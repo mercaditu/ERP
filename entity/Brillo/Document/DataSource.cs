@@ -88,203 +88,196 @@ namespace entity.Brillo.Document
 
         public ReportDataSource SalesBudget(sales_budget sales_budget)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
 
-                reportDataSource.Value = sales_budget_detail
-                    .Select(g => new
-                    {
-                        geo_name = g.sales_budget.contact.app_geography != null ? g.sales_budget.contact.app_geography.name != null ? g.sales_budget.contact.app_geography.name : "" : "",
-                        id_sales_budget = g.id_sales_budget,
-                        id_sales_budget_detail = g.id_sales_budget_detail,
-                        sales_budget = g.id_sales_budget_detail,
-                        id_company = g.id_company,
-                        add1 = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.address != null ? g.sales_budget.contact.address : "" : "" : "",
-                        telephone = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.telephone != null ? g.sales_budget.contact.telephone : "" : "" : "",
-                        email = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.email != null ? g.sales_budget.contact.email : "" : "" : "",
-                        company_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
-                        currency = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.name != null ? g.sales_budget.app_currencyfx.app_currency.name : "" : "" : "" : "",
-                        currencyfx_rate = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.sell_value != null ? g.sales_budget.app_currencyfx.sell_value : 0 : 0 : 0,
-                        item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
-                        item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
-                        item_long_description = g.item != null ? g.item.description != null ? g.item.description : "" : "",
-                        item_brand = g.item != null ? (g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "") : "",
-                        quantity = g.quantity,
-                        sub_Total = g.SubTotal,
-                        sub_Total_vat = g.SubTotal_Vat,
-                        unit_cost = g.unit_cost,
-                        unit_price = g.unit_cost,
-                        unit_price_vat = g.UnitPrice_Vat,
-                        unit_price_discount = g.discount,
+            reportDataSource.Value = sales_budget_detail
+                .Select(g => new
+                {
+                    geo_name = g.sales_budget.contact.app_geography != null ? g.sales_budget.contact.app_geography.name != null ? g.sales_budget.contact.app_geography.name : "" : "",
+                    id_sales_budget = g.id_sales_budget,
+                    id_sales_budget_detail = g.id_sales_budget_detail,
+                    sales_budget = g.id_sales_budget_detail,
+                    id_company = g.id_company,
+                    add1 = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.address != null ? g.sales_budget.contact.address : "" : "" : "",
+                    telephone = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.telephone != null ? g.sales_budget.contact.telephone : "" : "" : "",
+                    email = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.email != null ? g.sales_budget.contact.email : "" : "" : "",
+                    company_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
+                    currency = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.name != null ? g.sales_budget.app_currencyfx.app_currency.name : "" : "" : "" : "",
+                    currencyfx_rate = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.sell_value != null ? g.sales_budget.app_currencyfx.sell_value : 0 : 0 : 0,
+                    item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
+                    item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
+                    item_long_description = g.item != null ? g.item.description != null ? g.item.description : "" : "",
+                    item_brand = g.item != null ? (g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "") : "",
+                    quantity = g.quantity,
+                    sub_Total = g.SubTotal,
+                    sub_Total_vat = g.SubTotal_Vat,
+                    unit_cost = g.unit_cost,
+                    unit_price = g.unit_cost,
+                    unit_price_vat = g.UnitPrice_Vat,
+                    unit_price_discount = g.discount,
 
-                        terminale_name = g.sales_budget != null ? (g.sales_budget.app_terminal != null ? g.sales_budget.app_terminal.name != null ? g.sales_budget.app_terminal.name : "" : "") : "",
-                        code = g.sales_budget != null ? g.sales_budget.code != null ? g.sales_budget.code : "" : "",
-                        contact_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
-                        sales_rep_name = g.sales_budget != null ? g.sales_budget.sales_rep != null ? g.sales_budget.sales_rep.name != null ? g.sales_budget.sales_rep.name : "" : "" : "",
-                        trans_date = g.sales_budget != null ? g.sales_budget.trans_date != null ? g.sales_budget.trans_date.ToShortDateString() : "" : "",
-                        id_vat_group = g.id_vat_group,
-                        gov_id = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.gov_code != null ? g.sales_budget.contact.gov_code : "" : "" : "",
-                        contract = g.sales_budget != null ? g.sales_budget.app_contract != null ? g.sales_budget.app_contract.name != null ? g.sales_budget.app_contract.name : "" : "" : "",
-                        condition = g.sales_budget != null ? g.sales_budget.app_condition != null ? g.sales_budget.app_condition.name != null ? g.sales_budget.app_condition.name : "" : "" : "",
-                        Number = g.sales_budget != null ? g.sales_budget.number != null ? g.sales_budget.number : "" : "",
-                        comment = g.sales_budget != null ? g.sales_budget.comment != null ? g.sales_budget.comment : "" : "",
-                        security_user_name = g.sales_budget != null ? g.sales_budget.security_user != null ? g.sales_budget.security_user.name != null ? g.sales_budget.security_user.name : "" : "" : "",
-                        AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
+                    terminale_name = g.sales_budget != null ? (g.sales_budget.app_terminal != null ? g.sales_budget.app_terminal.name != null ? g.sales_budget.app_terminal.name : "" : "") : "",
+                    code = g.sales_budget != null ? g.sales_budget.code != null ? g.sales_budget.code : "" : "",
+                    contact_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
+                    sales_rep_name = g.sales_budget != null ? g.sales_budget.sales_rep != null ? g.sales_budget.sales_rep.name != null ? g.sales_budget.sales_rep.name : "" : "" : "",
+                    trans_date = g.sales_budget != null ? g.sales_budget.trans_date != null ? g.sales_budget.trans_date.ToShortDateString() : "" : "",
+                    id_vat_group = g.id_vat_group,
+                    gov_id = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.gov_code != null ? g.sales_budget.contact.gov_code : "" : "" : "",
+                    contract = g.sales_budget != null ? g.sales_budget.app_contract != null ? g.sales_budget.app_contract.name != null ? g.sales_budget.app_contract.name : "" : "" : "",
+                    condition = g.sales_budget != null ? g.sales_budget.app_condition != null ? g.sales_budget.app_condition.name != null ? g.sales_budget.app_condition.name : "" : "" : "",
+                    Number = g.sales_budget != null ? g.sales_budget.number != null ? g.sales_budget.number : "" : "",
+                    comment = g.sales_budget != null ? g.sales_budget.comment != null ? g.sales_budget.comment : "" : "",
+                    security_user_name = g.sales_budget != null ? g.sales_budget.security_user != null ? g.sales_budget.security_user.name != null ? g.sales_budget.security_user.name : "" : "" : "",
+                    AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
 
-                        // Text -> Words
-                        NumToWords.IntToText(Convert.ToInt64(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
+                    // Text -> Words
+                    NumToWords.IntToText(Convert.ToInt64(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))
+                    :
+                    NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                        //unit_price_discount = g.discount != null ? g.discount : 0,
+                    HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                    //unit_price_discount = g.discount != null ? g.discount : 0,
 
-                    }).ToList();
+                }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
 
         public ReportDataSource SalesOrder(sales_order sales_order)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_order_detail> sales_order_detail = sales_order.sales_order_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<sales_order_detail> sales_order_detail = sales_order.sales_order_detail.ToList();
 
-                reportDataSource.Value = sales_order_detail
-                    .Select(g => new
-                    {
+            reportDataSource.Value = sales_order_detail
+                .Select(g => new
+                {
 
-                        geo_name = g.sales_order != null ? g.sales_order.contact != null ? g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "" : "" : "",
-                        sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
-                        contact_name = g.sales_order != null ? g.sales_order.contact.name : "",
-                        customer_address = g.sales_order != null ? g.sales_order.contact.address != null ? g.sales_order.contact.address : "" : "",
-                        customer_telephone = g.sales_order != null ? g.sales_order.contact.telephone : "",
-                        customer_email = g.sales_order != null ? g.sales_order.contact.email != null ? g.sales_order.contact.email : "" : "",
-                        company_Name = g.sales_order != null ? g.sales_order.app_company != null ? g.sales_order.app_company.name : "" : "",
-                        customer_govid = g.sales_order != null ? g.sales_order.contact.gov_code : "",
-                        sales_order_terminal = g.sales_order != null ? g.sales_order.app_terminal != null ? g.sales_order.app_terminal.name : "" : "",
-                        branch_Name = g.sales_order != null ? g.sales_order.app_branch != null ? g.sales_order.app_branch.name : "" : "",
-                        order_Code = g.sales_order != null ? g.sales_order.code != null ? g.sales_order.code : "" : "",
-                        delivery_Date = g.sales_order != null ? g.sales_order.delivery_date != null ? g.sales_order.delivery_date : DateTime.Now : DateTime.Now,
-                        sales_number = g.sales_order != null ? g.sales_order.number : "",
-                        order_Total = g.sales_order != null ? g.sales_order.GrandTotal : 0M,
-                        currency = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.name : "" : "" : "",
-                        currencyfx_rate = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.sell_value : 0M : 0M,
-                        project_Name = g.sales_order != null ? g.sales_order.project != null ? g.sales_order.project.name : "" : "",
-                        sales_order_representative = g.sales_order != null ? g.sales_order.sales_rep != null ? g.sales_order.sales_rep.name : "" : "",
-                        security_user_name = g.sales_order != null ? g.sales_order.security_user != null ? g.sales_order.security_user.name : "" : "",
-                        trans_date = g.sales_order != null ? g.sales_order.trans_date : DateTime.Now,
-                        sales_order_contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name : "" : "",
-                        sales_order_condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name : "" : "",
-                        DeliveryDate = g.sales_order != null ? g.sales_order.delivery_date : DateTime.Now,
-                        sales_order_Comment = g.sales_order != null ? g.sales_order.comment != null ? g.sales_order.comment : "" : "",
-                        vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
-                        contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name != null ? g.sales_order.app_contract.name : "" : "" : "",
-                        condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name != null ? g.sales_order.app_condition.name : "" : "" : "",
-                        item_code = g.item != null ? g.item.code : "",
-                        item_description = g.item != null ? g.item.name : "",
-                        item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
+                    geo_name = g.sales_order != null ? g.sales_order.contact != null ? g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "" : "" : "",
+                    sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
+                    contact_name = g.sales_order != null ? g.sales_order.contact.name : "",
+                    customer_address = g.sales_order != null ? g.sales_order.contact.address != null ? g.sales_order.contact.address : "" : "",
+                    customer_telephone = g.sales_order != null ? g.sales_order.contact.telephone : "",
+                    customer_email = g.sales_order != null ? g.sales_order.contact.email != null ? g.sales_order.contact.email : "" : "",
+                    company_Name = g.sales_order != null ? g.sales_order.app_company != null ? g.sales_order.app_company.name : "" : "",
+                    customer_govid = g.sales_order != null ? g.sales_order.contact.gov_code : "",
+                    sales_order_terminal = g.sales_order != null ? g.sales_order.app_terminal != null ? g.sales_order.app_terminal.name : "" : "",
+                    branch_Name = g.sales_order != null ? g.sales_order.app_branch != null ? g.sales_order.app_branch.name : "" : "",
+                    order_Code = g.sales_order != null ? g.sales_order.code != null ? g.sales_order.code : "" : "",
+                    delivery_Date = g.sales_order != null ? g.sales_order.delivery_date != null ? g.sales_order.delivery_date : DateTime.Now : DateTime.Now,
+                    sales_number = g.sales_order != null ? g.sales_order.number : "",
+                    order_Total = g.sales_order != null ? g.sales_order.GrandTotal : 0M,
+                    currency = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.name : "" : "" : "",
+                    currencyfx_rate = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.sell_value : 0M : 0M,
+                    project_Name = g.sales_order != null ? g.sales_order.project != null ? g.sales_order.project.name : "" : "",
+                    sales_order_representative = g.sales_order != null ? g.sales_order.sales_rep != null ? g.sales_order.sales_rep.name : "" : "",
+                    security_user_name = g.sales_order != null ? g.sales_order.security_user != null ? g.sales_order.security_user.name : "" : "",
+                    trans_date = g.sales_order != null ? g.sales_order.trans_date : DateTime.Now,
+                    sales_order_contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name : "" : "",
+                    sales_order_condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name : "" : "",
+                    DeliveryDate = g.sales_order != null ? g.sales_order.delivery_date : DateTime.Now,
+                    sales_order_Comment = g.sales_order != null ? g.sales_order.comment != null ? g.sales_order.comment : "" : "",
+                    vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
+                    contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name != null ? g.sales_order.app_contract.name : "" : "" : "",
+                    condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name != null ? g.sales_order.app_condition.name : "" : "" : "",
+                    item_code = g.item != null ? g.item.code : "",
+                    item_description = g.item != null ? g.item.name : "",
+                    item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
 
-                        quantity = g.quantity,
-                        sub_Total = g.SubTotal,
-                        sub_Total_vat = g.SubTotal_Vat,
-                        unit_cost = g.unit_cost,
-                        unit_price = g.unit_price,
-                        unit_price_vat = g.UnitPrice_Vat,
-                        sub_total_vat_discount = g.Discount_SubTotal_Vat,
-                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
+                    quantity = g.quantity,
+                    sub_Total = g.SubTotal,
+                    sub_Total_vat = g.SubTotal_Vat,
+                    unit_cost = g.unit_cost,
+                    unit_price = g.unit_price,
+                    unit_price_vat = g.UnitPrice_Vat,
+                    sub_total_vat_discount = g.Discount_SubTotal_Vat,
+                    AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
 
-                        // Text -> Words
-                        NumToWords.IntToText(Convert.ToInt64(g.sales_order != null ? g.sales_order.GrandTotal : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "" : "" : "",
+                    // Text -> Words
+                    NumToWords.IntToText(Convert.ToInt64(g.sales_order != null ? g.sales_order.GrandTotal : 0))
+                    :
+                    NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                        unit_price_discount = g.discount != null ? g.discount : 0,
+                    HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                    unit_price_discount = g.discount != null ? g.discount : 0,
 
-                    }).ToList();
+                }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
 
         public ReportDataSource SalesInvoice(sales_invoice sales_invoice)
         {
-            using (db db = new db())
+            reportDataSource.Name = "DataSet1";
+            List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
+            if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
             {
-                reportDataSource.Name = "DataSet1";
-                List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
-                if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
+                for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
                 {
-                    for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
-                    {
-                        sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
-                        sales_invoice_detail.Add(_sales_invoice_detail);
-                    }
+                    sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
+                    sales_invoice_detail.Add(_sales_invoice_detail);
                 }
-
-                reportDataSource.Value = sales_invoice_detail.Select(g => new
-                {
-                    geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
-                    sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
-                    id_company = g.id_company,
-                    add1 = g.sales_invoice != null ? g.sales_invoice.contact.address != null ? g.sales_invoice.contact.address : "" : "",
-                    telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone != null ? g.sales_invoice.contact.telephone : "" : "",
-                    email = g.sales_invoice != null ? g.sales_invoice.contact.email != null ? g.sales_invoice.contact.email : "" : "",
-                    company_name = g.sales_invoice != null ? g.sales_invoice.app_company != null ? g.sales_invoice.app_company.name : "" : "",
-                    item_code = g.item != null ? g.item.code : "",
-                    item_name = g.item != null ? g.item.name : "",
-                    item_description = g.item_description,
-                    Description = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
-                    currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
-                    currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
-                    quantity = g.quantity,
-                    sub_Total = g.SubTotal,
-                    sub_Total_vat = g.SubTotal_Vat,
-                    sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
-                    unit_cost = g.unit_cost,
-                    unit_price = g.unit_price,
-                    unit_price_vat = g.UnitPrice_Vat,
-                    terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal != null ? g.sales_invoice.app_terminal.name : "" : "",
-                    code = g.sales_invoice != null ? g.sales_invoice.code != null ? g.sales_invoice.code : "" : "",
-                    customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
-                    customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code : "",
-                    customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias : "",
-                    project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
-                    sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
-                    trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
-                    id_vat_group = g.id_vat_group,
-                    gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
-                    sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
-                    sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
-                    sales_number = g.sales_invoice != null ? g.sales_invoice.number : "",
-                    sales_barcode = g.sales_invoice != null ? GetBarcode(g.sales_invoice.number) : "",
-                    sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
-                    packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
-                    sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
-                    AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
-
-                    // Text -> Words
-                    NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
-                    :
-                    NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
-
-                    HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                    unit_price_discount = g.discount != null ? g.discount : 0,
-                }).ToList();
-
-                return reportDataSource;
             }
+
+            reportDataSource.Value = sales_invoice_detail.Select(g => new
+            {
+                geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
+                sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
+                id_company = g.id_company,
+                add1 = g.sales_invoice != null ? g.sales_invoice.contact.address != null ? g.sales_invoice.contact.address : "" : "",
+                telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone != null ? g.sales_invoice.contact.telephone : "" : "",
+                email = g.sales_invoice != null ? g.sales_invoice.contact.email != null ? g.sales_invoice.contact.email : "" : "",
+                company_name = g.sales_invoice != null ? g.sales_invoice.app_company != null ? g.sales_invoice.app_company.name : "" : "",
+                item_code = g.item != null ? g.item.code : "",
+                item_name = g.item != null ? g.item.name : "",
+                item_description = g.item_description,
+                Description = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
+                currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
+                currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
+                quantity = g.quantity,
+                sub_Total = g.SubTotal,
+                sub_Total_vat = g.SubTotal_Vat,
+                sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
+                unit_cost = g.unit_cost,
+                unit_price = g.unit_price,
+                unit_price_vat = g.UnitPrice_Vat,
+                terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal != null ? g.sales_invoice.app_terminal.name : "" : "",
+                code = g.sales_invoice != null ? g.sales_invoice.code != null ? g.sales_invoice.code : "" : "",
+                customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
+                customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code : "",
+                customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias : "",
+                project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
+                sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
+                trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
+                id_vat_group = g.id_vat_group,
+                gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
+                sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
+                sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
+                sales_number = g.sales_invoice != null ? g.sales_invoice.number : "",
+                sales_barcode = g.sales_invoice != null ? GetBarcode(g.sales_invoice.number) : "",
+                sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
+                packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
+                sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
+                AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+
+                // Text -> Words
+                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                :
+                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
+
+                HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                unit_price_discount = g.discount != null ? g.discount : 0,
+            }).ToList();
+
+            return reportDataSource;
         }
+
         private string GetBarcode(string number)
         {
             entity.Class.clsBarcode clsbarcode = new Class.clsBarcode();
-           return clsbarcode.ConvertToBarcode(number);
+            return clsbarcode.ConvertToBarcode(number);
         }
+
         private string GetPacking(List<sales_packing_relation> sales_packing_relation)
         {
             string PackingList = "";
@@ -306,38 +299,36 @@ namespace entity.Brillo.Document
 
         public ReportDataSource Sales_PackingList(sales_packing sales_packing)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1";
-                List<sales_packing_detail> sales_packing_detail = sales_packing.sales_packing_detail.ToList();
-                reportDataSource.Value = sales_packing_detail
-                              .Select(g => new
-                              {
-                                  contact_name = g.sales_packing.contact != null ? g.sales_packing.contact.name != null ? g.sales_packing.contact.name : "" : "",
-                                  customer_govid = g.sales_packing.contact != null ? g.sales_packing.contact.gov_code != null ? g.sales_packing.contact.gov_code : "" : "",
-                                  customer_address = g.sales_packing.contact != null ? g.sales_packing.contact.address != null ? g.sales_packing.contact.address : "" : "",
-                                  customer_telephone = g.sales_packing.contact != null ? g.sales_packing.contact.telephone != null ? g.sales_packing.contact.telephone : "" : "",
-                                  customer_email = g.sales_packing.contact != null ? g.sales_packing.contact.email != null ? g.sales_packing.contact.email : "" : "",
-                                  company_Name = g.app_company != null ? g.app_company.name != null ? g.app_company.name : "" : "",
-                                  company_govid = g.app_company != null ? g.app_company.gov_code != null ? g.app_company.gov_code : "" : "",
-                                  company_address = g.app_company != null ? g.app_company.address != null ? g.app_company.address : "" : "",
-                                  sales_terminal = g.sales_packing != null ? g.sales_packing.app_terminal != null ? g.sales_packing.app_terminal.name != null ? g.sales_packing.app_terminal.name : "" : "" : "",
-                                  branch_Name = g.sales_packing != null ? g.sales_packing.app_branch != null ? g.sales_packing.app_branch.name != null ? g.sales_packing.app_branch.name : "" : "" : "",
-                                  security_user_name = g.sales_packing != null ? g.sales_packing.security_user != null ? g.sales_packing.security_user.name != null ? g.sales_packing.security_user.name : "" : "" : "",
-                                  trans_date = g.sales_packing.trans_date != null ? g.sales_packing.trans_date : DateTime.Now,
-                                  sales_order_Comment = g.sales_packing.comment != null ? g.sales_packing.comment : "",
-                                  item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
-                                  item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
-                                  item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "" : "",
-                                  quantity = g.quantity != null ? g.quantity : 0,
-                                  number = g.sales_packing != null ? g.sales_packing.number : "",
-                                  sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : "",
-                                  packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : ""
-                              }).ToList();
+            reportDataSource.Name = "DataSet1";
+            List<sales_packing_detail> sales_packing_detail = sales_packing.sales_packing_detail.ToList();
+            reportDataSource.Value = sales_packing_detail
+                          .Select(g => new
+                          {
+                              contact_name = g.sales_packing.contact != null ? g.sales_packing.contact.name != null ? g.sales_packing.contact.name : "" : "",
+                              customer_govid = g.sales_packing.contact != null ? g.sales_packing.contact.gov_code != null ? g.sales_packing.contact.gov_code : "" : "",
+                              customer_address = g.sales_packing.contact != null ? g.sales_packing.contact.address != null ? g.sales_packing.contact.address : "" : "",
+                              customer_telephone = g.sales_packing.contact != null ? g.sales_packing.contact.telephone != null ? g.sales_packing.contact.telephone : "" : "",
+                              customer_email = g.sales_packing.contact != null ? g.sales_packing.contact.email != null ? g.sales_packing.contact.email : "" : "",
+                              company_Name = g.app_company != null ? g.app_company.name != null ? g.app_company.name : "" : "",
+                              company_govid = g.app_company != null ? g.app_company.gov_code != null ? g.app_company.gov_code : "" : "",
+                              company_address = g.app_company != null ? g.app_company.address != null ? g.app_company.address : "" : "",
+                              sales_terminal = g.sales_packing != null ? g.sales_packing.app_terminal != null ? g.sales_packing.app_terminal.name != null ? g.sales_packing.app_terminal.name : "" : "" : "",
+                              branch_Name = g.sales_packing != null ? g.sales_packing.app_branch != null ? g.sales_packing.app_branch.name != null ? g.sales_packing.app_branch.name : "" : "" : "",
+                              security_user_name = g.sales_packing != null ? g.sales_packing.security_user != null ? g.sales_packing.security_user.name != null ? g.sales_packing.security_user.name : "" : "" : "",
+                              trans_date = g.sales_packing.trans_date != null ? g.sales_packing.trans_date : DateTime.Now,
+                              sales_order_Comment = g.sales_packing.comment != null ? g.sales_packing.comment : "",
+                              item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
+                              item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
+                              item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "" : "",
+                              quantity = g.quantity != null ? g.quantity : 0,
+                              number = g.sales_packing != null ? g.sales_packing.number : "",
+                              sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : "",
+                              packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : ""
+                          }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
+
         private string GetInvoice(List<sales_packing_relation> sales_packing_relation)
         {
             string PackingList = "";
@@ -350,55 +341,53 @@ namespace entity.Brillo.Document
             }
             return PackingList;
         }
+
         public ReportDataSource SalesReturn(sales_return sales_return)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
 
-                reportDataSource.Value = sales_return_detail
-                              .Select(g => new
-                              {
-                                  geo_name = g.sales_return.contact.app_geography != null ? g.sales_return.contact.app_geography.name : "",
-                                  id_sales_return = g.id_sales_return,
-                                  id_sales_return_detail = g.id_sales_return_detail,
-                                  sales_return = g.id_sales_return_detail,
-                                  id_company = g.id_company,
-                                  add1 = g.sales_return.contact.address != null ? g.sales_return.contact.address : "",
-                                  telephone = g.sales_return.contact.telephone != null ? g.sales_return.contact.telephone : "",
-                                  email = g.sales_return.contact.email != null ? g.sales_return.contact.email : "",
-                                  company_name = g.app_company != null ? g.app_company.name : "",
-                                  item_code = g.item.code,
-                                  item_description = g.item.name,
-                                  Description = g.item.item_brand != null ? g.item.item_brand.name : "",
-                                  quantity = g.quantity,
-                                  sub_Total = g.SubTotal,
-                                  sub_Total_vat = g.SubTotal_Vat,
-                                  unit_cost = g.unit_cost,
-                                  unit_price = g.unit_cost,
-                                  unit_price_vat = g.UnitPrice_Vat,
-                                  sales_invoice_number = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.number : "" : "",
-                                  salesman = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.sales_rep != null ? g.sales_invoice_detail.sales_invoice.sales_rep.name : "" : "" : "",
-                                  terminale_name = g.sales_return.app_terminal != null ? g.sales_return.app_terminal.name : "",
-                                  code = g.sales_return.code,
-                                  contact_name = g.sales_return.contact.name,
-                                  trans_date = g.sales_return.trans_date,
-                                  id_vat_group = g.id_vat_group,
-                                  gov_id = g.sales_return.contact.gov_code,
-                                  AmountWords = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding ?
+            reportDataSource.Value = sales_return_detail
+                          .Select(g => new
+                          {
+                              geo_name = g.sales_return.contact.app_geography != null ? g.sales_return.contact.app_geography.name : "",
+                              id_sales_return = g.id_sales_return,
+                              id_sales_return_detail = g.id_sales_return_detail,
+                              sales_return = g.id_sales_return_detail,
+                              id_company = g.id_company,
+                              add1 = g.sales_return.contact.address != null ? g.sales_return.contact.address : "",
+                              telephone = g.sales_return.contact.telephone != null ? g.sales_return.contact.telephone : "",
+                              email = g.sales_return.contact.email != null ? g.sales_return.contact.email : "",
+                              company_name = g.app_company != null ? g.app_company.name : "",
+                              item_code = g.item.code,
+                              item_description = g.item.name,
+                              Description = g.item.item_brand != null ? g.item.item_brand.name : "",
+                              quantity = g.quantity,
+                              sub_Total = g.SubTotal,
+                              sub_Total_vat = g.SubTotal_Vat,
+                              unit_cost = g.unit_cost,
+                              unit_price = g.unit_cost,
+                              unit_price_vat = g.UnitPrice_Vat,
+                              sales_invoice_number = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.number : "" : "",
+                              salesman = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.sales_rep != null ? g.sales_invoice_detail.sales_invoice.sales_rep.name : "" : "" : "",
+                              terminale_name = g.sales_return.app_terminal != null ? g.sales_return.app_terminal.name : "",
+                              code = g.sales_return.code,
+                              contact_name = g.sales_return.contact.name,
+                              trans_date = g.sales_return.trans_date,
+                              id_vat_group = g.id_vat_group,
+                              gov_id = g.sales_return.contact.gov_code,
+                              AmountWords = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding ?
 
-                     // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g.sales_return != null ? g.sales_return.GrandTotal : 0))
-                     :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "" : "" : "",
+                 // Text -> Words
+                 NumToWords.IntToText(Convert.ToInt32(g.sales_return != null ? g.sales_return.GrandTotal : 0))
+                 :
+                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "" : "" : "",
 
-                                  HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                                  unit_price_discount = g.discount != null ? g.discount : 0,
-                              }).ToList();
+                              HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                              unit_price_discount = g.discount != null ? g.discount : 0,
+                          }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
 
         /// <summary>
@@ -408,102 +397,152 @@ namespace entity.Brillo.Document
         /// <returns></returns>
         public ReportDataSource PurchaseTender(purchase_tender_contact purchase_tender_contact)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<purchase_tender_detail> purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<purchase_tender_detail> purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.ToList();
 
-                reportDataSource.Value = purchase_tender_detail
-                    .Select(g => new
-                    {
-                        add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.address : "" : "",
-                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.telephone : "" : "",
-                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.email : "" : "",
-                        company_name = g.app_company != null ? g.app_company.name : "",
-                        item_code = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "" : "",
-                        item_description = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.name : "" : "",
-                        Brand = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.item_brand != null ? g.purchase_tender_item.item.item_brand.name : "" : "" : "",
-                        quantity = g.quantity,
-                        sub_Total = g.SubTotal,
-                        sub_Total_vat = g.SubTotal_Vat,
-                        unit_cost = g.unit_cost,
-                        unit_price = g.unit_cost,
-                        unit_price_vat = g.UnitCost_Vat,
-                        branch_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_branch != null ? g.purchase_tender_contact.purchase_tender.app_branch.name : "" : "" : "",
-                        terminal_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal != null ? g.purchase_tender_contact.purchase_tender.app_terminal.name : "" : "" : "",
-                        Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition != null ? g.purchase_tender_contact.app_condition.name : "" : "",
-                        Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract != null ? g.purchase_tender_contact.app_contract.name : "" : "",
-                        Currency = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.name : "" : "" : "",
-                        code = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.code.ToString() : "" : "",
-                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.name : "" : "",
-                        trans_date = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.trans_date : DateTime.Now : DateTime.Now,
-                        id_vat_group = g.id_vat_group,
-                        gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.gov_code : "" : "",
-                        Number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "" : "" : "",
-                        DimensionString = g.DimensionString,
-                        AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
+            reportDataSource.Value = purchase_tender_detail
+                .Select(g => new
+                {
+                    add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.address : "" : "",
+                    telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.telephone : "" : "",
+                    email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.email : "" : "",
+                    company_name = g.app_company != null ? g.app_company.name : "",
+                    item_code = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "" : "",
+                    item_description = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.name : "" : "",
+                    Brand = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.item_brand != null ? g.purchase_tender_item.item.item_brand.name : "" : "" : "",
+                    quantity = g.quantity,
+                    sub_Total = g.SubTotal,
+                    sub_Total_vat = g.SubTotal_Vat,
+                    unit_cost = g.unit_cost,
+                    unit_price = g.unit_cost,
+                    unit_price_vat = g.UnitCost_Vat,
+                    branch_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_branch != null ? g.purchase_tender_contact.purchase_tender.app_branch.name : "" : "" : "",
+                    terminal_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal != null ? g.purchase_tender_contact.purchase_tender.app_terminal.name : "" : "" : "",
+                    Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition != null ? g.purchase_tender_contact.app_condition.name : "" : "",
+                    Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract != null ? g.purchase_tender_contact.app_contract.name : "" : "",
+                    Currency = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.name : "" : "" : "",
+                    code = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.code.ToString() : "" : "",
+                    contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.name : "" : "",
+                    trans_date = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.trans_date : DateTime.Now : DateTime.Now,
+                    id_vat_group = g.id_vat_group,
+                    gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.gov_code : "" : "",
+                    Number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "" : "" : "",
+                    DimensionString = g.DimensionString,
+                    AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
-                     // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))
-                     :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))) : "" : "" : "",
+                 // Text -> Words
+                 NumToWords.IntToText(Convert.ToInt32(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))
+                 :
+                 NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding : false : false : false : false
-                    }).ToList();
-                return reportDataSource;
-            }
+                    HasRounding = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                }).ToList();
+            return reportDataSource;
         }
 
         public ReportDataSource PurchaseOrder(purchase_order purchase_order)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
 
-                reportDataSource.Value = purchase_order_detail
-                    .Select(g => new
-                    {
-                        id_sales_return = g.id_purchase_order,
-                        id_sales_return_detail = g.id_purchase_order,
-                        sales_return = g.id_purchase_order_detail,
-                        id_company = g.id_company,
-                        add1 = g.purchase_order != null ? g.purchase_order.contact.address : "",
-                        telephone = g.purchase_order != null ? g.purchase_order.contact.telephone : "",
-                        email = g.purchase_order != null ? g.purchase_order.contact.email : "",
-                        company_name = g.app_company != null ? g.app_company.name : "",
-                        item_code = g.item != null ? g.item.code : "",
-                        item_description = g.item_description,
-                        Brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
-                        quantity = g.quantity,
-                        sub_Total = g.SubTotal,
-                        sub_Total_vat = g.SubTotal_Vat,
-                        unit_cost = g.unit_cost,
-                        unit_price = g.unit_cost,
-                        unit_price_vat = g.UnitCost_Vat,
-                        terminal_name = g.purchase_order != null ? g.purchase_order.app_terminal.name : "",
-                        Condition = g.purchase_order != null ? g.purchase_order.app_condition.name : "",
-                        Contract = g.purchase_order != null ? g.purchase_order.app_contract.name : "",
-                        Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
-                        code = g.purchase_order.code,
-                        contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
-                        trans_date = g.purchase_order.trans_date,
-                        id_vat_group = g.id_vat_group,
-                        vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
-                        gov_id = g.purchase_order.contact.gov_code,
-                        Number = g.purchase_order.number,
-                        AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?
+            reportDataSource.Value = purchase_order_detail
+                .Select(g => new
+                {
+                    id_sales_return = g.id_purchase_order,
+                    id_sales_return_detail = g.id_purchase_order,
+                    sales_return = g.id_purchase_order_detail,
+                    id_company = g.id_company,
+                    add1 = g.purchase_order != null ? g.purchase_order.contact.address : "",
+                    telephone = g.purchase_order != null ? g.purchase_order.contact.telephone : "",
+                    email = g.purchase_order != null ? g.purchase_order.contact.email : "",
+                    company_name = g.app_company != null ? g.app_company.name : "",
+                    item_code = g.item != null ? g.item.code : "",
+                    item_description = g.item_description,
+                    Brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
+                    quantity = g.quantity,
+                    sub_Total = g.SubTotal,
+                    sub_Total_vat = g.SubTotal_Vat,
+                    unit_cost = g.unit_cost,
+                    unit_price = g.unit_cost,
+                    unit_price_vat = g.UnitCost_Vat,
+                    terminal_name = g.purchase_order != null ? g.purchase_order.app_terminal.name : "",
+                    Condition = g.purchase_order != null ? g.purchase_order.app_condition.name : "",
+                    Contract = g.purchase_order != null ? g.purchase_order.app_contract.name : "",
+                    Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
+                    code = g.purchase_order.code,
+                    contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
+                    trans_date = g.purchase_order.trans_date,
+                    id_vat_group = g.id_vat_group,
+                    vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
+                    gov_id = g.purchase_order.contact.gov_code,
+                    Number = g.purchase_order.number,
+                    AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?
 
-                     // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))
-                     :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))) : "" : "" : "",
+                 // Text -> Words
+                 NumToWords.IntToText(Convert.ToInt32(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))
+                 :
+                 NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding : false : false : false : false
-                    }).ToList();
+                    HasRounding = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
+        }
+
+        public ReportDataSource PurchaseInvoice(purchase_invoice purchase_invoice)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();
+
+            reportDataSource.Value = purchase_invoice_detail
+                .Select(g => new
+                {
+                    CompanyName = g.app_company != null ? g.app_company.name : "",
+                    TerminalName = g.purchase_invoice != null ? g.purchase_invoice.app_terminal != null ? g.purchase_invoice.app_terminal.name : "" : "",
+                    BranchName = g.purchase_invoice != null ? g.purchase_invoice.app_branch != null ? g.purchase_invoice.app_branch.name : "" : "",
+                    UserName = g.purchase_invoice != null ? g.purchase_invoice.security_user != null ? g.purchase_invoice.security_user.name : "" : "",
+
+                    SupplierName = g.purchase_invoice != null ? g.purchase_invoice.contact.name : "",
+                    SupplierGovCode = g.purchase_invoice.contact.gov_code,
+                    SupplierAddress = g.purchase_invoice != null ? g.purchase_invoice.contact.address : "",
+                    SupplierTelephone = g.purchase_invoice != null ? g.purchase_invoice.contact.telephone : "",
+                    SupplierEmail = g.purchase_invoice != null ? g.purchase_invoice.contact.email : "",
+
+                    ItemCode = g.item != null ? g.item.code : "",
+                    ItemName = g.item_description,
+                    ItemBrand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
+
+                    CostCenterName = g.app_cost_center != null ? g.app_cost_center.name : "",
+                    Quantity = g.quantity,
+                    //Use VAT Group ID to seperate the data into columns as per Paraguayan Law.
+                    VATGroup_ID = g.id_vat_group,
+                    VATGroup_Name = g.app_vat_group != null ? g.app_vat_group.name : "",
+
+                    UnitCost = g.unit_cost,
+                    UnitCost_VAT = g.UnitCost_Vat,
+                    SubTotal = g.SubTotal,
+                    SubTotal_VAT = g.SubTotal_Vat,
+
+                    ProjectName = g.purchase_invoice != null ? g.purchase_invoice.project != null ? g.purchase_invoice.project.name : "" : "",
+
+                    Condition = g.purchase_invoice != null ? g.purchase_invoice.app_condition.name : "",
+                    Contract = g.purchase_invoice != null ? g.purchase_invoice.app_contract.name : "",
+                    Currency = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency.name : "" : "",
+                    PurchaseNumber = g.purchase_invoice.number,
+                    PurchaseCode = g.purchase_invoice.code,
+                    PurchaseDate = g.purchase_invoice.trans_date,
+
+                    AmountWords = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding ?
+
+                 // Text -> Words
+                 NumToWords.IntToText(Convert.ToInt32(g.purchase_invoice != null ? g.purchase_invoice.GrandTotal : 0))
+                 :
+                 NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_invoice != null ? g.purchase_invoice.GrandTotal : 0))) : "" : "" : "",
+
+                    HasRounding = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                }).ToList();
+
+            return reportDataSource;
         }
 
         /// <summary>
@@ -524,6 +563,16 @@ namespace entity.Brillo.Document
             reportDataSource.Value = item_transfer_detail
                 .Select(g => new
                 {
+                    ProjectName = g.item_transfer != null ? g.item_transfer.project != null ? g.item_transfer.project.name : "" : "",
+                    ProjectTaskName = g.project_task != null ? g.project_task.name : "",
+                    ProjectTaskCode = g.project_task != null ? g.project_task.code : "",
+
+                    DepartmentName = g.item_transfer != null ? g.item_transfer.app_department != null ? g.item_transfer.app_department.name : "" : "",
+                    UserName = g.security_user != null ? g.security_user.name : "",
+                    RequstedUserName = g.item_transfer != null ? g.item_transfer.user_requested != null ? g.item_transfer.user_requested.name : "" : "",
+                    RequstedUserCode = g.item_transfer != null ? g.item_transfer.user_requested != null ? g.item_transfer.user_requested.code : "" : "",
+
+
                     transfer_number = g.item_transfer.number,
                     location_origin_name = g.item_transfer != null ? g.item_transfer.app_location_origin != null ? g.item_transfer.app_location_origin.name : "" : "",
                     location_destination_name = g.item_transfer.app_location_destination.name,
@@ -531,8 +580,7 @@ namespace entity.Brillo.Document
                     quantity_origin = g.quantity_origin,
                     item_name = g.item_product.item.name,
                     trans_date = g.item_transfer.trans_date,
-                    comment = g.item_transfer.comment,
-                    UserName = g.security_user != null ? g.security_user.name : ""
+                    comment = g.item_transfer.comment
                 }).ToList();
 
             return reportDataSource;
@@ -540,26 +588,26 @@ namespace entity.Brillo.Document
 
         public ReportDataSource PaymentDetail_Print(payment_detail payment_detail)
         {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
-                List<payment_detail> payment_detailList = new List<payment_detail>();
-                payment_detailList.Add(payment_detail);
+            List<payment_detail> payment_detailList = new List<payment_detail>();
+            payment_detailList.Add(payment_detail);
 
-                reportDataSource.Value = payment_detailList.Select(g => new
-                    {
-                        Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
-                        TransDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
-                        Memo = g.comment,
-                        AmountNumber = g.value,
-                        AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+            reportDataSource.Value = payment_detailList.Select(g => new
+                {
+                    Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
+                    TransDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
+                    Memo = g.comment,
+                    AmountNumber = g.value,
+                    AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
                         //Text -> Words
-                        NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
+                    NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
+                    :
+                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
 
-                    }
-                    );
-                return reportDataSource;
+                }
+                );
+            return reportDataSource;
         }
 
         public ReportDataSource PromissoryNote(payment_promissory_note payment_promissory_note)
@@ -661,9 +709,9 @@ namespace entity.Brillo.Document
             reportDataSource.Value = item_inventory_detail
                 .Select(g => new
                 {
-                    date=g.item_inventory.trans_date,
-                    branch=g.item_inventory.app_branch.name,
-                    comment=g.item_inventory.comment,
+                    date = g.item_inventory.trans_date,
+                    branch = g.item_inventory.app_branch.name,
+                    comment = g.item_inventory.comment,
                     id_inventory_detail = g.id_inventory_detail,
                     id_company = g.id_company,
                     item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code != null ? g.item_product.item.code : "" : "" : "",

@@ -31,11 +31,11 @@ namespace entity
         public int? id_terminal { get; set; }
 
         [Required]
-        public short range_start { get; set; }
+        public int range_start { get; set; }
         [Required]
-        public short range_current { get; set; }
+        public int range_current { get; set; }
         [Required]
-        public short range_end { get; set; }
+        public int range_end { get; set; }
         public string range_padding { get; set; }
         [Required]
         public string range_template { get; set; }

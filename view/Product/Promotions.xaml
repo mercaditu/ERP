@@ -14,6 +14,7 @@
     <Page.Resources>
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
     </Page.Resources>
 
     <Grid DataContext="{StaticResource sales_promotionViewSource}" Background="White">
@@ -47,9 +48,8 @@
             <Label Content="Promotion" Style="{StaticResource input_label}"/>
             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
             <Label Content="Type" Style="{StaticResource input_label}"/>
-            <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}"
+            <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" SelectionChanged="cbxType_SelectionChanged"
                       SelectedValue="{Binding types, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label Style="{StaticResource input_label}" Content="StartDate" Width="125"/>
@@ -72,10 +72,19 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <Label Content="Parameters" Style="{StaticResource H2}"/>
-                    <Label Content="Item" Style="{StaticResource input_label}"/>
-                    <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                    <StackPanel x:Name="Item_Parameter">
+                        <Label Content="Item" Style="{StaticResource input_label}"/>
+                        <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                    </StackPanel>
+                    <StackPanel x:Name="Tag_Parameter">
+                        <Label Content="Tags" Style="{StaticResource input_label}"/>
+                        <ComboBox Style="{StaticResource input_combobox}"
+                              DisplayMemberPath="name" SelectedValuePath="id_tag"
+                              ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
+                              SelectedValue="{Binding reference, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
                     <Label Content="Quantity Step" Style="{StaticResource input_label}"/>
-                    <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" HorizontalAlignment="Left" Width="120"/>
+                    <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                 </StackPanel>
                 
                 <StackPanel Grid.Column="1">

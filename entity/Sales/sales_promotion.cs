@@ -19,7 +19,8 @@ namespace entity
             //Discount_onBrand = 5,
             //Discount_onItem = 6,
             BuyThis_GetThat = 7,
-            //BuyThis_Discount_OnSecond = 8
+            BuyTag_GetThat = 8
+            //BuyThis_Discount_OnSecond = 9
         }
    
         public sales_promotion()

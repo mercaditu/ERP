@@ -23,6 +23,11 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
                 {
+                    if (detail.item == null)
+                    {
+                        detail.item = db.items.Where(x => x.id_item == detail.id_item).FirstOrDefault();
+                    }
+
                     if (detail.item.is_autorecepie)
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);

@@ -43,62 +43,134 @@ namespace entity.Brillo.Promotion
 
             foreach (var Promo in SalesPromotionLIST)
             {
-                //if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
-                //{
-                if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
+                BuyThis_GetThat(Promo, Invoice, SalesInvoice);
+                BuyTag_GetThat(Promo, Invoice, SalesInvoice);
+            }
+        }
+
+        private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
+            {
+                if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
                 {
-                    if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
+                    foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
-                        foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
+                        if (Promo.quantity_step > 0)
                         {
-                            if (Promo.quantity_step > 0)
+                            Promo _Promo = new Promo();
+                            _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
+                            _Promo.Shared = true;
+
+                            _Detail.Promos.Add(_Promo);
+
+
+                            List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
+                            //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+                            foreach (sales_invoice_detail _Detail_ in sid)
                             {
-                                Promo _Promo = new Promo();
-                                _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
-                                _Promo.Shared = true;
 
-                                _Detail.Promos.Add(_Promo);
+                                SalesInvoice.sales_invoice_detail.Remove(_Detail_);
+                            }
 
+                            sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
-                                List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
-                                //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                                foreach (sales_invoice_detail _Detail_ in sid)
+                            //Needed to calculate the discounts and unit prices further on.
+                            sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
+
+                            using (db db = new db())
+                            {
+                                item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                if (item != null)
                                 {
-
-                                    SalesInvoice.sales_invoice_detail.Remove(_Detail_);
+                                    sales_invoice_detail.id_vat_group = item.id_vat_group;
+                                    sales_invoice_detail.item = item;
                                 }
 
-                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-
-                                //Needed to calculate the discounts and unit prices further on.
-                                sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
-
-                                using (db db = new db())
+                                item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
+                                if (item_price != null)
                                 {
-                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
-                                    if (item != null)
-                                    {
-                                        sales_invoice_detail.id_vat_group = item.id_vat_group;
-                                        sales_invoice_detail.item = item;   
-                                    }
-
-                                    item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
-                                    if (item_price != null)
-                                    {
-                                        sales_invoice_detail.unit_price = item_price.value;
-                                        sales_invoice_detail.discount = sales_invoice_detail.unit_price;
-                                    }
+                                    sales_invoice_detail.unit_price = item_price.value;
+                                    sales_invoice_detail.discount = sales_invoice_detail.unit_price;
                                 }
+                            }
 
-                                sales_invoice_detail.IsPromo = true;
-                                sales_invoice_detail.id_item = Promo.reference_bonus;
-                                sales_invoice_detail.item_description = sales_invoice_detail.item.name;
-                                sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                                SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                            sales_invoice_detail.IsPromo = true;
+                            sales_invoice_detail.id_item = Promo.reference_bonus;
+                            sales_invoice_detail.item_description = sales_invoice_detail.item.name;
+                            sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
+                            SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
 
-                             
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BuyTag_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.types == sales_promotion.Type.BuyTag_GetThat)
+            {
+                bool HasTag = false;
+                decimal TotalQuantity = 0;
+
+                List<Detail> DetailList = new List<Detail>();
+
+                using(db db = new db())
+	            {
+                    DetailList = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference)).ToList();
+                    HasTag = DetailList.Count > 0 ? true : false;
+                    TotalQuantity = DetailList.Sum(x => x.Quantity);
+	            }
+                
+
+                if (HasTag && TotalQuantity >= Promo.quantity_step)
+                {
+                    foreach (Detail _Detail in DetailList)
+                    {
+                        Promo _Promo = new Promo();
+                        _Promo.Type = sales_promotion.Type.BuyTag_GetThat;
+                        _Promo.Shared = true;
+
+                        _Detail.Promos.Add(_Promo);
+
+                        List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
+                        //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+                        foreach (sales_invoice_detail _Detail_ in sid)
+                        {
+                            SalesInvoice.sales_invoice_detail.Remove(_Detail_);
+                        }
+
+                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
+                        //Needed to calculate the discounts and unit prices further on.
+                        sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
+
+                        using (db db = new db())
+                        {
+                            item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                            if (item != null)
+                            {
+                                sales_invoice_detail.id_vat_group = item.id_vat_group;
+                                sales_invoice_detail.id_item = item.id_item;
+                                sales_invoice_detail.item_description = item.name;
+                                //sales_invoice_detail.item = item;
+                            }
+
+                            item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
+                            if (item_price != null)
+                            {
+                                sales_invoice_detail.unit_price = item_price.value;
+                                sales_invoice_detail.discount = item_price.value;
                             }
                         }
+
+                        sales_invoice_detail.IsPromo = true;
+                        sales_invoice_detail.quantity = Math.Floor(TotalQuantity / Promo.quantity_step);
+                        SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+
+
                     }
                 }
             }

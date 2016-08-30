@@ -994,6 +994,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\Inventory.rdlc" />
+    <EmbeddedResource Include="bin\Debug\PurchaseInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>

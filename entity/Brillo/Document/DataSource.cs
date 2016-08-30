@@ -42,6 +42,11 @@ namespace entity.Brillo.Document
                 purchase_order purchase_order = (purchase_order)Document;
                 return PurchaseOrder(purchase_order);
             }
+            else if (Document.GetType().BaseType == typeof(purchase_invoice) || Document.GetType() == typeof(purchase_invoice))
+            {
+                purchase_invoice purchase_invoice = (purchase_invoice)Document;
+                return PurchaseInvoice(purchase_invoice);
+            }
             else if (Document.GetType().BaseType == typeof(purchase_return) || Document.GetType() == typeof(purchase_return))
             {
                 purchase_return purchase_return = (purchase_return)Document;

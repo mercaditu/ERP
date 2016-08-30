@@ -209,18 +209,14 @@
                             </Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="False">
-                            <Label Content="" Style="{StaticResource btn_Label}"/>
-                            <TextBlock VerticalAlignment="Center"><Hyperlink PreviewMouseUp="btnDuplicateInvoice_PreviewMouseUp"><Run Text="{lex:Loc Duplicate}"/></Hyperlink></TextBlock>
-                        </StackPanel>
-                        <!--<StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Horizontal" >
                             <Label Content="" Style="{StaticResource btn_Label}"/>
-                            <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                    <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
-                                        <Run Text="{lex:Loc Document}"/>
-                                    </Hyperlink>
+                            <TextBlock VerticalAlignment="Center">
+                                                <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                                    <Run Text="{lex:Loc Document}"/>
+                                                </Hyperlink>
                             </TextBlock>
-                        </StackPanel>-->
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

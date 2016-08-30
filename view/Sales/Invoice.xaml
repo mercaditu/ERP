@@ -421,11 +421,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="" Style="{StaticResource btn_Label}"/>
-                                            <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                                <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
-                                                    <Run Text="{lex:Loc Document}"/>
-                                                </Hyperlink>
-                                            </TextBlock>
+                                            <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
                                                     Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

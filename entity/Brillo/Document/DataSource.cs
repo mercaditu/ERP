@@ -72,6 +72,11 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
+            else if (Document.GetType() == typeof(payment_schedual) || Document.GetType() == typeof(payment_schedual))
+            {
+                payment_schedual payment_schedual = (payment_schedual)payment_schedual;
+                return PaymentSchedual(payment_schedual);
+            }
             else if (Document.GetType() == typeof(payment) || Document.GetType() == typeof(payment))
             {
                 payment payment = (payment)Document;
@@ -641,6 +646,34 @@ namespace entity.Brillo.Document
                                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_promissory_note.value : 0))) : "" : "" : "",
 
                                 CompanyName = g.app_company.name,
+                            }).ToList();
+
+            return reportDataSource;
+        }
+
+        public ReportDataSource PaymentSchedual(payment_schedual payment_schedual)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+
+            List<payment_schedual> SchedualList = new List<entity.payment_schedual>();
+            SchedualList.Add(payment_schedual);
+
+            reportDataSource.Value = SchedualList
+                            .Select(g => new
+                            {
+                                SupplierName = g.contact != null ? g.contact.name : "",
+                                SupplierAlias = g.contact != null ? g.contact.alias : "",
+                                SupplierGovCode = g.contact != null ? g.contact.gov_code : "",
+                                SupplierAddress = g.contact != null ? g.contact.address : "",
+                                SupplierTelephone = g.contact != null ? g.contact.telephone : "",
+                                SupplierEmail = g.contact != null ? g.contact.email : "",
+                               
+                                InvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
+                                InvoiceDate = g.purchase_invoice != null ? g.purchase_invoice.trans_date.ToShortDateString() : "",
+                                InvoiceCurrency = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.name : "" : "" : "",
+                                InvoiceGrandTotal = g.purchase_invoice != null ? g.purchase_invoice.GrandTotal.ToString() : "",
+
+                                PaymentExpiryDate = g.expire_date.ToShortDateString()
                             }).ToList();
 
             return reportDataSource;

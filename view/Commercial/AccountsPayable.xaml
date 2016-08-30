@@ -17,6 +17,7 @@
       Title="AccountsPayable" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <converters:Status2ColorConverter x:Key="Status2ColorConverter"/>
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
         <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
@@ -58,7 +59,13 @@
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="" Width="32" 
                                             ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                            EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                                            EditingElementStyle="{DynamicResource MetroDataGridCheckBox}">
+                        <DataGridCheckBoxColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
+                                <Setter Property="Background" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                            </Style>
+                        </DataGridCheckBoxColumn.CellStyle>
+                    </DataGridCheckBoxColumn>
                     <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding purchase_invoice.number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -118,7 +125,6 @@
 
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
 			           btnApprove_Click="toolBar_btnApprove_Click"
-			           btnAnull_Click="toolBar_btnAnull_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
                           State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 

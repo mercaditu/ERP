@@ -50,20 +50,22 @@ namespace Cognitivo.Commercial
                 List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
                 ListPayments.Add(payment_schedual);
 
-                cntrl.Curd.PaymentApproval payment_quick = new cntrl.Curd.PaymentApproval(ListPayments);
+                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ListPayments);
                 crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(payment_quick);   
+                crud_modal.Children.Add(PaymentApproval);
+
+                PaymentApproval.SaveChanges += PaymentApproval_SaveChanges;
             }
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void PaymentApproval_SaveChanges(object sender, EventArgs e)
         {
-
-        }
-
-        private void purchase_returnDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
+            if (payment_schedual != null)
+            {
+                payment_schedual.status = Status.Documents_General.Approved;
+                PaymentDB.SaveChanges();
+            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

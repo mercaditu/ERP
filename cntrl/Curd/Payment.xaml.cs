@@ -83,10 +83,7 @@ namespace cntrl.Curd
                     payment_detail.value = payment_schedual.AccountPayableBalance;
                 }
 
-               
-
-                payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-              
+                payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;              
                 payment.payment_detail.Add(payment_detail);
             }
 

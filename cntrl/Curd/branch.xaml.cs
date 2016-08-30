@@ -11,8 +11,6 @@ namespace cntrl
 {
     public partial class branch : UserControl
     {
-        entity.Properties.Settings _Settings = new entity.Properties.Settings();
-
         CollectionViewSource _branchViewSource = null;
         public CollectionViewSource app_branchViewSource { get { return _branchViewSource; } set { _branchViewSource = value; } }
 
@@ -32,10 +30,7 @@ namespace cntrl
                 stackMain.DataContext = app_branchViewSource;
 
                 CollectionViewSource app_vatViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vatViewSource")));
-                app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).ToList();
-
-                //CollectionViewSource geo_areaViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("geo_areaViewSource");
-                //geo_areaViewSource.Source = entity.db.geo_area.OrderBy(a => a.name).ToList();
+                app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             }
         }
 

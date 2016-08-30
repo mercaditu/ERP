@@ -29,7 +29,7 @@ namespace cntrl.Curd
 
             payment_schedualViewSource.Source = SchedualList;
 
-            payment payment = PaymentDB.New(true);
+            payment payment = new entity.payment(); //PaymentDB.New(true);
             payment.trans_date = SchedualList.Max(x => x.expire_date);
             payment.IsSelected = true;
             payment.State = EntityState.Added;
@@ -53,7 +53,7 @@ namespace cntrl.Curd
             payment.payment_detail.Add(payment_detail);
 
             paymentViewSource.View.MoveCurrentTo(payment);
-            paymentpayment_detailViewSource.View.MoveCurrentToFirst();
+            //paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -66,10 +66,10 @@ namespace cntrl.Curd
             await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.Payment, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
             paymentViewSource.View.Refresh();
-            paymentpayment_detailViewSource.View.Refresh();
+            //paymentpayment_detailViewSource.View.Refresh();
         }
 
         #region Events
@@ -81,17 +81,28 @@ namespace cntrl.Curd
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public event RoutedEventHandler SaveChanges;
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
             if (payment_schedual != null)
             {
-                payment_schedual.status = Status.Documents_General.Approved;
-                PaymentDB.SaveChanges();
                 lblCancel_MouseDown(sender, null);
+
+                if (payment_schedual.id_range > 0)
+                {
+                    app_document_range app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
+                    if (app_document_range != null)
+                    {
+                        entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
+                    }
+                }
+                
+
+                if (SaveChanges != null)
+                { SaveChanges(this, new RoutedEventArgs()); }
             }
         }
-
         #endregion
     }
 }

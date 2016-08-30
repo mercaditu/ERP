@@ -64,6 +64,12 @@ namespace Cognitivo.Commercial
             if (payment_schedual != null)
             {
                 payment_schedual.status = Status.Documents_General.Approved;
+                payment_schedual.RaisePropertyChanged("status");
+                
+                app_document_range _app_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
+                payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(_app_range, true);
+                payment_schedual.RaisePropertyChanged("number");
+
                 PaymentDB.SaveChanges();
             }
         }

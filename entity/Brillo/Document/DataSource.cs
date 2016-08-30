@@ -12,82 +12,84 @@ namespace entity.Brillo.Document
 
         public ReportDataSource Create(object Document)
         {
-            if (Document.GetType().BaseType == typeof(sales_invoice) || Document.GetType() == typeof(sales_invoice))
+            string AppName = Document.GetType().BaseType.ToString();
+
+            if (AppName == typeof(sales_invoice).ToString())
             {
                 sales_invoice sales_invoice = (sales_invoice)Document;
                 return SalesInvoice(sales_invoice);
             }
-            else if (Document.GetType().BaseType == typeof(sales_order) || Document.GetType() == typeof(sales_order))
+            else if (AppName == typeof(sales_order).ToString())
             {
                 sales_order sales_order = (sales_order)Document;
                 return SalesOrder(sales_order);
             }
-            else if (Document.GetType().BaseType == typeof(sales_budget) || Document.GetType() == typeof(sales_budget))
+            else if (AppName == typeof(sales_budget).ToString())
             {
                 sales_budget sales_budget = (sales_budget)Document;
                 return SalesBudget(sales_budget);
             }
-            else if (Document.GetType().BaseType == typeof(sales_packing) || Document.GetType() == typeof(sales_packing))
+            else if (AppName == typeof(sales_packing).ToString())
             {
                 sales_packing sales_packing = (sales_packing)Document;
                 return Sales_PackingList(sales_packing);
             }
-            else if (Document.GetType().BaseType == typeof(sales_return) || Document.GetType() == typeof(sales_return))
+            else if (AppName == typeof(sales_return).ToString())
             {
                 sales_return sales_return = (sales_return)Document;
                 return SalesReturn(sales_return);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_order) || Document.GetType() == typeof(purchase_order))
+            else if (AppName == typeof(purchase_order).ToString())
             {
                 purchase_order purchase_order = (purchase_order)Document;
                 return PurchaseOrder(purchase_order);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_invoice) || Document.GetType() == typeof(purchase_invoice))
+            else if (AppName == typeof(purchase_invoice).ToString())
             {
                 purchase_invoice purchase_invoice = (purchase_invoice)Document;
                 return PurchaseInvoice(purchase_invoice);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_return) || Document.GetType() == typeof(purchase_return))
+            else if (AppName == typeof(purchase_return).ToString())
             {
                 purchase_return purchase_return = (purchase_return)Document;
                 return PurchaseReturn(purchase_return);
             }
-            else if (Document.GetType().BaseType == typeof(payment_promissory_note) || Document.GetType() == typeof(payment_promissory_note))
+            else if (AppName == typeof(payment_promissory_note).ToString())
             {
                 payment_promissory_note payment_promissory_note = (payment_promissory_note)Document;
                 return PromissoryNote(payment_promissory_note);
             }
-            else if (Document.GetType().BaseType == typeof(payment_detail) || Document.GetType() == typeof(payment_detail))
+            else if (AppName == typeof(payment_detail).ToString())
             {
                 payment_detail payment_detail = (payment_detail)Document;
                 return PaymentDetail_Print(payment_detail);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_tender_contact) || Document.GetType() == typeof(purchase_tender_contact))
+            else if (AppName == typeof(purchase_tender_contact).ToString())
             {
                 purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)Document;
                 return PurchaseTender(purchase_tender_contact);
             }
-            else if (Document.GetType() == typeof(item_transfer) || Document.GetType().BaseType == typeof(item_transfer))
+            else if (AppName == typeof(item_transfer).ToString())
             {
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-            else if (Document.GetType() == typeof(payment_schedual) || Document.GetType() == typeof(payment_schedual))
+            else if (AppName == typeof(payment_schedual).ToString())
             {
-                payment_schedual payment_schedual = (payment_schedual)payment_schedual;
+                payment_schedual payment_schedual = (payment_schedual)Document;
                 return PaymentSchedual(payment_schedual);
             }
-            else if (Document.GetType() == typeof(payment) || Document.GetType() == typeof(payment))
+            else if (AppName == typeof(payment).ToString())
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
             }
-            else if (Document.GetType() == typeof(item_inventory) || Document.GetType().BaseType == typeof(item_inventory))
+            else if (AppName == typeof(item_inventory).ToString())
             {
                 item_inventory item_inventory = (item_inventory)Document;
                 return Inventory(item_inventory);
             }
-            else if (Document.GetType().BaseType == typeof(project) || Document.GetType() == typeof(project))
+            else if (AppName == typeof(project).ToString())
             {
                 project project = (project)Document;
                 return Project(project);
@@ -667,7 +669,7 @@ namespace entity.Brillo.Document
                                 SupplierAddress = g.contact != null ? g.contact.address : "",
                                 SupplierTelephone = g.contact != null ? g.contact.telephone : "",
                                 SupplierEmail = g.contact != null ? g.contact.email : "",
-                               
+
                                 InvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
                                 InvoiceDate = g.purchase_invoice != null ? g.purchase_invoice.trans_date.ToShortDateString() : "",
                                 InvoiceCurrency = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.name : "" : "" : "",

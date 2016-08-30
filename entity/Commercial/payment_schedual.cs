@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using Brillo;
@@ -10,10 +9,6 @@ namespace entity
 
     public partial class payment_schedual : Audit
     {
-
-        //clsPayment objClsPayment = new clsPayment();
-        //decimal final_amount;
-
         public payment_schedual()
         {
             id_company = CurrentSession.Id_Company;
@@ -39,12 +34,67 @@ namespace entity
         public int id_contact { get; set; }
         public int id_currencyfx { get; set; }
 
-        public decimal debit { get { return _debit; } set { _debit = value; RaisePropertyChanged("debit"); RaisePropertyChanged("AccountReceivableBalance"); } }
+        public string number { get; set; }
+
+        public decimal debit { 
+            get 
+            { 
+                return _debit; 
+            } 
+            set 
+            {
+                if (_debit != value)
+                {
+                    _debit = value;
+                    RaisePropertyChanged("debit");
+                    RaisePropertyChanged("AccountReceivableBalance"); 
+                }
+            } 
+        }
         Decimal _debit;
+
         public decimal credit { get; set; }
         public bool can_calculate { get; set; }
-       
+
         //   Not Mapped Properties
+        #region NotMapped
+
+        [NotMapped]
+        public int? id_range
+        {
+            get
+            {
+                return _id_range;
+            }
+            set
+            {
+                if (_id_range != value)
+                {
+                    _id_range = value;
+
+                    if (number != null || number != "")
+                    {
+                        using (db db = new db())
+                        {
+                            app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                            if (_app_range != null)
+                            {
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                number = NumberWatermark;
+                                RaisePropertyChanged("NumberWatermark");
+                                RaisePropertyChanged("number");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private int? _id_range;
+
+        [NotMapped]
+        public string NumberWatermark { get; set; }
+
         [NotMapped]
         public decimal AccountPayableBalance
         {
@@ -82,6 +132,8 @@ namespace entity
             }
         }
         decimal _AccountReceivableBalance;
+
+        #endregion
 
         public DateTime trans_date { get; set; }
         public DateTime expire_date { get; set; }

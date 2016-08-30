@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace cntrl.Curd
 {
-    public partial class payment_quick : UserControl
+    public partial class PaymentApproval : UserControl
     {
         PaymentDB PaymentDB = new PaymentDB();
 
@@ -18,7 +18,7 @@ namespace cntrl.Curd
         CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        public payment_quick(List<payment_schedual> SchedualList)
+        public PaymentApproval(List<payment_schedual> SchedualList)
         {
             InitializeComponent();
 
@@ -47,6 +47,9 @@ namespace cntrl.Curd
             payment_detail payment_detail = new payment_detail();
             payment_detail.payment = payment;
             payment_detail.value = SchedualList.FirstOrDefault().AccountPayableBalance;
+            payment_detail.IsSelected = true;
+            payment_detail.id_currencyfx = SchedualList.FirstOrDefault().id_currencyfx;
+            payment_detail.State = EntityState.Added;
             payment.payment_detail.Add(payment_detail);
 
             paymentViewSource.View.MoveCurrentTo(payment);

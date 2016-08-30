@@ -50,7 +50,7 @@ namespace Cognitivo.Commercial
                 List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
                 ListPayments.Add(payment_schedual);
 
-                cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(ListPayments);
+                cntrl.Curd.PaymentApproval payment_quick = new cntrl.Curd.PaymentApproval(ListPayments);
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(payment_quick);   
             }

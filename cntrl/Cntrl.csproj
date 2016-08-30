@@ -305,8 +305,8 @@
     <Compile Include="Curd\measurement_type.xaml.cs">
       <DependentUpon>measurement_type.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Curd\payment_quick.xaml.cs">
-      <DependentUpon>payment_quick.xaml</DependentUpon>
+    <Compile Include="Curd\PaymentApproval.xaml.cs">
+      <DependentUpon>PaymentApproval.xaml</DependentUpon>
     </Compile>
     <Compile Include="Curd\payment_type.xaml.cs">
       <DependentUpon>payment_type.xaml</DependentUpon>
@@ -781,7 +781,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Curd\payment_quick.xaml">
+    <Page Include="Curd\PaymentApproval.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

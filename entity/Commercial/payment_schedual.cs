@@ -54,6 +54,7 @@ namespace entity
         Decimal _debit;
 
         public decimal credit { get; set; }
+
         public bool can_calculate { get; set; }
 
         //   Not Mapped Properties

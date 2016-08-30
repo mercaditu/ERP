@@ -27,10 +27,8 @@ namespace entity
         public int id_payment { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
-
         public int? id_account { get; set; }
        
-
         [NotMapped]
         public int id_currency
         {
@@ -40,25 +38,27 @@ namespace entity
             }
             set
             {
-                _id_currency = value;
-                using (db db = new db())
+                if (_id_currency != value)
                 {
-                    int old_currencyfx = id_currencyfx;
-                    if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
+                    _id_currency = value;
+                    RaisePropertyChanged("id_currency");
+
+                    using (db db = new db())
                     {
-                        id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
-                        RaisePropertyChanged("id_currencyfx");
-                    }
-                    else
-                    {
-                        id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
-                        RaisePropertyChanged("id_currencyfx");
-                    }
-                    
-                    //this.value = Currency.convert_Values(this.value, old_currencyfx, id_currencyfx, App.Modules.Sales);
-                    RaisePropertyChanged("value");
+                        int old_currencyfx = id_currencyfx;
+                        if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
+                        {
+                            id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
+                            RaisePropertyChanged("id_currencyfx");
+                        }
+                        else
+                        {
+                            id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                            RaisePropertyChanged("id_currencyfx");
+                        }
+                        RaisePropertyChanged("value");
+                    }   
                 }
-                RaisePropertyChanged("id_currency");
             }
         }
         int _id_currency;
@@ -77,11 +77,10 @@ namespace entity
                     old_currencyfx = _id_currencyfx;
                     _id_currencyfx = value;
 
-                    if (_id_currencyfx>0)
+                    if (_id_currencyfx > 0)
                     {
                         if (this.value > 0)
                         {
-
                             using (db db = new db())
                             {
                                 if (db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx).FirstOrDefault()!=null)
@@ -98,18 +97,9 @@ namespace entity
                                     }
                                 }
                             }
-                           
-                           
-                            //if (payment != null)
-                            //{
-                            //    payment.id_currencyfx = _id_currencyfx;
-                            //}
                         }
                     }
-
-                  
                 }
-                //Method to update value
             }
         }
         int _id_currencyfx;
@@ -131,6 +121,7 @@ namespace entity
         {
             get 
             { 
+                //If PaymentType is Null. Look for Default Payment Type.
                 if (_id_payment_type == 0)
 	            {
                     using (db db = new db())
@@ -146,6 +137,7 @@ namespace entity
                 if (_id_payment_type != value)
                 {
                     _id_payment_type = value;
+                    RaisePropertyChanged("id_payment_type");
                 }
             }
         }

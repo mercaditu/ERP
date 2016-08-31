@@ -260,14 +260,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="TransDate1">
+                    <Textbox Name="Textbox101">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TransDate.Value</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -278,7 +278,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>TransDate1</rd:DefaultName>
+                      <rd:DefaultName>Textbox101</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#e6eefc</Color>
@@ -291,6 +291,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>

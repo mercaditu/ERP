@@ -412,17 +412,20 @@ namespace Cognitivo.Product
                 //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;
 
-                if (ItemDB.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item))
+                if (item != null)
                 {
-                    toolBar.msgWarning("Product Already Exist..");
-                    return;
-                }
+                    if (ItemDB.items.Any(x => x.name == item.name && x.id_item != item.id_item))
+                    {
+                        toolBar.msgWarning("Product: " + item.name + " Already Exists..");
+                        return;
+                    }
 
-                if (ItemDB.SaveChanges() > 0)
-                {
-                    // Save Changes
-                    itemViewSource.View.Refresh();
-                    toolBar.msgSaved(ItemDB.NumberOfRecords);
+                    if (ItemDB.SaveChanges() > 0)
+                    {
+                        // Save Changes
+                        itemViewSource.View.Refresh();
+                        toolBar.msgSaved(ItemDB.NumberOfRecords);
+                    }   
                 }
             }
         }

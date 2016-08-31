@@ -190,8 +190,7 @@ namespace entity
                     {
                         return "Code needs to be filled";
                     }
-                        
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    else if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         using (db db = new db())
                         {

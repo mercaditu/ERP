@@ -37,13 +37,25 @@ namespace Cognitivo.Commercial {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.03")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.30")]
         public decimal vatwithholdingpercent {
             get {
                 return ((decimal)(this["vatwithholdingpercent"]));
             }
             set {
                 this["vatwithholdingpercent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.30")]
+        public string vatwithholdingPersent {
+            get {
+                return ((string)(this["vatwithholdingPersent"]));
+            }
+            set {
+                this["vatwithholdingPersent"] = value;
             }
         }
     }

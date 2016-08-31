@@ -30,6 +30,7 @@ namespace entity
             payment_withholding_detail = new List<payment_withholding_detail>();
             payment_withholding_details = new List<payment_withholding_details>();
             impex_expense = new List<impex_expense>();
+          
         }
 
         [Key]

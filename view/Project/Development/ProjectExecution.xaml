@@ -9,7 +9,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
-      
+           xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -100,7 +100,10 @@
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                 <Label Content="{Binding code}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                <toolkit:RichTextBox x:Name="rtbxcomment" Grid.Row="1" Margin="8" BorderBrush="Gray" Padding="4" MinHeight="128" IsReadOnly="True" 
+                                          Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto" />
+             
                 <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}"/>
                 <DataGrid AutoGenerateColumns="False" IsReadOnly="True"
                           EnableRowVirtualization="True" Margin="4" HeadersVisibility="None" 

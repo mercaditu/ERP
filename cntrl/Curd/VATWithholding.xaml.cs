@@ -48,7 +48,7 @@ namespace cntrl
                         sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
                         if (sales_invoice.GrandTotal > 0)
                         {
-                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)) * percentage, 4);
                         }
                     }
                     else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))

@@ -437,5 +437,58 @@ namespace Cognitivo.Commercial
         {
 
         }
+
+        private void lblCancelCost_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_cost_center = null;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+        private void lblCancelContract_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_contract = 0;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+      
+        private void lblCancelBank_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_bank = null;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+        private void lblCancelSalesMan_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_sales_rep = null;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+        private void lblCancelCurrency_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_currency = null;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+    
     }
 }

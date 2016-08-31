@@ -5,13 +5,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                  xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+     
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
+                
               xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
              mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded">
@@ -64,9 +66,9 @@
                           DisplayMemberPath="name" SelectedValuePath="id_project_template" 
                           SelectedValue="{Binding id_project_template, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                         TextWrapping="Wrap" Height="64"
-                         Style="{StaticResource input_textbox}"/>
+                <toolkit:RichTextBox x:Name="rtbxcomment" Grid.Row="1" Margin="8" BorderBrush="Gray" Padding="4" MinHeight="128"
+                                          Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
                 <ComboBox Style="{StaticResource input_combobox}"  ItemsSource="{Binding Source={StaticResource branchViewSource}}"

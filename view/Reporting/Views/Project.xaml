@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
       d:DesignHeight="600" d:DesignWidth="900"
-	Title="ProjectExecution">
+	Title="Project">
 
     <Grid Background="Gainsboro">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">

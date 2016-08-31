@@ -1519,6 +1519,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Factor.
+        /// </summary>
+        public static string Factor {
+            get {
+                return ResourceManager.GetString("Factor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Family.
         /// </summary>
         public static string Family {
@@ -1587,6 +1596,15 @@ namespace Cognitivo.Resources {
         public static string FiscalPeriod {
             get {
                 return ResourceManager.GetString("FiscalPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @FixedAssetGroup.
+        /// </summary>
+        public static string FixedAssetGroup {
+            get {
+                return ResourceManager.GetString("FixedAssetGroup", resourceCulture);
             }
         }
         
@@ -1911,6 +1929,24 @@ namespace Cognitivo.Resources {
         public static string Inventory {
             get {
                 return ResourceManager.GetString("Inventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @InventoryFlow.
+        /// </summary>
+        public static string InventoryFlow {
+            get {
+                return ResourceManager.GetString("InventoryFlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @InventoryFlowwithDimension.
+        /// </summary>
+        public static string InventoryFlowwithDimension {
+            get {
+                return ResourceManager.GetString("InventoryFlowwithDimension", resourceCulture);
             }
         }
         
@@ -2815,11 +2851,29 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @PurchaseInvoiceSummary.
+        /// </summary>
+        public static string PurchaseInvoiceSummary {
+            get {
+                return ResourceManager.GetString("PurchaseInvoiceSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @PurchaseOrder.
         /// </summary>
         public static string PurchaseOrder {
             get {
                 return ResourceManager.GetString("PurchaseOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @PurchaseOrderSummary.
+        /// </summary>
+        public static string PurchaseOrderSummary {
+            get {
+                return ResourceManager.GetString("PurchaseOrderSummary", resourceCulture);
             }
         }
         
@@ -2842,11 +2896,29 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @PurchaseTenderSummary.
+        /// </summary>
+        public static string PurchaseTenderSummary {
+            get {
+                return ResourceManager.GetString("PurchaseTenderSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @PurchaseValue.
         /// </summary>
         public static string PurchaseValue {
             get {
                 return ResourceManager.GetString("PurchaseValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @PurchaseVAT.
+        /// </summary>
+        public static string PurchaseVAT {
+            get {
+                return ResourceManager.GetString("PurchaseVAT", resourceCulture);
             }
         }
         
@@ -3121,6 +3193,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SalesBudgetSummary.
+        /// </summary>
+        public static string SalesBudgetSummary {
+            get {
+                return ResourceManager.GetString("SalesBudgetSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @SalesbyBrand.
         /// </summary>
         public static string SalesbyBrand {
@@ -3193,6 +3274,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SalesInvoiceSummary.
+        /// </summary>
+        public static string SalesInvoiceSummary {
+            get {
+                return ResourceManager.GetString("SalesInvoiceSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Salesman.
         /// </summary>
         public static string Salesman {
@@ -3220,6 +3310,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SalesOrderSummary.
+        /// </summary>
+        public static string SalesOrderSummary {
+            get {
+                return ResourceManager.GetString("SalesOrderSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @SalesRepresentative.
         /// </summary>
         public static string SalesRepresentative {
@@ -3234,6 +3333,15 @@ namespace Cognitivo.Resources {
         public static string SalesReturn {
             get {
                 return ResourceManager.GetString("SalesReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SalesVAT.
+        /// </summary>
+        public static string SalesVAT {
+            get {
+                return ResourceManager.GetString("SalesVAT", resourceCulture);
             }
         }
         

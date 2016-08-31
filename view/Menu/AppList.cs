@@ -103,8 +103,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Inventory, "Sales.PackingList", "PackingList", "ProductSend", entity.CurrentSession.Versions.Medium);
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.Inventory", entity.App.Names.Stock, "Reports", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.InventorySummary", entity.App.Names.Inventory, "Reports", entity.CurrentSession.Versions.Lite);
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.StockFlow", entity.App.Names.StockFlow, "Reports", entity.CurrentSession.Versions.Lite);
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.StockFlowDimension", entity.App.Names.StockFlowDimension, "Reports", entity.CurrentSession.Versions.Lite);
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.StockFlow", entity.App.Names.InventoryFlow, "Reports", entity.CurrentSession.Versions.Lite);
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.StockFlowDimension", entity.App.Names.InventoryFlowDimension, "Reports", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.ItemPriceList", entity.App.Names.ItemPriceList, "Reports", entity.CurrentSession.Versions.Lite);
 
 

@@ -278,7 +278,7 @@ namespace entity
             [LocalizedDescription("AnalisysofAccountsReceivable")]
             AnalisysofAccountsReceivable = 91,
             [LocalizedDescription("SalesbySalesman")]
-            SalesbySalesman = 92,
+            SalesbySalesman = 126,
             [LocalizedDescription("EmployeesInProduction")]
             EmployeesInProduction = 107,
             [LocalizedDescription("ProductionbyFraction")]
@@ -306,12 +306,14 @@ namespace entity
 
             [LocalizedDescription("ItemPriceList")]
             ItemPriceList = 120,
-            [LocalizedDescription("StockFlow")]
-            StockFlow = 121,
-            [LocalizedDescription("StockFlowDimension")]
-            StockFlowDimension = 124,
+            [LocalizedDescription("InventoryFlow")]
+            InventoryFlow = 121,
+            [LocalizedDescription("InventoryFlowDimension")]
+            InventoryFlowDimension = 124,
             [LocalizedDescription("SalesByVAT")]
-            SalesByVAT = 122
+            SalesByVAT = 122,
+            [LocalizedDescription("PurchaseByVAT")]
+            PurchaseByVAT = 127
         }
     }
 }

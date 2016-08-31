@@ -603,6 +603,9 @@
   <data name="Extras" xml:space="preserve">
     <value>Extras</value>
   </data>
+  <data name="Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
   <data name="Family" xml:space="preserve">
     <value>Family</value>
   </data>
@@ -626,6 +629,9 @@
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
     <value>Fiscal Period</value>
+  </data>
+  <data name="FixedAssetGroup" xml:space="preserve">
+    <value>Fixed Asset Group</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
     <value>Fixed Assets</value>
@@ -734,6 +740,12 @@
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>Inventory</value>
+  </data>
+  <data name="InventoryFlow" xml:space="preserve">
+    <value>Inventory Flow</value>
+  </data>
+  <data name="InventoryFlowwithDimension" xml:space="preserve">
+    <value>Inventory Flow with Dimension</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>Invoice</value>
@@ -1035,8 +1047,14 @@
   <data name="PurchaseInvoice" xml:space="preserve">
     <value>Purchase Invoice</value>
   </data>
+  <data name="PurchaseInvoiceSummary" xml:space="preserve">
+    <value>Purchase Invoice Summary</value>
+  </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Purchase Order</value>
+  </data>
+  <data name="PurchaseOrderSummary" xml:space="preserve">
+    <value>Purchase Order Summary</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
     <value>Purchase Return</value>
@@ -1044,8 +1062,14 @@
   <data name="PurchaseTender" xml:space="preserve">
     <value>Purchase Tender</value>
   </data>
+  <data name="PurchaseTenderSummary" xml:space="preserve">
+    <value>Purchase Tender Summary</value>
+  </data>
   <data name="PurchaseValue" xml:space="preserve">
     <value>Purchase Value</value>
+  </data>
+  <data name="PurchaseVAT" xml:space="preserve">
+    <value>Purchase VAT</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantity</value>
@@ -1137,6 +1161,9 @@
   <data name="SalesBudget" xml:space="preserve">
     <value>Sales Budget</value>
   </data>
+  <data name="SalesBudgetSummary" xml:space="preserve">
+    <value>Sales Budget Summary</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Sales by Brand</value>
   </data>
@@ -1161,6 +1188,9 @@
   <data name="SalesInvoice" xml:space="preserve">
     <value>Sales Invoice</value>
   </data>
+  <data name="SalesInvoiceSummary" xml:space="preserve">
+    <value>Sales Invoice Summary</value>
+  </data>
   <data name="Salesman" xml:space="preserve">
     <value>Salesman</value>
   </data>
@@ -1170,11 +1200,17 @@
   <data name="SalesOrder" xml:space="preserve">
     <value>Sales Order</value>
   </data>
+  <data name="SalesOrderSummary" xml:space="preserve">
+    <value>Sales Order Summary</value>
+  </data>
   <data name="SalesRepresentative" xml:space="preserve">
     <value>Sales Representative</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
     <value>Sales Return</value>
+  </data>
+  <data name="SalesVAT" xml:space="preserve">
+    <value>Sales VAT</value>
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Saloon</value>

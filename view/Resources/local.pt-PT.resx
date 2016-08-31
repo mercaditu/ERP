@@ -603,6 +603,9 @@
   <data name="Extras" xml:space="preserve">
     <value>Extras</value>
   </data>
+  <data name="Factor" xml:space="preserve">
+    <value>Fator</value>
+  </data>
   <data name="Family" xml:space="preserve">
     <value>Família</value>
   </data>
@@ -626,6 +629,9 @@
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
     <value>Período Fiscal</value>
+  </data>
+  <data name="FixedAssetGroup" xml:space="preserve">
+    <value>Fixa Grupo De Ativos</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
     <value>Ativo Permanente</value>
@@ -734,6 +740,12 @@
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>Inventário</value>
+  </data>
+  <data name="InventoryFlow" xml:space="preserve">
+    <value>Fluxo De Inventário</value>
+  </data>
+  <data name="InventoryFlowwithDimension" xml:space="preserve">
+    <value>Fluxo De Inventário Com Dimension</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>Fatura</value>
@@ -981,7 +993,7 @@
   <data name="Production" xml:space="preserve">
     <value>Produção</value>
   </data>
-  <data name="Productionby Fraction" xml:space="preserve">
+  <data name="ProductionbyFraction" xml:space="preserve">
     <value>Produção Pela Fração</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
@@ -1035,8 +1047,14 @@
   <data name="PurchaseInvoice" xml:space="preserve">
     <value>Nota Fiscal De Compra</value>
   </data>
+  <data name="PurchaseInvoiceSummary" xml:space="preserve">
+    <value>Comprar Resumo Da Fatura</value>
+  </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Ordem De Compra</value>
+  </data>
+  <data name="PurchaseOrderSummary" xml:space="preserve">
+    <value>Purchase Order Summary</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
     <value>Retorno De Compra</value>
@@ -1044,8 +1062,14 @@
   <data name="PurchaseTender" xml:space="preserve">
     <value>Tender Compra</value>
   </data>
+  <data name="PurchaseTenderSummary" xml:space="preserve">
+    <value>Resumo Compra Tender</value>
+  </data>
   <data name="PurchaseValue" xml:space="preserve">
     <value>Valor De Compra</value>
+  </data>
+  <data name="PurchaseVAT" xml:space="preserve">
+    <value>Iva Compra</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantidade</value>
@@ -1116,6 +1140,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>Reimprimir</value>
   </data>
+  <data name="RequestManagement" xml:space="preserve">
+    <value>Gerenciamento De Solicitações</value>
+  </data>
   <data name="RequestResource" xml:space="preserve">
     <value>Resource Pedido</value>
   </data>
@@ -1133,6 +1160,9 @@
   </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>Orçamento De Vendas</value>
+  </data>
+  <data name="SalesBudgetSummary" xml:space="preserve">
+    <value>Resumo Do Orçamento De Vendas</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Vendas Por Marca</value>
@@ -1158,6 +1188,9 @@
   <data name="SalesInvoice" xml:space="preserve">
     <value>Fatura De Vendas</value>
   </data>
+  <data name="SalesInvoiceSummary" xml:space="preserve">
+    <value>Resumo Da Factura De Vendas</value>
+  </data>
   <data name="Salesman" xml:space="preserve">
     <value>Vendedor</value>
   </data>
@@ -1167,11 +1200,17 @@
   <data name="SalesOrder" xml:space="preserve">
     <value>Pedido De Venda</value>
   </data>
+  <data name="SalesOrderSummary" xml:space="preserve">
+    <value>Resumo Do Pedido De Vendas</value>
+  </data>
   <data name="SalesRepresentative" xml:space="preserve">
     <value>Representante De Vendas</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
     <value>Retorno</value>
+  </data>
+  <data name="SalesVAT" xml:space="preserve">
+    <value>Iva Vendas</value>
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Salão</value>

@@ -603,6 +603,9 @@
   <data name="Extras" xml:space="preserve">
     <value>Extras</value>
   </data>
+  <data name="Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
   <data name="Family" xml:space="preserve">
     <value>Familia</value>
   </data>
@@ -626,6 +629,9 @@
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
     <value>Periodo Fiscal</value>
+  </data>
+  <data name="FixedAssetGroup" xml:space="preserve">
+    <value>Corregido Un Grupo De Activos</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
     <value>Activos Fijos</value>
@@ -734,6 +740,12 @@
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>Inventario</value>
+  </data>
+  <data name="InventoryFlow" xml:space="preserve">
+    <value>Flujo De Inventario</value>
+  </data>
+  <data name="InventoryFlowwithDimension" xml:space="preserve">
+    <value>Flujo De Inventario Con Dimensión</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>Factura</value>
@@ -910,7 +922,7 @@
     <value>Fecha De Pago</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>Forma De Pago</value>
+    <value>Formulario De Pago</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
     <value>Pago Realizado</value>
@@ -1035,8 +1047,14 @@
   <data name="PurchaseInvoice" xml:space="preserve">
     <value>Factura De Compra</value>
   </data>
+  <data name="PurchaseInvoiceSummary" xml:space="preserve">
+    <value>Compra Resumen De La Factura</value>
+  </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Orden De Compra</value>
+  </data>
+  <data name="PurchaseOrderSummary" xml:space="preserve">
+    <value>Resumen De Órdenes De Compra</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
     <value>Devolcuión De Compra</value>
@@ -1044,14 +1062,20 @@
   <data name="PurchaseTender" xml:space="preserve">
     <value>Oferta De Compra</value>
   </data>
+  <data name="PurchaseTenderSummary" xml:space="preserve">
+    <value>Resumen De Compra Tender</value>
+  </data>
   <data name="PurchaseValue" xml:space="preserve">
     <value>Valor De Compra</value>
+  </data>
+  <data name="PurchaseVAT" xml:space="preserve">
+    <value>Compra Iva</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Cantidad</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>Pregunta  </value>
+    <value>Pregunta  </value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
     <value>¡Cancelar Cambios! ¿Estás Seguro?</value>
@@ -1137,6 +1161,9 @@
   <data name="SalesBudget" xml:space="preserve">
     <value>Presupuesto De Ventas</value>
   </data>
+  <data name="SalesBudgetSummary" xml:space="preserve">
+    <value>Resumen Del Presupuesto De Ventas</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Ventas Por Marca</value>
   </data>
@@ -1161,6 +1188,9 @@
   <data name="SalesInvoice" xml:space="preserve">
     <value>Factura De Venta</value>
   </data>
+  <data name="SalesInvoiceSummary" xml:space="preserve">
+    <value>Resumen De La Factura De Venta</value>
+  </data>
   <data name="Salesman" xml:space="preserve">
     <value>Vendedor</value>
   </data>
@@ -1170,11 +1200,17 @@
   <data name="SalesOrder" xml:space="preserve">
     <value>Órdenes De Venta</value>
   </data>
+  <data name="SalesOrderSummary" xml:space="preserve">
+    <value>Resumen De Órdenes De Venta</value>
+  </data>
   <data name="SalesRepresentative" xml:space="preserve">
     <value>Representante De Ventas</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
     <value>Devolución</value>
+  </data>
+  <data name="SalesVAT" xml:space="preserve">
+    <value>Iva Ventas</value>
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Salon</value>
@@ -1267,7 +1303,7 @@
     <value>Suscripción</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
-    <value>Subtotal  </value>
+    <value>Subtotal  </value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
     <value>Subtotal Iva Incluido</value>

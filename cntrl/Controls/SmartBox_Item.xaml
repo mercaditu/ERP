@@ -55,6 +55,9 @@
                                 <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tag}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=3}" 
                                       Checked="RadioButton_Checked"/>
+                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc SearchByExactCode}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=4}" 
+                                      Checked="RadioButton_Checked"/>
 
                             </StackPanel>
                         </Border>

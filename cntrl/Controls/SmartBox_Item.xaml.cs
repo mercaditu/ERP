@@ -209,7 +209,7 @@ namespace cntrl.Controls
               
 
                 List<entity.item> results;
-                var param = smartBoxContactSetting.Default.SearchFilter;
+                var param = smartBoxItemSetting.Default.SearchFilter;
                 var predicate = PredicateBuilder.True<entity.item>();
 
                 //var predicateOR = PredicateBuilder.False<entity.item>();
@@ -223,18 +223,29 @@ namespace cntrl.Controls
                 //{
                 //    predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
                 //}
-                
-                predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
-                                         (
-                                             x.code.Contains(SearchText) ||
-                                             x.name.Contains(SearchText) ||
-                                             x.item_brand.name.Contains(SearchText)
-                                         ));
-
-                if (item_types != null)
+                if (param.Contains("ExactCode"))
                 {
-                    predicate = predicate.And(x => x.id_item_type == item_types);
+                    predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
+                                      (
+                                          x.code==SearchText
+                                      ));
                 }
+                else
+                {
+                    predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
+                                        (
+                                            x.code.Contains(SearchText) ||
+                                            x.name.Contains(SearchText) ||
+                                            x.item_brand.name.Contains(SearchText)
+                                        ));
+
+                    if (item_types != null)
+                    {
+                        predicate = predicate.And(x => x.id_item_type == item_types);
+                    }
+                }
+                
+               
 
             //      predicate = predicate.And
             //(
@@ -311,6 +322,10 @@ namespace cntrl.Controls
             if (rbtnTag.IsChecked == true)
             {
                 Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
+            }
+            if (rbtnExactCode.IsChecked==true)
+            {
+                  Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
             }
 
             Controls.smartBoxItemSetting.Default.Save();

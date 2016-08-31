@@ -299,36 +299,47 @@
                                       ItemsSource="{Binding Source={StaticResource appCostCenterViewSource}}" 
                                       DisplayMemberPath="name" SelectedValuePath="id_cost_center" 
                                       SelectedValue="{Binding id_cost_center, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                        <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
 
-                        <Label x:Name="lblCancelContract" Content="c" FontSize="18" VerticalAlignment="Center" 
+                            <Label x:Name="lblCancelContract" Content="c" FontSize="12" VerticalAlignment="Center" 
                         	HorizontalAlignment="Right" MouseUp="lblCancelContract_MouseUp"   
                         	FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        </StackPanel>
                         <ComboBox DisplayMemberPath="name" SelectedValuePath="id_contract"
                                       SelectedValue="{Binding id_contract, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                       ItemsSource="{Binding Source={StaticResource appContractViewSource}}" Style="{StaticResource input_combobox}"/>
                         <Label Content="{lex:Loc CreditLimit}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtCreditLimit" Style="{StaticResource input_textbox}"
                                      Text="{Binding credit_limit, Mode=TwoWay,StringFormat={}{0:N0}, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                        <Label x:Name="lblCancelCurrency" Content="c" FontSize="18" VerticalAlignment="Center" 
-                        	HorizontalAlignment="Right" MouseUp="lblCancelCurrency_MouseUp"   
-                        	FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                            <Label x:Name="lblCancelCurrency" Content="c" FontSize="12" VerticalAlignment="Center" 
+                        	    HorizontalAlignment="Right" MouseUp="lblCancelCurrency_MouseUp"   
+                        	    FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>      
+                        </StackPanel>
+
                         <ComboBox ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currency"
-                                      SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                  SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                   Custom:ComboBoxHelper.CharacterCasing="Normal"
                                   Style="{StaticResource input_combobox}"/>
-                        <Label Content="{lex:Loc Salesman}" Style="{StaticResource input_label}"/>
-                        <Label x:Name="lblCancelSalesMan" Content="c" FontSize="18" VerticalAlignment="Center" 
-                        	HorizontalAlignment="Right" MouseUp="lblCancelSalesMan_MouseUp"  
-                        	FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Salesman}" Style="{StaticResource input_label}"/>
+                            <Label x:Name="lblCancelSalesMan" Content="c" FontSize="12" VerticalAlignment="Center" 
+                        	        HorizontalAlignment="Right" MouseUp="lblCancelSalesMan_MouseUp"  
+                        	        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        </StackPanel>
+
                         <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
                                       SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                       Style="{StaticResource input_combobox}"/>
-                        <Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}"/>
-                        <Label x:Name="lblCancelBank" Content="c" FontSize="18" VerticalAlignment="Center" 
-                        	HorizontalAlignment="Right" MouseUp="lblCancelBank_MouseUp"   
-                        	FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}"/>
+                            <Label x:Name="lblCancelBank" Content="c" FontSize="12" VerticalAlignment="Center" 
+                        	        HorizontalAlignment="Right" MouseUp="lblCancelBank_MouseUp"   
+                        	        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                        </StackPanel>
+
                         <ComboBox ItemsSource="{Binding Source={StaticResource bankViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_bank"
                                       SelectedValue="{Binding id_bank, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                       Style="{StaticResource input_combobox}"/>

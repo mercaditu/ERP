@@ -12,84 +12,85 @@ namespace entity.Brillo.Document
 
         public ReportDataSource Create(object Document)
         {
-            string AppName = Document.GetType().BaseType.ToString();
+            string BaseName = Document.GetType().BaseType.ToString();
+            string AppName = Document.GetType().ToString();
 
-            if (AppName == typeof(sales_invoice).ToString())
+            if (AppName == typeof(sales_invoice).ToString() || BaseName == typeof(sales_invoice).ToString())
             {
                 sales_invoice sales_invoice = (sales_invoice)Document;
                 return SalesInvoice(sales_invoice);
             }
-            else if (AppName == typeof(sales_order).ToString())
+            else if (AppName == typeof(sales_order).ToString() || BaseName == typeof(sales_order).ToString())
             {
                 sales_order sales_order = (sales_order)Document;
                 return SalesOrder(sales_order);
             }
-            else if (AppName == typeof(sales_budget).ToString())
+            else if (AppName == typeof(sales_budget).ToString() || BaseName == typeof(sales_budget).ToString())
             {
                 sales_budget sales_budget = (sales_budget)Document;
                 return SalesBudget(sales_budget);
             }
-            else if (AppName == typeof(sales_packing).ToString())
+            else if (AppName == typeof(sales_packing).ToString() || BaseName == typeof(sales_packing).ToString())
             {
                 sales_packing sales_packing = (sales_packing)Document;
                 return Sales_PackingList(sales_packing);
             }
-            else if (AppName == typeof(sales_return).ToString())
+            else if (AppName == typeof(sales_return).ToString() || BaseName == typeof(sales_return).ToString())
             {
                 sales_return sales_return = (sales_return)Document;
                 return SalesReturn(sales_return);
             }
-            else if (AppName == typeof(purchase_order).ToString())
+            else if (AppName == typeof(purchase_order).ToString() || BaseName == typeof(purchase_order).ToString())
             {
                 purchase_order purchase_order = (purchase_order)Document;
                 return PurchaseOrder(purchase_order);
             }
-            else if (AppName == typeof(purchase_invoice).ToString())
+            else if (AppName == typeof(purchase_invoice).ToString() || BaseName == typeof(purchase_invoice).ToString())
             {
                 purchase_invoice purchase_invoice = (purchase_invoice)Document;
                 return PurchaseInvoice(purchase_invoice);
             }
-            else if (AppName == typeof(purchase_return).ToString())
+            else if (AppName == typeof(purchase_return).ToString() || BaseName == typeof(purchase_return).ToString())
             {
                 purchase_return purchase_return = (purchase_return)Document;
                 return PurchaseReturn(purchase_return);
             }
-            else if (AppName == typeof(payment_promissory_note).ToString())
+            else if (AppName == typeof(payment_promissory_note).ToString() || BaseName == typeof(payment_promissory_note).ToString())
             {
                 payment_promissory_note payment_promissory_note = (payment_promissory_note)Document;
                 return PromissoryNote(payment_promissory_note);
             }
-            else if (AppName == typeof(payment_detail).ToString())
+            else if (AppName == typeof(payment_detail).ToString() || BaseName == typeof(payment_detail).ToString())
             {
                 payment_detail payment_detail = (payment_detail)Document;
                 return PaymentDetail_Print(payment_detail);
             }
-            else if (AppName == typeof(purchase_tender_contact).ToString())
+            else if (AppName == typeof(purchase_tender_contact).ToString() || BaseName == typeof(purchase_tender_contact).ToString())
             {
                 purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)Document;
                 return PurchaseTender(purchase_tender_contact);
             }
-            else if (AppName == typeof(item_transfer).ToString())
+            else if (AppName == typeof(item_transfer).ToString() || BaseName == typeof(item_transfer).ToString())
             {
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-            else if (AppName == typeof(payment_schedual).ToString())
+            else if (AppName == typeof(payment_schedual).ToString() || BaseName == typeof(payment_schedual).ToString())
             {
                 payment_schedual payment_schedual = (payment_schedual)Document;
                 return PaymentSchedual(payment_schedual);
             }
-            else if (AppName == typeof(payment).ToString())
+            else if (AppName == typeof(payment).ToString() || BaseName == typeof(payment).ToString())
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
             }
-            else if (AppName == typeof(item_inventory).ToString())
+            else if (AppName == typeof(item_inventory).ToString() || BaseName == typeof(item_inventory).ToString())
             {
                 item_inventory item_inventory = (item_inventory)Document;
                 return Inventory(item_inventory);
             }
-            else if (AppName == typeof(project).ToString())
+            else if (AppName == typeof(project).ToString() || BaseName == typeof(project).ToString())
             {
                 project project = (project)Document;
                 return Project(project);

@@ -178,7 +178,7 @@ namespace cntrl.Controls
             {
 
                 string SearchText = tbxSearch.Text;
-
+                bool ExactCode=(bool)rbtnExactCode.IsChecked;
                 if (SearchText.Count() >= 3)
                 {
                     if (taskSearch != null)
@@ -193,7 +193,7 @@ namespace cntrl.Controls
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
-                    taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
+                    taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText, ExactCode), token);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace cntrl.Controls
             }
         }
 
-        private void Search_OnThread(string SearchText)
+        private void Search_OnThread(string SearchText,bool ExactCode)
         {
             using (entity.db db = new entity.db())
             {
@@ -223,7 +223,7 @@ namespace cntrl.Controls
                 //{
                 //    predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
                 //}
-                if (param.Contains("ExactCode"))
+                if (ExactCode == true)
                 {
                     predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
                                       (
@@ -327,6 +327,7 @@ namespace cntrl.Controls
             {
                   Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
             }
+           
 
             Controls.smartBoxItemSetting.Default.Save();
 

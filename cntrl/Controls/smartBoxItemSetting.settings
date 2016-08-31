@@ -7,7 +7,6 @@
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;Name&lt;/string&gt;
   &lt;string&gt;Code&lt;/string&gt;
-  &lt;string&gt;SearchExactCode&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

@@ -53,25 +53,6 @@ namespace Cognitivo.Commercial
                 cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ref PaymentDB, payment_schedual);
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(PaymentApproval);
-
-                PaymentApproval.SaveChanges += PaymentApproval_SaveChanges;
-            }
-        }
-
-        private void PaymentApproval_SaveChanges(object sender, EventArgs e)
-        {
-            payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            if (payment_schedual != null)
-            {
-                payment_schedual.status = Status.Documents_General.Approved;
-                payment_schedual.RaisePropertyChanged("status");
-                
-                app_document_range _app_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
-                payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(_app_range, true);
-                payment_schedual.RaisePropertyChanged("number");
-
-                PaymentDB.SaveChanges();
-               
             }
         }
 

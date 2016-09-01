@@ -18,8 +18,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
-        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
-        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
+        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail}"/>
         <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
@@ -44,9 +43,9 @@
 
         <Grid Grid.Column="1" Grid.Row="1"  Background="White" >
             <ScrollViewer Margin="0,0,0,32">
-                <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
+                <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentpayment_detailViewSource}" >
                     <Label Content="{lex:Loc Supplier}" Style="{DynamicResource input_label}"/>
-                    <Label Content="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=SupplierName}" Style="{StaticResource H3}"/>
+                    <Label DataContext="{StaticResource payment_schedualViewSource}" Content="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=SupplierName}" Style="{StaticResource H3}"/>
                     <StackPanel x:Name="stpDocument" Background="{StaticResource AccentColor_Brush}" DataContext="{StaticResource payment_schedualViewSource}">
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 

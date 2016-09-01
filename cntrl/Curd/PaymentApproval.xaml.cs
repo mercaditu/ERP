@@ -12,53 +12,36 @@ namespace cntrl.Curd
 {
     public partial class PaymentApproval : UserControl
     {
-        public PaymentDB PaymentDBold = new PaymentDB();
+        public PaymentDB PaymentDBold;
 
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        public PaymentApproval(ref  PaymentDB PaymentDB, payment_schedual SchedualList)
+        public PaymentApproval(ref  PaymentDB PaymentDB, payment_schedual payment_schedual)
         {
+            PaymentDBold = PaymentDB;
 
             InitializeComponent();
           
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             payment_schedualViewSource = (CollectionViewSource)this.FindResource("payment_schedualViewSource");
-            paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
-            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
-            payment_schedualViewSource.View.MoveCurrentTo(SchedualList);
-
-            //payment payment = new entity.payment(); //PaymentDB.New(true);
-            //payment.trans_date = SchedualList.Max(x => x.expire_date);
-            //payment.IsSelected = true;
-            //payment.State = EntityState.Added;
-
-            //int id_contact = SchedualList.FirstOrDefault().id_contact;
-            //if (PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault() != null)
-            //{
-            //    payment.id_contact = id_contact;
-            //    payment.contact = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
-            //}
-
-            //PaymentDB.payments.Add(payment);
-            //paymentViewSource.Source = PaymentDB.payments.Local;
+            payment_schedualViewSource.Source = PaymentDBold.payment_schedual.Local;
+            payment_schedualViewSource.View.MoveCurrentTo(payment_schedual);
 
             payment_detail payment_detail = new payment_detail();
-            /// payment_detail.payment = payment;
-            payment_detail.value = SchedualList.AccountPayableBalance;
+            payment_detail.value = payment_schedual.AccountPayableBalance;
             payment_detail.IsSelected = true;
-            payment_detail.id_currencyfx = SchedualList.id_currencyfx;
+            payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
             payment_detail.State = EntityState.Added;
-            PaymentDB.payment_detail.Add(payment_detail);
-            SchedualList.payment_detail = payment_detail;
-          
+            PaymentDBold.payment_detail.Add(payment_detail);
 
-            // paymentViewSource.View.MoveCurrentTo(payment);
-            paymentpayment_detailViewSource.Source = PaymentDB.payment_detail.Local;
-            paymentpayment_detailViewSource.View.MoveCurrentToLast();
+            payment_detail.payment_schedual.Add(payment_schedual);
+
+            paymentpayment_detailViewSource.Source = PaymentDBold.payment_detail.Local;
+            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -81,6 +64,8 @@ namespace cntrl.Curd
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            PaymentDBold.CancelAllChanges();
+
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
@@ -92,21 +77,36 @@ namespace cntrl.Curd
             payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
             if (payment_schedual != null)
             {
-                lblCancel_MouseDown(sender, null);
-
                 if (payment_schedual.id_range > 0)
                 {
                     app_document_range app_document_range = PaymentDBold.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
                     if (app_document_range != null)
                     {
+                        payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+
                         entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
                     }
                 }
 
+                payment_schedual.status = Status.Documents_General.Approved;
+                payment_schedual.RaisePropertyChanged("status");
 
+                try
+                {
+                    PaymentDBold.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
 
                 if (SaveChanges != null)
                 { SaveChanges(this, new RoutedEventArgs()); }
+
+                Grid parentGrid = (Grid)this.Parent;
+                parentGrid.Children.Clear();
+                parentGrid.Visibility = Visibility.Hidden;
             }
         }
         #endregion

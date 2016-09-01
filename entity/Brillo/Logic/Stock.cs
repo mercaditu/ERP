@@ -723,20 +723,15 @@ namespace entity.Brillo.Logic
                                         ChildDimesion = ChildDimesion * item_movement_dimension.value;
                                     }
 
-
                                     if (ParentDimesion > 0 && ChildDimesion > 0)
                                     {
                                         Dimension_Cost = parent_Movement.Cost;
                                         decimal ChildPaticipantion = (ChildDimesion / ParentDimesion);
                                         Dimension_Cost = Dimension_Cost * ChildPaticipantion;
                                     }
-
                                 }
-
                             }
-
                         }
-
                     }
 
                     //Logic for Value
@@ -831,8 +826,6 @@ namespace entity.Brillo.Logic
 
                 // item_movement.transaction_id = TransactionID;
                 item_movement.trans_date = TransDate;
-
-
 
                 if (app_currencyfx != null)
                 {

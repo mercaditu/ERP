@@ -78,7 +78,10 @@ namespace entity
                     //transit
                     NumberOfRecords += 1;
                     item_transfer.status = Status.Transfer.Transit;
-                    item_transfer.RaisePropertyChanged("status");
+
+                    ///The Raise property code was cuasing the toolbar to be unresponsive to status changes, 
+                    ///causeing the user to close and start again. and so i commented it.
+                    //item_transfer.RaisePropertyChanged("status");
                 }
 
                 if (item_transfer != null)

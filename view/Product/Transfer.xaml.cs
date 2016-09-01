@@ -79,26 +79,26 @@ namespace Cognitivo.Product
             }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             //Filter by branch.
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
-            ProductTransferDB.item_transfer.Where(a =>
-                a.id_company == CurrentSession.Id_Company &&
-                a.transfer_type == item_transfer.Transfer_type.transfer)
-                .Load();
+            await ProductTransferDB.item_transfer.Where(a =>
+                    a.id_company == CurrentSession.Id_Company &&
+                    a.transfer_type == item_transfer.Transfer_type.transfer).OrderByDescending(x => x.trans_date)
+                    .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
             item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(this.FindResource("item_transferitem_transfer_detailViewSource")));
 
-            ProductTransferDB.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0).OrderBy(a => a.name).Load();
+            await ProductTransferDB.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0).OrderBy(a => a.name).LoadAsync();
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
             branch_originViewSource.Source = ProductTransferDB.app_branch.Local;
             CollectionViewSource branch_destViewSource = ((CollectionViewSource)(this.FindResource("branch_destViewSource")));
             branch_destViewSource.Source = ProductTransferDB.app_branch.Local;
 
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
-            ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            await ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             security_userViewSource.Source = ProductTransferDB.security_user.Local;
 
             clsTotalGrid = new List<Class.transfercost>();

@@ -72,8 +72,9 @@ namespace Cognitivo.Purchase
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
             }));
 
-            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
             cbxContract.ItemsSource = CurrentSession.Get_Contract();
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+          
             
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -233,22 +234,26 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = await PurchaseInvoiceDB.app_contract.Where(a => a.is_active == true
+                cbxContract.ItemsSource = PurchaseInvoiceDB.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == CurrentSession.Id_Company
-                                                                        && a.id_condition == app_condition.id_condition).ToListAsync();
+                                                                        && a.id_condition == app_condition.id_condition).ToList();
                 //Selects first Item
                 if (purchase_invoice != null)
                 {
                     if (purchase_invoice.id_contract == 0)
                     {
                         cbxContract.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        cbxContract.SelectedValue = purchase_invoice.id_contract;
                     }
                   
                 }

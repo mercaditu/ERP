@@ -403,6 +403,10 @@
     <Compile Include="Migrations\201608300707278_Payment DocumentRange.Designer.cs">
       <DependentUpon>201608300707278_Payment DocumentRange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609010942288_ChangesinPaymentDetail.cs" />
+    <Compile Include="Migrations\201609010942288_ChangesinPaymentDetail.Designer.cs">
+      <DependentUpon>201609010942288_ChangesinPaymentDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1140,6 +1144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608300707278_Payment DocumentRange.resx">
       <DependentUpon>201608300707278_Payment DocumentRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609010942288_ChangesinPaymentDetail.resx">
+      <DependentUpon>201609010942288_ChangesinPaymentDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

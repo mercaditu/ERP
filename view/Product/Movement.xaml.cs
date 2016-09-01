@@ -133,21 +133,33 @@ namespace Cognitivo.Product
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.app_document_range != null)
             {
                 entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
-                if (dbContext.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                if (item_transfer.id_branch > 0)
                 {
-                    entity.Brillo.Logic.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                    if (dbContext.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                    {
+                        entity.Brillo.Logic.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                    }
                 }
-                if (dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                if (item_transfer.id_terminal > 0)
                 {
-                    entity.Brillo.Logic.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                    if (dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                    {
+                        entity.Brillo.Logic.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                    }
                 }
-                if (dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                if (item_transfer.id_user > 0)
                 {
-                    entity.Brillo.Logic.Range.user_Code = dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                    if (dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                    {
+                        entity.Brillo.Logic.Range.user_Code = dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                    }
                 }
-                if (dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                if (item_transfer.id_project > 0)
                 {
-                    entity.Brillo.Logic.Range.project_Code = dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                    if (dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                    {
+                        entity.Brillo.Logic.Range.project_Code = dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                    }
                 }
 
                 app_document_range app_document_range = item_transfer.app_document_range;
@@ -181,8 +193,6 @@ namespace Cognitivo.Product
                     Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
                 }
 
-
-
                 ///Debit Movement from Origin.
                 List<item_movement> item_movement_originList;
                 item_movement_originList = stock.DebitOnly_MovementLIST(ProductMovementDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
@@ -206,7 +216,6 @@ namespace Cognitivo.Product
                         _item_movement_dimension.value = item_movement_dimension.value;
                         DimensionList.Add(_item_movement_dimension);
                     }
-
                 }
 
                 item_movement_dest =

@@ -42,6 +42,8 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
+                    CurrentSession.Load_BasicData();
+
                     if (CurrentSession.Id_Branch == 0)
                     {
                         CurrentSession.Id_Branch = entity.db.app_branch.FirstOrDefault().id_branch;

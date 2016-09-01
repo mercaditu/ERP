@@ -56,6 +56,8 @@ namespace cntrl
             {
                 throw ex;
             }
+
+            CurrentSession.Load_BasicData();
         }
 
         private void _SaveChanges()

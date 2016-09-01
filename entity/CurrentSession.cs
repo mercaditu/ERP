@@ -168,7 +168,6 @@ namespace entity
                     Refresh_Security();
 
                     //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
-                    Task taskAuth = Task.Factory.StartNew(() => Load_BasicData());
                 }
             }
         }
@@ -192,6 +191,11 @@ namespace entity
         }
 
         public static void Load_BasicData()
+        {
+            Task taskAuth = Task.Factory.StartNew(() => Load_Data());
+        }
+
+        private static void Load_Data()
         {
             using (db cntx = new db())
             {

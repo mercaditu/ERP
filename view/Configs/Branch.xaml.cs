@@ -21,7 +21,6 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource branchViewSource;
-        //entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Branch()
         { InitializeComponent(); }

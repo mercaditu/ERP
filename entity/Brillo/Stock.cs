@@ -60,17 +60,23 @@ namespace entity.Brillo
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
+
+        /// <summary>
+        /// Why is this here???
+        /// </summary>
+        /// <param name="id_transfer_detail"></param>
+        /// <param name="id_item_product"></param>
+        /// <returns></returns>
         public List<StockList> MovementForTransfer(int id_transfer_detail, int id_item_product)
         {
             List<StockList> StockList = new List<StockList>();
             using (db db= new db())
             {
-                List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_transfer_detail == id_transfer_detail &&
-                    x.id_item_product == id_item_product && x.debit > 0).ToList();
+                List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_transfer_detail == id_transfer_detail && x.id_item_product == id_item_product && x.debit > 0).ToList();
                 foreach (item_movement item_movement in Items_InStockLIST)
                 {
                     StockList Stock = new StockList();
-                    Stock.MovementID =(int) item_movement.id_movement;
+                    Stock.MovementID = (int)item_movement.id_movement;
                     Stock.TranDate = item_movement.trans_date;
                     Stock.QtyBalance = item_movement.debit;
                     Stock.Cost = item_movement.item_movement_value.Sum(x=>x.unit_value);
@@ -79,7 +85,6 @@ namespace entity.Brillo
                 }
             }
             return StockList;
-         
         }
 
         private DataTable exeDT(string sql)

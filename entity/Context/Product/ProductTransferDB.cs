@@ -123,27 +123,38 @@ namespace entity
                 ///Print Document only if 
                 if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)
                 {
-
-                    if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                    if (item_transfer.id_branch > 0)
                     {
-                        Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                        if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                        {
+                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                        }
                     }
 
-                    if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                    if (item_transfer.id_terminal > 0)
                     {
-                        Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                        if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                        {
+                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                        }
                     }
 
-                    if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                    if (item_transfer.id_user > 0)
                     {
-                        Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                        if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                        {
+                            Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                        }
                     }
 
-                    if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                    if (item_transfer.id_project > 0)
                     {
-                        Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                        if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                        {
+                            Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                        }
                     }
-
+                    
                     app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
                     item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                     item_transfer.RaisePropertyChanged("number");
@@ -170,7 +181,7 @@ namespace entity
             {
                 List<entity.Brillo.StockList> Items_InStockLIST;
                 entity.Brillo.Stock stockBrillo = new Brillo.Stock();
-                Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product); ;
+                Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product);
 
                 List<item_movement> item_movement_LIST = new List<entity.item_movement>();
                 ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
@@ -200,7 +211,6 @@ namespace entity
                         stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                         null
                         );
-
 
                 base.item_movement.Add(item_movement_origin);
             }

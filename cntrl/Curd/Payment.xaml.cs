@@ -174,28 +174,20 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
-            if (payment.payment_detail.Where(x => x.IsSelected).Count() > 0)
+            PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
+            PaymentDB.SaveChanges();
+            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
-                PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
-                PaymentDB.SaveChanges();
-                foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
+                if (Mode == Modes.Recievable)
                 {
-                    if (Mode == Modes.Recievable)
-                    {
-                        PaymentDB.Approve(payment_detail.id_payment_schedual, true);
-                    }
-                    else
-                    {
-                        PaymentDB.Approve(payment_detail.id_payment_schedual, false);
-                    }
+                    PaymentDB.Approve(payment_detail.id_payment_schedual, true);
                 }
-                lblCancel_MouseDown(null, null);
+                else
+                {
+                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                }
             }
-            else
-            {
-                MessageBox.Show("Please select Payment..");
-            }
-
+            lblCancel_MouseDown(null, null);
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)

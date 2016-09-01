@@ -81,7 +81,7 @@
             <Grid>
                 <Grid.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
-                                              ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay}">
+                                              ItemsSource="{Binding child, Mode=TwoWay}">
                         <Panels:pnl_TreeView StatusColor="{Binding status, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource ProjectStatus2Color}}"  
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
@@ -92,8 +92,8 @@
                                              Quantity="{Binding quantity_est, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
-                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
-                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}"
+                                        VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" 
                                         ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}" >

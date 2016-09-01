@@ -29,31 +29,33 @@ namespace cntrl.Curd
 
             payment_schedualViewSource.Source = SchedualList;
 
-            payment payment = new entity.payment(); //PaymentDB.New(true);
-            payment.trans_date = SchedualList.Max(x => x.expire_date);
-            payment.IsSelected = true;
-            payment.State = EntityState.Added;
+            //payment payment = new entity.payment(); //PaymentDB.New(true);
+            //payment.trans_date = SchedualList.Max(x => x.expire_date);
+            //payment.IsSelected = true;
+            //payment.State = EntityState.Added;
 
-            int id_contact = SchedualList.FirstOrDefault().id_contact;
-            if (PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault() != null)
-            {
-                payment.id_contact = id_contact;
-                payment.contact = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
-            }
+            //int id_contact = SchedualList.FirstOrDefault().id_contact;
+            //if (PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault() != null)
+            //{
+            //    payment.id_contact = id_contact;
+            //    payment.contact = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+            //}
 
-            PaymentDB.payments.Add(payment);
-            paymentViewSource.Source = PaymentDB.payments.Local;
+            //PaymentDB.payments.Add(payment);
+            //paymentViewSource.Source = PaymentDB.payments.Local;
 
             payment_detail payment_detail = new payment_detail();
-            payment_detail.payment = payment;
+           /// payment_detail.payment = payment;
             payment_detail.value = SchedualList.FirstOrDefault().AccountPayableBalance;
             payment_detail.IsSelected = true;
             payment_detail.id_currencyfx = SchedualList.FirstOrDefault().id_currencyfx;
             payment_detail.State = EntityState.Added;
-            payment.payment_detail.Add(payment_detail);
+            payment_detail.id_payment_schedual = SchedualList.FirstOrDefault().id_payment_schedual;
+            PaymentDB.payment_detail.Add(payment_detail);
 
-            paymentViewSource.View.MoveCurrentTo(payment);
-            //paymentpayment_detailViewSource.View.MoveCurrentToFirst();
+           // paymentViewSource.View.MoveCurrentTo(payment);
+            paymentpayment_detailViewSource.Source = PaymentDB.payments.Local;
+           paymentpayment_detailViewSource.View.MoveCurrentToLast();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -68,8 +70,8 @@ namespace cntrl.Curd
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
-            paymentViewSource.View.Refresh();
-            //paymentpayment_detailViewSource.View.Refresh();
+           // paymentViewSource.View.Refresh();
+            paymentpayment_detailViewSource.View.Refresh();
         }
 
         #region Events
@@ -97,8 +99,8 @@ namespace cntrl.Curd
                         entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
                     }
                 }
-                
 
+                PaymentDB.SaveChanges();
                 if (SaveChanges != null)
                 { SaveChanges(this, new RoutedEventArgs()); }
             }

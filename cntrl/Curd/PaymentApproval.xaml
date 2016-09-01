@@ -62,9 +62,7 @@
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
                              Text="{Binding payment.number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     </StackPanel>
-                    <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                    <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
-                             Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
+                  
                     <Rectangle Style="{StaticResource line_Bar}"/>
                     
                     <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
@@ -82,7 +80,10 @@
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                     </ComboBox>
-                   
+                    <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Source={StaticResource paymentpayment_detailViewSource}}" MinHeight="64" 
+                             Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
+
                     <StackPanel x:Name="stpaccount">
                         <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
                         <ComboBox x:Name="app_accountComboBox"

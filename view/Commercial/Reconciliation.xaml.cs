@@ -101,7 +101,11 @@ namespace Cognitivo.Commercial
         private void toolBar_btnEdit_Click(object sender)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
-            app_account.State = EntityState.Modified;
+            if (app_account!=null)
+            {
+                app_account.State = EntityState.Modified;
+            }
+         
         }
     }
 }

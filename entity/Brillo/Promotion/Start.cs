@@ -84,20 +84,20 @@ namespace entity.Brillo.Promotion
                                 if (item != null)
                                 {
                                     sales_invoice_detail.id_vat_group = item.id_vat_group;
-                                    sales_invoice_detail.item = item;
+                                    sales_invoice_detail.id_item = item.id_item;
+                                    sales_invoice_detail.item_description = item.name;
+                                    //sales_invoice_detail.item = item;
                                 }
 
                                 item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
                                 if (item_price != null)
                                 {
                                     sales_invoice_detail.unit_price = item_price.value;
-                                    sales_invoice_detail.discount = sales_invoice_detail.unit_price;
+                                    sales_invoice_detail.discount = item_price.value;
                                 }
                             }
 
                             sales_invoice_detail.IsPromo = true;
-                            sales_invoice_detail.id_item = Promo.reference_bonus;
-                            sales_invoice_detail.item_description = sales_invoice_detail.item.name;
                             sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
                             SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
 
@@ -155,7 +155,6 @@ namespace entity.Brillo.Promotion
                                 sales_invoice_detail.id_vat_group = item.id_vat_group;
                                 sales_invoice_detail.id_item = item.id_item;
                                 sales_invoice_detail.item_description = item.name;
-                                //sales_invoice_detail.item = item;
                             }
 
                             item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();

@@ -24,7 +24,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_payment_detail { get; set; }
-        public int? id_payment { get; set; }
+        public int id_payment { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }

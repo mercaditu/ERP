@@ -12,22 +12,24 @@ namespace cntrl.Curd
 {
     public partial class PaymentApproval : UserControl
     {
-        PaymentDB PaymentDB = new PaymentDB();
+        public PaymentDB PaymentDBold = new PaymentDB();
 
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        public PaymentApproval(List<payment_schedual> SchedualList)
+        public PaymentApproval(ref  PaymentDB PaymentDB, payment_schedual SchedualList)
         {
-            InitializeComponent();
 
+            InitializeComponent();
+          
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             payment_schedualViewSource = (CollectionViewSource)this.FindResource("payment_schedualViewSource");
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
-            payment_schedualViewSource.Source = SchedualList;
+            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+            payment_schedualViewSource.View.MoveCurrentTo(SchedualList);
 
             //payment payment = new entity.payment(); //PaymentDB.New(true);
             //payment.trans_date = SchedualList.Max(x => x.expire_date);
@@ -45,32 +47,33 @@ namespace cntrl.Curd
             //paymentViewSource.Source = PaymentDB.payments.Local;
 
             payment_detail payment_detail = new payment_detail();
-           /// payment_detail.payment = payment;
-            payment_detail.value = SchedualList.FirstOrDefault().AccountPayableBalance;
+            /// payment_detail.payment = payment;
+            payment_detail.value = SchedualList.AccountPayableBalance;
             payment_detail.IsSelected = true;
-            payment_detail.id_currencyfx = SchedualList.FirstOrDefault().id_currencyfx;
+            payment_detail.id_currencyfx = SchedualList.id_currencyfx;
             payment_detail.State = EntityState.Added;
-            payment_detail.id_payment_schedual = SchedualList.FirstOrDefault().id_payment_schedual;
             PaymentDB.payment_detail.Add(payment_detail);
+            SchedualList.payment_detail = payment_detail;
+          
 
-           // paymentViewSource.View.MoveCurrentTo(payment);
-            paymentpayment_detailViewSource.Source = PaymentDB.payments.Local;
-           paymentpayment_detailViewSource.View.MoveCurrentToLast();
+            // paymentViewSource.View.MoveCurrentTo(payment);
+            paymentpayment_detailViewSource.Source = PaymentDB.payment_detail.Local;
+            paymentpayment_detailViewSource.View.MoveCurrentToLast();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            await PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            payment_typeViewSource.Source = PaymentDB.payment_type.Local;
+            await PaymentDBold.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            payment_typeViewSource.Source = PaymentDBold.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_accountViewSource.Source = PaymentDB.app_account.Local;
+            await PaymentDBold.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_accountViewSource.Source = PaymentDBold.app_account.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDBold, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
-           // paymentViewSource.View.Refresh();
+            // paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
         }
 
@@ -93,14 +96,15 @@ namespace cntrl.Curd
 
                 if (payment_schedual.id_range > 0)
                 {
-                    app_document_range app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
+                    app_document_range app_document_range = PaymentDBold.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
                     if (app_document_range != null)
                     {
                         entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
                     }
                 }
 
-                PaymentDB.SaveChanges();
+
+
                 if (SaveChanges != null)
                 { SaveChanges(this, new RoutedEventArgs()); }
             }

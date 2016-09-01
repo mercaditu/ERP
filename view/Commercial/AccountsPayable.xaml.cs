@@ -25,7 +25,7 @@ namespace Cognitivo.Commercial
         }
         #endregion
 
-    
+       // List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
         
         PaymentDB PaymentDB = new PaymentDB();
 
@@ -47,10 +47,10 @@ namespace Cognitivo.Commercial
             payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
             if (payment_schedual != null)
             {
-                List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
-                ListPayments.Add(payment_schedual);
+              
+               // ListPayments.Add(payment_schedual);
 
-                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ListPayments);
+                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ref PaymentDB, payment_schedual);
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(PaymentApproval);
 
@@ -71,6 +71,7 @@ namespace Cognitivo.Commercial
                 payment_schedual.RaisePropertyChanged("number");
 
                 PaymentDB.SaveChanges();
+               
             }
         }
 

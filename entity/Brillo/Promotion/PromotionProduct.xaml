@@ -12,16 +12,18 @@
         xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
         Title="PromotionProduct" Height="300" Width="388.8" Loaded="Window_Loaded">
     <Window.Resources>
-        <CollectionViewSource x:Key="ItemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+   
     </Window.Resources>
-    <Grid DataContext="{StaticResource ItemViewSource}">
-        <DataGrid x:Name="Template_detailDataGrid" MinHeight="64"
+    <Grid >
+        <DataGrid x:Name="Item_detailDataGrid" MinHeight="64"
                       AutoGenerateColumns="False" MaxHeight="256"
-                      ItemsSource="{Binding}"
+                    
                       >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Code" Binding="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Code" Binding="{Binding Code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+               
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Save" Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Button_Click" />

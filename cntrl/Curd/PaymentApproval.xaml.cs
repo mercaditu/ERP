@@ -18,10 +18,9 @@ namespace cntrl.Curd
         CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        public PaymentApproval(ref  PaymentDB PaymentDB, payment_schedual payment_schedual)
+        public PaymentApproval(ref PaymentDB PaymentDB, List<payment_schedual> SchedualList)
         {
             PaymentDBold = PaymentDB;
-
             InitializeComponent();
           
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
@@ -29,19 +28,22 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
             payment_schedualViewSource.Source = PaymentDBold.payment_schedual.Local;
-            payment_schedualViewSource.View.MoveCurrentTo(payment_schedual);
+            payment_schedualViewSource.View.MoveCurrentTo(SchedualList.FirstOrDefault());
 
-            payment_detail payment_detail = new payment_detail();
-            payment_detail.value = payment_schedual.AccountPayableBalance;
-            payment_detail.IsSelected = true;
-            payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
-            payment_detail.State = EntityState.Added;
-            PaymentDBold.payment_detail.Add(payment_detail);
+            foreach (payment_schedual payment_schedual in SchedualList)
+            {
+                payment_detail payment_detail = new payment_detail();
+                payment_detail.value = SchedualList.Sum(x => x.AccountPayableBalance);
+                payment_detail.IsSelected = true;
+                payment_detail.id_currencyfx = SchedualList.FirstOrDefault().id_currencyfx;
+                payment_detail.State = EntityState.Added;
+                PaymentDBold.payment_detail.Add(payment_detail);
 
-            payment_detail.payment_schedual.Add(payment_schedual);
+                payment_detail.payment_schedual.Add(payment_schedual);
+            }
 
             paymentpayment_detailViewSource.Source = PaymentDBold.payment_detail.Local;
-            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
+            paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)

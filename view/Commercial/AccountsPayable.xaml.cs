@@ -44,13 +44,10 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            if (payment_schedual != null)
+            List<payment_schedual> SchedualList = PaymentDB.payment_schedual.Local.Where(x => x.IsSelected).ToList();
+            if (SchedualList.Count() > 0)
             {
-              
-               // ListPayments.Add(payment_schedual);
-
-                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ref PaymentDB, payment_schedual);
+                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ref PaymentDB, SchedualList);
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(PaymentApproval);
             }

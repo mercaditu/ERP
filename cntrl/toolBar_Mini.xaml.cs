@@ -99,7 +99,7 @@ namespace cntrl
                     Approve_IsEnabled = false;
                     Annul_IsEnabled = true;
                 }
-                else if (Status.Contains("InProcess"))
+                else if (Status.Contains("InProcess") )
                 {
                     IsEditable = false;
                     Edit_IsEnabled = false;

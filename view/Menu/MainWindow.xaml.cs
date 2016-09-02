@@ -56,17 +56,16 @@ namespace Cognitivo.Menu
                 return;
             }
 
+            if (Settings.Default.wallpaper_Image == "")
+            {
+                double width = SystemParameters.WorkArea.Width;
+                double height = SystemParameters.WorkArea.Height;
+                string img = String.Format("https://source.unsplash.com/user/cognitivo/likes/{0}x{1}", width, height);
+                Settings.Default.wallpaper_Image =  img;
+                Settings.Default.Save();
+            }
+
             mainFrame.Navigate(new mainLogIn());
-
-        }
-
-        public void Security_Refresh()
-        {
-
-        }
-
-        private void _Security_RefreshThread()
-        {
 
         }
 

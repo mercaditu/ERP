@@ -85,7 +85,7 @@ namespace Cognitivo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/Images/Wallpaper/MatternHorn.jpg")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string wallpaper_Image {
             get {
                 return ((string)(this["wallpaper_Image"]));
@@ -116,17 +116,6 @@ namespace Cognitivo.Properties {
             }
             set {
                 this["DebeHaberConnString"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;persistsecurityinfo=True;database=Cog" +
-            "nitivo")]
-        public string MySQLconnString {
-            get {
-                return ((string)(this["MySQLconnString"]));
             }
         }
         
@@ -166,6 +155,17 @@ namespace Cognitivo.Properties {
             }
             set {
                 this["AppFavList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;persistsecurityinfo=True;database=cog" +
+            "nitivoerp")]
+        public string MySQLconnString {
+            get {
+                return ((string)(this["MySQLconnString"]));
             }
         }
     }

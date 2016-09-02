@@ -42,7 +42,7 @@
         		<BlurEffect/>
         	</Grid.Effect>
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" 
+                <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                             Stretch="UniformToFill"/>
             </Grid.Background>
             <!--<Grid.Effect>

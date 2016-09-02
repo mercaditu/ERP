@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +18,29 @@ namespace Cognitivo
     {
         public App()
         {
+            if (Cognitivo.Properties.Settings.Default.UpgradeSettings)
+            {
+                Cognitivo.Properties.Settings.Default.Upgrade();
+                Cognitivo.Properties.Settings.Default.UpgradeSettings = false;
+            }
+
+            //string localAppData =
+            //  Environment.GetFolderPath(
+            //  Environment.SpecialFolder.LocalApplicationData);
+            //string userFilePath
+            //  = Path.Combine(localAppData, "MyCompany");
+
+            //if (!Directory.Exists(userFilePath))
+            //    Directory.CreateDirectory(userFilePath);
+
+            ////if it's not already there, 
+            ////copy the file from the deployment location to the folder
+            //string sourceFilePath = Path.Combine(
+            //  System.Windows.Forms.Application.StartupPath, "MyFile.txt");
+            //string destFilePath = Path.Combine(userFilePath, "MyFile.txt");
+            //if (!File.Exists(destFilePath))
+            //    File.Copy(sourceFilePath, destFilePath);
+
             var CmdSaveAll = new CommandBinding(Class.CustomCommands.SaveAll, HotkeyPressed);
             CommandManager.RegisterClassCommandBinding(typeof(Window), CmdSaveAll);
             var CmdNewAll = new CommandBinding(Class.CustomCommands.NewAll, HotkeyPressed);

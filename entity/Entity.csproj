@@ -199,6 +199,9 @@
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
     <Compile Include="Brillo\ProductCost.cs" />
+    <Compile Include="Brillo\Promotion\PromotionProduct.xaml.cs">
+      <DependentUpon>PromotionProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Brillo\Promotion\Start.cs" />
     <Compile Include="Brillo\Stock.cs" />
     <Compile Include="Class\clsBarcode.cs" />
@@ -932,6 +935,10 @@
     <Content Include="SQL\sp_create_budgetstatus.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Brillo\Promotion\PromotionProduct.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DocumentViewr.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

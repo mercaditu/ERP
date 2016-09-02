@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace entity.Brillo.Promotion
 {
@@ -72,7 +73,7 @@ namespace entity.Brillo.Promotion
 
                                 SalesInvoice.sales_invoice_detail.Remove(_Detail_);
                             }
-
+                         
                             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
                             //Needed to calculate the discounts and unit prices further on.
@@ -110,6 +111,19 @@ namespace entity.Brillo.Promotion
 
         private void BuyTag_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
+
+            //PromotionProduct window = new PromotionProduct()
+            //{
+            //    Title = "Modal Dialog",
+            //    ShowInTaskbar = false,               // don't show the dialog on the taskbar
+            //    Topmost = true,                      // ensure we're Always On Top
+            //    ResizeMode = ResizeMode.NoResize,    // remove excess caption bar buttons
+            //    TagID = 1,
+            //};
+
+            //window.ShowDialog();
+
+            //int product = window.ProductID;
             if (Promo.types == sales_promotion.Type.BuyTag_GetThat)
             {
                 bool HasTag = false;
@@ -141,6 +155,7 @@ namespace entity.Brillo.Promotion
                         {
                             SalesInvoice.sales_invoice_detail.Remove(_Detail_);
                         }
+
 
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 

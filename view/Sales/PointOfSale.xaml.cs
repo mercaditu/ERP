@@ -409,6 +409,8 @@ namespace Cognitivo.Sales
 
         private void btnPromotion_Click(object sender, EventArgs e)
         {
+          
+
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             
             List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();

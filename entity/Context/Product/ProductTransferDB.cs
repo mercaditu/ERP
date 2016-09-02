@@ -223,6 +223,11 @@ namespace entity
                 item_movement item_movement_dest;
                 List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
                     x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
+                int count = 1;
+                if (Items_InStockLIST.Count()>0)
+                {
+                    count = Items_InStockLIST.Count();
+                }
 
                 item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault();
 
@@ -237,7 +242,7 @@ namespace entity
                                 app_location_dest,
                                 item_transfer_detail.quantity_destination,
                                 item_transfer_detail.item_transfer.trans_date,
-                                Items_InStockLIST.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1))),
+                                Items_InStockLIST.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1)))/count,
                                 stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                 null
                                 );

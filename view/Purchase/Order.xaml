@@ -198,16 +198,6 @@
                                 FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                         <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Project}"/>
                         <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
-                        <!--<ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
-                                    DisplayMemberPath="name"
-					                SelectedValue="{Binding id_project, Source={StaticResource purchase_orderViewSource}, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					                SelectedValuePath="id_project" >
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel/>
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>-->
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, 

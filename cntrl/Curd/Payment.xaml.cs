@@ -65,6 +65,7 @@ namespace cntrl.Curd
                 if (payment_schedual.payment_detail != null)
                 {
                     payment_detail payment_detail = PaymentDB.payment_detail.Where(x => x.id_payment_detail == payment_schedual.id_payment_detail).FirstOrDefault();
+                    payment_detail.IsSelected = true;
                     payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
                     payment.payment_detail.Add(payment_detail);
                 }

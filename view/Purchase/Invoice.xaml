@@ -282,11 +282,7 @@
                                 Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Project, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="Y" Style="{StaticResource ico_Label}"/>
                             <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-                            <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
-						        DisplayMemberPath="name"
-						        SelectedValuePath="id_project" 
-						        SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-						        Margin="0"/>
+                            <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

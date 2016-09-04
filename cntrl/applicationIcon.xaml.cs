@@ -7,6 +7,14 @@ namespace cntrl
 {
     public partial class applicationIcon : UserControl
     {
+        public static readonly DependencyProperty HasReportProperty =
+        DependencyProperty.Register("HasReport", typeof(bool), typeof(applicationIcon));
+        public bool HasReport
+        {
+            get { return (bool)GetValue(HasReportProperty); }
+            set { SetValue(HasReportProperty, value); }
+        }
+
         // Using a DependencyProperty as the backing store for Source.  
         //This enables animation, styling, binding, etc...
         public static readonly DependencyProperty imgSourceProperty =
@@ -52,16 +60,10 @@ namespace cntrl
             }
         }
 
-        //private void applicationIcon_ClickFavorites(object sender, RoutedEventArgs e)
-        //{
-        //    cntrl.Properties.Settings Settings = new Properties.Settings();
-        //    string _Tag = this.Tag.ToString();
 
-        //    if (Settings.AppFavList.Contains(_Tag) == false)
-        //    {
-        //        Settings.AppFavList.Add(_Tag);
-        //        Settings.Save();
-        //    }
-        //}
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -5041,13 +5041,13 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columngov_code;
             
-            private global::System.Data.DataColumn columnVatName;
-            
             private global::System.Data.DataColumn columnTotal;
             
             private global::System.Data.DataColumn columnVAT_Total;
             
             private global::System.Data.DataColumn columnTotal_VAT;
+            
+            private global::System.Data.DataColumn columnVatName;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -5116,14 +5116,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VatNameColumn {
-                get {
-                    return this.columnVatName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn TotalColumn {
                 get {
                     return this.columnTotal;
@@ -5143,6 +5135,14 @@ namespace Cognitivo.Reporting.Data {
             public global::System.Data.DataColumn Total_VATColumn {
                 get {
                     return this.columnTotal_VAT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VatNameColumn {
+                get {
+                    return this.columnVatName;
                 }
             }
             
@@ -5183,17 +5183,17 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRow AddSalesByVATRow(System.DateTime trans_date, string number, string name, string gov_code, double VatName, decimal Total, decimal VAT_Total, decimal Total_VAT) {
+            public SalesByVATRow AddSalesByVATRow(System.DateTime trans_date, string number, string name, string gov_code, decimal Total, decimal VAT_Total, decimal Total_VAT, string VatName) {
                 SalesByVATRow rowSalesByVATRow = ((SalesByVATRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         trans_date,
                         number,
                         name,
                         gov_code,
-                        VatName,
                         Total,
                         VAT_Total,
-                        Total_VAT};
+                        Total_VAT,
+                        VatName};
                 rowSalesByVATRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByVATRow);
                 return rowSalesByVATRow;
@@ -5220,10 +5220,10 @@ namespace Cognitivo.Reporting.Data {
                 this.columnnumber = base.Columns["number"];
                 this.columnname = base.Columns["name"];
                 this.columngov_code = base.Columns["gov_code"];
-                this.columnVatName = base.Columns["VatName"];
                 this.columnTotal = base.Columns["Total"];
                 this.columnVAT_Total = base.Columns["VAT_Total"];
                 this.columnTotal_VAT = base.Columns["Total_VAT"];
+                this.columnVatName = base.Columns["VatName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5237,14 +5237,14 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnname);
                 this.columngov_code = new global::System.Data.DataColumn("gov_code", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columngov_code);
-                this.columnVatName = new global::System.Data.DataColumn("VatName", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVatName);
                 this.columnTotal = new global::System.Data.DataColumn("Total", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotal);
                 this.columnVAT_Total = new global::System.Data.DataColumn("VAT_Total", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnVAT_Total);
                 this.columnTotal_VAT = new global::System.Data.DataColumn("Total_VAT", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotal_VAT);
+                this.columnVatName = new global::System.Data.DataColumn("VatName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVatName);
                 this.columntrans_date.AllowDBNull = false;
                 this.columnname.AllowDBNull = false;
             }
@@ -8738,22 +8738,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double VatName {
-                get {
-                    try {
-                        return ((double)(this[this.tableSalesByVAT.VatNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VatName\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.VatNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal Total {
                 get {
                     try {
@@ -8802,6 +8786,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VatName {
+                get {
+                    try {
+                        return ((string)(this[this.tableSalesByVAT.VatNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VatName\' in table \'SalesByVAT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByVAT.VatNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnumberNull() {
                 return this.IsNull(this.tableSalesByVAT.numberColumn);
             }
@@ -8822,18 +8822,6 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setgov_codeNull() {
                 this[this.tableSalesByVAT.gov_codeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVatNameNull() {
-                return this.IsNull(this.tableSalesByVAT.VatNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVatNameNull() {
-                this[this.tableSalesByVAT.VatNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8870,6 +8858,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTotal_VATNull() {
                 this[this.tableSalesByVAT.Total_VATColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVatNameNull() {
+                return this.IsNull(this.tableSalesByVAT.VatNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVatNameNull() {
+                this[this.tableSalesByVAT.VatNameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -12677,10 +12677,10 @@ order by s.trans_date";
             tableMapping.ColumnMappings.Add("number", "number");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("gov_code", "gov_code");
-            tableMapping.ColumnMappings.Add("VatName", "VatName");
             tableMapping.ColumnMappings.Add("Total", "Total");
             tableMapping.ColumnMappings.Add("VAT_Total", "VAT_Total");
             tableMapping.ColumnMappings.Add("Total_VAT", "Total_VAT");
+            tableMapping.ColumnMappings.Add("VatName", "VatName");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -12697,12 +12697,12 @@ order by s.trans_date";
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select 
-si.trans_date, si.number, contact.name, contact.gov_code,
-vatco.VatName as VatName,
-round(sum(sd.quantity * sd.unit_cost),4) as Total, 
-round(sum(sd.quantity * sd.unit_cost * vatco.vat),4) as VAT_Total,
- round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Total_VAT 
+            this._commandCollection[0].CommandText = @" select 
+ si.trans_date, si.number, contact.name, contact.gov_code,
+ vatco.VatName as VatName,
+ round(sum(sd.quantity * sd.unit_price),4) as Total, 
+ round(sum(sd.quantity * sd.unit_price * vatco.vat),4) as VAT_Total,
+ round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total_VAT 
 
 from sales_invoice_detail as sd 
 inner join sales_invoice as si on sd.id_sales_invoice = si.id_sales_invoice 
@@ -12711,12 +12711,14 @@ LEFT OUTER JOIN
     (SELECT   app_vat_group.id_vat_group, 
              sum(app_vat.coefficient) as vat, 
              sum(app_vat.coefficient) + 1 AS coef,
-             sum(app_vat.name) as VatName
-            FROM  app_vat_group LEFT OUTER JOIN 
-                     app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
-                     app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
-            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
-where si.status = 2 and si.trans_date >= @StartDate and si.trans_date <= @EndDate
+             app_vat.name as VatName
+            FROM  app_vat_group 
+            LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group 
+			LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
+            GROUP BY app_vat_group.id_vat_group
+            ) 
+            vatco ON vatco.id_vat_group = sd.id_vat_group
+ where si.status = 2 and si.trans_date >= @StartDate and si.trans_date <= @EndDate
  and si.id_company = @CompanyID
  group by sd.id_sales_invoice, vatco.id_vat_group";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;

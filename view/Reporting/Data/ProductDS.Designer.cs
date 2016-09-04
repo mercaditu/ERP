@@ -4021,8 +4021,8 @@ u.name_full as UserName,
 i.code as ItemCode, 
 i.name as ItemName, 
 sum(iid.value_system) as SystemQuantity,
-sum(iid.value_counted) as CountedQuantity,
-(sum(iid.value_system) - sum(iid.value_counted)) as Difference,
+sum(iid.value_counted) as CountedQuantity, (sum(iid.value_counted) - 
+sum(iid.value_system)) as Difference,
 iid.unit_value as ItemCost,
 iid.comment as Comment,
 branch.name as Branch,
@@ -4037,7 +4037,7 @@ left join items as i on ip.id_item = i.id_item
  inner join security_user as u on ii.id_user = u.id_user
 
  
-where (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID 
+where ii.status = 1 and (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID 
 group by iid.id_item_product
 order by i.name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
@@ -4070,8 +4070,7 @@ u.name_full as UserName,
 i.code as ItemCode, 
 i.name as ItemName, 
 sum(iid.value_system) as SystemQuantity,
-sum(iid.value_counted) as CountedQuantity,
-(sum(iid.value_system) - sum(iid.value_counted)) as Difference,
+sum(iid.value_counted) as CountedQuantity,(sum(iid.value_counted) - sum(iid.value_system)) as Difference,
 iid.unit_value as ItemCost,
 iid.comment as Comment,
 branch.name as Branch,
@@ -4086,7 +4085,7 @@ left join items as i on ip.id_item = i.id_item
  inner join security_user as u on ii.id_user = u.id_user
 
  
-where (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID and ii.id_branch = @BranchID 
+where ii.status = 1 and (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID and ii.id_branch = @BranchID 
 group by iid.id_item_product
 order by i.name";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;

@@ -119,8 +119,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Basic);
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic);
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.Payments", entity.App.Names.Payment, "", entity.CurrentSession.Versions.Medium);
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.PromissoryNote", entity.App.Names.PromissoryNote, "IOU", entity.CurrentSession.Versions.Medium);
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.Reconciliation", entity.App.Names.Reconciliation, "", entity.CurrentSession.Versions.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Form, "Commercial.PromissoryNote", entity.App.Names.PromissoryNote, "IOU", entity.CurrentSession.Versions.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Form, "Commercial.Reconciliation", entity.App.Names.Reconciliation, "", entity.CurrentSession.Versions.Medium);
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency", entity.CurrentSession.Versions.Basic);
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "", entity.CurrentSession.Versions.Basic);
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Bank", entity.App.Names.Bank, "BankAccount", entity.CurrentSession.Versions.Basic);
@@ -163,9 +163,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium);
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.ProductionOrderStatus", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium);
 
-            //Accounting
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberIntegration, "", entity.CurrentSession.Versions.Lite);
-
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Configs.Language", "Language", "Language", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Setup.Migration.MigrationAssistant", "MigrationAssistant", "MigrationAssistant", entity.CurrentSession.Versions.Lite);
@@ -184,6 +181,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Security.User", "User", "User", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Security.UserRole", "UserRole", "UserRole", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Configs.Department", "Department", "", entity.CurrentSession.Versions.Lite);
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Accounting.DebeHaberLogin", "DebeHaberSync", "", entity.CurrentSession.Versions.Lite);
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Currency", "Currency", "Currency", entity.CurrentSession.Versions.Lite);
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.AccountingCurrency", "AccountingCurrency", "Currency", entity.CurrentSession.Versions.Lite);

@@ -64,8 +64,6 @@
                                 <TextBlock Text="{lex:Loc Document}" MouseUp="config_MouseUp" Tag="Document"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_Document}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
@@ -73,8 +71,6 @@
                                 <TextBlock Text="{lex:Loc Range}" MouseUp="config_MouseUp" Tag="DocumentRange"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_Range}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
 
                         </StackPanel>
                     </StackPanel>
@@ -87,8 +83,6 @@
                             <TextBlock Text="{lex:Loc Company}" MouseUp="config_MouseUp" Tag="Company"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Company}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -96,8 +90,6 @@
                             <TextBlock Text="{lex:Loc Branch}"  MouseUp="config_MouseUp" Tag="Branch"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Branch}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -173,8 +165,6 @@
                                 <TextBlock Text="{lex:Loc PaymentType}" Focusable="True" MouseUp="config_MouseUp" Tag="PaymentType"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_PaymentType}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
@@ -206,8 +196,6 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_CostCenter}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
@@ -250,8 +238,6 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemBrand}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -284,8 +270,6 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemTempalte}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -294,8 +278,6 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_property}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -304,18 +286,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemAssetGroupTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
-                    <!--<StackPanel Margin="32,5">
-                        <StackPanel Orientation="Horizontal" Margin="0">
-                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductWeight.png" />
-                            <TextBlock Text="{lex:Loc Property}" MouseUp="config_MouseUp" Tag="Property"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
-                        </StackPanel>
-                        <TextBlock Text="Define properties of item" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
-                    </StackPanel>-->
-              
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
                     <Label Content="{lex:Loc Finance}" Style="{StaticResource H2}"/>
@@ -437,6 +408,17 @@
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="Users are linked to Contacts" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="16,8" Width="270">
+                    <Label Content="{lex:Loc Accounting}" Style="{StaticResource H2}"/>
+                    <StackPanel Margin="32,5">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/AccountingChart.png" />
+                            <TextBlock Text="{lex:Loc DebeHaberIntegration}" MouseUp="config_MouseUp" Tag="DebeHaberSync"
+                                           Style="{StaticResource text_HyperLinks}" 
+                               FontSize="16" Margin="5,0"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </WrapPanel>

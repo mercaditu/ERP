@@ -223,7 +223,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Value</Value>
+                              <Value>Cost</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -448,7 +448,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!value.Value)</Value>
+                              <Value>=Avg(Fields!value.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -890,7 +890,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!value.Value)</Value>
+                              <Value>=Avg(Fields!value.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -1081,7 +1081,7 @@
         </TablixRowHierarchy>
         <DataSetName>StockFlow</DataSetName>
         <Height>1in</Height>
-        <Width>8.15104in</Width>
+        <Width>8.15105in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1092,7 +1092,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>8.15104in</Width>
+  <Width>8.15105in</Width>
   <Page>
     <Style />
   </Page>

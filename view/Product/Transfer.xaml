@@ -290,7 +290,7 @@
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
-                      
+                       btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        Status="{Binding status, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        appName="Transfer"/>

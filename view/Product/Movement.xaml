@@ -29,7 +29,6 @@
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
-
     </Page.Resources>
 
     <Grid DataContext="{StaticResource item_transferViewSource}">
@@ -43,20 +42,6 @@
         </Grid.RowDefinitions>
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" 
               Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
-        <!--<DataGrid x:Name="item_transferDataGrid" ItemsSource="{Binding}"
-                  Style="{StaticResource main_Datagrid}"
-                  Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="commentColumn" Binding="{Binding comment}" Header="comment" Width="*"/>
-                <DataGridTemplateColumn x:Name="trans_dateColumn" Header="trans date" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>-->
 
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="item_transferDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
@@ -236,6 +221,7 @@
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnApprove_Click="toolBar_btnApprove_Click"
+                       btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        appName="Movement"/>

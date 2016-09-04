@@ -343,5 +343,33 @@ namespace Cognitivo.Product
                 item_transferitem_transfer_detailViewSource.View.Refresh();
             }
         }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                item_transferViewSource.View.Filter = i =>
+                {
+                    item_transfer item_transfer = i as item_transfer;
+                    if (item_transfer.Error == null)
+                    {
+                        string number = item_transfer.number;
+                        if (number.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    return false;
+                };
+            }
+            else
+            {
+                item_transferViewSource.View.Filter = null;
+            }
+        }
     }
 }

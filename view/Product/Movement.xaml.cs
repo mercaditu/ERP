@@ -85,7 +85,7 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_transferViewSource = ((CollectionViewSource)(FindResource("item_transferViewSource")));
-            dbContext.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_type.movemnent).Include("item_transfer_detail").Load();
+            dbContext.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_type.movemnent).OrderByDescending(x => x.trans_date).Load();
             item_transferViewSource.Source = dbContext.item_transfer.Local;
 
             CollectionViewSource itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
@@ -399,6 +399,30 @@ namespace Cognitivo.Product
 
             }
 
+        }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                item_transferViewSource.View.Filter = i =>
+                {
+                    item_transfer item_transfer = i as item_transfer;
+                    if (item_transfer.Error == null)
+                    {
+                        string number = item_transfer.number;
+                        if (number.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+            }
+            else
+            {
+                item_transferViewSource.View.Filter = null;
+            }
         }
     }
 }

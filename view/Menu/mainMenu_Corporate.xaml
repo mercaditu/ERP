@@ -51,7 +51,7 @@
             <StackPanel x:Name="stackModule" Orientation="Horizontal" HorizontalAlignment="Center">
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFav.png"
                                   ModuleName="{lex:Loc Favorite}" 
-                                  MouseUp="get_Apps"
+                                  MouseUp="get_Apps" IsChecked="True"
                                   Tag="Fav"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modPurchase.png"
                                   ModuleName="{lex:Loc Purchase}"
@@ -77,18 +77,14 @@
                                   ModuleName="{lex:Loc HumanResources}"
                                   MouseUp="get_Apps"
                                   Tag="HumanResources"/>
-                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modAccounting.png"
-                                  ModuleName="{lex:Loc Accounting}"
-                                  MouseUp="get_Apps"
-                                  Tag="Accounting"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_Event.png"
                                   ModuleName="{lex:Loc EventManagement}"
                                   MouseUp="get_Apps"
                                   Tag="Project_Event"/>
-                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_PrintingPress.png"
+                <!--<cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_PrintingPress.png"
                                   ModuleName="{lex:Loc PrintingPress}"
                                   MouseUp="get_Apps"
-                                  Tag="Project_PrintingPress"/>
+                                  Tag="Project_PrintingPress"/>-->
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject.png"
                                   ModuleName="{lex:Loc Project}"
                                   MouseUp="get_Apps"

@@ -8,8 +8,8 @@
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
     </UserControl.Resources>
     <Grid>
-        <metro:Tile HorizontalContentAlignment="Left" Cursor="Hand"
-                        Width="256" Height="64" Click="Tile_Click">
+        <metro:Tile HorizontalContentAlignment="Left" Cursor="Hand" Click="Tile_Click"
+                        Width="256" Height="64" Margin="16">
             <metro:Tile.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.64"/>
             </metro:Tile.Effect>
@@ -17,11 +17,11 @@
                 <SolidColorBrush Color="White" Opacity="0.95"/>
             </metro:Tile.Background>
             <Grid Height="64">
-                <Border Background="WhiteSmoke" MinWidth="64" HorizontalAlignment="Left">
+                <Border Background="WhiteSmoke" MinWidth="64" HorizontalAlignment="Left" MouseUp="Tile_Click">
                     <Image Source="{Binding imgSource, ElementName=this}" Margin="6">
-                        <Image.Effect>
-                            <DropShadowEffect BlurRadius="3" ShadowDepth="0"/>
-                        </Image.Effect>
+                        <!--<Image.Effect>
+                            <DropShadowEffect BlurRadius="1" ShadowDepth="0"/>
+                        </Image.Effect>-->
                     </Image>
                 </Border>
                 <StackPanel VerticalAlignment="Center" Margin="72,0,0,0" Width="184">

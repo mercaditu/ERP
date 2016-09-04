@@ -63,7 +63,7 @@ namespace cntrl
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-
+            e.Handled = true;
         }
     }
 }

@@ -4,35 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    <metro:Tile HorizontalContentAlignment="Left" Margin="16" Cursor="Hand"
-                Width="256" Height="64" Click="Tile_Click">
-        <metro:Tile.Effect>
-            <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.64"/>
-        </metro:Tile.Effect>
-        <metro:Tile.Background>
-            <SolidColorBrush Color="White" Opacity="0.95"/>
-        </metro:Tile.Background>
-        <StackPanel Orientation="Horizontal" Height="64">
-            <Border Background="WhiteSmoke" MinWidth="64">
-                <Image Source="{Binding imgSource, ElementName=_applicationIcon}" Margin="6">
-                    <Image.Effect>
-                        <DropShadowEffect BlurRadius="3" ShadowDepth="0"/>
-                    </Image.Effect>
-                </Image>
-            </Border>
-            <StackPanel VerticalAlignment="Center" Margin="4,0" Width="184">
-                <TextBlock MaxWidth="180" Text="{Binding ApplicationName, ElementName=_applicationIcon}" 
+    <Grid>
+        <metro:Tile HorizontalContentAlignment="Left" Cursor="Hand"
+                        Width="256" Height="64" Click="Tile_Click">
+            <metro:Tile.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.64"/>
+            </metro:Tile.Effect>
+            <metro:Tile.Background>
+                <SolidColorBrush Color="White" Opacity="0.95"/>
+            </metro:Tile.Background>
+            <StackPanel Orientation="Horizontal" Height="64">
+                <Border Background="WhiteSmoke" MinWidth="64">
+                    <Image Source="{Binding imgSource, ElementName=_applicationIcon}" Margin="6">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="0"/>
+                        </Image.Effect>
+                    </Image>
+                </Border>
+                <StackPanel VerticalAlignment="Center" Margin="4,0" Width="184">
+                    <TextBlock MaxWidth="180" Text="{Binding ApplicationName, ElementName=_applicationIcon}" 
                            Foreground="Black" FontWeight="Thin" FontSize="18" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
             </StackPanel>
+            <metro:Tile.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Favorite" Click="applicationIcon_ClickFavorites">
+                        <MenuItem.Icon>
+                            <Label Content="F" Style="{StaticResource ico_Label}" Foreground="Crimson"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </metro:Tile.ContextMenu>
+        </metro:Tile>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="3">
+            <Grid Background="#FF3C8FFF" Width="50">
+                <Label Content="" FontSize="23" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+            </Grid>
         </StackPanel>
-        <metro:Tile.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Favorite" Click="applicationIcon_ClickFavorites">
-                    <MenuItem.Icon>
-                        <Label Content="F" Style="{StaticResource ico_Label}" Foreground="Crimson"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
-        </metro:Tile.ContextMenu>
-    </metro:Tile>
+    </Grid>
 </UserControl>

@@ -16,7 +16,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value />
-                            <Style />
+                            <Style>
+                              <FontSize>9pt</FontSize>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -34,6 +36,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
             </TablixCornerRow>
@@ -50,7 +53,7 @@
                             <Value>ITEM</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
-                              <FontSize>11pt</FontSize>
+                              <FontSize>9pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>
@@ -72,6 +75,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
             </TablixCornerRow>
@@ -111,6 +115,7 @@
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -133,6 +138,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -147,6 +153,7 @@
                               <Value>=Sum(Fields!COST.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -169,6 +176,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -183,6 +191,7 @@
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -205,6 +214,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -219,6 +229,7 @@
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -243,6 +254,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -257,6 +269,7 @@
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -281,6 +294,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -300,6 +314,7 @@
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -324,6 +339,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -338,6 +354,7 @@
                               <Value>=Sum(Fields!COST.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -362,6 +379,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -376,6 +394,7 @@
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -400,6 +419,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -414,6 +434,7 @@
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -438,6 +459,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -452,6 +474,7 @@
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -476,6 +499,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -508,6 +532,7 @@
                             <Value>=Fields!BRANCH.Value</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>9pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>#465678</Color>
                             </Style>
@@ -529,6 +554,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -546,7 +572,7 @@
                                 <Value>QUANTITY</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -570,6 +596,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -590,7 +617,7 @@
                                 <Value>COST</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -614,6 +641,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -631,7 +659,7 @@
                                 <Value>SUBTOTAL</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -655,6 +683,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -674,6 +703,7 @@
                             <Value>Total</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>9pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>
@@ -695,6 +725,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -712,7 +743,7 @@
                                 <Value>QUANTITY</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -736,6 +767,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -753,7 +785,7 @@
                                 <Value>SUBTOTAL</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -777,6 +809,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -810,6 +843,7 @@
                             <Value>=Fields!ITEM.Value</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>9pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>#465678</Color>
                             </Style>
@@ -831,6 +865,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -851,6 +886,7 @@
                             <Value>Total</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>9pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>
@@ -872,6 +908,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <KeepWithGroup>Before</KeepWithGroup>

@@ -25,7 +25,6 @@ namespace Cognitivo.Class
     {
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
-
             string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, 
                              item.name as ItemName, prod.id_item_product as ProductID, 
                              (sum(mov.credit) - sum(mov.debit)) as Quantity, 
@@ -91,6 +90,47 @@ namespace Cognitivo.Class
                                 group by inv.id_movement";
 
             query = String.Format(query, entity.CurrentSession.Id_Company, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+            return exeDT(query);
+        }
+
+        public DataTable TransferSummary(DateTime StartDate, DateTime EndDate, int TransferNumber, entity.project Project, entity.security_user User, int ItemID)
+        {
+            string query = @" select 
+                              it.trans_date Date, 
+                              CONCAT(Origin.name, ' => ', Destination.name) as Movement, it.number as Transfer, it.comment as Comment, u.name as UserName, r.name as RequestedName,
+                              i.name as ItemName, i.code as ItemCode, 
+                              itd.quantity_destination as Quantity_D, itd.quantity_origin as Quantity_O
+                              from item_transfer as it
+                              inner join item_transfer_detail as itd on it.id_transfer = itd.id_transfer
+                              inner join item_product as ip on itd.id_item_product = ip.id_item_product
+                              inner join items as i on ip.id_item = i.id_item
+                              inner join app_location as Origin on it.app_location_origin_id_location = Origin.id_location
+                              inner join app_location as Destination on it.app_location_destination_id_location = Destination.id_location
+                              left join projects as p on it.id_project = p.id_project
+                              inner join security_user as u on it.id_user = u.id_user
+                              left join security_user as r on it.user_requested_id_user = r.id_user
+                              where {0} it.trans_date <= {2} and it.trans_date >= {3}
+                              order by it.trans_date";
+            
+            string WhereQuery = String.Format("it.id_company = {0} and ", entity.CurrentSession.Id_Company);
+
+            if (TransferNumber < 0)
+            {
+                WhereQuery = WhereQuery + " it.number like '%" + TransferNumber + "%' and ";
+            }
+
+            if (Project != null)
+            {
+                WhereQuery = WhereQuery + " it.id_project =" + Project.id_project + " and ";
+            }
+
+            if (ItemID > 0)
+            {
+                WhereQuery = WhereQuery + " ip.id_item =" + ItemID + " and ";
+            }
+
+            query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
+            
             return exeDT(query);
         }
 

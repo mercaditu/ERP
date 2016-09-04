@@ -586,6 +586,9 @@
     <Compile Include="Reporting\Views\AccountsRecievableAnalisys.xaml.cs">
       <DependentUpon>AccountsRecievableAnalisys.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\TransferSummary.xaml.cs">
+      <DependentUpon>TransferSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
@@ -615,6 +618,9 @@
     </Compile>
     <Compile Include="Reporting\Views\SalesBySalesman.xaml.cs">
       <DependentUpon>SalesBySalesman.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByVAT.xaml.cs">
+      <DependentUpon>SalesByVAT.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\StockFlowDimension.xaml.cs">
       <DependentUpon>StockFlowDimension.xaml</DependentUpon>
@@ -1051,6 +1057,7 @@
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlowDimension.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\TransferSummary.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1734,6 +1741,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\TransferSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\Inventory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1771,6 +1782,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesBySalesman.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\SalesByVAT.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

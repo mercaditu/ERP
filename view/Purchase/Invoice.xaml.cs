@@ -74,8 +74,8 @@ namespace Cognitivo.Purchase
 
             cbxContract.ItemsSource = CurrentSession.Get_Contract();
             cbxCondition.ItemsSource = CurrentSession.Get_Condition();
-          
-            
+
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseInvoiceDB.app_branch.Local;
@@ -172,7 +172,7 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseInvoiceDB.NumberOfRecords);
-                
+
             }
         }
 
@@ -255,7 +255,7 @@ namespace Cognitivo.Purchase
                     {
                         cbxContract.SelectedValue = purchase_invoice.id_contract;
                     }
-                  
+
                 }
             }
         }
@@ -412,7 +412,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.item_description = item.name;
                     purchase_invoice_detail.quantity = 1;
-                  
+
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -662,6 +662,12 @@ namespace Cognitivo.Purchase
                 purchase_invoice.app_contract = purchase_order.app_contract;
                 purchase_invoice.id_contract = purchase_order.id_contract;
 
+                if (purchase_order.project != null)
+                {
+                    purchase_invoice.project = purchase_order.project;
+                    purchase_invoice.id_project = purchase_order.id_project;
+                }
+          
                 foreach (purchase_order_detail _purchase_order_detail in purchase_order.purchase_order_detail)
                 {
                     if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
@@ -678,7 +684,7 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail.item_description = _purchase_order_detail.item_description;
                         purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseInvoiceDB.purchase_invoice_detail
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
-                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); 
+                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
 
                         foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
@@ -717,9 +723,9 @@ namespace Cognitivo.Purchase
         private void dgvRow_ShowRowDetail(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-         
+
             DataGridRow Row = e.OriginalSource as DataGridRow;
-           
+
             if (Row != null)
             {
                 if (Row.DetailsVisibility == System.Windows.Visibility.Collapsed)
@@ -803,7 +809,7 @@ namespace Cognitivo.Purchase
                     app_document app_document = new entity.app_document();
                     app_document.id_application = entity.App.Names.PurchaseInvoice;
                     app_document.name = "PurchaseInvoice";
-                    
+
                     app_document_range = new app_document_range();
                     app_document_range.use_default_printer = false;
                     app_document_range.app_document = app_document;
@@ -818,6 +824,8 @@ namespace Cognitivo.Purchase
             }
         }
 
-     
+
+
+
     }
 }

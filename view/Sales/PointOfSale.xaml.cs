@@ -412,7 +412,7 @@ namespace Cognitivo.Sales
           
 
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            
+
             List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
             if (promoList.Count() > 0)
             {

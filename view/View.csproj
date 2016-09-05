@@ -613,9 +613,6 @@
     <Compile Include="Reporting\Views\PurchaseInvoice.xaml.cs">
       <DependentUpon>PurchaseInvoice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PurchaseTender.xaml.cs">
-      <DependentUpon>PurchaseTender.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\SalesBySalesman.xaml.cs">
       <DependentUpon>SalesBySalesman.xaml</DependentUpon>
     </Compile>
@@ -1774,10 +1771,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\PurchaseInvoice.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\PurchaseTender.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

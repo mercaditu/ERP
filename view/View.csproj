@@ -589,8 +589,8 @@
     <Compile Include="Reporting\Views\Movement.xaml.cs">
       <DependentUpon>Movement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\Inventory.xaml.cs">
-      <DependentUpon>Inventory.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Stock.xaml.cs">
+      <DependentUpon>Stock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\ItemPriceList.xaml.cs">
       <DependentUpon>ItemPriceList.xaml</DependentUpon>
@@ -634,8 +634,8 @@
     <Compile Include="Reporting\Views\PurchaseOrder.xaml.cs">
       <DependentUpon>PurchaseOrder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\InventorySummary.xaml.cs">
-      <DependentUpon>InventorySummary.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Inventory.xaml.cs">
+      <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesOrder.xaml.cs">
       <DependentUpon>SalesOrder.xaml</DependentUpon>
@@ -1745,7 +1745,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\Inventory.xaml">
+    <Page Include="Reporting\Views\Stock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1805,7 +1805,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\InventorySummary.xaml">
+    <Page Include="Reporting\Views\Inventory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -35,7 +35,6 @@ namespace entity.BrilloQuery
 	                             left outer join app_location as loc on mov.id_location = loc.id_location
 	                             left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
- 
 	                             where item.id_company = {0} and 
 	                            (item.id_item_type = 3 or item.id_item_type = 4 or item.id_item_type = 5 or item.id_item_type = 7 or 
 	                             branch.id_branch = {1})

@@ -31,29 +31,23 @@ namespace entity.BrilloQuery
                              order by mov.trans_date, mov.id_movement
                                 ";
 
-            query = String.Format(query, entity.CurrentSession.Id_Company);
+            query = String.Format(query, entity.CurrentSession.Id_Company,CurrentSession.Id_Branch,DateTime.Now);
 
-            //using (DataTable dt = QueryExecutor.DT(query))
-            //{
-            //    foreach (DataRow DataRow in dt.Rows)
-            //    {
-            //        Contact Contact = new Contact();
+            using (DataTable dt = QueryExecutor.DT(query))
+            {
+                foreach (DataRow DataRow in dt.Rows)
+                {
+                    GetItem GetItem = new GetItem();
 
-            //        Contact.ID = Convert.ToInt16(DataRow["ID"]);
-            //        Contact.Name = Convert.ToString(DataRow["Name"]);
-            //        Contact.Alias = Convert.ToString(DataRow["Alias"]);
-            //        Contact.Gov_Code = Convert.ToString(DataRow["Gov_Code"]);
-            //        Contact.Code = Convert.ToString(DataRow["Code"]);
-            //        Contact.Telephone = Convert.ToString(DataRow["Telephone"]);
-            //        Contact.Email = Convert.ToString(DataRow["Email"]);
-            //        Contact.Address = Convert.ToString(DataRow["Address"]);
-            //        Contact.IsCustomer = Convert.ToBoolean(DataRow["IsCustomer"]);
-            //        Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
-            //        Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
+                    GetItem.ID = Convert.ToInt16(DataRow["ID"]);
+                    GetItem.Name = Convert.ToString(DataRow["ItemName"]);
+                    GetItem.Code = Convert.ToString(DataRow["ItemCode"]);
+                    GetItem.InStock = Convert.ToDecimal(DataRow["Quantity"]);
+                
 
-            //        List.Add(Contact);
-            //    }
-            //}
+                    List.Add(GetItem);
+                }
+            }
         }
     }
 

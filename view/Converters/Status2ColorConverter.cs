@@ -9,6 +9,7 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+
             if (value != null && value.ToString() == entity.Status.Documents_General.Approved.ToString())
             {
                 return new SolidColorBrush(Colors.PaleGreen);
@@ -21,13 +22,18 @@ namespace Cognitivo.Converters
             {
                 return new SolidColorBrush(Colors.Gold);
             }
-            else
+            else 
             {
+
                 return new SolidColorBrush(Colors.Gainsboro);
             }
+
+
+
+
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

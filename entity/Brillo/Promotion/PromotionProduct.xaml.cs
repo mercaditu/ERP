@@ -47,19 +47,19 @@ namespace entity.Brillo.Promotion
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            IQueryable<entity.BrilloQuery.GetItem> ItemList;
+            //IQueryable<entity.BrilloQuery.GetItem> ItemList;
         
-            entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
+            //entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
 
-            //List<item> items = db.items.Where(a => a.item_tag_detail.Where(x => x.id_tag == TagID).Count() > 0 && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            ItemList = Execute.List.AsQueryable();
-            ItemList = ItemList.Where(x => x.InStock > 0).AsQueryable();
-            foreach (entity.BrilloQuery.GetItem _items in ItemList)
+            List<item> items = db.items.Where(a => a.item_tag_detail.Where(x => x.id_tag == TagID).Count() > 0 && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            //ItemList = Execute.List.AsQueryable();
+            //ItemList = ItemList.Where(x => x.InStock > 0).AsQueryable();
+            foreach (item _items in items)
             {
                 entity.Brillo.Promotion.DetailProduct DetailProduct = new Promotion.DetailProduct();
-                DetailProduct.Name = _items.Name;
-                DetailProduct.Code = _items.Code;
-                DetailProduct.ProductId = _items.ID;
+                DetailProduct.Name = _items.name;
+                DetailProduct.Code = _items.code;
+                DetailProduct.ProductId = _items.id_item;
                 TotalProduct.Add(DetailProduct);
             }
             Item_detailDataGrid.ItemsSource = TotalProduct;

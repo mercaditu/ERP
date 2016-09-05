@@ -14,18 +14,22 @@ namespace entity.BrilloQuery
         public GetItems()
         {
             List = new List<GetItem>();
-            string query = @" select 
+            string query = @"select 
                              item.id_item as ID, 
                              item.code as ItemCode, 
                              item.name as ItemName,
+                             brand.name as Brand,
                              loc.id_location as LocationID, loc.name as Location,
                              (sum(mov.credit) - sum(mov.debit)) as Quantity
                              from items as item
                              
                              left join item_product as prod on prod.id_item = item.id_item
+                               left join item_brand as brand on brand.id_brand = item.id_brand
                              left join item_movement as mov on mov.id_item_product = prod.id_item_product  
 							 left join app_location as loc on mov.id_location = loc.id_location
 							 left join app_branch as branch on loc.id_branch = branch.id_branch
+                         
+                        
                              where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
                              group by loc.id_location, prod.id_item_product
                              order by mov.trans_date, mov.id_movement
@@ -42,6 +46,7 @@ namespace entity.BrilloQuery
                     GetItem.ID = Convert.ToInt16(DataRow["ID"]);
                     GetItem.Name = Convert.ToString(DataRow["ItemName"]);
                     GetItem.Code = Convert.ToString(DataRow["ItemCode"]);
+                    GetItem.BrandName = Convert.ToString(DataRow["Brand"]);
                     GetItem.InStock = Convert.ToDecimal(DataRow["Quantity"]);
                 
 

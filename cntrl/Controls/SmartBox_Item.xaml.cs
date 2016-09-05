@@ -251,6 +251,9 @@ namespace cntrl.Controls
             //(
             //    predicateOR
             //);
+                //IQueryable<entity.BrilloQuery.GetItem> ItemList;
+
+                //entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
                 results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
                 if (Is_Stock)
                 {
@@ -259,6 +262,7 @@ namespace cntrl.Controls
                           .OrderBy(x => x.name)
                           .ToList(); 
                 }
+                
               
 
 

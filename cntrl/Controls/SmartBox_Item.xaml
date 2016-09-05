@@ -68,14 +68,6 @@
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
-            <!--<Label Content="|" Foreground="Silver" VerticalAlignment="Center" 
-                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
-                   Margin="0" FontSize="9"/>
-
-            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
-                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                 Padding="4" FontWeight="Bold"/>-->
         </StackPanel>
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Left"
@@ -91,9 +83,10 @@
                 <DataGrid MaxWidth="512" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
                           IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding name}" FontWeight="Bold" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding item_brand.name}" FontWeight="Bold" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding Brand}" FontWeight="Bold" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Stock}" Binding="{Binding InStock, StringFormat=N2}" Width="32"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>

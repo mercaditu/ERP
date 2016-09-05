@@ -237,8 +237,7 @@ namespace Cognitivo.Sales
 
             sbxItem.Text = string.Empty;
             sbxItem.ItemID = 0;
-            sbxItem.Item = null;
-
+            
             tabContact.IsSelected = true;
         }
 

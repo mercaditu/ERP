@@ -7,85 +7,118 @@ using System.Threading.Tasks;
 
 namespace entity.BrilloQuery
 {
-    public class GetItems
+    public class GetItems : IDisposable
     {
-        public ICollection<GetItem> List { get; set; }
+        public ICollection<Item> Items { get; set; }
         
         public GetItems()
         {
-            List = new List<GetItem>();
-            string query = @"select 
-                             item.id_item as ID, 
-                             item.code as ItemCode, 
-                             item.name as ItemName,
-                             brand.name as Brand,
-                             ComapnyID=item.id_company,
-                             is_active=item.is_active,
-                             id_item_type=item.id_item_type,
-                             loc.id_location as LocationID, loc.name as Location,
-                             (sum(mov.credit) - sum(mov.debit)) as Quantity
-                             from items as item
-                             
-                             left join item_product as prod on prod.id_item = item.id_item
-                               left join item_brand as brand on brand.id_brand = item.id_brand
-                             left join item_movement as mov on mov.id_item_product = prod.id_item_product  
-							 left join app_location as loc on mov.id_location = loc.id_location
-							 left join app_branch as branch on loc.id_branch = branch.id_branch
-                         
-                        
-                             where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
-                             group by loc.id_location, prod.id_item_product
-                             order by mov.trans_date, mov.id_movement
-                                ";
+            Items = new List<Item>();
+            string query = @"
+                            select 
+	                             item.id_item as ID, 
+	                             item.code as Code, 
+	                             item.name as Name,
+	                             brand.name as Brand,
+	                             item.id_company as CompanyID,
+	                             item.is_active as IsActive,
+	                             item.id_item_type,
+	                             loc.name as Location,
+                                 branch.name as Branch,
+	                             (sum(mov.credit) - sum(mov.debit)) as Quantity
 
-            query = String.Format(query, entity.CurrentSession.Id_Company,CurrentSession.Id_Branch,DateTime.Now);
+	                             from items as item
+	 
+	                             left outer join item_product as prod on prod.id_item = item.id_item
+	                             left outer join item_brand as brand on brand.id_brand = item.id_brand
+	                             left outer join item_movement as mov on mov.id_item_product = prod.id_item_product  
+	                             left outer join app_location as loc on mov.id_location = loc.id_location
+	                             left outer join app_branch as branch on loc.id_branch = branch.id_branch
+
+ 
+	                             where item.id_company = {0} and 
+	                            (item.id_item_type = 3 or item.id_item_type = 4 or item.id_item_type = 5 or item.id_item_type = 7 or 
+	                             branch.id_branch = {1})
+	                             group by item.id_item
+	                             order by item.name";
+
+            query = String.Format(query, entity.CurrentSession.Id_Company,CurrentSession.Id_Branch);
 
             using (DataTable dt = QueryExecutor.DT(query))
             {
                 foreach (DataRow DataRow in dt.Rows)
                 {
-                    GetItem GetItem = new GetItem();
-                    GetItem.CanStock = Convert.ToBoolean(DataRow["id_item_type"]);
-                    GetItem.is_active = Convert.ToBoolean(DataRow["is_active"]);
-                    GetItem.ComapnyID = Convert.ToInt16(DataRow["ComapnyID"]);
-                    GetItem.Name = Convert.ToString(DataRow["ItemName"]);
-                    GetItem.Code = Convert.ToString(DataRow["ItemCode"]);
-                    GetItem.BrandName = Convert.ToString(DataRow["Brand"]);
-                    GetItem.InStock = Convert.ToDecimal(DataRow["Quantity"]);
+                    bool Is_Product = false;
 
-                    List.Add(GetItem);
+                    //Item Type will determine if it can stock (Is Product) or not.
+                    int type = Convert.ToInt16(DataRow["id_item_type"]);
+                    if (type == 1 || type == 2 || type == 6)
+                    {
+                        Is_Product = true;
+                    }
+
+                    Item Item = new Item();
+                    Item.ID = Convert.ToInt16(DataRow["ID"]);
+                    Item.Type = (item.item_type)type;
+                    Item.IsProduct = Is_Product;
+                    Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                    Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
+                    Item.Name = Convert.ToString(DataRow["Name"]);
+                    Item.Code = Convert.ToString(DataRow["Code"]);
+                    Item.Brand = Convert.ToString(DataRow["Brand"]);
+                    Item.InStock = Convert.ToDecimal(DataRow["Quantity"]);
+
+                    Items.Add(Item);
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            // Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this != null)
+            {
+                if (disposing)
+                {
+                    this.Dispose();
+                }
+                //release unmanaged resources.
             }
         }
     }
 
     public class GetProducts
     {
-        ICollection<GetItem> List { get; set; }
+        ICollection<Item> Items { get; set; }
 
         public GetProducts()
         {
-            List = new List<GetItem>();
+            Items = new List<Item>();
         }
     }
 
-    public class GetItem
+    public class Item
     {
         public int ComapnyID { get; set; }
         public int ID { get; set; }
-        public bool CanStock { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public item.item_type Type { get; set; }
-        public string BrandName { get; set; }
-        public bool is_active { get; set; }
+        public string Brand { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsProduct { get; set; }
 
         public decimal Location { get; set; }
         public decimal InStock { get; set; }
         public decimal Cost { get; set; }
 
         ICollection<Tag> Tags { get; set; }
-        public GetItem()
+        public Item()
         {
             Tags = new List<Tag>();
         }
@@ -94,7 +127,6 @@ namespace entity.BrilloQuery
     public class Tag
     {
         public string Name { get; set; }
-
-        ICollection<GetItem> Item { get; set; }
+        ICollection<Item> Item { get; set; }
     }
 }

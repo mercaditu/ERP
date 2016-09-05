@@ -22,6 +22,21 @@ namespace cntrl.Controls
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
+
+        public bool Exclude_OutOfStock
+        {
+            get { return _Exclude_OutOfStock; }
+            set
+            {
+                if (_Exclude_OutOfStock != value)
+                {
+                    _Exclude_OutOfStock = value;
+                    RaisePropertyChanged("Exclude_OutOfStock");
+                }
+            }
+        }
+        bool _Exclude_OutOfStock;
+
         public bool can_New
         {
             get { return _can_new; }
@@ -41,18 +56,7 @@ namespace cntrl.Controls
             }
         }
         bool _can_new;
-        public bool Is_Stock
-        {
-            get { return _Is_Stock; }
-            set
-            {
 
-                _Is_Stock = value;
-                RaisePropertyChanged("Is_Stock");
-
-            }
-        }
-        bool _Is_Stock;
         public bool can_Edit
         {
             get { return _can_new; }
@@ -87,13 +91,13 @@ namespace cntrl.Controls
             {
                 if (itemViewSource.View != null)
                 {
-                    Item = itemViewSource.View.CurrentItem as entity.item;
+                    entity.BrilloQuery.Item Item = itemViewSource.View.CurrentItem as entity.BrilloQuery.Item;
 
                     if (Item != null)
                     {
-                        ItemID = Item.id_item;
+                        ItemID = Item.ID;
                         ItemPopUp.IsOpen = false;
-                        Text = Item.name;
+                        Text = Item.Name;
                     }
                     else
                     {
@@ -110,9 +114,10 @@ namespace cntrl.Controls
         }
 
         public int ItemID { get; set; }
-        public entity.item Item { get; set; }
         public entity.item.item_type? item_types { get; set; }
-        entity.dbContext db = new entity.dbContext();
+
+        public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
+
         Task taskSearch;
         CancellationTokenSource tokenSource;
         CancellationToken token;
@@ -123,12 +128,30 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
-                itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
+                return;
+            }
+
+            Task task = Task.Factory.StartNew(() => LoadData());
+            this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
+            itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
+        }
+
+        private void LoadData()
+        {
+            Items = null;
+            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
+            {
+                Dispatcher.BeginInvoke(
+               DispatcherPriority.ContextIdle,
+               new Action(delegate()
+               {
+                   Items = Execute.Items.AsQueryable();
+               }));
             }
         }
+
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
@@ -176,7 +199,6 @@ namespace cntrl.Controls
             }
             else
             {
-
                 string SearchText = tbxSearch.Text;
                 bool ExactCode = (bool)rbtnExactCode.IsChecked;
                 if (SearchText.Count() >= 3)
@@ -204,78 +226,37 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText, bool ExactCode)
         {
-            using (entity.db db = new entity.db())
+            //List<entity.item> results;
+            var param = smartBoxItemSetting.Default.SearchFilter;
+            var predicate = PredicateBuilder.True<entity.BrilloQuery.Item>();
+
+            if (ExactCode == true)
             {
-
-
-                List<entity.item> results;
-                var param = smartBoxItemSetting.Default.SearchFilter;
-                var predicate = PredicateBuilder.True<entity.item>();
-
-                //var predicateOR = PredicateBuilder.False<entity.item>();
-
-                //if (param.Contains("Code"))
-                //{
-                //    predicateOR = predicateOR.Or(x => x.code == SearchText);
-                //}
-
-                //if (param.Contains("Name"))
-                //{
-                //    predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
-                //}
-                if (ExactCode == true)
-                {
-                    predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
-                                      (
-                                          x.code == SearchText
-                                      ));
-                }
-                else
-                {
-                    predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
-                                        (
-                                            x.code.Contains(SearchText) ||
-                                            x.name.Contains(SearchText) ||
-                                            x.item_brand.name.Contains(SearchText)
-                                        ));
-
-                    if (item_types != null)
-                    {
-                        predicate = predicate.And(x => x.id_item_type == item_types);
-                    }
-                }
-
-
-
-                //      predicate = predicate.And
-                //(
-                //    predicateOR
-                //);
-                //IQueryable<entity.BrilloQuery.GetItem> ItemList=null;
-
-                //entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
-                results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
-                //if (Is_Stock)
-                //{
-                //    results = results.Where(x => (x.item_product.FirstOrDefault() != null ? x.item_product.FirstOrDefault().stock : 1) > 0)
-
-                //          .OrderBy(x => x.name)
-                //          .ToList(); 
-                //}
-                //ItemList = ItemList.Where(x => x.InStock > 0).AsQueryable();
-
-
-
-                Dispatcher.InvokeAsync(new Action(() =>
-                {
-                    //itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
-                    itemViewSource.Source = results;
-                    Item = itemViewSource.View.CurrentItem as entity.item;
-
-                    ItemPopUp.IsOpen = true;
-                    progBar.IsActive = false;
-                }));
+                predicate = (x => x.IsActive && x.ComapnyID == entity.CurrentSession.Id_Company && ( x.Code == SearchText ));
             }
+            else
+            {
+                predicate = (x => x.IsActive && x.ComapnyID == entity.CurrentSession.Id_Company &&
+                    (
+                        x.Code.ToLower().Contains(SearchText.ToLower()) ||
+                        x.Name.ToLower().Contains(SearchText.ToLower()) ||
+                        x.Brand.ToLower().Contains(SearchText.ToLower())
+                    ));
+
+                if (item_types != null)
+                {
+                    predicate = predicate.And(x => x.Type == item_types);
+                }
+            }
+
+            Dispatcher.InvokeAsync(new Action(() =>
+            {
+                itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
+                //Item = itemViewSource.View.CurrentItem as entity.item;
+
+                ItemPopUp.IsOpen = true;
+                progBar.IsActive = false;
+            }));
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -332,11 +313,8 @@ namespace cntrl.Controls
                 Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
             }
 
-
             Controls.smartBoxItemSetting.Default.Save();
 
         }
-
-
     }
 }

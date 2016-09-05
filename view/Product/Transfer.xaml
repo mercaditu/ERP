@@ -168,7 +168,7 @@
                         <Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" VerticalAlignment="Top">
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
-                        <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Is_Stock="True"/>
+                        <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Exclude_OutOfStock="True"/>
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 

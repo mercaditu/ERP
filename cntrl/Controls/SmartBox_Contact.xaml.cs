@@ -97,8 +97,6 @@ namespace cntrl.Controls
         public bool Get_Employees { get; set; }
         public bool Get_Users { get; set; }
 
-
-
         Task taskSearch;
         CancellationTokenSource tokenSource;
         CancellationToken token;
@@ -151,7 +149,6 @@ namespace cntrl.Controls
 
                    ContactList = Execute.List.AsQueryable();
                }));
-
             }
         }
 
@@ -232,13 +229,11 @@ namespace cntrl.Controls
                 predicate = (x => x.IsSupplier == true);
             }
 
-
             if (Get_Employees)
             {
                 predicate = (x => x.IsEmployee == true);
             }
            
-
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
             var param = smartBoxContactSetting.Default.SearchFilter;
 

@@ -23,7 +23,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
-        
+
         // item_movement Selecteditem_movement;
         public Transfer()
         {
@@ -110,7 +110,7 @@ namespace Cognitivo.Product
 
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
-            
+
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
@@ -142,7 +142,7 @@ namespace Cognitivo.Product
 
                         int BranchID = (int)id_branch_originComboBox.SelectedValue;
 
-                        item_transfer_detail.Quantity_InStock = (decimal) StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+                        item_transfer_detail.Quantity_InStock = (decimal)StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
 
                         if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
                         {
@@ -152,7 +152,7 @@ namespace Cognitivo.Product
                         {
                             item_transfer_detail.StockLevel = Status.Documents_General.Annulled;
                         }
-                        
+
                         item_transfer_detail.timestamp = DateTime.Now;
                         item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                         item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
@@ -185,7 +185,7 @@ namespace Cognitivo.Product
 
                 int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
                 toolBar.msgSaved(NumberofRecords);
-                item_transferViewSource.View.Refresh(); 
+                item_transferViewSource.View.Refresh();
             }
             catch (Exception ex)
             {
@@ -205,8 +205,6 @@ namespace Cognitivo.Product
             {
                 itemMovement = new Configs.itemMovement();
                 toolBar.msgSaved(NumberOfRecords);
-
-               
             }
         }
 
@@ -232,7 +230,7 @@ namespace Cognitivo.Product
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             if (item_transfer != null)
             {
-                if (item_transfer.app_document_range!=null)
+                if (item_transfer.app_document_range != null)
                 {
                     entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
                 }
@@ -293,7 +291,7 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-         
+
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
 
@@ -311,7 +309,7 @@ namespace Cognitivo.Product
 
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;
-                  
+
                     item_transfer_detail.timestamp = DateTime.Now;
                     item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
@@ -351,16 +349,15 @@ namespace Cognitivo.Product
                 item_transferViewSource.View.Filter = i =>
                 {
                     item_transfer item_transfer = i as item_transfer;
-                    if (item_transfer.Error == null)
+                    if (item_transfer != null)
                     {
                         string number = item_transfer.number;
-                        if (number.ToLower().Contains(query.ToLower()))
+                        if (number != null)
                         {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
+                            if (number.ToLower().Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
                         }
                     }
                     return false;

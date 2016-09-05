@@ -157,8 +157,8 @@ namespace entity
             Property = 109,
             [LocalizedDescription("ItemAssetGroup")]
             ItemAssetGroup = 112,
-            [LocalizedDescription("ItemPromotion")]
-            ItemPromotion = 123,
+            [LocalizedDescription("SalesPromotion")]
+            SalesPromotion = 123,
 
             //Production
             [LocalizedDescription("ProductionExecution")]

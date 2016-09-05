@@ -408,10 +408,12 @@ namespace Cognitivo.Product
                 item_transferViewSource.View.Filter = i =>
                 {
                     item_transfer item_transfer = i as item_transfer;
-                    if (item_transfer.Error == null)
+                    if (item_transfer != null)
                     {
-                        string number = item_transfer.number;
-                        if (number.ToLower().Contains(query.ToLower()))
+                        string number = item_transfer.number != null ? item_transfer.number : "";
+                        string origin = item_transfer.app_location_origin.name != null ? item_transfer.app_location_origin.name : "";
+                        //string 
+                        if (number.ToLower().Contains(query.ToLower()) || origin.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }

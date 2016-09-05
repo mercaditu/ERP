@@ -45,14 +45,13 @@ namespace entity.BrilloQuery
                 foreach (DataRow DataRow in dt.Rows)
                 {
                     GetItem GetItem = new GetItem();
-                    GetItem.id_item_type = Convert.ToBoolean(DataRow["id_item_type"]);
+                    GetItem.CanStock = Convert.ToBoolean(DataRow["id_item_type"]);
                     GetItem.is_active = Convert.ToBoolean(DataRow["is_active"]);
                     GetItem.ComapnyID = Convert.ToInt16(DataRow["ComapnyID"]);
                     GetItem.Name = Convert.ToString(DataRow["ItemName"]);
                     GetItem.Code = Convert.ToString(DataRow["ItemCode"]);
                     GetItem.BrandName = Convert.ToString(DataRow["Brand"]);
                     GetItem.InStock = Convert.ToDecimal(DataRow["Quantity"]);
-                
 
                     List.Add(GetItem);
                 }
@@ -74,7 +73,7 @@ namespace entity.BrilloQuery
     {
         public int ComapnyID { get; set; }
         public int ID { get; set; }
-        public entity.item.item_type id_item_type { get; set; }
+        public bool CanStock { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public item.item_type Type { get; set; }

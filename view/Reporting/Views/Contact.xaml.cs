@@ -18,12 +18,12 @@ namespace Cognitivo.Reporting.Views
     /// <summary>
     /// Interaction logic for SalesByTag.xaml
     /// </summary>
-    public partial class Contacts : Page
+    public partial class Contact : Page
     {
         public bool IsCustomer { get; set; }
         public bool IsSupplier { get; set; }
 
-        public Contacts()
+        public Contact()
         {
             InitializeComponent();
 

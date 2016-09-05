@@ -574,8 +574,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reporting\Views\Contacts.xaml.cs">
-      <DependentUpon>Contacts.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Contact.xaml.cs">
+      <DependentUpon>Contact.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\CostOfGoodsSold.xaml.cs">
       <DependentUpon>CostOfGoodsSold.xaml</DependentUpon>
@@ -610,11 +610,11 @@
     <Compile Include="Reporting\Views\DeliveryByZone.xaml.cs">
       <DependentUpon>DeliveryByZone.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PurchaseInvoiceSummary.xaml.cs">
-      <DependentUpon>PurchaseInvoiceSummary.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\PurchaseInvoice.xaml.cs">
+      <DependentUpon>PurchaseInvoice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PurchaseTenderSummary.xaml.cs">
-      <DependentUpon>PurchaseTenderSummary.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\PurchaseTender.xaml.cs">
+      <DependentUpon>PurchaseTender.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesBySalesman.xaml.cs">
       <DependentUpon>SalesBySalesman.xaml</DependentUpon>
@@ -631,8 +631,8 @@
     <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
       <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PurchaseOrderSummary.xaml.cs">
-      <DependentUpon>PurchaseOrderSummary.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\PurchaseOrder.xaml.cs">
+      <DependentUpon>PurchaseOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\InventorySummary.xaml.cs">
       <DependentUpon>InventorySummary.xaml</DependentUpon>
@@ -1725,7 +1725,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\Contacts.xaml">
+    <Page Include="Reporting\Views\Contact.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1773,11 +1773,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\PurchaseInvoiceSummary.xaml">
+    <Page Include="Reporting\Views\PurchaseInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\PurchaseTenderSummary.xaml">
+    <Page Include="Reporting\Views\PurchaseTender.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1801,7 +1801,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\PurchaseOrderSummary.xaml">
+    <Page Include="Reporting\Views\PurchaseOrder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

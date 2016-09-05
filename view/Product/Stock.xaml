@@ -5,6 +5,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:pref="clr-namespace:Cognitivo.Sales"
+      xmlns:Brillo="clr-namespace:entity.BrilloQuery"
       xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -17,8 +18,8 @@
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
-        
-        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
+
+        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Brillo:Item}, CreateList=True}"/>
     
       
     </Page.Resources>

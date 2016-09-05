@@ -233,6 +233,7 @@ namespace Cognitivo.Menu
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.appName = name;
+                appWindow.Title = appName.Uid;
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();
             }
@@ -255,6 +256,7 @@ namespace Cognitivo.Menu
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.appName = name;
+                appWindow.Title = appName.Uid;
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();
             }

@@ -27,25 +27,25 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
-            dbContext.item_request.Include("item_request_detail").Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             item_requestViewSource.Source = dbContext.item_request.Local;
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detailitem_request_decisionViewSource = ((CollectionViewSource)(FindResource("item_request_detailitem_request_decisionViewSource")));
 
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-            dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
-            app_branchViewSource.Source = dbContext.app_branch.Local;
+            //dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+            app_branchViewSource.Source = CurrentSession.Get_Branch(); //dbContext.app_branch.Local;
 
-            item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            dbContext.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            item_movementViewSource.Source = dbContext.item_movement.Local;
+            //item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+            //dbContext.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            //item_movementViewSource.Source = dbContext.item_movement.Local;
 
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-            app_currencyViewSource.Source = dbContext.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            app_currencyViewSource.Source = CurrentSession.Get_Currency(); // dbContext.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            CollectionViewSource production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            production_orderViewSource.Source = dbContext.production_order.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            //CollectionViewSource production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
+            //production_orderViewSource.Source = dbContext.production_order.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToList();

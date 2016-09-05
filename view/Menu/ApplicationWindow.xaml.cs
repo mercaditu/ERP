@@ -44,7 +44,7 @@ namespace Cognitivo.Menu
 
                     if (objPage.Title != null)
                     {
-                        Title = objPage.Title;
+                        //Title = objPage.Title;
                     }
                 }));
             }

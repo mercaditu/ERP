@@ -19,6 +19,9 @@ namespace entity.BrilloQuery
                              item.code as ItemCode, 
                              item.name as ItemName,
                              brand.name as Brand,
+                             ComapnyID=item.id_company,
+                             is_active=item.is_active,
+                             id_item_type=item.id_item_type,
                              loc.id_location as LocationID, loc.name as Location,
                              (sum(mov.credit) - sum(mov.debit)) as Quantity
                              from items as item
@@ -42,8 +45,9 @@ namespace entity.BrilloQuery
                 foreach (DataRow DataRow in dt.Rows)
                 {
                     GetItem GetItem = new GetItem();
-
-                    GetItem.ID = Convert.ToInt16(DataRow["ID"]);
+                    GetItem.id_item_type = Convert.ToBoolean(DataRow["id_item_type"]);
+                    GetItem.is_active = Convert.ToBoolean(DataRow["is_active"]);
+                    GetItem.ComapnyID = Convert.ToInt16(DataRow["ComapnyID"]);
                     GetItem.Name = Convert.ToString(DataRow["ItemName"]);
                     GetItem.Code = Convert.ToString(DataRow["ItemCode"]);
                     GetItem.BrandName = Convert.ToString(DataRow["Brand"]);
@@ -68,11 +72,14 @@ namespace entity.BrilloQuery
 
     public class GetItem
     {
+        public int ComapnyID { get; set; }
         public int ID { get; set; }
+        public entity.item.item_type id_item_type { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public item.item_type Type { get; set; }
         public string BrandName { get; set; }
+        public bool is_active { get; set; }
 
         public decimal Location { get; set; }
         public decimal InStock { get; set; }

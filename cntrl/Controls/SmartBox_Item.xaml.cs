@@ -126,7 +126,7 @@ namespace cntrl.Controls
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
-                itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));             
+                itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
             }
         }
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -151,7 +151,7 @@ namespace cntrl.Controls
 
             else if (e.Key == Key.Up)
             {
-                if (itemViewSource!=null)
+                if (itemViewSource != null)
                 {
                     if (itemViewSource.View != null)
                     {
@@ -159,8 +159,8 @@ namespace cntrl.Controls
                         itemViewSource.View.Refresh();
                     }
                 }
-              
-            
+
+
             }
             else if (e.Key == Key.Down)
             {
@@ -172,13 +172,13 @@ namespace cntrl.Controls
                         itemViewSource.View.Refresh();
                     }
                 }
-               
+
             }
             else
             {
 
                 string SearchText = tbxSearch.Text;
-                bool ExactCode=(bool)rbtnExactCode.IsChecked;
+                bool ExactCode = (bool)rbtnExactCode.IsChecked;
                 if (SearchText.Count() >= 3)
                 {
                     if (taskSearch != null)
@@ -202,11 +202,11 @@ namespace cntrl.Controls
             }
         }
 
-        private void Search_OnThread(string SearchText,bool ExactCode)
+        private void Search_OnThread(string SearchText, bool ExactCode)
         {
             using (entity.db db = new entity.db())
             {
-              
+
 
                 List<entity.item> results;
                 var param = smartBoxItemSetting.Default.SearchFilter;
@@ -227,7 +227,7 @@ namespace cntrl.Controls
                 {
                     predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
                                       (
-                                          x.code==SearchText
+                                          x.code == SearchText
                                       ));
                 }
                 else
@@ -244,26 +244,26 @@ namespace cntrl.Controls
                         predicate = predicate.And(x => x.id_item_type == item_types);
                     }
                 }
-                
-               
 
-            //      predicate = predicate.And
-            //(
-            //    predicateOR
-            //);
-                //IQueryable<entity.BrilloQuery.GetItem> ItemList;
+
+
+                //      predicate = predicate.And
+                //(
+                //    predicateOR
+                //);
+                //IQueryable<entity.BrilloQuery.GetItem> ItemList=null;
 
                 //entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
                 results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
-                if (Is_Stock)
-                {
-                    results = results.Where(x => (x.item_product.FirstOrDefault() != null ? x.item_product.FirstOrDefault().stock : 1) > 0)
+                //if (Is_Stock)
+                //{
+                //    results = results.Where(x => (x.item_product.FirstOrDefault() != null ? x.item_product.FirstOrDefault().stock : 1) > 0)
 
-                          .OrderBy(x => x.name)
-                          .ToList(); 
-                }
-                
-              
+                //          .OrderBy(x => x.name)
+                //          .ToList(); 
+                //}
+                //ItemList = ItemList.Where(x => x.InStock > 0).AsQueryable();
+
 
 
                 Dispatcher.InvokeAsync(new Action(() =>
@@ -327,11 +327,11 @@ namespace cntrl.Controls
             {
                 Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
             }
-            if (rbtnExactCode.IsChecked==true)
+            if (rbtnExactCode.IsChecked == true)
             {
-                  Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
+                Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
             }
-           
+
 
             Controls.smartBoxItemSetting.Default.Save();
 

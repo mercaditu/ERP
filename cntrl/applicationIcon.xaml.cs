@@ -60,9 +60,14 @@ namespace cntrl
             }
         }
 
-
+        public event ReportClickEventHandler ReportClick;
+        public delegate void ReportClickEventHandler(object sender, RoutedEventArgs e);
         private void Report_Click(object sender, RoutedEventArgs e)
         {
+            if (ReportClick != null)
+            {
+                ReportClick(this, e);
+            }
             e.Handled = true;
         }
     }

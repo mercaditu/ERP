@@ -19,9 +19,9 @@ using Microsoft.Reporting.WinForms.Internal.Soap.ReportingServices2005.Execution
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class SalesOrderSummary : Page
+    public partial class SalesOrder : Page
     {
-        public SalesOrderSummary()
+        public SalesOrder()
         {
             InitializeComponent();            
             Fill(null, null);

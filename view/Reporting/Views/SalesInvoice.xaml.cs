@@ -21,10 +21,10 @@ using System.IO;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class SalesInvoiceSummary : Page
+    public partial class SalesInvoice : Page
     {
         List<cntrl.ReportColumns> ReportColumnsList = new List<cntrl.ReportColumns>();
-        public SalesInvoiceSummary()
+        public SalesInvoice()
         {
             InitializeComponent();
             Fill(null, null);

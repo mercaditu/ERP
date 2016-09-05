@@ -221,7 +221,7 @@ namespace Cognitivo.Menu
             
             ///AssemblyCheck. If reporting exists, don't add Cognitivo.
             appIcon.Tag = "Cognitivo." + _app;
-
+            appIcon.Uid = _name;
             ///Security Check.
             try
             {

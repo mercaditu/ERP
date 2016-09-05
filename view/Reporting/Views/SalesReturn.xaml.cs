@@ -18,11 +18,11 @@ using entity;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class SalesReturnDetail : Page
+    public partial class SalesReturn : Page
     {
       
 
-        public SalesReturnDetail()
+        public SalesReturn()
         {
             InitializeComponent();
             

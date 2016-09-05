@@ -19,9 +19,9 @@ namespace Cognitivo.Reporting.Views
     /// <summary>
     /// Interaction logic for SalesByTag.xaml
     /// </summary>
-    public partial class TransferSummary : Page
+    public partial class Movement : Page
     {
-        public TransferSummary()
+        public Movement()
         {
             InitializeComponent();
             Fill(null, null);

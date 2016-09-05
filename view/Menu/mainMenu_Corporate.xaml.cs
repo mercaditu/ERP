@@ -187,6 +187,10 @@ namespace Cognitivo.Menu
                     cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                     appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                     appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+                    if (appIcon.HasReport)
+                    {
+                        appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);   
+                    }
                     stck.Children.Add(appIcon);                    
                 }
                 else
@@ -207,6 +211,10 @@ namespace Cognitivo.Menu
                     cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                     appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                     appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+                    if (appIcon.HasReport)
+                    {
+                        appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                    }
                 
                     stck.Children.Add(appIcon);
                     wrapApps.Children.Add(stck);
@@ -232,6 +240,25 @@ namespace Cognitivo.Menu
             {
                 dynamic taskAuth = Task.Factory.StartNew(() => open_PageThread(name));
             }
+
+            e.Handled = true;
+        }
+
+        public void open_Report(object sender, RoutedEventArgs e)
+        {
+            cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
+            //string name = appName.Tag.ToString();
+
+            string name = "Cognitivo.Reporting.Views." + appName.Uid;
+
+            try
+            {
+                ApplicationWindow appWindow = new ApplicationWindow();
+                appWindow.appName = name;
+                appWindow.Icon = appName.imgSource;
+                appWindow.Show();
+            }
+            catch { }
 
             e.Handled = true;
         }

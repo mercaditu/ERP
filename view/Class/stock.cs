@@ -11,8 +11,8 @@ namespace Cognitivo.Class
 {
     public class StockList
     {
-        public string ItemName { get; set; }
-        public string ItemCode { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
         public string Location { get; set; }
         public string Brand { get; set; }
         public int ProductID { get; set; }
@@ -26,22 +26,22 @@ namespace Cognitivo.Class
     {
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
-            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, 
-                             item.name as ItemName, prod.id_item_product as ProductID, 
+            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as Code, 
+                             item.name as Name, prod.id_item_product as ProductID, 
                              (sum(mov.credit) - sum(mov.debit)) as Quantity, 
                              measure.name as Measurement,
                              (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
-                             brand.name,          
+                             brand.name as Brand        
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch
                              inner join item_product as prod on mov.id_item_product = prod.id_item_product 
                              inner join items as item on prod.id_item = item.id_item
-                             left join item_brand as brand on brand.id_brand = prod.id_brand
+                             left join item_brand as brand on brand.id_brand = item.id_brand
                              left join app_measurement as measure on item.id_measurement = measure.id_measurement 
                              where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
                              group by loc.id_location, prod.id_item_product
-                             order by mov.trans_date, mov.id_movement";
+                             order by item.name";
             query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
             DataTable dt = exeDT(query);
             return GenerateList(dt);
@@ -193,8 +193,8 @@ namespace Cognitivo.Class
             foreach (DataRow DataRow in dt.Rows)
             {
                 StockList Stock = new Class.StockList();
-                Stock.ItemCode = DataRow["ItemCode"].ToString();
-                Stock.ItemName = DataRow["ItemName"].ToString();
+                Stock.Code = DataRow["Code"].ToString();
+                Stock.Name = DataRow["Name"].ToString();
                 Stock.Location = DataRow["Location"].ToString();
                 Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
                 Stock.Measurement = DataRow["Measurement"].ToString();

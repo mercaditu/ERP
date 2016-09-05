@@ -42,7 +42,7 @@ namespace entity.BrilloQuery
 	                             group by item.id_item
 	                             order by item.name";
 
-            query = String.Format(query, entity.CurrentSession.Id_Company,CurrentSession.Id_Branch);
+            query = String.Format(query, entity.CurrentSession.Id_Company, CurrentSession.Id_Branch);
 
             using (DataTable dt = QueryExecutor.DT(query))
             {

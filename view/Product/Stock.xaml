@@ -5,7 +5,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:pref="clr-namespace:Cognitivo.Sales"
-      xmlns:Brillo="clr-namespace:entity.BrilloQuery"
+      xmlns:Stock="clr-namespace:Cognitivo.Class"
       xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -19,7 +19,7 @@
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
 
-        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Brillo:Item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Stock:StockList}, CreateList=True}"/>
     
       
     </Page.Resources>
@@ -53,8 +53,8 @@
                     RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" ItemsSource="{Binding Source={StaticResource inventoryViewSource}}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:Product}" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*"/>
                     <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N2}}" 
                                         ElementStyle="{StaticResource RightAlignStyle}" 
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>

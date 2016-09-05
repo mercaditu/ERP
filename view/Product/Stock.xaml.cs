@@ -49,11 +49,12 @@ namespace Cognitivo.Product
 
             if (app_branch != null && app_branch.id_branch > 0)
             {
-                int id_branch = app_branch.id_branch;
+                int BranchID = app_branch.id_branch;
 
                 Class.StockCalculations StockCalculations = new Class.StockCalculations();
+                
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
-                inventoryViewSource.Source = StockCalculations.ByBranch(id_branch, InventoryDate);
+                inventoryViewSource.Source = StockCalculations.ByBranch(BranchID, InventoryDate);
 
                 TextBox_TextChanged(null, null);
             }

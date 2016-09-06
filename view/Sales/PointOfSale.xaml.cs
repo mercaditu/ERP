@@ -174,25 +174,26 @@ namespace Cognitivo.Sales
 
         #endregion
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ///This code will create a new Sale & Payment Information.
             New_Sale_Payment();
 
             //PAYMENT TYPE
-            SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+            await SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
-            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //CurrentSession.Get_SalesRep();
+            cbxSalesRep.ItemsSource = await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
 
             int Id_Account = CurrentSession.Id_Account;
-            if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            app_account app_account = SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+            if (app_account != null)
             {
-                if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
+                if (app_account.is_active == false)
                 {
                     btnAccount_Click(sender, e);
                     frmaccount.Refresh();

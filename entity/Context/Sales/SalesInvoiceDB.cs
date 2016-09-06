@@ -34,12 +34,14 @@ namespace entity
                     sales_invoice.id_range = app_document_range.id_range;
                 }
 
-                if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault() != null)
+                app_contract _app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
+                if (_app_contract != null)
                 {
-                    if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
+                    app_condition _app_condition = _app_contract.app_condition;
+                    if (_app_condition != null)
                     {
-                        sales_invoice.app_condition = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
-                        sales_invoice.app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
+                        sales_invoice.app_condition = _app_condition;
+                        sales_invoice.app_contract = _app_contract;
                     }
                 }
             }

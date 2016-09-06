@@ -23,10 +23,10 @@ namespace entity
             if (Is_PaymentRecievable)
             {
                 payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
-
-                if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
+                app_document_range _app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+                if (_app_document_range != null)
                 {
-                    payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+                    payment.app_document_range = _app_document_range;
                 }
             }
 

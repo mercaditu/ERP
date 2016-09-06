@@ -312,5 +312,11 @@ namespace cntrl.Controls
 
             Controls.smartBoxItemSetting.Default.Save();
         }
+
+        private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+            Task task = Task.Factory.StartNew(() => LoadData());
+        }
     }
 }

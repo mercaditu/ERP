@@ -233,7 +233,7 @@ namespace Cognitivo.Menu
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.appName = name;
-                appWindow.Title = appName.Uid;
+                appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();
             }
@@ -248,7 +248,6 @@ namespace Cognitivo.Menu
         public void open_Report(object sender, RoutedEventArgs e)
         {
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
-            //string name = appName.Tag.ToString();
 
             string name = "Cognitivo.Reporting.Views." + appName.Uid;
 
@@ -256,7 +255,7 @@ namespace Cognitivo.Menu
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.appName = name;
-                appWindow.Title = appName.Uid;
+                appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();
             }

@@ -104,7 +104,7 @@
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="1" Direction="270" Opacity="0.8"/>
                 </Border.Effect>
-                <DataGrid MaxWidth="512" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
+                <DataGrid MaxWidth="512" MaxHeight="600" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
                           IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding Brand}" FontWeight="Bold" Width="auto"/>

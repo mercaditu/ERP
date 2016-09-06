@@ -112,7 +112,7 @@ namespace Cognitivo.Class
                               left join projects as p on it.id_project = p.id_project
                               inner join security_user as u on it.id_user = u.id_user
                               left join security_user as r on it.user_requested_id_user = r.id_user
-                              where {0} it.trans_date >= {1} and it.trans_date <= {2}
+                              where {0} it.trans_date >= '{1}' and it.trans_date <= '{2}'
                               order by it.trans_date";
             
             string WhereQuery = String.Format("it.id_company = {0} and ", entity.CurrentSession.Id_Company);

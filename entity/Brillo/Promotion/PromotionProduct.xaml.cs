@@ -32,7 +32,7 @@ namespace entity.Brillo.Promotion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity) != TotalQuantity)
+            if (TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity) != TotalQuantity) 
             {
                 MessageBox.Show("Invalid quantity.. Total Quantity Is:" + TotalQuantity + " You have Selectd :-" + TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity));
             }

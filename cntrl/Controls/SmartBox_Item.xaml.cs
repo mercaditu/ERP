@@ -147,7 +147,10 @@ namespace cntrl.Controls
                DispatcherPriority.ContextIdle,
                new Action(delegate()
                {
-                   Items = Execute.Items.AsQueryable();
+              
+                       Items = Execute.Items.AsQueryable();
+               
+                  
                }));
             }
         }
@@ -245,6 +248,11 @@ namespace cntrl.Controls
                 {
                     predicate = predicate.And(x => x.Type == item_types);
                 }
+                if (Exclude_OutOfStock == true)
+                {
+                    predicate = predicate.And(x => x.InStock>0);
+                }
+                
             }
 
             Dispatcher.InvokeAsync(new Action(() =>

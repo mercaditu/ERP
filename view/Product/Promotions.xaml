@@ -15,6 +15,7 @@
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagBonusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
     </Page.Resources>
 
     <Grid DataContext="{StaticResource sales_promotionViewSource}" Background="White">
@@ -89,14 +90,24 @@
                 
                 <StackPanel Grid.Column="1">
                     <Label Content="Output" Style="{StaticResource H2}"/>
-                    <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
+                    <StackPanel x:Name="Item_Bonus">
+                        <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
                     <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
+                    </StackPanel>
+                                
+                    <StackPanel x:Name="Tag_Bonus">
+                        <Label Content="Tags" Style="{StaticResource input_label}"/>
+                        <ComboBox Style="{StaticResource input_combobox}"
+                              DisplayMemberPath="name" SelectedValuePath="id_tag"
+                              ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
+                              SelectedValue="{Binding reference_bonus, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </StackPanel>
         
         <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2"
-                       appName="ItemPromotion"
+                       appName="SalesPromotion"
                        btnNew_Click="toolBar_btnNew_Click"
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"

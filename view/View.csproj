@@ -586,9 +586,6 @@
     <Compile Include="Reporting\Views\AccountsRecievableAnalisys.xaml.cs">
       <DependentUpon>AccountsRecievableAnalisys.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\Transfer.xaml.cs">
-      <DependentUpon>Transfer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\Movement.xaml.cs">
       <DependentUpon>Movement.xaml</DependentUpon>
     </Compile>
@@ -1741,10 +1738,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\AccountsRecievableAnalisys.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\Transfer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

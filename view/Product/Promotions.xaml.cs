@@ -20,7 +20,7 @@ namespace Cognitivo.Product
     public partial class Promotions : Page
     {
         PromotionDB PromotionDB = new PromotionDB();
-        CollectionViewSource sales_promotionViewSource, item_tagViewSource;
+        CollectionViewSource sales_promotionViewSource, item_tagViewSource, item_tagBonusViewSource;
 
         public Promotions()
         {
@@ -34,8 +34,10 @@ namespace Cognitivo.Product
             sales_promotionViewSource.Source = PromotionDB.sales_promotion.Local;
 
             item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
+            item_tagBonusViewSource = FindResource("item_tagBonusViewSource") as CollectionViewSource;
             await PromotionDB.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             item_tagViewSource.Source = PromotionDB.item_tag.Local;
+            item_tagBonusViewSource.Source = PromotionDB.item_tag.Local;
 
             cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.Type)).OfType<sales_promotion.Type>().ToList();
         }
@@ -44,7 +46,7 @@ namespace Cognitivo.Product
         private void toolBar_btnNew_Click(object sender)
         {
             sales_promotion sales_promotion = PromotionDB.New();
-
+            sales_promotion.IsSelected = true;
             PromotionDB.sales_promotion.Add(sales_promotion);
             sales_promotionViewSource.View.Refresh();
             sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
@@ -55,6 +57,7 @@ namespace Cognitivo.Product
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
             if (sales_promotion != null)
             {
+                sales_promotion.IsSelected = true;
                 sales_promotion.State = System.Data.Entity.EntityState.Modified;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
@@ -142,13 +145,17 @@ namespace Cognitivo.Product
             if (sales_promotion.types == entity.sales_promotion.Type.BuyThis_GetThat)
             {
                 Tag_Parameter.Visibility = System.Windows.Visibility.Collapsed;
+                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
                 Item_Parameter.Visibility = System.Windows.Visibility.Visible;
+                Item_Bonus.Visibility = System.Windows.Visibility.Visible;
             }
             //Buy Tag and get Bonus Item
             else if (sales_promotion.types == entity.sales_promotion.Type.BuyTag_GetThat)
             {
                 Tag_Parameter.Visibility = System.Windows.Visibility.Visible;
+                Tag_Bonus.Visibility = System.Windows.Visibility.Visible;
                 Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
+                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

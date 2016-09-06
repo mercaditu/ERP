@@ -178,7 +178,5 @@ namespace Cognitivo.Menu
         {
             myFrame.Navigate(new Configs.Settings());
         }
-
-       
     }
 }

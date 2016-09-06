@@ -10,6 +10,7 @@ using entity;
 using System.Data;
 using System.Data.Entity.Validation;
 using entity.Brillo;
+using System.Threading.Tasks;
 
 namespace Cognitivo.Sales
 {
@@ -115,9 +116,11 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = SalesInvoiceDB.New(0, false);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-            sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-            sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
+            Dispatcher.BeginInvoke((Action)(() => {
+                sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+                sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+                sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
+            }));
 
             PaymentDB = new PaymentDB();
             ///Creating new PAYMENT for upcomming sale. 
@@ -125,12 +128,15 @@ namespace Cognitivo.Sales
             payment.id_currencyfx = sales_invoice.id_currencyfx;
             PaymentDB.payments.Add(payment);
 
-            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-            paymentViewSource.Source = PaymentDB.payments.Local;
-            paymentViewSource.View.MoveCurrentTo(payment);
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+                paymentViewSource.Source = PaymentDB.payments.Local;
+                paymentViewSource.View.MoveCurrentTo(payment);
 
-            tabContact.Focus();
-            sbxContact.Text = "";
+                tabContact.Focus();
+                sbxContact.Text = "";
+            }));
         }
 
         #endregion
@@ -177,6 +183,7 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ///This code will create a new Sale & Payment Information.
+            //Task task = Task.Factory.StartNew(() => New_Sale_Payment());
             New_Sale_Payment();
 
             //PAYMENT TYPE

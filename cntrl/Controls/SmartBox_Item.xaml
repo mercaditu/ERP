@@ -33,7 +33,14 @@
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
-            <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+            <ToggleButton Width="28" Content="" ToolTip="Exact Code Search" Foreground="White" Background="Gainsboro"
+                    Style="{DynamicResource MetroCircleToggleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"
+                    IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=ExactSearch, Mode=TwoWay}">
+                <ToggleButton.Effect>
+                    <DropShadowEffect Color="Purple" BlurRadius="3" ShadowDepth="0"/>
+                </ToggleButton.Effect>
+            </ToggleButton>
+            <StackPanel x:Name="stackpnlCustomize" Margin="0,3">
                 <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0" 
                            HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
@@ -43,22 +50,17 @@
                         <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
                             <StackPanel Orientation="Vertical" Background="White">
                                
-                                <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc Stock Item}" 
-                                      IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"
-                                     />
+                                <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc InStock}" 
+                                      IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"/>
                                 <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=1}"
                                       Checked="RadioButton_Checked"/>
                                 <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=2}" 
                                       Checked="RadioButton_Checked"/>
-                                <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tag}"
+                                <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tags}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=3}" 
                                       Checked="RadioButton_Checked"/>
-                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc SearchByExactCode}"
-                                      IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=4}" 
-                                      Checked="RadioButton_Checked"/>
-
                             </StackPanel>
                         </Border>
                     </Popup>

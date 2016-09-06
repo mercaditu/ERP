@@ -25,15 +25,49 @@ namespace cntrl.Controls {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>Name</string>\r\n  <string>Code</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection SearchFilter {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExactSearch {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["SearchFilter"]));
+                return ((bool)(this["ExactSearch"]));
             }
             set {
-                this["SearchFilter"] = value;
+                this["ExactSearch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Name {
+            get {
+                return ((bool)(this["Name"]));
+            }
+            set {
+                this["Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Code {
+            get {
+                return ((bool)(this["Code"]));
+            }
+            set {
+                this["Code"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Tag {
+            get {
+                return ((bool)(this["Tag"]));
+            }
+            set {
+                this["Tag"] = value;
             }
         }
     }

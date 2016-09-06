@@ -200,8 +200,8 @@ namespace cntrl.Controls
             else
             {
                 string SearchText = tbxSearch.Text;
-                bool ExactCode = (bool)rbtnExactCode.IsChecked;
-                if (SearchText.Count() >= 3)
+
+                if(SearchText.Count() >= 1)
                 {
                     if (taskSearch != null)
                     {
@@ -215,7 +215,7 @@ namespace cntrl.Controls
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
-                    taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText, ExactCode), token);
+                    taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
                 }
                 else
                 {
@@ -224,13 +224,11 @@ namespace cntrl.Controls
             }
         }
 
-        private void Search_OnThread(string SearchText, bool ExactCode)
+        private void Search_OnThread(string SearchText)
         {
-            //List<entity.item> results;
-            var param = smartBoxItemSetting.Default.SearchFilter;
             var predicate = PredicateBuilder.True<entity.BrilloQuery.Item>();
 
-            if (ExactCode == true)
+            if (smartBoxItemSetting.Default.ExactSearch)
             {
                 predicate = (x => x.IsActive && x.ComapnyID == entity.CurrentSession.Id_Company && ( x.Code == SearchText ));
             }
@@ -252,7 +250,6 @@ namespace cntrl.Controls
             Dispatcher.InvokeAsync(new Action(() =>
             {
                 itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
-                //Item = itemViewSource.View.CurrentItem as entity.item;
 
                 ItemPopUp.IsOpen = true;
                 progBar.IsActive = false;
@@ -291,30 +288,29 @@ namespace cntrl.Controls
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (Controls.smartBoxItemSetting.Default.SearchFilter != null)
-            {
-                Controls.smartBoxItemSetting.Default.SearchFilter.Clear();
-            }
+            //if (Controls.smartBoxItemSetting.Default.SearchFilter != null)
+            //{
+            //    Controls.smartBoxItemSetting.Default.SearchFilter.Clear();
+            //}
 
-            if (rbtnCode.IsChecked == true)
-            {
-                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Code");
-            }
-            if (rbtnName.IsChecked == true)
-            {
-                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Name");
-            }
-            if (rbtnTag.IsChecked == true)
-            {
-                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
-            }
-            if (rbtnExactCode.IsChecked == true)
-            {
-                Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
-            }
+            //if (rbtnCode.IsChecked == true)
+            //{
+            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Code");
+            //}
+            //if (rbtnName.IsChecked == true)
+            //{
+            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Name");
+            //}
+            //if (rbtnTag.IsChecked == true)
+            //{
+            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
+            //}
+            //if (rbtnExactCode.IsChecked == true)
+            //{
+            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
+            //}
 
             Controls.smartBoxItemSetting.Default.Save();
-
         }
     }
 }

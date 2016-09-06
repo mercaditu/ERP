@@ -199,7 +199,7 @@ namespace cntrl.Controls
             app_currencyfx app_currencyfx = null;
             if (contact.app_currency != null && contact.app_currency.app_currencyfx != null && contact.app_currency.app_currencyfx.Count > 0)
             {
-                app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
+                app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault();
             }
 
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
@@ -207,7 +207,8 @@ namespace cntrl.Controls
                 SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
             else
             {
-                SelectedValue = 1;
+                app_currency app_currency=CurrentSession.Currency_Default;
+                SelectedValue = app_currency.app_currencyfx.FirstOrDefault().id_currencyfx;
                 // cbCurrency.SelectedValue = -1;
             }
         }

@@ -11,8 +11,8 @@ namespace Cognitivo.Class
 {
     public class StockList
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
+        public string ItemName { get; set; }
+        public string ItemCode { get; set; }
         public string Location { get; set; }
         public string Brand { get; set; }
         public int ProductID { get; set; }
@@ -26,8 +26,8 @@ namespace Cognitivo.Class
     {
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
-            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as Code, 
-                             item.name as Name, prod.id_item_product as ProductID, 
+            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, 
+                             item.name as ItemName, prod.id_item_product as ProductID, 
                              (sum(mov.credit) - sum(mov.debit)) as Quantity, 
                              measure.name as Measurement,
                              (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
@@ -112,7 +112,7 @@ namespace Cognitivo.Class
                               left join projects as p on it.id_project = p.id_project
                               inner join security_user as u on it.id_user = u.id_user
                               left join security_user as r on it.user_requested_id_user = r.id_user
-                              where {0} it.trans_date <= {1} and it.trans_date >= {2}
+                              where {0} it.trans_date >= {1} and it.trans_date <= {2}
                               order by it.trans_date";
             
             string WhereQuery = String.Format("it.id_company = {0} and ", entity.CurrentSession.Id_Company);
@@ -193,8 +193,8 @@ namespace Cognitivo.Class
             foreach (DataRow DataRow in dt.Rows)
             {
                 StockList Stock = new Class.StockList();
-                Stock.Code = DataRow["ItemCode"].ToString();
-                Stock.Name = DataRow["ItemName"].ToString();
+                Stock.ItemCode = DataRow["ItemCode"].ToString();
+                Stock.ItemName = DataRow["ItemName"].ToString();
                 Stock.Location = DataRow["Location"].ToString();
                 Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
                 Stock.Measurement = DataRow["Measurement"].ToString();

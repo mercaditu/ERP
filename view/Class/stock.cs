@@ -193,8 +193,8 @@ namespace Cognitivo.Class
             foreach (DataRow DataRow in dt.Rows)
             {
                 StockList Stock = new Class.StockList();
-                Stock.Code = DataRow["Code"].ToString();
-                Stock.Name = DataRow["Name"].ToString();
+                Stock.Code = DataRow["ItemCode"].ToString();
+                Stock.Name = DataRow["ItemName"].ToString();
                 Stock.Location = DataRow["Location"].ToString();
                 Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
                 Stock.Measurement = DataRow["Measurement"].ToString();

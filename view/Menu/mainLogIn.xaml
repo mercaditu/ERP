@@ -27,59 +27,59 @@
         </Storyboard>
         <Storyboard x:Key="loadAvatar">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:SwirlEffect.TwistAmount)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:BloomEffect.BloomIntensity)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="4.125"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="4.125"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="4.5916666666666668"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="4.125"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="4.125"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="4.5916666666666668"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="5"/>
             </DoubleAnimationUsingKeyFrames>
             <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:MagnifyEffect.Center)" Storyboard.TargetName="ellipse">
-                <EasingPointKeyFrame KeyTime="0" Value="0.5,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.883333333333333,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:2.5" Value="0.883333333333333,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:3.3" Value="0.945555555555555,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:4" Value="1,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.883333333333333,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.883333333333333,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.945555555555555,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:4.1" Value="1,0.5"/>
             </PointAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:PixelateEffect.Pixelation)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.75"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.92633333333333334"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.92633333333333334"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0.95495555555555556"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0.98"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.75"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.92633333333333334"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.92633333333333334"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.95495555555555556"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.98"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="32.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="47.166666666666664"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="32.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="47.166666666666664"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="60"/>
             </DoubleAnimationUsingKeyFrames>
             <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Center)" Storyboard.TargetName="ellipse">
-                <EasingPointKeyFrame KeyTime="0" Value="0.5,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.5,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:2.5" Value="0.5,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:3.3" Value="0.5,0.5"/>
-                <EasingPointKeyFrame KeyTime="0:0:4" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:4.1" Value="0.5,0.5"/>
             </PointAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Phase)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="6.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="8.3666666666666671"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="10"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="6.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="8.3666666666666671"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="10"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Magnitude)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.01"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.065"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0.083666666666666667"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0.1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.01"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.065"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.083666666666666667"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
                 <EasingDoubleKeyFrame KeyTime="0" Value="1"/>

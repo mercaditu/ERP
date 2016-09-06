@@ -27,25 +27,25 @@ namespace Cognitivo.Product
             CurrencyID = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
             item_inventoryitem_inventory_detailViewSource = (CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource"));
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
-            InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
             CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
+            await InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).LoadAsync();
             app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
 
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
-            InventoryDB.app_branch.Include(b => b.app_location)
+            await InventoryDB.app_branch
                 .Where(a => a.is_active == true
                     && a.can_stock == true
                     && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).Load();
+                .OrderBy(a => a.name).LoadAsync();
 
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
             app_branchViewSource.View.MoveCurrentToFirst();
@@ -122,35 +122,13 @@ namespace Cognitivo.Product
                                 item_inventory_detail.id_currencyfx = CurrencyID;
                             }
 
-                            /////Cost
-                            //using (db db = new db())
-                            //{
-                            //    if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.credit > 0).Take(1).ToList().Count() > 0)
-                            //    {
-                            //        item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.credit > 0)
-                            //                                                 .OrderBy(x => x.trans_date).Take(1).FirstOrDefault();
-
-                            //        if (item_movement.item_movement_value.LastOrDefault() != null)
-                            //        {
-                            //            item_inventory_detail.unit_value = item_movement.item_movement_value.Sum(x => x.unit_value);
-                            //        }
-
-                            //    }
-                            //    else
-                            //    {
-                            //        item_inventory_detail.unit_value = 0;
-                            //    }
-                            //}
-
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }
                     }
                 }
-                //Dispatcher.InvokeAsync(new Action(() =>
-                //{
+
                 item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 filetr_detail();
-                //}));
             }
         }
 

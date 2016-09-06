@@ -95,7 +95,7 @@
                     <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                 </StackPanel>
             </Grid>
-            
+
             <!-- Right Side Panel -->
             <Grid Grid.Column="2" DataContext="{StaticResource item_inventoryViewSource}">
                 <StackPanel Margin="8">
@@ -107,7 +107,7 @@
 
             <Grid Grid.Row="1">
                 <ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Margin="2"
-                          DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top"
+                          DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
                           SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}" 
                           SelectionChanged="CbxBranch_SelectionChanged"/>
                 <ListBox x:Name="location_ListBox" Background="White" Margin="2,32,2,2"
@@ -129,12 +129,12 @@
             </Grid>
 
             <Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-                
+
                 <Button Style="{StaticResource btn_green}" Content="{lex:Loc Extract}" Click="location_ListBox_SelectionChanged"
                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"/>
 
-                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2">
-                    <TextBox Width="185" x:Name="txtsearch" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
+                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2">
+                    <TextBox x:Name="txtsearch" Width="256" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" Margin="-71,0,0,0"/>
                     <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
                 </Grid>
 

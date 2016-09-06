@@ -190,7 +190,7 @@ namespace Cognitivo.Sales
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
 
             int Id_Account = CurrentSession.Id_Account;
-            app_account app_account = SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+            app_account app_account = await SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
             if (app_account != null)
             {
                 if (app_account.is_active == false)

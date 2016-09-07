@@ -148,12 +148,13 @@ namespace entity
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
+                if (invoice.id_sales_invoice == 0)
+                {
+                    SaveChanges();
+                }
                 if (Check_CreditLimit(invoice))
                 {
-                    if (invoice.id_sales_invoice == 0)
-                    {
-                        SaveChanges();
-                    }
+                  
 
                     //Logic
                     List<payment_schedual> payment_schedualList = new List<payment_schedual>();

@@ -101,9 +101,14 @@ namespace Cognitivo.Setup.Migration
                     app_vat_group app_vat_group10 = VATGroupList.Where(x => x.name.Contains("10")).FirstOrDefault();
                     app_vat_group app_vat_group5 = VATGroupList.Where(x => x.name.Contains("5")).FirstOrDefault();
                     app_vat_group app_vat_group0 = VATGroupList.Where(x => x.name.Contains("0")).FirstOrDefault();
-                    
+
+                  
                     foreach (DataRow InnerRow in dt_sales.Select("CODVENTA > " + FloorValue + " AND CODVENTA < " + RoofValue + "")) 
                     {
+                        if (value == 79)
+                        {
+                            System.Windows.Forms.MessageBox.Show("Test");
+                        }
                             sales_invoice sales_invoice = new entity.sales_invoice();
                             sales_invoice.State = EntityState.Added;
                             sales_invoice.status = Status.Documents_General.Pending;
@@ -345,9 +350,9 @@ namespace Cognitivo.Setup.Migration
                                         db.SaveChanges();
                                         sales_invoice.IsSelected = false;
                                     }
-                                    catch (Exception)
+                                    catch (Exception ex)
                                     {
-                                        throw;
+                                        throw ex;
                                     }
                                 }
                             }

@@ -22,9 +22,9 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class CarnetContactReport : Page
     {
-        public List<ContactLists> ContactList { get; set; }
+        public object ContactList { get; set; }
 
-        public CarnetContactReport(List<ContactLists> ContactLists)
+        public CarnetContactReport(object ContactLists)
         {
             InitializeComponent();
             ContactList = ContactLists;
@@ -47,11 +47,18 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.RefreshReport();
         }
 
-       
+
     }
     public class ContactLists
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+
+        public int id_contact { get; set; }
+        public string contacts_name { get; set; }
+        public string date_birth { get; set; }
+        public string gove_code { get; set; }
+        public string trans_date { get; set; }
+        public string contacts_code { get; set; }
+        public string Product_code { get; set; }
+        public string name { get; set; }
     }
 }

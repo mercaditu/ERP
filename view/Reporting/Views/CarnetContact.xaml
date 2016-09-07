@@ -21,9 +21,9 @@
         </Grid>
         <DataGrid Grid.Row="1" Name="ContactGridView" AutoGenerateColumns="False" CanUserAddRows="False" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Code, UpdateSourceTrigger=PropertyChanged}"
+                <DataGridTextColumn Binding="{Binding contacts_code, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="Code" IsReadOnly="True" Width="100"/>
-                <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                <DataGridTextColumn Binding="{Binding contacts_name,  UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="Name" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

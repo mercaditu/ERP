@@ -32,8 +32,8 @@ namespace Cognitivo.Setup.Migration
             supplier_Task.Wait();
             product_Task.Wait();
 
-            //Task accounting_Task = Task.Factory.StartNew(() => accounting());
-            //accounting_Task.Wait();
+            Task accounting_Task = Task.Factory.StartNew(() => accounting());
+            accounting_Task.Wait();
             //////  Start Sales and Purchase
             //Task purchase_Task = Task.Factory.StartNew(() => purchase());
 
@@ -223,7 +223,7 @@ namespace Cognitivo.Setup.Migration
                         dbContext.SaveChanges();
                     }
                 }
-                id_branch = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
+                id_branch = dbContext.app_branch.Where(i => i.id_company == id_company && i.can_stock).FirstOrDefault().id_branch;
                 id_terminal = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {

@@ -527,11 +527,6 @@
     <Compile Include="Reporting\Data\ContactDS.Designer.cs">
       <DependentUpon>ContactDS.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Data\ContactDS1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ContactDS.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
       <SubType>Component</SubType>

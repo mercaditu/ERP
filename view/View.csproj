@@ -520,6 +520,18 @@
     <Compile Include="Purchase\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\ContactDS.cs">
+      <DependentUpon>ContactDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\Data\ContactDS.Designer.cs">
+      <DependentUpon>ContactDS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Data\ContactDS1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -573,6 +585,12 @@
       <DependentUpon>SalesDS.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reporting\Views\CarnetContact.xaml.cs">
+      <DependentUpon>CarnetContact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\CarnetContactReport.xaml.cs">
+      <DependentUpon>CarnetContactReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
@@ -1036,6 +1054,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Reports\CarnetContact.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
@@ -1336,6 +1355,17 @@
       <LastGenOutput>InvoiceSetting.Designer.cs</LastGenOutput>
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
+    <None Include="Reporting\Data\ContactDS.xsc">
+      <DependentUpon>ContactDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\ContactDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ContactDS1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reporting\Data\ContactDS.xss">
+      <DependentUpon>ContactDS.xsd</DependentUpon>
+    </None>
     <None Include="Reporting\Data\FinanceDS.xsc">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </None>
@@ -1725,6 +1755,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Purchase\PackingList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\CarnetContact.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\CarnetContactReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

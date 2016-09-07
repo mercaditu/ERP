@@ -16,6 +16,8 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            is_read = false;
+            timestamp = DateTime.Now;
             item_movement= new List<item_movement>();
         }
 

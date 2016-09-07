@@ -25,15 +25,15 @@ namespace Cognitivo.Setup.Migration
             Task supplier_Task = Task.Factory.StartNew(() => supplier());
             Task product_Task = Task.Factory.StartNew(() => product());
 
-            ////////Wait for Related Tables to finish so we can be 
-            ////////assured that they are available for us when 
-            ////////we start with sales and purchase.
+            //////Wait for Related Tables to finish so we can be 
+            //////assured that they are available for us when 
+            //////we start with sales and purchase.
             customer_Task.Wait();
             supplier_Task.Wait();
             product_Task.Wait();
 
-            Task accounting_Task = Task.Factory.StartNew(() => accounting());
-            accounting_Task.Wait();
+            //Task accounting_Task = Task.Factory.StartNew(() => accounting());
+            //accounting_Task.Wait();
             //////  Start Sales and Purchase
             //Task purchase_Task = Task.Factory.StartNew(() => purchase());
 
@@ -124,6 +124,15 @@ namespace Cognitivo.Setup.Migration
             payment_type.payment_behavior = entity.payment_type.payment_behaviours.Normal;
             payment_type.is_default = true;
            return payment_type;
+        }
+        public app_location GenerateDefaultLocation(app_branch app_branch)
+        {
+            app_location app_location = new app_location();
+            app_location.name = "Default";
+            app_location.id_branch = app_branch.id_branch;
+            app_location.is_default = true;
+            app_branch.app_location.Add(app_location);
+            return app_location;
         }
 
         public app_account GenerateDefaultApp_Account()

@@ -219,6 +219,7 @@ namespace cntrl.Controls
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
                     taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
+                  //  Search_OnThread(SearchText);
                 }
                 else
                 {
@@ -257,10 +258,15 @@ namespace cntrl.Controls
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
+                if (Items.Where(predicate).Count()>0)
+                {
+                    itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
 
-                ItemPopUp.IsOpen = true;
+                    ItemPopUp.IsOpen = true;
+              
+                }
                 progBar.IsActive = false;
+
             }));
         }
 

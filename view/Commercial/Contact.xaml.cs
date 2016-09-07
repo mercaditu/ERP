@@ -489,6 +489,13 @@ namespace Cognitivo.Commercial
             }
         }
 
+        private void toolIcon_Click_1(object sender, RoutedEventArgs e)
+        {
+            entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
+          
+            Document.Document_PrintCarnetContact();
+        }
+
     
     }
 }

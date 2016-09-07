@@ -400,5 +400,18 @@ namespace entity.Brillo.Logic
 
             window.ShowDialog();
         }
+        public void Document_PrintCarnetContact()
+        {
+
+            DocumentViewr MainWindow = new DocumentViewr();
+            MainWindow.loadCarnetcontactReportall();
+            Window window = new Window
+            {
+                Title = "Report",
+                Content = MainWindow
+            };
+
+            window.ShowDialog();
+        }
     }
 }

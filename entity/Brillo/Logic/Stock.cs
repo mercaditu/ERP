@@ -281,21 +281,27 @@ namespace entity.Brillo.Logic
                             }
                         }
 
+                        if ((decimal)item_inventory_detail.value_counted > 0)
+                        {
 
-                        item_movementList.Add(
-                         CreditOnly_Movement(
-                             entity.Status.Stock.InStock,
-                             App.Names.Inventory,
-                             item_inventory_detail.id_inventory,
-                             item_inventory_detail.id_inventory_detail,
-                              app_currencyfx,
-                             item_product,
-                             item_inventory_detail.app_location,
-                             (decimal)item_inventory_detail.value_counted,
-                             item_inventory_detail.timestamp,
-                             item_inventory_detail.unit_value,
-                          comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
-                             ));
+                            item_movementList.Add(
+
+
+
+                             CreditOnly_Movement(
+                                 entity.Status.Stock.InStock,
+                                 App.Names.Inventory,
+                                 item_inventory_detail.id_inventory,
+                                 item_inventory_detail.id_inventory_detail,
+                                  app_currencyfx,
+                                 item_product,
+                                 item_inventory_detail.app_location,
+                                 (decimal)item_inventory_detail.value_counted,
+                                 item_inventory_detail.timestamp,
+                                 item_inventory_detail.unit_value,
+                              comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
+                              ));
+                        }
                     }
                     else
                     {

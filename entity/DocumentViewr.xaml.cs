@@ -71,7 +71,7 @@ namespace entity
 
                 if (!sales_packing.app_document_range.use_default_printer)
                 {
-                    
+
                     reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_PackingList.rdlc"; // Path of the rdlc file
                     reportViewer.LocalReport.DataSources.Add(reportDataSource);
                     reportViewer.RefreshReport();
@@ -128,9 +128,9 @@ namespace entity
             ReportDataSource reportDataSource = new ReportDataSource();
             try
             {
-              
 
-               
+
+
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 sales_order sales_order = db.sales_order.Where(x => x.id_sales_order == id).FirstOrDefault();
                 List<sales_order_detail> sales_order_detail = db.sales_order_detail.Where(x => x.id_sales_order == sales_order.id_sales_order).ToList();
@@ -169,7 +169,7 @@ namespace entity
                                   unit_price_vat = g.UnitPrice_Vat,
                               }).ToList();
 
-              
+
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -187,10 +187,42 @@ namespace entity
                     File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales_Order.rdlc", path + SubFolder + "\\Sales_Order.rdlc");
                 }
 
-              
 
 
-                    if (!sales_order.app_document_range.use_default_printer)
+
+                if (!sales_order.app_document_range.use_default_printer)
+                {
+                    reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
+                    reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                    reportViewer.RefreshReport();
+                    Window window = new Window
+                    {
+                        Title = "Report",
+                        Content = this
+                    };
+
+                    window.ShowDialog();
+                }
+                else
+                {
+                    try
+                    {
+                        if (sales_order.app_document_range.printer_name != null)
+                        {
+                            LocalReport report = new LocalReport();
+                            PrintInvoice PrintInvoice = new PrintInvoice();
+                            report.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
+                            report.DataSources.Add(reportDataSource);
+                            PrintInvoice.Export(report);
+                            PrintInvoice.Print(sales_order.app_document_range.printer_name);
+                        }
+                        else
+                        {
+                            NotSupportedException ex = new NotSupportedException();
+                            throw ex;
+                        }
+                    }
+                    catch
                     {
                         reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
                         reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -203,40 +235,8 @@ namespace entity
 
                         window.ShowDialog();
                     }
-                    else
-                    {
-                        try
-                        {
-                            if (sales_order.app_document_range.printer_name != null)
-                            {
-                                LocalReport report = new LocalReport();
-                                PrintInvoice PrintInvoice = new PrintInvoice();
-                                report.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
-                                report.DataSources.Add(reportDataSource);
-                                PrintInvoice.Export(report);
-                                PrintInvoice.Print(sales_order.app_document_range.printer_name);
-                            }
-                            else
-                            {
-                                NotSupportedException ex = new NotSupportedException();
-                                throw ex;
-                            }
-                        }
-                        catch
-                        {
-                            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
-                            reportViewer.LocalReport.DataSources.Add(reportDataSource);
-                            reportViewer.RefreshReport();
-                            Window window = new Window
-                            {
-                                Title = "Report",
-                                Content = this
-                            };
+                }
 
-                            window.ShowDialog();
-                        }
-                    }
-                
 
 
 
@@ -267,7 +267,7 @@ namespace entity
             try
             {
 
-               
+
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 //find the all sales invoice Detail
                 List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(x => x.id_sales_invoice == id).ToList();
@@ -308,7 +308,7 @@ namespace entity
                               }).ToList();
 
                 //copy report to the template folder
-                 path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = path + "\\CogntivoERP";
                 SubFolder = "";
                 SubFolder = "\\TemplateFiles";
@@ -376,7 +376,7 @@ namespace entity
             }
             catch
             {
-                
+
 
                 reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Invoice.rdlc"; // Path of the rdlc file
                 reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -400,7 +400,7 @@ namespace entity
             ReportDataSource reportDataSource = new ReportDataSource();
             try
             {
-              
+
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 sales_budget sales_budget = db.sales_budget.Where(x => x.id_sales_budget == id).FirstOrDefault();
                 List<sales_budget_detail> sales_budget_detail = db.sales_budget_detail.Where(x => x.id_sales_budget == sales_budget.id_sales_budget).ToList();
@@ -439,7 +439,7 @@ namespace entity
                                   comment = g.sales_budget.comment
                               }).ToList();
 
-              
+
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -691,11 +691,11 @@ namespace entity
                                   contact_name = g.payment.contact.name,
                                   payment_name = g.payment_type.name,
                                   trans_date = g.trans_date,
-                                  currency_name=g.app_currencyfx.app_currency.name,
+                                  currency_name = g.app_currencyfx.app_currency.name,
                                   receipt_number = g.payment_type_number,
-                                  gov_id=g.payment.contact.gov_code,
-                                  subtotal=g.value,
-                                 
+                                  gov_id = g.payment.contact.gov_code,
+                                  subtotal = g.value,
+
                               }).ToList();
 
                 //copy report to the template folder
@@ -735,7 +735,7 @@ namespace entity
                 ReportDataSource reportDataSource = new ReportDataSource();
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 contact contact = db.contacts.Where(x => x.id_contact == id).FirstOrDefault();
-                if ( contact.child.Count >0)
+                if (contact.child.Count > 0)
                 {
                     List<contact> contact_detail = contact.child.ToList();
                     reportDataSource.Value = contact_detail
@@ -747,7 +747,7 @@ namespace entity
                            gove_code = g.parent.gov_code,
                            trans_date = g.parent.timestamp,
                            contacts_code = g.parent.code,
-                           Product_code=g.parent.contact_subscription.FirstOrDefault().item.name,
+                           Product_code = g.parent.contact_subscription.FirstOrDefault().item.name,
                            name = g.name
                        }).ToList();
                 }
@@ -764,21 +764,13 @@ namespace entity
                            gove_code = g.gov_code,
                            trans_date = g.timestamp,
                            contacts_code = g.code,
-                           Product_code = g.contact_subscription.FirstOrDefault()!=null?g.contact_subscription.FirstOrDefault().item!=null?g.contact_subscription.FirstOrDefault().item.name:"":"",
+                           Product_code = g.contact_subscription.FirstOrDefault() != null ? g.contact_subscription.FirstOrDefault().item != null ? g.contact_subscription.FirstOrDefault().item.name : "" : "",
                            name = ""
                        }).ToList();
                 }
 
-                if (contact.child.Count==0)
-                {
-                   
-                      
-                }
-                else
-                {
-                  
-                }
-           
+
+
 
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = path + "\\CogntivoERP";
@@ -802,9 +794,67 @@ namespace entity
                 }
 
                 reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
-                    reportViewer.LocalReport.DataSources.Add(reportDataSource);
-                    reportViewer.RefreshReport();
-              
+                reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                reportViewer.RefreshReport();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void loadCarnetcontactReportall()
+        {
+            try
+            {
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+
+
+                List<contact> contact_detail = db.contacts.ToList();
+                reportDataSource.Value = contact_detail
+                   .Select(g => new
+                   {
+                       id_contact = g.id_contact,
+                       contacts_name = g.name,
+                       date_birth = g.date_birth!=null?g.date_birth:DateTime.Now,
+                       gove_code = g.gov_code!=null?g.gov_code:"",
+                       trans_date = g.timestamp != null ? g.timestamp : DateTime.Now,
+                       contacts_code = g.code!= null ?g.code:"",
+                       Product_code = "",
+                       name = g.name
+                   }).ToList();
+
+
+
+
+
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                path = path + "\\CogntivoERP";
+                string SubFolder = "";
+                SubFolder = "\\TemplateFiles";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path + SubFolder);
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact_ALL.rdlc", path + SubFolder + "\\Carnet_Contact_ALL.rdlc");
+                }
+                else if (!Directory.Exists(path + SubFolder))
+                {
+                    Directory.CreateDirectory(path + SubFolder);
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact_ALL.rdlc", path + SubFolder + "\\Carnet_Contact_ALL.rdlc");
+
+                }
+                else if (!File.Exists(path + SubFolder + "\\Carnet_Contact.rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact_ALL.rdlc", path + SubFolder + "\\Carnet_Contact_ALL.rdlc");
+                }
+
+                reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact_ALL.rdlc"; // Path of the rdlc file
+                reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                reportViewer.RefreshReport();
+
             }
             catch (Exception ex)
             {

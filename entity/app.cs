@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 125
+            /// Last Used : 128
             /// </summary>
 
 
@@ -313,7 +313,10 @@ namespace entity
             [LocalizedDescription("SalesByVAT")]
             SalesByVAT = 122,
             [LocalizedDescription("PurchaseByVAT")]
-            PurchaseByVAT = 127
+            PurchaseByVAT = 127,
+            [LocalizedDescription("Contact")]
+            CarnetContact = 128
+
         }
     }
 }

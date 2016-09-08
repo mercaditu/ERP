@@ -105,10 +105,7 @@ namespace Cognitivo.Setup.Migration
                   
                     foreach (DataRow InnerRow in dt_sales.Select("CODVENTA > " + FloorValue + " AND CODVENTA < " + RoofValue + "")) 
                     {
-                        if (value == 79)
-                        {
-                            System.Windows.Forms.MessageBox.Show("Test");
-                        }
+                      
                             sales_invoice sales_invoice = new entity.sales_invoice();
                             sales_invoice.State = EntityState.Added;
                             sales_invoice.status = Status.Documents_General.Pending;
@@ -118,7 +115,8 @@ namespace Cognitivo.Setup.Migration
                             sales_invoice.timestamp = DateTime.Now;
                             sales_invoice.id_company = id_company;
                             sales_invoice.number = (InnerRow["NUMVENTA"] is DBNull) ? null : InnerRow["NUMVENTA"].ToString();
-                            sales_invoice.trans_date = Convert.ToDateTime(InnerRow["FECHAVENTA"]);
+
+                            sales_invoice.trans_date = (InnerRow["FECHAVENTA"] is DBNull) ? DateTime.Now :Convert.ToDateTime(InnerRow["FECHAVENTA"]);
 
                             //Customer
                             if (!(InnerRow["NOMBRE"] is DBNull))
@@ -305,6 +303,10 @@ namespace Cognitivo.Setup.Migration
                                 }
 
                                 decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
+                                if (cotiz1==0)
+                                {
+                                    cotiz1 = 1;
+                                }
                                 sales_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / sales_invoice_detail.quantity) / cotiz1;
                                 sales_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]);
 

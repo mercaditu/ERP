@@ -290,6 +290,13 @@
                                                         SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Measurement}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding value}" Header="{lex:Loc Cognitivo:local:Value}" Width="100"/>
+                                <DataGridTemplateColumn Width="30" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 

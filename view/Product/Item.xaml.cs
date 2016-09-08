@@ -34,7 +34,8 @@ namespace Cognitivo.Product
             hr_talentViewSource,
             itemitem_serviceViewSource,
             item_templateViewSource,
-            item_templateitem_template_detaildetailViewSource;
+            item_templateitem_template_detaildetailViewSource,
+            itemitem_conversion_factorViewSource;
 
         public Item()
         {
@@ -54,6 +55,7 @@ namespace Cognitivo.Product
             itemitem_serviceViewSource = FindResource("itemitem_serviceViewSource") as CollectionViewSource;
             item_templateViewSource = FindResource("item_templateViewSource") as CollectionViewSource;
             item_templateitem_template_detaildetailViewSource = FindResource("item_templateitem_template_detaildetailViewSource") as CollectionViewSource;
+            itemitem_conversion_factorViewSource = FindResource("itemitem_conversion_factorViewSource") as CollectionViewSource;
         }
 
         private void load_PrimaryData()
@@ -511,6 +513,10 @@ namespace Cognitivo.Product
             {
                 e.CanExecute = true;
             }
+            if (e.Parameter as item_conversion_factor != null)
+            {
+                e.CanExecute = true;
+            }
         }
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -539,6 +545,12 @@ namespace Cognitivo.Product
                         item_tag_detailDataGrid.CancelEdit();
                         ItemDB.item_tag_detail.Remove(e.Parameter as item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
+                    }
+                    if (e.Parameter as item_conversion_factor != null)
+                    {
+                        item_conversion_factorDataGrid.CancelEdit();
+                        ItemDB.item_conversion_factor.Remove(e.Parameter as item_conversion_factor);
+                        itemitem_conversion_factorViewSource.View.Refresh();
                     }
                 }
             }

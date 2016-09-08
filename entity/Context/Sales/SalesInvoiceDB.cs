@@ -172,7 +172,11 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
-
+                    //Item Movement
+                    if (IsDiscountStock)
+                    {
+                        Insert_Items_2_Movement(invoice);
+                    }
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {
@@ -193,11 +197,7 @@ namespace entity
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
 
-                        //Item Movement
-                        if (IsDiscountStock)
-                        {
-                            Insert_Items_2_Movement(invoice);
-                        }
+                        
 
                         //Generate BarCode
 

@@ -141,6 +141,7 @@ namespace entity
 
         public string alias { get; set; }
         public string code { get; set; }
+       //  [Required]
         public string gov_code { get; set; }
         public string telephone { get; set; }
         public string email { get; set; }
@@ -295,6 +296,11 @@ namespace entity
                     if (String.IsNullOrEmpty(name))
                         return "Name needs to be filled";
                 }
+                //if (columnName == "gov_code")
+                //{
+                //    if (String.IsNullOrEmpty(gov_code))
+                //        return "Gov Code needs to be filled";
+                //}
                 if (columnName == "id_contact_role")
                 {
                     if (id_contact_role == 0)

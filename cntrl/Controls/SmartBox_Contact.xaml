@@ -88,7 +88,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding Gov_Code}" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

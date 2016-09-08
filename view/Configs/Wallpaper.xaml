@@ -20,11 +20,14 @@
             <Image VerticalAlignment="Center" Style="{StaticResource img_Config}"
                     Source="/Cognitivo;component/Images/Application/128/Wallpaper.png"/>
             <Label Content="{lex:Loc BackgroundImage}" HorizontalAlignment="Center" Style="{StaticResource H2}"/>
-            <Button Content="{lex:Loc New}" Margin="15"
-                        Style="{StaticResource btn_green}" Click="btnNew_Click"/>
+
             <TextBlock Text="Personalize your workarea with some of our finest images. Optionally you can also add your own." 
                             HorizontalAlignment="Center" 
                             Style="{StaticResource text_Instructions}"/>
+            <Button Content="Random Images" Margin="15" Width="128" Click="btnRandom"/>
+            <!--<ToggleButton Content="" FontSize="32" FontFamily="/Cognitivo;component/Resources/#cognitivo"
+                Width="64" Height="64" IsChecked="True"
+                Style="{StaticResource MetroCircleToggleButtonStyle}"/>-->
         </StackPanel>
         <Rectangle Grid.Column="1" Fill="Silver" Width="1" Margin="0,50"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="2" >

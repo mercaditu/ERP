@@ -68,9 +68,14 @@ namespace Cognitivo.Configs
             }
         }
 
-        private void btnNew_Click(object sender, RoutedEventArgs e)
+        private void btnRandom(object sender, RoutedEventArgs e)
         {
+            double width = SystemParameters.WorkArea.Width;
+            double height = SystemParameters.WorkArea.Height;
+            string img = String.Format("https://source.unsplash.com/user/cognitivo/likes/{0}x{1}", width, height);
 
+            Cognitivo.Properties.Settings.Default.wallpaper_Image = img;
+            Cognitivo.Properties.Settings.Default.Save();
         }
     }
 }

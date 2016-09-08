@@ -143,15 +143,7 @@ namespace cntrl.Controls
             Items = null;
             using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
             {
-                Dispatcher.BeginInvoke(
-               DispatcherPriority.ContextIdle,
-               new Action(delegate()
-               {
-              
-                       Items = Execute.Items.AsQueryable();
-               
-                  
-               }));
+                Items = Execute.Items.AsQueryable();
             }
         }
 

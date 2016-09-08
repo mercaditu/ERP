@@ -35,7 +35,7 @@ namespace entity.BrilloQuery
 	                             left outer join app_location as loc on mov.id_location = loc.id_location
 	                             left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
-	                             where item.id_company = {0} and branch.id_branch={1}
+	                             where item.id_company = {0}
 	                          
 	                             group by item.id_item
 	                             order by item.name";

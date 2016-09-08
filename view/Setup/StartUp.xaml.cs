@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Cognitivo.Menu
 {
@@ -227,5 +228,44 @@ namespace Cognitivo.Menu
 
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = true; }));
+
+
+            UpdateUnitCost();
+
+            Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = false; }));
+         
+        }
+        public void UpdateUnitCost()
+        {
+            using (db db = new db())
+            {
+                List<item> items = db.items.ToList();
+                foreach (item item in items)
+                {
+                    if (item.unit_cost == 0)
+                    {
+
+
+                        if (db.sales_invoice_detail
+                                     .Where(x => x.id_item == item.id_item)
+                                     .OrderByDescending(y => y.sales_invoice.trans_date)
+                                     .FirstOrDefault() != null)
+                        {
+                            item.unit_cost = db.sales_invoice_detail
+                                    .Where(x => x.id_item == item.id_item)
+                                    .OrderByDescending(y => y.sales_invoice.trans_date)
+                                    .FirstOrDefault().unit_cost;
+                        }
+                    }
+                   
+                }
+                db.SaveChanges();
+            }
+        }
+
     }
 }

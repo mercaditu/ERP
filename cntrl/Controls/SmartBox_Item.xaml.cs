@@ -218,8 +218,8 @@ namespace cntrl.Controls
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
-                    taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
-                  //  Search_OnThread(SearchText);
+                   // taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
+                    Search_OnThread(SearchText);
                 }
                 else
                 {
@@ -256,8 +256,8 @@ namespace cntrl.Controls
                 
             }
 
-            Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 if (Items.Where(predicate).Count()>0)
                 {
                     itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
@@ -267,7 +267,7 @@ namespace cntrl.Controls
                 }
                 progBar.IsActive = false;
 
-            }));
+            //}));
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)

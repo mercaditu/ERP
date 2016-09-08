@@ -106,6 +106,15 @@
                         <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch"/>
                         <Label Content="Parent / Child Rel" FontSize="10" HorizontalContentAlignment="Center"/>
                     </Grid>
+            
+                </Button>
+                <Button IsDefault="True" Click="Button_Click" Background="Transparent" 
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
+                        <ProgressBar x:Name="progBarunitcost" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch"/>
+                        <Label Content="Update Unit Cost" FontSize="10" HorizontalContentAlignment="Center"/>
+                    </Grid>
+
                 </Button>
             </StackPanel>
         </Grid>

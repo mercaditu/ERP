@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\4.12\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\4.13\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,6 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
+    <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>2.1.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -605,8 +606,8 @@
     <Compile Include="Reporting\Views\Stock.xaml.cs">
       <DependentUpon>Stock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\ItemPriceList.xaml.cs">
-      <DependentUpon>ItemPriceList.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\PriceList.xaml.cs">
+      <DependentUpon>PriceList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
       <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
@@ -1788,7 +1789,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\ItemPriceList.xaml">
+    <Page Include="Reporting\Views\PriceList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

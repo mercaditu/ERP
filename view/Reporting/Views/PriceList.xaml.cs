@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class ItemPriceList : Page
+    public partial class PriceList : Page
     {
-        public ItemPriceList()
+        public PriceList()
         {
             InitializeComponent();
             Fill(null, null);

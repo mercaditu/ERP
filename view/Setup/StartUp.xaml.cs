@@ -246,22 +246,23 @@ namespace Cognitivo.Menu
                 List<item> items = db.items.ToList();
                 foreach (item item in items)
                 {
-                    if (item.unit_cost == 0)
+                    if (item.item_product.FirstOrDefault() != null)
                     {
+                        item_product item_product = item.item_product.FirstOrDefault();
 
+                        /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
+                        item_movement item_movement = db.item_movement
+                            .Where(x =>
+                                x.id_item_product == item_product.id_item_product &&
+                                x.credit > 0 && 
+                                x._parent == null &&
+                                x.item_movement_value.Sum(y => y.unit_value) > 0).OrderByDescending(x => x.trans_date).FirstOrDefault();
 
-                        if (db.sales_invoice_detail
-                                     .Where(x => x.id_item == item.id_item)
-                                     .OrderByDescending(y => y.sales_invoice.trans_date)
-                                     .FirstOrDefault() != null)
+                        if (item_movement != null)
                         {
-                            item.unit_cost = db.sales_invoice_detail
-                                    .Where(x => x.id_item == item.id_item)
-                                    .OrderByDescending(y => y.sales_invoice.trans_date)
-                                    .FirstOrDefault().unit_cost;
+                            item.unit_cost = item_movement.item_movement_value.Sum(x => x.unit_value);
                         }
                     }
-                   
                 }
                 db.SaveChanges();
             }

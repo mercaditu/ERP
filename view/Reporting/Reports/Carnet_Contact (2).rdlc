@@ -65,8 +65,8 @@
             <Source>Embedded</Source>
             <Value>LOGOACTUALIZADODEANGELIUS</Value>
             <Sizing>FitProportional</Sizing>
-            <Top>1.37354cm</Top>
-            <Left>11.10668cm</Left>
+            <Top>0.83783cm</Top>
+            <Left>10.98361cm</Left>
             <Height>5.36292cm</Height>
             <Width>8.11735cm</Width>
             <Style>
@@ -79,8 +79,8 @@
             <Source>Embedded</Source>
             <Value>LOGOACTUALIZADODEANGELIUS</Value>
             <Sizing>FitProportional</Sizing>
-            <Top>1.50495cm</Top>
-            <Left>1.3462cm</Left>
+            <Top>0.96924cm</Top>
+            <Left>1.22313cm</Left>
             <Height>5.36292cm</Height>
             <Width>8.59645cm</Width>
             <ZIndex>1</ZIndex>
@@ -647,8 +647,8 @@
               </Line>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>1.30298cm</Top>
-            <Left>1.33657cm</Left>
+            <Top>0.76727cm</Top>
+            <Left>1.2135cm</Left>
             <Height>5.72435cm</Height>
             <Width>8.65045cm</Width>
             <ZIndex>2</ZIndex>
@@ -678,7 +678,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox73</rd:DefaultName>
-                <Top>5.22435cm</Top>
+                <Top>4.90685cm</Top>
                 <Left>0.70113cm</Left>
                 <Height>0.5cm</Height>
                 <Width>4.7225cm</Width>
@@ -881,7 +881,7 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox37</rd:DefaultName>
                 <Left>0.24652cm</Left>
-                <Height>4.89532cm</Height>
+                <Height>4.29532cm</Height>
                 <Width>0.41934cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
@@ -895,7 +895,7 @@
                 </Style>
               </Textbox>
               <Line Name="Line45">
-                <Top>5.90612cm</Top>
+                <Top>5.58862cm</Top>
                 <Left>0.00929cm</Left>
                 <Height>0cm</Height>
                 <Width>8.59569cm</Width>
@@ -909,9 +909,9 @@
               </Line>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>1.30298cm</Top>
-            <Left>10.732cm</Left>
-            <Height>5.98893cm</Height>
+            <Top>0.76727cm</Top>
+            <Left>10.60893cm</Left>
+            <Height>5.72435cm</Height>
             <Width>8.60498cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -929,7 +929,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>1.27093cm</Height>
+                  <Height>0.47718cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -987,9 +987,9 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Top>1.30298cm</Top>
-            <Left>11.43313cm</Left>
-            <Height>1.27093cm</Height>
+            <Top>1.08477cm</Top>
+            <Left>11.31006cm</Left>
+            <Height>0.47718cm</Height>
             <Width>7.4734cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -1000,8 +1000,8 @@
             </Style>
           </Tablix>
           <Line Name="Line43">
-            <Top>1.30228cm</Top>
-            <Left>11.40275cm</Left>
+            <Top>0.76657cm</Top>
+            <Left>11.27968cm</Left>
             <Height>0cm</Height>
             <Width>7.93423cm</Width>
             <ZIndex>5</ZIndex>
@@ -1012,7 +1012,7 @@
             </Style>
           </Line>
         </ReportItems>
-        <Height>17cm</Height>
+        <Height>7.3824cm</Height>
         <Style>
           <Border>
             <Style>None</Style>

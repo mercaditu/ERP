@@ -17,9 +17,6 @@ using System.Collections;
 
 namespace Cognitivo.Reporting.Views
 {
-    /// <summary>
-    /// Interaction logic for CarnetContact.xaml
-    /// </summary>
     public partial class CarnetContact : Page
     {
         public object ContactList { get; set; }
@@ -27,59 +24,35 @@ namespace Cognitivo.Reporting.Views
         public CarnetContact()
         {
             InitializeComponent();
-           
+
         }
-     
+
         private void set_ContactPref(object sender, RoutedEventArgs e)
         {
-            if (sbxContact.ContactID>0)
+            if (sbxContact.ContactID > 0)
             {
                 contact Contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                if (Contact!=null)
-                {
-                    if (Contact.child.Count > 0)
-                    {
-                        List<contact> contact_detail = Contact.child.ToList();
-                        ContactList = contact_detail
-                           .Select(g => new
-                           {
-                               id_contact = g.id_contact,
-                               contacts_name = g.parent.name,
-                               date_birth = g.parent.date_birth,
-                               gove_code = g.parent.gov_code,
-                               trans_date = g.parent.timestamp,
-                               contacts_code = g.parent.code,
-                               Product_code = g.parent.contact_subscription.FirstOrDefault().item.name,
-                               name = g.name
-                           });
-                    }
-                    else
-                    {
-                        List<contact> contact_detail = new List<entity.contact>();
-                        contact_detail.Add(Contact);
-                        List<ContactLists> a = new List<ContactLists>();
-                       ContactList = contact_detail
-                           .Select(g => new
-                           {
-                               id_contact = g.id_contact,
-                               contacts_name = g.name,
-                               date_birth = g.date_birth,
-                               gove_code = g.gov_code,
-                               trans_date = g.timestamp,
-                               contacts_code = g.code,
-                               Product_code = g.contact_subscription.FirstOrDefault() != null ? g.contact_subscription.FirstOrDefault().item != null ? g.contact_subscription.FirstOrDefault().item.name : "" : "",
-                               name = ""
-                           });
-                      
-                    }
 
-                   
+                if (Contact != null)
+                {
+                    List<contact> contact_detail = new List<entity.contact>();
+                    contact_detail.Add(Contact);
+                    List<ContactLists> a = new List<ContactLists>();
+                    ContactList = contact_detail
+                        .Select(g => new
+                       {
+                           id_contact = g.id_contact,
+                           contacts_name = g.name,
+                           date_birth = g.date_birth,
+                           gove_code = g.gov_code,
+                           trans_date = g.timestamp,
+                           contacts_code = g.code,
+                           Product_code = g.contact_subscription.FirstOrDefault() != null ? g.contact_subscription.FirstOrDefault().item != null ? g.contact_subscription.FirstOrDefault().item.name : "" : "",
+                           name = ""
+                       });
                 }
-                
             }
-           
             ContactGridView.ItemsSource = (IEnumerable)ContactList;
-           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

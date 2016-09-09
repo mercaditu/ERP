@@ -10,16 +10,17 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="46"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" >
-            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" HorizontalAlignment="Left"
-                                                               Select="set_ContactPref" can_Edit="True" can_New="True"
-                                                               Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False"
+                                       Select="set_ContactPref" can_Edit="False" can_New="False"
+                                       HorizontalAlignment="Center" Margin="2"
+                                       Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
-        <DataGrid Grid.Row="1" Name="ContactGridView" AutoGenerateColumns="False" CanUserAddRows="False" >
+        <DataGrid Grid.Row="1" Name="ContactGridView" AutoGenerateColumns="False" CanUserAddRows="False" Margin="14">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding contacts_code, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="Code" IsReadOnly="True" Width="100"/>
@@ -27,6 +28,6 @@
                                                 Header="Name" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" Content="Generate" Click="Button_Click"/>
+        <Button Grid.Row="2" Content="Generate" Click="Button_Click" Style="{StaticResource btn_green}" Margin="4" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

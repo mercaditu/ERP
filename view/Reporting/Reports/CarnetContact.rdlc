@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>12.47161cm</Height>
+              <Height>6.18776cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -932,7 +932,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Customer</DataSetName>
-        <Height>12.47161cm</Height>
+        <Height>6.18776cm</Height>
         <Width>17.65942cm</Width>
         <Style>
           <Border>
@@ -941,7 +941,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>12.47161cm</Height>
+    <Height>6.18776cm</Height>
     <Style />
   </Body>
   <Width>17.65942cm</Width>

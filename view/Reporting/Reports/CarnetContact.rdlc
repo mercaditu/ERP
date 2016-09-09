@@ -884,7 +884,7 @@
                           <TablixRowHierarchy>
                             <TablixMembers>
                               <TablixMember>
-                                <Group Name="Details1" />
+                           
                                 <TablixMembers>
                                   <TablixMember />
                                 </TablixMembers>
@@ -923,9 +923,6 @@
           <TablixMembers>
             <TablixMember>
               <Group Name="Details">
-                <GroupExpressions>
-                  <GroupExpression>Ceiling(RowNumber(Nothing)/2.5)</GroupExpression>
-                </GroupExpressions>
                 <PageBreak>
                   <BreakLocation>End</BreakLocation>
                 </PageBreak>
@@ -954,8 +951,7 @@
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>
     <BottomMargin>0cm</BottomMargin>
-    <Columns>2</Columns>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <ColumnSpacing>0cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>

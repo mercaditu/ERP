@@ -1176,6 +1176,8 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnComment;
             
+            private global::System.Data.DataColumn columnTotalCost;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public InventorySummaryDataTable() {
@@ -1299,6 +1301,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TotalCostColumn {
+                get {
+                    return this.columnTotalCost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1334,7 +1344,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public InventorySummaryRow AddInventorySummaryRow(string ItemCode, string ItemName, decimal SystemQuantity, decimal CountedQuantity, decimal Difference, decimal ItemCost, string Branch, string Location, System.DateTime InventoryDate, string UserName, string Comment) {
+            public InventorySummaryRow AddInventorySummaryRow(string ItemCode, string ItemName, decimal SystemQuantity, decimal CountedQuantity, decimal Difference, decimal ItemCost, string Branch, string Location, System.DateTime InventoryDate, string UserName, string Comment, decimal TotalCost) {
                 InventorySummaryRow rowInventorySummaryRow = ((InventorySummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ItemCode,
@@ -1347,7 +1357,8 @@ namespace Cognitivo.Reporting.Data {
                         Location,
                         InventoryDate,
                         UserName,
-                        Comment};
+                        Comment,
+                        TotalCost};
                 rowInventorySummaryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInventorySummaryRow);
                 return rowInventorySummaryRow;
@@ -1381,6 +1392,7 @@ namespace Cognitivo.Reporting.Data {
                 this.columnInventoryDate = base.Columns["InventoryDate"];
                 this.columnUserName = base.Columns["UserName"];
                 this.columnComment = base.Columns["Comment"];
+                this.columnTotalCost = base.Columns["TotalCost"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1408,6 +1420,8 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnUserName);
                 this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnComment);
+                this.columnTotalCost = new global::System.Data.DataColumn("TotalCost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotalCost);
                 this.columnItemCost.AllowDBNull = false;
                 this.columnBranch.AllowDBNull = false;
                 this.columnLocation.AllowDBNull = false;
@@ -3120,6 +3134,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal TotalCost {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableInventorySummary.TotalCostColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalCost\' in table \'InventorySummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInventorySummary.TotalCostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsItemCodeNull() {
                 return this.IsNull(this.tableInventorySummary.ItemCodeColumn);
             }
@@ -3200,6 +3230,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCommentNull() {
                 this[this.tableInventorySummary.CommentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTotalCostNull() {
+                return this.IsNull(this.tableInventorySummary.TotalCostColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTotalCostNull() {
+                this[this.tableInventorySummary.TotalCostColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4736,6 +4778,7 @@ order by mov.trans_date
             tableMapping.ColumnMappings.Add("InventoryDate", "InventoryDate");
             tableMapping.ColumnMappings.Add("UserName", "UserName");
             tableMapping.ColumnMappings.Add("Comment", "Comment");
+            tableMapping.ColumnMappings.Add("TotalCost", "TotalCost");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -4760,7 +4803,10 @@ i.name as ItemName,
 sum(iid.value_system) as SystemQuantity,
 sum(iid.value_counted) as CountedQuantity, (sum(iid.value_counted) - 
 sum(iid.value_system)) as Difference,
-iid.unit_value as ItemCost,
+iid.unit_value as ItemCost, 
+(sum(iid.value_counted) - sum(iid.value_system)) * iid.unit_value as TotalCost,
+
+
 iid.comment as Comment,
 branch.name as Branch,
 location.name as Location  
@@ -4809,6 +4855,8 @@ i.name as ItemName,
 sum(iid.value_system) as SystemQuantity,
 sum(iid.value_counted) as CountedQuantity,(sum(iid.value_counted) - sum(iid.value_system)) as Difference,
 iid.unit_value as ItemCost,
+ (sum(iid.value_counted) - sum(iid.value_system)) * iid.unit_value as TotalCost,
+
 iid.comment as Comment,
 branch.name as Branch,
 location.name as Location  

@@ -1,0 +1,139 @@
+﻿<Page x:Class="Cognitivo.Configs.Version"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="Version">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="128"/>
+            <RowDefinition/>
+            <RowDefinition Height="155"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.Background>
+                <SolidColorBrush Color="White" Opacity="0.32"/>
+            </Grid.Background>
+            <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <TabControl TabStripPlacement="Left">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <Image />
+                            </Border>
+                            <Label Content="LITE" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <Image />
+                            </Border>
+                            <Label Content="Basic" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <Image />
+                            </Border>
+                            <Label Content="PyMES" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <Image />
+                            </Border>
+                            <Label Content="Full" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+
+                </TabItem>
+            </TabControl>
+
+            <StackPanel Grid.Column="0">
+                <Border Background="Silver" CornerRadius="64" Width="100" Height="100" Margin="16">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <Image />
+                </Border>
+                <Label Content="LITE" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                <Button Content="Try" Style="{StaticResource btn_green}"/>
+                <TextBlock Text="TEST" Style="{StaticResource text_Instructions}" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Border Background="Silver" CornerRadius="64" Width="100" Height="100" Margin="16">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <Image />
+                </Border>
+                <Label Content="BASIC" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                <Button Content="Try" Style="{StaticResource btn_green}"/>
+                <TextBlock Text="TEST" Style="{StaticResource text_Instructions}" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" >
+                <Border Background="Silver" CornerRadius="64" Width="100" Height="100" Margin="16">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <Image />
+                </Border>
+                <Label Content="PyMES" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                <Button Content="Try" Style="{StaticResource btn_green}"/>
+                <TextBlock Text="TEST" Style="{StaticResource text_Instructions}" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="3">
+                <Border Background="Silver" CornerRadius="64" Width="100" Height="100" Margin="16">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <Image />
+                </Border>
+                <Label Content="FULL" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
+                <Button Content="Try" Style="{StaticResource btn_green}"/>
+                <TextBlock Text="TEST" Style="{StaticResource text_Instructions}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.Background>
+                <SolidColorBrush Color="White" Opacity="0.32"/>
+            </Grid.Background>
+            <StackPanel Orientation="Horizontal">
+                <Border Background="Silver" CornerRadius="55" Width="88" Height="88" Margin="16">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <Image />
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

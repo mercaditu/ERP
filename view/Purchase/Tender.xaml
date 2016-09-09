@@ -62,9 +62,9 @@
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding trans_date, StringFormat=d}" 
 						recordSecondaryName="{Binding priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						recordName="{Binding name}" IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                      State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+						recordName="{Binding name}" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        State="{Binding State, Mode=OneWay}"
+                        Status="{Binding status, Mode=OneWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -355,7 +355,7 @@
         <cntrl:toolBar x:Name="toolBar" appName="PurchaseTender" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                        btnNew_Click="toolBar_btnNew_Click" btnApprove_Click="toolBar_btnApprove_Click" btnEdit_Click="toolBar_btnEdit_Click" btnSave_Click="toolBar_btnSave_Click"
                        btnCancel_Click="toolBar_btnCancel_Click" btnDelete_Click="toolBar_btnDelete_Click" btnAnull_Click="toolBar_btnAnull_Click"      
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, Mode=OneWay}"
+                       Status="{Binding status, Mode=OneWay}"/>
     </Grid>
 </Page>

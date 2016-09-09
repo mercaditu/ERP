@@ -224,5 +224,10 @@ namespace Cognitivo.Project.Development
                 }
             }
         }
+
+        private void contactComboBox_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

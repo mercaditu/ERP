@@ -12,7 +12,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            if (Properties.Settings.Default.terminal_ID > 0) { id_terminal = Properties.Settings.Default.terminal_ID; }
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
             id_branch =  CurrentSession.Id_Branch;
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;

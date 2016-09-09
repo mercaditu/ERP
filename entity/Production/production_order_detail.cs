@@ -100,6 +100,9 @@ namespace entity
         [NotMapped]
         public decimal? quantity_exe
         { get; set; }
+        [NotMapped]
+        public decimal? Unit_Cost_exe
+        { get; set; }
 
    
 
@@ -219,6 +222,21 @@ namespace entity
                     {
                         quantity_exe = db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
                         RaisePropertyChanged("quantity_exe");
+                    }
+                }
+            }
+            catch { }
+        }
+        public void CalcExecutedCost_TimerTaks()
+        {
+            try
+            {
+                if (production_execution_detail != null && production_execution_detail.Count > 0)
+                {
+                    using (db db = new db())
+                    {
+                        Unit_Cost_exe = db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.unit_cost);
+                        RaisePropertyChanged("Unit_Cost_exe");
                     }
                 }
             }

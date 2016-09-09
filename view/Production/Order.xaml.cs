@@ -36,7 +36,7 @@ namespace Cognitivo.Production
         private void toolBar_btnNew_Click(object sender)
         {
             production_order production_order =OrderDB.New("",production_order.ProductionOrderTypes.Production,0);
-          
+            production_order.State = EntityState.Added;
             OrderDB.production_order.Add(production_order);
 
             production_orderViewSource.View.MoveCurrentToLast();

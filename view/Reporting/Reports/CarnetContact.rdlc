@@ -155,7 +155,7 @@
                                             <rd:DefaultName>Textbox5</rd:DefaultName>
                                             <Top>2.48163cm</Top>
                                             <Left>0.2999cm</Left>
-                                            <Height>0.54708cm</Height>
+                                            <Height>0.40156cm</Height>
                                             <Width>1.52104cm</Width>
                                             <ZIndex>2</ZIndex>
                                             <Style>
@@ -373,7 +373,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!contacts_name.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!Name.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -405,7 +405,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!date_birth.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!DateBirth.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>d/M/yyyy</Format>
@@ -438,7 +438,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!gove_code.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!GovCode.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -470,9 +470,10 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!trans_date.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!StartDate.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>d/M/yyyy</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -502,7 +503,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!contacts_code.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!Code.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -534,7 +535,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!Product_code.Value, "Customer")</Value>
+                                                    <Value>=First(Fields!SubscriptionItem.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -821,24 +822,25 @@
                                                   </Border>
                                                 </Style>
                                               </Line>
-                                              <Textbox Name="Name">
+                                              <Textbox Name="Children">
                                                 <CanGrow>true</CanGrow>
                                                 <KeepTogether>true</KeepTogether>
                                                 <Paragraphs>
                                                   <Paragraph>
                                                     <TextRuns>
                                                       <TextRun>
-                                                        <Value>=Fields!name.Value</Value>
+                                                        <Value>=First(Fields!Children.Value)</Value>
                                                         <Style />
                                                       </TextRun>
                                                     </TextRuns>
                                                     <Style />
                                                   </Paragraph>
                                                 </Paragraphs>
-                                                <rd:DefaultName>Name</rd:DefaultName>
+                                                <rd:DefaultName>Children</rd:DefaultName>
+                                                <Top>0.05556in</Top>
                                                 <Left>0.84225cm</Left>
-                                                <Height>0.6cm</Height>
-                                                <Width>2.5cm</Width>
+                                                <Height>5.04796cm</Height>
+                                                <Width>7.50062cm</Width>
                                                 <ZIndex>3</ZIndex>
                                                 <Style>
                                                   <Border>
@@ -884,7 +886,6 @@
                           <TablixRowHierarchy>
                             <TablixMembers>
                               <TablixMember>
-                           
                                 <TablixMembers>
                                   <TablixMember />
                                 </TablixMembers>
@@ -971,43 +972,43 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="id_contact">
-          <DataField>id_contact</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="contacts_name">
-          <DataField>contacts_name</DataField>
+        <Field Name="ID">
+          <DataField>ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="date_birth">
-          <DataField>date_birth</DataField>
+        <Field Name="Name">
+          <DataField>Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="gove_code">
-          <DataField>gove_code</DataField>
+        <Field Name="DateBirth">
+          <DataField>DateBirth</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="GovCode">
+          <DataField>GovCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="trans_date">
-          <DataField>trans_date</DataField>
+        <Field Name="StartDate">
+          <DataField>StartDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="contacts_code">
-          <DataField>contacts_code</DataField>
+        <Field Name="SubscriptionItem">
+          <DataField>SubscriptionItem</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Product_code">
-          <DataField>Product_code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="name">
-          <DataField>name</DataField>
+        <Field Name="Children">
+          <DataField>Children</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>ContactDS</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\ABHI\Desktop\ERP\trunk\view\Reporting\Data\ContactDS.xsd</rd:SchemaPath>
-        <rd:TableName>Contact</rd:TableName>
+        <rd:DataSetName>SalesDS</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\abhi\OneDrive\Documents\Projects\CognitivoERP\view\Reporting\Data\SalesDS.xsd</rd:SchemaPath>
+        <rd:TableName>ContactSubscription</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

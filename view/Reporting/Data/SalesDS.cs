@@ -2,6 +2,10 @@
     
     
     public partial class SalesDS {
+        partial class ContactSubscriptionDataTable
+        {
+        }
+    
         partial class SalesVATReportDataTable
         {
         }

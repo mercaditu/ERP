@@ -44,7 +44,7 @@ namespace Cognitivo.Menu
 
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Basic, "1");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact", entity.CurrentSession.Versions.Full, "0");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.ContactSubscription", entity.App.Names.ContactSubscription, "Contact", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales", entity.CurrentSession.Versions.Basic, "1");
@@ -56,7 +56,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.Packing", entity.App.Names.PackingList, "", entity.CurrentSession.Versions.Medium, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.CarnetContact", entity.App.Names.CarnetContact, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesbySalesman", entity.App.Names.SalesbySalesman, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", entity.CurrentSession.Versions.Full, "0");

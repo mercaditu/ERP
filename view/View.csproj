@@ -523,13 +523,6 @@
     <Compile Include="Purchase\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Data\ContactDS.cs">
-      <DependentUpon>ContactDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reporting\Data\ContactDS.Designer.cs">
-      <DependentUpon>ContactDS.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -584,8 +577,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reporting\Views\CarnetContact.xaml.cs">
-      <DependentUpon>CarnetContact.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Subscription.xaml.cs">
+      <DependentUpon>Subscription.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\CarnetContactReport.xaml.cs">
       <DependentUpon>CarnetContactReport.xaml</DependentUpon>
@@ -1356,17 +1349,6 @@
       <LastGenOutput>InvoiceSetting.Designer.cs</LastGenOutput>
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
-    <None Include="Reporting\Data\ContactDS.xsc">
-      <DependentUpon>ContactDS.xsd</DependentUpon>
-    </None>
-    <None Include="Reporting\Data\ContactDS.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ContactDS1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Reporting\Data\ContactDS.xss">
-      <DependentUpon>ContactDS.xsd</DependentUpon>
-    </None>
     <None Include="Reporting\Data\FinanceDS.xsc">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </None>
@@ -1763,7 +1745,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\CarnetContact.xaml">
+    <Page Include="Reporting\Views\Subscription.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2228,7 +2210,7 @@
   <ItemGroup>
     <Folder Include="bin\Debug\Inventory\" />
     <Folder Include="bin\Debug\Sales\" />
-    <Folder Include="Promotion\" />
+    <Folder Include="obj\Promotion\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Menu\modAccounting.png" />

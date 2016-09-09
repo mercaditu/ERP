@@ -17,17 +17,14 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Reporting.Views
 {
-    /// <summary>
-    /// Interaction logic for SalesByTag.xaml
-    /// </summary>
     public partial class CarnetContactReport : Page
     {
-        public object ContactList { get; set; }
+        public List<ContactInfo> ContactSubscription { get; set; }
 
-        public CarnetContactReport(object ContactLists)
+        public CarnetContactReport(List<ContactInfo> _ContactSubscription)
         {
             InitializeComponent();
-            ContactList = ContactLists;
+            ContactSubscription = _ContactSubscription;
             Fill(null, null);
         }
 
@@ -36,29 +33,32 @@ namespace Cognitivo.Reporting.Views
             MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
             con.Open();
 
-
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
             reportDataSource1.Name = "Customer"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ContactList;
+            reportDataSource1.Value = ContactSubscription;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.CarnetContact.rdlc";
 
             this.reportViewer.RefreshReport();
         }
-
-
     }
-    public class ContactLists
-    {
 
-        public int id_contact { get; set; }
-        public string contacts_name { get; set; }
-        public string date_birth { get; set; }
-        public string gove_code { get; set; }
-        public string trans_date { get; set; }
-        public string contacts_code { get; set; }
-        public string Product_code { get; set; }
-        public string name { get; set; }
+    public class ContactInfo
+    {
+        public ContactInfo()
+        {
+            //Children = new List<ContactInfo>();
+        }
+
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public DateTime DateBirth { get; set; }
+        public string GovCode { get; set; }
+        public DateTime StartDate { get; set; }
+        public string Code { get; set; }
+        public string SubscriptionItem { get; set; }
+        public string Children { get; set; }
+        //public List<ContactInfo> Children { get; set; }
     }
 }

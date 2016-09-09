@@ -142,7 +142,7 @@
                 <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N2}}" FontSize="18" Style="{StaticResource generic_Label}" ContentStringFormat="N2" />
             </StackPanel>
         </StackPanel>
-          <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"
+          <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="ContactSubscription"
 			      btnSearch_Click="toolBar_btnSearch_Click"
 			           btnEdit_Click="toolBar_btnEdit_Click" 
                        btnSave_Click="toolBar_btnSave_Click" 

@@ -95,6 +95,11 @@ namespace entity.Brillo.Document
                 project project = (project)Document;
                 return Project(project);
             }
+            else if (AppName == typeof(item_request).ToString() || BaseName == typeof(item_request).ToString())
+            {
+                item_request item_request = (item_request)Document;
+                return ItemRequest(item_request);
+            }
 
             return null;
         }
@@ -597,6 +602,33 @@ namespace entity.Brillo.Document
                     trans_date = g.item_transfer.trans_date,
 
                     comment = g.item_transfer.comment
+                }).ToList();
+
+            return reportDataSource;
+        }
+        public ReportDataSource ItemRequest(item_request item_request)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_request_detail> item_request_detail = item_request.item_request_detail.ToList();
+
+            reportDataSource.Value = item_request_detail
+                .Select(g => new
+                {
+                    ProjectName = g.item_request != null ? g.item_request.project != null ? g.item_request.project.name : "" : "",
+                    ProjectTaskName = g.project_task != null ? g.project_task.name : "",
+                    ProjectTaskCode = g.project_task != null ? g.project_task.code : "",
+
+                    DepartmentName = g.item_request != null ? g.item_request.app_department != null ? g.item_request.app_department.name : "" : "",
+                    UserName = g.security_user != null ? g.security_user.name : "",
+                    RequstedUserName = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.name : "" : "",
+                    RequstedUserCode = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.code : "" : "",
+
+
+                    item_code = g.item != null ?g.item.code:"",
+                    item_name = g.item != null ? g.item.name : "",
+                    quantity = g.quantity,
+                    request_date = g.item_request.request_date,
+                    trans_date = g.item_request.timestamp
                 }).ToList();
 
             return reportDataSource;

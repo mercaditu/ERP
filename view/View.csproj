@@ -1053,7 +1053,6 @@
     <EmbeddedResource Include="Reporting\Reports\CarnetContact.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\Reports\Carnet_Contact %282%29.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />

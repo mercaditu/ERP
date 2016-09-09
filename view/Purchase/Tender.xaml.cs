@@ -188,15 +188,16 @@ namespace Cognitivo.Purchase
                     {
                         purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
                         purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
-                        //purchase_tender_contact.app_contract = (cbxContract.SelectedItem as app_contract);
-                        //purchase_tender_contact.app_condition = (cbxCondition.SelectedItem as app_condition);
+
+                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Where(x => x.id_contract == purchase_tender_contact.id_contract).FirstOrDefault();
+                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Where(x => x.id_condition == purchase_tender_contact.id_condition).FirstOrDefault(); ;
                     }
                     else if (contact.app_contract != null)
                     {
                         purchase_tender_contact.id_contract = (int)contact.id_contract;
                         purchase_tender_contact.id_condition = contact.app_contract.id_condition;
-                        //purchase_tender_contact.app_contract = contact.app_contract;
-                        //purchase_tender_contact.app_condition = contact.app_contract.app_condition;
+                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Where(x => x.id_contract == purchase_tender_contact.id_contract).FirstOrDefault();
+                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Where(x => x.id_condition == purchase_tender_contact.id_condition).FirstOrDefault();
                     }
                     else
                     {
@@ -214,9 +215,9 @@ namespace Cognitivo.Purchase
                     if (purchase_tender_contact.contact.id_currency == 0)
                     {
                         //Contact does not have Currency, take default currency from Company.
-                        if (PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                        if (CurrentSession.CurrencyFX_Default != null)
                         {
-                            purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                            purchase_tender_contact.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
                         }
                     }
                     else

@@ -99,6 +99,14 @@ namespace cntrl.Panels
             get { return Convert.ToDecimal(GetValue(QuantityExecProperty)); }
             set { SetValue(QuantityExecProperty, value); }
         }
+        public static readonly DependencyProperty UnitCostProperty =
+      DependencyProperty.Register("UnitCost", typeof(decimal), typeof(pnl_TreeView),
+      new FrameworkPropertyMetadata(null));
+        public decimal UnitCost
+        {
+            get { return Convert.ToDecimal(GetValue(UnitCostProperty)); }
+            set { SetValue(UnitCostProperty, value); }
+        }
 
         public static readonly DependencyProperty project_taskProperty =
             DependencyProperty.Register("Project_task", typeof(List<project_task>), typeof(pnl_TreeView),

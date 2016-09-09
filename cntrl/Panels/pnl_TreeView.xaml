@@ -62,6 +62,14 @@
                 </StackPanel>
                 
             </Border>
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblExecutedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblExecutedCost" Text="{Binding UnitCost, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                               Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
+                </StackPanel>
+
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

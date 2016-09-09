@@ -158,7 +158,8 @@
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             UnitCost="{Binding Unit_Cost_Exec, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
 

@@ -705,6 +705,8 @@ namespace Cognitivo.Production
                 foreach (production_order_detail production_order_detail in production_order.production_order_detail)
                 {
                     production_order_detail.CalcExecutedQty_TimerTaks();
+                    production_order_detail.CalcExecutedCost_TimerTaks();
+                   
                 }
             }
             catch { }

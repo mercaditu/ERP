@@ -315,8 +315,10 @@ namespace entity
             [LocalizedDescription("PurchaseByVAT")]
             PurchaseByVAT = 127,
             [LocalizedDescription("Contact")]
-            CarnetContact = 128
+            CarnetContact = 128,
 
+            [LocalizedDescription("Version")]
+            Version = 128
         }
     }
 }

@@ -19,19 +19,8 @@
             <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
-            <TabControl TabStripPlacement="Left">
-                <TabItem Background="{StaticResource AccentColor_Introvert}">
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
-                                </Border.Effect>
-                                <Image />
-                            </Border>
-                            <Label Content="LITE" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </TabItem.Header>
+            <TabControl TabStripPlacement="Top">
+                <TabItem Header="LITE">
                     <StackPanel>
                         <Label Content="LITE" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="The Essentials for your Company" HorizontalAlignment="Center"/>
@@ -41,18 +30,7 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
-                                </Border.Effect>
-                                <Image />
-                            </Border>
-                            <Label Content="BASIC" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                <TabItem Header="BASIC">
                     <StackPanel>
                         <Label Content="BASIC" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="For Little Companies with Big Aspirations" HorizontalAlignment="Center"/>
@@ -62,18 +40,7 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
-                                </Border.Effect>
-                                <Image />
-                            </Border>
-                            <Label Content="PyMES" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                <TabItem Header="PyMES">
                     <StackPanel>
                         <Label Content="PyMES" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="Perfect for Companies who want to be Perfect" HorizontalAlignment="Center"/>
@@ -83,18 +50,7 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="Silver" CornerRadius="16" Width="32" Height="32" Margin="8">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
-                                </Border.Effect>
-                                <Image />
-                            </Border>
-                            <Label Content="FULL" VerticalAlignment="Center" Style="{StaticResource H2}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                <TabItem Header="Full">
                     <StackPanel>
                         <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>

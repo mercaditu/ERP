@@ -170,6 +170,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Security.UserRole", "UserRole", "UserRole", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Configs.Department", "Department", "", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Accounting.DebeHaberLogin", "DebeHaberSync", "", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Company, "Configs.Version", "Version", "Version", entity.CurrentSession.Versions.Lite, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Currency", "Currency", "Currency", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.AccountingCurrency", "AccountingCurrency", "Currency", entity.CurrentSession.Versions.Lite, "0");

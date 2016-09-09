@@ -20,8 +20,15 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class Version : Page
     {
+        public int UserNumber { get; set; }
+
         public Version()
         {
+            using (entity.db db = new entity.db())
+            {
+                UserNumber = db.security_user.Where(x => x.id_company == entity.CurrentSession.Id_Company).Count();
+            }
+
             InitializeComponent();
         }
     }

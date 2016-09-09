@@ -22,19 +22,15 @@ namespace Cognitivo.Project.Development
     public partial class Project : Page
     {
         ProjectDB ProjectDB = new ProjectDB();
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
-        int company_ID;
         CollectionViewSource ProjectViewSource, Projectproject_tag_detail;
+
         public Project()
         {
             InitializeComponent();
-            company_ID = _setting.company_ID;
         }
 
         private void btnNew_Click(object sender)
         {
-
-
             entity.project project =new  entity.project();
             project.IsSelected = true;
 
@@ -122,17 +118,19 @@ namespace Cognitivo.Project.Development
             ProjectDB.CancelAllChanges();
         }
 
-        private void Project_Loaded(object sender, RoutedEventArgs e)
+        private async void Project_Loaded(object sender, RoutedEventArgs e)
         {
 
-            ProjectDB.projects.Where(a => a.id_company == company_ID
+            ProjectDB.projects.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (a.is_head == true)).ToList();
 
             ProjectViewSource = ((CollectionViewSource)(FindResource("ProjectViewSource")));
             ProjectViewSource.Source = ProjectDB.projects.Local;
 
+            CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
+            branchViewSource.Source = await ProjectDB.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
 
-            ProjectDB.project_tag
+            await ProjectDB.project_tag
             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
             .OrderBy(x => x.name).LoadAsync();
 

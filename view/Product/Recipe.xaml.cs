@@ -168,5 +168,24 @@ namespace Cognitivo.Product
                 toolBar.msgError(ex);
             }
         }
+
+     
+      private void Button_Click(object sender, RoutedEventArgs e)
+      {
+          item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
+          decimal Cost = 0;
+          int id_currency = CurrentSession.CurrencyFX_Default.id_currency;
+          foreach (item_recepie_detail item_recepie_detail in item_recepie.item_recepie_detail)
+          {
+
+
+              if (item_recepie_detail.item.item_price.Where(x => x.id_currency == id_currency).FirstOrDefault() != null)
+              {
+                  Cost += item_recepie_detail.item.item_price.Where(x => x.id_currency == id_currency).FirstOrDefault().valuewithVAT;
+              }
+
+          }
+          lblCost.Content = "Total Cost is :" + Math.Round(Cost);
+      }
     }
 }

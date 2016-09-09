@@ -74,6 +74,7 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+           cbxCondition.ItemsSource= CurrentSession.Get_Condition();
             load_Schedual();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
@@ -90,6 +91,7 @@ namespace Cognitivo.Commercial
             }
 
             contactViewSource.Source = contactLIST;
+          
         }
 
         private  void load_Schedual()
@@ -272,6 +274,34 @@ namespace Cognitivo.Commercial
         private void Rearrange_Click(object sender, RoutedEventArgs e)
         {
             PaymentDB.Rearrange_Payment();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            int Condition=(int)cbxCondition.SelectedValue;
+            if (contact.id_contact > 0 && payment_schedualViewSource != null && Condition>0)
+            {
+                payment_schedualViewSource.View.Filter = i =>
+                {
+                    payment_schedual payment_schedual = i as payment_schedual;
+                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance > 0 && payment_schedual.sales_invoice.id_condition == Condition)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+
+
+            }
+            else
+            {
+                contactViewSource.View.Filter = null;
+            }
+
         }
 
         

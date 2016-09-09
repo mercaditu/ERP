@@ -64,12 +64,15 @@
                     <Label Style="{StaticResource input_label}" Content="Item"/>
                     <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
                                                  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Text="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                   
                     <CheckBox Content="{lex:Loc AutomaticRecipe}" Grid.Column="1" Grid.Row="7" 
                               HorizontalAlignment="Left" Margin="5"
 						      IsChecked="{Binding items.is_autorecepie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Background="{StaticResource AccentColor_Brush}">
                     <Label Style="{StaticResource input_label}" Content="Calculated Stock"/>
+                    <Button Content="Calculate Cost" Click="Button_Click" Height="25" Width="50" HorizontalAlignment="Left"/>
+                    <Label Content="Total Cost" x:Name="lblCost"/>
                 </StackPanel>
             </Grid>
 

@@ -626,7 +626,7 @@
                             <StackPanel VerticalAlignment="Top" Margin="8,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
                                         Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                                 <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Margin="0,0,444,0"/>
-                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" can_New="True"
+                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" can_New="True" item_types="Product"
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                             </StackPanel>
 

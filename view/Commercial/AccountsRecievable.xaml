@@ -50,7 +50,15 @@
         </ListBox>
 
         <Grid Background="White" Grid.Column="1" Grid.Row="1">
-            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name" Width="75"
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue" 
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                               SelectedValuePath="id_condition"  />
+                <Button Content="Search" Click="Button_Click" Height="25" Width="50" VerticalAlignment="Top"/>
+            </StackPanel>
+            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,50,0,0"
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

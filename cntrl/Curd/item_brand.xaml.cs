@@ -11,7 +11,8 @@ namespace cntrl.Curd
 {
     public partial class item_brand : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
+        entity.db db = new entity.db();
+        //entity.dbContext mydb = new entity.dbContext();
         CollectionViewSource myViewSource = new CollectionViewSource();
         //CollectionViewSource contactViewSource = null;
         public bool isExternalCall { get; set; }
@@ -29,8 +30,6 @@ namespace cntrl.Curd
 
         private entity.item_brand _item_brandobject = null;
         public entity.item_brand item_brandobject { get { return _item_brandobject; } set { _item_brandobject = value; } }
-
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public item_brand()
         {
@@ -60,8 +59,8 @@ namespace cntrl.Curd
                     if (operationMode == Class.clsCommon.Mode.Add)
                     {
                         entity.item_brand newBrand = new entity.item_brand();
-                        mydb.db.item_brand.Add(newBrand);
-                        myViewSource.Source = mydb.db.item_brand.Local;
+                        db.item_brand.Add(newBrand);
+                        myViewSource.Source = db.item_brand.Local;
                         myViewSource.View.Refresh();
                         myViewSource.View.MoveCurrentTo(newBrand);
                         stackMain.DataContext = myViewSource;
@@ -87,11 +86,7 @@ namespace cntrl.Curd
                     _entity.CancelChanges();
                     item_brandViewSource.View.Refresh();
                 }
-                else
-                {
-                    if (operationMode == Class.clsCommon.Mode.Add)
-                        mydb.CancelChanges();
-                }
+
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -117,14 +112,14 @@ namespace cntrl.Curd
                 }
                 else
                 {
-                    IEnumerable<DbEntityValidationResult> validationresult = mydb.db.GetValidationErrors();
+                    IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
                         if (operationMode == Class.clsCommon.Mode.Add)
                         {
-                            mydb.SaveChanges();
+                            db.SaveChanges();
                             entity.item_brand item_brand = myViewSource.View.CurrentItem as entity.item_brand;
-                            //mydb.db.Entry(item_brand).State = EntityState.Detached;
+                            //db.Entry(item_brand).State = EntityState.Detached;
                             //_entity.db.item_brand.Attach(item_brand);
                             item_brandViewSource.View.Refresh();
                             item_brandViewSource.View.MoveCurrentTo(item_brand);
@@ -149,12 +144,16 @@ namespace cntrl.Curd
         {
             if (sbxContact.ContactID > 0)
             {
-                entity.contact contact = mydb.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 entity.item_brand item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
-                item_brand.id_contact = contact.id_contact;
-              
-
-          
+                entity.contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                if (contact != null && item_brand != null)
+                {
+                    item_brand.id_contact = contact.id_contact;   
+                }
+                else
+                {
+                    MessageBox.Show("Contact not selected");
+                }
             }
         }
 

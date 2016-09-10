@@ -133,42 +133,52 @@ namespace Cognitivo.Purchase
                 item item = PurchaseTenderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 if (item != null)
                 {
-                    purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                    purchase_tender_item.item = item;
-                    purchase_tender_item.id_item = item.id_item;
-                    purchase_tender_item.item_description = item.name;
-                    purchase_tender_item.quantity = 1;
-
-                    foreach (item_dimension item_dimension in item.item_dimension)
+                    //Checks if product exists.
+                    if (purchase_tender.purchase_tender_item_detail.Where(x => x.id_item == item.id_item).Count() == 0)
                     {
-                        purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
-                        purchase_tender_dimension.purchase_tender_item = purchase_tender_item;
-                        purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
-                        purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
+                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
+                        purchase_tender_item.item = item;
+                        purchase_tender_item.id_item = item.id_item;
+                        purchase_tender_item.item_description = item.name;
+                        purchase_tender_item.quantity = 1;
 
-                        if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault()!=null)
+                        foreach (item_dimension item_dimension in item.item_dimension)
                         {
-                            purchase_tender_dimension.app_dimension = PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();     
-                        }
-                       
-                        purchase_tender_dimension.app_measurement = item_dimension.app_measurement;
-                        purchase_tender_dimension.value = item_dimension.value;
-                        purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
-                    }
+                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
+                            purchase_tender_dimension.purchase_tender_item = purchase_tender_item;
+                            purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
+                            purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
 
-                    purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
-                    purchase_tenderViewSource.View.Refresh();
-                    purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
+                            if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault() != null)
+                            {
+                                purchase_tender_dimension.app_dimension = PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
+                            }
+
+                            purchase_tender_dimension.app_measurement = item_dimension.app_measurement;
+                            purchase_tender_dimension.value = item_dimension.value;
+                            purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
+                        }
+
+                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);   
+                    }
+                    else
+                    {
+                        toolBar.msgWarning("Product Exists");
+                    }
                 }
                 else
                 {
                     if (sbxItem.Text != string.Empty)
                     {
                         purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                        purchase_tender_item.item_description = item.name;
+                        purchase_tender_item.item_description = sbxItem.Text;
                         purchase_tender_item.quantity = 1;
+                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                     }
                 }
+
+                purchase_tenderViewSource.View.Refresh();
+                purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
             }
         }
 
@@ -187,12 +197,16 @@ namespace Cognitivo.Purchase
                 //Get Contact from SmartBox.
                 contact contact = PurchaseTenderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
+                if (contact == null)
+                {
+                    toolBar.msgWarning("Please select Contact");
+                    return;
+                }
+
                 if (purchase_tenderViewSource.View != null)
                 {
-
                     purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
                     purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
-
 
                     if (cbxContract.SelectedItem != null)
                     {
@@ -213,16 +227,12 @@ namespace Cognitivo.Purchase
                     {
                         toolBar.msgWarning("Please select Contract...");
                         return;
-
                     }
-
-
                
                     purchase_tender_contact.contact = contact;
                     purchase_tender_contact.id_contact = contact.id_contact;
 
-
-                    if (purchase_tender_contact.contact.id_currency == 0)
+                    if (purchase_tender_contact.contact.id_currency == 0 || purchase_tender_contact.contact.id_currency == null)
                     {
                         //Contact does not have Currency, take default currency from Company.
                         if (CurrentSession.CurrencyFX_Default != null)
@@ -243,9 +253,6 @@ namespace Cognitivo.Purchase
                     {
                         purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
                     }
-
-                  
-                    
 
                     if (purchase_tender != null)
                     {

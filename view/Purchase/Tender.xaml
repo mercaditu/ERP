@@ -24,6 +24,7 @@
 
     </Page.CommandBindings>
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -169,16 +170,18 @@
                         Grid.ColumnSpan="2" Grid.Row="1" >
                 <TabItem Header="{lex:Loc Order}">
                     <StackPanel Margin="4">
-                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}"/>
-                        <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                        <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource Bool2Visi}}">
+                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}"/>
+                            <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                        </StackPanel>
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  
                                   
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding IsEditable, Converter={StaticResource TrueToFalse}, ElementName=toolBar}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding item.name, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>
-                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
+                                <!--<DataGridTextColumn Binding="{Binding item.name, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>-->
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
                             		                ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
@@ -221,8 +224,7 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="4" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource Bool2Visi}}">
                             <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
                             <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name" Width="75"
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"

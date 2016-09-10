@@ -250,13 +250,11 @@ namespace cntrl.Controls
 
             //Dispatcher.InvokeAsync(new Action(() =>
             //{
-                if (Items.Where(predicate).Count()>0)
-                {
+                //if (Items.Where(predicate).Count()>0)
+                //{
                     itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
-
                     ItemPopUp.IsOpen = true;
-              
-                }
+                //}
                 progBar.IsActive = false;
 
             //}));

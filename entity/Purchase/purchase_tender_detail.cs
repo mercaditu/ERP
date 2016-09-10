@@ -45,9 +45,6 @@ namespace entity
                     //update quantity
                     update_SubTotal();
                     _quantity = value;
-
-                 
-                  
                 }
             }
         }
@@ -115,6 +112,7 @@ namespace entity
             }
         }
         private decimal _unit_cost;
+
         [NotMapped]
         public decimal UnitCost_Vat
         {
@@ -139,6 +137,7 @@ namespace entity
             }
         }
         private decimal _UnitCost_Vat;
+
         [NotMapped]
         public decimal SubTotal
         {
@@ -151,6 +150,7 @@ namespace entity
             }
         }
         private decimal _SubTotal;
+
         [NotMapped]
         public decimal SubTotal_Vat
         {
@@ -218,17 +218,16 @@ namespace entity
             }
             set
             {
-                _purchase_tender_item = value;
-              
-
+                if (_purchase_tender_item != value)
+                {
+                    _purchase_tender_item = value;
+                }
             }
         }
         purchase_tender_item _purchase_tender_item;
 
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
-
-
 
         #region Methods
 

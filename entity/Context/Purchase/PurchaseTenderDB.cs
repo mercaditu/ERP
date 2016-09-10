@@ -83,7 +83,6 @@ namespace entity
                         purchase_order.id_currencyfx = purchase_tender_contact.id_currencyfx;
                         purchase_order.recieve_date_est = purchase_tender_contact.recieve_date_est;
 
-
                         purchase_order.id_contact = purchase_tender_contact.id_contact;
                         purchase_order.contact = purchase_tender_contact.contact;
                         purchase_order.id_contract = purchase_tender_contact.id_contract;
@@ -144,6 +143,7 @@ namespace entity
                         purchase_tender.RaisePropertyChanged("number");
                     }
 
+                    purchase_tender.IsSelected = true;
                     purchase_tender.status = Status.Documents_General.Approved;
                     SaveChanges();
                 }

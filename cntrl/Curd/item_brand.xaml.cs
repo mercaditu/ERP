@@ -12,9 +12,7 @@ namespace cntrl.Curd
     public partial class item_brand : UserControl
     {
         entity.db db = new entity.db();
-        //entity.dbContext mydb = new entity.dbContext();
         CollectionViewSource myViewSource = new CollectionViewSource();
-        //CollectionViewSource contactViewSource = null;
         public bool isExternalCall { get; set; }
 
         CollectionViewSource _MainViewSource = null;
@@ -156,7 +154,5 @@ namespace cntrl.Curd
                 }
             }
         }
-
-     
     }
 }

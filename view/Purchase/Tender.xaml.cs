@@ -14,8 +14,10 @@ namespace Cognitivo.Purchase
     {
         PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
 
-        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource,
-            purchase_tenderpurchase_tender_contact_detailViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
+        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, 
+            purchase_tenderpurchase_tender_itemViewSource,
+            purchase_tenderpurchase_tender_contact_detailViewSource, 
+            app_contractViewSource;
 
         public Tender()
         {
@@ -84,9 +86,9 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = PurchaseTenderDB.purchase_tender.Local;
 
@@ -96,30 +98,30 @@ namespace Cognitivo.Purchase
 
             cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseTenderDB.app_branch.Local;
 
-            PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            await PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseTenderDB, entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
-            app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
+            CollectionViewSource app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
             app_conditionViewSource.Source = CurrentSession.Get_Condition();
 
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = CurrentSession.Get_Contract();
 
             PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
+            CollectionViewSource app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_dimensionViewSource.Source = PurchaseTenderDB.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
         }
 
@@ -242,10 +244,11 @@ namespace Cognitivo.Purchase
                     }
                     else
                     {
-                        //Contact has Currency, take FX Rate of Currency. 
-                        if (PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault() != null)
+                        //Contact has Currency, take FX Rate of Currency.
+                        app_currencyfx app_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault();
+                        if (app_currencyfx != null)
                         {
-                            purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
+                            purchase_tender_contact.id_currencyfx = app_currencyfx.id_currencyfx;
                         }
                     }
 
@@ -287,7 +290,6 @@ namespace Cognitivo.Purchase
                                 {
                                     purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
                                     purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
-
                                 }
 
                             }

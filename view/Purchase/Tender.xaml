@@ -245,14 +245,18 @@
                                   CellEditEnding="purchase_tender_contact_detailDataGrid_CellEditEnding"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto">
+                                <!--<DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <DatePicker SelectedDate="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                </DataGridTemplateColumn>-->
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto" Binding="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
+					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
 					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
@@ -265,7 +269,7 @@
 					                                    ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"  
                                                         DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx" 
 					                                    SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
-                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                 
                                 <!-- Button to View Document -->
                                 <DataGridTemplateColumn Width="Auto">

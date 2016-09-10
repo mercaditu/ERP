@@ -103,7 +103,7 @@ namespace entity
                             {
                                 purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
                                 purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
-                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item.name;
+                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
 
                                 app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_product).FirstOrDefault();
                                 if (app_cost_center != null)
@@ -122,7 +122,7 @@ namespace entity
                             }
                             else
                             {
-                                purchase_order_detail.item_description = purchase_tender_detail.item_description;
+                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
 
                                 app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_administrative).FirstOrDefault();
                                 if (app_cost_center != null)

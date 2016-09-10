@@ -210,12 +210,7 @@ namespace cntrl.Controls
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
-                   // taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
                     Search_OnThread(SearchText);
-                }
-                else
-                {
-                    //contactViewSource.Source = null;
                 }
             }
         }

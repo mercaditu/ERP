@@ -20,7 +20,9 @@ namespace entity
         public int id_purchase_tender_item { get; set; }
         public int id_purchase_tender { get; set; }
         public int? id_item { get; set; }
+
         public int? id_project_task { get; set; }
+
         public string item_description { get; set; }
 
         /// <summary>
@@ -64,7 +66,23 @@ namespace entity
         }
         private decimal _Quantity_Factored;
 
-        public virtual item item { get; set; }
+        public virtual item item 
+        {
+            get { return _item; }
+            set
+            {
+                if (_item != value)
+                {
+                    _item = value;
+                    if (_item != null && (item_description == null || item_description == string.Empty))
+                    {
+                        item_description = _item.name;
+                    }
+                }
+            } 
+        }
+        public item _item;
+
         public virtual purchase_tender purchase_tender { get; set; }
         public virtual IEnumerable<purchase_tender_detail> purchase_tender_detail { get; set; }
         public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
@@ -75,8 +93,6 @@ namespace entity
             decimal Dimension = 1M;
             if (purchase_tender_dimension != null)
             {
-
-
                 foreach (purchase_tender_dimension _purchase_tender_dimension in purchase_tender_dimension)
                 {
                     Dimension = Dimension * _purchase_tender_dimension.value;

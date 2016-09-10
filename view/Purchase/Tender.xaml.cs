@@ -131,7 +131,6 @@ namespace Cognitivo.Purchase
             if (purchase_tender != null)
             {
                 item item = PurchaseTenderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-
                 if (item != null)
                 {
                     purchase_tender_item purchase_tender_item = new purchase_tender_item();
@@ -139,12 +138,14 @@ namespace Cognitivo.Purchase
                     purchase_tender_item.id_item = item.id_item;
                     purchase_tender_item.item_description = item.name;
                     purchase_tender_item.quantity = 1;
+
                     foreach (item_dimension item_dimension in item.item_dimension)
                     {
                         purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
                         purchase_tender_dimension.purchase_tender_item = purchase_tender_item;
                         purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
                         purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
+
                         if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault()!=null)
                         {
                             purchase_tender_dimension.app_dimension = PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();     
@@ -154,10 +155,19 @@ namespace Cognitivo.Purchase
                         purchase_tender_dimension.value = item_dimension.value;
                         purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
                     }
-                    purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
 
+                    purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                     purchase_tenderViewSource.View.Refresh();
                     purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
+                }
+                else
+                {
+                    if (sbxItem.Text != string.Empty)
+                    {
+                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
+                        purchase_tender_item.item_description = item.name;
+                        purchase_tender_item.quantity = 1;
+                    }
                 }
             }
         }
@@ -522,11 +532,5 @@ namespace Cognitivo.Purchase
                 purchase_tender_item_detail.RaisePropertyChanged("Quantity_Factored");
             }
         }
-
-        
-
-      
-
-
     }
 }

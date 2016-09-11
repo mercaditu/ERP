@@ -186,8 +186,11 @@ namespace entity
             }
             set
             {
-                _status = value;
-                RaisePropertyChanged("status");
+                if (_status != value)
+                {
+                    _status = value;
+                    RaisePropertyChanged("status");
+                }
             }
         }
         private Status.Documents_General _status;

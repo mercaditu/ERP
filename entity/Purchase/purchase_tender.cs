@@ -13,7 +13,8 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
-            id_branch =  CurrentSession.Id_Branch;
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
+
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;
           
@@ -26,12 +27,24 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_tender { get; set; }
         public int id_branch { get; set; }
+
         public Status.Documents_General status
         {
-            get { return _status; }
-            set { _status = value; RaisePropertyChanged("status"); }
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    RaisePropertyChanged("status");
+                }
+            }
         }
-        Status.Documents_General _status;
+        private Status.Documents_General _status;
+
         public int? id_department { get; set; }
         public int? id_project { get; set; }
         public int? id_weather { get; set; }

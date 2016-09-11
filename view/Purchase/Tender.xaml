@@ -236,17 +236,9 @@
                         <DataGrid x:Name="purchase_tender_contact_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" Margin="4,35,4,0"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_contact_detailDataGrid_SelectionChanged" 
-                                  CellEditEnding="purchase_tender_contact_detailDataGrid_CellEditEnding"
+                                  CellEditEnding="purchase_tender_contact_detailDataGrid_CellEditEnding" CanUserAddRows="False"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <!--<DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-                                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>-->
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto" Binding="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
 					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
@@ -287,7 +279,7 @@
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" 
                                   RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" 
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

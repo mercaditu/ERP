@@ -89,10 +89,19 @@ namespace entity
                         purchase_order.id_project = purchase_tender.id_project;
                         purchase_order.project = purchase_tender.project;
 
+                        ///Don't approve if there is nothing selected. Sometimes Users make mistakes.
                         if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count() == 0)
                         {
                             return;
                         }
+
+                        ///Reject all non selected Details.
+                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected))
+                        {
+                            purchase_tender_detail.status = Status.Documents_General.Rejected;
+                        }
+
+                        ///Approve all selected Details.
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected))
                         {
                             purchase_order_detail purchase_order_detail = new purchase_order_detail();
@@ -155,6 +164,7 @@ namespace entity
                             }
 
                             purchase_order.purchase_order_detail.Add(purchase_order_detail);
+                            purchase_tender_detail.IsSelected = false;
                             purchase_tender_detail.status = Status.Documents_General.Approved;
                         }
 
@@ -170,7 +180,7 @@ namespace entity
                         purchase_tender.RaisePropertyChanged("number");
                     }
 
-                    purchase_tender.IsSelected = true;
+                    purchase_tender.IsSelected = false;
                     purchase_tender.status = Status.Documents_General.Approved;
                     SaveChanges();
                 }

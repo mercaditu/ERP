@@ -19,7 +19,6 @@ namespace Cognitivo.Sales
     {
         CollectionViewSource sales_orderViewSource;
         SalesOrderDB dbContext = new SalesOrderDB();
-        contact _contact = new contact();
 
         public Order()
         {

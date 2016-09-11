@@ -109,10 +109,11 @@ namespace Cognitivo.Product
             (
                 predicateOR
             );
-            await ItemDB.items.Where(predicate).LoadAsync();
+
+            await ItemDB.items.Where(predicate).OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                itemViewSource.Source = ItemDB.items.Local.OrderBy(x => x.name);
+                itemViewSource.Source = ItemDB.items.Local;
             }));
         }
 
@@ -120,7 +121,7 @@ namespace Cognitivo.Product
         {
             await ItemDB.app_measurement
                     .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).LoadAsync();
+                    .OrderBy(a => a.name).AsNoTracking().LoadAsync();
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -135,21 +136,19 @@ namespace Cognitivo.Product
 
             await ItemDB.app_dimension
                 .Where(a => a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
+                .OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = ItemDB.app_dimension.Local;
             }));
+
             await ItemDB.app_property
-            .OrderBy(a => a.name).LoadAsync();
+            .OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_propertyViewSource.Source = ItemDB.app_property.Local;
             }));
 
-            //await ItemDB.app_vat_group
-            //    .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
-            //    .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //ItemDB.app_vat_group.Local;
@@ -157,7 +156,7 @@ namespace Cognitivo.Product
 
             await ItemDB.item_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-                .OrderBy(x => x.name).LoadAsync();
+                .OrderBy(x => x.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
@@ -166,16 +165,13 @@ namespace Cognitivo.Product
 
             await ItemDB.item_template
              .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-             .OrderBy(x => x.name).LoadAsync();
+             .OrderBy(x => x.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 item_templateViewSource = ((CollectionViewSource)(FindResource("item_templateViewSource")));
                 item_templateViewSource.Source = ItemDB.item_template.Local;
             }));
 
-            //await ItemDB.app_currency
-            //    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-            //    .OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
@@ -184,7 +180,7 @@ namespace Cognitivo.Product
 
             await ItemDB.hr_talent
                 .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
+                .OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 hr_talentViewSource.Source = ItemDB.hr_talent.Local;
@@ -192,7 +188,7 @@ namespace Cognitivo.Product
 
             await ItemDB.item_price_list
                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-               .OrderBy(a => a.name).LoadAsync();
+               .OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 item_price_listViewSource.Source = ItemDB.item_price_list.Local;

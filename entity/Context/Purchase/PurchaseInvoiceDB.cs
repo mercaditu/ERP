@@ -116,7 +116,6 @@ namespace entity
                         }
 
                         invoice.status = Status.Documents_General.Approved;
-
                         SaveChanges();
                     }
                 }

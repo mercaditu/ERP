@@ -54,8 +54,6 @@
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
               Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
-   
-
         <ListBox x:Name="purchase_invoiceDataGrid"  Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="purchase_invoiceDataGrid_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"

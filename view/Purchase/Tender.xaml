@@ -21,7 +21,6 @@
         <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
                         CanExecute="EditCommand_CanExecute" 
                         Executed="EditCommand_Executed"/>
-
     </Page.CommandBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
@@ -39,8 +38,7 @@
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tender_dimensionViewSource" Source="{Binding purchase_tender_dimension, Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"/>
-        
-                <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_tenderViewSource}">
         <Grid.ColumnDefinitions>
@@ -51,9 +49,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-
         <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="purchase_tenderDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -69,13 +65,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         <Grid Grid.Column="1" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
             <ScrollViewer>
                 <Grid IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                     <Grid.ColumnDefinitions>
@@ -180,7 +174,7 @@
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding IsEditable, Converter={StaticResource TrueToFalse}, ElementName=toolBar}">
                             <DataGrid.Columns>
-                                <!--<DataGridTextColumn Binding="{Binding item.name, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>-->
+                                <DataGridTextColumn Binding="{Binding item.code, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Code}" Width="64"/>
                                 <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
                             		                ElementStyle="{StaticResource RightAlignStyle}"/>
@@ -363,7 +357,7 @@
         <cntrl:toolBar x:Name="toolBar" appName="PurchaseTender" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                        btnNew_Click="toolBar_btnNew_Click" btnApprove_Click="toolBar_btnApprove_Click" btnEdit_Click="toolBar_btnEdit_Click" btnSave_Click="toolBar_btnSave_Click"
                        btnCancel_Click="toolBar_btnCancel_Click" btnDelete_Click="toolBar_btnDelete_Click" btnAnull_Click="toolBar_btnAnull_Click"      
-                       State="{Binding State, Mode=OneWay}"
-                       Status="{Binding status, Mode=OneWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

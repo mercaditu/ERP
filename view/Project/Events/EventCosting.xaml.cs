@@ -22,7 +22,6 @@ namespace Cognitivo.Project
             itemViewSource,
             contractViewSource = null;
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
         int IDcurrencyfx = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,28 +49,25 @@ namespace Cognitivo.Project
             itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
 
             contractViewSource = FindResource("contractViewSource") as CollectionViewSource;
-            contractViewSource.Source = await EventDB.app_contract.Where(a => a.is_active == true && a.id_company == _settings.company_ID).ToListAsync();
+            contractViewSource.Source = CurrentSession.Get_Contract();
 
             CollectionViewSource conditionViewSource = FindResource("conditionViewSource") as CollectionViewSource;
-            conditionViewSource.Source = await EventDB.app_condition.Where(a => a.is_active == true && a.id_company == _settings.company_ID).ToListAsync();
+            conditionViewSource.Source = CurrentSession.Get_Condition();
 
             CollectionViewSource contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-            contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).ToListAsync();
+            contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && a.is_customer).ToListAsync();
 
             CollectionViewSource template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
-            template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active == true && a.id_company == _settings.company_ID).ToListAsync();
+            template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             project_costingViewSource = FindResource("project_costingViewSource") as CollectionViewSource;
-            EventDB.project_event.Where(a => a.is_active == true && a.id_company == _settings.company_ID).Load();
+            await EventDB.project_event.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).LoadAsync();
             project_costingViewSource.Source = EventDB.project_event.Local;
             project_costingproject_event_template_variable_detailsViewSource = FindResource("project_costingproject_event_template_variable_detailsViewSource") as CollectionViewSource;
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
-
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(EventDB, entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
-
-
+            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(EventDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             EstimateCost();
         }
@@ -433,10 +429,10 @@ namespace Cognitivo.Project
                         sales_budget.id_contact = contact.id_contact;
                         sales_budget.contact = db.contacts.Where(x => x.id_contact == contact.id_contact).FirstOrDefault();
 
-                        if (_settings.branch_ID > 0)
-                            sales_budget.id_branch = _settings.branch_ID;
+                        if (CurrentSession.Id_Branch > 0)
+                            sales_budget.id_branch = CurrentSession.Id_Branch;
                         else
-                            sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
+                            sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_branch;
 
                         sales_budget.id_condition = app_condition.id_condition;
                         sales_budget.id_contract = app_contract.id_contract;
@@ -597,7 +593,7 @@ namespace Cognitivo.Project
             project.id_contact = contact.id_contact;
 
             project.IsSelected = true;
-            project.id_branch = _settings.branch_ID;
+            project.id_branch = CurrentSession.Id_Branch;
             project.name = txtName.Text;
             project.est_start_date = timestampCalendar.SelectedDate;
             project.est_end_date = timestampCalendar.SelectedDate;
@@ -865,6 +861,7 @@ namespace Cognitivo.Project
                     project_event_variable.is_included = true;
                     project_event_variable.item = item;
                     project_event_variable.id_item = item.id_item;
+                    
                     if (item.item_tag_detail.Count() > 0)
                     {
                         if (item.item_tag_detail.FirstOrDefault().item_tag != null)
@@ -872,8 +869,13 @@ namespace Cognitivo.Project
                             project_event_variable.item_tag = item.item_tag_detail.FirstOrDefault().item_tag;
                             project_event_variable.id_tag = item.item_tag_detail.FirstOrDefault().item_tag.id_tag;
                         }
-
                     }
+                    else
+                    {
+                        toolBar.msgWarning("Item needs Tag");
+                        return; 
+                    }
+
                     project_event_variable.adult_consumption = 1;
                     project_event_variable.child_consumption = 1;
                     project_event_variable.is_included = false;
@@ -883,7 +885,6 @@ namespace Cognitivo.Project
                 toolBar_btnSave_Click(sender);
                 toolBar_btnEdit_Click(sender);
                 EstimateCost();
-
             }
         }
 

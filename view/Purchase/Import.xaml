@@ -123,8 +123,10 @@
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
-                            
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="128" Binding="{Binding item}"/>
+
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Binding="{Binding item_code}"/>
+
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Binding="{Binding item}"/>
 
                             <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" Width="SizeToHeader"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>

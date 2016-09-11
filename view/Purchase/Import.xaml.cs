@@ -34,11 +34,9 @@ namespace Cognitivo.Purchase
                 purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
 
                 impexViewSource = FindResource("impexViewSource") as CollectionViewSource;
-                ImpexDB.impex
-                    //.Include(x => x.impex_import)
-                    //.Include(x => x.impex_expense)
+                await ImpexDB.impex
                     .Where(x => x.impex_type == impex._impex_type.Import && x.is_active == true && x.id_company == CurrentSession.Id_Company)
-                    .Load();
+                    .LoadAsync();
                 impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
 

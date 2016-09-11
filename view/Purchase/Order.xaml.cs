@@ -53,25 +53,21 @@ namespace Cognitivo.Purchase
                 await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company
                                       ).OrderByDescending(x => x.trans_date).ToListAsync();
             }
-
-            //await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company
-            //                               ).Include(x => x.purchase_order_detail).ToListAsync();
             
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_orderViewSource = ((CollectionViewSource)(FindResource("purchase_orderViewSource")));
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
-            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
 
+            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-
                 app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
             }));
 
-            await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
@@ -85,41 +81,21 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-
-            //PurchaseOrderDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
             cbxContract.ItemsSource = CurrentSession.Get_Contract();
-            //}));
 
-            PurchaseOrderDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-                cbxDepartment.ItemsSource = PurchaseOrderDB.app_department.Local;
-           // }));
-
-            //PurchaseOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    cbxProject.ItemsSource = PurchaseOrderDB.projects.Local;
-            //}));
-
-           
-            //dbContext.app_document_range.Where(d => d.is_active == true
-            //                               && d.app_document.id_application == entity.App.Names.PurchaseOrder && d.id_company == CurrentSession.Id_Company).Include(i => i.app_document).ToList();
+            await PurchaseOrderDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
+            cbxDepartment.ItemsSource = PurchaseOrderDB.app_department.Local;
+            
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseOrderDB, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
-            //cmbdocument
-            //PurchaseOrderDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxCondition.ItemsSource = CurrentSession.Get_Condition(); //PurchaseOrderDB.app_condition.Local;
             }));
 
-            //PurchaseOrderDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseOrderDB.app_branch.Local;
@@ -131,18 +107,17 @@ namespace Cognitivo.Purchase
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
                 app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //PurchaseOrderDB.app_vat_group.Local;
             }));
-         
 
-            PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).ToList();
+            await PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
                 app_cost_centerViewSource.Source = PurchaseOrderDB.app_cost_center.Local;
             }));
 
-            PurchaseOrderDB.app_document_range.Where(d => d.is_active == true
+            await PurchaseOrderDB.app_document_range.Where(d => d.is_active
                                            && d.app_document.id_application == entity.App.Names.PurchaseOrder
-                                           && d.id_company == CurrentSession.Id_Company).Include("app_document").ToList();
+                                           && d.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cmbdocument.ItemsSource = PurchaseOrderDB.app_document_range.Local;

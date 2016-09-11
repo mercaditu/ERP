@@ -66,7 +66,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-            PurchaseInvoiceDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+            await PurchaseInvoiceDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
@@ -87,21 +87,21 @@ namespace Cognitivo.Purchase
                 app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //PurchaseInvoiceDB.app_vat_group.Local;
             }));
 
-            PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            await PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
                 app_dimensionViewSource.Source = PurchaseInvoiceDB.app_dimension.Local;
             }));
 
-            await PurchaseInvoiceDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            await PurchaseInvoiceDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
                 app_measurementViewSource.Source = PurchaseInvoiceDB.app_measurement.Local;
             }));
 
-            PurchaseInvoiceDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).ToList();
+            await PurchaseInvoiceDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).AsNoTracking().ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;

@@ -2210,7 +2210,7 @@
   <ItemGroup>
     <Folder Include="bin\Debug\Inventory\" />
     <Folder Include="bin\Debug\Sales\" />
-    <Folder Include="obj\Promotion\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Menu\modAccounting.png" />

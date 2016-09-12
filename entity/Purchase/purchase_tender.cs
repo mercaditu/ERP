@@ -63,32 +63,54 @@ namespace entity
                 if (_id_range != value)
                 {
                     _id_range = value;
-
-                    using (db db = new db())
+                    
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
-                        if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                        using (db db = new db())
                         {
                             app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                            if (app_document_range != null)
+                            {
+                                if (app_document_range.range_template.Contains("#Branch"))
+                                {
+                                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                    if (app_branch != null)
+                                    {
+                                        Brillo.Logic.Range.branch_Code = app_branch.code;
+                                    }
+                                }
 
-                            if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
-                            {
-                                Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                            }
-                            if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
-                            {
-                                Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
-                            }
-                            if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
-                            {
-                                Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
-                            }
-                            if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
-                            {
-                                Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
-                            }
+                                if (app_document_range.range_template.Contains("#Terminal"))
+                                {
+                                    app_terminal app_terminal = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault();
+                                    if (app_terminal != null)
+                                    {
+                                        Brillo.Logic.Range.terminal_Code = app_terminal.code;
+                                    }
+                                }
 
-                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
-                            RaisePropertyChanged("NumberWatermark");
+                                if (app_document_range.range_template.Contains("#User"))
+                                {
+                                    security_user security_user = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault();
+                                    if (security_user != null)
+                                    {
+                                        Brillo.Logic.Range.user_Code = security_user.code;
+                                    }
+                                }
+
+                                if (app_document_range.range_template.Contains("#Project"))
+                                {
+                                    project projects = db.projects.Where(x => x.id_project == id_project).FirstOrDefault();
+                                    if (projects != null)
+                                    {
+                                        Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                    }
+                                }
+
+
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                RaisePropertyChanged("NumberWatermark");
+                            }
                         }
                     }
                 }

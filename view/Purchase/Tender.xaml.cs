@@ -27,6 +27,11 @@ namespace Cognitivo.Purchase
         private void toolBar_btnApprove_Click(object sender)
         {
             PurchaseTenderDB.Approve();
+             purchase_tenderViewSource.View.Refresh();
+             purchase_tenderViewSource.View.MoveCurrentToFirst();
+             purchase_tenderViewSource.View.MoveCurrentToLast();
+        
+
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -34,7 +39,7 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.CancelAllChanges();
             purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
             purchase_tender_old.State = EntityState.Unchanged;
-          //  
+        
         }
 
         private void toolBar_btnAnull_Click(object sender)

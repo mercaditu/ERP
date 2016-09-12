@@ -43,8 +43,6 @@
         public virtual IEnumerable<payment> payment { get; set; }
 
         public virtual IEnumerable<production_order> production_order { get; set; }
-        public virtual IEnumerable<production_execution> production_execution { get; set; }
-
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }
     }
 }

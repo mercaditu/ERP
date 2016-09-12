@@ -12,7 +12,6 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // TODO:Define mapping
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 9));
         }
         
@@ -115,7 +114,6 @@
         public virtual DbSet<production_order> production_order { get; set; }
         public virtual DbSet<production_order_detail> production_order_detail { get; set; }
         public virtual DbSet<production_line> production_line { get; set; }
-        public virtual DbSet<production_execution> production_execution { get; set; }
         public virtual DbSet<project> projects { get; set; }
         public virtual DbSet<project_tag_detail> project_tag_detail { get; set; }
         public virtual DbSet<project_tag> project_tag { get; set; }

@@ -745,7 +745,6 @@
     <Compile Include="PrintInvoice.cs" />
     <Compile Include="Production\production_execution_detail.cs" />
     <Compile Include="Production\production_line.cs" />
-    <Compile Include="Production\production_execution.cs" />
     <Compile Include="Production\production_order_detail.cs" />
     <Compile Include="Production\production_order.cs" />
     <Compile Include="Project\clsproject.cs" />

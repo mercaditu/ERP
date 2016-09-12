@@ -19,16 +19,6 @@ namespace entity
             return production_order;
         }
 
-             public production_execution NewExecustion()
-        {
-            production_execution production_execution = new production_execution();
-            production_execution.id_production_line = base.production_line.FirstOrDefault().id_production_line;
-        
-            production_execution.trans_date = DateTime.Now;
-            production_execution.status = Status.Documents_General.Pending;
-            return production_execution;
-        }
-
         public override int SaveChanges()
         {
             validate_Execution();

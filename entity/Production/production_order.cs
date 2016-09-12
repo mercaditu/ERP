@@ -25,9 +25,7 @@ namespace entity
             Properties.Settings _settings = new Properties.Settings();
             trans_date = DateTime.Now;
             production_order_detail = new List<production_order_detail>();
-            item_request = new List<item_request>();
-            production_execution = new List<production_execution>();
-           
+            item_request = new List<item_request>();           
         }
 
         [Key]
@@ -159,7 +157,6 @@ namespace entity
 
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
-        public virtual ICollection<production_execution> production_execution { get; set; }
 
         #region Error
         public string Error

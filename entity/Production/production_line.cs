@@ -14,7 +14,6 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             production_order = new List<production_order>();
-            production_execution = new List<production_execution>();
         }
 
         [Key]
@@ -27,7 +26,6 @@ namespace entity
         public virtual app_location app_location { get; set; }
 
         public virtual ICollection<production_order> production_order { get; set; }
-        public virtual ICollection<production_execution> production_execution { get; set; }
         public string Error
         {
             get

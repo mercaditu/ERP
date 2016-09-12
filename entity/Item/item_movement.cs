@@ -7,6 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
+
     public partial class item_movement : Audit, IDataErrorInfo
     {
         public item_movement()

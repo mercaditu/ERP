@@ -25,7 +25,6 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_execution_detail { get; set; }
-        public int id_production_execution { get; set; }
         public int? id_order_detail { get; set; }
         public int? id_project_task { get; set; }
 
@@ -109,7 +108,6 @@ namespace entity
         public virtual ICollection<production_execution_dimension> production_execution_dimension { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }
-        public virtual production_execution production_execution { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual item item { get; set; }

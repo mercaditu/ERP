@@ -49,9 +49,9 @@ namespace Cognitivo.Production
             item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
             item_dimensionViewSource.Source = ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            production_executionViewSource = FindResource("production_executionViewSource") as CollectionViewSource;
-            ExecutionDB.production_execution.Where(a => a.production_order.types != production_order.ProductionOrderTypes.Fraction && a.id_company == CurrentSession.Id_Company).ToList(); //Include("production_execution_detail").Load();
-            production_executionViewSource.Source = ExecutionDB.production_execution.Local;
+            //production_executionViewSource = FindResource("production_executionViewSource") as CollectionViewSource;
+            //ExecutionDB.production_execution.Where(a => a.production_order.types != production_order.ProductionOrderTypes.Fraction && a.id_company == CurrentSession.Id_Company).ToList(); //Include("production_execution_detail").Load();
+            //production_executionViewSource.Source = ExecutionDB.production_execution.Local;
 
             production_execution_detailProductViewSource = FindResource("production_execution_detailProductViewSource") as CollectionViewSource;
             production_execution_detailRawViewSource = FindResource("production_execution_detailRawViewSource") as CollectionViewSource;

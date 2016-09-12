@@ -12,7 +12,7 @@ namespace Cognitivo.Menu
     public partial class MainWindow : INotifyPropertyChanged
     {
         bool _is_LoggedIn = false;
-        public List<entity.security_curd> security_curdList { get; set; }
+        public List<entity.security_crud> security_curdList { get; set; }
 
         public bool is_LoggedIn
         {

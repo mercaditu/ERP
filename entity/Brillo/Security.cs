@@ -36,7 +36,7 @@
             {
                 if (CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault() != null)
                 {
-                    security_curd security_curd = CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
+                    security_crud security_curd = CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
 
                     view = security_curd.can_read;
                     create = security_curd.can_create;

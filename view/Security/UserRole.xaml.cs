@@ -174,14 +174,14 @@ namespace Cognitivo.Security
             if (security_rolesecurity_curdViewSource.View != null)
             {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-                List<security_curd> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
+                List<security_crud> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
                 List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
                 List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
                 List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
 
                 foreach (entity.App.Names AppName in finalapplicaiton)
                 {
-                    security_curd _security_curd = new security_curd();
+                    security_crud _security_curd = new security_crud();
                     _security_curd.id_application = AppName;
                     _security_curd.can_update = false;
                     _security_curd.can_read = false;
@@ -208,7 +208,7 @@ namespace Cognitivo.Security
                     {
                         security_rolesecurity_curdViewSource.View.Filter = i =>
                         {
-                            security_curd security_curd = (security_curd)i;
+                            security_crud security_curd = (security_crud)i;
                             string TranslatedName = entity.Brillo.Localize.StringText(security_curd.id_application.ToString());
                             if (TranslatedName.ToUpper().Contains(txtsearch.Text.ToUpper()))
                                 return true;

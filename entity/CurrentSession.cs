@@ -103,7 +103,7 @@ namespace entity
         public static Versions Version { get; set; }
         public static int NumberOfSeats { get; set; }
 
-        public static List<security_curd> Security_CurdList { get; set; }
+        public static List<security_crud> Security_CurdList { get; set; }
         public static List<security_role_privilage> Security_role_privilageList { get; set; }
 
         // public static db db = new db();
@@ -113,7 +113,7 @@ namespace entity
 
         public static void Start(string UserName, string Password)
         {
-            Security_CurdList = new List<security_curd>();
+            Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
 
             using (db ctx = new db())

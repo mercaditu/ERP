@@ -5,9 +5,9 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class security_curd : INotifyPropertyChanged
+    public partial class security_crud : INotifyPropertyChanged
     {
-        public security_curd()
+        public security_crud()
         {
 
         }
@@ -23,7 +23,7 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_curd { get; set; }
+        public int id_crud { get; set; }
         public int id_role { get; set; }
         public App.Names id_application { get; set; }
         public bool can_create

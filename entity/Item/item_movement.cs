@@ -128,9 +128,8 @@ namespace entity
                 }
             }
         }
-
+        
         item_product _item_product;
-
 
         #region Methods
         private decimal GetDimensionValue()

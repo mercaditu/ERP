@@ -34,7 +34,7 @@ namespace cntrl.Class
             }
         }
 
-        public static security_curd getUserSecurityValues(int UserId, App.Names Application)
+        public static security_crud getUserSecurityValues(int UserId, App.Names Application)
         {
             using(db db = new db())
             {

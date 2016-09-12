@@ -245,6 +245,7 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />
     <Compile Include="Execustionstrategy.cs" />
+    <Compile Include="Generic\AuditGeneric.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />
     <Compile Include="Item\item_asset_maintainance_detail.cs" />
     <Compile Include="Item\item_asset_maintainance.cs" />
@@ -779,7 +780,7 @@
     <Compile Include="Sales\sales_rep.cs" />
     <Compile Include="Sales\sales_return.cs" />
     <Compile Include="Sales\sales_return_detail.cs" />
-    <Compile Include="Security\security_curd.cs" />
+    <Compile Include="Security\security_crud.cs" />
     <Compile Include="Security\security_privilage.cs" />
     <Compile Include="Security\security_question.cs" />
     <Compile Include="Security\security_role.cs" />

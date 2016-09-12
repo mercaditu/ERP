@@ -13,7 +13,7 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            security_curd = new List<security_curd>();
+            security_curd = new List<security_crud>();
             security_user = new List<security_user>();
             security_role_privilage = new List<security_role_privilage>();
         }
@@ -34,6 +34,8 @@ namespace entity
             }
         }
         string _name;
+
+        public bool see_cost { get; set; }
         public bool is_active { get; set; }
         public bool is_master { get; set; }
 
@@ -41,7 +43,7 @@ namespace entity
         public virtual app_department app_department { get; set; }
         public virtual IEnumerable<bi_tag_role> bi_tag_role { get; set; }
         public virtual ICollection<security_user> security_user { get; set; }
-        public virtual ICollection<security_curd> security_curd { get; set; }
+        public virtual ICollection<security_crud> security_curd { get; set; }
         public virtual ICollection<security_role_privilage> security_role_privilage { get; set; }
         
         public event PropertyChangedEventHandler PropertyChanged;

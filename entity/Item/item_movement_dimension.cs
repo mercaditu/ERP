@@ -16,7 +16,7 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_movement_property { get; set; }
+        public long id_movement_dimension { get; set; }
         public long id_movement { get; set; }
         public int id_dimension { get; set; }
         public decimal value { get; set; }

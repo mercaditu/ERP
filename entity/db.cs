@@ -13,7 +13,7 @@
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // TODO:Define mapping
-            modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 8));
+            modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 9));
         }
         
         public virtual DbSet<accounting_cycle> accounting_cycle { get; set; }

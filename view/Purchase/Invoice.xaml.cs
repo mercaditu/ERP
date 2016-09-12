@@ -358,23 +358,23 @@ namespace Cognitivo.Purchase
         private void item_Select(object sender, EventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
-            item item = null;
-            contact contact = null;
-
-            if (sbxItem.ItemID > 0)
+            if (purchase_invoice != null)
             {
-                item = PurchaseInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = null;
+                contact contact = null;
 
-                if (item != null && item.id_item > 0 && purchase_invoice != null)
+                if (sbxItem.ItemID > 0)
                 {
-                    if (sbxContact.ContactID > 0)
-                    {
-                        contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                    }
+                    item = PurchaseInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 }
-            }
 
-            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact));
+                if (purchase_invoice.id_contact > 0 || sbxContact.ContactID > 0)
+                {
+                    contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                }
+
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact));
+            }
         }
 
         private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact)
@@ -385,10 +385,11 @@ namespace Cognitivo.Purchase
             //ItemLink 
             if (item != null)
             {
-                if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null && InvoiceSetting.AllowDuplicateItems)
+                purchase_invoice_detail detail_withitem = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                if (detail_withitem != null && InvoiceSetting.AllowDuplicateItems)
                 {
                     //Item Exists in Context, so add to sum.
-                    purchase_invoice_detail _purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                    purchase_invoice_detail _purchase_invoice_detail = detail_withitem;
                     _purchase_invoice_detail.quantity += 1;
                     //Return because Item exists, and will +1 in Quantity
                     return;
@@ -396,15 +397,13 @@ namespace Cognitivo.Purchase
                 else
                 {
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
-                    if (PurchaseInvoiceDB.purchase_invoice_detail
+                    purchase_invoice_detail _purchase_invoice_detail = PurchaseInvoiceDB.purchase_invoice_detail
                         .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
                         .OrderByDescending(y => y.purchase_invoice.trans_date)
-                        .FirstOrDefault() != null)
+                        .FirstOrDefault();
+                    if (_purchase_invoice_detail != null)
                     {
-                        purchase_invoice_detail.unit_cost = PurchaseInvoiceDB.purchase_invoice_detail
-                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
-                        .OrderByDescending(y => y.purchase_invoice.trans_date)
-                        .FirstOrDefault().unit_cost;
+                        purchase_invoice_detail.unit_cost = _purchase_invoice_detail.unit_cost;
                     }
 
                     //Item DOES NOT Exist in Context
@@ -412,7 +411,6 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.item_description = item.name;
                     purchase_invoice_detail.quantity = 1;
-
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -453,15 +451,17 @@ namespace Cognitivo.Purchase
 
                     if (item.item_product != null)
                     {
-                        if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                            id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                        if (app_cost_center != null)
+                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
                             purchase_invoice_detail.id_cost_center = id_cost_center;
                     }
                     else if (item.item_asset != null)
                     {
-                        if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                            id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                        if (app_cost_center != null)
+                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
                             purchase_invoice_detail.id_cost_center = id_cost_center;
                     }
@@ -469,8 +469,9 @@ namespace Cognitivo.Purchase
                 else
                 {
                     int id_cost_center = 0;
-                    if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                        id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                    app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                    if (app_cost_center != null)
+                        id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                     if (id_cost_center > 0)
                         purchase_invoice_detail.id_cost_center = id_cost_center;
                 }
@@ -485,9 +486,9 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_vat_group = item.id_vat_group;
                 }
             }
-            else if (PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+            else if (PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).Any())
             {
-                purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>

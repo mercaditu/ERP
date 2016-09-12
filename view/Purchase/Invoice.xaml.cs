@@ -451,7 +451,7 @@ namespace Cognitivo.Purchase
 
                     if (item.item_product != null)
                     {
-                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
                         if (app_cost_center != null)
                             id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
@@ -459,7 +459,7 @@ namespace Cognitivo.Purchase
                     }
                     else if (item.item_asset != null)
                     {
-                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
                         if (app_cost_center != null)
                             id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
@@ -469,7 +469,7 @@ namespace Cognitivo.Purchase
                 else
                 {
                     int id_cost_center = 0;
-                    app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault()
+                    app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
                     if (app_cost_center != null)
                         id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                     if (id_cost_center > 0)

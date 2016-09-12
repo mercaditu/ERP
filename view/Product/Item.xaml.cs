@@ -156,7 +156,7 @@ namespace Cognitivo.Product
 
             await ItemDB.item_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-                .OrderBy(x => x.name).AsNoTracking().LoadAsync();
+                .OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));

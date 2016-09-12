@@ -50,6 +50,7 @@ namespace entity
             item_property = new List<item_property>();
             item_dimension = new List<item_dimension>();
             project_task = new List<project_task>();
+            item_recepie = new List<item_recepie>();
         }
 
         [Key]

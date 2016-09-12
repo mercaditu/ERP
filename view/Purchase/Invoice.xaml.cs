@@ -444,6 +444,8 @@ namespace Cognitivo.Purchase
             }
             else
             {
+                Dispatcher.BeginInvoke((Action)(() =>
+            {
                 //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
                 if (item != null)
                 {
@@ -472,6 +474,7 @@ namespace Cognitivo.Purchase
                     if (id_cost_center > 0)
                         purchase_invoice_detail.id_cost_center = id_cost_center;
                 }
+            }));
             }
 
             //VAT
@@ -667,7 +670,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice.project = purchase_order.project;
                     purchase_invoice.id_project = purchase_order.id_project;
                 }
-          
+
                 foreach (purchase_order_detail _purchase_order_detail in purchase_order.purchase_order_detail)
                 {
                     if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)

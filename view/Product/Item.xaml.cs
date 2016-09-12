@@ -63,9 +63,6 @@ namespace Cognitivo.Product
             ItemDB = new ItemDB();
             load_PrimaryDataThread();
             load_SecondaryDataThread();
-            //Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            //task_PrimaryData.Wait();
-            //Task thread_SecondaryData = Task.Factory.StartNew(() => load_SecondaryDataThread());
         }
 
         private async void load_PrimaryDataThread()
@@ -136,14 +133,14 @@ namespace Cognitivo.Product
 
             await ItemDB.app_dimension
                 .Where(a => a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).AsNoTracking().LoadAsync();
+                .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = ItemDB.app_dimension.Local;
             }));
 
             await ItemDB.app_property
-            .OrderBy(a => a.name).AsNoTracking().LoadAsync();
+            .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_propertyViewSource.Source = ItemDB.app_property.Local;
@@ -165,7 +162,7 @@ namespace Cognitivo.Product
 
             await ItemDB.item_template
              .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-             .OrderBy(x => x.name).AsNoTracking().LoadAsync();
+             .OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 item_templateViewSource = ((CollectionViewSource)(FindResource("item_templateViewSource")));
@@ -180,7 +177,7 @@ namespace Cognitivo.Product
 
             await ItemDB.hr_talent
                 .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).AsNoTracking().LoadAsync();
+                .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 hr_talentViewSource.Source = ItemDB.hr_talent.Local;
@@ -188,7 +185,7 @@ namespace Cognitivo.Product
 
             await ItemDB.item_price_list
                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-               .OrderBy(a => a.name).AsNoTracking().LoadAsync();
+               .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 item_price_listViewSource.Source = ItemDB.item_price_list.Local;

@@ -240,9 +240,7 @@
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto" Binding="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
-					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-
+                                
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
 					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 

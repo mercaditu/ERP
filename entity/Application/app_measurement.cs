@@ -6,8 +6,8 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
-    public partial class app_measurement : Audit, IDataErrorInfo
+
+    public partial class app_measurement : AuditGeneric, IDataErrorInfo
     {
         public app_measurement()
         {

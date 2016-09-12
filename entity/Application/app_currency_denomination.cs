@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class app_currency_denomination : Audit, IDataErrorInfo
+    public partial class app_currency_denomination : AuditGeneric, IDataErrorInfo
     {
         public app_currency_denomination()
         {

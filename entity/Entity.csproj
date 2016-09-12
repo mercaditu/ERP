@@ -411,6 +411,10 @@
     <Compile Include="Migrations\201609010942288_ChangesinPaymentDetail.Designer.cs">
       <DependentUpon>201609010942288_ChangesinPaymentDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609121254279_Currencychange.cs" />
+    <Compile Include="Migrations\201609121254279_Currencychange.Designer.cs">
+      <DependentUpon>201609121254279_Currencychange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1155,6 +1159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609010942288_ChangesinPaymentDetail.resx">
       <DependentUpon>201609010942288_ChangesinPaymentDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609121254279_Currencychange.resx">
+      <DependentUpon>201609121254279_Currencychange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

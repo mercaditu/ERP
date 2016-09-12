@@ -30,7 +30,7 @@ namespace entity
         public int? id_execution_detail { get; set; }
         public int? id_purchase_invoice_detail { get; set; }
         public int? id_purchase_return_detail { get; set; }
-        public long? id_sales_invoice_detail { get; set; }
+        public int? id_sales_invoice_detail { get; set; }
         public int? id_sales_return_detail { get; set; }
         public int? id_inventory_detail { get; set; }
         public int? id_sales_packing_detail { get; set; }
@@ -76,7 +76,7 @@ namespace entity
         {
             get
             {
-                _avlquantity = credit - (_child.Count() > 0 ? _child.Sum(y => y.debit) : 0);
+                _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
                 return _avlquantity;
             }
             set
@@ -87,8 +87,8 @@ namespace entity
         private decimal _avlquantity;
 
         //Heirarchy For Movement
-        public virtual ICollection<item_movement> _child { get; set; }
-        public virtual item_movement _parent { get; set; }
+        public virtual ICollection<item_movement> child { get; set; }
+        public virtual item_movement parent { get; set; }
 
         public virtual app_location app_location { get; set; }
 

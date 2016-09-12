@@ -9,7 +9,7 @@ namespace entity
     using System.Linq;
     using entity.Class;
 
-    public partial class item : Audit, IDataErrorInfo
+    public partial class item : AuditGeneric, IDataErrorInfo
     {
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum item_type

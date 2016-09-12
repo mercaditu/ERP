@@ -6,8 +6,8 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
-    public partial class item_price_list : Audit, IDataErrorInfo
+
+    public partial class item_price_list : AuditGeneric, IDataErrorInfo
     {
         public item_price_list()
         {

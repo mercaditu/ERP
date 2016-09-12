@@ -9,7 +9,7 @@ namespace entity
     using System.Linq;
     using System.Text;
 
-    public partial class contact : Audit, IDataErrorInfo, INotifyPropertyChanged
+    public partial class contact : AuditGeneric, IDataErrorInfo, INotifyPropertyChanged
     {
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum CivilStatus

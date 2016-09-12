@@ -52,7 +52,7 @@ namespace Cognitivo.Configs
                 Items_InStockLIST = db.item_movement.Where(x => x.id_location == id_location &&
                                                                          x.item_product.id_item == id_item
                                                                          && x.status == entity.Status.Stock.InStock
-                                                                         && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                                                                         && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0).ToList();
 
 
 

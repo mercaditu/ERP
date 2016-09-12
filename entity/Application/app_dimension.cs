@@ -7,7 +7,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class app_dimension : Audit, IDataErrorInfo
+    public partial class app_dimension : AuditGeneric, IDataErrorInfo
     {
         public app_dimension()
         {

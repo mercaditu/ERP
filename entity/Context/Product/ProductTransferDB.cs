@@ -246,7 +246,7 @@ namespace entity
                                 stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                 null
                                 );
-                item_movement_dest._parent = Items_InStockLIST.FirstOrDefault();
+                item_movement_dest.parent = Items_InStockLIST.FirstOrDefault();
                 base.item_movement.Add(item_movement_dest);
             }
         }

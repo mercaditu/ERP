@@ -255,7 +255,7 @@ namespace Cognitivo.Menu
                             .Where(x =>
                                 x.id_item_product == item_product.id_item_product &&
                                 x.credit > 0 && 
-                                x._parent == null &&
+                                x.parent == null &&
                                 x.item_movement_value.Sum(y => y.unit_value) > 0).OrderByDescending(x => x.trans_date).FirstOrDefault();
 
                         if (item_movement != null)

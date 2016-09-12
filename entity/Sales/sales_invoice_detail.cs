@@ -23,7 +23,7 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_sales_invoice_detail { get; set; }
+        public int id_sales_invoice_detail { get; set; }
         public int id_sales_invoice { get; set; }
         public int? movement_id { get; set; }
         public int? id_sales_order_detail { get; set; }

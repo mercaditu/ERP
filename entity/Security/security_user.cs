@@ -19,7 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_user { get; set; }
-        public int id_company { get; set; }
+        public int? id_company { get; set; }
 
         public int? id_contact { get; set; }
         public int? id_question { get; set; }

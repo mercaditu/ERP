@@ -565,7 +565,7 @@ namespace Cognitivo.Project
             return 0;
         }
 
-        public item_price get_Default(int id_company)
+        public item_price get_Default(int? id_company)
         {
             item_price item_price = new item_price();
             using (db db = new db())

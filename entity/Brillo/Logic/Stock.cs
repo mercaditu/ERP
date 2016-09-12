@@ -662,7 +662,7 @@ namespace entity.Brillo.Logic
                     item_movement.credit = 0;
                     item_movement.status = Status;
                     item_movement.id_location = app_location.id_location;
-                    item_movement._parent = db.item_movement.Where(x => x.id_movement == parent_Movement.MovementID).FirstOrDefault();
+                    item_movement.parent = db.item_movement.Where(x => x.id_movement == parent_Movement.MovementID).FirstOrDefault();
 
                     if (ApplicationID == App.Names.Transfer)
                     {
@@ -675,7 +675,7 @@ namespace entity.Brillo.Logic
                         if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
-                            item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
+                            item_movement.parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
                         }
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
@@ -784,7 +784,7 @@ namespace entity.Brillo.Logic
                 item_movement.credit = 0;
                 item_movement.status = Status;
                 item_movement.id_location = app_location.id_location;
-                item_movement._parent = null;
+                item_movement.parent = null;
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer_detail = TransactionDetailID;

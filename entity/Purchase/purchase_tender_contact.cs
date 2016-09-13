@@ -54,7 +54,7 @@ namespace entity
         public DateTime? recieve_date_est { get; set; }
 
         [NotMapped]
-        public new decimal GrandTotal
+        public decimal GrandTotal
         {
             get
             {

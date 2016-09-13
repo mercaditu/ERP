@@ -26,7 +26,6 @@ namespace entity.Brillo.Logic
                     {
                         payment.app_document_range = _entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                     }
-
                 }
 
 

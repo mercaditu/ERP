@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using entity;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Windows.Documents;
 using System.Threading.Tasks;
 
@@ -53,8 +52,6 @@ namespace Cognitivo.Sales
         #region Toolbar Events
         private void toolBar_btnNew_Click(object sender)
         {
-            PackingListSetting _pref_SalesOrder = new PackingListSetting();
-
             sales_packing sales_packing = dbContext.New();
             sales_packing.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
 

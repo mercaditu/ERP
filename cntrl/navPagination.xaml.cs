@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Windows;
 
 namespace cntrl
@@ -8,7 +7,7 @@ namespace cntrl
     public partial class navPagination : UserControl
     {
       
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         public static readonly DependencyProperty PageIndexProperty =
                DependencyProperty.Register("PageIndex", typeof(int), typeof(navPagination));

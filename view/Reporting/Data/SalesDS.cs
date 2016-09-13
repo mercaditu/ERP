@@ -22,21 +22,21 @@
         {
         }
     
-        partial class SalesByTagDataTable
-        {
-        }
+        //partial class SalesByTagDataTable
+        //{
+        //}
     
-        partial class SalesByItemDataTable
-        {
-        }
+        //partial class SalesByItemDataTable
+        //{
+        //}
 
-        partial class SalesInvoiceSummaryDataTable
-        {
-        }
+        //partial class SalesInvoiceSummaryDataTable
+        //{
+        //}
     
-        partial class SalesByBrandDataTable
-        {
-        }
+        //partial class SalesByBrandDataTable
+        //{
+        //}
     }
 }
 

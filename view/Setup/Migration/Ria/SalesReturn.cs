@@ -245,14 +245,9 @@ namespace Cognitivo.Setup.Migration
                         sales_return.State = System.Data.Entity.EntityState.Added;
                         sales_return.IsSelected = true;
                         db.sales_return.Add(sales_return);
-                        try
-                        {
-                            db.SaveChanges();
-                        }
-                     catch  (Exception ex)
-                        {
-                            throw ex;
-                        }
+
+                        db.SaveChanges();
+                   
                         if (!(reader["ESTADO"] is DBNull))
                         {
                             int status = Convert.ToInt32(reader["ESTADO"]);

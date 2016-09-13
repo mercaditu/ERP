@@ -234,8 +234,6 @@ namespace Cognitivo.Setup.Migration
 
                     if (purchase_invoice.Error == null)
                     {
-                        try
-                        {
                             purchase_invoice.State = System.Data.Entity.EntityState.Added;
                             purchase_invoice.IsSelected = true;
 
@@ -245,27 +243,6 @@ namespace Cognitivo.Setup.Migration
                             {
                                 db.SaveChanges();
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-
-                        //Sales Brillo
-                        //if (reader.GetInt32(10) == 1)
-                        //{
-                        //    entity.Brillo.Approve.SalesInvoice salesBrillo = new entity.Brillo.Approve.SalesInvoice();
-                        //    salesBrillo.Start(ref db, sales_invoice);
-                        //    sales_invoice.status = 0; ?????
-                        //}
-                        //else if (reader.GetInt32(10))
-                        //{
-                        //    entity.Brillo.Approve.SalesInvoice salesBrillo = new entity.Brillo.Approve.SalesInvoice();
-                        //    salesBrillo.Start(ref db, sales_invoice);
-                        //    entity.Brillo.Annul.SalesInvoice salesAnullBrillo = new entity.Brillo.Annul.SalesInvoice();
-                        //    salesAnullBrillo.Start(ref db, sales_invoice);
-                        //    sales_invoice.status = 0; ?????
-                        //}
 
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));

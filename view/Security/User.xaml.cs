@@ -15,7 +15,7 @@ namespace Cognitivo.Security
     {
         //entity.dbContext dbcontext = new entity.dbContext();
         UserDB dbContext = new UserDB();
-        CollectionViewSource security_user_view_source, security_ques_view_source, security_role_view_source;
+        CollectionViewSource security_user_view_source, security_role_view_source;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public User()

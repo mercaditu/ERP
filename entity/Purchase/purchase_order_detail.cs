@@ -78,7 +78,7 @@ namespace entity
             {
                 if (purchase_invoice_detail!=null)
                 {
-                    _balance = quantity - purchase_invoice_detail.Sum(x => x.quantity != null ? x.quantity : 0);
+                    _balance = quantity - purchase_invoice_detail.Sum(x => x.quantity);
                     return _balance;
                 }
                 return 0;

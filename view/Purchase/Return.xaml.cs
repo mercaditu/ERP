@@ -424,7 +424,7 @@ namespace Cognitivo.Purchase
             pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
             crud_modal.Children.Add(pnlPurchaseInvoice);
         }
-        public async void PurchaseInvoice_Click(object sender)
+        public void PurchaseInvoice_Click(object sender)
         {
             purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
 
@@ -439,20 +439,20 @@ namespace Cognitivo.Purchase
 
                 foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
                 {
-                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Count() == 0)
+                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Any())
                     {
                         purchase_return_detail purchase_return_detail = new purchase_return_detail();
                         purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
                         purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
                         purchase_return_detail.id_location = _purchase_invoice_detail.id_location;
 
-                        if (dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault() != null)
+                        app_location app_location = dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
+                        if (app_location != null)
                         {
-                            purchase_return_detail.app_location = dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
+                            purchase_return_detail.app_location = app_location;
                         }
 
                         purchase_return_detail.purchase_return = _purchase_return;
-
                         if (dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
                         {
                             purchase_return_detail.id_item = _purchase_invoice_detail.id_item;

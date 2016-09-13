@@ -347,15 +347,9 @@ namespace Cognitivo.Setup.Migration
                                         }
                                     }
 
-                                    try
-                                    {
-                                        db.SaveChanges();
+                                    db.SaveChanges();
                                         sales_invoice.IsSelected = false;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        throw ex;
-                                    }
+                                    
                                 }
                             }
                             else
@@ -467,15 +461,7 @@ namespace Cognitivo.Setup.Migration
                                 app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
                                 db.app_account_detail.Add(app_account_detail);
 
-                                try
-                                {
-                                    db.payments.Add(payment);
-                                }
-                                catch (Exception ex)
-                                {
-                                    throw ex;
-                                }
-
+                                db.payments.Add(payment);
                             }
                         }
                     }

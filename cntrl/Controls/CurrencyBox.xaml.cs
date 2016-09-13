@@ -86,8 +86,7 @@ namespace cntrl.Controls
                 if (app_currencyfx != null)
                 {
                     Rate_Previous = Rate_Current;
-                    if (appName != null)
-                    {
+
                         if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
                         {
                             Rate_Current = app_currencyfx.sell_value;
@@ -96,7 +95,7 @@ namespace cntrl.Controls
                         {
                             Rate_Current = app_currencyfx.buy_value;
                         }
-                    }
+
                     RaisePropertyChanged("Rate_Current");
 
                     SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
@@ -121,8 +120,7 @@ namespace cntrl.Controls
                     app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == SelectedValue).FirstOrDefault();
 
                     decimal rate = 0;
-                    if (appName != null)
-                    {
+
                         if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
                         {
                             rate = app_currencyfx.sell_value;
@@ -131,7 +129,6 @@ namespace cntrl.Controls
                         {
                             rate = app_currencyfx.buy_value;
                         }
-                    }
                     if (Convert.ToDecimal(Rate_Current) != rate)
                     {
                         if (cbCurrency.SelectedValue != null)

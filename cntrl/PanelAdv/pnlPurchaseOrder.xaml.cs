@@ -131,7 +131,7 @@ namespace cntrl.PanelAdv
                              {
                                  id_purchase_order = grouped.Key.purchase_order_detail.purchase_order.id_purchase_order,
                                  purchaseOrder = grouped.Key.purchase_order_detail.purchase_order,
-                                 balance = grouped.Key.purchase_order_detail.quantity != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0)
+                                 balance = grouped.Key.purchase_order_detail != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity)
                              }).ToList().Select(x => x.id_purchase_order);
 
             purchase_orderViewSource = (CollectionViewSource)Resources["purchase_orderViewSource"];

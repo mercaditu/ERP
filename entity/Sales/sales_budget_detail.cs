@@ -28,7 +28,7 @@ namespace entity
             get
             {
 
-                _balance = quantity - sales_order_detail.Sum(x => x.quantity != null ? x.quantity : 0);
+                _balance = quantity - sales_order_detail.Sum(x => x.quantity);
                 return _balance;
             }
             set

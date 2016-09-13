@@ -17,7 +17,6 @@ namespace entity.Brillo
         /// <returns>Version</returns>
         public CurrentSession.Versions VersionDecrypt()
         {
-            int i = 1;
             string VersionKey = "";
 
             using (db db = new db())

@@ -106,8 +106,6 @@ namespace entity
         public static List<security_crud> Security_CurdList { get; set; }
         public static List<security_role_privilage> Security_role_privilageList { get; set; }
 
-        // public static db db = new db();
-
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
 

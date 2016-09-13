@@ -15,7 +15,6 @@ namespace cntrl.Curd
         public PaymentDB PaymentDBold;
 
         CollectionViewSource paymentpayment_detailViewSource;
-        CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource;
 
         public PaymentApproval(ref PaymentDB PaymentDB, List<payment_schedual> SchedualList)

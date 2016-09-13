@@ -66,7 +66,7 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
-        public decimal Discount_SubTotal
+        public new decimal Discount_SubTotal
         {
             get { return _Discount_SubTotal; }
             set

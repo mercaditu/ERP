@@ -341,7 +341,7 @@ namespace entity
                 }
 
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
-                if (PriceList_ID == 0 && PriceList_ID != null)
+                if (PriceList_ID == 0)
                 {
                     using (db db = new db())
                     {

@@ -33,9 +33,6 @@ namespace Cognitivo.Commercial
         CollectionViewSource payment_schedualViewSource;
 
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
-        //cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
-
-     
 
         public AccountsPayable()
         {
@@ -218,7 +215,7 @@ namespace Cognitivo.Commercial
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
             Refinance.btnSave_Click += SaveRefinance_Click;
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Refinance);
         }
 

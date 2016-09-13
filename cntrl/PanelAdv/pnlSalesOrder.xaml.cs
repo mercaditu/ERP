@@ -86,7 +86,7 @@ namespace cntrl.PanelAdv
                              {
                                  id_sales_order=grouped.Key.sales_order_detail.sales_order.id_sales_order,
                                  salesOrder = grouped.Key.sales_order_detail.sales_order,
-                                 balance = grouped.Key.sales_order_detail.quantity != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0)
+                                 balance = grouped.Key.sales_order_detail != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity)
                              }).ToList().Select(x => x.id_sales_order);
        
             sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
@@ -168,8 +168,8 @@ namespace cntrl.PanelAdv
                                       {
                                           id = grouped.Key.sales_order_detail.id_sales_order_detail,
                                           name = grouped.Key.sales_order_detail.item.name,
-                                          quantity = grouped.Key.sales_order_detail.quantity != null ? grouped.Key.sales_order_detail.quantity : 0,
-                                          balance = grouped.Key.sales_order_detail.quantity != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0),
+                                          quantity = grouped.Key.sales_order_detail != null ? grouped.Key.sales_order_detail.quantity : 0,
+                                          balance = grouped.Key.sales_order_detail != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity),
                                       }).ToList().Where(x => x.balance > 0).ToList();
                 Dispatcher.Invoke(new Action(() =>
                 {

@@ -47,8 +47,6 @@ namespace Cognitivo.HumanResource
         {
             if (!string.IsNullOrEmpty(query) && hr_talentViewSource != null)
             {
-                try
-                {
                     hr_talentViewSource.View.Filter = i =>
                     {
                         hr_talent hr_talent = i as hr_talent;
@@ -75,11 +73,6 @@ namespace Cognitivo.HumanResource
                             return false;
                         }
                     };
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
             }
             else
             {

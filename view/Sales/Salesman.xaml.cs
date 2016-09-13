@@ -193,14 +193,7 @@ namespace Cognitivo.Sales
             IEnumerable<DbEntityValidationResult> validationresult = ContactdbContext.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
-                try
-                {
                     ContactdbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
 
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;

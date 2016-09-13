@@ -190,13 +190,7 @@ namespace Cognitivo.Setup.Migration
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-
-                    try
-                    {
+                    catch { }
                         if (item.Error == null)
                         {
                             db.items.Add(item);
@@ -205,8 +199,6 @@ namespace Cognitivo.Setup.Migration
                             Dispatcher.BeginInvoke((Action)(() => progItem.Value = value));
                             Dispatcher.BeginInvoke((Action)(() => itemValue.Text = value.ToString()));
                         }
-                    }
-                    catch { }
                 }
             }
 

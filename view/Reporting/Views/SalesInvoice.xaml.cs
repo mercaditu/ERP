@@ -94,23 +94,23 @@ namespace Cognitivo.Reporting.Views
 
                 if (ReportColumns.Columname == "VAT_SubTotal")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVAT", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVAT", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "Profit")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowProfit", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowProfit", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "MarkUp")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMarkup", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMarkup", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "Margin")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMargin", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMargin", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "SubTotalCost")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowCost", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowCost", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
 
                 }
                 if (ReportColumns.Columname == "SubTotalVAT")

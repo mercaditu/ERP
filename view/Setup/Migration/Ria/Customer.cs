@@ -160,8 +160,8 @@ namespace Cognitivo.Setup.Migration
                             }
                         }
 
-                        var SEXO = Convert.ToInt32((reader[33] is DBNull) ? null : reader[33].ToString());
-                        if (SEXO != null)
+                        var SEXO = Convert.ToInt32((reader[33] is DBNull) ? "0" : reader[33].ToString());
+                        if (SEXO > 0)
                         {
                             if (SEXO == 0)
                             {
@@ -307,14 +307,8 @@ namespace Cognitivo.Setup.Migration
                     if (contacts.Error == null)
                     {
                         db.contacts.Add(contacts);
-                        try
-                        {
-                            db.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                        db.SaveChanges();
+
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progCustomer.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => customerValue.Text = value.ToString()));

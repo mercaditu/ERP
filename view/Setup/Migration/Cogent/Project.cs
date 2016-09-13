@@ -238,8 +238,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                   
 
                     string sql_task = "SELECT * FROM project_task_dimension inner join app_dimension on app_dimension.id=project_task_dimension.id_dimension inner join project_task on project_task.id=project_task_dimension.id_task where id_task=" + proj_task_reader.GetInt32("id");
-                    try
-                    {
+
                         MySqlConnection conntask = new MySqlConnection(_connString);
                         MySqlCommand cmdtask = new MySqlCommand();
                         conntask.Open();
@@ -266,9 +265,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         task_reader.Close();
                         cmdtask.Dispose();
                         conntask.Close();
-                    }
-                    catch (Exception ex)
-                    { throw ex; }
 
 
                     IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();

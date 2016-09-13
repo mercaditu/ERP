@@ -13,12 +13,11 @@ namespace Cognitivo.Product
 {
     public partial class Request : Page
     {
-        entity.item_requestDB dbContext = new entity.item_requestDB();
+        item_requestDB dbContext = new item_requestDB();
         CollectionViewSource item_requestViewSource;
-        CollectionViewSource item_movementViewSource;
         CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
-      //  item_movement Selecteditem_movement;
+
         public Request()
         {
             InitializeComponent();
@@ -123,7 +122,7 @@ namespace Cognitivo.Product
                              {
                                  id_location = last.Key.app_location.id_location,
                                  location = last.Key.app_location.name,
-                                 quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
+                                 quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
                              }).ToList();
 
 
@@ -167,7 +166,7 @@ namespace Cognitivo.Product
                      {
                          id_location = last.Key.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
                          branch = last.Key.app_branch.name,
-                         quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
+                         quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
 
                      }).ToList();
                 List<desion> list_desion_transfer = new List<desion>();

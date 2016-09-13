@@ -258,7 +258,7 @@ namespace entity.Brillo.Logic
                     .Where(x => x.item_product != null))
                 {
                     item_product item_product = FindNFix_ItemProduct(item_inventory_detail.item_product.item);
-                    if (item_inventory_detail.id_location != null && item_inventory_detail.app_location != null)
+                    if (item_inventory_detail.app_location != null)
                     {
                         item_inventory_detail.id_location = FindNFix_Location(item_product, item_inventory_detail.app_location, item_inventory.app_branch);
                         item_inventory_detail.app_location = db.app_location.Where(x => x.id_location == item_inventory_detail.id_location).FirstOrDefault();
@@ -420,7 +420,7 @@ namespace entity.Brillo.Logic
                 if (production_execution_detail.item.id_item_type == item.item_type.Product || production_execution_detail.item.id_item_type == item.item_type.RawMaterial || production_execution_detail.item.id_item_type == item.item_type.Supplies)
                 {
                     item_product item_product = FindNFix_ItemProduct(production_execution_detail.item);
-                    List<item_movement_dimension> MovementDimensionLIST = null;
+                    //List<item_movement_dimension> MovementDimensionLIST = null;
                     decimal Cost = 0;
 
                     //OUTPUT. CREDIT Stock.

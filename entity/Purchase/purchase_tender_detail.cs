@@ -33,7 +33,7 @@ namespace entity
         public string item_description { get; set; }
 
         [Required]
-        public new decimal quantity
+        public decimal quantity
         {
             get { return _quantity; }
             set
@@ -51,7 +51,7 @@ namespace entity
         private decimal _quantity;
 
         [NotMapped]
-        public new decimal Quantity_Factored
+        public decimal Quantity_Factored
         {
             get { return _Quantity_Factored; }
             set
@@ -183,7 +183,6 @@ namespace entity
                 return s;
             }
         }
-        private string _DimensionString;
 
         /// <summary>
         /// 

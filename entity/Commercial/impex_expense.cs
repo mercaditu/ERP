@@ -20,7 +20,7 @@ namespace entity
         public int id_impex { get; set; }
         public int? id_purchase_invoice { get; set; }
         public int id_incoterm_condition { get; set; }
-        public decimal value { get; set; }
+        public decimal? value { get; set; }
         public int id_currencyfx { get; set; }
 
         public int? id_currency { get; set; }

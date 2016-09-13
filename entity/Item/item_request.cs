@@ -49,6 +49,8 @@ namespace entity
         }
         private Status.Documents_General _status;
 
+
+
         [NotMapped]
         public int TotalSelected { get; set; }
 

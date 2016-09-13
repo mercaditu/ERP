@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Data.Entity;
-using System.Timers;
 
 namespace Cognitivo.Accounting
 {
@@ -190,7 +180,7 @@ namespace Cognitivo.Accounting
                 }
 
                 Transactions.Commercial_Invoice.Add(Sales);
-
+                sales_invoice.IsSelected = false;
                 try
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
@@ -248,7 +238,7 @@ namespace Cognitivo.Accounting
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
-
+                purchase_invoice.IsSelected = false;
                 Transactions.Commercial_Invoice.Add(Purchase);
 
                 try
@@ -311,7 +301,7 @@ namespace Cognitivo.Accounting
                 }
 
                 Transactions.Commercial_Invoice.Add(SalesReturn);
-
+                sales_return.IsSelected = true;
                 try
                 {
                     var Json = new JavaScriptSerializer().Serialize(Transactions);
@@ -371,6 +361,7 @@ namespace Cognitivo.Accounting
                     }
                 }
 
+                purchase_return.IsSelected = true;
                 Transactions.Commercial_Invoice.Add(PurchaseReturn);
 
                 try
@@ -409,9 +400,10 @@ namespace Cognitivo.Accounting
                     //Loads Data from Sales
                     entity.payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
                     Payment.FillPayments(schedual);
-
                     Transactions.Payments.Add(Payment);
                 }
+
+                payments.IsSelected = true;
 
                 try
                 {
@@ -456,11 +448,12 @@ namespace Cognitivo.Accounting
                     FixedAsset.Quantity = 1;
                     FixedAsset.CurrencyName = entity.CurrentSession.Currency_Default.name;
 
+                    item_asset.IsSelected = false;
                     FixedAssetGroup.FixedAssets.Add(FixedAsset);
                 }
 
                 Transactions.FixedAssetGroup.Add(FixedAssetGroup);
-
+                
                 try
                 {
                     var Json = new JavaScriptSerializer().Serialize(Transactions);
@@ -606,7 +599,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(object Json)
         {
-            var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/transactions";
+            var webAddr = .Properties.Settings.Default.DebeHaberConnString + "/api/transactions";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";

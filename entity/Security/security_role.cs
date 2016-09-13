@@ -39,6 +39,7 @@ namespace entity
         public bool is_active { get; set; }
         public bool is_master { get; set; }
 
+        public string version { get; set; }
         public virtual app_company app_company { get; set; }
         public virtual app_department app_department { get; set; }
         public virtual IEnumerable<bi_tag_role> bi_tag_role { get; set; }

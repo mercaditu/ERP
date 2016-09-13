@@ -25,7 +25,6 @@ namespace entity
 
         public virtual ICollection<hr_position> hr_position { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
         public virtual IEnumerable<security_role> security_role { get; set; }
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }
 

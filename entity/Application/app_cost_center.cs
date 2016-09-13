@@ -34,7 +34,6 @@ namespace entity
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
 
         public string Error
         {

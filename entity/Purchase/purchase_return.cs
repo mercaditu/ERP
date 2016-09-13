@@ -81,7 +81,6 @@ namespace entity
         private int _id_currencyfx;
 
         public bool is_accounted { get; set; }
-        public int? id_journal { get; set; }
 
         [NotMapped]
         public new decimal GrandTotal

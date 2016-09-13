@@ -19,7 +19,7 @@ namespace entity
             sales_invoice_detail = new List<sales_invoice_detail>();
             payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
-            payment_withholding_details = new List<payment_withholding_detail>();
+            payment_withholding_detail = new List<payment_withholding_detail>();
                 
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
@@ -66,7 +66,6 @@ namespace entity
         public int id_opportunity { get; set; }
 
         public bool is_accounted { get; set; }
-        public int? id_journal { get; set; }
 
         /// <summary>
         /// 
@@ -230,7 +229,6 @@ namespace entity
         #region "Foreign Key"
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual sales_order sales_order { get; set; }
-        public virtual accounting_journal accounting_journal { get; set; }
 
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual ICollection<sales_return> sales_return { get; set; }

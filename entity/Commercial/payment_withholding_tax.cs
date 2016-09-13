@@ -26,7 +26,6 @@ namespace entity
         public int id_currencyfx { get; set; }
 
         ///public bool is_accounted { get; set; }
-        public int? id_journal { get; set; }
 
         public string withholding_number { get; set; }
         public string code { get; set; }
@@ -37,7 +36,6 @@ namespace entity
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual app_document_range app_document_range { get; set; }
         public virtual contact contact { get; set; }
-        public virtual accounting_journal accounting_journal { get; set; }
 
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }
         public virtual ICollection<payment_withholding_detail> payment_withholding_detail { get; set; }

@@ -23,6 +23,5 @@ namespace entity
         
         //Nav Properties
         public virtual IEnumerable<item_asset> item_asset { get; set; }
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
     }
 }

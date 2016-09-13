@@ -15,13 +15,6 @@
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 9));
         }
         
-        public virtual DbSet<accounting_cycle> accounting_cycle { get; set; }
-        public virtual DbSet<accounting_chart> accounting_chart { get; set; }
-        public virtual DbSet<accounting_journal> accounting_journal { get; set; }
-        public virtual DbSet<accounting_journal_detail> accounting_journal_detail { get; set; }
-        public virtual DbSet<accounting_template> accounting_template { get; set; }
-        public virtual DbSet<accounting_template_detail> accounting_template_detail { get; set; }
-        public virtual DbSet<accounting_budget> accounting_budget { get; set; }
         public virtual DbSet<app_account> app_account { get; set; }
         public virtual DbSet<app_account_detail> app_account_detail { get; set; }
         public virtual DbSet<app_account_session> app_account_session { get; set; }
@@ -175,13 +168,5 @@
         public virtual DbSet<project_event_template> project_event_template { get; set; }
         public virtual DbSet<project_event_template_variable> project_event_template_variable { get; set; }
         public virtual DbSet<project_event_template_fixed> project_event_template_fixed { get; set; }
-
-        //Business Intelligence for Reports. Not to be Used by ERP.
-        public virtual DbSet<bi_chart_report> bi_chart_report { get; set; }
-        public virtual DbSet<bi_report> bi_report { get; set; }
-        public virtual DbSet<bi_report_detail> bi_report_detail { get; set; }
-        public virtual DbSet<bi_tag> bi_tag { get; set; }
-        public virtual DbSet<bi_tag_report> bi_tag_report { get; set; }
-        public virtual DbSet<bi_tag_role> bi_tag_role { get; set; }
     }
 }

@@ -40,17 +40,7 @@ namespace entity
         public virtual contact contact { get { return _contact; } set { _contact = value; RaisePropertyChanged("contact"); } }
         private contact _contact;
 
-
         public bool is_accounted { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public int? id_journal { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual accounting_journal accounting_journal { get; set; }
 
         /// <summary>
         /// 

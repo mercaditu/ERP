@@ -28,7 +28,6 @@ namespace entity
             purchase_return = new List<purchase_return>();
 
             payment_withholding_detail = new List<payment_withholding_detail>();
-            payment_withholding_details = new List<payment_withholding_detail>();
             impex_expense = new List<impex_expense>();
           
         }
@@ -69,7 +68,6 @@ namespace entity
         }
         private int _id_currencyfx;
         public bool is_accounted { get; set; }
-        public int? id_journal { get; set; }
 
         //TimeCapsule
         public ICollection<purchase_invoice> older { get; set; }
@@ -223,7 +221,6 @@ namespace entity
         public virtual purchase_order purchase_order { get; set; }
         public virtual app_department app_department { get; set; }
 
-        public virtual accounting_journal accounting_journal { get; set; }
 
         public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail
         {

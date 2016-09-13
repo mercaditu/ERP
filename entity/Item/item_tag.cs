@@ -28,8 +28,6 @@ namespace entity
 
         public virtual ICollection<item_tag_detail> item_tag_detail { get; set; }
         public virtual IEnumerable<project_template_detail> project_template_detail { get; set; }
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
-
 
         public string Error
         {

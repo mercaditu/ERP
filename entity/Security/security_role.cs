@@ -42,7 +42,6 @@ namespace entity
         public string version { get; set; }
         public virtual app_company app_company { get; set; }
         public virtual app_department app_department { get; set; }
-        public virtual IEnumerable<bi_tag_role> bi_tag_role { get; set; }
         public virtual ICollection<security_user> security_user { get; set; }
         public virtual ICollection<security_crud> security_curd { get; set; }
         public virtual ICollection<security_role_privilage> security_role_privilage { get; set; }

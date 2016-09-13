@@ -100,11 +100,6 @@ namespace entity
        // public virtual security_user Createdby { get; set; }
         public virtual IEnumerable<item_inventory> item_inventory { get; set; }
 
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
-        public virtual IEnumerable<accounting_budget> accounting_budget { get; set; }
-        public virtual IEnumerable<accounting_cycle> accounting_cycle { get; set; }
-        public virtual IEnumerable<accounting_journal_detail> accounting_journal_detail { get; set; }
-
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }
         public virtual IEnumerable<sales_budget_detail> sales_budget_detail { get; set; }
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }

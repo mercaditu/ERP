@@ -34,7 +34,6 @@ namespace entity
         
         public bool is_active { get; set; }
 
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
         public virtual IEnumerable<app_branch> app_branch { get; set; }
 
         public string Error

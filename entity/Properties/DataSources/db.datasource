@@ -18,14 +18,9 @@
                      </ControlSetting>
                   </ControlSettings>
                </PropertyUISetting>
-               <PropertyUISetting Name="id_journal">
-                  <ControlSettings>
-                     <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
-                        <BindableControlInfo Name="[None]" Type="Microsoft.VSDesigner.Data.BindManager.NoneControlPlaceHolder" />
-                     </ControlSetting>
-                  </ControlSettings>
-               </PropertyUISetting>
-               <PropertyUISetting Name="id_journal_detail">
+               <PropertyUISetting Name="
+                                  
+">
                   <ControlSettings>
                      <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
                         <BindableControlInfo Name="[None]" Type="Microsoft.VSDesigner.Data.BindManager.NoneControlPlaceHolder" />

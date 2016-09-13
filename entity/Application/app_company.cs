@@ -38,11 +38,6 @@ namespace entity
         //public virtual geo_country geo_country { get; set; }
         public virtual ICollection<app_branch> app_branch { get; set; }
 
-        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
-        public virtual IEnumerable<accounting_budget> accounting_budget { get; set; }
-        public virtual IEnumerable<accounting_cycle> accounting_cycle { get; set; }
-        public virtual IEnumerable<accounting_journal> accounting_journal { get; set; }
-        public virtual IEnumerable<accounting_template> accounting_template { get; set; }
         public virtual IEnumerable<item_inventory_dimension> item_inventory_dimension { get; set; }
 
         public virtual IEnumerable<app_account> app_account { get; set; }

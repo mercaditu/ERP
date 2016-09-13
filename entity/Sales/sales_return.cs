@@ -68,7 +68,6 @@ namespace entity
         private int _id_currencyfx;
 
         public bool is_accounted { get; set; }
-        public int? id_journal { get; set; }
 
         [NotMapped]
         public new decimal GrandTotal
@@ -176,7 +175,6 @@ namespace entity
         public ICollection<sales_return> older { get; set; }
         public sales_return newer { get; set; }
 
-        public virtual accounting_journal accounting_journal { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }

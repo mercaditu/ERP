@@ -19,10 +19,5 @@ namespace entity.Project
         {
             return Convert.ToDecimal(child.Sum(x => x.unit_cost_est));
         }
-
-        public decimal getsumAccounting_chart(accounting_chart child)
-        {
-            return   Convert.ToDecimal(child.accounting_journal_detail.Sum(x => x.credit) - child.accounting_journal_detail.Sum(x => x.debit));
-        }
     }
 }

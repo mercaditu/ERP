@@ -17,6 +17,11 @@
             start_date = DateTime.Now;
             end_date = DateTime.Now.AddYears(1);
         }
+        public enum WorkTypes
+        {
+            Monthly,
+            Daily
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -74,7 +79,7 @@
         public DateTime end_date { get; set; }
         public DateTime end_trial_period { get; set; }
         public string comment { get; set; }
-
+        public WorkTypes work_type { get; set; }
         [Required]
         public bool is_active { get; set; }
 

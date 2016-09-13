@@ -34,6 +34,7 @@ namespace entity
             }
         }
         string _name;
+        public bool see_cost { get; set; }
         public bool is_active { get; set; }
         public bool is_master { get; set; }
 

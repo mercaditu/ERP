@@ -137,27 +137,23 @@ namespace entity
                     Id_Company = User.app_company.id_company;
 
                     //Check if Branch Exists
-                    if (User.app_company.app_branch.Where(branch =>
+                    app_branch app_branch = User.app_company.app_branch.Where(branch =>
                                     branch.id_company == Id_Company &&
                                     branch.id_branch == Properties.Settings.Default.branch_ID)
-                                    .FirstOrDefault() != null)
+                                    .FirstOrDefault();
+                    if (app_branch != null)
                     {
-                        Id_Branch = User.app_company.app_branch.Where(branch =>
-                                    branch.id_company == Id_Company &&
-                                    branch.id_branch == Properties.Settings.Default.branch_ID)
-                                    .FirstOrDefault().id_branch;
+                        Id_Branch = app_branch.id_branch;
                     }
 
                     //Check if Terminal Exists inside Branch
-                    if (ctx.app_terminal.Where(terminal =>
+                    app_terminal app_terminal = ctx.app_terminal.Where(terminal =>
                                     terminal.id_branch == Id_Branch &&
                                     terminal.id_terminal == Properties.Settings.Default.terminal_ID)
-                                    .FirstOrDefault() != null)
+                                    .FirstOrDefault();
+                    if (app_terminal != null)
                     {
-                        Id_Terminal = ctx.app_terminal.Where(terminal =>
-                                        terminal.id_branch == Id_Branch &&
-                                        terminal.id_terminal == Properties.Settings.Default.terminal_ID)
-                                        .FirstOrDefault().id_terminal;
+                        Id_Terminal = app_terminal.id_terminal;
                     }
 
                     //Default Currency

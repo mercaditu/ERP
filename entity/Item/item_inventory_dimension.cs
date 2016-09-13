@@ -17,11 +17,11 @@ namespace entity
         public int id_item_inventory_dimension { get; set; }
         public int id_inventory_detail { get; set; }
         public int id_dimension { get; set; }
-      //  public int id_measurement { get; set; }
+        public int id_measurement { get; set; }
         public decimal value { get; set; }
 
         public virtual item_inventory_detail item_inventory_detail { get; set; }
         public virtual app_dimension app_dimension { get; set; }
-     //   public virtual app_measurement app_measurement { get; set; }
+        public virtual app_measurement app_measurement { get; set; }
     }
 }

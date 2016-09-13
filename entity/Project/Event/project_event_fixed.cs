@@ -18,9 +18,8 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_event_fixed { get; set; }
         public int id_project_event { get; set; }
-        [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
-        public int id_tag { get; set; }
+
+        public int? id_tag { get; set; }
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_item { get; set; }

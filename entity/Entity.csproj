@@ -507,7 +507,9 @@
     <None Include="Properties\DataSources\contact_role.datasource" />
     <None Include="Properties\DataSources\contact_subscription.datasource" />
     <None Include="Properties\DataSources\cost_calculation.datasource" />
-    <None Include="Properties\DataSources\db.datasource" />
+    <None Include="Properties\DataSources\db.datasource">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\geo_area.datasource" />
     <None Include="Properties\DataSources\geo_city.datasource" />
     <None Include="Properties\DataSources\geo_country.datasource" />

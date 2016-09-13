@@ -11,7 +11,7 @@ namespace Cognitivo.Converters
             if (value != null)
             {
                 int v = (int)value;
-                if(v == 1 || v == 5)
+                if(v == 1 || v == 5|| v==4)
                 {
                     v = 0;
                 }

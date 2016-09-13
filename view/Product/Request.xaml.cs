@@ -90,7 +90,9 @@ namespace Cognitivo.Product
                     item_requestitem_request_detailViewSource.View.Refresh();
                     item_request_detailitem_request_decisionViewSource.View.Refresh();
                     //calculate_total(sender, e);
+                    
                     item_request_detail.item_request.GetTotalDecision();
+                    item_request_detail.RaisePropertyChanged("balance");
                 }
             }
             catch (Exception ex)
@@ -246,7 +248,7 @@ namespace Cognitivo.Product
             }
 
             item_request_detail.item_request.GetTotalDecision();
-
+            item_request_detail.RaisePropertyChanged("balance");
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -336,7 +338,7 @@ namespace Cognitivo.Product
             }
 
             item_request_detail.item_request.GetTotalDecision();
-
+            item_request_detail.RaisePropertyChanged("balance");
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -365,7 +367,7 @@ namespace Cognitivo.Product
             }
 
             item_request_detail.item_request.GetTotalDecision();
-
+            item_request_detail.RaisePropertyChanged("balance");
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -433,7 +435,7 @@ namespace Cognitivo.Product
             }
 
             item_request_detail.item_request.GetTotalDecision();
-
+            item_request_detail.RaisePropertyChanged("balance");
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -443,18 +445,18 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
-            //if (item_requestDataGrid.SelectedItem != null)
-            //{
-            //    item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
+          //  dbContext.CancelAllChanges();
+            if (item_requestDataGrid.SelectedItem != null)
+            {
+                item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
 
-            //    item_request.State = EntityState.Unchanged;
-            //    dbContext.Entry(item_request).State = EntityState.Unchanged;
-            //}
-            //else
-            //{
-            //    toolBar.msgWarning("Please Select an Item");
-            //}
+                item_request.State = EntityState.Unchanged;
+                dbContext.Entry(item_request).State = EntityState.Unchanged;
+            }
+            else
+            {
+                toolBar.msgWarning("Please Select an Item");
+            }
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -476,7 +478,7 @@ namespace Cognitivo.Product
 
 
                 item_request_detail.item_request.GetTotalDecision();
-
+                item_request_detail.RaisePropertyChanged("balance");
                 dbContext.SaveChanges();
                 item_requestViewSource.View.MoveCurrentToLast();
                 item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -504,12 +506,56 @@ namespace Cognitivo.Product
 
 
                 item_request_detail.item_request.GetTotalDecision();
-
+                item_request_detail.RaisePropertyChanged("balance");
                 dbContext.SaveChanges();
                 item_requestViewSource.View.MoveCurrentToLast();
                 item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
                 item_request_detailitem_request_decisionViewSource.View.Refresh();
                 toolBar_btnEdit_Click(sender);
+            }
+        }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query) && item_requestViewSource != null)
+            {
+                try
+                {
+                    item_requestViewSource.View.Filter = i =>
+                    {
+                        item_request item_request = i as item_request;
+
+                        if (item_request != null)
+                        {
+                            //Protect the code against null values.
+                            //string number = item_request.number != null ? item_request.number : "";
+                            string name = item_request.name != null ? item_request.name : "";
+
+                            if ((name.ToLower().Contains(query.ToLower()))
+                                )
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch //(Exception ex)
+                {
+                    //throw ex;
+                }
+            }
+            else
+            {
+                item_requestViewSource.View.Filter = null;
             }
         }
     }

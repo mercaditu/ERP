@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\4.16\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\4.17\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>2.1.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -524,6 +524,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
+    <Compile Include="Purchase\TenderSetting.cs" />
+    <Compile Include="Purchase\TenderSetting.Designer.cs">
+      <DependentUpon>TenderSetting.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
     <Compile Include="Purchase\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
     </Compile>
@@ -1335,6 +1341,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Purchase\TenderSetting.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>TenderSetting.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Purchase\OrderSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>OrderSetting.Designer.cs</LastGenOutput>

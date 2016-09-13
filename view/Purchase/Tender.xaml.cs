@@ -49,10 +49,11 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnNew_Click(object sender)
         {
+            TenderSetting _pref_PurchaseTender = new TenderSetting();
             purchase_tender purchase_tender = new purchase_tender();
             purchase_tender.State = EntityState.Added;
             purchase_tender.IsSelected = true;
-            purchase_tender.trans_date = DateTime.Now;
+            purchase_tender.trans_date = DateTime.Now.AddDays(_pref_PurchaseTender.TransDate_OffSet);
             PurchaseTenderDB.Entry(purchase_tender).State = EntityState.Added;
 
             purchase_tenderViewSource.View.MoveCurrentToLast();
@@ -544,6 +545,34 @@ namespace Cognitivo.Purchase
             {
                 purchase_tender_item_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item_detail.item, purchase_tender_item_detail.quantity, purchase_tender_item_detail.GetDimensionValue());
                 purchase_tender_item_detail.RaisePropertyChanged("Quantity_Factored");
+            }
+        }
+
+        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.StaysOpen = false;
+            popupCustomize.IsOpen = true;
+        }
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            TenderSetting _pref_PurchaseTender = new TenderSetting();
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            TenderSetting.Default.Save();
+            _pref_PurchaseTender = TenderSetting.Default;
+            popupCustomize.IsOpen = false;
+        }
+
+        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chbx = sender as CheckBox;
+            if ((bool)chbx.IsChecked)
+            {
+                purchase_tender_item_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                purchase_tender_item_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
         }
     }

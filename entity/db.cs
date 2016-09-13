@@ -109,7 +109,6 @@
         public virtual DbSet<payment_type_detail> payment_type_detail { get; set; }
         public virtual DbSet<payment_schedual> payment_schedual { get; set; }
         public virtual DbSet<payment_withholding_tax> payment_withholding_tax { get; set; }
-        public virtual DbSet<payment_withholding_details> payment_withholding_details { get; set; }
         public virtual DbSet<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual DbSet<production_order> production_order { get; set; }
         public virtual DbSet<production_order_detail> production_order_detail { get; set; }

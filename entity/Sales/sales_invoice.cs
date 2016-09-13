@@ -19,7 +19,7 @@ namespace entity
             sales_invoice_detail = new List<sales_invoice_detail>();
             payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
-            payment_withholding_details = new List<payment_withholding_details>();
+            payment_withholding_details = new List<payment_withholding_detail>();
                 
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
@@ -237,7 +237,6 @@ namespace entity
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
 
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
-        public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         #endregion
 
         #region "Validations"

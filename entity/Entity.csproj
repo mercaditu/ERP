@@ -212,7 +212,7 @@
     <Compile Include="Class\Promotion.cs" />
     <Compile Include="Commercial\contact_tag.cs" />
     <Compile Include="Commercial\contact_tag_detail.cs" />
-    <Compile Include="Commercial\payment_withholding_details.cs" />
+    <Compile Include="Commercial\payment_withholding_detail.cs" />
     <Compile Include="Commercial\refinance.cs" />
     <Compile Include="Context\Accounting\AccountingChartDB.cs" />
     <Compile Include="Context\Accounting\AccountingCycleDB.cs" />
@@ -404,7 +404,6 @@
     <Compile Include="Commercial\impex_incoterm_condition.cs" />
     <Compile Include="Commercial\impex_incoterm_detail.cs" />
     <Compile Include="Commercial\payment_promissory_note.cs" />
-    <Compile Include="Commercial\payment_withholding_detail.cs" />
     <Compile Include="Commercial\payment_withholding_tax.cs" />
     <Compile Include="db.cs" />
     <Compile Include="Commercial\impex.cs" />

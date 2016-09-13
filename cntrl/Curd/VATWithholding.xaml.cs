@@ -86,7 +86,7 @@ namespace cntrl
                 payment_withholding_tax.expire_date = (DateTime)DtpTransdate.SelectedDate;
 
 
-                payment_withholding_details payment_withholding_details = new payment_withholding_details();
+                payment_withholding_detail payment_withholding_details = new payment_withholding_detail();
                 if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice) || _invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
                 {
                     sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
@@ -99,7 +99,7 @@ namespace cntrl
 
                 }
 
-                payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
+                payment_withholding_tax.payment_withholding_detail.Add(payment_withholding_details);
 
                 PaymentDB.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();

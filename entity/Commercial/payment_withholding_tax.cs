@@ -13,7 +13,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            payment_withholding_details = new List<payment_withholding_details>();
+            payment_withholding_detail = new List<payment_withholding_detail>();
             payment_detail = new List<payment_detail>();
         }
 
@@ -40,7 +40,6 @@ namespace entity
         public virtual accounting_journal accounting_journal { get; set; }
 
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }
-        public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         public virtual ICollection<payment_withholding_detail> payment_withholding_detail { get; set; }
     }
 }

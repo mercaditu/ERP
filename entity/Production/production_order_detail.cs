@@ -55,7 +55,7 @@ namespace entity
 
                     if (production_order!=null)
                     {
-                        if (parent != null && parent.item != null && production_order.types != entity.production_order.ProductionOrderTypes.Fraction)
+                        if (parent != null && parent.item != null && production_order.type != entity.production_order.ProductionOrderTypes.Fraction)
                         {
                             if (!parent.item.is_autorecepie)
                             {

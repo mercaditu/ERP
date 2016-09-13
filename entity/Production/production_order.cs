@@ -149,7 +149,7 @@ namespace entity
         
         public DateTime? end_date_est { get; set; }
 
-        public ProductionOrderTypes types { get; set; }
+        public ProductionOrderTypes type { get; set; }
 
         public virtual production_line production_line { get; set; }
         

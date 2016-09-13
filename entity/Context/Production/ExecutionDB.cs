@@ -12,7 +12,7 @@ namespace entity
         {
             production_order production_order = new production_order();
             production_order.id_production_line = Line;
-            production_order.types = Type;
+            production_order.type = Type;
             production_order.trans_date = DateTime.Now;
             production_order.status = Status.Production.Pending;
             production_order.name = name;

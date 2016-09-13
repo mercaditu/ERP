@@ -112,7 +112,7 @@ namespace Cognitivo.Production
             //item_requestViewSource.Source = OrderDB.item_request.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types==production_order.ProductionOrderTypes.Production).Load();
+            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type==production_order.ProductionOrderTypes.Production).Load();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
@@ -318,7 +318,7 @@ namespace Cognitivo.Production
                     production_orderViewSource.View.Filter = i =>
                     {
                         production_order production_order = i as production_order;
-                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.types==entity.production_order.ProductionOrderTypes.Production)
+                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.type==entity.production_order.ProductionOrderTypes.Production)
                         {
                             return true;
                         }
@@ -655,7 +655,7 @@ namespace Cognitivo.Production
                     }
                 }
                 OrderDB = new entity.OrderDB();
-                OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types == production_order.ProductionOrderTypes.Production).Load();
+                OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Load();
                 production_orderViewSource.Source = OrderDB.production_order.Local;
 
                 

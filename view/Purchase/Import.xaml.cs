@@ -212,7 +212,7 @@ namespace Cognitivo.Purchase
 
             foreach (var item in impex_expense)
             {
-                totalExpense += item.value;
+                totalExpense += (decimal)item.value;
             }
 
             if (purchase_invoice != null)
@@ -363,13 +363,13 @@ namespace Cognitivo.Purchase
                 if (Impex_Products.id_item == 0)
                 {
                     Impex_CostDetail = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList();
-                    totalExpense = impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
+                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
                 else
                 {
                     Impex_CostDetail = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList().Where(x => x.id_item == Impex_Products.id_item || x.id_item == 0).ToList();
-                    totalExpense = impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
+                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
 

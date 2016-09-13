@@ -66,7 +66,7 @@ namespace entity
 
             foreach (var item in impex_expense)
             {
-                totalExpense += item.value;
+                totalExpense += (decimal)item.value;
             }
 
             foreach (impex_import impex_import in impex_importList)
@@ -145,14 +145,14 @@ namespace entity
 
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {
-                                    decimal condition_value = _impex_expense.value;
+                                    decimal condition_value = (decimal)_impex_expense.value;
 
                                     if (condition_value != 0 && itemTotal != 0)
                                     {
                                         //Coeficient is used to get prorated cost of one item
                                         item_movement_value item_movement_detail = new item_movement_value();
 
-                                        decimal Cost = Math.Round(_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
+                                        decimal Cost = Math.Round((decimal)_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
 
                                         //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
 

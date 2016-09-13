@@ -244,7 +244,7 @@ namespace Cognitivo.Commercial
             {
                 sales_invoice sales_invoice = PaymentSchedualList.FirstOrDefault().sales_invoice;
 
-                if (sales_invoice.payment_withholding_details.Count() == 0)
+                if (sales_invoice.payment_withholding_detail.Count() == 0)
                 {
                     cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
 

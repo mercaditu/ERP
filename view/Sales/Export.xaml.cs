@@ -164,13 +164,13 @@ namespace Cognitivo.Sales
 
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {
-                                    decimal condition_value = _impex_expense.value;
+                                    decimal condition_value = (decimal)_impex_expense.value;
                                     if (condition_value != 0 && itemTotal != 0)
                                     {
                                         //Coeficient is used to get prorated cost of one item
                                         item_movement_value item_movement_detail = new item_movement_value();
 
-                                        decimal Cost = Math.Round(_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
+                                        decimal Cost = Math.Round((decimal)_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
 
                                         //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
 
@@ -280,7 +280,7 @@ namespace Cognitivo.Sales
             decimal totalExpence = 0;
             foreach (var item in impex_expense)
             {
-                totalExpence += item.value;
+                totalExpence +=(decimal) item.value;
             }
 
             //Insert sales Invoice Detail
@@ -400,13 +400,13 @@ namespace Cognitivo.Sales
                 if (Impex_Products.id_item == 0)
                 {
                     Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList();
-                    totalExpense = impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
+                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
                 else
                 {
                     Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList().Where(x => x.id_item == Impex_Products.id_item || x.id_item == 0).ToList();
-                    totalExpense = impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
+                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
 

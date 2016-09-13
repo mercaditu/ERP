@@ -135,7 +135,7 @@ namespace entity
                 if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
                 {
                     int count=purchase_invoice.purchase_invoice_detail.Where(x => x.purchase_return_detail == null).Count();
-                    if (purchase_invoice.accounting_journal == null && count > 0)
+                    if (count > 0)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();

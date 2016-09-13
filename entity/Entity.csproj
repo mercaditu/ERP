@@ -196,9 +196,6 @@
     <Compile Include="Commercial\contact_tag_detail.cs" />
     <Compile Include="Commercial\payment_withholding_detail.cs" />
     <Compile Include="Commercial\refinance.cs" />
-    <Compile Include="Context\Accounting\AccountingChartDB.cs" />
-    <Compile Include="Context\Accounting\AccountingCycleDB.cs" />
-    <Compile Include="Context\Accounting\AccountingJournalDB.cs" />
     <Compile Include="Context\BaseDB.cs" />
     <Compile Include="Context\Commercial\PromissoryNoteDB.cs" />
     <Compile Include="Context\Commercial\PaymentDB.cs" />
@@ -235,9 +232,9 @@
     <Compile Include="Item\item_movement_value.cs" />
     <Compile Include="Item\item_template.cs" />
     <Compile Include="Item\item_template_detail.cs" />
-    <Compile Include="Migrations\201609131205386_InitialCreate.cs" />
-    <Compile Include="Migrations\201609131205386_InitialCreate.Designer.cs">
-      <DependentUpon>201609131205386_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201609131349079_INITIAL-MIGRATE.cs" />
+    <Compile Include="Migrations\201609131349079_INITIAL-MIGRATE.Designer.cs">
+      <DependentUpon>201609131349079_INITIAL-MIGRATE.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
@@ -634,8 +631,8 @@
       <DependentUpon>DocumentViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609131205386_InitialCreate.resx">
-      <DependentUpon>201609131205386_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609131349079_INITIAL-MIGRATE.resx">
+      <DependentUpon>201609131349079_INITIAL-MIGRATE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

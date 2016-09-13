@@ -239,15 +239,6 @@
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\Decimal2Visibility.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
-    <Compile Include="Curd\AccountingJournal.xaml.cs">
-      <DependentUpon>AccountingJournal.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Curd\Accounting_template.xaml.cs">
-      <DependentUpon>Accounting_template.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Curd\Acocunting_Template_Entry.xaml.cs">
-      <DependentUpon>Acocunting_Template_Entry.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
@@ -685,18 +676,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Totals.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\AccountingJournal.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\Accounting_template.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\Acocunting_Template_Entry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

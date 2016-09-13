@@ -347,7 +347,7 @@ namespace entity
                         _invoice.id_weather = invoice.id_weather;
                         _invoice.number = invoice.number;
                         _invoice.GrandTotal = invoice.GrandTotal;
-                        _invoice.accounting_journal = invoice.accounting_journal;
+                      //  _invoice.accounting_journal = invoice.accounting_journal;
                         _invoice.is_head = invoice.is_head;
                         _invoice.is_issued = invoice.is_issued;
                         _invoice.IsSelected = invoice.IsSelected;

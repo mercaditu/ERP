@@ -189,7 +189,7 @@ namespace Cognitivo.Commercial
             if (PaymentSchedualList.Count > 0)
             {
                 purchase_invoice purchase_invoice=PaymentSchedualList.FirstOrDefault().purchase_invoice;
-                if (purchase_invoice.payment_withholding_details.Count()==0)
+                if (purchase_invoice.payment_withholding_detail.Count()==0)
                 {
                     cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
                     VATWithholding.invoiceList = new List<object>();

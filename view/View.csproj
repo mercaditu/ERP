@@ -294,9 +294,6 @@
     <Compile Include="Configs\AccountActive.xaml.cs">
       <DependentUpon>AccountActive.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Configs\Accounting_Template.xaml.cs">
-      <DependentUpon>Accounting_Template.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Configs\AccountUtility.xaml.cs">
       <DependentUpon>AccountUtility.xaml</DependentUpon>
     </Compile>
@@ -407,14 +404,7 @@
     <Compile Include="Class\DataGrid.cs" />
     <Compile Include="Converters\ExpireDate2Visible.cs" />
     <Compile Include="Converters\NotConverter .cs" />
-    <Compile Include="Converters\AccountChartSubType2BooleanConverter.cs" />
-    <Compile Include="Converters\AccountChartGroupAsset.cs" />
-    <Compile Include="Converters\AccountChartGroupEquity.cs" />
-    <Compile Include="Converters\AccountChartGroupLiabillity.cs" />
-    <Compile Include="Converters\AccountingChartGroupExpense.cs" />
-    <Compile Include="Converters\AccountingChartGroupIncome.cs" />
     <Compile Include="Converters\Projectfinance.cs" />
-    <Compile Include="Converters\AccountingChart2BooleanConverter.cs" />
     <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\Status2EnableForProject.cs">
@@ -535,6 +525,7 @@
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -543,6 +534,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -551,6 +543,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -559,6 +552,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.cs">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -567,6 +561,7 @@
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.cs">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -575,6 +570,7 @@
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.Designer.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
@@ -674,9 +670,6 @@
     <Compile Include="ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ReportViewerAccounting.xaml.cs">
-      <DependentUpon>ReportViewerAccounting.xaml</DependentUpon>
-    </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
       <DependentUpon>Budget.xaml</DependentUpon>
@@ -721,7 +714,6 @@
     <Compile Include="Setup\Migration\Cogent\MigrationGUI.xaml.cs">
       <DependentUpon>MigrationGUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Migration\Ria\Accounting.cs" />
     <Compile Include="Setup\Migration\Ria\SalesReturn.cs" />
     <Compile Include="Setup\Migration\Ria\Sales.cs" />
     <Compile Include="Setup\Migration\Ria\Customer.cs" />
@@ -1518,10 +1510,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Configs\Accounting_Template.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Configs\AccountUtility.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1877,10 +1865,6 @@
     <Page Include="ReportViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ReportViewerAccounting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>

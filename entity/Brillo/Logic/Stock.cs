@@ -389,7 +389,7 @@ namespace entity.Brillo.Logic
                             else
                             {
                                 entity.Brillo.Stock stockBrillo = new Brillo.Stock();
-                                app_location app_location = db.app_location.Where(x => x.id_location == production_execution_detail.production_execution.production_line.id_location).FirstOrDefault();
+                                app_location app_location = db.app_location.Where(x => x.id_location == production_execution_detail.production_order_detail.production_order.production_line.id_location).FirstOrDefault();
                                 Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_product);
 
                             }
@@ -399,16 +399,16 @@ namespace entity.Brillo.Logic
                             item_movementINPUT.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                                     App.Names.ProductionExecution,
-                                                    production_execution_detail.id_production_execution,
+                                                    production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
                                                     CurrentSession.CurrencyFX_Default,
                                                     item_product,
-                                                    production_execution_detail.production_execution.production_line.app_location,
+                                                    production_execution_detail.production_order_detail.production_order.production_line.app_location,
                                                     production_execution_detail.quantity,
                                                     DateTime.Now,
                                                     comment_Generator
                                                     (App.Names.ProductionExecution,
-                                                    (production_execution_detail.production_execution.production_order != null ? production_execution_detail.production_execution.production_order.work_number : ""),
+                                                    (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     "")));
 
                             item_movementList.AddRange(item_movementINPUT);
@@ -496,17 +496,17 @@ namespace entity.Brillo.Logic
                             item_movementOUTPUT.Add(
                                     CreditOnly_Movement(entity.Status.Stock.InStock,
                                                     App.Names.ProductionExecution,
-                                                    production_execution_detail.id_production_execution,
+                                                    production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
                                                     CurrentSession.CurrencyFX_Default,
                                                     item_product,
-                                                    production_execution_detail.production_execution.production_line.app_location,
+                                                    production_execution_detail.production_order_detail.production_order.production_line.app_location,
                                                     production_execution_detail.quantity,
-                                                    production_execution_detail.production_execution.trans_date,
+                                                    production_execution_detail.trans_date,
                                                     Cost,
                                                     comment_Generator
                                                     (App.Names.ProductionExecution,
-                                                    (production_execution_detail.production_execution.production_order != null ? production_execution_detail.production_execution.production_order.work_number : ""),
+                                                    (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     ""),
                                                     OutputMovementDimensionLIST)
                                                 );
@@ -542,17 +542,17 @@ namespace entity.Brillo.Logic
                 }
 
             }
-            else if (Application_ID == App.Names.ProductionExecution)
-            {
-                production_execution production_execution = Transcation as production_execution;
-                foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
-                {
-                    // item_movement.transaction_id = TransactionID;
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_execution_detail == production_execution_detail.id_execution_detail)
-                                                                     .ToList());
-                }
+            //else if (Application_ID == App.Names.ProductionExecution)
+            //{
+            //    production_execution production_execution = Transcation as production_execution;
+            //    foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
+            //    {
+            //        // item_movement.transaction_id = TransactionID;
+            //        item_movementList.AddRange(db.item_movement.Where(x => x.id_execution_detail == production_execution_detail.id_execution_detail)
+            //                                                         .ToList());
+            //    }
 
-            }
+            //}
             else if (Application_ID == App.Names.PurchaseInvoice)
             {
                 purchase_invoice purchase_invoice = Transcation as purchase_invoice;
@@ -712,7 +712,7 @@ namespace entity.Brillo.Logic
                         if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
                         {
                             production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
-                            if (production_execution_detail.production_execution.production_order.types == production_order.ProductionOrderTypes.Fraction)
+                            if (production_execution_detail.production_order_detail.production_order.types == production_order.ProductionOrderTypes.Fraction)
                             {
 
                                 if (parent_movement_dimension != null && item_movement.item_movement_dimension != null)

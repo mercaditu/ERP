@@ -525,6 +525,7 @@
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -533,6 +534,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -541,6 +543,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -549,6 +552,7 @@
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.cs">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -557,6 +561,7 @@
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.cs">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -565,6 +570,7 @@
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.Designer.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
@@ -833,9 +839,6 @@
     </Compile>
     <Compile Include="openweather.xaml.cs">
       <DependentUpon>openweather.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Production\Execution.xaml.cs">
-      <DependentUpon>Execution.xaml</DependentUpon>
     </Compile>
     <Compile Include="Production\Line.xaml.cs">
       <DependentUpon>Line.xaml</DependentUpon>
@@ -1976,10 +1979,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="openweather.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Production\Execution.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

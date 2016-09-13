@@ -10,8 +10,6 @@ using entity;
 using System.Data;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Data.Entity.Validation;
-using System.Windows.Media;
 using System.Windows.Documents;
 
 namespace Cognitivo.Purchase
@@ -381,7 +379,8 @@ namespace Cognitivo.Purchase
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
-            Cognitivo.Purchase.InvoiceSetting InvoiceSetting = new Cognitivo.Purchase.InvoiceSetting();
+            InvoiceSetting InvoiceSetting = new InvoiceSetting();
+
             //ItemLink 
             if (item != null)
             {

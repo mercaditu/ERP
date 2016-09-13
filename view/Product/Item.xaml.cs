@@ -62,17 +62,14 @@ namespace Cognitivo.Product
             ItemDB = new ItemDB();
             load_PrimaryDataThread();
             load_SecondaryDataThread();
-            //Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            //task_PrimaryData.Wait();
-            //Task thread_SecondaryData = Task.Factory.StartNew(() => load_SecondaryDataThread());
         }
 
         private async void load_PrimaryDataThread()
         {
-            var predicate = PredicateBuilder.True<entity.item>();
-            predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company);
+            var predicate = PredicateBuilder.True<item>();
+            predicate = (x => x.is_active && x.id_company == CurrentSession.Id_Company);
 
-            var predicateOR = PredicateBuilder.False<entity.item>();
+            var predicateOR = PredicateBuilder.False<item>();
 
             if (ProductSettings.Default.Product)
             {

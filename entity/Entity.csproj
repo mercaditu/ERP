@@ -257,6 +257,7 @@
     <Compile Include="Migrations\201609131205386_InitialCreate.Designer.cs">
       <DependentUpon>201609131205386_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />

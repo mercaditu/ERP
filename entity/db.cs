@@ -120,6 +120,7 @@
         public virtual DbSet<project_template> project_template { get; set; }
         public virtual DbSet<project_template_detail> project_template_detail { get; set; }
         public virtual DbSet<production_execution_detail> production_execution_detail { get; set; }
+        public virtual DbSet<production_account> production_account { get; set; }
         public virtual DbSet<project_task> project_task { get; set; }
         public virtual DbSet<project_task_dimension> project_task_dimension { get; set; }
         public virtual DbSet<crm_opportunity> crm_opportunity { get; set; }

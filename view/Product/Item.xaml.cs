@@ -12,7 +12,6 @@ using System.Data;
 using entity;
 using System.Data.Entity.Validation;
 using System.IO;
-using System.Threading.Tasks;
 using cntrl.Controls;
 
 namespace Cognitivo.Product

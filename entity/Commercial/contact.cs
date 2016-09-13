@@ -229,6 +229,7 @@ namespace entity
         //Navigation Properties
         public virtual ICollection<contact_field_value> contact_field_value { get; set; }
         public virtual ICollection<contact_subscription> contact_subscription { get; set; }
+
         public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
         public virtual IEnumerable<item_brand> item_brand { get; set; }
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }
@@ -252,6 +253,7 @@ namespace entity
         public virtual IEnumerable<project_event> project_costing { get; set; }
         public virtual IEnumerable<project> project { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
+        public virtual IEnumerable<production_account> production_account { get; set; }
 
         public virtual ICollection<contact_tag_detail> contact_tag_detail { get; set; }
         public virtual ICollection<hr_contract> hr_contract { get; set; }

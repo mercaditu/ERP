@@ -136,6 +136,8 @@ namespace entity
         public virtual IEnumerable<project_template_detail> project_template_detail { get; set; }
         public virtual IEnumerable<production_order_detail> production_order_detail { get; set; }
         public virtual IEnumerable<production_execution_detail> production_execution_detail { get; set; }
+        public virtual IEnumerable<production_account> production_account { get; set; }
+
         public virtual IEnumerable<item_request> item_request { get; set; }
 
         public virtual ICollection<project_event> project_event { get; set; }

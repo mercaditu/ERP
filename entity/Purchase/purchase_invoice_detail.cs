@@ -71,6 +71,8 @@ namespace entity
         }
         ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
         public virtual ICollection<item_movement> item_movement { get; set; }
+        public virtual ICollection<production_account> production_account { get; set; }
+
         #endregion
 
         #region "Validation"

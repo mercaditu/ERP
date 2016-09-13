@@ -10,8 +10,8 @@ namespace entity
 
     public partial class sales_promotion : Audit, IDataErrorInfo
     {
-      public  enum Type
-        {
+      public enum Types
+        { 
             //Discount_onGrandTotal = 1,
             //Discount_onQuantityTotal = 2,
             //Discount_onQuantityRow = 3,
@@ -35,7 +35,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_promotion { get; set; }
-        public Type types { get; set; }
+        public Types type { get; set; }
         public string name { get; set; }
         public int reference { get; set; }
         public DateTime date_start { get; set; }

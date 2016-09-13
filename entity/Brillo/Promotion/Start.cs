@@ -51,7 +51,7 @@ namespace entity.Brillo.Promotion
 
         private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-            if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
+            if (Promo.type == sales_promotion.Types.BuyThis_GetThat)
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
                 {
@@ -60,7 +60,7 @@ namespace entity.Brillo.Promotion
                         if (Promo.quantity_step > 0)
                         {
                             Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
+                            _Promo.Type = sales_promotion.Types.BuyThis_GetThat;
                             _Promo.Shared = true;
 
                             _Detail.Promos.Add(_Promo);
@@ -113,7 +113,7 @@ namespace entity.Brillo.Promotion
         {
 
 
-            if (Promo.types == sales_promotion.Type.BuyTag_GetThat)
+            if (Promo.type == sales_promotion.Types.BuyTag_GetThat)
             {
 
 
@@ -144,7 +144,7 @@ namespace entity.Brillo.Promotion
                     foreach (DetailTag _DetailTag in DetailTagList)
                     {
                         Promo _Promo = new Promo();
-                        _Promo.Type = sales_promotion.Type.BuyTag_GetThat;
+                        _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
                         _Promo.Shared = true;
 
                        
@@ -253,14 +253,14 @@ namespace entity.Brillo.Promotion
                 //    }
                 //}
 
-                if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
+                if (Promo.type == sales_promotion.Types.BuyThis_GetThat)
                 {
                     if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
                     {
                         foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                         {
                             Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
+                            _Promo.Type = sales_promotion.Types.BuyThis_GetThat;
                             _Promo.Shared = true;
 
                             using (db db = new db())
@@ -325,7 +325,7 @@ namespace entity.Brillo.Promotion
 
     public class Promo
     {
-        public sales_promotion.Type Type { get; set; }
+        public sales_promotion.Types Type { get; set; }
         public decimal DiscountValue { get; set; }
         public bool Shared { get; set; }
     }

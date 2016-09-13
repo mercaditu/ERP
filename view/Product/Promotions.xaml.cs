@@ -39,7 +39,7 @@ namespace Cognitivo.Product
             item_tagViewSource.Source = PromotionDB.item_tag.Local;
             item_tagBonusViewSource.Source = PromotionDB.item_tag.Local;
 
-            cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.Type)).OfType<sales_promotion.Type>().ToList();
+            cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.Types)).OfType<sales_promotion.Types>().ToList();
         }
 
         #region ToolBar
@@ -96,8 +96,8 @@ namespace Cognitivo.Product
             if (sales_promotion != null)
             {
                 //Buy Item and get Bonus Item
-                if (sales_promotion.types == entity.sales_promotion.Type.BuyThis_GetThat ||
-                    sales_promotion.types == entity.sales_promotion.Type.BuyTag_GetThat)
+                if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat ||
+                    sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
                 {
                     int BonusID = Convert.ToInt32(sales_promotion.reference_bonus);
                     if (BonusID > 0)
@@ -142,7 +142,7 @@ namespace Cognitivo.Product
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
             
             //
-            if (sales_promotion.types == entity.sales_promotion.Type.BuyThis_GetThat)
+            if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat)
             {
                 Tag_Parameter.Visibility = System.Windows.Visibility.Collapsed;
                 Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
@@ -150,7 +150,7 @@ namespace Cognitivo.Product
                 Item_Bonus.Visibility = System.Windows.Visibility.Visible;
             }
             //Buy Tag and get Bonus Item
-            else if (sales_promotion.types == entity.sales_promotion.Type.BuyTag_GetThat)
+            else if (sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
             {
                 Tag_Parameter.Visibility = System.Windows.Visibility.Visible;
                 Tag_Bonus.Visibility = System.Windows.Visibility.Visible;

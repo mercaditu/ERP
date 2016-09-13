@@ -128,17 +128,17 @@ namespace entity
                 // apply property level validation rules
                 if (columnName == "name")
                 {
-                    if (String.IsNullOrEmpty(name))
+                    if (string.IsNullOrEmpty(name))
                         return "Name needs to be filled";
                 }
                 if (columnName == "gov_code")
                 {
-                    if (String.IsNullOrEmpty(gov_code))
+                    if (string.IsNullOrEmpty(gov_code))
                         return "Gov code needs to be filled";
                 }
                 if (columnName == "address")
                 {
-                    if (String.IsNullOrEmpty(address))
+                    if (string.IsNullOrEmpty(address))
                         return "Addrss needs to be filled";
                 }
                 return "";

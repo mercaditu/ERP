@@ -162,7 +162,10 @@ namespace entity
 
                     //Default Currency
                     Currency_Default = ctx.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
-                    CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
+                    if (Currency_Default != null)
+                    {
+                        CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
+                    }
 
                     //Setting Security, once CurrentSession Data is set.
                     Refresh_Security();

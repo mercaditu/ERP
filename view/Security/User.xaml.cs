@@ -18,42 +18,35 @@ namespace Cognitivo.Security
         CollectionViewSource security_user_view_source, security_ques_view_source, security_role_view_source;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
 
-
         public User()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
-            security_user_view_source = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
-            dbContext.security_user.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            security_user_view_source = ((CollectionViewSource)(FindResource("security_userViewSource")));
+            await dbContext.security_user.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).LoadAsync();
             security_user_view_source.Source = dbContext.security_user.Local;
 
-            security_ques_view_source = ((CollectionViewSource)(this.FindResource("securityQuesViewSource")));
-            dbContext.security_question.Load();
-            security_ques_view_source.Source = dbContext.security_question.Local;
+            //security_ques_view_source = ((CollectionViewSource)(this.FindResource("securityQuesViewSource")));
+            //dbContext.security_question.Load();
+            //security_ques_view_source.Source = dbContext.security_question.Local;
 
-            security_role_view_source = ((CollectionViewSource)(this.FindResource("securityRoleViewSource")));
+            security_role_view_source = ((CollectionViewSource)(FindResource("securityRoleViewSource")));
             dbContext.security_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
             security_role_view_source.Source = dbContext.security_role.Local;
 
-            if (!dbContext.security_user.Where(x => x.name == "master").Any())
+            //This helps create a Master Admin Role.
+            if (dbContext.security_role.Local.Count() == 0)
             {
-                security_user security_user = new security_user();
-                security_user.State = EntityState.Added;
-                security_user.IsSelected = true;
-                if (dbContext.security_role.Where(x => x.is_master).FirstOrDefault()!=null)
-                {
-                    security_user.security_role = dbContext.security_role.Where(x => x.is_master).FirstOrDefault();
-                }
-             
-                security_user.name = "master";
-                dbContext.security_user.Add(security_user);
-                security_user_view_source.View.MoveCurrentToLast();
-           
+                security_role security_role = new security_role();
+                security_role.name = "Master Admin";
+                security_role.is_master = true;
+                security_role.is_active = true;
 
+                dbContext.security_role.Add(security_role);
             }
         }
 

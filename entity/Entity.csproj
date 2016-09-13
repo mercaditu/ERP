@@ -253,6 +253,10 @@
     <Compile Include="Item\item_movement_value.cs" />
     <Compile Include="Item\item_template.cs" />
     <Compile Include="Item\item_template_detail.cs" />
+    <Compile Include="Migrations\201609131205386_InitialCreate.cs" />
+    <Compile Include="Migrations\201609131205386_InitialCreate.Designer.cs">
+      <DependentUpon>201609131205386_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -671,6 +675,9 @@
     <EmbeddedResource Include="DocumentViewer.resx">
       <DependentUpon>DocumentViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609131205386_InitialCreate.resx">
+      <DependentUpon>201609131205386_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

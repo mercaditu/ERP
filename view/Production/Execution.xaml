@@ -35,7 +35,7 @@
         <sys:Int32 x:Key="IntFive">5</sys:Int32>
         <sys:Int32 x:Key="IntSix">6</sys:Int32>
         <sys:Int32 x:Key="IntSeven">7</sys:Int32>
-        <CollectionViewSource x:Key="production_executionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution}, CreateList=True}"/>
+
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_detaillProductViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
@@ -46,19 +46,19 @@
         <CollectionViewSource x:Key="production_order_detaillServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_execution_detailProductViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailRawViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailAssetViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailProductViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillProductViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailRawViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillRawViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailAssetViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillAssetViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailServiceViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillServiceViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillServiceContractViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillSupplyViewSource}}"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}"/>
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
     </Page.Resources>
-    <Grid Background="White" DataContext="{StaticResource production_executionViewSource}">
+    <Grid Background="White" DataContext="{StaticResource production_orderViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2"/>
@@ -80,7 +80,7 @@
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding production_line.name, StringFormat=d}" 
 						           recordSecondaryName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   recordName="{Binding production_order.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>

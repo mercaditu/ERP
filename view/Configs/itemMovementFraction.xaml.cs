@@ -27,7 +27,7 @@ namespace Cognitivo.Configs
         public int id_item { get; set; }
         public long id_movement { get; set; }
         public item_movement item_movement { get; set; }
-        public production_execution _production_execution { get; set; }
+       // public production_execution _production_execution { get; set; }
         public production_order_detail production_order_detail { get; set; }
         public decimal Quantity { get; set; }
         public enum Types
@@ -64,7 +64,7 @@ namespace Cognitivo.Configs
             app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
             app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-            Items_InStockLIST = ExecutionDB.item_movement.Where(x => x.id_location == _production_execution.production_line.id_location &&
+            Items_InStockLIST = ExecutionDB.item_movement.Where(x => x.id_location == production_order_detail.production_order.production_line.id_location &&
                                                                      x.item_product.id_item == id_item && 
                                                                      x.status == entity.Status.Stock.InStock && 
                                                                     (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0).ToList();
@@ -104,8 +104,8 @@ namespace Cognitivo.Configs
 
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
-            if (_production_execution != null)
-            {
+            //if (_production_execution != null)
+            //{
                 if (production_order_detail != null)
                 {
                     production_execution_detail _production_execution_detail = new entity.production_execution_detail();
@@ -131,7 +131,7 @@ namespace Cognitivo.Configs
                         _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
                     }
 
-                    _production_execution_detail.production_execution = _production_execution;
+                  //  _production_execution_detail.production_execution = _production_execution;
                     _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
 
                     if (production_order_detail.item.is_autorecepie)
@@ -150,9 +150,9 @@ namespace Cognitivo.Configs
                         production_execution_dimension.id_measurement =(app_measurementViewSource.View.CurrentItem as app_measurement).id_measurement;
                         _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
                     }
-                    _production_execution.production_execution_detail.Add(_production_execution_detail);
+                    production_order_detail.production_execution_detail.Add(_production_execution_detail);
                 }
-            }
+           // }
 
 
             btnCancel_Click(null, null);

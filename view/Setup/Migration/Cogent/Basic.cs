@@ -1591,22 +1591,22 @@ namespace Cognitivo.Setup.Migration.Cogent
                     using (db db = new db())
                     {
                         db.Database.CommandTimeout = 5500;
-                        production_execution production_execution = new production_execution();
+                      //  production_execution production_execution = new production_execution();
                         int id = Convert.ToInt32(readerproduction["id"]);
-                        production_execution.id_production_execution = id;
+                      //  production_execution.id_production_execution = id;
 
-                        if (_enitity.db.production_line.Count() > 0)
-                        {
-                            production_execution.id_production_line = _enitity.db.production_line.FirstOrDefault().id_production_line;
-                        }
+                        //if (_enitity.db.production_line.Count() > 0)
+                        //{
+                        //    production_execution.id_production_line = _enitity.db.production_line.FirstOrDefault().id_production_line;
+                        //}
 
-                        String order_name = Convert.ToString(readerproduction["name_plan"]);
-                        if (_enitity.db.production_order.Where(x => x.name == order_name).FirstOrDefault() != null)
-                        {
-                            production_execution.id_production_order = _enitity.db.production_order.Where(x => x.name == order_name).FirstOrDefault().id_production_order;
-                        }
+                        //String order_name = Convert.ToString(readerproduction["name_plan"]);
+                        //if (_enitity.db.production_order.Where(x => x.name == order_name).FirstOrDefault() != null)
+                        //{
+                        //    production_execution.id_production_order = _enitity.db.production_order.Where(x => x.name == order_name).FirstOrDefault().id_production_order;
+                        //}
 
-                        production_execution.trans_date = Convert.ToDateTime(readerproduction["timestamp"]);
+                        //production_execution.trans_date = Convert.ToDateTime(readerproduction["timestamp"]);
 
                         MySqlConnection connproduction_detail = new MySqlConnection(_connString);
 
@@ -1651,18 +1651,18 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 production_execution_detail.id_item = db.items.Where(x => x.name == name).FirstOrDefault().id_item;
                             }
 
-                            if (production_execution.id_production_order == 0)
-                            {
-                                string ord_name = Convert.ToString(dtproductionexecdetail.Rows[i]["plan_name"]);
+                            //if (production_execution.id_production_order == 0)
+                            //{
+                            //    string ord_name = Convert.ToString(dtproductionexecdetail.Rows[i]["plan_name"]);
 
-                                if (db.production_order.Where(x => x.name == ord_name).FirstOrDefault() != null)
-                                {
-                                    production_order production_order = db.production_order.Where(x => x.name == ord_name).FirstOrDefault();
-                                    production_order.status = Status.Production.InProcess;
-                                    production_execution.production_order = db.production_order.Where(x => x.name == ord_name).FirstOrDefault();
-                                }
-                                else { continue; }
-                            }
+                            //    if (db.production_order.Where(x => x.name == ord_name).FirstOrDefault() != null)
+                            //    {
+                            //        production_order production_order = db.production_order.Where(x => x.name == ord_name).FirstOrDefault();
+                            //        production_order.status = Status.Production.InProcess;
+                            //        production_execution.production_order = db.production_order.Where(x => x.name == ord_name).FirstOrDefault();
+                            //    }
+                            //    else { continue; }
+                            //}
 
 
 
@@ -1688,15 +1688,15 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 production_execution_detail.id_project_task = db.project_task.Where(x => x.item_description == Task_name && x.project.name == project_name).FirstOrDefault().id_project_task;
                             }
-                            production_execution.production_execution_detail.Add(production_execution_detail);
+                            db.production_execution_detail.Add(production_execution_detail);
 
 
                         }
-                        if (production_execution.Error == null && production_execution.production_execution_detail.Count() > 0)
-                        {
-                            db.production_execution.Add(production_execution);
+                        //if (production_execution.Error == null && production_execution.production_execution_detail.Count() > 0)
+                        //{
+                        //    db.production_execution.Add(production_execution);
 
-                        }
+                        //}
                         // readerproduction_detail.Close();
                         dtproductionexec.Clear();
                         cmdproduction_detail.Dispose();

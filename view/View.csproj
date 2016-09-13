@@ -370,6 +370,10 @@
       <DependentUpon>Version.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Bool2Color.cs" />
+    <Compile Include="Production\Execution.xaml.cs">
+      <DependentUpon>Execution.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Production\Fraction.xaml.cs">
       <DependentUpon>Fraction.xaml</DependentUpon>
     </Compile>
@@ -1607,6 +1611,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\Version.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Production\Execution.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

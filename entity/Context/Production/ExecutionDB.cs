@@ -65,37 +65,6 @@ namespace entity
                 }
             }
 
-            foreach (production_execution production_execution in base.production_execution.Local)
-            {
-                if (production_execution.IsSelected && production_execution.Error == null)
-                {
-                    if (production_execution.State == EntityState.Added)
-                    {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        Entry(production_execution).State = EntityState.Added;
-                    }
-                    else if (production_execution.State == EntityState.Modified)
-                    {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        Entry(production_execution).State = EntityState.Modified;
-                    }
-                    else if (production_execution.State == EntityState.Deleted)
-                    {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        base.production_execution.Remove(production_execution);
-                    }
-                }
-                else if (production_execution.State > 0)
-                {
-                    if (production_execution.State != EntityState.Unchanged)
-                    {
-                        Entry(production_execution).State = EntityState.Unchanged;
-                    }
-                }
-            }
         }
 
         public int Approve(entity.production_order.ProductionOrderTypes Type)
@@ -142,23 +111,23 @@ namespace entity
             return NumberOfRecords;
         }
 
-        public void Anull()
-        {
-            foreach (production_execution production_execution in base.production_execution.Local.Where(x =>
-                                                                  x.IsSelected && x.Error == null))
-            {
-                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                List<item_movement> item_movementList = new List<item_movement>();
-                item_movementList = _Stock.revert_Stock(this, App.Names.ProductionExecution, production_execution);
+        //public void Anull()
+        //{
+        //    foreach (production_execution production_execution in base.production_execution.Local.Where(x =>
+        //                                                          x.IsSelected && x.Error == null))
+        //    {
+        //        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+        //        List<item_movement> item_movementList = new List<item_movement>();
+        //        item_movementList = _Stock.revert_Stock(this, App.Names.ProductionExecution, production_execution);
 
-                if (item_movementList != null && item_movementList.Count > 0)
-                {
-                    item_movement.RemoveRange(item_movementList);
-                }
+        //        if (item_movementList != null && item_movementList.Count > 0)
+        //        {
+        //            item_movement.RemoveRange(item_movementList);
+        //        }
 
-                production_execution.status = Status.Documents_General.Annulled;
-            }
-        }
+        //        production_execution.status = Status.Documents_General.Annulled;
+        //    }
+        //}
 
     }
 }

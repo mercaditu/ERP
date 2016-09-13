@@ -437,7 +437,7 @@ namespace Cognitivo.Product
                     item item = i as item;
                     if (item.Error == null)
                     {
-                        if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower()) || item.item_tag_detail.Where(x => x.item_tag.name.ToLower().Contains(query.ToLower())).Any())
+                        if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower())) //item.item_tag_detail.Where(x => x.item_tag.name.ToLower().Contains(query.ToLower())).Any()
                         {
                             return true;
                         }

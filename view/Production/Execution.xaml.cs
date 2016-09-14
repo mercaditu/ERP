@@ -327,10 +327,14 @@ namespace Cognitivo.Production
             RefreshData();
         }
 
-        private void treeraw_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void treeraw_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem_;
-            production_order_detaillRawViewSource.View.MoveCurrentTo(production_order_detail);
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
             if (production_order_detail != null)
             {
                
@@ -348,19 +352,56 @@ namespace Cognitivo.Production
             }
         }
 
-        private void treeservice_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void treeservice_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem_;
-            production_order_detaillServiceViewSource.View.MoveCurrentTo(production_order_detail);
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
         
         }
 
-        private void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem_;
-            production_order_detaillAssetViewSource.View.MoveCurrentTo(production_order_detail);
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
+        }
+        private async void treeSupply_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem;
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
         }
 
+        private async void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
+
+        }
+
+        private async void treeServicecontract_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            production_order_detail production_order_detail = (production_order_detail)treeServicecontract.SelectedItem_;
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
+        }
         private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (production_execution_detailSupplyViewSource != null)
@@ -487,18 +528,7 @@ namespace Cognitivo.Production
             }
         }
 
-        private void treeSupply_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem;
-            production_order_detaillSupplyViewSource.View.MoveCurrentTo(production_order_detail);
-        }
-
-        private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
-            production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
-          
-        }
+     
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -625,7 +655,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = null;
             Button btn = sender as Button;
             decimal Quantity = 0M;
-
+            CollectionViewSource Collection = null; 
             item.item_type type = item.item_type.Task;
 
             if (btn.Name.Contains("Prod"))
@@ -633,30 +663,35 @@ namespace Cognitivo.Production
                 Quantity = Convert.ToDecimal(txtProduct.Text);
                 production_order_detail = treeProduct.SelectedItem_ as production_order_detail;
                 type = item.item_type.Product;
+                Collection = production_execution_detailProductViewSource;
             }
             else if (btn.Name.Contains("Raw"))
             {
                 Quantity = Convert.ToDecimal(txtRaw.Text);
                 production_order_detail = treeRaw.SelectedItem_ as production_order_detail;
                 type = item.item_type.RawMaterial;
+                Collection = production_execution_detailRawViewSource;
             }
             else if (btn.Name.Contains("Asset"))
             {
                 Quantity = Convert.ToDecimal(txtAsset.Text);
                 production_order_detail = treeAsset.SelectedItem_ as production_order_detail;
                 type = item.item_type.FixedAssets;
+                Collection = production_execution_detailAssetViewSource;
             }
             else if (btn.Name.Contains("Supp"))
             {
                 Quantity = Convert.ToDecimal(txtSupply.Text);
                 production_order_detail = treeSupply.SelectedItem_ as production_order_detail;
                 type = item.item_type.Supplies;
+                Collection = production_execution_detailSupplyViewSource;
             }
             else if (btn.Name.Contains("ServiceContract"))
             {
                 Quantity = Convert.ToDecimal(txtServicecontract.Text);
                 production_order_detail = treeServicecontract.SelectedItem_ as production_order_detail;
                 type = item.item_type.ServiceContract;
+                Collection = production_execution_detailServiceContractViewSource;
             }
 
             try
@@ -702,6 +737,10 @@ namespace Cognitivo.Production
                     Insert_IntoDetail(production_order_detail, Quantity);
                     RefreshData();
                 }
+
+                Collection.Source = ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+               
             }
             catch (Exception ex)
             {
@@ -750,11 +789,6 @@ namespace Cognitivo.Production
             ExecutionDB.SaveChanges();
         }
 
-        private void treeServicecontract_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            production_order_detail production_order_detail = (production_order_detail)treeServicecontract.SelectedItem_;
-            production_order_detaillServiceContractViewSource.View.MoveCurrentTo(production_order_detail);
-        }
 
         private void dgServicecontract_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

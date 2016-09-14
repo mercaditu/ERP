@@ -36,14 +36,14 @@ namespace Cognitivo.Setup.Migration.Cogent
             item_factor.Wait();
             Task item_price = Task.Factory.StartNew(() => items_price());
             item_price.Wait();
-            Task project_task = Task.Factory.StartNew(() => project());
-            project_task.Wait();
-            Task productions = Task.Factory.StartNew(() => production());
-            productions.Wait();
-            Task productionsExecution = Task.Factory.StartNew(() => production_Exec());
-            productionsExecution.Wait();
-            Task PurchaseInvoice = Task.Factory.StartNew(() => Purchase_Invoice());
-            PurchaseInvoice.Wait();
+            //Task project_task = Task.Factory.StartNew(() => project());
+            //project_task.Wait();
+            //Task productions = Task.Factory.StartNew(() => production());
+            //productions.Wait();
+            //Task productionsExecution = Task.Factory.StartNew(() => production_Exec());
+            //productionsExecution.Wait();
+            //Task PurchaseInvoice = Task.Factory.StartNew(() => Purchase_Invoice());
+            //PurchaseInvoice.Wait();
             //  Task SalesInvocie = Task.Factory.StartNew(() => Sales_Invoice());
         }
 

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cognitivo.Reporting.Data;
 using MySql.Data.MySqlClient;
 
@@ -77,7 +74,7 @@ namespace Cognitivo.Class
 
                                 from (
                                 select item_movement.*, sum(val.unit_value) as UnitCost,
-                                (select if(sum(debit) is null, 0, sum(debit)) from item_movement as mov where mov._parent_id_movement = item_movement.id_movement) as DebitChild
+                                (select if(sum(debit) is null, 0, sum(debit)) from item_movement as mov where mov.parent_id_movement = item_movement.id_movement) as DebitChild
 
                                 from item_movement 
                                 left outer join item_movement_value as val on item_movement.id_movement = val.id_movement

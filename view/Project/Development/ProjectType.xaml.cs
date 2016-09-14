@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Data.Entity;
 using entity;
-using System.Data.Entity.Validation;
 
 namespace Cognitivo.Project.Development
 {
@@ -17,21 +16,19 @@ namespace Cognitivo.Project.Development
 
         CollectionViewSource projectproject_template_detailViewSource;
         CollectionViewSource project_templateViewSource;
-        //CollectionViewSource itemSearchViewSource;
 
         public ProjectType()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            project_templateViewSource = FindResource("project_templateViewSource") as CollectionViewSource;
+            await ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
 
-            projectproject_template_detailViewSource = ((CollectionViewSource)(FindResource("projectproject_template_detailViewSource")));
-            //itemSearchViewSource = ((CollectionViewSource)(FindResource("itemSearchViewSource")));
+            projectproject_template_detailViewSource = FindResource("projectproject_template_detailViewSource") as CollectionViewSource;
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
 

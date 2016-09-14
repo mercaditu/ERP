@@ -43,8 +43,6 @@ namespace Cognitivo.Commercial
         {
             if (!string.IsNullOrEmpty(query) && payment_promissory_noteViewSource != null)
             {
-                try
-                {
                     payment_promissory_noteViewSource.View.Filter = i =>
                     {
                         payment_promissory_note payment_promissory_note = i as payment_promissory_note;
@@ -67,11 +65,6 @@ namespace Cognitivo.Commercial
                             return false;
                         }
                     };
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
             }
             else
             {

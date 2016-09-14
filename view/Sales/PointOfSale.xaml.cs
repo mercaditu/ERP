@@ -287,8 +287,6 @@ namespace Cognitivo.Sales
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
-            {
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -320,11 +318,6 @@ namespace Cognitivo.Sales
                         paymentpayment_detailViewSource.View.Refresh();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         #endregion

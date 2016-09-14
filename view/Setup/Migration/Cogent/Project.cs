@@ -270,15 +270,8 @@ namespace Cognitivo.Setup.Migration.Cogent
                     IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
-                        try
-                        {
-                            db.SaveChanges();
-
-                        }
-                        catch(Exception ex)
-                            {
-                                throw ex;
-                            }
+                        db.SaveChanges();
+                            
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progProject.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => projectValue.Text = value.ToString()));

@@ -98,8 +98,6 @@ namespace entity.Brillo.Logic
         {
             List<app_document_range> RangeLIST = new List<app_document_range>();
 
-            //using (db db = new db())
-            //{
                 RangeLIST = db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company
                                           && x.app_document.filterby_branch == false
                                           && x.app_document.filterby_tearminal == false
@@ -113,8 +111,6 @@ namespace entity.Brillo.Logic
                                                           && x.id_terminal == TerminalID
                                                           && x.app_document.id_application == AppName && x.is_active)
                                                  .ToList());
-            //}
-
             return RangeLIST;
         }
     }

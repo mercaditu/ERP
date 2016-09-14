@@ -117,7 +117,7 @@ namespace Cognitivo.Product
         {
             await ItemDB.app_measurement
                     .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).AsNoTracking().LoadAsync();
+                    .OrderBy(a => a.name).LoadAsync();
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {

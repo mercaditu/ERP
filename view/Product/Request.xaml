@@ -97,7 +97,7 @@
                 <TextBox
                                 Style="{StaticResource input_textbox}"
                                 metro:TextBoxHelper.SelectAllOnFocus="True"
-               
+               metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=OneWay}"
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
                              Text="{Binding Path=number,ElementName=TaskApprove, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

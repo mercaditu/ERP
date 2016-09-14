@@ -264,6 +264,12 @@ namespace Cognitivo.Product
 
             item_request.IsSelected = true;
 
+            app_document_range app_document_range = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            if (app_document_range != null)
+            {
+                //Gets List of Ranges avaiable for this Document.
+                item_request.id_range = app_document_range.id_range;
+            }
 
             // dbContext.sales_invoice.Local.Add(sales_invoice);
             dbContext.Entry(item_request).State = EntityState.Added;

@@ -371,9 +371,6 @@
       <DependentUpon>Execution.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Production\Fraction.xaml.cs">
-      <DependentUpon>Fraction.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Product\BranchWalkin.xaml.cs">
       <DependentUpon>BranchWalkin.xaml</DependentUpon>
     </Compile>
@@ -1604,10 +1601,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Production\Execution.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Production\Fraction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

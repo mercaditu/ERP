@@ -6,9 +6,6 @@ using System.Windows.Data;
 using System.Data.Entity;
 using entity;
 using System;
-using System.ComponentModel;
-using cntrl.Panels;
-using System.Windows.Media;
 using System.Windows.Input;
 
 namespace Cognitivo.Production
@@ -1137,10 +1134,14 @@ namespace Cognitivo.Production
 
         }
 
-        private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
-               production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            production_order_detail production_order_detail = treeProduct.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+            }
         }
 
         private void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

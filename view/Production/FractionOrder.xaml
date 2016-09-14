@@ -50,12 +50,12 @@
         <CollectionViewSource x:Key="production_order_detaillSupplyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_detaillServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_executionproduction_execustion_detailViewSource" Source="{Binding production_execustion_detail, Source={StaticResource production_orderproduction_order_detailViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_execution_detailProductViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillProductViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailRawViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillRawViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailAssetViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillAssetViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillServiceViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillServiceContractViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detaillSupplyViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailProductViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_execution_detailRawViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_execution_detailAssetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_execution_detailServiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_dimensionViewSource" Source="{Binding production_order_dimension, Source={StaticResource production_orderproduction_order_detailViewSource}}"/>
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>

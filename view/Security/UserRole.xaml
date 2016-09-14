@@ -66,9 +66,11 @@
             </ComboBox>
             <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       Content="{lex:Loc Master}" Style="{StaticResource input_checkbox}"/>
+            <CheckBox IsChecked="{Binding see_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                      Content="{lex:Loc Cost}" Style="{StaticResource input_checkbox}"/>
         </StackPanel>
 
-        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,155,0,0">
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,200,0,0">
             <TabItem Header="{lex:Loc Basic}">
                 <Grid>
                     <DataGrid x:Name="security_curdDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"

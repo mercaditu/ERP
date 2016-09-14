@@ -292,8 +292,8 @@
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
 					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
-					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                            
+					                       
 
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
 					                                Binding="{Binding app_condition.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>

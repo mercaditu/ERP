@@ -92,7 +92,7 @@
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
-                                  SelectedValue="{Binding ElementName=TaskApprove,Path=id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxDocument_SelectionChanged"  />
+                                  SelectedValue="{Binding ElementName=TaskApprove,Path=id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"   />
                 <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
                 <TextBox
                                 Style="{StaticResource input_textbox}"

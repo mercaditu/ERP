@@ -39,7 +39,7 @@
         <converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_executionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution}, CreateList=True}"/>
+        
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderproduction_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>

@@ -1,0 +1,208 @@
+﻿<Page x:Class="Cognitivo.Project.EventFinance"
+     x:Name="_ProjectInvocie" Title="{lex:Loc EventFinance}"
+       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:local="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+            xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
+      xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      
+      xmlns:data="clr-namespace:entity;assembly=entity"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+      mc:Ignorable="d"
+      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
+    <Page.Resources>
+        <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <converter:Projectfinance x:Key="Projectfinance"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
+        <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
+        <converter:salesorderdetailtostatus x:Key="salesorderdetailtostatus"/>
+        <converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable"/>
+        <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
+        <CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
+    </Page.Resources>
+   
+    <Grid DataContext="{StaticResource projectViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+                       <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+        <ListBox Background="{StaticResource AccentColor_Brush}"
+			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="3">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
+						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--<StackPanel Grid.Column="1" Grid.Row="1" Background="White"  >
+          
+            <Grid>
+                <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+               
+            </Grid>
+            <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 
+                                  Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id_condition"
+                                SelectionChanged="cbxCondition_SelectionChanged">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Grid>
+                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+              
+            </Grid>
+            <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract" 
+                          DisplayMemberPath="name" SelectedValuePath="id_contract">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+            <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="4,0,340,0"/>
+           
+        </StackPanel>-->
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.Resources>
+
+                    <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
+                                              ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay}">
+                        <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource Status2ColorConverter}}" 
+                                             IsEnabled="{Binding Path=., Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource salesorderdetailtoEnable}}" 
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             TaskName="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                    </HierarchicalDataTemplate>
+                </Grid.Resources>
+             
+                <TextBlock Style="{StaticResource TextAreaH2}" Margin="40,16,36,0" 
+                           Text="{Binding project.name, FallbackValue=ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
+
+                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,22"  FontSize="16"
+                              VerticalAlignment="Top" HorizontalAlignment="Left"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
+                              Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
+                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,60,0,0" ItemsSource="{Binding}" 
+                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                                        ScrollViewer.CanContentScroll="True"   >
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_ProjectInvocie, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+
+                    <TreeView.ItemsPanel>
+                        <ItemsPanelTemplate >
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </TreeView.ItemsPanel>
+                </cntrl:ExtendedTreeView>
+            </Grid>
+
+            <StackPanel Background="WhiteSmoke" Grid.Column="2">
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+                       Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
+                <TextBlock Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
+                           Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
+                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
+                    <StackPanel x:Name="stpcode" >
+                        <!--<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding}">
+
+                            --><!--<Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
+                                    <Hyperlink >
+                                        <Run Text="{lex:Loc SalesOrder}" />
+                                    </Hyperlink>
+                            </TextBlock>--><!--
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding }" Margin="0">
+                            --><!-- host the items generated by this ItemsControl in a grid --><!--
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            --><!-- render each bound item using a TextBlock--><!--
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
+                                    <Hyperlink PreviewMouseUp="salesorder_PreviewMouseUp" Tag="{Binding sales_detail.sales_order}">
+                                        <Run  Text="{Binding sales_detail.id_sales_order}" />
+                                    </Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>-->
+                        <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}">
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource Projectfinance}" >
+                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_exe"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                      
+
+                        <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
+
+                       
+                        <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            
+        </Grid>
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                       appName="ProjectFinance" 
+                       btnSearch_Click="toolBar_btnSearch_Click"/>
+    </Grid>
+</Page>

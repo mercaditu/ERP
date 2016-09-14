@@ -483,6 +483,9 @@
     <Compile Include="Project\Events\EventType.xaml.cs">
       <DependentUpon>EventType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Project\Events\EventFinance.xaml.cs">
+      <DependentUpon>EventFinance.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Project\Logistics.xaml.cs">
       <DependentUpon>Logistics.xaml</DependentUpon>
     </Compile>
@@ -1705,6 +1708,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Project\Events\EventType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Project\Events\EventFinance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

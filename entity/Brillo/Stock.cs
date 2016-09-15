@@ -21,7 +21,7 @@ namespace entity.Brillo
 
                                 from item_movement as parent
                                 inner join app_location as loc on parent.id_location = loc.id_location
-                                left join item_movement as child on child._parent_id_movement = parent.id_movement
+                                left join item_movement as child on child.parent_id_movement = parent.id_movement
 
                                 where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
                                 group by parent.id_movement
@@ -51,7 +51,6 @@ namespace entity.Brillo
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
-                             
 
                                 where parent.id_movement={0}
                                 group by parent.id_movement

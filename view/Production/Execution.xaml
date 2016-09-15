@@ -129,10 +129,10 @@
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
                 <Grid DataContext="{StaticResource production_orderViewSource}">
-                    <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,6,0,0"
+                    <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,16,0,0"
                                                Text="{Binding name, FallbackValue=Production, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
-                    <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,8"  FontSize="16"
+                    <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,20"  FontSize="16"
                                                   VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="{StaticResource AccentColor_Brush2}"
                                                   Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" 
                                                   FontFamily="/Cognitivo;component/Resources/#cognitivo" Foreground="RoyalBlue"
@@ -152,9 +152,9 @@
             <!-- Execution Panels -->
             <Grid Grid.Column="1" Grid.Row="1">
                 <TabControl IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-                    <TabItem IsSelected="True">
+                    <TabItem x:Name="tabBlank" IsSelected="True">
                         <Grid Background="WhiteSmoke">
-                            
+                            <Label Content="Please Select" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource H1}"/>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tabProduct">
@@ -178,13 +178,13 @@
                                       SelectionChanged="dgproduct_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
-                                                        Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:D}}" Width="Auto"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="*"
-                                                        Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
+                                                        Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
+                                                        Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
-                                                        Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                                        Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
-                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -263,7 +263,7 @@
                                 <TextBlock Text="{Binding name, Mode=OneWay}" TextTrimming="CharacterEllipsis"
                                            Style="{StaticResource text_H3}" HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36">
+                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Coeficient}" />
                                     <ComboBox x:Name="cmbcoefficient" Width="235" 

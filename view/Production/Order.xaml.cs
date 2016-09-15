@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Order : Page,INotifyPropertyChanged
+    public partial class Order : Page, INotifyPropertyChanged
     {
         OrderDB OrderDB = new OrderDB();
 

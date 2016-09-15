@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Execution : Page
+    public partial class Execution : Page, INotifyPropertyChanged
     {
         public bool ViewAll { get; set; }
 
@@ -242,6 +242,10 @@ namespace Cognitivo.Production
                 {
                     tabServiceContract.IsSelected = true;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                }
+                else
+                {
+                    tabBlank.IsSelected = true;
                 }
             }
 

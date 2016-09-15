@@ -89,44 +89,26 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="7*"/>
+                <RowDefinition Height="107*"/>
+                <RowDefinition Height="453*"/>
             </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="18,0,17,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
-                <ComboBox  Style="{DynamicResource input_combobox}" 
-					DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					SelectedValuePath="id_production_line"
-					ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding trans_date,Mode=OneWay}" IsEnabled="False"/>
                 <Label Content="{lex:Loc ProductionOrder}" Style="{StaticResource input_label}"/>
-                <ComboBox  Style="{DynamicResource input_combobox}" x:Name="cmborder"
-				    DisplayMemberPath="name" SelectedValue="{Binding id_production_order, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					SelectedValuePath="id_production_order"
-					ItemsSource="{Binding Source={StaticResource production_orderViewSource}}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <Label Content="{Binding name}" Style="{StaticResource generic_Label}"/>
             </StackPanel>
-            <Grid Grid.Column="1">
-                <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                        <Label Content="{Binding production_order.project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+            <StackPanel Grid.Column="1" Margin="0,0,0.5,0">
+                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+                    <Label Content="{Binding production_order.project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
-            </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
+                    <Label Content="{Binding production_line.name}" Style="{StaticResource generic_Label}"/>
+                </StackPanel>
+            </StackPanel>
             <!-- TreeView -->
             <Grid Grid.Column="0" Grid.Row="1" DataContext="{StaticResource production_order_detailViewSource}">
                 <Grid.Resources >
@@ -152,7 +134,7 @@
                 </cntrl:ExtendedTreeView>
             </Grid>
             <!-- Execution Panels -->
-            <Grid Grid.Column="1" Grid.Row="1">
+            <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,0.5,0">
                 <!-- Product -->
                 <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" 
                                     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
@@ -377,6 +359,7 @@
                         </DataGrid>
                     </StackPanel>
                 </StackPanel>
+
                 <!-- FixedAsset -->
                 <StackPanel x:Name="pnlFixedAsset" Background="WhiteSmoke"  DataContext="{StaticResource production_execution_detailViewSource}" 
                                     IsEnabled="{Binding SelectedItem, ElementName=treeAsset, Converter={StaticResource Type2Enable}}">

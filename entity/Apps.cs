@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 128
+            /// Last Used : 129
             /// </summary>
 
 
@@ -176,6 +176,8 @@ namespace entity
             Logistics = 25,
             [LocalizedDescription("EventManagement")]
             EventManagement = 39,
+            [LocalizedDescription("EventFinance")]
+            EventFinance = 129,
             [LocalizedDescription("PrintingPresstemplate")]
             PrintingPresstemplate = 40,
             [LocalizedDescription("ProjectFinance")]

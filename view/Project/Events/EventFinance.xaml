@@ -31,6 +31,7 @@
         <converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
+        <CollectionViewSource x:Key="sales_invoiceViewSource" Source="{Binding sales_invoice, Source={StaticResource projectViewSource}}" />
     </Page.Resources>
    
     <Grid DataContext="{StaticResource projectViewSource}">
@@ -63,7 +64,13 @@
             <TabControl>
                 <TabItem Header="Event">
                     <Grid>
-                        <DataGrid>
+                        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding unit_price_vat, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Cognitivo:local:Price}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
                             <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
                         </DataGrid>
                         <Button Content="Calculate Selling Price" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource btn_green}"/>
@@ -74,8 +81,13 @@
                 </TabItem>
                 <TabItem Header="SalesInvoice">
                     <Grid>
-                        <DataGrid>
-                            <!-- Add all sales Invoice Headers values with GrandTotal. Show status of Invoice (Pending, Approved, Anull) -->
+                        <DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Cognitivo:local:Price}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </TabItem>

@@ -32,7 +32,6 @@ namespace Cognitivo.Project
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
             set_price();
-            filter_task();
         }
 
         public void set_price()
@@ -65,36 +64,9 @@ namespace Cognitivo.Project
             }
         }
 
-        public void filter_task()
-        {
-            try
-            {
-                if (project_taskViewSource != null)
-                {
-                    if (project_taskViewSource.View != null)
-                    {
-                        project_taskViewSource.View.Filter = i =>
-                        {
-                            project_task _project_task = (project_task)i;
-                            if (_project_task.parent == null && _project_task.is_active == true && _project_task.status!=Status.Project.Rejected)
-                                return true;
-                            else
-                                return false;
-                        };
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
+    
 
-        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
-        {
-            ViewAll = !ViewAll;
-            RaisePropertyChanged("ViewAll");
-        }
+      
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
@@ -108,7 +80,7 @@ namespace Cognitivo.Project
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             set_price();
-            filter_task();
+           // filter_task();
 
             //calculate_total();
         }
@@ -214,7 +186,7 @@ namespace Cognitivo.Project
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            filter_task();
+           // filter_task();
         }
 
      

@@ -54,11 +54,14 @@
             </Grid>
             <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center" Margin="8">
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
+                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                    NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
+                <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                    NotifyOnValidationError=true, ValidatesOnExceptions=true, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding est_start_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                <DatePicker SelectedDate="{Binding est_start_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                    ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                       IsEnabled="False"      Style="{StaticResource input_datepicker}"/>
 
                 <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}"/>

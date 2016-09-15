@@ -20,6 +20,7 @@ namespace entity
             project_tag_detail = new List<project_tag_detail>();
             est_start_date = DateTime.Now.Date;
             est_end_date = DateTime.Now.Date;
+            sales_invoice = new List<sales_invoice>();
         }
 
         [Key]
@@ -93,7 +94,7 @@ namespace entity
         public virtual app_currency app_currency { get; set; }
         public virtual project_template project_template { get; set; }
 
-        public virtual IEnumerator<sales_invoice> sales_invoice { get; set; }
+        public virtual ICollection<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerator<sales_order> sales_order { get; set; }
         public virtual IEnumerator<purchase_order> purchase_order { get; set; }
         public virtual IEnumerator<purchase_tender> purchase_tender { get; set; }

@@ -31,38 +31,10 @@ namespace Cognitivo.Project
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
-            set_price();
+       
         }
 
-        public void set_price()
-        {
-            if (project_taskViewSource != null)
-            {
-                if (project_taskViewSource.View != null)
-                {
-                    foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
-                    {
-                        if (project_task.sales_detail != null)
-                        {
-                            project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
-                            project_task.RaisePropertyChanged("unit_price_vat");
-
-
-                        }
-                        if (project_task.production_execution_detail != null)
-                        {
-                            if (project_task.production_execution_detail.Count() > 0)
-                            {
-                                //Abhi... I would like to handle such things from Entity Level.
-                                //project_task.quantity_exe = (decimal)(project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : project_task.production_execution_detail.Sum(x => x.quantity));
-                                //project_task.RaisePropertyChanged("quantity_exec");
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
+    
 
     
 
@@ -79,7 +51,7 @@ namespace Cognitivo.Project
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            set_price();
+            
            // filter_task();
 
             //calculate_total();
@@ -137,17 +109,16 @@ namespace Cognitivo.Project
             
             if (project != null)
             {
-                cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
+                cntrl.SalesInvoice objSalesinvoice = new cntrl.SalesInvoice();
 
-                objSalesOrder.project = project;
-                objSalesOrder.SalesOrderDB = SalesOrderDB;
+                objSalesinvoice.project = project;
+                objSalesinvoice.db = SalesOrderDB;
                 
-                objSalesOrder.Generate_Invoice =true;
-                objSalesOrder.Generate_Budget = false;
+               
 
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(objSalesOrder);   
+                crud_modal.Children.Add(objSalesinvoice);   
             }
         }
 
@@ -186,6 +157,7 @@ namespace Cognitivo.Project
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            projectViewSource.View.Refresh();
            // filter_task();
         }
 

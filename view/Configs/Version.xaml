@@ -80,7 +80,7 @@
                         <Label Content="/" VerticalAlignment="Center" Style="{StaticResource H2}" />
                         <Label Content="{Binding ElementName=this, Path=UserTotal, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource H2}" />
                     </StackPanel>
-                    <Button Content="Buy More" Margin="8" VerticalAlignment="Center" Style="{StaticResource btn_green}"/>
+                    <Button Content="Buy More" Margin="8" VerticalAlignment="Center" Style="{StaticResource btn_green}" />
                 </StackPanel>
             </StackPanel>
         </Grid>

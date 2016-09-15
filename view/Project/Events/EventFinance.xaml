@@ -64,7 +64,7 @@
             <TabControl>
                 <TabItem Header="Event">
                     <Grid>
-                        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"/>
@@ -73,10 +73,9 @@
                             </DataGrid.Columns>
                             <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
                         </DataGrid>
-                        <Button Content="Calculate Selling Price" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource btn_green}"/>
-                        <Button Content="Create Invoice" VerticalAlignment="Top" Style="{StaticResource btn_green}"/>
-                        <ComboBox x:Name="sbxItem"/>
-                        <TextBox x:Name="tbxInvoiceTotal"/>
+
+                        <Button Content="Create Invoice" VerticalAlignment="Top" Style="{StaticResource btn_green}" Click="Button_Click"/>
+                    
                     </Grid>
                 </TabItem>
                 <TabItem Header="SalesInvoice">

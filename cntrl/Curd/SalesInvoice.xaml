@@ -20,7 +20,7 @@
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
-    <StackPanel x:Name="stackMain" Background="White" Height="500">
+    <StackPanel x:Name="stackMain" Background="White" Height="600">
         <Grid>
             <Border Background="WhiteSmoke" />
             <Border Width="45" HorizontalAlignment="Left" Background="#990099">
@@ -72,6 +72,11 @@
             </ComboBox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
             <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+            <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
+            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26"  can_New="True"
+                                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+            <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
+            <TextBox Name="txtvalue"/>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

@@ -140,7 +140,7 @@
             <!-- Execution Panels -->
             <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,0.5,0">
                 <!-- Product -->
-                <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" 
+                <StackPanel x:Name="pnlProduct" Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" 
                                     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8" IsEnabled="{Binding SelectedItem, ElementName=treeProduct, Converter={StaticResource Type2Enable}}">
                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
@@ -171,7 +171,7 @@
                     </DataGrid>
                 </StackPanel>
                 <!-- RawMaterial -->
-                <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
+                <StackPanel x:Name="pnlRaw" Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8" IsEnabled="{Binding SelectedItem, ElementName=treeProduct, Converter={StaticResource Type2Enable}}">
                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                         <TextBox x:Name="txtraw" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
@@ -213,11 +213,11 @@
                     </DataGrid>
                 </StackPanel>
                 <!-- Service -->
-                <StackPanel>
+                <StackPanel x:Name="pnlService"  DataContext="{StaticResource production_execution_detailViewSource}">
                     <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" 
-                                       IsEnabled="{Binding SelectedItem, ElementName=treeService, Converter={StaticResource Type2Enable}}" 
+                                 
                                        VerticalAlignment="Top" Background="WhiteSmoke" 
-                                       DataContext="{StaticResource production_execution_detailViewSource}">
+                                      >
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Coeficient}" />
@@ -243,7 +243,7 @@
                         </StackPanel>
                     </WrapPanel>
                     <DataGrid x:Name="dgService" Grid.Column="1" 
-                                  IsEnabled="{Binding SelectedItem, ElementName=treeService, Converter={StaticResource Type2Enable}}" 
+                              
                                   ItemsSource="{Binding}" 
                                   Margin="0,145,0,50" AutoGenerateColumns="False">
                         <DataGrid.Columns>
@@ -272,9 +272,9 @@
                     </DataGrid>
                 </StackPanel>
                 <!-- ServiceContract -->
-                <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
+                <StackPanel x:Name="pnlServiceContract" Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
                                     DataContext="{StaticResource production_execution_detailViewSource}" 
-                                    IsEnabled="{Binding SelectedItem, ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}">
+                                   >
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Hours" IsChecked="True" x:Name="rbtnHours"/>
                         <RadioButton Content="Quantity" x:Name="rbtnQuantity"/>
@@ -387,7 +387,7 @@
                     </DataGrid>
                 </StackPanel>
                 <!-- Supplies -->
-                <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
+                <StackPanel x:Name="pnlSupplies" Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
                                     DataContext="{StaticResource production_execution_detailViewSource}" 
                                     IsEnabled="{Binding SelectedItem, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
                     <StackPanel Orientation="Horizontal" Margin="8">

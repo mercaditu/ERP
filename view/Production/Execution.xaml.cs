@@ -197,7 +197,7 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
-                            ExecutionDB.production_execution_detail.Add(_production_execution_detail);
+                            production_order_detail.production_execution_detail.Add(_production_execution_detail);
                             RefreshData();
                             
                         }
@@ -302,10 +302,22 @@ namespace Cognitivo.Production
             {
                 if (production_order_detail.item.id_item_type == item.item_type.Product)
                 {
+                    pnlFixedAsset.Visibility = Visibility.Collapsed;
+                    pnlProduct.Visibility = Visibility.Visible;
+                    pnlRaw.Visibility = Visibility.Collapsed;
+                    pnlSupplies.Visibility = Visibility.Collapsed;
+                    pnlService.Visibility = Visibility.Collapsed;
+                    pnlServiceContract.Visibility = Visibility.Collapsed;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.RawMaterial)
                 {
+                    pnlFixedAsset.Visibility = Visibility.Collapsed;
+                    pnlProduct.Visibility = Visibility.Collapsed;
+                    pnlRaw.Visibility = Visibility.Visible;
+                    pnlSupplies.Visibility = Visibility.Collapsed;
+                    pnlService.Visibility = Visibility.Collapsed;
+                    pnlServiceContract.Visibility = Visibility.Collapsed;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                     if (production_order_detail.project_task != null)
                     {
@@ -317,19 +329,42 @@ namespace Cognitivo.Production
                 else if (production_order_detail.item.id_item_type == item.item_type.FixedAssets)
                 {
                     pnlFixedAsset.Visibility = Visibility.Visible;
+                    pnlProduct.Visibility = Visibility.Collapsed;
+                    pnlRaw.Visibility = Visibility.Collapsed;
+                    pnlSupplies.Visibility = Visibility.Collapsed;
+                    pnlService.Visibility = Visibility.Collapsed;
+                    pnlServiceContract.Visibility = Visibility.Collapsed;
 
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Supplies)
                 {
+                    pnlFixedAsset.Visibility = Visibility.Collapsed;
+                    pnlProduct.Visibility = Visibility.Collapsed;
+                    pnlRaw.Visibility = Visibility.Collapsed;
+                    pnlSupplies.Visibility = Visibility.Visible;
+                    pnlService.Visibility = Visibility.Collapsed;
+                    pnlServiceContract.Visibility = Visibility.Collapsed;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Service)
                 {
+                    pnlFixedAsset.Visibility = Visibility.Collapsed;
+                    pnlProduct.Visibility = Visibility.Collapsed;
+                    pnlRaw.Visibility = Visibility.Collapsed;
+                    pnlSupplies.Visibility = Visibility.Collapsed;
+                    pnlService.Visibility = Visibility.Visible;
+                    pnlServiceContract.Visibility = Visibility.Collapsed;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                 {
+                    pnlFixedAsset.Visibility = Visibility.Collapsed;
+                    pnlProduct.Visibility = Visibility.Collapsed;
+                    pnlRaw.Visibility = Visibility.Collapsed;
+                    pnlSupplies.Visibility = Visibility.Collapsed;
+                    pnlService.Visibility = Visibility.Collapsed;
+                    pnlServiceContract.Visibility = Visibility.Visible;
                     production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
             
@@ -558,8 +593,8 @@ namespace Cognitivo.Production
         {
             try
             {
-                production_execution_detailViewSource.View.Refresh();
-                production_execution_detailViewSource.View.MoveCurrentToLast();
+                production_orderViewSource.View.Refresh();
+                production_orderViewSource.View.MoveCurrentToLast();
 
                
 

@@ -378,7 +378,7 @@
                     </StackPanel>
                 </StackPanel>
                 <!-- FixedAsset -->
-                <StackPanel Grid.Column="1" Background="WhiteSmoke"  DataContext="{StaticResource production_execution_detailViewSource}" 
+                <StackPanel x:Name="pnlFixedAsset" Background="WhiteSmoke"  DataContext="{StaticResource production_execution_detailViewSource}" 
                                     IsEnabled="{Binding SelectedItem, ElementName=treeAsset, Converter={StaticResource Type2Enable}}">
                     <StackPanel Orientation="Horizontal" Margin="8">
                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" Margin="4"/>

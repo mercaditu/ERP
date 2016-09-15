@@ -142,14 +142,18 @@ namespace Cognitivo.Configs
                     {
                         _production_execution_detail.is_input = true;
                     }
-                    foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                    if (item_movement!=null)
                     {
-                        production_execution_dimension production_execution_dimension = new production_execution_dimension();
-                        production_execution_dimension.id_dimension = item_movement_dimension.id_dimension;
-                        production_execution_dimension.value = item_movement_dimension.value;
-                        production_execution_dimension.id_measurement =(app_measurementViewSource.View.CurrentItem as app_measurement).id_measurement;
-                        _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
+                        foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                        {
+                            production_execution_dimension production_execution_dimension = new production_execution_dimension();
+                            production_execution_dimension.id_dimension = item_movement_dimension.id_dimension;
+                            production_execution_dimension.value = item_movement_dimension.value;
+                            production_execution_dimension.id_measurement = (app_measurementViewSource.View.CurrentItem as app_measurement).id_measurement;
+                            _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
+                        } 
                     }
+             
                     production_order_detail.production_execution_detail.Add(_production_execution_detail);
                 }
            // }

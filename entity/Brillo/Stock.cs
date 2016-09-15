@@ -110,16 +110,20 @@ namespace entity.Brillo
         private List<StockList> GenerateList(DataTable dt)
         {
             List<StockList> StockList = new List<StockList>();
-            foreach (DataRow DataRow in dt.Select("QtyBalance > 0"))
+            if (dt.Rows.Count>0)
             {
-                StockList Stock = new StockList();
-                Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
-                Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
-                Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
-                Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                foreach (DataRow DataRow in dt.Select("QtyBalance > 0"))
+                {
+                    StockList Stock = new StockList();
+                    Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
+                    Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
+                    Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
+                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
 
-                StockList.Add(Stock);
+                    StockList.Add(Stock);
+                }
             }
+           
             return StockList;
         }
     }

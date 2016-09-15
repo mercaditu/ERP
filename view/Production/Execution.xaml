@@ -131,7 +131,7 @@
             <Grid Grid.Column="0" Grid.Row="1" DataContext="{StaticResource production_order_detailViewSource}">
                 <Grid.Resources >
                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
-                                              ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSix}}">
+                                              ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                                HorizontalAlignment="Stretch"
@@ -143,7 +143,7 @@
                                                QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
-                <cntrl:ExtendedTreeView x:Name="treeSupply" ItemsSource="{Binding}" SelectedItemChanged="treeSupply_SelectedItemChanged">
+                <cntrl:ExtendedTreeView x:Name="treeSupply" ItemsSource="{Binding}" SelectedItemChanged="treeProduct_SelectedItemChanged">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="True" />
@@ -186,6 +186,11 @@
                 </StackPanel>
                 <!-- RawMaterial -->
                 <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8" IsEnabled="{Binding SelectedItem, ElementName=treeProduct, Converter={StaticResource Type2Enable}}">
+                        <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
+                        <TextBox x:Name="txtraw" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
+                        <Button x:Name="btnInsert_Raw" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
+                    </StackPanel>
                     <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True"  IsReadOnly="True" CanUserAddRows="False"
                                                       ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 

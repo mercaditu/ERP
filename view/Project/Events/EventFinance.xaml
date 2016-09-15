@@ -59,147 +59,27 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <!--<StackPanel Grid.Column="1" Grid.Row="1" Background="White"  >
-          
-            <Grid>
-                <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
-               
-            </Grid>
-            <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 
-                                  Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id_condition"
-                                SelectionChanged="cbxCondition_SelectionChanged">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-            </ComboBox>
-            <Grid>
-                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
-              
-            </Grid>
-            <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract" 
-                          DisplayMemberPath="name" SelectedValuePath="id_contract">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-            </ComboBox>
-            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="4,0,340,0"/>
-           
-        </StackPanel>-->
-        
         <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid>
-                <Grid.Resources>
-
-                    <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
-                                              ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay}">
-                        <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
-                                                                   Converter={StaticResource Status2ColorConverter}}" 
-                                             IsEnabled="{Binding Path=., Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
-                                                                   Converter={StaticResource salesorderdetailtoEnable}}" 
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
-                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             TaskName="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
-                        
-                    </HierarchicalDataTemplate>
-                </Grid.Resources>
-             
-                <TextBlock Style="{StaticResource TextAreaH2}" Margin="40,16,36,0" 
-                           Text="{Binding project.name, FallbackValue=ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                           HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
-
-                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,22"  FontSize="16"
-                              VerticalAlignment="Top" HorizontalAlignment="Left"
-                              Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
-                              Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
-                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,60,0,0" ItemsSource="{Binding}" 
-                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
-                                        ScrollViewer.CanContentScroll="True"   >
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_ProjectInvocie, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-
-                    <TreeView.ItemsPanel>
-                        <ItemsPanelTemplate >
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </TreeView.ItemsPanel>
-                </cntrl:ExtendedTreeView>
-            </Grid>
-
-            <StackPanel Background="WhiteSmoke" Grid.Column="2">
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
-                <TextBlock Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
-                           Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
-                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
-                    <StackPanel x:Name="stpcode" >
-                        <!--<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding}">
-
-                            --><!--<Label Content="" Style="{StaticResource ico_Label}"/>
-                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
-                                    <Hyperlink >
-                                        <Run Text="{lex:Loc SalesOrder}" />
-                                    </Hyperlink>
-                            </TextBlock>--><!--
-                        </StackPanel>
-                        <ItemsControl ItemsSource="{Binding }" Margin="0">
-                            --><!-- host the items generated by this ItemsControl in a grid --><!--
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            --><!-- render each bound item using a TextBlock--><!--
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
-                                    <Hyperlink PreviewMouseUp="salesorder_PreviewMouseUp" Tag="{Binding sales_detail.sales_order}">
-                                        <Run  Text="{Binding sales_detail.id_sales_order}" />
-                                    </Hyperlink>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
-                        <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource Projectfinance}" >
-                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_exe"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-                      
-
-                        <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
-
-                       
-                        <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-            
+            <TabControl>
+                <TabItem Header="Event">
+                    <Grid>
+                        <DataGrid>
+                            <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
+                        </DataGrid>
+                        <Button Content="Calculate Selling Price" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource btn_green}"/>
+                        <Button Content="Create Invoice" VerticalAlignment="Top" Style="{StaticResource btn_green}"/>
+                        <ComboBox x:Name="sbxItem"/>
+                        <TextBox x:Name="tbxInvoiceTotal"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="SalesInvoice">
+                    <Grid>
+                        <DataGrid>
+                            <!-- Add all sales Invoice Headers values with GrandTotal. Show status of Invoice (Pending, Approved, Anull) -->
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                        appName="ProjectFinance" 

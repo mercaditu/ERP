@@ -233,7 +233,6 @@ namespace Cognitivo.Product
                                 stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                 DimensionList
                                 );
-                //item_movement_dest._parent = Items_InStockLIST.FirstOrDefault();
                 ProductMovementDB.item_movement.Add(item_movement_dest);
                 item_transfer.status = Status.Transfer.Approved;
             }

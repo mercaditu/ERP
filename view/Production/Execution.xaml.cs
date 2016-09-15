@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -7,11 +6,14 @@ using System.Data.Entity;
 using entity;
 using System;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
     public partial class Execution : Page
     {
+        public bool ViewAll { get; set; }
+
         ExecutionDB ExecutionDB = new ExecutionDB();
 
         //Production EXECUTION CollectionViewSource
@@ -31,7 +33,6 @@ namespace Cognitivo.Production
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
             item_dimensionViewSource.Source = ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             
@@ -58,64 +59,12 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            //filter_order(production_order_detaillViewSource, item.item_type.Product);
-
             dtpenddate.Text = DateTime.Now.ToString();
             dtpstartdate.Text = DateTime.Now.ToString();
+
+            //This prevents bringing multiple
+            filter_task();
         }
-
-        //public void filter_order(CollectionViewSource CollectionViewSource, item.item_type item_type)
-        //{
-        //    int id_production_order = 0;
-        //    if (production_orderViewSource.View.CurrentItem != null)
-        //    {
-        //        id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
-        //    }
-
-        //    if (CollectionViewSource != null)
-        //    {
-
-        //        List<production_order_detail> _production_order_detail =
-        //            ExecutionDB.production_order_detail.Where(a =>
-        //                   a.status == Status.Production.Approved
-                 
-        //                && a.id_production_order == id_production_order)
-        //                 .ToList();
-
-        //        if (_production_order_detail.Count() > 0)
-        //        {
-        //            CollectionViewSource.Source = _production_order_detail;
-        //        }
-        //        else
-        //        {
-        //            CollectionViewSource.Source = null;
-        //        }
-        //    }
-
-        //    if (CollectionViewSource != null)
-        //    {
-        //        if (CollectionViewSource.View != null)
-        //        {
-        //            CollectionViewSource.View.Filter = i =>
-        //            {
-
-        //                production_order_detail production_order_detail = (production_order_detail)i;
-        //                if (production_order_detail.parent == null)
-        //                {
-
-        //                    return true;
-
-        //                }
-        //                else { return false; }
-
-        //            };
-        //        }
-        //    }
-
-        //}
-
-  
-
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -241,17 +190,6 @@ namespace Cognitivo.Production
             production_order production_order = (production_order)projectDataGrid.SelectedItem;
             production_order.State = EntityState.Unchanged;
            
-        }
-
-        private void toolBar_btnDelete_Click(object sender)
-        {
-            //if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question)
-            //                == MessageBoxResult.Yes)
-            //{
-            //    OrderDB.production_execution.Remove((production_execution)production_executionViewSource.View.CurrentItem);
-            //    production_executionViewSource.View.MoveCurrentToFirst();
-            //}
-
         }
 
         private void toolBar_btnApprove_Click(object sender)
@@ -733,6 +671,41 @@ namespace Cognitivo.Production
         {
             crud_modal.Children.Clear();
             RefreshData();
+        }
+
+        private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filter_task();
+        }
+
+        public void filter_task()
+        {
+            if (production_order_detaillViewSource != null)
+            {
+                if (production_order_detaillViewSource.View != null)
+                {
+                    production_order_detaillViewSource.View.Filter = i =>
+                    {
+                        production_order_detail objproduction_order_detail = (production_order_detail)i;
+                        if (objproduction_order_detail.parent == null)
+                            return true;
+                        else
+                            return false;
+                    };
+                }
+            }
+        }
+
+        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewAll = !ViewAll;
+            RaisePropertyChanged("ViewAll");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

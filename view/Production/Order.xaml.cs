@@ -22,11 +22,7 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
-        /// <summary>
-        /// Property used by Open TreeView Button.
-        /// </summary>
         public bool ViewAll { get; set; }
-
       
         public Order()
         {
@@ -105,12 +101,6 @@ namespace Cognitivo.Production
             production_lineViewSource = (CollectionViewSource)FindResource("production_lineViewSource");
             production_lineViewSource.Source = OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            //item_transferViewSource = (CollectionViewSource)FindResource("item_transferViewSource");
-            //item_transferViewSource.Source = OrderDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-
-            //item_requestViewSource = (CollectionViewSource)FindResource("item_requestViewSource");
-            //item_requestViewSource.Source = OrderDB.item_request.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
             OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type==production_order.ProductionOrderTypes.Production).Load();
             production_orderViewSource.Source = OrderDB.production_order.Local;
@@ -127,7 +117,6 @@ namespace Cognitivo.Production
             {
                 production_orderproduction_order_detailViewSource.View.Filter = null;
                 filter_task();
-               // production_orderproduction_order_detailViewSource.View.Refresh();
             }
 
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
@@ -782,13 +771,11 @@ namespace Cognitivo.Production
             ViewAll = !ViewAll;
             RaisePropertyChanged("ViewAll");
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
        

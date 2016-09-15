@@ -214,11 +214,7 @@
                 </StackPanel>
                 <!-- Service -->
                 <StackPanel x:Name="pnlService"  DataContext="{StaticResource production_execution_detailViewSource}">
-                    <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" 
-                                 
-                                       VerticalAlignment="Top" Background="WhiteSmoke" 
-                                      >
-
+                    <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" VerticalAlignment="Top" Background="WhiteSmoke">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Coeficient}" />
                             <ComboBox x:Name="cmbcoefficient" Width="235" 

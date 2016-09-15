@@ -156,12 +156,12 @@ namespace Cognitivo.Menu
                     Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));                        
                 }
             }
-            catch (Exception ex) 
+            catch 
             {
-                Dispatcher.BeginInvoke((Action)(() => 
-                {
-                    MessageBox.Show(ex.InnerException.ToString(), "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
-                }));
+                //Dispatcher.BeginInvoke((Action)(() => 
+                //{
+                //    MessageBox.Show(ex.InnerException.ToString(), "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}));
             }
             finally
             {

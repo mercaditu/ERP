@@ -166,7 +166,12 @@ namespace Cognitivo.Production
 
                 contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeService);
-
+                production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
+                if (production_order_detail != null)
+                {
+                    production_execution_detailServiceViewSource.Source =  ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                    //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+                }
             }
         }
 
@@ -827,6 +832,12 @@ namespace Cognitivo.Production
             {
                 contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeServicecontract);
+                production_order_detail production_order_detail = (production_order_detail)treeServicecontract.SelectedItem;
+                if (production_order_detail != null)
+                {
+                    production_execution_detailServiceContractViewSource.Source = ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                    //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
+                }
             }
         }
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

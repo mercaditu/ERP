@@ -73,7 +73,7 @@ namespace entity.Brillo
                     string hash = StringCipher.Encrypt(_Seats, _Passkey);
 
                     app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                    app_company.seats = hash;
+                    app_company.version = hash;
                     db.SaveChanges();
                 }
                 return true;

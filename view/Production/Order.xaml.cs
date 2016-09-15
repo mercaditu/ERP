@@ -618,6 +618,7 @@ namespace Cognitivo.Production
                 production_order.State = EntityState.Modified;
                 Update_request();
                 stpcode.IsEnabled = false;
+                toolBar.msgSaved(OrderDB.NumberOfRecords);
             }
         }
 

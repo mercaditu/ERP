@@ -17,13 +17,13 @@ namespace Cognitivo.Menu
         AppList appList = new AppList();
         MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
 
-        public bool SearchMode 
+        public bool SearchMode
         {
             get { return _SearchMode; }
             set
             {
                 tbxSearch.Focus();
-                _SearchMode = value; 
+                _SearchMode = value;
             }
         }
         private bool _SearchMode;
@@ -83,11 +83,11 @@ namespace Cognitivo.Menu
             cntrl.moduleIcon ico = sender as cntrl.moduleIcon;
 
             if (ico != null)
-            { 
+            {
                 _modName = ico.Tag.ToString();
                 //Check to see if other icon (not module) has been clicked.
                 lblModuleName.Content = (sender as cntrl.moduleIcon).ModuleName.ToString();
-                
+
                 //Get Icons
                 if (ico.Tag.ToString() == "Fav")
                 {
@@ -97,10 +97,10 @@ namespace Cognitivo.Menu
                 {
                     ListApps(_modName, true);
                 }
-                
+
             }
             else
-            { 
+            {
                 _modName = (sender as TextBlock).Tag.ToString();
                 rootWindow.Nav_Frame(_modName);
             }
@@ -126,39 +126,43 @@ namespace Cognitivo.Menu
                 foreach (DataRow app in appList.dtApp.Select(SearchBy, "namespace ASC"))
                 {
                     string _namespace = app["namespace"].ToString();
+                    //if (entity.CurrentSession.Version >= (entity.CurrentSession.Versions)app["Version"])
+                    //{
 
-                    if (arrNamespace.Contains(_namespace))
-                    {
-                        cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
-                        appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
-                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
 
-                        stck.Children.Add(appIcon);
-                    }
-                    else
-                    {
-                        stck = new StackPanel();
-                        Label lbl = new Label();
-                        Style style = Application.Current.FindResource("H2") as Style;
-                        lbl.Style = style;
-                        lbl.Foreground = Brushes.White;
-                        lbl.Effect = new DropShadowEffect
+                        if (arrNamespace.Contains(_namespace))
                         {
-                            ShadowDepth = 0,
-                            BlurRadius = 2
-                        };
+                            cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
+                            appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                            appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
 
-                        stck.Children.Add(lbl);
-                        var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
-                        cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
-                        appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
-                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+                            stck.Children.Add(appIcon);
+                        }
+                        else
+                        {
+                            stck = new StackPanel();
+                            Label lbl = new Label();
+                            Style style = Application.Current.FindResource("H2") as Style;
+                            lbl.Style = style;
+                            lbl.Foreground = Brushes.White;
+                            lbl.Effect = new DropShadowEffect
+                            {
+                                ShadowDepth = 0,
+                                BlurRadius = 2
+                            };
 
-                        stck.Children.Add(appIcon);
-                        wrapApps.Children.Add(stck);
+                            stck.Children.Add(lbl);
+                            var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
+                            cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
+                            appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                            appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
 
-                        arrNamespace.Add(_namespace);
-                    }
+                            stck.Children.Add(appIcon);
+                            wrapApps.Children.Add(stck);
+
+                            arrNamespace.Add(_namespace);
+                        }
+                    //}
                 }
             }
         }
@@ -181,46 +185,49 @@ namespace Cognitivo.Menu
             foreach (DataRow app in appList.dtApp.Select(SearchBy, "namespace ASC"))
             {
                 string _namespace = app["namespace"].ToString();
-
-                if (arrNamespace.Contains(_namespace))
-                {
-                    cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
-                    appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
-                    appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
-                    if (appIcon.HasReport)
+                entity.CurrentSession.Versions a = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
+                //if (entity.CurrentSession.Version >= a)
+                //{
+                    if (arrNamespace.Contains(_namespace))
                     {
-                        appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);   
+                        cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
+                        appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+                        if (appIcon.HasReport)
+                        {
+                            appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                        }
+                        stck.Children.Add(appIcon);
                     }
-                    stck.Children.Add(appIcon);                    
-                }
-                else
-                {
-                    stck = new StackPanel();
-                    Label lbl = new Label();
-                    Style style = Application.Current.FindResource("H2") as Style;
-                    lbl.Style = style;
-                    lbl.Foreground = Brushes.White;
-                    lbl.Effect = new DropShadowEffect
+                    else
                     {
-                        ShadowDepth = 0,
-                        BlurRadius = 2
-                    };
+                        stck = new StackPanel();
+                        Label lbl = new Label();
+                        Style style = Application.Current.FindResource("H2") as Style;
+                        lbl.Style = style;
+                        lbl.Foreground = Brushes.White;
+                        lbl.Effect = new DropShadowEffect
+                        {
+                            ShadowDepth = 0,
+                            BlurRadius = 2
+                        };
 
-                    stck.Children.Add(lbl);
-                    var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
-                    cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
-                    appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
-                    appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
-                    if (appIcon.HasReport)
-                    {
-                        appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                        stck.Children.Add(lbl);
+                        var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
+                        cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
+                        appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+                        if (appIcon.HasReport)
+                        {
+                            appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                        }
+
+                        stck.Children.Add(appIcon);
+                        wrapApps.Children.Add(stck);
+
+                        arrNamespace.Add(_namespace);
                     }
-                
-                    stck.Children.Add(appIcon);
-                    wrapApps.Children.Add(stck);
-
-                    arrNamespace.Add(_namespace);
-                }
+                //}
             }
         }
 

@@ -121,12 +121,10 @@ namespace entity
                                                  && x.password == Password
                                                  && x.id_company == Id_Company)
                                        .FirstOrDefault();
-                UserRole = User.security_role;
-
                 if (User != null)
                 {
-                    //Set the User
                     Id_User = User.id_user;
+                    UserRole = ctx.security_role.Where(x => x.id_role == User.id_role).FirstOrDefault();
 
                     Properties.Settings.Default.user_Name = User.name_full;
                     Properties.Settings.Default.Save();

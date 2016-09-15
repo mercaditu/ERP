@@ -473,7 +473,7 @@
                     </Popup>
                 </StackPanel>
                 <StackPanel x:Name="stackpnlCost" Orientation="Horizontal" Margin="3,2,0,5" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <Label Content="A" Style="{StaticResource btn_Label}"/>
+                    <Label Content="$" Style="{StaticResource btn_Label}"/>
                     <TextBlock x:Name="tbCost" VerticalAlignment="Center">
                             <Hyperlink x:Name="hrefCost" Click="hrefCost_Click"><Run Text="{lex:Loc Cost}"/></Hyperlink></TextBlock>
 

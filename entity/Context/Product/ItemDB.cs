@@ -61,12 +61,14 @@ namespace entity
                         item.timestamp = DateTime.Now;
                         item.State = EntityState.Unchanged;
                         Entry(item).State = EntityState.Added;
+                        item.IsSelected = false;
                     }
                     else if (item.State == EntityState.Modified)
                     {
                         item.timestamp = DateTime.Now;
                         item.State = EntityState.Unchanged;
                         Entry(item).State = EntityState.Modified;
+                        item.IsSelected = false;
                     }
                     NumberOfRecords += 1;
                 }

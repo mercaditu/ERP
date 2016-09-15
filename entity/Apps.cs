@@ -279,19 +279,9 @@ namespace entity
             [LocalizedDescription("DeliveryByCustomer")]
             DeliveryByCustomer = 105,
 
-            [LocalizedDescription("SalesOrderSummary")]
-            SalesOrderSummary = 113,
-            [LocalizedDescription("SalesBudgetSummary")]
-            SalesBudgetSummary = 114,
             [LocalizedDescription("SalesVATDetail")]
             SalesVATDetail = 119,
 
-            [LocalizedDescription("PurchaseTenderSummary")]
-            PurchaseTenderSummary = 115,
-            [LocalizedDescription("PurchaseOrderSummary")]
-            PurchaseOrderSummary = 116,
-            [LocalizedDescription("PurchaseInvoiceSummary")]
-            PurchaseInvoiceSummary = 117,
             [LocalizedDescription("PurchaseVATDetail")]
             PurchaseVATDetail = 118,
 

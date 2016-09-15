@@ -133,8 +133,7 @@ namespace Cognitivo.Menu
                     }
                 }
 
-
-                Cognitivo.Properties.Settings ViewSettings = new Properties.Settings();
+                Properties.Settings ViewSettings = new Properties.Settings();
                 CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
                 CurrentSession.Start(u, p);
 
@@ -166,8 +165,10 @@ namespace Cognitivo.Menu
             }
             finally
             {
-                Dispatcher.BeginInvoke((Action)(() => { this.Cursor = Cursors.Arrow; }));
-                Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
+                Dispatcher.BeginInvoke((Action)(() => {
+                    Cursor = Cursors.Arrow;
+                    progBar.IsIndeterminate = false;
+                }));
                 taskAuth = null;
             }
         }

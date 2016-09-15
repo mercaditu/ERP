@@ -780,15 +780,21 @@ namespace Cognitivo.Product
             }
         }
 
-       
-
         private void hrefCost_Click(object sender, RoutedEventArgs e)
         {
             item item = itemViewSource.View.CurrentItem as item;
-            entity.Brillo.ProductCost ProductCost = new entity.Brillo.ProductCost();
-            ProductCost.calc_SingleCost(item.item_product.FirstOrDefault());
-            
+            if (item != null)
+            {
+                if (item.item_product.FirstOrDefault() != null)
+                {
+                    entity.Brillo.ProductCost ProductCost = new entity.Brillo.ProductCost();
+                    ProductCost.calc_SingleCost(item.item_product.FirstOrDefault());
+                }
+                else
+                {
+                    toolBar.msgWarning("Only Products, RawMaterial, and Supplies can have Automatic Costs. Else enter manually.");   
+                }
+            }
         }
-
     }
 }

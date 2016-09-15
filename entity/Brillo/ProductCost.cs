@@ -26,23 +26,21 @@ namespace entity.Brillo
             }
 
         }
-        public void calc_SingleCost( item_product item_product)
+        public void calc_SingleCost(item_product item_product)
         {
-            using (db db = new db())
+            if (item_product != null)
             {
-                int itemproductId = item_product.id_item_product;
-                item_movement ItemMovement = db.item_movement.Where(x => x.credit > 0 && x.id_item_product == itemproductId).OrderByDescending(x => x.trans_date).Take(1).FirstOrDefault();
-                if (ItemMovement != null)
+                using (db db = new db())
                 {
-                    item_product.item.unit_cost = ItemMovement.item_movement_value.Sum(x => x.unit_value);
+                    int itemproductId = item_product.id_item_product;
+                    item_movement ItemMovement = db.item_movement.Where(x => x.credit > 0 && x.id_item_product == itemproductId).OrderByDescending(x => x.trans_date).Take(1).FirstOrDefault();
+
+                    if (ItemMovement != null)
+                    {
+                        item_product.item.unit_cost = ItemMovement.item_movement_value.Sum(x => x.unit_value);
+                    }
                 }
-               
             }
-
-
-
-
         }
     }
-
 }

@@ -30,13 +30,13 @@ namespace Cognitivo.Project
             template_designerproject_event_template_variableViewSource = FindResource("template_designerproject_event_template_variableViewSource") as CollectionViewSource;
 
             List<item_tag> item_tag = new List<item_tag>();
-            item_tag = ProjectTemplateDB.item_tag.Where(a => a.id_company == _settings.company_ID && a.is_active == true).ToList();
+            item_tag = ProjectTemplateDB.item_tag.Where(a => a.id_company == _settings.company_ID && a.is_active == true).OrderBy(x => x.name).ToList();
             CollectionViewSource item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
-            item_tagViewSource.Source = item_tag.OrderBy(x=>x.name);
+            item_tagViewSource.Source = item_tag;
             CollectionViewSource item_tagViewSourceForEvents = FindResource("item_tagViewSourceForEvents") as CollectionViewSource;
-            item_tagViewSourceForEvents.Source = item_tag.OrderBy(x => x.name);
+            item_tagViewSourceForEvents.Source = item_tag;
             CollectionViewSource item_tagViewSourceForPerson = FindResource("item_tagViewSourceForPerson") as CollectionViewSource;
-            item_tagViewSourceForPerson.Source = item_tag.OrderBy(x => x.name);
+            item_tagViewSourceForPerson.Source = item_tag;
         }
 
         #region ToolBarEvents

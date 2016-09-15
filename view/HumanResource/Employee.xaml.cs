@@ -1,9 +1,6 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,18 +29,13 @@ namespace Cognitivo.HumanResource
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _setting = new entity.Properties.Settings();
-
             employeeViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            await dbContext.contacts.Where(i => i.is_employee && i.is_active && i.id_company == _setting.company_ID).OrderBy(i => i.name).ToListAsync();
+            await dbContext.contacts.Where(i => i.is_employee && i.is_active && i.id_company == CurrentSession.Id_Company).OrderBy(i => i.name).ToListAsync();
             employeeViewSource.Source = dbContext.contacts.Local;
             contacthr_contractViewSource = (CollectionViewSource)FindResource("contacthr_contractViewSource");
             contacthr_familyViewSource = (CollectionViewSource)FindResource("contacthr_familyViewSource");
             contacthr_talent_detailViewSource = (CollectionViewSource)FindResource("contacthr_talent_detailViewSource");
             contacthr_educationViewSource = (CollectionViewSource)FindResource("contacthr_educationViewSource");
-            hr_positionViewSource = (CollectionViewSource)FindResource("hr_positionViewSource");
-            await dbContext.hr_position.ToListAsync();
-            hr_positionViewSource.Source = dbContext.hr_position.Local;
 
             app_departmentViewSource = (CollectionViewSource)FindResource("app_departmentViewSource");
             await dbContext.app_department.ToListAsync();
@@ -57,10 +49,15 @@ namespace Cognitivo.HumanResource
             await dbContext.app_location.ToListAsync();
             app_locationViewSource.Source = dbContext.app_location.Local;
 
+            CollectionViewSource hr_positionViewSource = FindResource("hr_position") as CollectionViewSource;
+            hr_positionViewSource.Source = dbContext.hr_position.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+
             cbxBloodtype.ItemsSource = Enum.GetValues(typeof(contact.BloodTypes));
             cbxmaritialstatus.ItemsSource = Enum.GetValues(typeof(contact.CivilStatus));
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
             cbxRelation.ItemsSource = Enum.GetValues(typeof(hr_family.Relationship));
+
+            cbxContractType.ItemsSource = Enum.GetValues(typeof(hr_contract.WorkTypes));
         }
 
         #region Contract Buttons

@@ -55,10 +55,10 @@ namespace Cognitivo.Project
             conditionViewSource.Source = CurrentSession.Get_Condition();
 
             CollectionViewSource contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-            contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && a.is_customer).ToListAsync();
+            contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && a.is_customer).OrderBy(x => x.name).ToListAsync();
 
             CollectionViewSource template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
-            template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
+            template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToListAsync();
 
             project_costingViewSource = FindResource("project_costingViewSource") as CollectionViewSource;
             await EventDB.project_event.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).LoadAsync();

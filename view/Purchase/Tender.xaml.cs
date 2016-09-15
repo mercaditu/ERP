@@ -107,7 +107,7 @@ namespace Cognitivo.Purchase
 
             cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseTenderDB.app_branch.Local;
 
-            await PurchaseTenderDB.app_department.Where(b => b.is_active && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
+            await PurchaseTenderDB.app_department.Where(b => b.is_active && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseTenderDB, entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -118,7 +118,7 @@ namespace Cognitivo.Purchase
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = CurrentSession.Get_Contract();
 
-            PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+            PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             CollectionViewSource app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
 
@@ -126,11 +126,11 @@ namespace Cognitivo.Purchase
             app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
 
             app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).AsNoTracking().LoadAsync();
+            await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_dimensionViewSource.Source = PurchaseTenderDB.app_dimension.Local;
 
             app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            await PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).AsNoTracking().LoadAsync();
+            await PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
         }
 

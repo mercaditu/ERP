@@ -49,7 +49,7 @@ namespace Cognitivo.HumanResource
             await dbContext.app_location.ToListAsync();
             app_locationViewSource.Source = dbContext.app_location.Local;
 
-            CollectionViewSource hr_positionViewSource = FindResource("hr_position") as CollectionViewSource;
+            CollectionViewSource hr_positionViewSource = FindResource("hr_positionViewSource") as CollectionViewSource;
             hr_positionViewSource.Source = dbContext.hr_position.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             cbxBloodtype.ItemsSource = Enum.GetValues(typeof(contact.BloodTypes));

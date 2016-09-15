@@ -357,7 +357,7 @@
                                             IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
                                     <StackPanel Orientation="Horizontal" Margin="0,4">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                        <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
+                                        <TextBox  x:Name="txtRaw" Width="128" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
 

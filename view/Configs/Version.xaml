@@ -60,6 +60,16 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="EnterPrice">
+                    <StackPanel>
+                        <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
+                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <StackPanel x:Name="stackEnterprice" Margin="8">
+
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </Grid>
         <Grid Grid.Row="2">

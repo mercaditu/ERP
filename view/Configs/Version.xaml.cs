@@ -61,6 +61,10 @@ namespace Cognitivo.Configs
                 {
                     version = entity.CurrentSession.Versions.Full;
                 }
+                else if (tabitem.Header.ToString() == "EnterPrice")
+                {
+                    version = entity.CurrentSession.Versions.Enterprise;
+                }
               
             }
         }

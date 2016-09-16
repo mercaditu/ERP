@@ -25,7 +25,10 @@ namespace entity.Brillo
                 int id_role = CurrentSession.UserRole.id_role;
                 string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
 
-                VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                if (_Hash != null)
+                {
+                    VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                }
             }
 
             if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey)

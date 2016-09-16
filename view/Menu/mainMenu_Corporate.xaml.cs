@@ -129,8 +129,6 @@ namespace Cognitivo.Menu
                     entity.CurrentSession.Versions a = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
                     if (entity.CurrentSession.Version >= a)
                     {
-
-
                         if (arrNamespace.Contains(_namespace))
                         {
                             cntrl.applicationIcon appIcon = appList.get_AppIcon(app);

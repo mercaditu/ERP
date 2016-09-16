@@ -47,7 +47,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,64">
 
             <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_select"
                                           IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>

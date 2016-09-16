@@ -43,7 +43,6 @@
 
         <CollectionViewSource x:Key="itemitem_productViewSource" Source="{Binding item_product, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}"/>
-        <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
@@ -53,7 +52,8 @@
 
         <CollectionViewSource x:Key="item_asset_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemitem_dimentionViewSource" Source="{Binding item_dimension, Source={StaticResource itemViewSource}}"/>
-        <CollectionViewSource x:Key="item_productViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_product}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}"/>
+
         <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
         <CollectionViewSource x:Key="hr_talentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_talent}, CreateList=True}"/>
     </Page.Resources>
@@ -269,7 +269,7 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Usage}" Visibility="{Binding SelectedIndex, FallbackValue=Visible, ConverterParameter=0, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
-                    <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
+                    <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" DataContext="{StaticResource itemViewSource}">
                         <Label Content="{lex:Loc Measurement}"  Style="{StaticResource input_label}"/>
                         <ComboBox Style="{StaticResource input_combobox}" 
                                     metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -279,29 +279,31 @@
                                     SelectedValue="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                             ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                             ValidatesOnDataErrors=True}" DisplayMemberPath="name" SelectedValuePath="id_measurement" />
-                        <Label Content="{lex:Loc ConversionFactor}"  Style="{StaticResource input_label}"/>
-                        <DataGrid x:Name="item_conversion_factorDataGrid" AutoGenerateColumns="False" Margin="8"
+                        <StackPanel DataContext="{StaticResource itemitem_productViewSource}">
+                            <Label Content="{lex:Loc Factor}"  Style="{StaticResource input_label}"/>
+                            <DataGrid x:Name="item_conversion_factorDataGrid" AutoGenerateColumns="False" Margin="8"
                                     IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                                     EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource itemitem_conversion_factorViewSource}}"  
                                     RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridComboBoxColumn DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn DisplayMemberPath="name" SelectedValuePath="id_measurement"  
                                                         ItemsSource="{Binding Source={StaticResource app_measurementViewSourceconvert}}"
                                                         SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Measurement}" Width="*"/>
-                                <DataGridTextColumn Binding="{Binding value}" Header="{lex:Loc Cognitivo:local:Value}" Width="100"/>
-                                <DataGridTemplateColumn Width="30" Header="">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                    <DataGridTextColumn Binding="{Binding value}" Header="{lex:Loc Cognitivo:local:Value}" Width="100"/>
+                                    <DataGridTemplateColumn Width="30" Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
 
                         <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                            <Label Content="{lex:Loc ByDimension}"  Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc Dimension}"  Style="{StaticResource input_label}"/>
                             <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
                                         EnableRowVirtualization="True" Height="Auto" Margin="8,4"
                                         ItemsSource="{Binding Source={StaticResource itemitem_dimentionViewSource}}"
@@ -324,36 +326,6 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <!--<Grid Visibility="Collapsed">
-                                <Label Content="{lex:Loc Properties}"  Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Label x:Name="AddProperty" Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddProperty_PreviewMouseUp" 
-                                           Style="{StaticResource btn_Label}"/>
-                                    <Label x:Name="EditProperty" Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditProperty_PreviewMouseUp" 
-                                           Style="{StaticResource btn_Label}"/>
-                                </StackPanel>
-                            </Grid>-->
-                            <!--<DataGrid x:Name="item_propertyDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
-                                      IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                                      EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Visibility="Collapsed"
-                                      ItemsSource="{Binding Source={StaticResource itemitem_propertyViewSource}}" Margin="16,2,16,16">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn DisplayMemberPath="name" SelectedValuePath="id_property" 
-                                                            IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                                                            ItemsSource="{Binding Source={StaticResource app_propertyViewSource}}" 
-                                                            SelectedValueBinding="{Binding id_property, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                            Header="{lex:Loc Cognitivo:local:Property}" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="*"/>
-                                    <DataGridTemplateColumn Width="30">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>-->
                         </StackPanel>
                     </StackPanel>
                 </TabItem>

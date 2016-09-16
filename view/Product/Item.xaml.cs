@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -285,7 +284,7 @@ namespace Cognitivo.Product
                 //mycntrl._item =item;
                 itemViewSource.View.Filter = i =>
                 {
-                    entity.item objitem = (item)i;
+                    item objitem = (item)i;
                     if (objitem.is_active == true)
                         return true;
                     else
@@ -300,7 +299,7 @@ namespace Cognitivo.Product
             {
                 item item = itemDataGrid.SelectedItem as item;
                 item.IsSelected = true;
-                item.State = System.Data.Entity.EntityState.Modified;
+                item.State = EntityState.Modified;
             }
             else
             {
@@ -311,9 +310,6 @@ namespace Cognitivo.Product
         private void toolBar_btnNew_Click(object sender)
         {
             item item = ItemDB.New();
-            //item_price _item_price = new item_price();
-
-            //item.item_price.Add(_item_price);
             ItemDB.items.Add(item);
 
             itemViewSource.View.Refresh();
@@ -371,31 +367,7 @@ namespace Cognitivo.Product
                         }
                     }
                 }
-                //Capital Resource
-                //else if (item.id_item_type == item.item_type.FixedAssets)
-                //{
-                //    if (item.item_asset.Count == 0)
-                //    {
-                //        item_asset _capital = new item_asset();
-                //        item.item_asset.Add(_capital);
-                //        if (itemitem_capitalViewSource.View != null)
-                //        {
-                //            itemitem_capitalViewSource.View.Refresh();
-                //            itemitem_capitalViewSource.View.MoveCurrentTo(_capital);
-                //        }
-
-                //    }
-                //    if (item.item_product.Count > 0)
-                //    {
-                //        List<item_product> records = item.item_product.ToList();
-                //        foreach (var record in records)
-                //        {
-                //            ItemDB.item_product.Remove(record);
-                //        }
-                //    }
-                //}
             }
-            //Product
         }
 
         private void toolBar_btnSave_Click(object sender)

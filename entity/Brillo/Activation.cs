@@ -22,7 +22,8 @@ namespace entity.Brillo
             using (db db = new db())
             {
                 string _Passkey = "^%*@$^$";
-                string _Hash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().version;
+                int id_role = CurrentSession.UserRole.id_role;
+                string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
 
                 VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
             }
@@ -102,8 +103,9 @@ namespace entity.Brillo
 
                     string hash = StringCipher.Encrypt(_Seats, _Passkey);
 
-                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                    app_company.version = hash;
+                    int id_role = CurrentSession.UserRole.id_role;
+                    security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                    security_role.version = hash;
                     db.SaveChanges();
                 }
                 return true;

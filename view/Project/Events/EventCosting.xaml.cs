@@ -27,10 +27,7 @@ namespace Cognitivo.Project
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         //Total Property
@@ -53,10 +50,7 @@ namespace Cognitivo.Project
 
             CollectionViewSource conditionViewSource = FindResource("conditionViewSource") as CollectionViewSource;
             conditionViewSource.Source = CurrentSession.Get_Condition();
-
-            CollectionViewSource contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-            contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && a.is_customer).OrderBy(x => x.name).ToListAsync();
-
+            
             CollectionViewSource template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
             template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToListAsync();
 
@@ -346,17 +340,7 @@ namespace Cognitivo.Project
         {
             EstimateCost();
         }
-
-        //private void project_costingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
-        //    if (project_costing != null && project_costing.contact != null)
-        //        contactComboBox.Text = project_costing.contact.name;
-        //    else
-        //        contactComboBox.Text = string.Empty;
-        //    EstimateCost();
-        //}
-
+        
         private void id_template_designerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (id_template_designerComboBox.SelectedItem != null)
@@ -668,7 +652,7 @@ namespace Cognitivo.Project
                     if (item != null && item.id_item > 0 && item.is_autorecepie)
                     {
                         project_task project_task = new project_task();
-                        project_task.status = Status.Project.Pending;
+                        project_task.status = Status.Project.Approved;
                         //project_task.project = project;
                         project_task.id_item = per_event_service.id_item;
                         project_task.item_description = per_event_service.item.name;
@@ -682,6 +666,8 @@ namespace Cognitivo.Project
                             project_task Subproject_task = new project_task();
 
                             Subproject_task.code = item_recepie_detail.item.name;
+                            Subproject_task.status = Status.Project.Approved;
+
                             Subproject_task.item_description = item_recepie_detail.item.name;
                             Subproject_task.id_item = item_recepie_detail.item.id_item;
                             Subproject_task.items = item_recepie_detail.item;
@@ -691,18 +677,14 @@ namespace Cognitivo.Project
                                 Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
                             }
 
-
-
                             project_task.child.Add(Subproject_task);
                         }
                         project.project_task.Add(project_task);
-
-
                     }
                     else
                     {
                         project_task project_task = new project_task();
-                        project_task.status = Status.Project.Pending;
+                        project_task.status = Status.Project.Approved;
                         //project_task.project = project;
                         project_task.id_item = per_event_service.id_item;
                         project_task.item_description = per_event_service.item.name;
@@ -710,27 +692,19 @@ namespace Cognitivo.Project
                         project_task.quantity_est = per_event_service.consumption;
                         project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Sales);
                         project.project_task.Add(project_task);
-
-
-
                     }
-
-
                 }
                 item _item = project_costing.item;
+
                 if (_item != null && _item.id_item > 0 && _item.is_autorecepie)
                 {
                     project_task _project_task = new project_task();
-                    _project_task.status = Status.Project.Pending;
-                    //_project_task.project = project;
+                    _project_task.status = Status.Project.Approved;
                     _project_task.id_item = project_costing.id_item;
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
                     _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
-
-
-
 
                     foreach (item_recepie_detail item_recepie_detail in _item.item_recepie.FirstOrDefault().item_recepie_detail)
                     {
@@ -740,34 +714,28 @@ namespace Cognitivo.Project
                         Subproject_task.item_description = item_recepie_detail.item.name;
                         Subproject_task.id_item = item_recepie_detail.item.id_item;
                         Subproject_task.items = item_recepie_detail.item;
+                        Subproject_task.status = Status.Project.Approved;
                         Subproject_task.RaisePropertyChanged("item");
+
                         if (item_recepie_detail.quantity > 0)
                         {
                             Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * _project_task.quantity_est;
                         }
-
-
-
+                        
                         _project_task.child.Add(Subproject_task);
                     }
                     project.project_task.Add(_project_task);
-
-
                 }
                 else
                 {
                     project_task _project_task = new project_task();
-                    _project_task.status = Status.Project.Pending;
-                    //_project_task.project = project;
+                    _project_task.status = Status.Project.Approved;
                     _project_task.id_item = project_costing.id_item;
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
                     _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
                     project.project_task.Add(_project_task);
-
-
-
                 }
 
                 project_costing.status = Status.Documents_General.Approved;
@@ -775,27 +743,7 @@ namespace Cognitivo.Project
                 EventDB.projects.Add(project);
                 EventDB.SaveChanges();
             }
-            //}
         }
-
-        //private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        contactComboBox._focusgrid = false;
-        //        contactComboBox.Text = ((contact)contactComboBox.Data).name;
-        //        contact contact = (contact)contactComboBox.Data;
-        //        get_ActiveRateXContact(ref contact);
-        //    }
-        //}
-
-        //private void contactComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    contactComboBox._focusgrid = false;
-        //    contactComboBox.Text = ((contact)contactComboBox.Data).name;
-        //    contact contact = (contact)contactComboBox.Data;
-        //    get_ActiveRateXContact(ref contact);
-        //}
 
         public void get_ActiveRateXContact(ref contact contact)
         {
@@ -805,7 +753,6 @@ namespace Cognitivo.Project
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
             {
                 cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.id_currency == app_currencyfx.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
-                //Convert.ToInt32(app_currencyfx.id_currencyfx);
             }
             else
             {
@@ -816,14 +763,11 @@ namespace Cognitivo.Project
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
             EventDB.Dispose();
         }
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-
-
             EstimateCost();
         }
         public class Event

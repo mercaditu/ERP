@@ -9,7 +9,8 @@
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
-        lex:LocalizeDictionary.DesignCulture="en-US"          xmlns:entity="clr-namespace:entity;assembly=entity"
+        lex:LocalizeDictionary.DesignCulture="en-US"         
+      xmlns:entity="clr-namespace:entity;assembly=entity"
       mc:Ignorable="d" 
      MinHeight="500" MinWidth="800"
 	Title="ContactSubscription" Loaded="Page_Loaded">
@@ -48,9 +49,14 @@
         </ListBox>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
-
-            <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_select"
+            <StackPanel Orientation="Horizontal">
+                <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_select"
                                           IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                <Label Content="Invoice Date" Style="{StaticResource input_label}"/>
+                <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"/>
+                <Button Content="Generate Invoice" Click="Button_Click" Style="{StaticResource btn_green}"/>
+            </StackPanel>
+          
             <DataGrid x:Name="contactcontact_subscriptionDataGrid" AutoGenerateColumns="False" Margin="8"
                               IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                               ItemsSource="{Binding Source={StaticResource contact_subscriptionViewSource}}" CanUserAddRows="False" 

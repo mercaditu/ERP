@@ -205,18 +205,23 @@ namespace Cognitivo.Production
 
         private async void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem_;
+            production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem;
             if (production_order_detail != null)
             {
                 if (production_order_detail.item.id_item_type == item.item_type.Product)
                 {
                     tabProduct.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    txtProduct.Text = (production_order_detail.quantity).ToString();
+
+                    //ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.RawMaterial)
                 {
                     tabRaw.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    txtraw.Text = (production_order_detail.quantity).ToString();
+
                     if (production_order_detail.project_task != null)
                     {
                         int _id_task = production_order_detail.project_task.id_project_task;
@@ -227,22 +232,26 @@ namespace Cognitivo.Production
                 else if (production_order_detail.item.id_item_type == item.item_type.FixedAssets)
                 {
                     tabFixedAsset.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    txtAsset.Text = (production_order_detail.quantity).ToString();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Supplies)
                 {
                     tabSupplies.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    txtSupply.Text = (production_order_detail.quantity).ToString();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Service)
                 {
                     tabService.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                 {
                     tabServiceContract.IsSelected = true;
-                    production_execution_detailViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+                    txtServicecontract.Text = (production_order_detail.quantity).ToString();
                 }
                 else
                 {

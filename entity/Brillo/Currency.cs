@@ -120,14 +120,10 @@ namespace entity.Brillo
                                 return originalValue * rate;
                             }
                         }
-                        else
-                        {
-                            return originalValue;
-                        }
                     }
                 }
             }
-            return 0;
+            return originalValue;
         }
 
         private static decimal AwayFromDefault(decimal Rate, decimal OriginalValue, bool IsReverse)

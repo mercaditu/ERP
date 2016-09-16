@@ -10,7 +10,7 @@
                     GlowBrush="Black" WindowStartupLocation="CenterScreen"
                     RightWindowCommandsOverlayBehavior="Flyouts" MinHeight="550" MinWidth="750"
                     Style="{DynamicResource MyCleanWindowStyle}"
-                   Background="Transparent"
+                   Background="White"
                     Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
     <metro:MetroWindow.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>

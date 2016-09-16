@@ -76,7 +76,7 @@ namespace Cognitivo.Accounting
             sales_invoiceViewSource.Source = await db.sales_invoice.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToListAsync();
+                (x.status == entity.Status.Documents_General.Approved || x.status == entity.Status.Documents_General.Annulled)).ToListAsync();
         }
 
         public async void Get_Payment()
@@ -94,7 +94,7 @@ namespace Cognitivo.Accounting
             sales_returnViewSource.Source = await db.sales_return.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToListAsync();
+                (x.status == entity.Status.Documents_General.Approved || x.status == entity.Status.Documents_General.Annulled)).ToListAsync();
         }
 
         public async void Get_PurchaseReturnInvoice()

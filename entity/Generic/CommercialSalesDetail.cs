@@ -269,7 +269,24 @@ namespace entity
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual project_task project_task { get; set; }
-        public virtual item item { get; set; }
+        public virtual item item
+        {
+            get { return _item; }
+            set
+            {
+                if (_item != value)
+                {
+                    _item = value;
+
+                    if (_item != null && item_description == null)
+                    {
+                        item_description = _item.name;
+                        RaisePropertyChanged("item_description");
+                    }
+                }
+            }
+        }
+        private item _item;
 
         #endregion
 

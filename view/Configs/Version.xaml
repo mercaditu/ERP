@@ -19,7 +19,7 @@
             <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
-            <TabControl TabStripPlacement="Top">
+            <TabControl x:Name="TabVersion" TabStripPlacement="Top" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="LITE">
                     <StackPanel>
                         <Label Content="LITE" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
@@ -80,7 +80,7 @@
                         <Label Content="/" VerticalAlignment="Center" Style="{StaticResource H2}" />
                         <Label Content="{Binding ElementName=this, Path=UserTotal, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource H2}" />
                     </StackPanel>
-                    <Button Content="Buy More" Margin="8" VerticalAlignment="Center" Style="{StaticResource btn_green}" />
+                    <Button Content="Buy More" Margin="8" VerticalAlignment="Center" Style="{StaticResource btn_green}" Click="Button_Click" />
                 </StackPanel>
             </StackPanel>
         </Grid>

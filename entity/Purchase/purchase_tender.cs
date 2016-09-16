@@ -63,15 +63,15 @@ namespace entity
                 if (_id_range != value)
                 {
                     _id_range = value;
-                    
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                     {
                         using (db db = new db())
                         {
                             app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-                            if (app_document_range != null)
+                            if (_app_range != null)
                             {
-                                if (app_document_range.range_template.Contains("#Branch"))
+                                if (_app_range.range_template.Contains("#Branch"))
                                 {
                                     app_branch app_branch = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                                     if (app_branch != null)
@@ -80,7 +80,7 @@ namespace entity
                                     }
                                 }
 
-                                if (app_document_range.range_template.Contains("#Terminal"))
+                                if (_app_range.range_template.Contains("#Terminal"))
                                 {
                                     app_terminal app_terminal = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault();
                                     if (app_terminal != null)
@@ -89,7 +89,7 @@ namespace entity
                                     }
                                 }
 
-                                if (app_document_range.range_template.Contains("#User"))
+                                if (_app_range.range_template.Contains("#User"))
                                 {
                                     security_user security_user = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault();
                                     if (security_user != null)
@@ -98,7 +98,7 @@ namespace entity
                                     }
                                 }
 
-                                if (app_document_range.range_template.Contains("#Project"))
+                                if (_app_range.range_template.Contains("#Project"))
                                 {
                                     project projects = db.projects.Where(x => x.id_project == id_project).FirstOrDefault();
                                     if (projects != null)

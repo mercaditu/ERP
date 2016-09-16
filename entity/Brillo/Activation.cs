@@ -67,7 +67,37 @@ namespace entity.Brillo
             {
                 using (db db = new db())
                 {
-                    string _Seats = Version.ToString();
+                    string _Seats=CurrentSession.VersionsKey.Himayuddin_51.ToString();
+                    if (CurrentSession.Versions.Lite.ToString() == Version.ToString())
+                    {
+                        _Seats =CurrentSession.VersionsKey.Himayuddin_51.ToString();
+                    }
+                    else if (CurrentSession.Versions.Basic.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Bathua_102.ToString();
+                    }
+                    else if (CurrentSession.Versions.Medium.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Mankurad_153.ToString();
+                    }
+                    else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Dashehari_204.ToString();
+                    }
+                    else if (CurrentSession.Versions.Enterprise.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
+                    }
+                    else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
+                    }
+                    else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
+                    }
+                  
+                   
                     string _Passkey = "^%*@$^$";
 
                     string hash = StringCipher.Encrypt(_Seats, _Passkey);

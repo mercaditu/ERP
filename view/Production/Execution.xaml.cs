@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data.Entity;
 using entity;
+using System.Data;
 using System;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -452,12 +453,15 @@ namespace Cognitivo.Production
                 
                 if (result == MessageBoxResult.Yes)
                 {
+                    production_order_detail production_order_detail = treeOrder.SelectedItem_ as production_order_detail;
                     //production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
                     //DeleteDetailGridRow
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
                     production_execution_detail.State = EntityState.Deleted;
-
+                    production_order_detail.production_execution_detail.Remove(production_execution_detail);
+                    ExecutionDB.production_execution_detail.Remove(production_execution_detail);
+                    ExecutionDB.SaveChanges();
                     RefreshData();
                 }
             }
@@ -472,7 +476,7 @@ namespace Cognitivo.Production
             try
             {
                 production_orderViewSource.View.Refresh();
-                production_execution_detailViewSource.View.Refresh();
+                production_order_detaillViewSource.View.Refresh();
 
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 foreach (production_order_detail production_order_detail in production_order.production_order_detail)
@@ -574,7 +578,7 @@ namespace Cognitivo.Production
                     RefreshData();
                 }
 
-                Collection.Source = ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                Collection.Source = ExecutionDB.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail);
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
                
             }
@@ -622,7 +626,7 @@ namespace Cognitivo.Production
             }
                production_order_detail.production_execution_detail.Add(_production_execution_detail);
 
-            ExecutionDB.SaveChanges();
+           // ExecutionDB.SaveChanges();
         }
 
 
@@ -709,7 +713,7 @@ namespace Cognitivo.Production
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -96,7 +96,7 @@ namespace entity
         }
         private int? _id_range;
 
-
+        
         /// <summary>
         /// 
         /// </summary>

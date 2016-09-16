@@ -164,6 +164,10 @@ namespace entity
 
                     //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
                     Load_BasicData();
+                   
+            entity.Brillo.Activation Activation = new entity.Brillo.Activation();
+
+            Version = Activation.VersionDecrypt();
                 }
             }
         }

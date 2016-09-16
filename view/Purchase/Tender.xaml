@@ -228,7 +228,8 @@
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
                             		                ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                                    Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                         Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>

@@ -126,8 +126,8 @@ namespace Cognitivo.Menu
                 foreach (DataRow app in appList.dtApp.Select(SearchBy, "namespace ASC"))
                 {
                     string _namespace = app["namespace"].ToString();
-                    //if (entity.CurrentSession.Version >= (entity.CurrentSession.Versions)app["Version"])
-                    //{
+                    if (entity.CurrentSession.Version >= (entity.CurrentSession.Versions)app["Version"])
+                    {
 
 
                         if (arrNamespace.Contains(_namespace))
@@ -162,7 +162,7 @@ namespace Cognitivo.Menu
 
                             arrNamespace.Add(_namespace);
                         }
-                    //}
+                    }
                 }
             }
         }
@@ -186,8 +186,8 @@ namespace Cognitivo.Menu
             {
                 string _namespace = app["namespace"].ToString();
                 entity.CurrentSession.Versions a = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
-                //if (entity.CurrentSession.Version >= a)
-                //{
+                if (entity.CurrentSession.Version >= a)
+                {
                     if (arrNamespace.Contains(_namespace))
                     {
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
@@ -227,7 +227,7 @@ namespace Cognitivo.Menu
 
                         arrNamespace.Add(_namespace);
                     }
-                //}
+                }
             }
         }
 

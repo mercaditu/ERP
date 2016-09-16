@@ -565,5 +565,49 @@ namespace Cognitivo.Product
                 item_requestViewSource.View.Filter = null;
             }
         }
+
+        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        {
+            item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
+            if (item_request != null)
+            {
+                app_document_range app_document_range;
+
+                if (item_request.id_range != null)
+                {
+                    app_document_range = dbContext.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
+                }
+                else
+                {
+                    app_document app_document = new entity.app_document();
+                    app_document.id_application = entity.App.Names.RequestManagement;
+                    app_document.name = "RequestManagement";
+
+                    app_document_range = new app_document_range();
+                    app_document_range.use_default_printer = false;
+                    app_document_range.app_document = app_document;
+
+                }
+
+                entity.Brillo.Document.Start.Manual(item_request, app_document_range);
+            }
+            else
+            {
+                toolBar.msgWarning("Please select");
+            }
+        }
+
+        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chbx = sender as CheckBox;
+            if ((bool)chbx.IsChecked)
+            {
+                item_request_detailMovementDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                item_request_detailMovementDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            }
+        }
     }
 }

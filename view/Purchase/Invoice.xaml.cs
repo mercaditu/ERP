@@ -64,7 +64,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-            await PurchaseInvoiceDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
+            await PurchaseInvoiceDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;

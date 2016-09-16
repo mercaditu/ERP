@@ -444,6 +444,7 @@ namespace Cognitivo.Project
                             sales_budget_detail sales_budget_detail = new sales_budget_detail();
                             sales_budget_detail.sales_budget = sales_budget;
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
+                            sales_budget_detail.item_description = sales_budget_detail.item.name;
                             sales_budget_detail.id_item = project_event_variable.id_item;
                             sales_budget_detail.id_vat_group = project_event_variable.item.id_vat_group;
                             sales_budget_detail.quantity = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));

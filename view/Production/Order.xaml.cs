@@ -775,7 +775,7 @@ namespace Cognitivo.Production
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
        

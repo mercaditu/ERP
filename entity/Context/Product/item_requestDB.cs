@@ -366,6 +366,7 @@ namespace entity
 
                             item_request.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             item_request.RaisePropertyChanged("number");
+                            Brillo.Document.Start.Automatic(item_request, app_document_range);
                         }
                     }
                 }
@@ -388,6 +389,7 @@ namespace entity
                 }
             }
             orderdb.SaveChanges();
+           
             SaveChanges();
         }
     }

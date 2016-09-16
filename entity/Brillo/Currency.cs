@@ -67,8 +67,6 @@ namespace entity.Brillo
                     {
                         if (app_currencyfx.id_currency != app_currencyfxold.id_currency)
                         {
-
-
                             bool is_priority = true;
                             if (app_currencyfxold != null)
                             {
@@ -122,9 +120,11 @@ namespace entity.Brillo
                                 return originalValue * rate;
                             }
                         }
+                        else
+                        {
+                            return originalValue;
+                        }
                     }
-
-
                 }
             }
             return 0;

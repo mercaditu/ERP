@@ -203,7 +203,7 @@ namespace Cognitivo.Production
             }
         }
 
-        private async void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem;
             if (production_order_detail != null)

@@ -44,83 +44,90 @@ namespace entity.Brillo
 
             using (db db = new db())
             {
-                app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
-                app_currencyfxold = db.app_currencyfx.Where(x => x.id_currencyfx == old_app_currencyfx).FirstOrDefault();
-
-                if (app_currencyfx != null)
+                try
                 {
-                    if (Modules == App.Modules.Sales)
-                    {
-                        rate = app_currencyfx.buy_value;
-                    }
-                    else //Purchase Rates
-                    {
-                        rate = app_currencyfx.sell_value;
-                    }
+                    app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
+                    app_currencyfxold = db.app_currencyfx.Where(x => x.id_currencyfx == old_app_currencyfx).FirstOrDefault();
 
-                    if (app_currencyfx.app_currency == null)
+                    if (app_currencyfx != null)
                     {
-                        Rate_Previous = rate;
-                        return originalValue * rate;
-                    }
-                    else
-                    {
-                        if (app_currencyfx.id_currency != app_currencyfxold.id_currency)
+                        if (Modules == App.Modules.Sales)
                         {
-                            bool is_priority = true;
-                            if (app_currencyfxold != null)
-                            {
-                                if (app_currencyfxold.app_currency.is_priority)
-                                {
-                                    is_priority = app_currencyfxold.app_currency.is_priority;
-                                }
-                                else
-                                {
-                                    is_priority = false;
-                                }
-                            }
+                            rate = app_currencyfx.buy_value;
+                        }
+                        else //Purchase Rates
+                        {
+                            rate = app_currencyfx.sell_value;
+                        }
 
-                            if (app_currencyfx.app_currency.is_priority == false && is_priority == false)
+                        if (app_currencyfx.app_currency == null)
+                        {
+                            Rate_Previous = rate;
+                            return originalValue * rate;
+                        }
+                        else
+                        {
+                            if (app_currencyfx.id_currency != app_currencyfxold.id_currency)
                             {
-                                if (db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault() != null)
-                                {
-                                    //Convert Towards Defualt
-                                    decimal Value_InPriority = convert_Values(originalValue, old_app_currencyfx, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, App.Modules.Sales);
-                                    //Convert Away from Default
-                                    return convert_Values(Value_InPriority, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, id_app_currencyfx, App.Modules.Sales);
-                                }
-                            }
-                            else if (app_currencyfx.app_currency.is_priority == true) //Towards Default
-                            {
+                                bool is_priority = true;
                                 if (app_currencyfxold != null)
                                 {
-                                    if (Modules == App.Modules.Sales)
+                                    if (app_currencyfxold.app_currency.is_priority)
                                     {
-                                        rate = app_currencyfxold.buy_value;
+                                        is_priority = app_currencyfxold.app_currency.is_priority;
                                     }
-                                    else //Purchase Rates
+                                    else
                                     {
-                                        rate = app_currencyfxold.sell_value;
+                                        is_priority = false;
                                     }
                                 }
 
-                                if (app_currencyfx.is_reverse)
+                                if (app_currencyfx.app_currency.is_priority == false && is_priority == false)
                                 {
-                                    return originalValue * rate;
+                                    if (db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault() != null)
+                                    {
+                                        //Convert Towards Defualt
+                                        decimal Value_InPriority = convert_Values(originalValue, old_app_currencyfx, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, App.Modules.Sales);
+                                        //Convert Away from Default
+                                        return convert_Values(Value_InPriority, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, id_app_currencyfx, App.Modules.Sales);
+                                    }
                                 }
-                                return originalValue * (1 / rate);
-                            }
-                            else //Away from Default
-                            {
-                                Rate_Previous = rate;
-                                if (app_currencyfx.is_reverse)
+                                else if (app_currencyfx.app_currency.is_priority == true) //Towards Default
                                 {
+                                    if (app_currencyfxold != null)
+                                    {
+                                        if (Modules == App.Modules.Sales)
+                                        {
+                                            rate = app_currencyfxold.buy_value;
+                                        }
+                                        else //Purchase Rates
+                                        {
+                                            rate = app_currencyfxold.sell_value;
+                                        }
+                                    }
+
+                                    if (app_currencyfx.is_reverse)
+                                    {
+                                        return originalValue * rate;
+                                    }
                                     return originalValue * (1 / rate);
                                 }
-                                return originalValue * rate;
+                                else //Away from Default
+                                {
+                                    Rate_Previous = rate;
+                                    if (app_currencyfx.is_reverse)
+                                    {
+                                        return originalValue * (1 / rate);
+                                    }
+                                    return originalValue * rate;
+                                }
                             }
                         }
                     }
+                }
+                catch
+                {
+                    return originalValue * rate;
                 }
             }
             return originalValue;

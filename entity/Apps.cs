@@ -295,8 +295,6 @@ namespace entity
             SalesByVAT = 122,
             [LocalizedDescription("PurchaseByVAT")]
             PurchaseByVAT = 127,
-            [LocalizedDescription("ContactSubscription")]
-            ContactSubscription = 128,
 
             [LocalizedDescription("Version")]
             Version = 128

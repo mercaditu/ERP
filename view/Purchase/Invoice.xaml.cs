@@ -170,7 +170,6 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseInvoiceDB.NumberOfRecords);
-
             }
         }
 

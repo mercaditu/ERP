@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -34,35 +30,20 @@ namespace cntrl.Curd
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
+            entity.CancelChanges();
+            objCollectionViewSource.View.Refresh();
+
+            Grid parentGrid = Parent as Grid;
+            if (parentGrid != null)
             {
-                entity.CancelChanges();
-                objCollectionViewSource.View.Refresh();
-                Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
-                parentGrid.Visibility = System.Windows.Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                parentGrid.Visibility = Visibility.Hidden;
             }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    entity.db.SaveChanges();
-                    btnCancel_Click(sender, e);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.InnerException.ToString());
-            }
+            _entity.SaveChanges();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

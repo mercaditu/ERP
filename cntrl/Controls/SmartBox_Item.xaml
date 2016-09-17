@@ -58,9 +58,8 @@
                         <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                             <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
-                                <StackPanel Orientation="Vertical" Background="White">
-
-                                    <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc InStock}" 
+                            <StackPanel Orientation="Vertical" Background="White">
+                                <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc InStock}" 
                                       IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"/>
                                     <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=1}"
@@ -107,9 +106,9 @@
                 <DataGrid MaxWidth="512" MaxHeight="600" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
                           IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding Brand}" FontWeight="Bold" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" MinWidth="64" MaxWidth="128"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" MinWidth="128" MaxWidth="256"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding Brand}" FontWeight="Bold" MinWidth="64" MaxWidth="128"/>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Stock}" Binding="{Binding InStock, StringFormat=N2}" Width="32"/>
                     </DataGrid.Columns>
                 </DataGrid>

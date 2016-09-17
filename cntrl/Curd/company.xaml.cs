@@ -77,7 +77,8 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     objEntity.SaveChanges();
-                    if (CurrentSession.Id_Company==0)
+
+                    if (CurrentSession.Id_Company == 0)
                     {
                         CurrentSession.Id_Company = objEntity.db.app_company.FirstOrDefault().id_company;
                     }
@@ -85,6 +86,7 @@ namespace cntrl
                     entity.Properties.Settings.Default.company_ID = objEntity.db.app_company.FirstOrDefault().id_company;
                     entity.Properties.Settings.Default.company_Name = objEntity.db.app_company.FirstOrDefault().alias;
                     entity.Properties.Settings.Default.Save();
+
                     btnCancel_Click(sender, e);
                 }
             }

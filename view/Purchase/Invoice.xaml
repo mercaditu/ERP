@@ -340,12 +340,12 @@
                       VerticalScrollBarVisibility="Auto" Height="Auto"
                       AutoGenerateColumns="False" CanUserAddRows="False"
                       IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                      EnableRowVirtualization="True" 
+                      EnableRowVirtualization="True" EnableColumnVirtualization="True"
                       RowDetailsVisibilityMode="Collapsed"
                       ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
                       RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
                       InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
-                      CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding" >
+                      CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding" ScrollViewer.CanContentScroll="False">
                 <DataGrid.Resources>
                     <!-- the non-editing cell -->
                     <DataTemplate x:Key="CellTemplate">

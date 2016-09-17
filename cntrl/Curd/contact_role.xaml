@@ -20,9 +20,8 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#ffcc00">
+        <Grid Background="#ffcc00">
+            <Border Width="45" HorizontalAlignment="Left">
                 <Image Source="/cntrl;component/Images/Outline_White/group_filled-100.png" 
                        Height="32" Opacity="0.64"/>
             </Border>

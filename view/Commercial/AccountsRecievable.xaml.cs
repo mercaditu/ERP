@@ -13,7 +13,6 @@ namespace Cognitivo.Commercial
 {
     public partial class AccountsRecievable : Page, INotifyPropertyChanged
     {
-
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
@@ -26,25 +25,12 @@ namespace Cognitivo.Commercial
         #endregion
 
         CollectionViewSource payment_schedualViewSource, contactViewSource;
-        PaymentDB PaymentDB = new entity.PaymentDB();
-
-
-
+        PaymentDB PaymentDB = new PaymentDB();
+        
         public AccountsRecievable()
         {
             InitializeComponent();
         }
-
-        private void toolBar_btnApprove_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_btnAnull_Click(object sender)
-        {
-
-        }
-
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -63,8 +49,6 @@ namespace Cognitivo.Commercial
                         return false;
                     }
                 };
-
-
             }
             else
             {
@@ -74,8 +58,17 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-           cbxCondition.ItemsSource= CurrentSession.Get_Condition();
             load_Schedual();
+
+            foreach (app_condition app_condition in CurrentSession.Get_Condition())
+            {
+                Label lbl = new Label();
+                lbl.Content = app_condition.name;
+                lbl.Tag = app_condition.id_condition;
+                lbl.Foreground = SystemColors.HighlightBrush;
+                lbl.MouseUp += lblCondition_MouseUp;
+                stckFilter.Children.Add(lbl);
+            }
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
@@ -92,6 +85,39 @@ namespace Cognitivo.Commercial
 
             contactViewSource.Source = contactLIST;
           
+        }
+
+        private void lblCondition_MouseUp(object sender, EventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+
+            if (payment_schedualViewSource != null && contact != null)
+            {
+                Label lbl = sender as Label;
+                int ConditionID = Convert.ToInt32(lbl.Tag);
+
+                if (contact.id_contact > 0 && payment_schedualViewSource.View != null && ConditionID > 0)
+                {
+                    payment_schedualViewSource.View.Filter = i =>
+                    {
+                        payment_schedual payment_schedual = i as payment_schedual;
+                        if (payment_schedual.id_contact == contact.id_contact && 
+                        payment_schedual.AccountReceivableBalance > 0 && 
+                        payment_schedual.sales_invoice.id_condition == ConditionID)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    contactViewSource.View.Filter = null;
+                }
+            }
         }
 
         private  void load_Schedual()
@@ -220,7 +246,7 @@ namespace Cognitivo.Commercial
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
             Refinance.btnSave_Click += SaveRefinance_Click;
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Refinance);
         }
 
@@ -231,7 +257,7 @@ namespace Cognitivo.Commercial
             {
                 PaymentDB.SaveChanges();
                 crud_modal.Children.Clear();
-                crud_modal.Visibility = System.Windows.Visibility.Collapsed;
+                crud_modal.Visibility = Visibility.Collapsed;
             }
             load_Schedual();
         }
@@ -253,7 +279,7 @@ namespace Cognitivo.Commercial
                     VATWithholding.PaymentDB = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
                     VATWithholding.percentage = sales_invoice.vatwithholdingpercentage;
-                    crud_modal.Visibility = System.Windows.Visibility.Visible;
+                    crud_modal.Visibility = Visibility.Visible;
                     crud_modal.Children.Add(VATWithholding);
                 }
                 else
@@ -266,7 +292,7 @@ namespace Cognitivo.Commercial
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            PaymentDB = new entity.PaymentDB();
+            PaymentDB = new PaymentDB();
             load_Schedual();
             ListBox_SelectionChanged(sender, null);
         }
@@ -274,37 +300,7 @@ namespace Cognitivo.Commercial
         private void Rearrange_Click(object sender, RoutedEventArgs e)
         {
             PaymentDB.Rearrange_Payment();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            contact contact = contactViewSource.View.CurrentItem as contact;
-            int Condition=(int)cbxCondition.SelectedValue;
-            if (contact.id_contact > 0 && payment_schedualViewSource != null && Condition>0)
-            {
-                payment_schedualViewSource.View.Filter = i =>
-                {
-                    payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance > 0 && payment_schedual.sales_invoice.id_condition == Condition)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                };
-
-
-            }
-            else
-            {
-                contactViewSource.View.Filter = null;
-            }
-
-        }
-
-        
+        } 
     }
 }
 

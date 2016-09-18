@@ -64,6 +64,7 @@ namespace Cognitivo.Menu
         {
             TextBox tbx = sender as TextBox;
             string SearchBy = tbx.Text;
+
             if (SearchBy.Length >= 3)
             {
                 ListApps(tbx.Text, false);
@@ -72,8 +73,6 @@ namespace Cognitivo.Menu
             {
                 wrapApps.Children.Clear();
             }
-
-            //e.Handled = true;
         }
 
         private void get_Apps(object sender, EventArgs e)

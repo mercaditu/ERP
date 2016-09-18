@@ -102,8 +102,8 @@ namespace Cognitivo.Commercial
                     {
                         payment_schedual payment_schedual = i as payment_schedual;
                         if (payment_schedual.id_contact == contact.id_contact && 
-                        payment_schedual.AccountReceivableBalance > 0 && 
-                        payment_schedual.sales_invoice.id_condition == ConditionID)
+                            payment_schedual.AccountReceivableBalance > 0 && 
+                            payment_schedual.sales_invoice.id_condition == ConditionID)
                         {
                             return true;
                         }

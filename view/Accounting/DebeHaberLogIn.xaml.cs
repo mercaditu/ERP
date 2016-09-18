@@ -96,7 +96,7 @@ namespace Cognitivo.Accounting
         {
             try
             {
-                string server = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/registration/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
+                string server = Settings.Default.DebeHaberConnString + "/api/registration/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
                 var json = await DownloadPage(server);
                 string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).hash_integretion;
                 using (entity.db db = new entity.db())

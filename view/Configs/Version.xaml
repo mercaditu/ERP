@@ -18,7 +18,7 @@
             </Grid.Background>
             <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="White">
             <TabControl x:Name="TabVersion" TabStripPlacement="Top" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="LITE">
                     <StackPanel>
@@ -50,22 +50,12 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Full">
+                <TabItem Header="FULL">
                     <StackPanel>
                         <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
                         <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
                         <StackPanel x:Name="stackFULL" Margin="8">
-
-                        </StackPanel>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="EnterPrice">
-                    <StackPanel>
-                        <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
-                        <StackPanel x:Name="stackEnterprice" Margin="8">
 
                         </StackPanel>
                     </StackPanel>

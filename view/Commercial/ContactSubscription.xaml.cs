@@ -26,10 +26,10 @@ namespace Cognitivo.Commercial
             contactViewSource.Source = ContactDB.contacts.Local;
 
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = CurrentSession.Get_Contract(); // ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            appContractViewSource.Source = CurrentSession.Get_Contract();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();//ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
         }
 
         private async void LoadChildOnthread(int ContactID)

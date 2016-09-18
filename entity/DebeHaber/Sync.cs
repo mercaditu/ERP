@@ -56,62 +56,66 @@ namespace entity.DebeHaber
         //Fill Methods
         public void Fill_BySales(sales_invoice sales_invoice)
         {
-            this.Type = entity.DebeHaber.TransactionTypes.Sales;
-            this.TransDate = sales_invoice.trans_date;
-            this.CompanyName = sales_invoice.contact.name;
+            Type = TransactionTypes.Sales;
+            TransDate = sales_invoice.trans_date;
+            CompanyName = sales_invoice.contact.name;
+            BranchName = sales_invoice.app_branch != null ? sales_invoice.app_branch.name : "";
+            PaymentCondition = sales_invoice.app_contract != null ? (sales_invoice.app_contract.app_contract_detail != null ? sales_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
 
-            this.PaymentCondition = sales_invoice.app_contract != null ? (sales_invoice.app_contract.app_contract_detail != null ? sales_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
+            Gov_Code = sales_invoice.contact.gov_code;
+            Comment = sales_invoice.comment;
+            CurrencyName = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
 
-            this.Gov_Code = sales_invoice.contact.gov_code;
-            this.Comment = sales_invoice.comment;
-            this.CurrencyName = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
-
-            this.DocNumber = sales_invoice.number;
-            this.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
-            this.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+            DocNumber = sales_invoice.number;
+            DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
+            DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
         }
 
         public void Fill_BySalesReturn(sales_return sales_return)
         {
-            this.Type = entity.DebeHaber.TransactionTypes.SalesReturn;
-            this.TransDate = sales_return.trans_date;
-            this.CompanyName = sales_return.contact.name;
+            Type = TransactionTypes.SalesReturn;
+            TransDate = sales_return.trans_date;
+            CompanyName = sales_return.contact.name;
+            BranchName = sales_return.app_branch != null ? sales_return.app_branch.name : "";
 
-            this.Gov_Code = sales_return.contact.gov_code;
-            this.Comment = sales_return.comment;
-            this.CurrencyName = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
+            Gov_Code = sales_return.contact.gov_code;
+            Comment = sales_return.comment;
+            CurrencyName = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
 
-            this.DocNumber = sales_return.number;
-            this.DocCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "";
-            this.DocExpiry = (sales_return.app_document_range != null ? (DateTime)sales_return.app_document_range.expire_date : DateTime.Now);
+            DocNumber = sales_return.number;
+            DocCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "";
+            DocExpiry = (sales_return.app_document_range != null ? (DateTime)sales_return.app_document_range.expire_date : DateTime.Now);
         }
 
         public void Fill_ByPurchase(purchase_invoice purchase_invoice)
         {
-            this.Type = entity.DebeHaber.TransactionTypes.Purchase;
-            this.TransDate = purchase_invoice.trans_date;
-            this.CompanyName = purchase_invoice.contact.name;
-            this.Gov_Code = purchase_invoice.contact.gov_code;
-            this.Comment = purchase_invoice.comment;
-            this.CurrencyName = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
-            this.PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
-            this.DocNumber = purchase_invoice.number;
-            this.DocCode = purchase_invoice.code;
+            Type = TransactionTypes.Purchase;
+            TransDate = purchase_invoice.trans_date;
+            CompanyName = purchase_invoice.contact.name;
+            Gov_Code = purchase_invoice.contact.gov_code;
+            BranchName = purchase_invoice.app_branch != null ? purchase_invoice.app_branch.name : "";
+
+            Comment = purchase_invoice.comment;
+            CurrencyName = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
+            PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
+            DocNumber = purchase_invoice.number;
+            DocCode = purchase_invoice.code;
         }
 
         public void Fill_ByPurchaseReturn(purchase_return purchase_return)
         {
-            this.Type = entity.DebeHaber.TransactionTypes.SalesReturn;
-            this.TransDate = purchase_return.trans_date;
-            this.CompanyName = purchase_return.contact.name;
+            Type = TransactionTypes.SalesReturn;
+            TransDate = purchase_return.trans_date;
+            CompanyName = purchase_return.contact.name;
 
-            this.Gov_Code = purchase_return.contact.gov_code;
-            this.Comment = purchase_return.comment;
-            this.CurrencyName = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
+            Gov_Code = purchase_return.contact.gov_code;
+            BranchName = purchase_return.app_branch != null ? purchase_return.app_branch.name : "";
+            Comment = purchase_return.comment;
+            CurrencyName = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
 
-            this.DocNumber = purchase_return.number;
-            this.DocCode = purchase_return.app_document_range != null ? purchase_return.app_document_range.code : "";
-            this.DocExpiry = (purchase_return.app_document_range != null ? (DateTime)purchase_return.app_document_range.expire_date : DateTime.Now);
+            DocNumber = purchase_return.number;
+            DocCode = purchase_return.app_document_range != null ? purchase_return.app_document_range.code : "";
+            DocExpiry = (purchase_return.app_document_range != null ? (DateTime)purchase_return.app_document_range.expire_date : DateTime.Now);
         }
     }
 
@@ -134,20 +138,20 @@ namespace entity.DebeHaber
         //Methods
         public void Fill_BySales(sales_invoice_detail Detail, db db)
         {
-            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
-            this.Comment = Detail.item_description;
+            VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            UnitValue_WithVAT = Detail.SubTotal_Vat;
+            Comment = Detail.item_description;
 
-            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+            CostCenter CostCenter = new CostCenter();
 
             // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
             if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
             {
                 CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+                CostCenter.Type = CostCenterTypes.FixedAsset;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
             // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
             else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
@@ -160,7 +164,7 @@ namespace entity.DebeHaber
                 CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
             // Finally if all else fails, assume Item being sold is Merchendice.
             else
@@ -176,15 +180,15 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
                 }
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
         }
 
         public void Fill_BySalesReturn(sales_return_detail Detail, db db)
         {
-            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
-            this.Comment = Detail.item_description;
+            VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            UnitValue_WithVAT = Detail.SubTotal_Vat;
+            Comment = Detail.item_description;
 
             entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
 
@@ -195,7 +199,7 @@ namespace entity.DebeHaber
                 CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
             // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
             else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
@@ -208,7 +212,7 @@ namespace entity.DebeHaber
                 CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
             // Finally if all else fails, assume Item being sold is Merchendice.
             else
@@ -224,17 +228,17 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
                 }
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
         }
 
         public void Fill_ByPurchase(purchase_invoice_detail Detail, db db)
         {
-            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
-            this.Comment = Detail.item_description;
+            VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            UnitValue_WithVAT = Detail.SubTotal_Vat;
+            Comment = Detail.item_description;
 
-            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+            CostCenter CostCenter = new CostCenter();
 
             //Check if Purchase has Item. If not its an expense.
             if (Detail.item != null)
@@ -246,7 +250,7 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
                 // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
                 else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
@@ -259,7 +263,7 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
                 // Finally if all else fails, assume Item being sold is Merchendice.
                 else
@@ -276,7 +280,7 @@ namespace entity.DebeHaber
                     }
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
             }
             else
@@ -285,15 +289,15 @@ namespace entity.DebeHaber
                 CostCenter.Type = entity.DebeHaber.CostCenterTypes.Expense;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
         }
 
         public void Fill_ByPurchaseReturn(purchase_return_detail Detail, db db)
         {
-            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
-            this.Comment = Detail.item_description;
+            VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            UnitValue_WithVAT = Detail.SubTotal_Vat;
+            Comment = Detail.item_description;
 
             entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
 
@@ -307,7 +311,7 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
                 // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
                 else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
@@ -320,7 +324,7 @@ namespace entity.DebeHaber
                     CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
                 // Finally if all else fails, assume Item being sold is Merchendice.
                 else
@@ -337,7 +341,7 @@ namespace entity.DebeHaber
                     }
 
                     //Add CostCenter into Detail.
-                    this.CostCenter.Add(CostCenter);
+                    CostCenter.Add(CostCenter);
                 }
             }
             else
@@ -346,7 +350,7 @@ namespace entity.DebeHaber
                 CostCenter.Type = entity.DebeHaber.CostCenterTypes.Expense;
 
                 //Add CostCenter into Detail.
-                this.CostCenter.Add(CostCenter);
+                CostCenter.Add(CostCenter);
             }
         }
     }
@@ -377,31 +381,31 @@ namespace entity.DebeHaber
 
         public void FillPayments(entity.payment_schedual schedual)
         {
-            this.PaymentType = entity.DebeHaber.PaymentTypes.Normal;
+            PaymentType = entity.DebeHaber.PaymentTypes.Normal;
 
             if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.CreditNote)
             {
-                this.PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
+                PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
             }
             else if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.WithHoldingVAT)
             {
-                this.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
+                PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
             }
 
-            this.Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
-            this.CompanyName = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
-            this.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
-            this.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
-            this.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
-            this.DocNumber = schedual.payment_detail.payment.number;
+            Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
+            CompanyName = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
+            Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
+            DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
+            DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
+            DocNumber = schedual.payment_detail.payment.number;
 
-            this.Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
-            this.Value = schedual.payment_detail.value;
-            this.Currency = schedual.payment_detail.app_currencyfx.app_currency.name;
+            Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
+            Value = schedual.payment_detail.value;
+            Currency = schedual.payment_detail.app_currencyfx.app_currency.name;
 
-            this.TransDate = schedual.payment_detail.payment.trans_date;
-            this.Account = schedual.payment_detail.app_account.name;
-            this.Value = schedual.debit;
+            TransDate = schedual.payment_detail.payment.trans_date;
+            Account = schedual.payment_detail.app_account.name;
+            Value = schedual.debit;
         }
     }
 

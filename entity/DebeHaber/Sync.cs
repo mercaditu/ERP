@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using entity;
 
-namespace entity.DebeHaber
+namespace DebeHaber
 {
     public enum TransactionTypes { Sales = 1, Purchase = 2, SalesReturn = 3, PurchaseReturn = 4}
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
@@ -145,7 +146,7 @@ namespace entity.DebeHaber
             CostCenter CostCenter = new CostCenter();
 
             // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-            if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+            if (Detail.item.id_item_type == item.item_type.FixedAssets)
             {
                 CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                 CostCenter.Type = CostCenterTypes.FixedAsset;
@@ -154,14 +155,14 @@ namespace entity.DebeHaber
                 CostCenter.Add(CostCenter);
             }
             // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-            else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+            else if (Detail.item.id_item_type == item.item_type.Service || Detail.item.id_item_type == item.item_type.Task || Detail.item.id_item_type == item.item_type.ServiceContract)
             {
                 if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
                 { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                 else
                 { CostCenter.Name = Detail.item_description; }
 
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+                CostCenter.Type = CostCenterTypes.Income;
 
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -172,12 +173,12 @@ namespace entity.DebeHaber
                 if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
                 {
                     CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    CostCenter.Type = CostCenterTypes.Merchendice;
                 }
                 else
                 {
                     CostCenter.Name = "Mercaderia";
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    CostCenter.Type = CostCenterTypes.Merchendice;
                 }
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -190,26 +191,26 @@ namespace entity.DebeHaber
             UnitValue_WithVAT = Detail.SubTotal_Vat;
             Comment = Detail.item_description;
 
-            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+            CostCenter CostCenter = new CostCenter();
 
             // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-            if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+            if (Detail.item.id_item_type == item.item_type.FixedAssets)
             {
                 CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+                CostCenter.Type = CostCenterTypes.FixedAsset;
 
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
             }
             // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-            else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+            else if (Detail.item.id_item_type == item.item_type.Service || Detail.item.id_item_type == item.item_type.Task || Detail.item.id_item_type == item.item_type.ServiceContract)
             {
                 if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
                 { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                 else
                 { CostCenter.Name = Detail.item_description; }
 
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+                CostCenter.Type = CostCenterTypes.Income;
 
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -220,12 +221,12 @@ namespace entity.DebeHaber
                 if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
                 {
                     CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    CostCenter.Type = CostCenterTypes.Merchendice;
                 }
                 else
                 {
                     CostCenter.Name = "Mercaderia";
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    CostCenter.Type = CostCenterTypes.Merchendice;
                 }
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -244,23 +245,23 @@ namespace entity.DebeHaber
             if (Detail.item != null)
             {
                 // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+                if (Detail.item.id_item_type == item.item_type.FixedAssets)
                 {
                     CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+                    CostCenter.Type = CostCenterTypes.FixedAsset;
 
                     //Add CostCenter into Detail.
-                    CostCenter.Add(CostCenter);
+                    Detail.costce.Add(CostCenter);
                 }
                 // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-                else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+                else if (Detail.item.id_item_type == item.item_type.Service || Detail.item.id_item_type == item.item_type.Task || Detail.item.id_item_type == item.item_type.ServiceContract)
                 {
                     if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
                     { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                     else
                     { CostCenter.Name = Detail.item_description; }
 
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+                    CostCenter.Type = CostCenterTypes.Income;
 
                     //Add CostCenter into Detail.
                     CostCenter.Add(CostCenter);
@@ -271,12 +272,12 @@ namespace entity.DebeHaber
                     if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
                     {
                         CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                        CostCenter.Type = CostCenterTypes.Merchendice;
                     }
                     else
                     {
                         CostCenter.Name = "Mercaderia";
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                        CostCenter.Type = CostCenterTypes.Merchendice;
                     }
 
                     //Add CostCenter into Detail.
@@ -286,7 +287,7 @@ namespace entity.DebeHaber
             else
             {
                 CostCenter.Name = db.app_cost_center.Where(x => x.is_administrative).FirstOrDefault().name;
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Expense;
+                CostCenter.Type = CostCenterTypes.Expense;
 
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -299,29 +300,29 @@ namespace entity.DebeHaber
             UnitValue_WithVAT = Detail.SubTotal_Vat;
             Comment = Detail.item_description;
 
-            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+            CostCenter CostCenter = new CostCenter();
 
             //Check if Purchase has Item. If not its an expense.
             if (Detail.item != null)
             {
                 // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+                if (Detail.item.id_item_type == item.item_type.FixedAssets)
                 {
                     CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+                    CostCenter.Type = CostCenterTypes.FixedAsset;
 
                     //Add CostCenter into Detail.
                     CostCenter.Add(CostCenter);
                 }
                 // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-                else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+                else if (Detail.item.id_item_type == item.item_type.Service || Detail.item.id_item_type == item.item_type.Task || Detail.item.id_item_type == item.item_type.ServiceContract)
                 {
                     if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
                     { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                     else
                     { CostCenter.Name = Detail.item_description; }
 
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+                    CostCenter.Type = CostCenterTypes.Income;
 
                     //Add CostCenter into Detail.
                     CostCenter.Add(CostCenter);
@@ -332,12 +333,12 @@ namespace entity.DebeHaber
                     if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
                     {
                         CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                        CostCenter.Type = CostCenterTypes.Merchendice;
                     }
                     else
                     {
                         CostCenter.Name = "Mercaderia";
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                        CostCenter.Type = CostCenterTypes.Merchendice;
                     }
 
                     //Add CostCenter into Detail.
@@ -347,7 +348,7 @@ namespace entity.DebeHaber
             else
             {
                 CostCenter.Name = db.app_cost_center.Where(x => x.is_administrative).FirstOrDefault().name;
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Expense;
+                CostCenter.Type = CostCenterTypes.Expense;
 
                 //Add CostCenter into Detail.
                 CostCenter.Add(CostCenter);
@@ -379,17 +380,17 @@ namespace entity.DebeHaber
         public decimal Value { get; set; }
         public string Currency { get; set; }
 
-        public void FillPayments(entity.payment_schedual schedual)
+        public void FillPayments(payment_schedual schedual)
         {
-            PaymentType = entity.DebeHaber.PaymentTypes.Normal;
+            PaymentType = PaymentTypes.Normal;
 
-            if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.CreditNote)
+            if (schedual.payment_detail.payment_type.payment_behavior == payment_type.payment_behaviours.CreditNote)
             {
-                PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
+                PaymentType = PaymentTypes.CreditNote;
             }
-            else if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.WithHoldingVAT)
+            else if (schedual.payment_detail.payment_type.payment_behavior == payment_type.payment_behaviours.WithHoldingVAT)
             {
-                PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
+                PaymentType = PaymentTypes.VATWithHolding;
             }
 
             Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
@@ -405,7 +406,6 @@ namespace entity.DebeHaber
 
             TransDate = schedual.payment_detail.payment.trans_date;
             Account = schedual.payment_detail.app_account.name;
-            Value = schedual.debit;
         }
     }
 

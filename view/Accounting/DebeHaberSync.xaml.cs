@@ -12,9 +12,6 @@ using entity;
 
 namespace Cognitivo.Accounting
 {
-    /// <summary>
-    /// Loads ERP Data and serializes into Json for DebeHaber.
-    /// </summary>
     public partial class DebeHaberSync : Page
     {
         CollectionViewSource sales_invoiceViewSource;
@@ -46,7 +43,6 @@ namespace Cognitivo.Accounting
                 null,
                 TimeSpan.FromMinutes(1),
                 TimeSpan.FromMinutes(15));
-
         }
 
         private void fill()
@@ -239,7 +235,7 @@ namespace Cognitivo.Accounting
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
-                purchase_invoice.IsSelected = false;
+
                 Transactions.Commercial_Invoice.Add(Purchase);
 
                 try
@@ -255,6 +251,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
+                    purchase_invoice.IsSelected = false;
                     db.SaveChanges();
                 }
             }
@@ -302,7 +299,7 @@ namespace Cognitivo.Accounting
                 }
 
                 Transactions.Commercial_Invoice.Add(SalesReturn);
-                sales_return.IsSelected = true;
+
                 try
                 {
                     var Json = new JavaScriptSerializer().Serialize(Transactions);
@@ -316,6 +313,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
+                    sales_return.IsSelected = true;
                     db.SaveChanges();
                 }
             }
@@ -362,7 +360,6 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                purchase_return.IsSelected = true;
                 Transactions.Commercial_Invoice.Add(PurchaseReturn);
 
                 try
@@ -378,6 +375,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
+                    purchase_return.IsSelected = true;
                     db.SaveChanges();
                 }
             }
@@ -404,8 +402,6 @@ namespace Cognitivo.Accounting
                     Transactions.Payments.Add(Payment);
                 }
 
-                payments.IsSelected = true;
-
                 try
                 {
                     var Json = new JavaScriptSerializer().Serialize(Transactions);
@@ -418,6 +414,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
+                    payments.IsSelected = true;
                     db.SaveChanges();
                 }
             }
@@ -454,17 +451,13 @@ namespace Cognitivo.Accounting
                 }
 
                 Transactions.FixedAssetGroup.Add(FixedAssetGroup);
-                
+
                 try
                 {
                     var Json = new JavaScriptSerializer().Serialize(Transactions);
                     Send2API(Json);
-                    //payments.is_accounted = true;
                 }
-                catch (Exception)
-                {
-                    //payments.is_accounted = false;
-                }
+                catch { }
                 finally
                 {
                     db.SaveChanges();
@@ -616,11 +609,10 @@ namespace Cognitivo.Accounting
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
-                MessageBox.Show(result.ToString());
                 if (result.ToString().Contains("Error"))
                 {
-                    Exception ex = new Exception();
-                    throw ex;
+                    MessageBox.Show(result.ToString());
+                    file_create(Json.ToString(), "DebeHaber Error File" + DateTime.Now);
                 }
             }
         }
@@ -628,9 +620,9 @@ namespace Cognitivo.Accounting
         public void file_create(String Data, String filename)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Json.json";
-            if (!System.IO.File.Exists(path))
+            if (!File.Exists(path))
             {
-                using (System.IO.FileStream fs = System.IO.File.Create(path))
+                using (FileStream fs = File.Create(path))
                 {
                     using (var fw = new StreamWriter(fs))
                     {

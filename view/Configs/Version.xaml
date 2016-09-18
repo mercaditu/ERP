@@ -8,7 +8,7 @@
 	Title="Version">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="128"/>
+            <RowDefinition Height="127"/>
             <RowDefinition/>
             <RowDefinition Height="155"/>
         </Grid.RowDefinitions>

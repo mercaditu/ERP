@@ -51,13 +51,9 @@ namespace entity.Brillo
             {
                 return CurrentSession.Versions.Medium;
             }
-            else if (CurrentSession.VersionsKey.Dashehari_204.ToString() == VersionKey)
-            {
-                return CurrentSession.Versions.Full;
-            }
             else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey)
             {
-                return CurrentSession.Versions.Enterprise;
+                return CurrentSession.Versions.Full;
             }
             else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey)
             {
@@ -93,10 +89,6 @@ namespace entity.Brillo
                         _Seats = CurrentSession.VersionsKey.Mankurad_153.ToString();
                     }
                     else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Dashehari_204.ToString();
-                    }
-                    else if (CurrentSession.Versions.Enterprise.ToString() == Version.ToString())
                     {
                         _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
                     }

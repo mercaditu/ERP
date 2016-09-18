@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
 using System.Data.Entity;
+using entity;
 
 namespace Cognitivo.Accounting
 {
@@ -23,7 +24,7 @@ namespace Cognitivo.Accounting
         CollectionViewSource paymentViewSource;
         CollectionViewSource item_assetViewSource;
 
-        entity.db db = new entity.db();
+        db db = new db();
 
         string RelationshipHash = string.Empty;
 
@@ -38,7 +39,7 @@ namespace Cognitivo.Accounting
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
 
-            RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
+            RelationshipHash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
 
             var timer = new System.Threading.Timer(
                 e => btnData_Refresh(null, null),
@@ -74,51 +75,51 @@ namespace Cognitivo.Accounting
         {
             //x.Is Head replace with Is_Accounted = True.
             sales_invoiceViewSource.Source = await db.sales_invoice.Where(x =>
-                x.id_company == entity.CurrentSession.Id_Company &&
+                x.id_company == CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                (x.status == entity.Status.Documents_General.Approved || x.status == entity.Status.Documents_General.Annulled)).ToListAsync();
+                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
         }
 
         public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
             paymentViewSource.Source = await db.payments.Where(x =>
-                 x.id_company == entity.CurrentSession.Id_Company &&
+                 x.id_company == CurrentSession.Id_Company &&
                  x.is_accounted == false &&
-                 x.status == entity.Status.Documents_General.Approved).ToListAsync();
+                 x.status == Status.Documents_General.Approved).ToListAsync();
         }
 
         public async void Get_SalesReturn()
         {
             //x.Is Head replace with Is_Accounted = True.
             sales_returnViewSource.Source = await db.sales_return.Where(x =>
-                x.id_company == entity.CurrentSession.Id_Company &&
+                x.id_company == CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                (x.status == entity.Status.Documents_General.Approved || x.status == entity.Status.Documents_General.Annulled)).ToListAsync();
+                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
         }
 
         public async void Get_PurchaseReturnInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
             purchase_returnViewSource.Source = await db.purchase_return.Where(x =>
-                x.id_company == entity.CurrentSession.Id_Company &&
+                x.id_company == CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToListAsync();
+                x.status == Status.Documents_General.Approved).ToListAsync();
         }
 
         public async void Get_PurchaseInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
             purchase_invoiceViewSource.Source = await db.purchase_invoice.Where(x =>
-                x.id_company == entity.CurrentSession.Id_Company &&
+                x.id_company == CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToListAsync();
+                x.status == Status.Documents_General.Approved).ToListAsync();
         }
 
         private async void Get_ItemAsset()
         {
             await db.item_asset.Where(x =>
-                x.id_company == entity.CurrentSession.Id_Company &&
+                x.id_company == CurrentSession.Id_Company &&
                 x.item.is_active == true).ToListAsync();
             item_assetViewSource.Source = db.item_asset.Local;
         }
@@ -141,35 +142,35 @@ namespace Cognitivo.Accounting
 
         private void Sales_Sync()
         {
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions SalesError = new entity.DebeHaber.Transactions();
-
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions SalesError = new DebeHaber.Transactions();
+            
             //Loop through
-            foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
+            foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
-
+                DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
+                
                 //Loads Data from Sales
                 Sales.Fill_BySales(sales_invoice);
 
                 ///Loop through Details.
-                foreach (entity.sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
+                foreach (sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
                 {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
                     CommercialInvoice_Detail.Fill_BySales(Detail, db);
                     Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual)
+                foreach (payment_schedual schedual in sales_invoice.payment_schedual)
                 {
                     if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
-                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        DebeHaber.Payments Payments = new DebeHaber.Payments();
                         //Fill and Add Payments
                         Payments.FillPayments(schedual);
                         Sales.Payments.Add(Payments);
@@ -201,35 +202,35 @@ namespace Cognitivo.Accounting
 
         private void Purchase_Sync()
         {
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions PurchaseError = new entity.DebeHaber.Transactions();
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions PurchaseError = new DebeHaber.Transactions();
 
             //Loop through
-            foreach (entity.purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
+            foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                entity.DebeHaber.Commercial_Invoice Purchase = new entity.DebeHaber.Commercial_Invoice();
+                DebeHaber.Commercial_Invoice Purchase = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
                 Purchase.Fill_ByPurchase(purchase_invoice);
 
                 ///Loop through Details.
-                foreach (entity.purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
+                foreach (purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
                     CommercialInvoice_Detail.Fill_ByPurchase(Detail, db);
                     Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in purchase_invoice.payment_schedual)
+                foreach (payment_schedual schedual in purchase_invoice.payment_schedual)
                 {
                     if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
-                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        DebeHaber.Payments Payments = new DebeHaber.Payments();
                         //Fill and Add Payments
                         Payments.FillPayments(schedual);
                         Purchase.Payments.Add(Payments);
@@ -262,35 +263,35 @@ namespace Cognitivo.Accounting
         private void SalesReturn_Sync()
         {
             //remember to clean out those that are already accounted from SalesSync.
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions SalesReturnError = new entity.DebeHaber.Transactions();
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions SalesReturnError = new DebeHaber.Transactions();
 
             //Loop through
-            foreach (entity.sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected && x.is_accounted == false))// && x.is_accounted == false))
+            foreach (sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected && x.is_accounted == false))// && x.is_accounted == false))
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                entity.DebeHaber.Commercial_Invoice SalesReturn = new entity.DebeHaber.Commercial_Invoice();
+                DebeHaber.Commercial_Invoice SalesReturn = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
                 SalesReturn.Fill_BySalesReturn(sales_return);
 
                 ///Loop through Details.
-                foreach (entity.sales_return_detail Detail in sales_return.sales_return_detail)
+                foreach (sales_return_detail Detail in sales_return.sales_return_detail)
                 {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
                     CommercialInvoice_Detail.Fill_BySalesReturn(Detail, db);
                     SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_return.payment_schedual)
+                foreach (payment_schedual schedual in sales_return.payment_schedual)
                 {
                     if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
-                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        DebeHaber.Payments Payments = new DebeHaber.Payments();
                         //Fill and Add Payments
                         Payments.FillPayments(schedual);
                         SalesReturn.Payments.Add(Payments);
@@ -323,35 +324,35 @@ namespace Cognitivo.Accounting
         private void PurchaseReturn_Sync()
         {
             //remember to clean out those that are already accounted from SalesSync.
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions PurchaseReturnError = new entity.DebeHaber.Transactions();
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions PurchaseReturnError = new DebeHaber.Transactions();
 
             //Loop through
-            foreach (entity.purchase_return purchase_return in db.purchase_return.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            foreach (purchase_return purchase_return in db.purchase_return.Local.Where(x => x.IsSelected && x.is_accounted == false))
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                entity.DebeHaber.Commercial_Invoice PurchaseReturn = new entity.DebeHaber.Commercial_Invoice();
+                DebeHaber.Commercial_Invoice PurchaseReturn = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
                 PurchaseReturn.Fill_ByPurchaseReturn(purchase_return);
 
                 ///Loop through Details.
-                foreach (entity.purchase_return_detail Detail in purchase_return.purchase_return_detail)
+                foreach (purchase_return_detail Detail in purchase_return.purchase_return_detail)
                 {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
                     CommercialInvoice_Detail.Fill_ByPurchaseReturn(Detail, db);
                     PurchaseReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in purchase_return.payment_schedual)
+                foreach (payment_schedual schedual in purchase_return.payment_schedual)
                 {
                     if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
-                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        DebeHaber.Payments Payments = new DebeHaber.Payments();
                         //Fill and Add Payments
                         Payments.FillPayments(schedual);
                         PurchaseReturn.Payments.Add(Payments);
@@ -384,21 +385,21 @@ namespace Cognitivo.Accounting
 
         private void PaymentSync()
         {
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions PaymentError = new entity.DebeHaber.Transactions();
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions PaymentError = new DebeHaber.Transactions();
 
             //Loop through
-            foreach (entity.payment payments in db.payments.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            foreach (payment payments in db.payments.Local.Where(x => x.IsSelected && x.is_accounted == false))
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                foreach (entity.payment_detail payment_detail in payments.payment_detail.ToList())
+                foreach (payment_detail payment_detail in payments.payment_detail.ToList())
                 {
-                    entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
+                    DebeHaber.Payments Payment = new DebeHaber.Payments();
 
                     //Loads Data from Sales
-                    entity.payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                    payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
                     Payment.FillPayments(schedual);
                     Transactions.Payments.Add(Payment);
                 }
@@ -424,29 +425,29 @@ namespace Cognitivo.Accounting
 
         private void FixedAsset()
         {
-            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            entity.DebeHaber.Transactions FixedAssetError = new entity.DebeHaber.Transactions();
+            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
+            DebeHaber.Transactions FixedAssetError = new DebeHaber.Transactions();
 
-            foreach (entity.item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == entity.CurrentSession.Id_Company).ToList())
+            foreach (item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList())
             {
-                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;
 
-                entity.DebeHaber.FixedAssetGroup FixedAssetGroup = new entity.DebeHaber.FixedAssetGroup();
+                DebeHaber.FixedAssetGroup FixedAssetGroup = new DebeHaber.FixedAssetGroup();
                 FixedAssetGroup.Name = item_asset_group.name;
                 FixedAssetGroup.LifespanYears = (decimal)item_asset_group.depreciation_rate;
 
                 //Loop through
-                foreach (entity.item_asset item_asset in item_asset_group.item_asset.Where(x => x.IsSelected))
+                foreach (item_asset item_asset in item_asset_group.item_asset.Where(x => x.IsSelected))
                 {
-                    entity.DebeHaber.FixedAsset FixedAsset = new entity.DebeHaber.FixedAsset();
+                    DebeHaber.FixedAsset FixedAsset = new DebeHaber.FixedAsset();
                     FixedAsset.Name = item_asset.item.name;
                     FixedAsset.Code = item_asset.item.code;
                     FixedAsset.CurrentCost = (decimal)item_asset.current_value;
                     FixedAsset.PurchaseCost = (decimal)item_asset.purchase_value;
                     FixedAsset.PurchaseDate = (DateTime)item_asset.purchase_date;
                     FixedAsset.Quantity = 1;
-                    FixedAsset.CurrencyName = entity.CurrentSession.Currency_Default.name;
+                    FixedAsset.CurrencyName = CurrentSession.Currency_Default.name;
 
                     item_asset.IsSelected = false;
                     FixedAssetGroup.FixedAssets.Add(FixedAsset);
@@ -476,7 +477,7 @@ namespace Cognitivo.Accounting
         {
             if (sales_invoiceViewSource.View != null)
             {
-                foreach (entity.sales_invoice sales_invoice in sales_invoiceViewSource.View.OfType<entity.sales_invoice>().ToList())
+                foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.OfType<sales_invoice>().ToList())
                 {
                     sales_invoice.IsSelected = true;
                 }
@@ -489,7 +490,7 @@ namespace Cognitivo.Accounting
         {
             if (sales_invoiceViewSource.View != null)
             {
-                foreach (entity.sales_invoice sales_invoice in sales_invoiceViewSource.View.OfType<entity.sales_invoice>().ToList())
+                foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.OfType<sales_invoice>().ToList())
                 {
                     sales_invoice.IsSelected = false;
                 }
@@ -502,7 +503,7 @@ namespace Cognitivo.Accounting
         {
             if (sales_returnViewSource.View != null)
             {
-                foreach (entity.sales_return sales_return in sales_returnViewSource.View.OfType<entity.sales_return>().ToList())
+                foreach (sales_return sales_return in sales_returnViewSource.View.OfType<sales_return>().ToList())
                 {
                     sales_return.IsSelected = true;
                 }
@@ -514,7 +515,7 @@ namespace Cognitivo.Accounting
         {
             if (sales_returnViewSource.View != null)
             {
-                foreach (entity.sales_return sales_return in sales_returnViewSource.View.OfType<entity.sales_return>().ToList())
+                foreach (sales_return sales_return in sales_returnViewSource.View.OfType<sales_return>().ToList())
                 {
                     sales_return.IsSelected = false;
                 }
@@ -526,7 +527,7 @@ namespace Cognitivo.Accounting
         {
             if (purchase_invoiceViewSource.View != null)
             {
-                foreach (entity.purchase_invoice purchase_invoice in purchase_invoiceViewSource.View.OfType<entity.purchase_invoice>().ToList())
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceViewSource.View.OfType<purchase_invoice>().ToList())
                 {
                     purchase_invoice.IsSelected = true;
                 }
@@ -538,7 +539,7 @@ namespace Cognitivo.Accounting
         {
             if (purchase_invoiceViewSource.View != null)
             {
-                foreach (entity.purchase_invoice purchase_invoice in purchase_invoiceViewSource.View.OfType<entity.purchase_invoice>().ToList())
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceViewSource.View.OfType<purchase_invoice>().ToList())
                 {
                     purchase_invoice.IsSelected = false;
                 }
@@ -550,7 +551,7 @@ namespace Cognitivo.Accounting
         {
             if (purchase_returnViewSource.View != null)
             {
-                foreach (entity.purchase_return purchase_return in purchase_returnViewSource.View.OfType<entity.purchase_return>().ToList())
+                foreach (purchase_return purchase_return in purchase_returnViewSource.View.OfType<purchase_return>().ToList())
                 {
                     purchase_return.IsSelected = true;
                 }
@@ -563,7 +564,7 @@ namespace Cognitivo.Accounting
         {
             if (purchase_returnViewSource.View != null)
             {
-                foreach (entity.purchase_return purchase_return in purchase_returnViewSource.View.OfType<entity.purchase_return>().ToList())
+                foreach (purchase_return purchase_return in purchase_returnViewSource.View.OfType<purchase_return>().ToList())
                 {
                     purchase_return.IsSelected = false;
                 }
@@ -575,7 +576,7 @@ namespace Cognitivo.Accounting
         {
             if (paymentViewSource.View != null)
             {
-                foreach (entity.payment payment in paymentViewSource.View.OfType<entity.payment>().ToList())
+                foreach (payment payment in paymentViewSource.View.OfType<payment>().ToList())
                 {
                     payment.IsSelected = true;
                 }
@@ -588,7 +589,7 @@ namespace Cognitivo.Accounting
         {
             if (paymentViewSource.View != null)
             {
-                foreach (entity.payment payment in paymentViewSource.View.OfType<entity.payment>().ToList())
+                foreach (payment payment in paymentViewSource.View.OfType<payment>().ToList())
                 {
                     payment.IsSelected = false;
                 }

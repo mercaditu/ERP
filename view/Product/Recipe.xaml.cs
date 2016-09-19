@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
@@ -22,13 +15,11 @@ namespace Cognitivo.Product
     public partial class Recipe : Page
     {
         ProductRecipeDB ProductRecipeDB = new ProductRecipeDB();
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
         CollectionViewSource item_recepieViewSource, item_recepieitem_recepie_detailViewSource;
         int company_ID;
         public Recipe()
         {
             InitializeComponent();
-            company_ID = _setting.company_ID;
         }
 
         private void item_Select(object sender, EventArgs e)
@@ -150,7 +141,6 @@ namespace Cognitivo.Product
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -159,8 +149,6 @@ namespace Cognitivo.Product
                     dgvReceipeDetail.CancelEdit();
                     ProductRecipeDB.item_recepie_detail.Remove(e.Parameter as item_recepie_detail);
                     item_recepieitem_recepie_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-
                 }
             }
             catch (Exception ex)
@@ -168,24 +156,22 @@ namespace Cognitivo.Product
                 toolBar.msgError(ex);
             }
         }
-
      
       private void Button_Click(object sender, RoutedEventArgs e)
       {
           item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
           decimal Cost = 0;
           int id_currency = CurrentSession.CurrencyFX_Default.id_currency;
+
           foreach (item_recepie_detail item_recepie_detail in item_recepie.item_recepie_detail)
           {
-
-
-              if (item_recepie_detail.item.item_price.Where(x => x.id_currency == id_currency).FirstOrDefault() != null)
+              if (item_recepie_detail.item != null)
               {
-                  Cost += item_recepie_detail.item.item_price.Where(x => x.id_currency == id_currency).FirstOrDefault().valuewithVAT;
+                  Cost += (decimal)item_recepie_detail.item.unit_cost * item_recepie_detail.quantity;
               }
-
           }
-          lblCost.Content = "Total Cost is :" + Math.Round(Cost);
+
+          lblCost.Content = entity.Brillo.Localize.StringText("Cost") + " : " + Math.Round(Cost);
       }
     }
 }

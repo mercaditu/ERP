@@ -67,6 +67,8 @@ namespace cntrl
 
                 sales_invoice sales_invoice = new entity.sales_invoice();
                 sales_invoice.id_contact = (int)project.id_contact;
+                sales_invoice.timestamp = DateTime.Now;
+                sales_invoice.trans_date = DateTime.Now;
                 sales_invoice.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
 
                 sales_invoice.id_project = project.id_project;

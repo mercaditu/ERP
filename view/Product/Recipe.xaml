@@ -70,9 +70,10 @@
 						      IsChecked="{Binding items.is_autorecepie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Background="{StaticResource AccentColor_Brush}">
-                    <Label Style="{StaticResource input_label}" Content="Calculated Stock"/>
-                    <Button Content="Calculate Cost" Click="Button_Click" Height="25" Width="50" HorizontalAlignment="Left"/>
-                    <Label Content="Total Cost" x:Name="lblCost"/>
+                    <Label Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc QuickAction}"/>
+                    <TextBlock Style="{StaticResource text_Label}">
+                        <Hyperlink Click="btnCalculateCost_Click"><TextBlock x:Name="tbxCalculateCost" Text="Calculate Cost"/></Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
 
@@ -87,10 +88,12 @@
                         <DataGrid x:Name="dgvReceipeDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,5,0"
                                   ItemsSource="{Binding Source={StaticResource item_recepieitem_recepie_detailViewSource}}">
                             <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128"/>
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="auto"/>
+                                                Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" 
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="False" Width="*"/>
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

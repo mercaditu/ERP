@@ -156,8 +156,13 @@ namespace Cognitivo.Product
                 toolBar.msgError(ex);
             }
         }
-     
-      private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCalculateCost_Click(object sender, RoutedEventArgs e)
       {
           item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
           decimal Cost = 0;
@@ -171,7 +176,7 @@ namespace Cognitivo.Product
               }
           }
 
-          lblCost.Content = entity.Brillo.Localize.StringText("Cost") + " : " + Math.Round(Cost);
+          tbxCalculateCost.Text = entity.Brillo.Localize.StringText("Cost") + " : " + Math.Round(Cost) + " " + CurrentSession.Currency_Default.name;
       }
     }
 }

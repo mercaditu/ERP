@@ -387,12 +387,12 @@ namespace Cognitivo.Project
 
             id_conditionComboBox.SelectedIndex = -1;
             id_contractComboBox.SelectedIndex = -1;
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
         }
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            crud_modal.Visibility = System.Windows.Visibility.Hidden;
+            crud_modal.Visibility = Visibility.Hidden;
         }
 
         private void saveOrder_Click(object sender, RoutedEventArgs e)
@@ -403,7 +403,6 @@ namespace Cognitivo.Project
                 contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 app_condition app_condition = id_conditionComboBox.SelectedItem as app_condition;
                 app_contract app_contract = id_contractComboBox.SelectedItem as app_contract;
-
 
                 if (contact != null && app_condition != null && app_contract != null)
                 {
@@ -443,8 +442,17 @@ namespace Cognitivo.Project
                         {
                             sales_budget_detail sales_budget_detail = new sales_budget_detail();
                             sales_budget_detail.sales_budget = sales_budget;
-                            sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
+
+                            item item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
+
+                            if (item == null)
+                            {
+                                continue;
+                            }
+
+                            sales_budget_detail.item = item;
                             sales_budget_detail.id_item = project_event_fixed.id_item;
+                            sales_budget_detail.item_description = sales_budget_detail.item.name;
                             sales_budget_detail.id_vat_group = project_event_fixed.item.id_vat_group;
                             sales_budget_detail.quantity = project_event_fixed.consumption;
                             sales_budget_detail.UnitPrice_Vat = Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales));

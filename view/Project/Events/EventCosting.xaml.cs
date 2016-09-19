@@ -583,8 +583,6 @@ namespace Cognitivo.Project
 
         private void btnPlaceProject_Click(object sender, RoutedEventArgs e)
         {
-            //using (ProjectDB db = new ProjectDB())
-            //{
             project project = new project();
 
             contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();

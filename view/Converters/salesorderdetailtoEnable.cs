@@ -40,17 +40,10 @@ namespace Cognitivo.Converters
                    
                 }
             }
-            //else if (sales_order_detail.project_task.sales_invoice_detail.Count() >0)
-            //{
-            //    return false;
-               
-            //}
             else
             {
                 return true;
             }
-          
-            //throw new NotImplementedException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

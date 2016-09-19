@@ -104,8 +104,7 @@
                                               ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay}">
                         <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource Status2ColorConverter}}" 
-                                             IsEnabled="{Binding Path=., Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
-                                                                   Converter={StaticResource salesorderdetailtoEnable}}" 
+
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
@@ -114,19 +113,21 @@
                                              QuantityExec="{Binding quantity_exe, StringFormat=N2, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                         
                     </HierarchicalDataTemplate>
+                    <!--IsEnabled="{Binding Path=., Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource salesorderdetailtoEnable}}"-->
                 </Grid.Resources>
              
                 <TextBlock Style="{StaticResource TextAreaH2}" Margin="40,16,36,0" 
                            Text="{Binding project.name, FallbackValue=ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                            HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
 
-                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,22"  FontSize="16"
+                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,22" FontSize="16"
                               VerticalAlignment="Top" HorizontalAlignment="Left"
                               Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,60,0,0" ItemsSource="{Binding}" 
-                                        VirtualizingPanel.VirtualizationMode="Recycling"  VirtualizingPanel.IsVirtualizing="True" 
-                                        ScrollViewer.CanContentScroll="True"   >
+                                        VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" 
+                                        ScrollViewer.CanContentScroll="True">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="{Binding  ElementName=_ProjectInvocie, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

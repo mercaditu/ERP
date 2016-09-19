@@ -612,8 +612,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Sales);
-
+                        project_task.unit_cost_est = project_event_variable.item.unit_cost;
 
                         if (item.item_recepie.Count() > 0)
                         {
@@ -635,7 +634,6 @@ namespace Cognitivo.Project
                             }
                         }
 
-
                         project.project_task.Add(project_task);
                     }
                     else
@@ -647,7 +645,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Sales);
+                        project_task.unit_cost_est = project_event_variable.item.unit_cost;
                         project.project_task.Add(project_task);
                     }
                 }
@@ -664,8 +662,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Sales);
-
+                        project_task.unit_cost_est = per_event_service.item.unit_cost;
 
                         foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
@@ -696,7 +693,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Sales);
+                        project_task.unit_cost_est = per_event_service.item.unit_cost;
                         project.project_task.Add(project_task);
                     }
                 }
@@ -710,7 +707,7 @@ namespace Cognitivo.Project
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
-                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
+                    _project_task.unit_cost_est = project_costing.item.unit_cost;
 
                     foreach (item_recepie_detail item_recepie_detail in _item.item_recepie.FirstOrDefault().item_recepie_detail)
                     {
@@ -740,7 +737,7 @@ namespace Cognitivo.Project
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
-                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
+                    _project_task.unit_cost_est = project_costing.item.unit_cost;
                     project.project_task.Add(_project_task);
                 }
 

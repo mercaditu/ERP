@@ -194,7 +194,7 @@
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-							        ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
+							        ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" Margin="0,0,0,30"
 							        RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Dimension" 

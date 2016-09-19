@@ -221,17 +221,17 @@ namespace cntrl.Controls
 
             if (Get_Customers)
             {
-                predicate = (x => x.IsCustomer == true);
+                predicate = (x => x.IsCustomer == true && x.IsActive);
             }
 
             if(Get_Suppliers)
             {
-                predicate = (x => x.IsSupplier == true);
+                predicate = (x => x.IsSupplier == true && x.IsActive);
             }
 
             if (Get_Employees)
             {
-                predicate = (x => x.IsEmployee == true);
+                predicate = (x => x.IsEmployee == true && x.IsActive);
             }
            
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();

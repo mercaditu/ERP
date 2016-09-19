@@ -34,22 +34,23 @@ namespace Cognitivo.Configs
             TabItem tabitem = TabVersion.SelectedItem as TabItem;
             if (tabitem != null)
             {
-                if (tabitem.Header.ToString() == "LITE".ToString())
+                if (tabitem.Header.ToString().ToUpper() == "LITE".ToString())
                 {
                     version = CurrentSession.Versions.Basic;
                 }
-                if (tabitem.Header.ToString() == "BASIC".ToString())
+                if (tabitem.Header.ToString().ToUpper() == "BASIC".ToString())
                 {
                     version = CurrentSession.Versions.Basic;
                 }
-                else if (tabitem.Header.ToString() == "PyMES")
+                else if (tabitem.Header.ToString().ToUpper() == "PYMES")
                 {
                     version = CurrentSession.Versions.Medium;
                 }
-                else if (tabitem.Header.ToString() == "Full")
+                else if (tabitem.Header.ToString().ToUpper() == "FULL")
                 {
                     version = CurrentSession.Versions.Full;
                 }
+              
             }
         }
     }

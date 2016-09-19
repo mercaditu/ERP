@@ -52,9 +52,10 @@
 			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
+                    <cntrl:navList recordCode="{Binding contact.gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 
                     />
                 </DataTemplate>
             </ListBox.ItemTemplate>

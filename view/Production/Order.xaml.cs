@@ -345,16 +345,21 @@ namespace Cognitivo.Production
         {
             if (itemDataGrid.ItemsSource != null)
             {
+                production_order production_order = ((production_order)production_orderViewSource.View.CurrentItem);
                 List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
                 production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
 
                 if (production_order_detaillist.Count() > 0)
                 {
-                 
+                                     
                     ItemRequest = new cntrl.Curd.ItemRequest();
                     crud_modal_request.Visibility = Visibility.Visible;
                     ItemRequest.listdepartment = OrderDB.app_department.ToList();
                     ItemRequest.item_request_Click += item_request_Click;
+                    if (production_order.id_project>0 && production_order.project!=null )
+                    {
+                        ItemRequest.name = production_order.project.name;
+                    }
                     crud_modal_request.Children.Add(ItemRequest);
                 }
                 else

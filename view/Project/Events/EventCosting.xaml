@@ -193,6 +193,7 @@
                                                 <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Item"/>
                                                 <DataGridTextColumn Binding="{Binding adult_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="adult Consumption" />
                                                 <DataGridTextColumn Binding="{Binding child_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="Child Consumption" />
+                                                <DataGridTextColumn Binding="{Binding unit_price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="unit price" IsReadOnly="True" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                         <!--<ItemsControl x:Name="project_event_template_variable_detailsDataGrid"
@@ -251,8 +252,8 @@
                                                 <DataGridCheckBoxColumn Binding="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                 <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Tag"/>
                                                 <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Item"/>
-
                                                 <DataGridTextColumn Binding="{Binding consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="Consumption" />
+                                                <DataGridTextColumn Binding="{Binding unit_price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="unit price" IsReadOnly="True" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                         <!--<ItemsControl x:Name="services_per_event_detailsDataGrid"

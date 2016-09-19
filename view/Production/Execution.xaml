@@ -291,6 +291,9 @@
                             <DataGrid x:Name="dgService" Margin="4" ItemsSource="{Binding}" AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
+                                                    Binding="{Binding hr_time_coefficient.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Width="Auto"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Width="Auto"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" 

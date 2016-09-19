@@ -38,9 +38,48 @@ namespace entity
         [Required]
         public decimal quantity { get; set; }
 
-        public DateTime start_date { get; set; }
 
-        public DateTime end_date { get; set; }
+        public DateTime start_date
+        {
+            get { return _start_date; }
+            set
+            {
+                if (value != _start_date)
+                {
+                    _start_date = value;
+                }
+            }
+        }
+        private DateTime _start_date = DateTime.Now;
+
+        public DateTime end_date
+        {
+            get
+            {
+                return _end_date;
+            }
+            set
+            {
+                if (value != _end_date)
+                {
+                    _end_date = value;
+                    TimeSpan time = end_date.Subtract(start_date);
+
+                    _hour = (decimal)time.TotalMinutes / 60;
+                    RaisePropertyChanged("hours");
+
+                    if (id_time_coefficient > 0)
+                    {
+                        using (db db = new db())
+                        {
+                            quantity = Convert.ToDecimal(time.TotalHours) * db.hr_time_coefficient.Where(x => x.id_time_coefficient == id_time_coefficient).FirstOrDefault().coefficient;
+                        }
+                    }
+                }
+            }
+        }
+
+        private DateTime _end_date = DateTime.Now;
 
         public decimal unit_cost { get; set; }
 

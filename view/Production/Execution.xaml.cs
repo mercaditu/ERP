@@ -128,6 +128,7 @@ namespace Cognitivo.Production
                         if (cmbcoefficient.SelectedValue != null)
                         {
                             _production_execution_detail.id_time_coefficient = (int)cmbcoefficient.SelectedValue;
+                            _production_execution_detail.hr_time_coefficient = (hr_time_coefficient)cmbcoefficient.SelectedItem;
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {

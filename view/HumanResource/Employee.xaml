@@ -278,6 +278,10 @@
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                             <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                      Style="{StaticResource input_textbox}" TextWrapping="Wrap" Height="64"/>
+                            <Label Content="{lex:Loc Active}" Style="{StaticResource input_label}"/>
+                            <CheckBox
+                                IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource input_textbox}" />
                         </StackPanel>
                     </ScrollViewer>
 

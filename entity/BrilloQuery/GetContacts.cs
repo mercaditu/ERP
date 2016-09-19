@@ -29,7 +29,8 @@ namespace entity.BrilloQuery
                                 address as Address,
                                 is_customer as IsCustomer,
                                 is_supplier as IsSupplier,
-                                is_employee as IsEmployee
+                                is_employee as IsEmployee,
+                                is_active as IsActive
                                 from contacts
                                 where id_company = {0} and is_active = 1
                                 order by name
@@ -54,6 +55,7 @@ namespace entity.BrilloQuery
                     Contact.IsCustomer = Convert.ToBoolean(DataRow["IsCustomer"]);
                     Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
                     Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
+                    Contact.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
                   
                     List.Add(Contact);
                 }   
@@ -94,6 +96,7 @@ namespace entity.BrilloQuery
         public bool IsCustomer { get; set; }
         public bool IsSupplier { get; set; }
         public bool IsEmployee { get; set; }
+        public bool IsActive { get; set; }
      
     }
 }

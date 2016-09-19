@@ -186,6 +186,8 @@ namespace Cognitivo.Product
                 int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
                 toolBar.msgSaved(NumberofRecords);
                 item_transferViewSource.View.Refresh();
+                 item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+                item_transfer.State = EntityState.Modified;
             }
             catch (Exception ex)
             {

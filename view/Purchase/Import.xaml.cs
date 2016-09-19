@@ -492,6 +492,21 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Impex_CostDetailLIST != null)
+            {
+           
+                if (txtsearch.Text!="")
+                {
+                    impex_importDataGrid.ItemsSource = null;
+                    impex_importDataGrid.ItemsSource = Impex_CostDetailLIST.Where(x => x.item.ToUpper().Contains(txtsearch.Text.ToUpper()));
+                }
+              
+               
+            }
+        }
+
       
 
 

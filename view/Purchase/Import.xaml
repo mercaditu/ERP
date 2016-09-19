@@ -118,6 +118,11 @@
             
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True">
                 <TabItem Header="{lex:Loc Purchase}">
+                    <StackPanel>
+                    <Grid Grid.Column="1" HorizontalAlignment="Right">
+                        <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
+                        <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver"/>
+                    </Grid>
                     <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
                                 EnableRowVirtualization="True" Height="Auto" Margin="4"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
@@ -142,6 +147,7 @@
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Expenses}">
                     <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"

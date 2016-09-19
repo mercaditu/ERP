@@ -125,7 +125,7 @@
                               Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,60,0,0" ItemsSource="{Binding}" 
-                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                                        VirtualizingPanel.VirtualizationMode="Recycling"  VirtualizingPanel.IsVirtualizing="True" 
                                         ScrollViewer.CanContentScroll="True"   >
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
@@ -181,16 +181,7 @@
                         <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource Projectfinance}" >
-                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_exe"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+
                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
                                             IsCheckedChanged="toggleQuantity_CheckedChange"
                                             IsChecked="{Binding is_Executable, Source={StaticResource projectViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

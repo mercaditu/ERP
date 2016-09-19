@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\6.13\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\6.16\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>14</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>2.1.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -525,7 +525,6 @@
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -534,7 +533,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -543,7 +541,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -552,7 +549,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.cs">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -561,7 +557,6 @@
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.cs">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -570,7 +565,6 @@
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.Designer.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>

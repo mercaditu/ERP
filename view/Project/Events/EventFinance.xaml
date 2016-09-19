@@ -61,7 +61,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
-            <Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
 
             <TabControl>
                 <TabItem Header="{lex:Loc EventManagement}">
@@ -94,6 +93,8 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+            <Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
+
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                        appName="ProjectFinance" />

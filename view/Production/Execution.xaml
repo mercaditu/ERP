@@ -290,17 +290,17 @@
                             </WrapPanel>
                             <DataGrid x:Name="dgService" Margin="4" ItemsSource="{Binding}" AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" IsReadOnly="True" 
                                                     Binding="{Binding hr_time_coefficient.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Width="Auto"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Width="Auto"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" 
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" IsReadOnly="True"
                                                     Binding="{Binding start_date, Mode=TwoWay, 
                                                                       UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:g}}" 
                                                                       Width="Auto"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}"
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}" IsReadOnly="True"
                                                     Binding="{Binding end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                                                                       StringFormat={}{0:g}}" Width="Auto"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
@@ -386,7 +386,7 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                                        <controls:SmartBox_Contact x:Name="CmbServicecontract" Get_Employees="True" Width="226" 
+                                        <controls:SmartBox_Contact x:Name="CmbServicecontract" Get_Employees="True" Width="220" Margin="1"
                                                                    IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay}"
                                                                    Select="CmbServicecontract_Select"/>
                                     </StackPanel>
@@ -394,14 +394,17 @@
                                 <DataGrid x:Name="dgServiceContracthour" 
                                           ItemsSource="{Binding}" Margin="0,0,0,50" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" IsReadOnly="True" 
+                                                    Binding="{Binding hr_time_coefficient.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Width="Auto"/>
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Width="Auto"/>
-                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" 
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" IsReadOnly="True"
                                                     Binding="{Binding start_date, Mode=TwoWay, 
                                                                       UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:g}}" 
                                                                       Width="Auto"/>
-                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}" 
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}" IsReadOnly="True"
                                                     Binding="{Binding end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                                                                       StringFormat={}{0:g}}" Width="Auto"/>
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"

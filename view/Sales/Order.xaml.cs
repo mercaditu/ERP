@@ -28,10 +28,7 @@ namespace Cognitivo.Sales
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region DataLoad
@@ -338,16 +335,16 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item));
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, SalesSettings.AllowDuplicateItem));
                 }
                 sales_order.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_order sales_order, item item)
+        private void select_Item(sales_order sales_order, item item, bool AllowDuplicateItem)
         {
-            Settings SalesSettings = new Settings();
-            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
+            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.State = EntityState.Added;

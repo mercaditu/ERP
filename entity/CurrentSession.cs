@@ -21,8 +21,7 @@ namespace entity
             Himayuddin_51, //Lite
             Bathua_102,    //Basic
             Mankurad_153,  //Medium
-            Dashehari_204, //Full
-            Alphonso_255,  //Enterprise
+            Alphonso_255, //Full
             Gulabkhas_306, //PrintingPress
             Chausa_357     //EventManagement
         }

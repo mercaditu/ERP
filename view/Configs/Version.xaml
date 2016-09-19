@@ -60,12 +60,12 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="FULL">
+                <TabItem Header="Event">
                     <StackPanel>
-                        <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
+                        <Label Content="Event" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
                         <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
                         <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
-                        <StackPanel x:Name="stackFULL" Margin="8">
+                        <StackPanel x:Name="stackEvent" Margin="8">
 
                         </StackPanel>
                     </StackPanel>

@@ -61,31 +61,34 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
+            <Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
+
             <TabControl>
-                <TabItem Header="Event">
+                <TabItem Header="{lex:Loc EventManagement}">
                     <Grid>
                         <DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding unit_price_vat, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Price}" IsReadOnly="True"/>
+                                                    Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding unit_price_vat, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" 
+                                                    Header="{lex:Loc Cognitivo:local:Price}" CellStyle="{StaticResource Number_CellStyle}" Width="128" IsReadOnly="True"/>
                             </DataGrid.Columns>
                             <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
                         </DataGrid>
-
-                        <Button Content="Create Invoice" VerticalAlignment="Top" Style="{StaticResource btn_green}" Click="Button_Click"/>
-                    
                     </Grid>
                 </TabItem>
-                <TabItem Header="SalesInvoice">
+                <TabItem Header="{lex:Loc SalesInvoice}">
                     <Grid>
                         <DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Price}" IsReadOnly="True"/>
+                                                    Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding condition.name, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Header="{lex:Loc Cognitivo:local:Condition}" Width="128" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding number, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="64" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" 
+                                                    Header="{lex:Loc Cognitivo:local:Total}" Width="128" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -93,7 +96,6 @@
             </TabControl>
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                       appName="ProjectFinance" 
-                       btnSearch_Click="toolBar_btnSearch_Click"/>
+                       appName="ProjectFinance" />
     </Grid>
 </Page>

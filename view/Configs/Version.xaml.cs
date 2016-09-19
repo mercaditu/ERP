@@ -50,7 +50,6 @@ namespace Cognitivo.Configs
                 {
                     version = CurrentSession.Versions.Full;
                 }
-              
             }
         }
     }

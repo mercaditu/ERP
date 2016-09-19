@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Data.Entity;
 using entity;
-using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Controls;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Cognitivo.Commercial
 {
@@ -193,8 +191,6 @@ namespace Cognitivo.Commercial
             List<contact> ContactList = contactViewSource.View.OfType<contact>().ToList();
             foreach (contact Contact in ContactList)
             {
-
-
                 foreach (contact_subscription contact_subscription in Contact.contact_subscription.Where(x => x.start_date <= dtpTrans_Date.SelectedDate))
                 {
                     numofrecord += 1;
@@ -222,11 +218,8 @@ namespace Cognitivo.Commercial
                     sales_invoice_detail.id_vat_group = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault().id_vat_group;
                     sales_invoice_detail.id_item = (int)contact_subscription.id_item;
                     sales_invoice_detail.item_description = contact_subscription.item.name;
-                    sales_invoice_detail.quantity = (decimal)(contact_subscription.quantity == null ? 0M : contact_subscription.quantity);
-                    sales_invoice_detail.UnitPrice_Vat = (decimal)(contact_subscription.UnitPrice_Vat == null ? 0M : contact_subscription.UnitPrice_Vat);
-
-
-
+                    sales_invoice_detail.quantity = contact_subscription.quantity;
+                    sales_invoice_detail.UnitPrice_Vat = contact_subscription.UnitPrice_Vat;
 
 
                     sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);

@@ -8,8 +8,6 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Data;
-using System.Data.Entity.Validation;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Cognitivo.Sales
@@ -34,11 +32,11 @@ namespace Cognitivo.Sales
 
                 if (SalesSettings.FilterByBranch)
                 {
-                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Load();
+                    await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
                 }
                 else
                 {
-                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Load();
+                    await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
                 }
 
                 sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
@@ -60,7 +58,7 @@ namespace Cognitivo.Sales
                 }));
 
                 CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_Terminal);
+                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
                 app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
@@ -77,7 +75,6 @@ namespace Cognitivo.Sales
             sales_budget sales_budget = sales_budgetDataGrid.SelectedItem as sales_budget;
             if (sales_budget != null)
             {
-              //  sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 entity.Brillo.Document.Start.Manual(sales_budget, sales_budget.app_document_range);
             }
             else
@@ -253,17 +250,17 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_budget!= null)
                 {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item));
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, SalesSettings.AllowDuplicateItem));
                 }
+
                 sales_budget.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_budget sales_budget, item item)
+        private void select_Item(sales_budget sales_budget, item item, bool AllowDuplicateItem)
         {
-            Settings SalesSettings = new Settings();
-
-            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
+            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.State = EntityState.Added;
@@ -284,7 +281,6 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-              
                 sales_budgetsales_budget_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
             }));

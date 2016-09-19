@@ -426,19 +426,18 @@ namespace Cognitivo.Purchase
                     contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 }
             }
-
-            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact));
+            OrderSetting OrderSetting = new OrderSetting();
+            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems));
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate)
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
-            Cognitivo.Purchase.OrderSetting OrderSetting = new Cognitivo.Purchase.OrderSetting();
             //ItemLink 
             if (item != null)
             {
-                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || OrderSetting.AllowDuplicateItems)
+                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null  || AllowDuplicate)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_order_detail _purchase_order_detail = purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
@@ -450,15 +449,13 @@ namespace Cognitivo.Purchase
                 else
                 {
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
-                    if (PurchaseOrderDB.purchase_invoice_detail
-                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_order.id_contact)
+                    purchase_invoice_detail purchase_invoice_detail = PurchaseOrderDB.purchase_invoice_detail
+                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_order.id_contact && x.purchase_invoice.status == Status.Documents_General.Approved)
                         .OrderByDescending(y => y.purchase_invoice.trans_date)
-                        .FirstOrDefault() != null)
+                        .FirstOrDefault();
+                    if (purchase_invoice_detail != null)
                     {
-                        purchase_order_detail.unit_cost = PurchaseOrderDB.purchase_invoice_detail
-                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_order.id_contact)
-                        .OrderByDescending(y => y.purchase_invoice.trans_date)
-                        .FirstOrDefault().unit_cost;
+                        purchase_order_detail.unit_cost = purchase_invoice_detail.unit_cost;
                     }
 
                     //Item DOES NOT Exist in Context
@@ -491,15 +488,17 @@ namespace Cognitivo.Purchase
 
                     if (item.item_product != null)
                     {
-                        if (PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                            id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        app_cost_center app_cost_center = PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                        if (app_cost_center != null)
+                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
                             purchase_order_detail.id_cost_center = id_cost_center;   
                     }
                     else if (item.item_asset != null)
                     {
-                        if (PurchaseOrderDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                            id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        app_cost_center app_cost_center = PurchaseOrderDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                        if (app_cost_center != null)
+                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                         if (id_cost_center > 0)
                             purchase_order_detail.id_cost_center = id_cost_center;
                     }
@@ -507,8 +506,9 @@ namespace Cognitivo.Purchase
                 else
                 {
                     int id_cost_center = 0;
-                    if (PurchaseOrderDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                        id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                    app_cost_center app_cost_center = PurchaseOrderDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    if (app_cost_center  != null)
+                        id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
                     if (id_cost_center > 0)
                         purchase_order_detail.id_cost_center = id_cost_center;
                 }

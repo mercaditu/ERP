@@ -27,7 +27,8 @@
     <Grid DataContext="{StaticResource security_roleViewSource}" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="182"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -38,7 +39,7 @@
         <Grid />
         <ListBox x:Name="security_roleDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.RowSpan="2"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
                  ItemsSource="{Binding Source={StaticResource security_roleViewSource}}">
             <ListBox.ItemTemplate>
@@ -50,27 +51,51 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="32,16">
-            <Label Style="{StaticResource input_label}" Content="{lex:Loc UserRole}"/>
-            <TextBox Style="{StaticResource input_textbox}"
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="8">
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc UserRole}"/>
+                <TextBox Style="{StaticResource input_textbox}"
                      Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-            <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
-            <ComboBox x:Name="id_departmentComboBox" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
+                <ComboBox x:Name="id_departmentComboBox" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
                       SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-            </ComboBox>
-            <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
+                      SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="8" Grid.Column="1">
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
+                <ComboBox Style="{StaticResource input_combobox}" 
+                      SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       Content="{lex:Loc Master}" Style="{StaticResource input_checkbox}"/>
-            <CheckBox IsChecked="{Binding see_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                <CheckBox IsChecked="{Binding see_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       Content="{lex:Loc Cost}" Style="{StaticResource input_checkbox}"/>
-        </StackPanel>
-
-        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,200,0,0">
+            </StackPanel>
+        </Grid>
+        <TabControl Grid.Row="2" Grid.Column="1">
             <TabItem Header="{lex:Loc Basic}">
                 <Grid>
                     <DataGrid x:Name="security_curdDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
@@ -134,7 +159,7 @@
             </TabItem>
         </TabControl>
 
-        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="4,168">
+        <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="0,8,4,0" Height="26">
             <TextBox x:Name="txtsearch" Width="256" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" Margin="-71,0,0,0"/>
             <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
         </Grid>

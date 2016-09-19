@@ -96,7 +96,6 @@ namespace Cognitivo.Project
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             projectViewSource.View.Refresh();
-           // filter_task();
         }
         
     }

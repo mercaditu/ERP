@@ -258,7 +258,6 @@ namespace Cognitivo.Project
             if (project_costingViewSource.View.CurrentItem != null)
             {
                 IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
-
             }
             int adult_guest = 0;
             int child_guest = 0;

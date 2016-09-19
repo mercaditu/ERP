@@ -51,8 +51,6 @@ namespace Cognitivo.Project
 
                 objSalesinvoice.project = project;
                 objSalesinvoice.db = SalesOrderDB;
-                
-               
 
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
@@ -69,7 +67,7 @@ namespace Cognitivo.Project
                     projectViewSource.View.Filter = i =>
                     {
                         project project = i as project;
-                        List<entity.project_tag_detail> project_tag_detail = new List<entity.project_tag_detail>();
+                        List<project_tag_detail> project_tag_detail = new List<project_tag_detail>();
                         project_tag_detail = project.project_tag_detail.ToList();
 
                         if (project.name.ToLower().Contains(query.ToLower()) || project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any())

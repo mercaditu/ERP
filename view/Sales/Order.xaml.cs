@@ -28,7 +28,7 @@ namespace Cognitivo.Sales
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region DataLoad

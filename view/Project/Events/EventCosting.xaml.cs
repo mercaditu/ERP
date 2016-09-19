@@ -929,6 +929,7 @@ namespace Cognitivo.Project
                 project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
                 contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 project_event.id_contact = contact.id_contact;
+                project_event.contact = contact;
                 get_ActiveRateXContact(ref contact);
             }
 

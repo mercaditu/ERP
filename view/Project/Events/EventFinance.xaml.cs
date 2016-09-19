@@ -34,7 +34,7 @@ namespace Cognitivo.Project
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

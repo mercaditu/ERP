@@ -191,7 +191,7 @@ namespace Cognitivo.Commercial
             List<contact> ContactList = contactViewSource.View.OfType<contact>().ToList();
             foreach (contact Contact in ContactList)
             {
-                foreach (contact_subscription contact_subscription in Contact.contact_subscription.Where(x => x.start_date <= dtpTrans_Date.SelectedDate))
+                foreach (contact_subscription contact_subscription in Contact.contact_subscription.Where(x => x.contact.timestamp <= dtpTrans_Date.SelectedDate))
                 {
                     numofrecord += 1;
                     sales_invoice sales_invoice = new entity.sales_invoice();
@@ -202,7 +202,7 @@ namespace Cognitivo.Commercial
                     sales_invoice.id_condition = app_contract.id_condition;
                     sales_invoice.id_contract = app_contract.id_contract;
                     sales_invoice.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
-                    sales_invoice.comment = "Subscription  ";
+                    sales_invoice.comment = "Subscription";
 
                     sales_invoice_detail sales_invoice_detail = null;
 

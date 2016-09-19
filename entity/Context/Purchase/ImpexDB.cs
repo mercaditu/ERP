@@ -66,7 +66,11 @@ namespace entity
 
             foreach (var item in impex_expense)
             {
-                totalExpense += (decimal)item.value;
+                if (item.value!=null)
+                {
+                    totalExpense += (decimal)item.value;
+                }
+           
             }
 
             foreach (impex_import impex_import in impex_importList)
@@ -145,34 +149,39 @@ namespace entity
 
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {
-                                    decimal condition_value = (decimal)_impex_expense.value;
-
-                                    if (condition_value != 0 && itemTotal != 0)
+                                    if (_impex_expense.value!=null)
                                     {
-                                        //Coeficient is used to get prorated cost of one item
-                                        item_movement_value item_movement_detail = new item_movement_value();
-
-                                        decimal Cost = Math.Round((decimal)_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
-
-                                        //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
-
-                                        //Improve this in future. For now take from Purchase
-                                        using (db db = new db())
+                                        decimal condition_value = (decimal)_impex_expense.value;
+                                        if (condition_value != 0 && itemTotal != 0)
                                         {
-                                            int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
-                                            decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+                                            //Coeficient is used to get prorated cost of one item
+                                            item_movement_value item_movement_detail = new item_movement_value();
 
-                                            item_movement_detail.unit_value = DefaultCurrency_Cost;
-                                            item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
-                                        }
+                                            decimal Cost = Math.Round((decimal)_impex_expense.value / ImpexImportDetails.Sum(x => x.quantity), 2);
 
-                                        item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-                                        if (item_movement!=null)
-                                        {
-                                            item_movement.item_movement_value.Add(item_movement_detail);
+                                            //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
+
+                                            //Improve this in future. For now take from Purchase
+                                            using (db db = new db())
+                                            {
+                                                int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                                                decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                                                item_movement_detail.unit_value = DefaultCurrency_Cost;
+                                                item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
+                                            }
+
+                                            item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
+                                            if (item_movement != null)
+                                            {
+                                                item_movement.item_movement_value.Add(item_movement_detail);
+                                            }
+
                                         }
-                                      
                                     }
+                                   
+
+                                   
                                 }
                             }
                             impex.status = Status.Documents_General.Approved;

@@ -150,7 +150,7 @@
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                           />
                             </StackPanel>
-                            <Button x:Name="btnGetDetails" Click="GetServices" Content="{lex:Loc Calculate}" 
+                            <Button x:Name="btnGetDetails" Click="GetServices" Content="Calculate" 
                                 Style="{StaticResource btn_green}" HorizontalAlignment="Left" Margin="4"/>
                             <Rectangle Style="{StaticResource line_Bar}"/>
                             <WrapPanel Orientation="Horizontal">

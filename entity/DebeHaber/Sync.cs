@@ -81,7 +81,7 @@ namespace DebeHaber
 
             DocNumber = sales_invoice.number;
             DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
-            DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+            DocExpiry = (sales_invoice.app_document_range != null ? sales_invoice.app_document_range.expire_date != null ? sales_invoice.app_document_range.expire_date: DateTime.Now : DateTime.Now);
         }
 
         public void Fill_BySalesReturn(sales_return sales_return)

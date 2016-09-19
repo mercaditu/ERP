@@ -425,7 +425,7 @@ namespace Cognitivo.Accounting
             //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
             DebeHaber.Transactions FixedAssetError = new DebeHaber.Transactions();
 
-            foreach (item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList())
+            foreach (item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList())
             {
                 DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
                 Transactions.HashIntegration = RelationshipHash;

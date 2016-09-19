@@ -6,6 +6,7 @@ using entity;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cognitivo.Commercial
 {
@@ -187,63 +188,87 @@ namespace Cognitivo.Commercial
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int numofrecord = 0;
             List<contact> ContactList = contactViewSource.View.OfType<contact>().ToList();
+            DateTime InvoiceDate = (DateTime)dtpTrans_Date.SelectedDate;
+            progBar.Minimum = 1;
+            progBar.Value = 1;
+            progBar.Maximum = ContactList.Count() + 1;
+            Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
+        }
 
-            foreach (contact Contact in ContactList.Where(x => x.timestamp <= dtpTrans_Date.SelectedDate))
+        private void SyncSalesInvoice(List<contact> ContactList, DateTime InvoiceDate)
+        {
+            app_vat_group VatGroup = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault();
+            foreach (contact Contact in ContactList)
             {
-                sales_invoice sales_invoice = new sales_invoice();
-                numofrecord += 1;
-                sales_invoice.id_contact = Contact.id_contact;
-                sales_invoice.contact = Contact;
-
-                app_contract app_contract = ContactDB.app_contract.Where(x => x.id_contract == Contact.id_contract).FirstOrDefault();
-                sales_invoice.id_condition = app_contract.id_condition;
-                sales_invoice.id_contract = app_contract.id_contract;
-                sales_invoice.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
-                sales_invoice.comment = "Subscription";
-
-                foreach (contact_subscription contact_subscription in Contact.contact_subscription)
+                try
                 {
-                    sales_invoice_detail sales_invoice_detail = null;
+                    sales_invoice sales_invoice = new sales_invoice();
+                    sales_invoice.id_contact = Contact.id_contact;
+                    sales_invoice.contact = Contact;
 
-                    sales_invoice_detail = new sales_invoice_detail();
-                    sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
-                    sales_invoice_detail.sales_invoice = sales_invoice;
-                    item item = ContactDB.items.Where(x => x.id_item == contact_subscription.id_item).FirstOrDefault();
+                    app_contract app_contract = ContactDB.app_contract.Where(x => x.id_contract == Contact.id_contract).FirstOrDefault();
+                    sales_invoice.id_condition = app_contract.id_condition;
+                    sales_invoice.id_contract = app_contract.id_contract;
+                    sales_invoice.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                    sales_invoice.comment = "Subscription";
+                    sales_invoice.trans_date = InvoiceDate;
+                    sales_invoice.timestamp = DateTime.Now;
 
-                    if (item != null)
+                    if (Contact.contact_subscription.Count > 0)
                     {
-                        sales_invoice_detail.item = item;
+                        foreach (contact_subscription contact_subscription in Contact.contact_subscription)
+                        {
+                            sales_invoice_detail sales_invoice_detail = null;
+
+                            sales_invoice_detail = new sales_invoice_detail();
+                            sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
+                            sales_invoice_detail.sales_invoice = sales_invoice;
+                            item item = ContactDB.items.Where(x => x.id_item == contact_subscription.id_item).FirstOrDefault();
+
+                            if (item != null)
+                            {
+                                sales_invoice_detail.item = item;
+                                sales_invoice_detail.id_vat_group = contact_subscription.id_vat_group > 0 ? contact_subscription.id_vat_group : VatGroup.id_vat_group;
+                                sales_invoice_detail.id_item = contact_subscription.id_item;
+                                sales_invoice_detail.item_description = contact_subscription.item.name;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+
+                            sales_invoice_detail.quantity = contact_subscription.quantity;
+                            sales_invoice_detail.UnitPrice_Vat = contact_subscription.UnitPrice_Vat;
+
+                            sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                        }
+
+                        if (sales_invoice.sales_invoice_detail.Count > 0)
+                        {
+                            sales_invoice.State = EntityState.Added;
+                            sales_invoice.IsSelected = true;
+
+                            crm_opportunity crm_opportunity = new crm_opportunity();
+                            crm_opportunity.id_contact = sales_invoice.id_contact;
+                            crm_opportunity.id_currency = sales_invoice.id_currencyfx;
+                            crm_opportunity.value = sales_invoice.GrandTotal;
+
+                            crm_opportunity.sales_invoice.Add(sales_invoice);
+                            ContactDB.crm_opportunity.Add(crm_opportunity);
+                            ContactDB.sales_invoice.Add(sales_invoice);
+                            ContactDB.SaveChanges();
+
+                            Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
+                        }
                     }
-
-                    sales_invoice_detail.id_vat_group = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault().id_vat_group;
-                    sales_invoice_detail.id_item = (int)contact_subscription.id_item;
-                    sales_invoice_detail.item_description = contact_subscription.item.name;
-                    sales_invoice_detail.quantity = contact_subscription.quantity;
-                    sales_invoice_detail.UnitPrice_Vat = contact_subscription.UnitPrice_Vat;
-
-                    sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    
                 }
-
-                if (sales_invoice.sales_invoice_detail.Count > 0)
+                catch (Exception)
                 {
-                    sales_invoice.State = EntityState.Added;
-                    sales_invoice.IsSelected = true;
-
-                    crm_opportunity crm_opportunity = new crm_opportunity();
-                    crm_opportunity.id_contact = sales_invoice.id_contact;
-                    crm_opportunity.id_currency = sales_invoice.id_currencyfx;
-                    crm_opportunity.value = sales_invoice.GrandTotal;
-
-                    crm_opportunity.sales_invoice.Add(sales_invoice);
-                    ContactDB.crm_opportunity.Add(crm_opportunity);
-                    ContactDB.sales_invoice.Add(sales_invoice);
+                    Dispatcher.BeginInvoke((Action)(() => { Contact.IsSelected = true; }));
                 }
             }
-
-            ContactDB.SaveChanges();
-            toolBar.msgSaved(numofrecord);
         }
     }
 }

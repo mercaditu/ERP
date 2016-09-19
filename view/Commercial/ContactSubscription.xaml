@@ -54,7 +54,12 @@
                                           IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                 <Label Content="Invoice Date" Style="{StaticResource input_label}"/>
                 <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"/>
-                <Button Content="Generate Invoice" Click="Button_Click" Style="{StaticResource btn_green}"/>
+                <Button Click="Button_Click" Style="{StaticResource btn_green}" VerticalAlignment="Top" Padding="0">
+                    <Grid>
+                        <ProgressBar x:Name="progBar" Height="32" Width="256" Minimum="1" Maximum="100" Value="23"/>
+                        <Label Content="{lex:Loc SalesInvoice}" Foreground="White"/>
+                    </Grid>
+                </Button>
             </StackPanel>
           
             <DataGrid x:Name="contactcontact_subscriptionDataGrid" AutoGenerateColumns="False" Margin="8"

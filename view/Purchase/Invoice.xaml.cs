@@ -370,21 +370,21 @@ namespace Cognitivo.Purchase
                     contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 }
 
-                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact));
+                InvoiceSetting InvoiceSetting = new InvoiceSetting();
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems));
             }
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate)
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
-            InvoiceSetting InvoiceSetting = new InvoiceSetting();
 
             //ItemLink 
             if (item != null)
             {
                 purchase_invoice_detail detail_withitem = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                if (detail_withitem != null && InvoiceSetting.AllowDuplicateItems)
+                if (detail_withitem != null && AllowDuplicate)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_invoice_detail _purchase_invoice_detail = detail_withitem;
@@ -432,15 +432,16 @@ namespace Cognitivo.Purchase
             }
 
             //Cost Center
-            if (contact != null && contact.app_cost_center != null)
+            if (contact != null)
             {
-                app_cost_center app_cost_center = contact.app_cost_center;
-                if (app_cost_center.id_cost_center > 0)
-                    purchase_invoice_detail.id_cost_center = app_cost_center.id_cost_center;
+                if (contact.app_cost_center != null)
+                {
+                    app_cost_center app_cost_center = contact.app_cost_center;
+                    if (app_cost_center.id_cost_center > 0)
+                        purchase_invoice_detail.id_cost_center = app_cost_center.id_cost_center;
+                }
             }
             else
-            {
-                Dispatcher.BeginInvoke((Action)(() =>
             {
                 //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
                 if (item != null)
@@ -473,7 +474,6 @@ namespace Cognitivo.Purchase
                     if (id_cost_center > 0)
                         purchase_invoice_detail.id_cost_center = id_cost_center;
                 }
-            }));
             }
 
             //VAT
@@ -491,7 +491,6 @@ namespace Cognitivo.Purchase
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-
                 purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                 purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
@@ -825,9 +824,5 @@ namespace Cognitivo.Purchase
                 toolBar.msgWarning("Please select");
             }
         }
-
-
-
-
     }
 }

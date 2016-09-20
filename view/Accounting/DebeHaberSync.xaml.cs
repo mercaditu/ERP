@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Data.Entity;
 using entity;
+using System.Collections.Generic;
 
 namespace Cognitivo.Accounting
 {
@@ -142,8 +143,10 @@ namespace Cognitivo.Accounting
             DebeHaber.Integration Integration = new DebeHaber.Integration();
             Integration.Key = RelationshipHash;
 
+            List<sales_invoice> SalesList = db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
+
             //Loop through
-            foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
+            foreach (sales_invoice sales_invoice in SalesList)// && x.is_accounted == false))
             {
                 DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
                 
@@ -188,8 +191,10 @@ namespace Cognitivo.Accounting
             }
             catch (Exception)
             {
-                
-                sales_invoice.is_accounted = false;
+                foreach (sales_invoice sales_invoice in SalesList)
+                {
+                    sales_invoice.is_accounted = false;
+                }
             }
             finally
             {
@@ -203,7 +208,9 @@ namespace Cognitivo.Accounting
             DebeHaber.Integration Integration = new DebeHaber.Integration();
             Integration.Key = RelationshipHash;
 
-            foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
+            List<purchase_invoice>PurchaseList = db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
+
+            foreach (purchase_invoice purchase_invoice in PurchaseList)
             {
                 DebeHaber.Commercial_Invoice Purchase = new DebeHaber.Commercial_Invoice();
 
@@ -233,40 +240,41 @@ namespace Cognitivo.Accounting
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
+                purchase_invoice.is_accounted = true;
 
-                Transactions.Commercial_Invoices.Add(Purchase);
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.Commercial_Invoices.Add(Purchase);
+                Integration.Transactions.Add(Transaction);
+            }
 
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Sales_Json);
-                    purchase_invoice.is_accounted = true;
-                }
-                catch (Exception)
-                {
-                    PurchaseError.Commercial_Invoices.Add(Purchase);
-                    purchase_invoice.is_accounted = false;
-                }
-                finally
+            try
+            {
+                var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Sales_Json);
+            }
+            catch (Exception)
+            {
+                foreach (purchase_invoice purchase_invoice in PurchaseList)
                 {
                     purchase_invoice.IsSelected = false;
-                    db.SaveChanges();
                 }
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 
         private void SalesReturn_Sync()
         {
-            //remember to clean out those that are already accounted from SalesSync.
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions SalesReturnError = new DebeHaber.Transactions();
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
+            List<sales_return> SalesReturnList = db.sales_return.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
-            foreach (sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected && x.is_accounted == false))// && x.is_accounted == false))
+            foreach (sales_return sales_return in SalesReturnList)
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
-
                 DebeHaber.Commercial_Invoice SalesReturn = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
@@ -296,18 +304,20 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                Transactions.Commercial_Invoices.Add(SalesReturn);
+                sales_return.is_accounted = true;
+
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.Commercial_Invoices.Add(SalesReturn);
+                Integration.Transactions.Add(Transaction);
 
                 try
                 {
-                    var Json = new JavaScriptSerializer().Serialize(Transactions);
+                    var Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Json);
-                    sales_return.is_accounted = true;
                 }
                 catch (Exception)
                 {
-                    SalesReturnError.Commercial_Invoices.Add(SalesReturn);
-                    sales_return.is_accounted = false;
+
                 }
                 finally
                 {

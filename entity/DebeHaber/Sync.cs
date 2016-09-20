@@ -10,20 +10,24 @@ namespace DebeHaber
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
-    public class Transactions
+    public class Integration
     {
-        public Transactions()
+        public string Key { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+    }
+
+    public class Transaction
+    {
+        public Transaction()
         {
-            Commercial_Invoice = new List<Commercial_Invoice>();
+            Commercial_Invoices = new List<Commercial_Invoice>();
             Payments = new List<Payments>();
-            FixedAssetGroup = new List<FixedAssetGroup>();
+            FixedAssetGroups = new List<FixedAssetGroup>();
         }
 
-        public string HashIntegration { get; set; }
-
-        public virtual ICollection<Commercial_Invoice> Commercial_Invoice { get; set; }
+        public virtual ICollection<Commercial_Invoice> Commercial_Invoices { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
-        public virtual ICollection<FixedAssetGroup> FixedAssetGroup { get; set; }
+        public virtual ICollection<FixedAssetGroup> FixedAssetGroups { get; set; }
     }
 
     public class Commercial_Invoice

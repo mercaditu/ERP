@@ -18,7 +18,7 @@ namespace Cognitivo.Accounting
         CollectionViewSource sales_returnViewSource;
         CollectionViewSource purchase_invoiceViewSource;
         CollectionViewSource purchase_returnViewSource;
-        CollectionViewSource paymentViewSource;
+        CollectionViewSource payment_detailViewSource;
         CollectionViewSource item_assetViewSource;
 
         db db = new db();
@@ -33,7 +33,7 @@ namespace Cognitivo.Accounting
             sales_returnViewSource = ((CollectionViewSource)(FindResource("sales_returnViewSource")));
             purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
             purchase_returnViewSource = ((CollectionViewSource)(FindResource("purchase_returnViewSource")));
-            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            payment_detailViewSource = ((CollectionViewSource)(FindResource("payment_detailViewSource")));
             item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
 
             RelationshipHash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
@@ -79,7 +79,7 @@ namespace Cognitivo.Accounting
         public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
-            paymentViewSource.Source = await db.payment_detail.Where(x =>
+            payment_detailViewSource.Source = await db.payment_detail.Where(x =>
                 x.payment.id_company == CurrentSession.Id_Company &&
                 x.payment.is_accounted == false &&
                 x.payment.status == Status.Documents_General.Approved).ToListAsync();
@@ -138,15 +138,13 @@ namespace Cognitivo.Accounting
 
         private void Sales_Sync()
         {
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions SalesError = new DebeHaber.Transactions();
-            
+
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
             //Loop through
             foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
-
                 DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
                 
                 //Loads Data from Sales
@@ -175,38 +173,38 @@ namespace Cognitivo.Accounting
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
-
-                Transactions.Commercial_Invoice.Add(Sales);
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.Commercial_Invoices.Add(Sales);
+                Integration.Transactions.Add(Transaction);
+                
                 sales_invoice.IsSelected = false;
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Sales_Json);
-                    sales_invoice.is_accounted = true;
-                }
-                catch (Exception)
-                {
-                    SalesError.Commercial_Invoice.Add(Sales);
-                    sales_invoice.is_accounted = false;
-                }
-                finally
-                {
-                    db.SaveChanges();
-                }
+                sales_invoice.is_accounted = true;
+            }
+
+            try
+            {
+                var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Sales_Json);
+            }
+            catch (Exception)
+            {
+                
+                sales_invoice.is_accounted = false;
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 
         private void Purchase_Sync()
         {
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions PurchaseError = new DebeHaber.Transactions();
-
             //Loop through
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
             foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
-
                 DebeHaber.Commercial_Invoice Purchase = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
@@ -236,7 +234,7 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                Transactions.Commercial_Invoice.Add(Purchase);
+                Transactions.Commercial_Invoices.Add(Purchase);
 
                 try
                 {
@@ -246,7 +244,7 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception)
                 {
-                    PurchaseError.Commercial_Invoice.Add(Purchase);
+                    PurchaseError.Commercial_Invoices.Add(Purchase);
                     purchase_invoice.is_accounted = false;
                 }
                 finally
@@ -298,7 +296,7 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                Transactions.Commercial_Invoice.Add(SalesReturn);
+                Transactions.Commercial_Invoices.Add(SalesReturn);
 
                 try
                 {
@@ -308,7 +306,7 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception)
                 {
-                    SalesReturnError.Commercial_Invoice.Add(SalesReturn);
+                    SalesReturnError.Commercial_Invoices.Add(SalesReturn);
                     sales_return.is_accounted = false;
                 }
                 finally
@@ -360,7 +358,7 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                Transactions.Commercial_Invoice.Add(PurchaseReturn);
+                Transactions.Commercial_Invoices.Add(PurchaseReturn);
 
                 try
                 {
@@ -370,7 +368,7 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception)
                 {
-                    PurchaseReturnError.Commercial_Invoice.Add(PurchaseReturn);
+                    PurchaseReturnError.Commercial_Invoices.Add(PurchaseReturn);
                     purchase_return.is_accounted = false;
                 }
                 finally
@@ -450,7 +448,7 @@ namespace Cognitivo.Accounting
                     FixedAssetGroup.FixedAssets.Add(FixedAsset);
                 }
 
-                Transactions.FixedAssetGroup.Add(FixedAssetGroup);
+                Transactions.FixedAssetGroups.Add(FixedAssetGroup);
 
                 try
                 {
@@ -567,26 +565,25 @@ namespace Cognitivo.Accounting
 
         private void Payment_Checked(object sender, RoutedEventArgs e)
         {
-            if (paymentViewSource.View != null)
+            if (payment_detailViewSource.View != null)
             {
-                foreach (payment payment in paymentViewSource.View.OfType<payment>().ToList())
+                foreach (payment_detail payment_detail in payment_detailViewSource.View.OfType<payment_detail>().ToList())
                 {
-                    payment.IsSelected = true;
+                    payment_detail.IsSelected = true;
                 }
-                paymentViewSource.View.Refresh();
+                payment_detailViewSource.View.Refresh();
             }
-
         }
 
         private void Payment_UnChecked(object sender, RoutedEventArgs e)
         {
-            if (paymentViewSource.View != null)
+            if (payment_detailViewSource.View != null)
             {
-                foreach (payment payment in paymentViewSource.View.OfType<payment>().ToList())
+                foreach (payment_detail payment_detail in payment_detailViewSource.View.OfType<payment_detail>().ToList())
                 {
-                    payment.IsSelected = false;
+                    payment_detail.IsSelected = false;
                 }
-                paymentViewSource.View.Refresh();
+                payment_detailViewSource.View.Refresh();
             }
         }
         #endregion

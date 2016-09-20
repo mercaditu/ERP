@@ -16,7 +16,7 @@
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
     </Page.Resources>
     <Grid>
@@ -96,22 +96,26 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc Payment}">
-                <Grid Background="White" DataContext="{StaticResource paymentViewSource}">
+                <Grid Background="White" DataContext="{StaticResource payment_detailViewSource}">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="Payment_Checked" Unchecked="Payment_UnChecked"/>
                     <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn IsReadOnly="False"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                    Binding="{Binding IsSelected, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
-                                                Binding="{Binding trans_date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                Binding="{Binding payment.trans_date,Mode=OneWay}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True"
-                                                Binding="{Binding contact.name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                Binding="{Binding payment.contact.name,Mode=OneWay}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True"
-                                                Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                Binding="{Binding payment.number,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PaymentType}" IsReadOnly="True"
+                                                Binding="{Binding payment_type.name, Mode=OneWay}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True"
-                                                Binding="{Binding GrandTotalDetail,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                Binding="{Binding value, Mode=OneWay, StringFormat=N2}" CellStyle="{StaticResource Number_CellStyle}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" IsReadOnly="True"
+                                                Binding="{Binding app_currencyfx.app_currency.name, Mode=OneWay}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

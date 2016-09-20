@@ -89,6 +89,12 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
+                    <Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->
+                    <Label Content="/"/>
+                    <Label Content="5"/> <!-- Total Number of Seats Avaiable from Internet -->
+                </StackPanel>
                 <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       Content="{lex:Loc Master}" Style="{StaticResource input_checkbox}"/>
                 <CheckBox IsChecked="{Binding see_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 

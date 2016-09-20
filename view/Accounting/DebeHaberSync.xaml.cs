@@ -79,10 +79,10 @@ namespace Cognitivo.Accounting
         public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
-            paymentViewSource.Source = await db.payments.Where(x =>
-                 x.id_company == CurrentSession.Id_Company &&
-                 x.is_accounted == false &&
-                 x.status == Status.Documents_General.Approved).ToListAsync();
+            paymentViewSource.Source = await db.payment_detail.Where(x =>
+                x.payment.id_company == CurrentSession.Id_Company &&
+                x.payment.is_accounted == false &&
+                x.payment.status == Status.Documents_General.Approved).ToListAsync();
         }
 
         public async void Get_SalesReturn()

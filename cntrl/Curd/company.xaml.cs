@@ -73,14 +73,15 @@ namespace cntrl
         {
             try
             {
+                app_company app_company = app_companyViewSource.View.CurrentItem as app_company;
                 IEnumerable<DbEntityValidationResult> validationresult = objEntity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
                     objEntity.SaveChanges();
 
-                    if (CurrentSession.Id_Company == 0)
+                    if (app_company!=null)
                     {
-                        CurrentSession.Id_Company = objEntity.db.app_company.FirstOrDefault().id_company;
+                        CurrentSession.Id_Company = app_company.id_company;
                     }
                  
                     entity.Properties.Settings.Default.company_ID = objEntity.db.app_company.FirstOrDefault().id_company;

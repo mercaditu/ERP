@@ -1,6 +1,8 @@
-﻿using entity;
+﻿using Cognitivo.Menu;
+using entity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -171,6 +173,66 @@ namespace Cognitivo.Security
 
         private void add_MissingRecords()
         {
+            //AppList appList = new AppList();
+            //security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+            //List<security_crud> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
+            //entity.Brillo.Activation Activation = new entity.Brillo.Activation();
+            //CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
+            //List<entity.App.Names> _DbApplicationDelete = security_curd.Select(x => x.id_application).ToList();
+            //List<entity.App.Names> ApplicationDelete = new List<entity.App.Names>();
+            //foreach (DataRow item in appList.dtApp.Select("Version<>'" + version + "'"))
+            //{
+            //    if (Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"]))!=null )
+            //    {
+            //        ApplicationDelete.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+            //    }
+              
+            //}
+
+            //List<entity.App.Names> finalapplicaitonDelete = Enumerable.Except<entity.App.Names>(ApplicationDelete, (IEnumerable<entity.App.Names>)_DbApplicationDelete).ToList();
+
+            //foreach (entity.App.Names AppName in finalapplicaitonDelete)
+            //{
+            //    security_crud _security_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+            //    if (_security_curd != null)
+            //    {
+            //        security_role.security_curd.Remove(_security_curd);
+            //    }
+
+
+            //}
+            //dbContext.SaveChanges();
+
+
+
+
+            //List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
+            //List<entity.App.Names> Application = new List<entity.App.Names>();
+            //foreach (DataRow item in appList.dtApp.Select("Version=" + version))
+            //{
+            //    Application.Add((entity.App.Names)item["name"]);
+            //}
+
+            //List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
+
+            //foreach (entity.App.Names AppName in finalapplicaiton)
+            //{
+            //    security_crud _security_curd = new security_crud();
+            //    _security_curd.id_application = AppName;
+            //    _security_curd.can_update = false;
+            //    _security_curd.can_read = false;
+            //    _security_curd.can_delete = false;
+            //    _security_curd.can_create = false;
+            //    _security_curd.can_approve = false;
+            //    _security_curd.can_annul = false;
+            //    security_role.security_curd.Add(_security_curd);
+            //}
+
+            ////Remove Addtional
+
+            //security_rolesecurity_curdViewSource.View.Refresh();
+            //security_rolesecurity_role_privilageViewSource.View.Refresh();
+
             if (security_rolesecurity_curdViewSource.View != null)
             {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;

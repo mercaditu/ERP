@@ -68,6 +68,59 @@ namespace entity.Brillo
                 return CurrentSession.Versions.Lite;
             }
         }
+        public CurrentSession.Versions VersionDecrypt(security_role security_role)
+        {
+            string VersionKey = "Himayuddin_51";
+
+            using (db db = new db())
+            {
+                string _Passkey = "^%*@$^$";
+                int id_role = CurrentSession.UserRole.id_role;
+
+              //  security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                if (security_role != null)
+                {
+                    if (security_role.version != null)
+                    {
+                        string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+                        VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                    }
+                }
+
+
+
+
+            }
+
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Lite;
+            }
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Basic;
+            }
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Medium;
+            }
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Full;
+            }
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.PrintingPress;
+            }
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.EventManagement;
+            }
+            else
+            {
+                return CurrentSession.Versions.Lite;
+            }
+        }
 
         public bool VersionEncrypt(CurrentSession.Versions Version)
         {

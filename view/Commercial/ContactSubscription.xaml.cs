@@ -194,7 +194,8 @@ namespace Cognitivo.Commercial
             progBar.Value = 1;
             progBar.Maximum = ContactList.Count() + 1;
             SyncSalesInvoice(ContactList, InvoiceDate);
-            Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
+            
+           // Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
         }
 
         private void SyncSalesInvoice(List<contact> ContactList, DateTime InvoiceDate)
@@ -260,7 +261,7 @@ namespace Cognitivo.Commercial
                             ContactDB.sales_invoice.Add(sales_invoice);
                             ContactDB.SaveChanges();
                             progBar.Value += 1;
-                           Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
+                          // Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
                         }
                     }
                     

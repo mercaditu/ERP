@@ -211,11 +211,7 @@ namespace Cognitivo.Menu
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Project_Dev, "Project.ProjectTag", "ProjectTag", "Project", entity.CurrentSession.Versions.Lite, "0");
 
-            foreach (DataRow row in dtApp.Rows)
-            {
-                ApplicationClass appClass = new ApplicationClass();
-                appClass.Application = 
-            }
+         
         }
 
         public cntrl.applicationIcon get_AppIcon(DataRow app)

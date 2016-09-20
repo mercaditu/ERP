@@ -83,7 +83,9 @@ namespace entity.Brillo
                     if (security_role.version != null)
                     {
                         string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+                        
                         VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                        
                     }
                 }
 
@@ -153,14 +155,15 @@ namespace entity.Brillo
                     {
                         _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
                     }
-
+                    int id_role = CurrentSession.UserRole.id_role;
+                    security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                    _Seats = _Seats + "_" + security_role.name + "_" + security_role.app_company.gov_code;
 
                     string _Passkey = "^%*@$^$";
 
                     string hash = StringCipher.Encrypt(_Seats, _Passkey);
 
-                    int id_role = CurrentSession.UserRole.id_role;
-                    security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                    
                     security_role.version = hash;
                     db.SaveChanges();
                 }

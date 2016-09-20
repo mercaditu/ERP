@@ -41,7 +41,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.RowSpan="2"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}">
+                 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}" SelectionChanged="security_roleDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding app_department.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -81,13 +81,9 @@
             </StackPanel>
             <StackPanel Margin="8" Grid.Column="1">
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
-                <ComboBox Style="{StaticResource input_combobox}" 
-                      SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
+                <ComboBox x:Name="cbxRole" Style="{StaticResource input_combobox}" 
+                     >
+                
                 </ComboBox>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource input_label}" Content="Seats Avialable"/>

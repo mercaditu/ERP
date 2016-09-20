@@ -81,7 +81,7 @@
             </StackPanel>
             <StackPanel Margin="8" Grid.Column="1">
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
-                <ComboBox x:Name="cbxRole" Style="{StaticResource input_combobox}" 
+                <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" 
                      >
                 
                 </ComboBox>

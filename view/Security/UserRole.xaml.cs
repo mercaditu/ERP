@@ -46,7 +46,7 @@ namespace Cognitivo.Security
             app_departmentViewSource.Source = await dbContext.app_department.Where(x => x.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToListAsync();
 
             add_Privallge();
-            cbxRole.ItemsSource = Enum.GetValues(typeof(entity.CurrentSession.Versions));
+            cbxVersion.ItemsSource = Enum.GetValues(typeof(entity.CurrentSession.Versions));
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -58,6 +58,10 @@ namespace Cognitivo.Security
         {
             try
             {
+                security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+                entity.CurrentSession.Versions version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                entity.Brillo.Activation Activation = new entity.Brillo.Activation();
+                Activation.VersionEncrypt(version, security_role);
                 dbContext.SaveChanges();
                 entity.CurrentSession.Refresh_Security();
                 security_roleViewSource.View.Refresh();
@@ -298,7 +302,7 @@ namespace Cognitivo.Security
             {
                 entity.Brillo.Activation Activation = new entity.Brillo.Activation();
                 CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-                cbxRole.SelectedItem = version;
+                cbxVersion.SelectedItem = version;
             }
         }
     }

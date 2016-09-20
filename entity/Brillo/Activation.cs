@@ -9,6 +9,7 @@ namespace entity.Brillo
 {
     public class Activation
     {
+        db db = new db();
         #region Version
 
         /// <summary>
@@ -18,48 +19,65 @@ namespace entity.Brillo
         public CurrentSession.Versions VersionDecrypt()
         {
             string VersionKey = "Himayuddin_51";
+            string versionname = "";
+            string companycode = "";
+            security_role security_role = null;
 
-            using (db db = new db())
+            string _Passkey = "^%*@$^$";
+            int id_role = CurrentSession.UserRole.id_role;
+
+            security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+            if (security_role != null)
             {
-                string _Passkey = "^%*@$^$";
-                int id_role = CurrentSession.UserRole.id_role;
-              
-                security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
-                if (security_role != null)
+                if (security_role.version != null)
                 {
-                    if (security_role.version != null)
+                    string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+
+                    VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                    string[] version = VersionKey.Split('.');
+                    if (version.Count() >= 1)
                     {
-                         string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
-                         VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                        VersionKey = version[0];
                     }
+                    if (version.Count() >= 2)
+                    {
+                        versionname = version[1];
+                    }
+                    if (version.Count() >= 3)
+                    {
+                        companycode = version[2];
+                    }
+
+
                 }
-
-
-
-                
             }
 
-            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey)
+
+
+
+
+
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Lite;
             }
-            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Basic;
             }
-            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Medium;
             }
-            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.PrintingPress;
             }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.EventManagement;
             }
@@ -71,21 +89,25 @@ namespace entity.Brillo
         public CurrentSession.Versions VersionDecrypt(security_role security_role)
         {
             string VersionKey = "Himayuddin_51";
-
+            string versionname = "";
+            string companycode = "";
             using (db db = new db())
             {
                 string _Passkey = "^%*@$^$";
                 int id_role = CurrentSession.UserRole.id_role;
 
-              //  security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                //  security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
                 if (security_role != null)
                 {
                     if (security_role.version != null)
                     {
                         string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
-                        
+
                         VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
-                        
+                        string[] version = VersionKey.Split('_');
+                        VersionKey = version[0];
+                        versionname = version[1];
+                        companycode = version[2];
                     }
                 }
 
@@ -94,27 +116,27 @@ namespace entity.Brillo
 
             }
 
-            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey)
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Lite;
             }
-            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Basic;
             }
-            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Medium;
             }
-            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.PrintingPress;
             }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey)
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.EventManagement;
             }
@@ -163,7 +185,57 @@ namespace entity.Brillo
 
                     string hash = StringCipher.Encrypt(_Seats, _Passkey);
 
-                    
+
+                    security_role.version = hash;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool VersionEncrypt(CurrentSession.Versions Version, security_role security_role)
+        {
+            try
+            {
+                using (db db = new db())
+                {
+                    string _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
+                    if (CurrentSession.Versions.Lite.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
+                    }
+                    else if (CurrentSession.Versions.Basic.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Bathua_102.ToString();
+                    }
+                    else if (CurrentSession.Versions.Medium.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Mankurad_153.ToString();
+                    }
+                    else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
+                    }
+                    else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
+                    }
+                    else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
+                    {
+                        _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
+                    }
+                    int id_role = CurrentSession.UserRole.id_role;
+                    // security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                    _Seats = _Seats + "." + security_role.name + "." + security_role.app_company.gov_code;
+
+                    string _Passkey = "^%*@$^$";
+
+                    string hash = StringCipher.Encrypt(_Seats, _Passkey);
+
+
                     security_role.version = hash;
                     db.SaveChanges();
                 }

@@ -27,7 +27,7 @@ namespace Cognitivo.Accounting
 
         public class DebeHaberRegistration
         {
-            public string hash_integretion { get; set; }
+            public string Key { get; set; }
         }
 
         public DebeHaberLogIn()
@@ -98,7 +98,7 @@ namespace Cognitivo.Accounting
             {
                 string server = Settings.Default.DebeHaberConnString + "/api/registration/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
                 var json = await DownloadPage(server);
-                string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).hash_integretion;
+                string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).Key;
                 using (entity.db db = new entity.db())
                 {
                     entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();

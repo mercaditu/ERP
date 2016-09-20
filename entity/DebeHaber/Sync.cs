@@ -12,6 +12,11 @@ namespace DebeHaber
 
     public class Integration
     {
+        public Integration()
+        {
+            Transactions = new List<Transaction>();
+        }
+
         public string Key { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

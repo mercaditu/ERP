@@ -193,6 +193,7 @@ namespace Cognitivo.Commercial
             progBar.Minimum = 1;
             progBar.Value = 1;
             progBar.Maximum = ContactList.Count() + 1;
+            SyncSalesInvoice(ContactList, InvoiceDate);
             Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
         }
 
@@ -258,15 +259,15 @@ namespace Cognitivo.Commercial
                             ContactDB.crm_opportunity.Add(crm_opportunity);
                             ContactDB.sales_invoice.Add(sales_invoice);
                             ContactDB.SaveChanges();
-
-                            Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
+                            progBar.Value += 1;
+                           Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
                         }
                     }
                     
                 }
                 catch (Exception)
                 {
-                    Dispatcher.BeginInvoke((Action)(() => { Contact.IsSelected = true; }));
+                  //  Dispatcher.BeginInvoke((Action)(() => { Contact.IsSelected = true; }));
                 }
             }
         }

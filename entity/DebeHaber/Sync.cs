@@ -38,12 +38,12 @@ namespace DebeHaber
         public TransactionTypes Type { get; set; }
         public States State { get; set; }
         public DateTime TransDate { get; set; }
-        public string CompanyName {get;set;}
+        public string Company {get;set;}
         public string Gov_Code { get; set; }
-        public string BranchName { get; set; }
+        public string Branch { get; set; }
 
         public string Comment { get; set; }
-        public string CurrencyName { get; set; }
+        public string Currency { get; set; }
 
         //Invoice Documents
         public string DocNumber { get; set; }
@@ -61,7 +61,7 @@ namespace DebeHaber
         {
             Type = TransactionTypes.Sales;
             TransDate = sales_invoice.trans_date;
-            CompanyName = sales_invoice.contact.name;
+            Company = sales_invoice.contact.name;
 
             if (sales_invoice.status == Status.Documents_General.Approved)
             {
@@ -72,12 +72,12 @@ namespace DebeHaber
                 State = States.Annuled;
             }
 
-            BranchName = sales_invoice.app_branch != null ? sales_invoice.app_branch.name : "";
+            Branch = sales_invoice.app_branch != null ? sales_invoice.app_branch.name : "";
             PaymentCondition = sales_invoice.app_contract != null ? (sales_invoice.app_contract.app_contract_detail != null ? sales_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
 
             Gov_Code = sales_invoice.contact.gov_code;
             Comment = sales_invoice.comment;
-            CurrencyName = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
+            Currency = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
 
             DocNumber = sales_invoice.number;
             DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
@@ -88,8 +88,8 @@ namespace DebeHaber
         {
             Type = TransactionTypes.SalesReturn;
             TransDate = sales_return.trans_date;
-            CompanyName = sales_return.contact.name;
-            BranchName = sales_return.app_branch != null ? sales_return.app_branch.name : "";
+            Company = sales_return.contact.name;
+            Branch = sales_return.app_branch != null ? sales_return.app_branch.name : "";
 
             if (sales_return.status == Status.Documents_General.Approved)
             {
@@ -102,7 +102,7 @@ namespace DebeHaber
 
             Gov_Code = sales_return.contact.gov_code;
             Comment = sales_return.comment;
-            CurrencyName = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
+            Currency = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
 
             DocNumber = sales_return.number;
             DocCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "";
@@ -113,9 +113,9 @@ namespace DebeHaber
         {
             Type = TransactionTypes.Purchase;
             TransDate = purchase_invoice.trans_date;
-            CompanyName = purchase_invoice.contact.name;
+            Company = purchase_invoice.contact.name;
             Gov_Code = purchase_invoice.contact.gov_code;
-            BranchName = purchase_invoice.app_branch != null ? purchase_invoice.app_branch.name : "";
+            Branch = purchase_invoice.app_branch != null ? purchase_invoice.app_branch.name : "";
 
             if (purchase_invoice.status == Status.Documents_General.Approved)
             {
@@ -127,7 +127,7 @@ namespace DebeHaber
             }
 
             Comment = purchase_invoice.comment;
-            CurrencyName = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
+            Currency = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
             PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
             DocNumber = purchase_invoice.number;
             DocCode = purchase_invoice.code;
@@ -137,7 +137,7 @@ namespace DebeHaber
         {
             Type = TransactionTypes.SalesReturn;
             TransDate = purchase_return.trans_date;
-            CompanyName = purchase_return.contact.name;
+            Company = purchase_return.contact.name;
 
             if (purchase_return.status == Status.Documents_General.Approved)
             {
@@ -149,9 +149,9 @@ namespace DebeHaber
             }
 
             Gov_Code = purchase_return.contact.gov_code;
-            BranchName = purchase_return.app_branch != null ? purchase_return.app_branch.name : "";
+            Branch = purchase_return.app_branch != null ? purchase_return.app_branch.name : "";
             Comment = purchase_return.comment;
-            CurrencyName = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
+            Currency = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
 
             DocNumber = purchase_return.number;
             DocCode = purchase_return.app_document_range != null ? purchase_return.app_document_range.code : "";
@@ -408,7 +408,7 @@ namespace DebeHaber
         public PaymentTypes PaymentType { get; set; }
         public DateTime TransDate { get; set; }
         public string Parent { get; set; }
-        public string CompanyName { get; set; }
+        public string Company { get; set; }
         public string Gov_Code { get; set; }
 
         public string DocNumber { get; set; }
@@ -433,7 +433,7 @@ namespace DebeHaber
             }
 
             Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
-            CompanyName = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
+            Company = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
             Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
             DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
             DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
@@ -474,12 +474,4 @@ namespace DebeHaber
         public virtual List<FixedAsset> FixedAssets {get;set;}
     }
 
-    public class Vat
-    {
-        public int Type { get; set; }
-        public decimal Coef { get; set; }
-        public decimal ValueWVAT { get; set; }
-        public string CostCenter { get; set; }
-        public string CostCenterType { get; set; }
-    }
 }

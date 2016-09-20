@@ -189,8 +189,9 @@ namespace Cognitivo.Accounting
                 var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                 Send2API(Sales_Json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Sales Invoice Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
                 foreach (sales_invoice sales_invoice in SalesList)
                 {
                     sales_invoice.is_accounted = false;
@@ -252,8 +253,9 @@ namespace Cognitivo.Accounting
                 var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                 Send2API(Sales_Json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Purchase Invoice Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
                 foreach (purchase_invoice purchase_invoice in PurchaseList)
                 {
                     purchase_invoice.IsSelected = false;
@@ -316,8 +318,9 @@ namespace Cognitivo.Accounting
                 var Json = new JavaScriptSerializer().Serialize(Integration);
                 Send2API(Json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Sales Return Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
                 foreach (sales_return sales_return in SalesReturnList)
                 {
                     sales_return.is_accounted = false;
@@ -381,8 +384,9 @@ namespace Cognitivo.Accounting
                 var Json = new JavaScriptSerializer().Serialize(Integration);
                 Send2API(Json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Purchase Return Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
                 foreach (purchase_return purchase_return in PurchaseReturnList)
                 {
                     purchase_return.is_accounted = false;
@@ -423,8 +427,10 @@ namespace Cognitivo.Accounting
                 var Json = new JavaScriptSerializer().Serialize(Integration);
                 Send2API(Json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Payment Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 foreach (payment_detail payment_detail in PaymentList)
                 {
                     payment_detail.payment.is_accounted = false;

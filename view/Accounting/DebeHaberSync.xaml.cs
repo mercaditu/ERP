@@ -444,14 +444,13 @@ namespace Cognitivo.Accounting
 
         private void FixedAsset()
         {
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions FixedAssetError = new DebeHaber.Transactions();
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
 
-            foreach (item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList())
+            List<item_asset_group> AssetGroupList = db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList();
+
+            foreach (item_asset_group item_asset_group in AssetGroupList)
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
-
                 DebeHaber.FixedAssetGroup FixedAssetGroup = new DebeHaber.FixedAssetGroup();
                 FixedAssetGroup.Name = item_asset_group.name;
                 FixedAssetGroup.LifespanYears = (decimal)item_asset_group.depreciation_rate;
@@ -472,18 +471,24 @@ namespace Cognitivo.Accounting
                     FixedAssetGroup.FixedAssets.Add(FixedAsset);
                 }
 
-                Transactions.FixedAssetGroups.Add(FixedAssetGroup);
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.FixedAssetGroups.Add(FixedAssetGroup);
 
-                try
-                {
-                    var Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Json);
-                }
-                catch { }
-                finally
-                {
-                    db.SaveChanges();
-                }
+                Integration.Transactions.Add(Transaction);
+            }
+
+            try
+            {
+                var Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Json);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("FixedAsset Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 

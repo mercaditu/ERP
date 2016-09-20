@@ -309,36 +309,36 @@ namespace Cognitivo.Accounting
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
                 Transaction.Commercial_Invoices.Add(SalesReturn);
                 Integration.Transactions.Add(Transaction);
+            }
 
-                try
+            try
+            {
+                var Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Json);
+            }
+            catch (Exception)
+            {
+                foreach (sales_return sales_return in SalesReturnList)
                 {
-                    var Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Json);
+                    sales_return.is_accounted = false;
                 }
-                catch (Exception)
-                {
-
-                }
-                finally
-                {
-                    sales_return.IsSelected = true;
-                    db.SaveChanges();
-                }
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 
         private void PurchaseReturn_Sync()
         {
-            //remember to clean out those that are already accounted from SalesSync.
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions PurchaseReturnError = new DebeHaber.Transactions();
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
+            List<purchase_return> PurchaseReturnList = db.purchase_return.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
-            foreach (purchase_return purchase_return in db.purchase_return.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            foreach (purchase_return purchase_return in PurchaseReturnList)
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
-
                 DebeHaber.Commercial_Invoice PurchaseReturn = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
@@ -368,63 +368,71 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                Transactions.Commercial_Invoices.Add(PurchaseReturn);
+                purchase_return.is_accounted = true;
+                purchase_return.IsSelected = false;
 
-                try
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.Commercial_Invoices.Add(PurchaseReturn);
+                Integration.Transactions.Add(Transaction);
+            }
+
+            try
+            {
+                var Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Json);
+            }
+            catch (Exception)
+            {
+                foreach (purchase_return purchase_return in PurchaseReturnList)
                 {
-                    var Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Json);
-                    purchase_return.is_accounted = true;
-                }
-                catch (Exception)
-                {
-                    PurchaseReturnError.Commercial_Invoices.Add(PurchaseReturn);
                     purchase_return.is_accounted = false;
-                }
-                finally
-                {
-                    purchase_return.IsSelected = true;
-                    db.SaveChanges();
-                }
+                }                
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 
         private void PaymentSync()
         {
-            //DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-            DebeHaber.Transactions PaymentError = new DebeHaber.Transactions();
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
+            List<payment_detail> PaymentList = db.payment_detail.Local.Where(x => x.IsSelected && x.payment.is_accounted == false).ToList();
 
             //Loop through
-            foreach (payment payments in db.payments.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            foreach (payment_detail payment_detail in PaymentList)
             {
-                DebeHaber.Transactions Transactions = new DebeHaber.Transactions();
-                Transactions.HashIntegration = RelationshipHash;
+                DebeHaber.Payments Payment = new DebeHaber.Payments();
 
-                foreach (payment_detail payment_detail in payments.payment_detail.ToList())
-                {
-                    DebeHaber.Payments Payment = new DebeHaber.Payments();
+                //Loads Data from Sales
+                payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                Payment.FillPayments(schedual);
 
-                    //Loads Data from Sales
-                    payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
-                    Payment.FillPayments(schedual);
-                    Transactions.Payments.Add(Payment);
-                }
+                payment_detail.IsSelected = false;
+                payment_detail.payment.is_accounted = true;
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Transaction.Payments.Add(Payment);
 
-                try
+                Integration.Transactions.Add(Transaction);
+            }
+
+            try
+            {
+                var Json = new JavaScriptSerializer().Serialize(Integration);
+                Send2API(Json);
+            }
+            catch (Exception)
+            {
+                foreach (payment_detail payment_detail in PaymentList)
                 {
-                    var Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Json);
-                    payments.is_accounted = true;
+                    payment_detail.payment.is_accounted = false;
                 }
-                catch (Exception)
-                {
-                    payments.is_accounted = false;
-                }
-                finally
-                {
-                    payments.IsSelected = true;
-                    db.SaveChanges();
-                }
+            }
+            finally
+            {
+                db.SaveChanges();
             }
         }
 

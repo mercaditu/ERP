@@ -191,7 +191,12 @@ namespace Cognitivo.Accounting
             }
             catch (Exception e)
             {
-                MessageBox.Show("Sales Invoice Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (MessageBox.Show("Sales Error. Would you like to Save the File for Analsys?", "",MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                {
+                    MessageBox.Show(e.Message, "Error Message");
+                    file_create(new JavaScriptSerializer().Serialize(Integration).ToString(), "SalesInvoice-" + DateTime.Now);
+                }
+
                 foreach (sales_invoice sales_invoice in SalesList)
                 {
                     sales_invoice.is_accounted = false;
@@ -255,10 +260,14 @@ namespace Cognitivo.Accounting
             }
             catch (Exception e)
             {
-                MessageBox.Show("Purchase Invoice Error, code will try to revert changes. " + e.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (MessageBox.Show("Purchase Error. Would you like to Save the File for Analsys?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                {
+                    MessageBox.Show(e.Message, "Error Message");
+                    file_create(new JavaScriptSerializer().Serialize(Integration).ToString(), "PurchaseInvoice-" + DateTime.Now);
+                }
                 foreach (purchase_invoice purchase_invoice in PurchaseList)
                 {
-                    purchase_invoice.IsSelected = false;
+                    purchase_invoice.is_accounted = false;
                 }
             }
             finally
@@ -335,6 +344,8 @@ namespace Cognitivo.Accounting
         private void PurchaseReturn_Sync()
         {
             DebeHaber.Integration Integration = new DebeHaber.Integration();
+            DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+
             Integration.Key = RelationshipHash;
 
             List<purchase_return> PurchaseReturnList = db.purchase_return.Local.Where(x => x.IsSelected).ToList();
@@ -374,10 +385,10 @@ namespace Cognitivo.Accounting
                 purchase_return.is_accounted = true;
                 purchase_return.IsSelected = false;
 
-                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
                 Transaction.Commercial_Invoices.Add(PurchaseReturn);
-                Integration.Transactions.Add(Transaction);
             }
+
+            Integration.Transactions.Add(Transaction);
 
             try
             {
@@ -447,7 +458,7 @@ namespace Cognitivo.Accounting
             DebeHaber.Integration Integration = new DebeHaber.Integration();
             Integration.Key = RelationshipHash;
 
-            List<item_asset_group> AssetGroupList = db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList();
+            List<item_asset_group> AssetGroupList = db.item_asset_group.Local.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList();
 
             foreach (item_asset_group item_asset_group in AssetGroupList)
             {

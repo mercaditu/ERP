@@ -71,12 +71,13 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+            <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" 
+                                  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
             <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
-            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26"  can_New="True"
+            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" can_New="True"
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-            <TextBox Name="txtvalue"/>
+            <TextBox Name="txtvalue" Style="{StaticResource input_textbox}"/>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

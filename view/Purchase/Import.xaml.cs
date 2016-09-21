@@ -138,7 +138,7 @@ namespace Cognitivo.Purchase
                 {
                     if (purchase_invoice != null)
                     {
-                        getProratedCostCounted(purchase_invoice, true,GrandTotal );
+                        getProratedCostCounted(purchase_invoice, true, GrandTotal);
                     }
                 }
                 productDataGrid.ItemsSource = null;
@@ -156,7 +156,7 @@ namespace Cognitivo.Purchase
             if (impexDataGrid.SelectedItem != null)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
-                GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.GrandTotal);
+                GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
                 foreach (impex_import impex_import in impex.impex_import)
                 {
                     getProratedCostCounted(impex_import.purchase_invoice, false, GrandTotal); 
@@ -463,7 +463,12 @@ namespace Cognitivo.Purchase
                     impex.contact = contact;
 
                     sbxContact.Text = contact.name;
-                    GrandTotal = pnlPurchaseInvoice.selected_purchase_invoice.Sum(x => x.GrandTotal);
+
+                    foreach (purchase_invoice purchase_invoice in pnlPurchaseInvoice.selected_purchase_invoice)
+                    {
+                        GrandTotal += purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal);
+                    }
+
                     purchase_invoiceViewSource.Source =
                     pnlPurchaseInvoice.selected_purchase_invoice;
                     btnImportInvoice_Click(sender, null);

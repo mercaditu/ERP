@@ -18,7 +18,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="impexViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex}, CreateList=True}"/>
-     
+
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
         <CollectionViewSource x:Key="statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}"/>
@@ -63,13 +63,15 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="290"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="229"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="0,8">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="18,0" Width="264">
                 <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
                             HorizontalAlignment="Center">
+                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="numberTextBox" Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
                     <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
@@ -79,23 +81,20 @@
                     <ComboBox x:Name="id_incotermComboBox" Style="{StaticResource input_combobox}"
                               ItemsSource="{Binding Source={StaticResource incotermViewSource}}" 
                               DisplayMemberPath="name" SelectedValuePath="id_incoterm" SelectedValue="{Binding id_incoterm, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
-                    <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
-                    <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
-                    <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
-                    <!--<Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="id_pur_invoiceComboBox" Style="{StaticResource input_combobox}"
-                                  ItemsSource="{Binding Source={StaticResource purchase_invoiceViewSource}}"
-                                  DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"/>
-                        <Button x:Name="btnImportInvoice" Content="O" VerticalAlignment="Top" FontFamily="/Cognitivo;component/Resources/#cognitivo"  
-                                Click="btnImportInvoice_Click" Height="18"/>
-                    </StackPanel>-->
+                    <CheckBox x:Name="is_activeCheckBox" Width="180" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay}" Style="{StaticResource input_checkbox}"/>
                 </StackPanel>
             </ScrollViewer>
             <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
                         Grid.Column="1" Grid.Row="0" Margin="4,0,0,0">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+
+                <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
+                <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
+                <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
+                <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, 
+                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                Style="{StaticResource input_datepicker}"/>
+
                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="statusComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource statusViewSource}}" Width="180"
@@ -109,12 +108,9 @@
                             </Hyperlink>
                     </TextBlock>
                 </StackPanel>
-
-              
-                <CheckBox x:Name="is_activeCheckBox" Width="180" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
             </StackPanel>
-            
-            <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Height="2" Margin="0,2" HorizontalAlignment="Stretch"/>
+
+            <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch"/>
 
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True">
                 <TabItem Header="{lex:Loc Purchase}">
@@ -122,14 +118,14 @@
                         <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
 
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" MaxWidth="128" Binding="{Binding item_code}"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" MaxWidth="128" Binding="{Binding item_code}"/>
 
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="64" MaxWidth="256" Binding="{Binding item}"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="64" MaxWidth="256" Binding="{Binding item}"/>
 
-                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
+                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
                                                 Width="64" CellStyle="{StaticResource Number_CellStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
 
@@ -144,12 +140,12 @@
                                 <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
                                                 Header="Landed" ElementStyle="{StaticResource RightAlignStyle}"/>
-                            
-                            <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+
+                                <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Expenses}">
@@ -194,20 +190,20 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-                       
+
 
                         <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
                                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
-                        </Grid>
+                    </Grid>
                 </TabItem>
             </TabControl>
 
-            <Grid Grid.Row="2" Grid.Column="1" Margin="8" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Grid Grid.Row="2" Grid.Column="1" Margin="14" HorizontalAlignment="Right" VerticalAlignment="Top" Height="26" Width="155">
                 <TextBox Width="155" x:Name="txtsearch" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
                 <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
             </Grid>
         </Grid>
-        
+
         <cntrl:toolBar x:Name="toolBar" 
                        btnCancel_Click="toolBar_btnCancel_Click_1" 
                        btnDelete_Click="toolBar_btnDelete_Click_1"

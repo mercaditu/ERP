@@ -33,22 +33,14 @@ namespace Cognitivo.Product
             item_request_detailitem_request_decisionViewSource = ((CollectionViewSource)(FindResource("item_request_detailitem_request_decisionViewSource")));
 
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-            //dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
-            app_branchViewSource.Source = CurrentSession.Get_Branch(); //dbContext.app_branch.Local;
-
-            //item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            //dbContext.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            //item_movementViewSource.Source = dbContext.item_movement.Local;
+            app_branchViewSource.Source = CurrentSession.Get_Branch();
 
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-            app_currencyViewSource.Source = CurrentSession.Get_Currency(); // dbContext.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-
-            //CollectionViewSource production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            //production_orderViewSource.Source = dbContext.production_order.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            app_currencyViewSource.Source = CurrentSession.Get_Currency();
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            cmburgency.ItemsSource = Enum.GetValues(typeof(entity.item_request_detail.Urgencies));
+            cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
@@ -59,11 +51,6 @@ namespace Cognitivo.Product
         {
             itemMovement = new Configs.itemMovement();
             dbContext.Approve();
-        }
-
-        private void toolBar_btnAnull_Click(object sender)
-        {
-
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)

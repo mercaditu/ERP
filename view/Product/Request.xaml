@@ -34,8 +34,6 @@
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
-        <!--<CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>-->
-        <!--<CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
@@ -306,8 +304,13 @@
             
         </Grid>
 
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" btnNew_Click="toolBar_btnNew_Click" btnEdit_Click="toolBar_btnEdit_Click" btnAnull_Click="toolBar_btnAnull_Click" btnCancel_Click="toolBar_btnCancel_Click"
-                       btnApprove_Click="toolBar_btnApprove_Click" btnSave_Click="toolBar_btnSave_Click" btnSearch_Click="toolBar_btnSearch_Click"
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
+                       btnNew_Click="toolBar_btnNew_Click" 
+                       btnEdit_Click="toolBar_btnEdit_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click" 
+                       btnSave_Click="toolBar_btnSave_Click" 
+                       btnSearch_Click="toolBar_btnSearch_Click"
                          State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="RequestResource"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 

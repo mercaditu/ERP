@@ -307,6 +307,7 @@ namespace Cognitivo.Purchase
                             }
                             impex_expense.value = 0;
                             impex_expense.id_incoterm_condition = item.id_incoterm_condition;
+                            impex_expense.id_currencyfx = PurchaseInvoice.app_currencyfx.id_currency;
                             impex_expense.id_currencyfx = PurchaseInvoice.id_currencyfx;
                             impex_expense.id_purchase_invoice = PurchaseInvoice.id_purchase_invoice;
                             impex_expense.id_item = (int)product.id_item;
@@ -506,6 +507,8 @@ namespace Cognitivo.Purchase
                
             }
         }
+
+      
 
       
 

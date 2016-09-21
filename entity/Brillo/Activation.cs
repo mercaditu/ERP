@@ -91,30 +91,41 @@ namespace entity.Brillo
             string VersionKey = "Himayuddin_51";
             string versionname = "";
             string companycode = "";
-            using (db db = new db())
+          
+
+            string _Passkey = "^%*@$^$";
+            int id_role = CurrentSession.UserRole.id_role;
+
+         
+            if (security_role != null)
             {
-                string _Passkey = "^%*@$^$";
-                int id_role = CurrentSession.UserRole.id_role;
-
-                //  security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
-                if (security_role != null)
+                if (security_role.version != null)
                 {
-                    if (security_role.version != null)
-                    {
-                        string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+                    string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
 
-                        VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
-                        string[] version = VersionKey.Split('_');
+                    VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                    string[] version = VersionKey.Split('.');
+                    if (version.Count() >= 1)
+                    {
                         VersionKey = version[0];
+                    }
+                    if (version.Count() >= 2)
+                    {
                         versionname = version[1];
+                    }
+                    if (version.Count() >= 3)
+                    {
                         companycode = version[2];
                     }
+
+
                 }
-
-
-
-
             }
+
+
+
+
+
 
             if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {

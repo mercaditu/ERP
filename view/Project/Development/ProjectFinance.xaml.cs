@@ -45,7 +45,7 @@ namespace Cognitivo.Project
                     {
                         if (project_task.sales_detail != null)
                         {
-                            project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
+                            project_task.UnitPrice_Vat = project_task.sales_detail.UnitPrice_Vat;
                             project_task.RaisePropertyChanged("unit_price_vat");
 
 

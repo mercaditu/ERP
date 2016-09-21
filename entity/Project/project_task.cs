@@ -75,8 +75,11 @@ namespace entity
         {
             get { return _item_description; }
             set {
-                _item_description = value;
-                RaisePropertyChanged("item_description");
+                if (_item_description != value)
+                {
+                    _item_description = value;
+                    RaisePropertyChanged("item_description");
+                }
             }
         }
         private string _item_description;
@@ -153,17 +156,13 @@ namespace entity
         }
 
         [NotMapped]
-        public decimal? unit_price_vat
+        public decimal? UnitPrice_Vat
         {
             get { return _unit_price_vat; }
             set
             {
-
                 _unit_price_vat = value;
-                RaisePropertyChanged("unit_price_vat");
-
-
-
+                RaisePropertyChanged("UnitPrice_Vat");
             }
         }
         private decimal? _unit_price_vat;
@@ -171,6 +170,20 @@ namespace entity
         public DateTime? end_date_est { get; set; }
         public DateTime? trans_date { get; set; }
         public bool is_active { get; set; }
+
+        [NotMapped]
+        public decimal SubTotal_WithVAT
+        {
+            get
+            {
+                decimal i = 0M;
+                if (quantity_exe > 0 && UnitPrice_Vat > 0)
+                {
+                    i = quantity_exe * (decimal)UnitPrice_Vat;
+                }
+                return i;
+            }
+        }
 
         [NotMapped]
         public new bool IsSelected

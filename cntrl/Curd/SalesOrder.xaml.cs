@@ -100,9 +100,9 @@ namespace cntrl
                         }
                         
                         
-                        if (_project_task.unit_price_vat != null)
+                        if (_project_task.UnitPrice_Vat != null)
                         {
-                            sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
+                            sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
                         }
 
                         sales_budget_detail.id_project_task = _project_task.id_project_task;
@@ -206,9 +206,9 @@ namespace cntrl
                             }
 
 
-                            if (_project_task.unit_price_vat != null)
+                            if (_project_task.UnitPrice_Vat != null)
                             {
-                                sales_order_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
+                                sales_order_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
                             }
 
                             sales_order_detail.id_project_task = _project_task.id_project_task;
@@ -268,9 +268,9 @@ namespace cntrl
                                     sales_invoice_detail.quantity = (decimal)_project_task.quantity_est;
                                 }
 
-                                if (_project_task.unit_price_vat != null)
+                                if (_project_task.UnitPrice_Vat != null)
                                 {
-                                    sales_invoice_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
+                                    sales_invoice_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
 
                                 }
 

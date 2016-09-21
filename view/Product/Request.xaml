@@ -160,7 +160,7 @@
             </StackPanel>
 
             <TabControl Grid.Row="1" Grid.ColumnSpan="2">
-                <TabItem Header="{lex:Loc Request}">
+                <TabItem Header="{lex:Loc RequestResource}">
                     <DataGrid x:Name="item_request_detailMovementDataGrid" SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" 
                           AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                           ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
@@ -200,20 +200,21 @@
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                 </TabItem>
-                <TabItem Header="{lex:Loc Decision}">
+                <TabItem Header="{lex:Loc RequestManagement}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Grid IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-                            <DataGrid SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" 
+                            <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}" VerticalAlignment="Top"/>
+                            <DataGrid SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" Margin="0,44,0,0"
                                       AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
                                       RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
-                    		                            Header="Item" MinWidth="128"/>
+                    		                            Header="Item" Width="128"/>
                                     <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
                                                         Header="balance" Width="64" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
                                 </DataGrid.Columns>

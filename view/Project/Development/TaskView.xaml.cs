@@ -435,6 +435,11 @@ namespace Cognitivo.Project.Development
                     project_task.status = Status.Project.Rejected;
                     ProjectTaskDB.NumberOfRecords += 1;
                     project_task.IsSelected = false;
+
+                    foreach (production_order_detail production_order_detail in project_task.production_order_detail)
+                    {
+                        production_order_detail.status = Status.Production.Anull;
+                    }
                 }
 
                 if (ProjectTaskDB.SaveChanges() > 0)

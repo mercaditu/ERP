@@ -124,28 +124,33 @@
                         <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver"/>
                     </Grid>
                     <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                                EnableRowVirtualization="True" Height="Auto" Margin="4"
+                                EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
 
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Binding="{Binding item_code}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" MaxWidth="128" Binding="{Binding item_code}"/>
 
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="90" Binding="{Binding item}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="64" MaxWidth="256" Binding="{Binding item}"/>
 
-                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" Width="SizeToHeader"
+                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
+                                                Width="64" CellStyle="{StaticResource Number_CellStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
-                            
-                            <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" Width="SizeToHeader"
-                                                Header="Unit Cost" ElementStyle="{StaticResource RightAlignStyle}"/>
-                                <DataGridTextColumn Binding="{Binding unit_Importcost, StringFormat={}{0:N2}}" Width="SizeToHeader"
-                                                Header="Unit  Cost Import" ElementStyle="{StaticResource RightAlignStyle}"/>
 
-                                <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader"
+                                <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" 
+                                                    Width="64" CellStyle="{StaticResource Number_CellStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}"/>
+
+                                <DataGridTextColumn Binding="{Binding unit_Importcost, StringFormat={}{0:N2}}" 
+                                                    Width="64" CellStyle="{StaticResource Number_CellStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Expenses}" ElementStyle="{StaticResource RightAlignStyle}"/>
+
+                                <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Width="64" CellStyle="{StaticResource Number_CellStyle}"
                                                 Header="Landed" ElementStyle="{StaticResource RightAlignStyle}"/>
                             
                             <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:SubTotal}" Width="SizeToHeader"
+                                                Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>

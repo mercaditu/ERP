@@ -128,14 +128,15 @@
 
                         <TabControl Grid.Column="1">
                             <TabItem Header="Data">
-                                <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                                <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center" 
+                                            IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                                     <StackPanel Orientation="Horizontal" >
                                         <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                                         <Label Content="{Binding project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" Width="55"/>
+                                        <TextBlock Text="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
                                     </StackPanel>
                                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                                     <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -181,7 +182,6 @@
                                                     btnSave_Click="btnSaveTask_Click"
                                                     btnDelete_Click="btnDeleteTask_Click"
                                                     btnApprove_Click="toolIcon_Click"
-                                            
                                                     btnParent_Click="btnAddParentTask_Click"/>
                                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                         <StackPanel x:Name="stpcode" IsEnabled="False">

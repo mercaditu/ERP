@@ -601,7 +601,18 @@ namespace Cognitivo.Production
 
         private void btnEditTask_Click(object sender)
         {
-            stpcode.IsEnabled = true;
+            production_order_detail production_order_detail = treeProject.SelectedItem as production_order_detail;
+            if (production_order_detail != null)
+            {
+                if (production_order_detail.project_task != null)
+                {
+                    toolBar.msgWarning("Access Denied. Order linked to Approved Task.");
+                }
+                else
+                {
+                    stpcode.IsEnabled = true;
+                }
+            }
         }
 
         private void btnSaveTask_Click(object sender)

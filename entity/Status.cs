@@ -88,7 +88,8 @@ namespace entity
             InProcess = 3,
             Executed = 4,
             QA_Check = 5,
-            QA_Rejected = 6
+            QA_Rejected = 6,
+            Anull = 7
         }
 
         public enum Project

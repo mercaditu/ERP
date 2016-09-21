@@ -610,7 +610,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = project_event_variable.item.unit_cost;
+                        project_task.unit_cost_est = project_event_variable.unit_price;
 
                         if (item.item_recepie.Count() > 0)
                         {
@@ -643,7 +643,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = project_event_variable.item.unit_cost;
+                        project_task.unit_cost_est = project_event_variable.unit_price;
                         project.project_task.Add(project_task);
                     }
                 }
@@ -660,7 +660,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = per_event_service.item.unit_cost;
+                        project_task.unit_cost_est = per_event_service.unit_price;
 
                         foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
@@ -691,7 +691,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = per_event_service.item.unit_cost;
+                        project_task.unit_cost_est = per_event_service.unit_price;
                         project.project_task.Add(project_task);
                     }
                 }

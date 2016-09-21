@@ -61,12 +61,7 @@ namespace Cognitivo.Project
                 objSalesinvoice.project = project;
                 objSalesinvoice.db = SalesOrderDB;
 
-                foreach (project_task project_task in project.project_task)
-                {
-                  TotalCost+=project_task.CalcExecutedPrice_TimerTaks();
-
-                }
-                objSalesinvoice.TotalCost = TotalCost;
+                objSalesinvoice.TotalCost = project.project_task.Sum(x=>x.SubTotal_WithVAT);
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(objSalesinvoice);

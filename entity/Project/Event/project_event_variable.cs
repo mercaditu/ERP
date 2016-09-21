@@ -37,12 +37,7 @@ namespace entity
                     RaisePropertyChanged("id_item");
 
                
-                        using (db db = new db())
-                        {
-                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
-
-
-                        }
+                   
 
                         update_UnitPrice();
                     

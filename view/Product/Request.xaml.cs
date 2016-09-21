@@ -137,18 +137,6 @@ namespace Cognitivo.Product
 
 
                 var transfer =
-                    //(from items in dbContext.item_transfer_detail
-                    // where items.item_product.id_item == item_request_detail.id_item
-                    // group items by new { items.item_transfer.app_branch_destination }
-                    //     into last
-                    //     select new
-                    //     {
-                    //         id_location = last.Key.app_branch_destination.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
-                    //         branch = last.Key.app_branch_destination.name,
-                    //         quntitiy = last.Sum(x => x.quantity_destination != null ? x.quantity_destination : 0),
-
-                      //     }).ToList();
-
                 (from items in dbContext.item_movement
                  where items.status == Status.Stock.InStock
                  && items.item_product.id_item == item_request_detail.id_item

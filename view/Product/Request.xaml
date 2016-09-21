@@ -243,9 +243,9 @@
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty, StringFormat={}{0:N2}}" IsReadOnly="True" Width="*"/>
                             <DataGridTextColumn 
                                 Header="{lex:Loc Cognitivo:local:Requests}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*"/>
-                            
+
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Transfer}" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource B2V}}">
@@ -275,7 +275,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn 
                                 Header="{lex:Loc Cognitivo:local:Items}" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
-                           
+
                             <DataGridTextColumn 
                                 Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*"/>
 
@@ -298,10 +298,8 @@
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
-                  
                 </TabItem>
-            </TabControl >
-            
+            </TabControl>
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" 

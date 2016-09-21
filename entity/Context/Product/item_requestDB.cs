@@ -141,8 +141,11 @@ namespace entity
                             }
 
                             int id_location = (int)item.id_location;
-                            item_transfer.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
-                            item_transfer.app_branch_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
+
+                            app_location app_location = base.app_location.Where(x => x.id_location == id_location && x.is_default).FirstOrDefault();
+                            item_transfer.app_location_origin = app_location;
+                            item_transfer.app_branch_origin = app_location.app_branch;
+
                             item_transfer.comment = "Transfer item Request from " + item.decision.ToString();
 
 
@@ -154,6 +157,7 @@ namespace entity
                             item_transfer_detail.quantity_destination = item.quantity;
                             item_transfer_detail.movement_id = item.movement_id;
 
+                            //PROJECT
                             if (item_request_detail.id_project_task != null)
                             {
                                 //Transfer related to Project because there is a Project.
@@ -165,19 +169,21 @@ namespace entity
                                 item_transfer.id_project = item_request_detail.project_task.id_project;
                             }
 
+                            //SALES ORDER
                             if (item_request_detail.id_sales_order_detail != null)
                             {
                                 item_transfer.app_location_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
                                 item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault();
                             }
 
+                            //PRODUCTION ORDER
                             if (item_request_detail.id_order_detail != null)
                             {
                                 //Get Production Line
                                 int id_production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.id_production_line;
                                 //Get Location based on Line
-                                app_location app_location = base.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
-                                item_transfer.app_location_destination = app_location;
+                                app_location app_location_Destination = base.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
+                                item_transfer.app_location_destination = app_location_Destination;
                                 //Get Branch based on Location
                                 item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
                             }
@@ -189,11 +195,11 @@ namespace entity
                                 item_transfer_dimension.value = item_request_dimension.value;
                                 item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                             }
+
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
-                            item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
+                            item_transfer.transfer_type = item_transfer.Transfer_type.movemnent;
 
                             base.item_transfer.Add(item_transfer);
-                            //  ProductTransferDB.SaveChanges();
                         }
 
                         else if (item.decision == entity.item_request_decision.Decisions.Transfer)

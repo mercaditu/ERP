@@ -59,7 +59,6 @@ namespace Cognitivo.Product
         {
             itemMovement = new Configs.itemMovement();
             dbContext.Approve();
-           
         }
 
         private void toolBar_btnAnull_Click(object sender)

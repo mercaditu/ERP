@@ -17,7 +17,7 @@
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
       Title="{lex:Loc RequestManagement}"
-      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
+      MinHeight="500" MinWidth="800" Loaded="Page_Loaded">
 
     <Page.CommandBindings>
         <CommandBinding Command="customcmd:CustomCommands.Delete" 
@@ -311,8 +311,8 @@
                        btnApprove_Click="toolBar_btnApprove_Click" 
                        btnSave_Click="toolBar_btnSave_Click" 
                        btnSearch_Click="toolBar_btnSearch_Click"
-                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="RequestResource"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="RequestResource"
+                                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
     </Grid>
 </Page>

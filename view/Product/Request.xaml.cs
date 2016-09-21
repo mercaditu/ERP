@@ -23,10 +23,15 @@ namespace Cognitivo.Product
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
-            dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
             item_requestViewSource.Source = dbContext.item_request.Local;
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
@@ -39,7 +44,7 @@ namespace Cognitivo.Product
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
-            app_departmentViewSource.Source = dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            app_departmentViewSource.Source = await dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
             cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);

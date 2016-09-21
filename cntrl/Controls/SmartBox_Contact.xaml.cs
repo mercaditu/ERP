@@ -108,7 +108,7 @@ namespace cntrl.Controls
             InitializeComponent();
 
             ///Exists code if in design view.
-            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }

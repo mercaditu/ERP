@@ -58,9 +58,6 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{850B7465-0841-4C34-A918-F8B4472457D3} = {764326F8-BA6F-4E1B-87A9-3BD3AF36B301}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection

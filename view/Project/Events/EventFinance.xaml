@@ -80,7 +80,7 @@
                             </DataGrid.Columns>
                             <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
                         </DataGrid>
-                        <Label x:Name="tbxEventTotal"/>
+                        <Label x:Name="lblEventTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc SalesInvoice}">
@@ -97,7 +97,7 @@
                                                     Header="{lex:Loc Cognitivo:local:Total}" Width="128" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Label x:Name="tbxInvoiceTotal"/>
+                        <Label x:Name="lblInvoiceTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -51,14 +51,14 @@ namespace Cognitivo.Project
                     EventTotal += project_task.SubTotal_WithVAT;
                 }
 
-                tbxEventTotal.Content = EventTotal;
+                lblEventTotal.Content = EventTotal;
 
                 foreach (sales_invoice sales_invoice in project.sales_invoice)
                 {
                     InvoiceTotal += sales_invoice.GrandTotal;
                 }
 
-                tbxInvoiceTotal.Content = InvoiceTotal;
+                lblInvoiceTotal.Content = InvoiceTotal;
             }
         }
 

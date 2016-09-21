@@ -39,6 +39,14 @@ namespace Cognitivo.Project
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project != null)
+            {
+                foreach (project_task project_task in project.project_task)
+                {
+                    project_task.CalcExecutedQty_TimerTaks();
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

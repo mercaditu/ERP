@@ -448,13 +448,30 @@ namespace entity
                 {
                     using (db db = new db())
                     {
-                        quantity_exe = db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
+                        quantity_exe = db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.unit_cost);
                         RaisePropertyChanged("quantity_exe");
                     }
                 }
             }
             catch
             { }
+        }
+        public decimal CalcExecutedPrice_TimerTaks()
+        {
+            try
+            {
+                if (production_execution_detail != null && production_execution_detail.Count > 0)
+                {
+                    using (db db = new db())
+                    {
+                       return db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
+                       
+                    }
+                }
+            }
+            catch
+            { }
+            return 0;
         }
 
         #endregion

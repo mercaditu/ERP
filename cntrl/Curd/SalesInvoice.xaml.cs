@@ -45,6 +45,7 @@ namespace cntrl
 
         private project _project;
         public db db { get; set; }
+        public decimal TotalCost { get; set; }
 
         public SalesInvoice()
         {
@@ -130,6 +131,14 @@ namespace cntrl
             cbxCondition.ItemsSource = db.app_condition.Local;
 
             stackMain.DataContext = project;
+            decimal TotalValue=TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
+            if (TotalValue>0)
+            {
+                txtvalue.Text = Convert.ToString(TotalValue);
+            }
+          
+            
+          
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -30,7 +30,7 @@ namespace Cognitivo.Project
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
@@ -45,6 +45,7 @@ namespace Cognitivo.Project
                 foreach (project_task project_task in project.project_task)
                 {
                     project_task.CalcExecutedQty_TimerTaks();
+
                 }
             }
         }
@@ -52,7 +53,7 @@ namespace Cognitivo.Project
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             project project = projectViewSource.View.CurrentItem as project;
-            
+            Decimal TotalCost = 0;
             if (project != null)
             {
                 cntrl.SalesInvoice objSalesinvoice = new cntrl.SalesInvoice();
@@ -60,9 +61,15 @@ namespace Cognitivo.Project
                 objSalesinvoice.project = project;
                 objSalesinvoice.db = SalesOrderDB;
 
+                foreach (project_task project_task in project.project_task)
+                {
+                  TotalCost+=project_task.CalcExecutedPrice_TimerTaks();
+
+                }
+                objSalesinvoice.TotalCost = TotalCost;
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(objSalesinvoice);   
+                crud_modal.Children.Add(objSalesinvoice);
             }
         }
 
@@ -103,6 +110,6 @@ namespace Cognitivo.Project
         {
             projectViewSource.View.Refresh();
         }
-        
+
     }
 }

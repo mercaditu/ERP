@@ -51,7 +51,7 @@
                     <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">
@@ -65,7 +65,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">

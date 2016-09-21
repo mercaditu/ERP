@@ -15,10 +15,12 @@ namespace cntrl.Chart
             set
             {
                 _value = value;
-                OnPropertyChanged("Value");
+                //OnPropertyChanged("Value");
             }
         }
         private double _value;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Func<double, string> Formatter { get; set; }
 
@@ -32,6 +34,9 @@ namespace cntrl.Chart
             DataContext = this;
         }
 
+        private void MoveOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
 
+        }
     }
 }

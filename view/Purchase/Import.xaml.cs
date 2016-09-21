@@ -7,8 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Data.Entity;
 using entity;
-using System.Data.Entity.Validation;
-using entity.Brillo;
 
 namespace Cognitivo.Purchase
 {
@@ -20,7 +18,7 @@ namespace Cognitivo.Purchase
 
         List<entity.Class.Impex_CostDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_CostDetail>();
         List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
-        Decimal GrandTotal;
+        decimal GrandTotal;
         public Import()
         {
             InitializeComponent();
@@ -213,11 +211,10 @@ namespace Cognitivo.Purchase
 
             foreach (var item in impex_expense)
             {
-                if ((decimal)item.value!=null)
+                if ((decimal)item.value != null)
                 {
                     totalExpense += (decimal)item.value;
                 }
-              
             }
 
             if (purchase_invoice != null)
@@ -387,14 +384,12 @@ namespace Cognitivo.Purchase
                 {
                     if (totalExpense > 0)
                     {
-                        _ImpexImportDetails.unit_Importcost=Math.Round(((_ImpexImportDetails.sub_total / GrandTotal) * totalExpense) / _ImpexImportDetails.quantity, 2);
+                        _ImpexImportDetails.unit_Importcost = Math.Round(((_ImpexImportDetails.sub_total / GrandTotal) * totalExpense) / _ImpexImportDetails.quantity, 2);
                         _ImpexImportDetails.prorated_cost = _ImpexImportDetails.unit_cost + _ImpexImportDetails.unit_Importcost;
 
                         decimal SubTotal = (_ImpexImportDetails.quantity * _ImpexImportDetails.prorated_cost);
                         _ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
                     }
-                    
-
                 }
             }
         }

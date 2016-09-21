@@ -115,15 +115,11 @@
             </StackPanel>
             
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Height="2" Margin="0,2" HorizontalAlignment="Stretch"/>
-            
+
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True">
                 <TabItem Header="{lex:Loc Purchase}">
-                    <StackPanel>
-                    <Grid Grid.Column="1" HorizontalAlignment="Right">
-                        <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
-                        <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver"/>
-                    </Grid>
-                    <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                    <Grid>
+                        <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                         <DataGrid.Columns>
@@ -154,7 +150,7 @@
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    </StackPanel>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Expenses}">
                     <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
@@ -205,6 +201,11 @@
                         </Grid>
                 </TabItem>
             </TabControl>
+
+            <Grid Grid.Row="2" Grid.Column="1" Margin="8" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <TextBox Width="155" x:Name="txtsearch" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
+                <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
+            </Grid>
         </Grid>
         
         <cntrl:toolBar x:Name="toolBar" 

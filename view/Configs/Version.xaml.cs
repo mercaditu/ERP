@@ -36,7 +36,7 @@ namespace Cognitivo.Configs
             {
                 if (tabitem.Header.ToString().ToUpper() == "LITE".ToString())
                 {
-                    version = CurrentSession.Versions.Basic;
+                    version = CurrentSession.Versions.Lite;
                 }
                 if (tabitem.Header.ToString().ToUpper() == "BASIC".ToString())
                 {

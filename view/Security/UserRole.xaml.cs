@@ -182,33 +182,41 @@ namespace Cognitivo.Security
             AppList appList = new AppList();
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             List<security_crud> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
-            entity.Brillo.Activation Activation = new entity.Brillo.Activation();
-            CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-            List<entity.App.Names> _DbApplicationDelete = security_curd.Select(x => x.id_application).ToList();
-            List<entity.App.Names> ApplicationDelete = new List<entity.App.Names>();
-            foreach (DataRow item in appList.dtApp.Select("Version<>'" + version + "'"))
-            {
-                if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"]))==true)
+
+            CurrentSession.Versions version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+          
+
+                List<entity.App.Names> _DbApplicationDelete = security_curd.Select(x => x.id_application).ToList();
+                List<entity.App.Names> ApplicationDelete = new List<entity.App.Names>();
+                foreach (DataRow item in appList.dtApp.Rows)
                 {
-                    ApplicationDelete.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
-                }
+                    entity.CurrentSession.Versions dtVersion = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(item["Version"]));
+                    if (dtVersion > version)
+                    {
+                        if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
+                        {
+                            ApplicationDelete.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+                        }
+                    }
 
-            }
-
-
-
-            foreach (entity.App.Names AppName in ApplicationDelete)
-            {
-
-                security_crud _security_curd = dbContext.security_curd.Where(x => x.id_application == AppName && x.id_role == security_role.id_role).FirstOrDefault();
-                if (_security_curd != null)
-                {
-                    dbContext.security_curd.Remove(_security_curd);
                 }
 
 
-            }
-            dbContext.SaveChanges();
+
+                foreach (entity.App.Names AppName in ApplicationDelete)
+                {
+
+                    security_crud _security_curd = dbContext.security_curd.Where(x => x.id_application == AppName && x.id_role == security_role.id_role).FirstOrDefault();
+                    if (_security_curd != null)
+                    {
+                        dbContext.security_curd.Remove(_security_curd);
+                    }
+
+
+                }
+                dbContext.SaveChanges();
+            
+          
 
 
 

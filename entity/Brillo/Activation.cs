@@ -190,7 +190,7 @@ namespace entity.Brillo
                     }
                     int id_role = CurrentSession.UserRole.id_role;
                     security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
-                    _Seats = _Seats + "_" + security_role.name + "_" + security_role.app_company.gov_code;
+                    _Seats = _Seats + "." + security_role.name + "." + security_role.app_company.gov_code;
 
                     string _Passkey = "^%*@$^$";
 

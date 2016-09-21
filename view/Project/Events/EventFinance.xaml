@@ -65,7 +65,7 @@
             <TabControl>
                 <TabItem Header="{lex:Loc EventManagement}">
                     <Grid>
-                        <DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Code}" Width="128" IsReadOnly="True"/>
@@ -80,11 +80,12 @@
                             </DataGrid.Columns>
                             <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
                         </DataGrid>
+                        <Label x:Name="tbxEventTotal"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc SalesInvoice}">
                     <Grid>
-                        <DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True"/>
@@ -96,6 +97,7 @@
                                                     Header="{lex:Loc Cognitivo:local:Total}" Width="128" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label x:Name="tbxInvoiceTotal"/>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -42,11 +42,23 @@ namespace Cognitivo.Project
             project project = projectViewSource.View.CurrentItem as project;
             if (project != null)
             {
+                decimal EventTotal = 0M;
+                decimal InvoiceTotal = 0M;
+
                 foreach (project_task project_task in project.project_task)
                 {
                     project_task.CalcExecutedQty_TimerTaks();
-
+                    EventTotal += project_task.SubTotal_WithVAT;
                 }
+
+                tbxEventTotal.Content = EventTotal;
+
+                foreach (sales_invoice sales_invoice in project.sales_invoice)
+                {
+                    InvoiceTotal += sales_invoice.GrandTotal;
+                }
+
+                tbxInvoiceTotal.Content = InvoiceTotal;
             }
         }
 

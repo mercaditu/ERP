@@ -17,6 +17,7 @@ namespace entity.Class
         public string item { get; set; }
         public decimal quantity { get; set; }
         public decimal unit_cost { get; set; }
+        public decimal unit_Importcost { get; set; }
         public decimal cost { get; set; }
         public decimal sub_total { get { return _sub_total; } set { _sub_total = value; RaisePropertyChanged("sub_total"); } }
         private decimal _sub_total = 0;

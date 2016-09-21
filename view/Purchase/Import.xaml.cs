@@ -20,7 +20,7 @@ namespace Cognitivo.Purchase
 
         List<entity.Class.Impex_CostDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_CostDetail>();
         List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
-
+        Decimal GrandTotal;
         public Import()
         {
             InitializeComponent();
@@ -140,7 +140,7 @@ namespace Cognitivo.Purchase
                 {
                     if (purchase_invoice != null)
                     {
-                        getProratedCostCounted(purchase_invoice, true);
+                        getProratedCostCounted(purchase_invoice, true,GrandTotal );
                     }
                 }
                 productDataGrid.ItemsSource = null;
@@ -158,9 +158,10 @@ namespace Cognitivo.Purchase
             if (impexDataGrid.SelectedItem != null)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
+                GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.GrandTotal);
                 foreach (impex_import impex_import in impex.impex_import)
                 {
-                    getProratedCostCounted(impex_import.purchase_invoice, false); 
+                    getProratedCostCounted(impex_import.purchase_invoice, false, GrandTotal); 
                 }
             }
       
@@ -171,7 +172,7 @@ namespace Cognitivo.Purchase
             Calculate_Click(null, null);
         }
 
-        private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew)
+        private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew, decimal GrandTotal)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
 
@@ -254,15 +255,19 @@ namespace Cognitivo.Purchase
                     entity.Class.Impex_CostDetail ImpexImportDetails = new entity.Class.Impex_CostDetail();
                     ImpexImportDetails.number = _purchase_invoice_detail.purchase_invoice.number;
                     ImpexImportDetails.id_item = (int)_purchase_invoice_detail.id_item;
+                    ImpexImportDetails.item_code = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().code;
                     ImpexImportDetails.item = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().name;
                     ImpexImportDetails.quantity = _purchase_invoice_detail.quantity;
                     ImpexImportDetails.unit_cost = _purchase_invoice_detail.unit_cost;
+                    ImpexImportDetails.sub_total = _purchase_invoice_detail.SubTotal;
                     ImpexImportDetails.id_invoice = _purchase_invoice_detail.id_purchase_invoice;
                     ImpexImportDetails.id_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
 
                     if (totalExpense > 0)
                     {
-                        ImpexImportDetails.prorated_cost = Math.Round(_purchase_invoice_detail.unit_cost + (totalExpense / purchase_invoice_detail.Sum(x => x.quantity)), 2);
+                        ImpexImportDetails.unit_Importcost = Math.Round(((_purchase_invoice_detail.SubTotal / GrandTotal) * totalExpense) / _purchase_invoice_detail.quantity,2);
+                        ImpexImportDetails.prorated_cost = _purchase_invoice_detail.unit_cost + ImpexImportDetails.unit_Importcost;
+                    
                     }
 
                     decimal SubTotal = (_purchase_invoice_detail.quantity * ImpexImportDetails.prorated_cost);
@@ -382,7 +387,8 @@ namespace Cognitivo.Purchase
                 {
                     if (totalExpense > 0)
                     {
-                        _ImpexImportDetails.prorated_cost = Math.Round(_ImpexImportDetails.unit_cost + (totalExpense / totalQuantity), 2);
+                        _ImpexImportDetails.unit_Importcost=Math.Round(((_ImpexImportDetails.sub_total / GrandTotal) * totalExpense) / _ImpexImportDetails.quantity, 2);
+                        _ImpexImportDetails.prorated_cost = _ImpexImportDetails.unit_cost + _ImpexImportDetails.unit_Importcost;
 
                         decimal SubTotal = (_ImpexImportDetails.quantity * _ImpexImportDetails.prorated_cost);
                         _ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
@@ -462,6 +468,7 @@ namespace Cognitivo.Purchase
                     impex.contact = contact;
 
                     sbxContact.Text = contact.name;
+                    GrandTotal = pnlPurchaseInvoice.selected_purchase_invoice.Sum(x => x.GrandTotal);
                     purchase_invoiceViewSource.Source =
                     pnlPurchaseInvoice.selected_purchase_invoice;
                     btnImportInvoice_Click(sender, null);

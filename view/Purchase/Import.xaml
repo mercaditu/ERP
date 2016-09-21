@@ -131,15 +131,17 @@
 
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Binding="{Binding item_code}"/>
 
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Binding="{Binding item}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="90" Binding="{Binding item}"/>
 
                             <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" Width="SizeToHeader"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
                             
                             <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" Width="SizeToHeader"
                                                 Header="Unit Cost" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Binding="{Binding unit_Importcost, StringFormat={}{0:N2}}" Width="SizeToHeader"
+                                                Header="Unit  Cost Import" ElementStyle="{StaticResource RightAlignStyle}"/>
 
-                            <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader"
+                                <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader"
                                                 Header="Landed" ElementStyle="{StaticResource RightAlignStyle}"/>
                             
                             <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

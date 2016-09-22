@@ -1,8 +1,6 @@
 ﻿namespace Cognitivo.Reporting.Data {
     
-    
-    public partial class FinanceDS {
-    }
+
 }
 
 namespace Cognitivo.Reporting.Data.FinanceDSTableAdapters

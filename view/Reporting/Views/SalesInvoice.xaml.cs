@@ -85,37 +85,37 @@ namespace Cognitivo.Reporting.Views
             reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
 
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesInvoiceSummary.rdlc";
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesInvoiceSummary.rdlc";
 
             foreach (cntrl.ReportColumns ReportColumns in ReportColumnsList)
             {
 
                 if (ReportColumns.Columname == "VAT_SubTotal")
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVAT", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVAT", ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "Profit")
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowProfit", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowProfit", ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "MarkUp")
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMarkup", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMarkup", ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "Margin")
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMargin", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMargin", ReportColumns.IsVisibility.ToString()));
                 }
                 if (ReportColumns.Columname == "SubTotalCost")
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowCost", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowCost", ReportColumns.IsVisibility.ToString()));
 
                 }
                 if (ReportColumns.Columname == "SubTotalVAT")
                 {
-                    this.reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVATTotal", ReportColumns.IsVisibility == null ? true.ToString() : ReportColumns.IsVisibility.ToString()));
+                    reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVATTotal", ReportColumns.IsVisibility.ToString()));
                 }
 
 
@@ -124,8 +124,8 @@ namespace Cognitivo.Reporting.Views
             }
             SalesDB.EndInit();
 
-            this.reportViewer.Refresh();
-            this.reportViewer.RefreshReport();
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
         }
 
         private void rptPanel_Update(object sender, RoutedEventArgs e)

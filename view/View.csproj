@@ -256,6 +256,7 @@
     </Compile>
     <Compile Include="Class\clsStatus.cs" />
     <Compile Include="Class\CustomCommands.cs" />
+    <Compile Include="Class\ErrorLog.cs" />
     <Compile Include="Class\itemmovement.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\RichTextBoxHelper.cs" />

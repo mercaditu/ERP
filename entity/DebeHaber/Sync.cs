@@ -86,7 +86,7 @@ namespace DebeHaber
 
             Gov_Code = sales_invoice.contact.gov_code;
             Comment = sales_invoice.comment;
-            Currency = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
+            Currency = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.code : "" : "";
 
             DocNumber = sales_invoice.number;
             DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
@@ -111,7 +111,7 @@ namespace DebeHaber
 
             Gov_Code = sales_return.contact.gov_code;
             Comment = sales_return.comment;
-            Currency = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
+            Currency = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.code : "" : "";
 
             DocNumber = sales_return.number;
             DocCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "";
@@ -136,7 +136,7 @@ namespace DebeHaber
             }
 
             Comment = purchase_invoice.comment;
-            Currency = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
+            Currency = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.code : "" : "";
             PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
             DocNumber = purchase_invoice.number;
             DocCode = purchase_invoice.code;
@@ -160,7 +160,7 @@ namespace DebeHaber
             Gov_Code = purchase_return.contact.gov_code;
             Branch = purchase_return.app_branch != null ? purchase_return.app_branch.name : "";
             Comment = purchase_return.comment;
-            Currency = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
+            Currency = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.code : "" : "";
 
             DocNumber = purchase_return.number;
             DocCode = purchase_return.app_document_range != null ? purchase_return.app_document_range.code : "";
@@ -450,7 +450,7 @@ namespace DebeHaber
 
             Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
             Value = schedual.payment_detail.value;
-            Currency = schedual.payment_detail.app_currencyfx.app_currency.name;
+            Currency = schedual.payment_detail.app_currencyfx.app_currency.code;
 
             TransDate = schedual.payment_detail.payment.trans_date;
             Account = schedual.payment_detail.app_account.name;

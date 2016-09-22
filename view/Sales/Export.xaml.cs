@@ -28,7 +28,7 @@ namespace Cognitivo.Sales
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, sales_invoiceViewSource = null;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
 
-        List<entity.Class.Impex_CostDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_CostDetail>();
+        List<entity.Class.Impex_ItemDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_ItemDetail>();
         List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
 
         int company_ID = CurrentSession.Id_Company;
@@ -147,14 +147,14 @@ namespace Cognitivo.Sales
                 if (impex.status != Status.Documents_General.Approved)
                 {
                     List<impex_expense> impex_expenses = impex.impex_expense.ToList();
-                    List<entity.Class.Impex_CostDetail> ImpexImportDetails = (List<entity.Class.Impex_CostDetail>)impex_ExportDataGrid.ItemsSource;
+                    List<entity.Class.Impex_ItemDetail> ImpexImportDetails = (List<entity.Class.Impex_ItemDetail>)impex_ExportDataGrid.ItemsSource;
                     if (ImpexImportDetails.Count > 0)
                     {
                         //To make sure we have a Purchase Total
                         decimal SalesTotal = ImpexImportDetails.Sum(i => i.sub_total);
                         if (SalesTotal != 0)
                         {
-                            foreach (entity.Class.Impex_CostDetail detail in ImpexImportDetails)
+                            foreach (entity.Class.Impex_ItemDetail detail in ImpexImportDetails)
                             {
                                 //Get total value of a Product Row
                                 decimal itemTotal = detail.quantity * detail.unit_cost;
@@ -312,7 +312,7 @@ namespace Cognitivo.Sales
                         Impex_ProductsLIST.Add(ImpexImportProductDetails);
                     }
 
-                    entity.Class.Impex_CostDetail ImpexImportDetails = new entity.Class.Impex_CostDetail();
+                    entity.Class.Impex_ItemDetail ImpexImportDetails = new entity.Class.Impex_ItemDetail();
                     ImpexImportDetails.number = _sales_invoice_detail.sales_invoice.number;
                     ImpexImportDetails.id_item = (int)_sales_invoice_detail.id_item;
                     ImpexImportDetails.item = ImpexDB.items.Where(a => a.id_item == _sales_invoice_detail.id_item).FirstOrDefault().name;
@@ -390,7 +390,7 @@ namespace Cognitivo.Sales
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            List<entity.Class.Impex_CostDetail> Impex_CostDetail = null;
+            List<entity.Class.Impex_ItemDetail> Impex_CostDetail = null;
 
             foreach (entity.Class.Impex_Products Impex_Products in Impex_ProductsLIST)
             {
@@ -399,18 +399,18 @@ namespace Cognitivo.Sales
 
                 if (Impex_Products.id_item == 0)
                 {
-                    Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList();
+                    Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList();
                     totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
                 else
                 {
-                    Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList().Where(x => x.id_item == Impex_Products.id_item || x.id_item == 0).ToList();
+                    Impex_CostDetail = impex_ExportDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList().Where(x => x.id_item == Impex_Products.id_item || x.id_item == 0).ToList();
                     totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
                     totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
                 }
 
-                foreach (entity.Class.Impex_CostDetail _ImpexImportDetails in Impex_CostDetail)
+                foreach (entity.Class.Impex_ItemDetail _ImpexImportDetails in Impex_CostDetail)
                 {
                     if (totalExpense > 0)
                     {

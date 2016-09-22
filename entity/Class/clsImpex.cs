@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace entity.Class
 {
-    public class Impex_CostDetail : INotifyPropertyChanged
+    public class Impex_ItemDetail : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string number { get; set; }
@@ -26,25 +22,13 @@ namespace entity.Class
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
-    public class Impex_Products : INotifyPropertyChanged
+    public class Impex_Products
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         public int? id_item { get; set; }
         public string item { get; set; }
-        public void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
     }
 }

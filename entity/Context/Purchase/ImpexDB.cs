@@ -57,9 +57,9 @@ namespace entity
             }
         }
 
-        public List<entity.Class.Impex_CostDetail> Fill_ViewModel(impex impex)
+        public List<entity.Class.Impex_ItemDetail> Fill_ViewModel(impex impex)
         {
-            List<entity.Class.Impex_CostDetail> Impex_CostDetailLIST = new List<Class.Impex_CostDetail>();
+            List<entity.Class.Impex_ItemDetail> Impex_CostDetailLIST = new List<Class.Impex_ItemDetail>();
             List<impex_expense> impex_expense = impex.impex_expense.ToList();
             List<impex_import> impex_importList = impex.impex_import.ToList();
             decimal totalExpense = 0;
@@ -95,7 +95,7 @@ namespace entity
                     {
                         int id_item = (int)_purchase_invoice_detail.id_item;
 
-                        entity.Class.Impex_CostDetail ImpexImportDetails = new entity.Class.Impex_CostDetail();
+                        entity.Class.Impex_ItemDetail ImpexImportDetails = new entity.Class.Impex_ItemDetail();
                         ImpexImportDetails.number = _purchase_invoice_detail.purchase_invoice.number;
                         ImpexImportDetails.id_item = (int)_purchase_invoice_detail.id_item;
                         ImpexImportDetails.item = base.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().name;
@@ -130,7 +130,7 @@ namespace entity
                     }
 
                     //fill up virtual class
-                    List<entity.Class.Impex_CostDetail> ImpexImportDetails = Fill_ViewModel(impex);
+                    List<entity.Class.Impex_ItemDetail> ImpexImportDetails = Fill_ViewModel(impex);
                     List<impex_expense> impex_expenses = impex.impex_expense.ToList();
 
                     if (ImpexImportDetails.Count > 0)
@@ -139,7 +139,7 @@ namespace entity
                         decimal purchaseTotal = ImpexImportDetails.Sum(i => i.sub_total);
                         if (purchaseTotal != 0)
                         {
-                            foreach (entity.Class.Impex_CostDetail Impex_CostDetail in ImpexImportDetails)
+                            foreach (entity.Class.Impex_ItemDetail Impex_CostDetail in ImpexImportDetails)
                             {
                                 //Get total value of a Product Row
                                 decimal itemTotal = Impex_CostDetail.quantity * Impex_CostDetail.unit_cost;

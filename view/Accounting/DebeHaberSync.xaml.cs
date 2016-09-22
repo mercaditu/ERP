@@ -151,7 +151,7 @@ namespace Cognitivo.Accounting
                 if (MessageBox.Show("Sales Error. Would you like to Save the File for Analsys?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     MessageBox.Show(ex.Message, "Error Message");
-                    file_create(new JavaScriptSerializer().Serialize(Integration).ToString(), "SalesInvoice-" + DateTime.Now);
+                    Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
                 }
             }
             finally
@@ -524,29 +524,8 @@ namespace Cognitivo.Accounting
                 if (result.ToString().Contains("Error"))
                 {
                     MessageBox.Show(result.ToString());
-                    file_create(Json.ToString(), "DebeHaber Error File" + DateTime.Now);
+                    Class.ErrorLog.DebeHaber(Json.ToString());
                 }
-            }
-        }
-
-        public void file_create(string Data, string filename)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Json.json";
-            if (!File.Exists(path))
-            {
-                using (FileStream fs = File.Create(path))
-                {
-                    using (var fw = new StreamWriter(fs))
-                    {
-                        fw.Write(Data);
-                        fw.Flush();
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("File \"{0}\" already exists.", filename);
-                return;
             }
         }
 

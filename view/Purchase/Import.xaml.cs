@@ -16,8 +16,9 @@ namespace Cognitivo.Purchase
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice= new cntrl.PanelAdv.pnlPurchaseInvoice();
 
-        List<entity.Class.Impex_CostDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_CostDetail>();
+        List<entity.Class.Impex_ItemDetail> Impex_ItemDetailLIST = new List<entity.Class.Impex_ItemDetail>();
         List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
+
         decimal GrandTotal;
         public Import()
         {
@@ -109,7 +110,7 @@ namespace Cognitivo.Purchase
             impex.IsSelected = true;
             ImpexDB.impex.Add(impex);
             impexViewSource.View.MoveCurrentToLast();
-            Impex_CostDetailLIST.Clear();
+            Impex_ItemDetailLIST.Clear();
         }
 
         private void toolBar_btnSave_Click_1(object sender)
@@ -143,14 +144,14 @@ namespace Cognitivo.Purchase
                 }
                 productDataGrid.ItemsSource = null;
                 impex_importDataGrid.ItemsSource = null;
-                impex_importDataGrid.ItemsSource = Impex_CostDetailLIST;
+                impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST;
                 productDataGrid.ItemsSource = Impex_ProductsLIST;
             }
         }
 
         private void impexDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Impex_CostDetailLIST.Clear();
+            Impex_ItemDetailLIST.Clear();
             Impex_ProductsLIST.Clear();
 
             if (impexDataGrid.SelectedItem != null)
@@ -165,7 +166,7 @@ namespace Cognitivo.Purchase
       
             productDataGrid.ItemsSource = null;
             impex_importDataGrid.ItemsSource = null;
-            impex_importDataGrid.ItemsSource = Impex_CostDetailLIST;
+            impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST;
             productDataGrid.ItemsSource = Impex_ProductsLIST;
             Calculate_Click(null, null);
         }
@@ -249,7 +250,7 @@ namespace Cognitivo.Purchase
                         Impex_ProductsLIST.Add(ImpexImportProductDetails);
                     }
 
-                    entity.Class.Impex_CostDetail ImpexImportDetails = new entity.Class.Impex_CostDetail();
+                    entity.Class.Impex_ItemDetail ImpexImportDetails = new entity.Class.Impex_ItemDetail();
                     ImpexImportDetails.number = _purchase_invoice_detail.purchase_invoice.number;
                     ImpexImportDetails.id_item = (int)_purchase_invoice_detail.id_item;
                     ImpexImportDetails.item_code = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().code;
@@ -269,7 +270,8 @@ namespace Cognitivo.Purchase
 
                     decimal SubTotal = (_purchase_invoice_detail.quantity * ImpexImportDetails.prorated_cost);
                     ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
-                    Impex_CostDetailLIST.Add(ImpexImportDetails);
+
+                    Impex_ItemDetailLIST.Add(ImpexImportDetails);
                 }
             }
         }
@@ -361,35 +363,30 @@ namespace Cognitivo.Purchase
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            List<entity.Class.Impex_CostDetail> Impex_CostDetail = null;
-            foreach (entity.Class.Impex_Products Impex_Products in Impex_ProductsLIST)
+            List<entity.Class.Impex_ItemDetail> Impex_ItemDetails = null;
+
+            decimal totalExpense = 0;
+
+            Impex_ItemDetails = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList();
+            //Total of General expenses asigned to no item.
+            totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
+
+            MessageBox.Show(totalExpense.ToString());
+
+            foreach (entity.Class.Impex_ItemDetail Detail in Impex_ItemDetails)
             {
-                decimal totalExpense = 0;
-                decimal totalQuantity = 0;
+                //Adds extra expenses asigend to this product.
+                totalExpense += (decimal)impex.impex_expense.Where(x => x.id_item == Detail.id_item).Sum(x => x.value);
 
-                if (Impex_Products.id_item == 0)
+                if (totalExpense > 0)
                 {
-                    Impex_CostDetail = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList();
-                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
-                    totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
-                }
-                else
-                {
-                    Impex_CostDetail = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_CostDetail>().ToList().Where(x => x.id_item == Impex_Products.id_item || x.id_item == 0).ToList();
-                    totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == Impex_Products.id_item).Sum(x => x.value);
-                    totalQuantity = Impex_CostDetail.Sum(x => x.quantity);
-                }
+                    decimal percentage = ((Detail.unit_cost * Detail.quantity) / GrandTotal);
+                    decimal participation = percentage * totalExpense;
+                    Detail.unit_Importcost = Math.Round(participation / Detail.quantity, 2);
+                    Detail.prorated_cost = Detail.unit_cost + Detail.unit_Importcost;
 
-                foreach (entity.Class.Impex_CostDetail _ImpexImportDetails in Impex_CostDetail)
-                {
-                    if (totalExpense > 0)
-                    {
-                        _ImpexImportDetails.unit_Importcost = Math.Round(((_ImpexImportDetails.sub_total / GrandTotal) * totalExpense) / _ImpexImportDetails.quantity, 2);
-                        _ImpexImportDetails.prorated_cost = _ImpexImportDetails.unit_cost + _ImpexImportDetails.unit_Importcost;
-
-                        decimal SubTotal = (_ImpexImportDetails.quantity * _ImpexImportDetails.prorated_cost);
-                        _ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
-                    }
+                    decimal SubTotal = (Detail.quantity * Detail.prorated_cost);
+                    Detail.sub_total = Math.Round(SubTotal, 2);
                 }
             }
         }
@@ -502,13 +499,13 @@ namespace Cognitivo.Purchase
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Impex_CostDetailLIST != null)
+            if (Impex_ItemDetailLIST != null)
             {
            
                 if (txtsearch.Text!="")
                 {
                     impex_importDataGrid.ItemsSource = null;
-                    impex_importDataGrid.ItemsSource = Impex_CostDetailLIST.Where(x => x.item.ToUpper().Contains(txtsearch.Text.ToUpper()));
+                    impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST.Where(x => x.item.ToUpper().Contains(txtsearch.Text.ToUpper()));
                 }
               
                

@@ -94,7 +94,7 @@ namespace cntrl.Curd
         {
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
-            parentGrid.Visibility = System.Windows.Visibility.Hidden;
+            parentGrid.Visibility = Visibility.Hidden;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

@@ -155,7 +155,6 @@ namespace entity.Brillo.Document
                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
                     HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false,
-                    //unit_price_discount = g.discount != null ? g.discount : 0,
 
                 }).ToList();
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace cntrl.Chart
@@ -7,7 +6,7 @@ namespace cntrl.Chart
     /// <summary>
     /// Interaction logic for Gauge180.xaml
     /// </summary>
-    public partial class Gauge180 : UserControl, INotifyPropertyChanged
+    public partial class Gauge180 : UserControl //, INotifyPropertyChanged
     {
         public double Value
         {
@@ -20,7 +19,6 @@ namespace cntrl.Chart
         }
         private double _value;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public Func<double, string> Formatter { get; set; }
 

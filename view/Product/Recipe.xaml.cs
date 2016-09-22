@@ -16,7 +16,7 @@ namespace Cognitivo.Product
     {
         ProductRecipeDB ProductRecipeDB = new ProductRecipeDB();
         CollectionViewSource item_recepieViewSource, item_recepieitem_recepie_detailViewSource;
-        int company_ID;
+
         public Recipe()
         {
             InitializeComponent();

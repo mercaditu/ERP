@@ -2,32 +2,19 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Brillo.Logic
 {
     public class AccountReceivable
     {
-        public void ReceivePayment(ref dbContext _entity, payment_schedual payment_schedual, int id_range, int id_currencyfx,int id_payment_type,
+        public void ReceivePayment(ref dbContext _entity, payment_schedual payment_schedual, int? id_range, int id_currencyfx,int id_payment_type,
                                   int id_purchase_return, int id_sales_return, decimal value, string comment, int id_account, DateTime trans_date)
         {
-
             payment payment = new payment();
             if (id_sales_return > 0)
             {
 
                 payment.id_contact = payment_schedual.contact.id_contact;
-
-                if (id_range != null)
-                {
-                    payment.id_range = id_range;
-                    if (_entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
-                    {
-                        payment.app_document_range = _entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
-                    }
-                }
-
 
                 payment_detail payment_detailreturn = new payment_detail();
                 if (_entity.db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)

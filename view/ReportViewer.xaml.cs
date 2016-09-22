@@ -3,7 +3,6 @@ using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +13,6 @@ namespace View
     /// </summary>
     public partial class ReportViewer : Window
     {
-        db db = new db();
         List<Cognitivo.Project.PrintingPress.calc_Cost> final_cost = new List<Cognitivo.Project.PrintingPress.calc_Cost>();
 
         public ReportViewer()
@@ -25,10 +23,8 @@ namespace View
 
         public void loadReport(ref TabControl CostTab)
         {
-            //List<sales_invoice_detail> sales_invoice_detail = new List<entity.sales_invoice_detail>();
-            //sales_invoice_detail = db.sales_invoice_detail.ToList();
             ReportDataSource reportDataSource = new ReportDataSource();
-            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            reportDataSource.Name = "DataSet1";
 
             final_cost.Clear();
             foreach (TabItem item in CostTab.Items)
@@ -69,7 +65,6 @@ namespace View
             }
             reportViewer.LocalReport.ReportPath = path + SubFolder + "\\PrintingPress.rdlc"; // Path of the rdlc file
 
-            //reportDataSource.Value = db.sales_invoice.Join(db.sales_invoice_detail, PeopleKey => PeopleKey.id_sales_invoice, PeopleTypesKey => PeopleTypesKey.id_sales_invoice, (Person, PersoneType) => new { id_sales_invoice = Person.id_sales_invoice, id_sales_invoice_detail = PersoneType.id_sales_invoice_detail }).GroupBy(x => x.id_sales_invoice);
             reportViewer.LocalReport.ReportPath = "..\\..\\Project\\PrintingPressReport\\PrintingPress.rdlc"; // Path of the rdlc file
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource);

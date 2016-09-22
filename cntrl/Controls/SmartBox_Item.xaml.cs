@@ -109,8 +109,7 @@ namespace cntrl.Controls
                 }
             }
 
-            if (Select != null)
-            { Select(this, new RoutedEventArgs()); }
+            Select?.Invoke(this, new RoutedEventArgs());
         }
 
         public int ItemID { get; set; }
@@ -243,16 +242,9 @@ namespace cntrl.Controls
                 
             }
 
-            //Dispatcher.InvokeAsync(new Action(() =>
-            //{
-                //if (Items.Where(predicate).Count()>0)
-                //{
-                    itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
-                    ItemPopUp.IsOpen = true;
-                //}
-                progBar.IsActive = false;
-
-            //}));
+            itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
+            ItemPopUp.IsOpen = true;
+            progBar.IsActive = false;
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)

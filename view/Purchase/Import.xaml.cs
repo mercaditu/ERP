@@ -370,9 +370,7 @@ namespace Cognitivo.Purchase
             Impex_ItemDetails = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList();
             //Total of General expenses asigned to no item.
             totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
-
-            MessageBox.Show(totalExpense.ToString());
-
+            
             foreach (entity.Class.Impex_ItemDetail Detail in Impex_ItemDetails)
             {
                 //Adds extra expenses asigend to this product.

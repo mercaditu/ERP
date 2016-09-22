@@ -583,11 +583,12 @@ namespace Cognitivo.Project
 
         private void btnPlaceProject_Click(object sender, RoutedEventArgs e)
         {
+            project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
             project project = new project();
 
             contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
             project.id_contact = contact.id_contact;
-
+            project.id_currency =EventDB.app_currencyfx.Where(x=>x.id_currencyfx==project_costing.id_currencyfx).FirstOrDefault().id_currency;
             project.IsSelected = true;
             project.id_branch = CurrentSession.Id_Branch;
             project.name = txtName.Text;
@@ -595,7 +596,7 @@ namespace Cognitivo.Project
             project.est_end_date = timestampCalendar.SelectedDate;
             project.priority = 0;
 
-            project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
+        
             if (project_costing != null)
             {
                 foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
@@ -807,6 +808,7 @@ namespace Cognitivo.Project
 
                     item item = EventDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                     project_event_variable project_event_variable = new project_event_variable();
+                    project_event_variable.id_project_event = project_event.id_project_event;
                     project_event_variable.project_event = project_event;
                     project_event_variable.is_included = true;
                     project_event_variable.item = item;
@@ -851,6 +853,7 @@ namespace Cognitivo.Project
 
 
                     project_event_fixed services_per_event_details = new project_event_fixed();
+                    services_per_event_details.id_project_event = project_event.id_project_event;
                     services_per_event_details.project_event = project_event;
                     services_per_event_details.is_included = true;
                     services_per_event_details.item = item;

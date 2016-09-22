@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace entity.Brillo.Logic
 {
@@ -9,7 +7,7 @@ namespace entity.Brillo.Logic
         public void Document_PrintPaymentReceipt(payment payment)
         {
             DocumentViewr MainWindow = new DocumentViewr();
-            MainWindow.loadPaymentRecieptReport(payment.id_payment);
+            //MainWindow.loadPaymentRecieptReport(payment.id_payment);
 
             Window window = new Window
             {

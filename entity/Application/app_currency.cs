@@ -25,7 +25,38 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_currency { get; set; }
         [Required]
-        public string name { get; set; }
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                if (value != _name)
+                {
+                    _name = value;
+                    if (value.ToLower().Contains("guara"))
+                    {
+                        code = "PYG";
+                    }
+                    else if (value.ToLower().Contains("dol"))
+                    {
+                        code = "USD";
+                    }
+                    else if (value.ToLower().Contains("real"))
+                    {
+                        code = "BRL";
+                    }
+                    else if (value.ToLower().Contains("eru"))
+                    {
+                        code = "EUR";
+                    }
+                    else if (value.ToLower().Contains("peso"))
+                    {
+                        code = "ARL";
+                    }
+                }
+            }
+        }
+        private string _name;
     
         public int? id_country { get; set; }
         [Required]
@@ -33,6 +64,9 @@ namespace entity
         public bool is_active { get; set; }
         public bool has_rounding { get; set; }
         public bool is_reverse { get; set; }
+
+        [NotMapped]
+        public string code { get; set; }
 
         public virtual ICollection<app_currency_denomination> app_currency_denomination { get; set; }
         public virtual ICollection<app_currencyfx> app_currencyfx { get; set; }

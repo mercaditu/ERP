@@ -237,6 +237,9 @@
   <data name="BelongsTo" xml:space="preserve">
     <value>Pertence A</value>
   </data>
+  <data name="Billing" xml:space="preserve">
+    <value>Faturamento</value>
+  </data>
   <data name="BloodType" xml:space="preserve">
     <value>Tipo Sanguíneo</value>
   </data>
@@ -1068,9 +1071,6 @@
   <data name="PurchaseValue" xml:space="preserve">
     <value>Valor De Compra</value>
   </data>
-  <data name="PurchaseVAT" xml:space="preserve">
-    <value>Iva Compra</value>
-  </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantidade</value>
   </data>
@@ -1203,14 +1203,14 @@
   <data name="SalesOrderSummary" xml:space="preserve">
     <value>Resumo Do Pedido De Vendas</value>
   </data>
+  <data name="SalesPromotion" xml:space="preserve">
+    <value>Promoção De Vendas</value>
+  </data>
   <data name="SalesRepresentative" xml:space="preserve">
     <value>Representante De Vendas</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
     <value>Retorno</value>
-  </data>
-  <data name="SalesVAT" xml:space="preserve">
-    <value>Iva Vendas</value>
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Salão</value>
@@ -1365,6 +1365,9 @@
   <data name="Type" xml:space="preserve">
     <value>Digitar</value>
   </data>
+  <data name="Urgency" xml:space="preserve">
+    <value>Urgência</value>
+  </data>
   <data name="Usage" xml:space="preserve">
     <value>Uso</value>
   </data>
@@ -1395,8 +1398,17 @@
   <data name="VATIncluded" xml:space="preserve">
     <value>Iva Incluído</value>
   </data>
+  <data name="VATPurchase" xml:space="preserve">
+    <value>Compra Iva</value>
+  </data>
+  <data name="VATSales" xml:space="preserve">
+    <value>Vendas De Iva</value>
+  </data>
   <data name="VATWithholding" xml:space="preserve">
     <value>Retenção De Iva</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versão</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Atenção</value>

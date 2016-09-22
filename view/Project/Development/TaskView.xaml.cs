@@ -601,6 +601,7 @@ namespace Cognitivo.Project.Development
                         {
                             project_task.quantity_est = (decimal)item_recepie_detail.quantity;
                         }
+
                         project_task_output.child.Add(project_task);
                     }
                     filter_task();

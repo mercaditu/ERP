@@ -1,7 +1,6 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System.Collections.Generic;
 using System.Linq;
-using entity;
 using System;
 
 namespace entity.Brillo.Document

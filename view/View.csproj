@@ -140,7 +140,7 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\trunk\packages\Microsoft.ReportViewer.WinForms.10.0.40219.1\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\ReportViewer\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
@@ -524,7 +524,6 @@
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -533,7 +532,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -542,7 +540,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -551,7 +548,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.cs">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -560,7 +556,6 @@
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.cs">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -569,7 +564,6 @@
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.Designer.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
@@ -1049,7 +1043,9 @@
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\Project.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PurchaseInvoiceSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PurchaseOrderSummary.rdlc" />

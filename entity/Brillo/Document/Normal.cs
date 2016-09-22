@@ -16,8 +16,6 @@ namespace entity.Brillo.Document
             Manual
         }
 
-        public Normal()
-        { }
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
             if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application == App.Names.PointOfSale:false)
@@ -33,6 +31,7 @@ namespace entity.Brillo.Document
                 }
                 else
                 {
+                    //Purchase invoice does not have Range. So we default to this if not existant.
                     DocumentName = "PurchaseInvoice";
                 }
 
@@ -101,9 +100,9 @@ namespace entity.Brillo.Document
                     File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc",
                            path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
                 }
-               
             }
         }
+
         public void loadCarnetcontactReport(contact contact)
         {
             try
@@ -129,7 +128,7 @@ namespace entity.Brillo.Document
                 }
                 else
                 {
-                    List<contact> contact_detail = new List<entity.contact>();
+                    List<contact> contact_detail = new List<contact>();
                     contact_detail.Add(contact);
                     reportDataSource.Value = contact_detail
                        .Select(g => new
@@ -145,9 +144,6 @@ namespace entity.Brillo.Document
                        }).ToList();
                 }
                
-
-
-
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = path + "\\CogntivoERP";
                 string SubFolder = "";
@@ -188,8 +184,5 @@ namespace entity.Brillo.Document
                 throw ex;
             }
         }
-
-   
-    
     }
 }

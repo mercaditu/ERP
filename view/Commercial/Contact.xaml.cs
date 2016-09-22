@@ -290,14 +290,6 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolIcon_Click(object sender, RoutedEventArgs e)
-        {
-           entity.Brillo.Document.Normal Document = new entity.Brillo.Document.Normal();
-            contact contact = (contact)listContacts.SelectedItem;
-            
-            Document.loadCarnetcontactReport(contact);
-        }
-
         private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
         {
             contact contact = (contact)contactViewSource.View.CurrentItem;

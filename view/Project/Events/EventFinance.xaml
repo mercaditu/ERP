@@ -9,8 +9,8 @@
 	xmlns:local="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
-    xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
-    xmlns:converter="clr-namespace:Cognitivo.Converters"
+	xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
+	xmlns:converter="clr-namespace:Cognitivo.Converters"
 	xmlns:data="clr-namespace:entity;assembly=entity"
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
 	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
@@ -100,12 +100,12 @@
 			</TabControl>
 			<Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
 
-            <StackPanel Orientation="Horizontal">
-                <Label x:Name="lblInvoiceTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
-                <Label Content="/" Style="{StaticResource H3}"/>
-                <Label x:Name="lblEventTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
-            </StackPanel>
-            
+			<StackPanel Orientation="Horizontal">
+				<Label x:Name="lblInvoiceTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
+				<Label Content="/" Style="{StaticResource H3}"/>
+				<Label x:Name="lblEventTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
+			</StackPanel>
+			
 		</Grid>
 		<cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
 					   appName="ProjectFinance" />

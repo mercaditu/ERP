@@ -165,7 +165,7 @@ namespace cntrl
         public event RoutedEventHandler Update;
         private void Data_Update(object sender, RoutedEventArgs e)
         {
-            Update?.Invoke(this, new RoutedEventArgs());
+            Update(this, new RoutedEventArgs());
         }
 
         public ReportPanel()

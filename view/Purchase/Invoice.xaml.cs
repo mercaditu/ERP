@@ -716,8 +716,8 @@ namespace Cognitivo.Purchase
             purchase_order purchase_order = (purchase_order)Hyperlink.Tag;
             if (purchase_order != null)
             {
-                entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                Document.Document_PrintPurchaseOrder(0, purchase_order);
+                entity.Brillo.Document.Start.Manual(purchase_order, purchase_order.app_document_range);
+               
             }
         }
 

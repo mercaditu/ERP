@@ -343,8 +343,7 @@ namespace Cognitivo.Sales
             sales_order sales_order = (sales_order)Hyperlink.Tag;
             if (sales_order != null)
             {
-                entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                Document.Document_PrintOrder(0, sales_order, true);
+                entity.Brillo.Document.Start.Manual(sales_order, sales_order.app_document_range);
             }
         }
 

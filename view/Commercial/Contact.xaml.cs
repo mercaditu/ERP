@@ -292,9 +292,10 @@ namespace Cognitivo.Commercial
 
         private void toolIcon_Click(object sender, RoutedEventArgs e)
         {
-            entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
+           entity.Brillo.Document.Normal Document = new entity.Brillo.Document.Normal();
             contact contact = (contact)listContacts.SelectedItem;
-            Document.Document_PrintCarnetContact(contact);
+            
+            Document.loadCarnetcontactReport(contact);
         }
 
         private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
@@ -489,12 +490,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolIcon_Click_1(object sender, RoutedEventArgs e)
-        {
-            entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-          
-            Document.Document_PrintCarnetContact();
-        }
+        
 
     
     }

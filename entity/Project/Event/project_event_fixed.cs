@@ -34,14 +34,7 @@ namespace entity
                     _id_item = value;
                     RaisePropertyChanged("id_item");
 
-                  
-                        using (db db = new db())
-                        {
-                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
-
-                        
-                        }
-
+              
                         update_UnitPrice();
                     
                 }
@@ -57,12 +50,18 @@ namespace entity
         public virtual item item { get; set; }
         private void update_UnitPrice()
         {
-            if (item != null)
+            using (db db = new db())
             {
-                unit_price = get_Price(project_event.contact, project_event.id_currencyfx, item, App.Modules.Sales);
-                RaisePropertyChanged("unit_price");
+                item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+                project_event _project_event = db.project_event.Where(x => x.id_project_event == id_project_event).FirstOrDefault();
 
-            }
+
+
+              
+                    unit_price = get_Price(_project_event.contact, _project_event.id_currencyfx, _item, App.Modules.Sales);
+                    RaisePropertyChanged("unit_price");
+
+                           }
         }
         public decimal get_Price(contact contact, int id_currencyfx, item item, entity.App.Modules Module)
         {

@@ -116,5 +116,10 @@ namespace Cognitivo.Project
         {
             filter_task();
         }
+
+        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

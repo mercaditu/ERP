@@ -53,7 +53,7 @@
         <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource winBackground}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
             <StackPanel  HorizontalAlignment="Center" Orientation="Vertical" Margin="8" DataContext="{Binding }">
                 <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}" />
-                <TextBox Style="{StaticResource input_textbox}" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox Style="{StaticResource input_textbox}" Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <!--<CheckBox x:Name="is_activeCheckBox" Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}" IsChecked="{Binding }"/>-->
                 <Rectangle Height="1" Fill="Silver" Margin="8" />
                 <!--<Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />

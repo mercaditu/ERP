@@ -830,6 +830,7 @@ namespace Cognitivo.Project
                     project_event_variable.child_consumption = 1;
                     project_event_variable.is_included = false;
                     project_event.project_event_variable.Add(project_event_variable);
+
                 }
                 project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
                 toolBar_btnSave_Click(sender);

@@ -64,7 +64,7 @@ namespace Cognitivo.Product
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ProductRecipeDB.item_recepie.Where(a => a.id_company == company_ID
+            ProductRecipeDB.item_recepie.Where(a => a.id_company == CurrentSession.Id_Company
                                                        && (a.is_head == true)).ToList();
 
             item_recepieViewSource = ((CollectionViewSource)(FindResource("item_recepieViewSource")));

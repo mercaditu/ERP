@@ -192,7 +192,7 @@ namespace entity
             [LocalizedDescription("Talent")]
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
-            Hr_coefficient = 48,
+            HourCoeficient = 48,
             [LocalizedDescription("EmpRecievable")]
             EmpRecievable = 101,
 
@@ -291,10 +291,10 @@ namespace entity
             InventoryFlow = 121,
             [LocalizedDescription("InventoryFlowDimension")]
             InventoryFlowDimension = 124,
-            [LocalizedDescription("SalesByVAT")]
-            SalesByVAT = 122,
-            [LocalizedDescription("PurchaseByVAT")]
-            PurchaseByVAT = 127,
+            [LocalizedDescription("VATSales")]
+            VATSales = 122,
+            [LocalizedDescription("VATPurchase")]
+            VATPurchase = 127,
 
             [LocalizedDescription("Version")]
             Version = 128

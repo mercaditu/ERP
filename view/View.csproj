@@ -796,9 +796,6 @@
     <Compile Include="CRM\Template.xaml.cs">
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HumanResource\Clock.xaml.cs">
-      <DependentUpon>Clock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="HumanResource\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
     </Compile>
@@ -1936,10 +1933,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CRM\Template.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\Clock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

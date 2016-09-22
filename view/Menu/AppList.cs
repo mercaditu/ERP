@@ -67,8 +67,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesbySalesman", entity.App.Names.SalesbySalesman, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByVAT", entity.App.Names.SalesByVAT, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByVAT", entity.App.Names.VATSales, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Lite, "1");
@@ -77,13 +77,13 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Order", entity.App.Names.PurchaseOrder, "PurchaseOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Invoice", entity.App.Names.PurchaseInvoice, "Purchase", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Return", entity.App.Names.PurchaseReturn, "PurchaseReturn", entity.CurrentSession.Versions.Basic, "1");
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Basic, "0");
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Lite, "0");
 
             //Human Resources        //Module                 //Namespace      //App                 //Name                   //Img
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_coefficient", entity.App.Names.Hr_coefficient, "EntryExit", entity.CurrentSession.Versions.Full, "0");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit", entity.CurrentSession.Versions.Medium, "0");
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Item", entity.App.Names.Items, "Item", entity.CurrentSession.Versions.Lite, "0");
@@ -131,10 +131,9 @@ namespace Cognitivo.Menu
             //Projects Event
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Form, "Project.EventType", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.EventCosting", entity.App.Names.EventManagement, "ProjectTaskWizard", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.EventFinance", entity.App.Names.EventFinance, "", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Financial, "Project.EventFinance", entity.App.Names.EventFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");

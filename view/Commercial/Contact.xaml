@@ -362,7 +362,5 @@
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        <cntrl:toolIcon imgSource="p" Click="toolIcon_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"/>
-      
     </Grid>
 </Page>

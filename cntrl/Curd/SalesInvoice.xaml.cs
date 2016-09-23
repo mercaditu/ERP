@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,19 +53,21 @@ namespace cntrl
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (project != null)
+            item item = db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+
+            if (project != null && item != null)
             {
-                sales_invoice sales_invoice = new entity.sales_invoice();
+                sales_invoice sales_invoice = new sales_invoice();
                 sales_invoice.id_contact = (int)project.id_contact;
                 sales_invoice.timestamp = DateTime.Now;
                 sales_invoice.trans_date = DateTime.Now;
-                sales_invoice.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                sales_invoice.contact = db.contacts.Where(x => x.id_contact == project.id_contact).FirstOrDefault();
 
                 sales_invoice.id_project = project.id_project;
                 sales_invoice.id_condition = (int)cbxCondition.SelectedValue;
                 sales_invoice.id_contract = (int)cbxContract.SelectedValue;
-                sales_invoice.id_currencyfx = (int)cbxCurrency.SelectedValue;
-                sales_invoice.comment = "Project -> " + project.name;
+                sales_invoice.id_currencyfx = cbxCurrency.SelectedValue;
+                sales_invoice.comment = entity.Brillo.Localize.StringText("Project") + " -> " + project.name;
 
                 sales_invoice_detail sales_invoice_detail = null;
 
@@ -74,28 +75,18 @@ namespace cntrl
                 sales_invoice_detail = new sales_invoice_detail();
                 sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                 sales_invoice_detail.sales_invoice = sales_invoice;
-                sales_invoice_detail.id_item = (int)sbxItem.ItemID;
-                item item = db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-
-                if (item != null)
-                {
-                    sales_invoice_detail.item = item;
-                }
+                sales_invoice_detail.id_item = item.id_item;
+                sales_invoice_detail.item = item;
 
                 sales_invoice_detail.id_vat_group = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault().id_vat_group;
-                
-             
-                sales_invoice_detail.id_item = (int)sbxItem.ItemID;
+                             
                 sales_invoice_detail.quantity = 1;
                 sales_invoice_detail.UnitPrice_Vat = Convert.ToDecimal(txtvalue.Text);
 
-
                 sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-
 
                 sales_invoice.State = EntityState.Added;
                 sales_invoice.IsSelected = true;
-
 
                 crm_opportunity crm_opportunity = new crm_opportunity();
                 crm_opportunity.id_contact = sales_invoice.id_contact;
@@ -112,7 +103,6 @@ namespace cntrl
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
 
@@ -133,16 +123,13 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            db.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
-            cbxContract.ItemsSource = db.app_contract.Local;
-
-            db.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
-            cbxCondition.ItemsSource = db.app_condition.Local;
+            cbxContract.ItemsSource = CurrentSession.Get_Contract();
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
 
             stackMain.DataContext = project;
-            decimal TotalValue = TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
+            decimal TotalValue = TotalCost - project.sales_invoice.Where(x => x.status == Status.Documents_General.Approved).Sum(x => x.GrandTotal);
 
-            if (TotalValue>0)
+            if (TotalValue > 0)
             {
                 txtvalue.Text = Math.Round(TotalValue, 2).ToString();
             }
@@ -153,11 +140,16 @@ namespace cntrl
         {
             if (cbxCondition.SelectedItem != null)
             {
-
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = db.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == entity.Properties.Settings.Default.company_ID
-                                                                        && a.id_condition == app_condition.id_condition).ToList();
+
+                if (app_condition != null)
+                {
+                    cbxContract.ItemsSource = CurrentSession.Get_Contract()
+                        .Where(a => a.is_active == true && 
+                                    a.id_company == CurrentSession.Id_Company && 
+                                    a.id_condition == app_condition.id_condition).ToList();
+                }
+
                 cbxContract.SelectedIndex = 0;
             }
         }

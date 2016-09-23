@@ -55,7 +55,7 @@ namespace Cognitivo.Project
 
                 foreach (sales_invoice sales_invoice in project.sales_invoice.Where(x => x.status == Status.Documents_General.Approved))
                 {
-                    InvoiceTotal += sales_invoice.GrandTotal;
+                    InvoiceTotal += entity.Brillo.Currency.convert_Values(sales_invoice.GrandTotal, sales_invoice.id_currencyfx, CurrentSession.CurrencyFX_Default.id_currencyfx, entity.App.Modules.Sales);
                 }
 
                 lblInvoiceTotal.Content = InvoiceTotal;
@@ -65,7 +65,7 @@ namespace Cognitivo.Project
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             project project = projectViewSource.View.CurrentItem as project;
-            Decimal TotalCost = 0;
+
             if (project != null)
             {
                 cntrl.SalesInvoice objSalesinvoice = new cntrl.SalesInvoice();

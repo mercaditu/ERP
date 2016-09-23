@@ -147,17 +147,15 @@ namespace entity
 
                                 purchase_invoice purchase_invoice = base.purchase_invoice.Where(x => x.id_purchase_invoice == Impex_CostDetail.id_invoice).FirstOrDefault();
                                 item_movement item_movement = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).FirstOrDefault();
-                                decimal totalExpense = 0;
-
-                                totalExpense += (decimal)impex.impex_expense.Where(x => x.id_item == Impex_CostDetail.id_item).Sum(x => x.value);
+                              
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {
 
 
-                                    if (totalExpense > 0)
+                                    if (_impex_expense.id_item==0 || _impex_expense.id_item == Impex_CostDetail.id_item)
                                     {
                                         decimal percentage = ((Impex_CostDetail.unit_cost * Impex_CostDetail.quantity) / GrandTotal);
-                                        decimal participation = percentage * totalExpense;
+                                        decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
                                         Impex_CostDetail.unit_Importcost = Math.Round(participation / Impex_CostDetail.quantity, 2);
                                         Impex_CostDetail.prorated_cost = Impex_CostDetail.unit_cost + Impex_CostDetail.unit_Importcost;
 

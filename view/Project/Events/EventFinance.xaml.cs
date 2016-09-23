@@ -53,7 +53,7 @@ namespace Cognitivo.Project
 
                 lblEventTotal.Content = EventTotal;
 
-                foreach (sales_invoice sales_invoice in project.sales_invoice)
+                foreach (sales_invoice sales_invoice in project.sales_invoice.Where(x => x.status == Status.Documents_General.Approved))
                 {
                     InvoiceTotal += sales_invoice.GrandTotal;
                 }

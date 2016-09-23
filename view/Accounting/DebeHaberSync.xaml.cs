@@ -134,7 +134,6 @@ namespace Cognitivo.Accounting
             Purchase_Sync(Transaction);
             SalesReturn_Sync(Transaction);
             PurchaseReturn_Sync(Transaction);
-
             PaymentSync(Transaction);
             FixedAsset(Transaction);
 
@@ -148,7 +147,7 @@ namespace Cognitivo.Accounting
             }
             catch (Exception ex)
             {
-                if (MessageBox.Show("Sales Error. Would you like to Save the File for Analsys?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Error. Would you like to Save the file for analsys?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     MessageBox.Show(ex.Message, "Error Message");
                     Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
@@ -350,7 +349,7 @@ namespace Cognitivo.Accounting
 
         private void FixedAsset(DebeHaber.Transaction Transaction)
         {
-            List<item_asset_group> AssetGroupList = db.item_asset_group.Local.Where(x => x.id_company == CurrentSession.Id_Company && x.IsSelected).ToList();
+            List<item_asset_group> AssetGroupList = db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             foreach (item_asset_group item_asset_group in AssetGroupList)
             {

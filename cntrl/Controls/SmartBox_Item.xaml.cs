@@ -105,7 +105,7 @@ namespace cntrl.Controls
                 }
             }
 
-            Select(this, new RoutedEventArgs());
+            Select?.Invoke(this, new RoutedEventArgs());
         }
 
         public int ItemID { get; set; }

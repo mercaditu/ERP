@@ -78,10 +78,12 @@ namespace cntrl
                 sales_invoice_detail.sales_invoice = sales_invoice;
                 sales_invoice_detail.id_item = (int)sbxItem.ItemID;
                 item item = db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+
                 if (item != null)
                 {
                     sales_invoice_detail.item = item;
                 }
+
                 sales_invoice_detail.id_vat_group = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault().id_vat_group;
                 
              
@@ -116,7 +118,7 @@ namespace cntrl
             {
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
-                parentGrid.Visibility = System.Windows.Visibility.Hidden;
+                parentGrid.Visibility = Visibility.Hidden;
             }
             catch (Exception ex)
             { throw ex; }
@@ -131,13 +133,12 @@ namespace cntrl
             cbxCondition.ItemsSource = db.app_condition.Local;
 
             stackMain.DataContext = project;
-            decimal TotalValue=TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
+            decimal TotalValue= TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
+
             if (TotalValue>0)
             {
-                txtvalue.Text = Convert.ToString(TotalValue);
+                txtvalue.Text = Math.Round(TotalValue, 2).ToString();
             }
-          
-            
           
         }
 

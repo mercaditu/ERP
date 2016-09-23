@@ -999,7 +999,6 @@
     <Content Include="bin\Debug\RequestManagement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="bin\Report1.rdlc" />
     <EmbeddedResource Include="bin\SalesBudget.rdlc" />
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">

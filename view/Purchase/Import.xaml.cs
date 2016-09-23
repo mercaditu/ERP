@@ -509,17 +509,5 @@ namespace Cognitivo.Purchase
                
             }
         }
-
-      
-
-      
-
-
-
-
-
-
-
-
     }
 }

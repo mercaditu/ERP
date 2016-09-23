@@ -75,7 +75,7 @@
     <ApplicationIcon>cognitivo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F7ED3D0C47CB59178127DD3B17A472AC3D646CD5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5D23E83812A2A80F1B382B0CB12A158D0ABBD8A3</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>View_1_TemporaryKey.pfx</ManifestKeyFile>
@@ -118,7 +118,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ABC.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DSoft.RDLC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -918,7 +919,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="ABC.snk" />
+    <None Include="View_1_TemporaryKey.pfx" />
     <Resource Include="Images\Application\128\Accounts.png" />
     <Resource Include="Images\Application\128\Fraction.png" />
     <Resource Include="Images\Application\128\IncotermContract.png" />

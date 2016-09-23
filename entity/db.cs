@@ -4,7 +4,6 @@
 
     public class db : DbContext
     {
-       
         public db() : base("name=Cognitivo.Properties.Settings.MySQLconnString")
         {
             Configuration.LazyLoadingEnabled = true;
@@ -151,7 +150,6 @@
         public virtual DbSet<purchase_return_dimension> purchase_return_dimension { get; set; }
         public virtual DbSet<purchase_tender_dimension> purchase_tender_dimension { get; set; }
         public virtual DbSet<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
-        
         public virtual DbSet<item_movement_dimension> item_movement_dimension { get; set; }
         public virtual DbSet<item_inventory_dimension> item_inventory_dimension { get; set; }
         public virtual DbSet<item_transfer_dimension> item_transfer_dimension { get; set; }

@@ -56,8 +56,6 @@ namespace cntrl
         {
             if (project != null)
             {
-                List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
-
                 sales_invoice sales_invoice = new entity.sales_invoice();
                 sales_invoice.id_contact = (int)project.id_contact;
                 sales_invoice.timestamp = DateTime.Now;
@@ -106,9 +104,18 @@ namespace cntrl
 
                 crm_opportunity.sales_invoice.Add(sales_invoice);
                 db.crm_opportunity.Add(crm_opportunity);
-              
-                db.SaveChanges();
-                btnCancel_Click(null, null);
+
+                try
+                {
+                    db.SaveChanges();
+                    btnCancel_Click(null, null);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
             }
         }
 
@@ -133,7 +140,7 @@ namespace cntrl
             cbxCondition.ItemsSource = db.app_condition.Local;
 
             stackMain.DataContext = project;
-            decimal TotalValue= TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
+            decimal TotalValue = TotalCost - project.project_task.Sum(x => x.sales_invoice_detail.Sum(y => y.sales_invoice.GrandTotal));
 
             if (TotalValue>0)
             {

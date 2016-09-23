@@ -100,10 +100,10 @@
 			</TabControl>
 			<Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
 
-			<StackPanel Orientation="Horizontal">
-				<Label x:Name="lblInvoiceTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+				<Label x:Name="lblInvoiceTotal" Style="{StaticResource H3}" ContentStringFormat="N2"/>
 				<Label Content="/" Style="{StaticResource H3}"/>
-				<Label x:Name="lblEventTotal" VerticalAlignment="Bottom" Style="{StaticResource H3}" HorizontalAlignment="Right" ContentStringFormat="N2"/>
+				<Label x:Name="lblEventTotal" Style="{StaticResource H3}" ContentStringFormat="N2"/>
 			</StackPanel>
 			
 		</Grid>

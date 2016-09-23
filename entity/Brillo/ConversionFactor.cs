@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Brillo
 {
@@ -20,14 +17,6 @@ namespace entity.Brillo
                         {
                             if (item.item_dimension.Count() > 0)
                             {
-                                //decimal i = 1M;
-                                //foreach (item_dimension item_dimension in item.item_dimension)
-                                //{
-                                //    if (item_dimension.value > 0)
-                                //    {
-                                //        i = i * item_dimension.value;
-                                //    }
-                                //}
                                 if ((BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value)>0)
                                 {
                                     return Quantity_Factored / (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);

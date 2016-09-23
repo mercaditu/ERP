@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using entity.Brillo;
 
 namespace entity
 {
@@ -130,22 +129,20 @@ namespace entity
                     }
 
                     //fill up virtual class
-                    List<Class.Impex_ItemDetail> ImpexImportDetails = Fill_ViewModel(impex);
+                    List<Class.Impex_ItemDetail> Impex_ItemDetail = Fill_ViewModel(impex);
                     List<impex_expense> impex_expenses = impex.impex_expense.ToList();
-                    decimal GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
-                    if (ImpexImportDetails.Count > 0)
+                    if (Impex_ItemDetail.Count > 0)
                     {
                         //To make sure we have a Purchase Total
-                        decimal purchaseTotal = ImpexImportDetails.Sum(i => i.sub_total);
-                        if (purchaseTotal != 0)
+                        decimal GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
+                        if (GrandTotal != 0)
                         {
 
-                            foreach (Class.Impex_ItemDetail Impex_CostDetail in ImpexImportDetails)
+                            foreach (Class.Impex_ItemDetail Impex_CostDetail in Impex_ItemDetail)
                             {
                                 //Get total value of a Product Row
                                 decimal itemTotal = Impex_CostDetail.quantity * Impex_CostDetail.unit_cost;
 
-                                purchase_invoice purchase_invoice = base.purchase_invoice.Where(x => x.id_purchase_invoice == Impex_CostDetail.id_invoice).FirstOrDefault();
                                 item_movement item_movement = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).FirstOrDefault();
                               
                                 foreach (impex_expense _impex_expense in impex_expenses)
@@ -155,31 +152,27 @@ namespace entity
                                         decimal percentage = ((Impex_CostDetail.unit_cost * Impex_CostDetail.quantity) / GrandTotal);
                                         decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
                                         Impex_CostDetail.unit_Importcost = Math.Round(participation / Impex_CostDetail.quantity, 2);
-                                        Impex_CostDetail.prorated_cost = Impex_CostDetail.unit_cost + Impex_CostDetail.unit_Importcost;
-
-                                        decimal SubTotal = (Impex_CostDetail.quantity * Impex_CostDetail.prorated_cost);
-                                        Impex_CostDetail.sub_total = Math.Round(SubTotal, 2);
                                     }
 
                                     //Coeficient is used to get prorated cost of one item
-                                    item_movement_value item_movement_detail = new item_movement_value();
+                                    item_movement_value item_movement_value = new item_movement_value();
 
                                     int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
-
-                                    item_movement_detail.unit_value = Impex_CostDetail.sub_total;
-                                    item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
-                                    item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-
+                                    item_movement_value.unit_value = Impex_CostDetail.unit_Importcost;
+                                    item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
+                                    item_movement_value.comment = _impex_expense.impex_incoterm_condition.name;
+                                    
                                     if (item_movement != null)
                                     {
-                                        item_movement.item_movement_value.Add(item_movement_detail);
+                                        item_movement.item_movement_value.Add(item_movement_value);
                                     }
                                 }
                             }
-                            impex.status = Status.Documents_General.Approved;
-                            base.SaveChanges();
                         }
                     }
+
+                    impex.status = Status.Documents_General.Approved;
+                    base.SaveChanges();
                 }
             }
         }

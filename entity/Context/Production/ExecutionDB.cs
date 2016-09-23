@@ -24,6 +24,11 @@ namespace entity
             validate_Execution();
             return base.SaveChanges();
         }
+        public int SaveChangesWithoutValidation()
+        {
+           // validate_Execution();
+            return base.SaveChanges();
+        }
 
         public override Task<int> SaveChangesAsync()
         {

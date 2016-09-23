@@ -150,7 +150,7 @@ namespace Cognitivo.Production
                             _production_execution_detail.production_order_detail = production_order_detail;
 
                             production_order_detail.production_execution_detail.Add(_production_execution_detail);
-                            ExecutionDB.SaveChanges();
+                            ExecutionDB.SaveChangesWithoutValidation();
                             RefreshData();
                         }
                     }

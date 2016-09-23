@@ -100,6 +100,7 @@ namespace cntrl.Curd
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             db.SaveChanges();
+            btnCancel_MouseDown(sender, null);
             //if (btnSave_Click != null)
             //{
             //    btnSave_Click(sender);

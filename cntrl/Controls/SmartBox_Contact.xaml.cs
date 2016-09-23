@@ -361,6 +361,5 @@ namespace cntrl.Controls
             Task task = Task.Factory.StartNew(() => LoadData());
         }
 
-
     }
 }

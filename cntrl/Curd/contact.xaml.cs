@@ -68,6 +68,10 @@ namespace cntrl.Curd
         {
             entity.contact contact = contactViewSource.View.CurrentItem as entity.contact;
 
+            if (ContactDB.SaveChanges() == 0)
+            {
+                MessageBox.Show("Saving Error");
+            }
             //This is helpful when we want to Automate the search of contact when saving is done.
             if (contact != null)
             {
@@ -79,10 +83,7 @@ namespace cntrl.Curd
                 }
             }
 
-            if (ContactDB.SaveChanges() == 0)
-            {
-                MessageBox.Show("Saving Error");
-            }
+         
 
             btnCancel_MouseDown(null, null);
         }

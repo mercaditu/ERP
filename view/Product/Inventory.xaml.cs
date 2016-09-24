@@ -7,7 +7,6 @@ using System.Data.Entity;
 using System.Data;
 using entity;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Product
 {
@@ -41,14 +40,9 @@ namespace Cognitivo.Product
             app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
 
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
-            await InventoryDB.app_branch
-                .Where(a => a.is_active == true
-                    && a.can_stock == true
-                    && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
-
-            app_branchViewSource.Source = InventoryDB.app_branch.Local;
+            app_branchViewSource.Source = CurrentSession.Get_Branch().OrderBy(x => x.name);
             app_branchViewSource.View.MoveCurrentToFirst();
+
             app_branchapp_locationViewSource.View.MoveCurrentToFirst();
             filetr_detail();
         }

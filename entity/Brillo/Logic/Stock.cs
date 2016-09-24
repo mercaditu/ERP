@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using WPFLocalizeExtension.Extensions;
-using System.Data.Entity;
 
 namespace entity.Brillo.Logic
 {
@@ -276,7 +275,6 @@ namespace entity.Brillo.Logic
                                 item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
                                 item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
                                 item_movement_dimension.value = item_inventory_dimension.value;
-                                // item_movement_dimension.id_measurement = purchase_invoice_dimension.id_measurement;
                                 item_movement_dimensionLIST.Add(item_movement_dimension);
                             }
                         }
@@ -285,8 +283,6 @@ namespace entity.Brillo.Logic
                         {
 
                             item_movementList.Add(
-
-
 
                              CreditOnly_Movement(
                                  entity.Status.Stock.InStock,
@@ -299,7 +295,7 @@ namespace entity.Brillo.Logic
                                  (decimal)item_inventory_detail.value_counted,
                                  item_inventory_detail.timestamp,
                                  item_inventory_detail.unit_value,
-                              comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
+                                 comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
                               ));
                         }
                     }
@@ -317,46 +313,41 @@ namespace entity.Brillo.Logic
                         {
                             if (delta > 0)
                             {
-                                                item_movementList.Add(
-                                                CreditOnly_Movement(
-                                            entity.Status.Stock.InStock,
-                                            App.Names.Inventory,
-                                            item_inventory_detail.id_inventory,
-                                            item_inventory_detail.id_inventory_detail,
-                                             app_currencyfx,
-                                            item_product,
-                                            item_inventory_detail.app_location,
-                                           delta,
-                                            item_inventory_detail.timestamp,
-                                            item_inventory_detail.unit_value,
-                                         comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), null
-                                            ));
+                                item_movementList.Add(
+                                    CreditOnly_Movement(
+                                        entity.Status.Stock.InStock,
+                                        App.Names.Inventory,
+                                        item_inventory_detail.id_inventory,
+                                        item_inventory_detail.id_inventory_detail,
+                                        app_currencyfx,
+                                        item_product,
+                                        item_inventory_detail.app_location,
+                                        delta,
+                                        item_inventory_detail.timestamp,
+                                        item_inventory_detail.unit_value,
+                                        comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null
+                                        ));
                             }
                             else if (delta < 0)
                             {
-                                entity.Brillo.Stock stock = new Brillo.Stock();
-                                List<entity.Brillo.StockList> Items_InStockLIST = stock.List(item_inventory_detail.app_location.app_branch, item_inventory_detail.app_location, item_product);
+                                Brillo.Stock stock = new Brillo.Stock();
+                                List<StockList> Items_InStockLIST = stock.List(item_inventory_detail.app_location.app_branch, item_inventory_detail.app_location, item_product);
 
-
-                                item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
-                                                         App.Names.Inventory,
-                                                         item_inventory_detail.id_inventory,
-                                                         item_inventory_detail.id_inventory_detail,
-                                                         app_currencyfx,
-                                                         item_product,
-                                                         item_inventory_detail.app_location,
-                                                          Math.Abs(delta),
-                                                         item_inventory_detail.timestamp,
-                                                         comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment)
-                                                         ));
+                                item_movementList.AddRange(
+                                    DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
+                                        App.Names.Inventory,
+                                        item_inventory_detail.id_inventory,
+                                        item_inventory_detail.id_inventory_detail,
+                                        app_currencyfx,
+                                        item_product,
+                                        item_inventory_detail.app_location,
+                                        Math.Abs(delta),
+                                        item_inventory_detail.timestamp,
+                                        comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
+                                        ));
                             }
-
-
                         }
-
-
                     }
-
                 }
                 //Return List so we can save into context.
                 return item_movementList;
@@ -378,17 +369,17 @@ namespace entity.Brillo.Logic
                     {
                         if (production_execution_detail.quantity > 0)
                         {
-                            List<entity.Brillo.StockList> Items_InStockLIST = null;
+                            List<StockList> Items_InStockLIST = null;
 
                             //If Detail has an associated Id Movement. Use it, else List FIFO.
                             if (production_execution_detail.movement_id != null && production_execution_detail.movement_id > 0)
                             {
-                                entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                                Brillo.Stock stockBrillo = new Brillo.Stock();
                                 Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Where(x => x.id_movement == production_execution_detail.movement_id).FirstOrDefault());
                             }
                             else
                             {
-                                entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                                Brillo.Stock stockBrillo = new Brillo.Stock();
                                 app_location app_location = db.app_location.Where(x => x.id_location == production_execution_detail.production_order_detail.production_order.production_line.id_location).FirstOrDefault();
                                 Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_product);
 
@@ -884,7 +875,6 @@ namespace entity.Brillo.Logic
                         if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
-
                         }
 
                         if (DimensionList == null)

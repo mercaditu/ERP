@@ -106,9 +106,9 @@ namespace entity
             foreach (item_inventory item_inventory in base.item_inventory.Local.Where(x => x.status != Status.Documents.Issued && x.IsSelected))
             {
                 //If Value Counted in Null, we undsertand that this has not been counted and will be removed from context.
-                List<item_inventory_detail> null_detail = item_inventory.item_inventory_detail.Where(x => x.value_counted == null).ToList();
-                if (null_detail.Count > 0)
+                if (item_inventory.item_inventory_detail.Where(x => x.value_counted == null).Count() > 0)
                 {
+                    List<item_inventory_detail> null_detail = item_inventory.item_inventory_detail.Where(x => x.value_counted == null).ToList();
                     base.item_inventory_detail.RemoveRange(null_detail);
                 }
 

@@ -62,9 +62,7 @@ namespace cntrl.Curd
                         myViewSource.Source = mydb.db.payment_type.Local;
                         myViewSource.View.Refresh();
                         myViewSource.View.MoveCurrentTo(newPaymentType);
-                        stackFields.DataContext = myViewSource;
-                        btnDelete.Visibility = System.Windows.Visibility.Collapsed;
-                      
+                        stackFields.DataContext = myViewSource;                      
                     }
                     else if (operationMode == Class.clsCommon.Mode.Edit)
                     {

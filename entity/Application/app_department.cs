@@ -21,8 +21,19 @@ namespace entity
         public int id_department { get; set; }
         [Required]
         public string name { get; set; }
-        public bool is_active { get; set; }
-
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public virtual ICollection<hr_position> hr_position { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
         public virtual IEnumerable<security_role> security_role { get; set; }

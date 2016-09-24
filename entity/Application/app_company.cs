@@ -31,7 +31,19 @@ namespace entity
         public string representative_gov_code { get; set; }
         public string accountant_name { get; set; }
         public string accountant_gov_code { get; set; }
-        public bool is_active { get; set; }
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public string version { get; set; }
         public string seats { get; set; }
 

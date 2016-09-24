@@ -63,7 +63,6 @@ namespace cntrl.Curd
                             myViewSource.View.Refresh();
                             myViewSource.View.MoveCurrentTo(newvat_group);
                             stackMain.DataContext = myViewSource;
-                            btnDelete.Visibility = System.Windows.Visibility.Collapsed;
                         }
                         else if (operationMode == Class.clsCommon.Mode.Edit)
                         {

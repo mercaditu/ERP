@@ -24,8 +24,6 @@ namespace entity
         public string name { get; set; }
     
         public virtual ICollection<app_measurement> app_measurement { get; set; }
-       // public virtual ICollection<item_conversion_factor> conversion { get; set; }
-       // public virtual item_conversion_factor item_conversion_factor { get; set; }
 
         public string Error
         {

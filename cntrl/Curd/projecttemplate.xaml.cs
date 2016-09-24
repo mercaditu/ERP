@@ -62,12 +62,7 @@ namespace cntrl.Curd
                 stpDisplay.IsEnabled = true;
                 btnSave.IsEnabled = true;
             }
-
-            if (candelete == false)
-            {
-                btnDelete.IsEnabled = false;
-            }
-
+            
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.project project = new entity.project();
@@ -84,7 +79,6 @@ namespace cntrl.Curd
                 else
                 {
                     _projecttemplateViewSource.View.MoveCurrentTo(projecttemplateobject);
-                    btnDelete.Visibility = System.Windows.Visibility.Visible;
                 }
                 stackMain.DataContext = _projecttemplateViewSource;
             }

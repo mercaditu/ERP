@@ -68,7 +68,6 @@ namespace cntrl
                 else
                 {
                     accountsViewSource.View.MoveCurrentTo(entity.db.app_account.Where(x => x.id_account == accountobject.id_account).FirstOrDefault());
-                    btnDelete.Visibility = System.Windows.Visibility.Visible;
                 }
                 stackMainAc.DataContext = accountsViewSource;
             }

@@ -28,9 +28,20 @@ namespace entity
         public bool is_product { get; set; }
         [Required]
         public bool is_fixedasset { get; set; }
-        
-        public bool is_active { get; set; }
 
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }

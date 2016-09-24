@@ -11,7 +11,6 @@ namespace Cognitivo.HumanResource
     public partial class Employee : Page
     {
         CollectionViewSource employeeViewSource,
-            hr_positionViewSource,
             app_departmentViewSource,
             app_locationViewSource,
             contacthr_contractViewSource,
@@ -95,23 +94,11 @@ namespace Cognitivo.HumanResource
             contact contact = new contact();
             contact.is_employee = true;
             contact.id_contact_role = dbContext.contact_role.Where(x => x.is_principal).FirstOrDefault().id_contact_role;
-            //dbContext.Entry(contact).State = EntityState.Added;
             contact.State = EntityState.Added;
             contact.IsSelected = true;
 
             dbContext.contacts.Add(contact);
             employeeViewSource.View.MoveCurrentToLast();
-        }
-
-        private void btnDelete_Click(object sender)
-        {
-            //if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question)
-            //               == MessageBoxResult.Yes)
-            //{
-            //    dbContext.contacts.Remove((contact)dgemployee.SelectedItem);
-            //    employeeViewSource.View.MoveCurrentToFirst();
-            //    btnSave_Click(sender);
-            //}
         }
 
         private void btnSave_Click(object sender)

@@ -336,8 +336,7 @@
         </StackPanel>
         <cntrl:toolBar x:Name="toolBar"
                        btnSearch_Click="toolBar_btnSearch_Click"
-			           btnNew_Click="btnNew_Click" 
-			           btnDelete_Click="btnDelete_Click" 
+			           btnNew_Click="btnNew_Click"
 			           btnSave_Click="btnSave_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnCancel_Click="toolBar_btnCancel_Click" 

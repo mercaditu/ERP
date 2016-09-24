@@ -55,7 +55,6 @@ namespace cntrl
                         myViewSource.View.Refresh();
                         myViewSource.View.MoveCurrentTo(newCondition);
                         stackFields.DataContext = myViewSource;
-                        btnDelete.Visibility = System.Windows.Visibility.Collapsed;
                     }
                     else if (operationMode == Class.clsCommon.Mode.Edit)
                     {

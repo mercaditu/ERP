@@ -51,7 +51,6 @@ namespace cntrl
                 else
                 {
                     objCollectionViewSource.View.MoveCurrentTo(entity.db.hr_time_coefficient.Where(x => x.id_time_coefficient == hr_time_coefficientobject.id_time_coefficient).FirstOrDefault());
-                    btnDelete.Visibility = System.Windows.Visibility.Visible;
                 }
                 stackFields.DataContext = objCollectionViewSource;
             }

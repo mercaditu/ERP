@@ -42,8 +42,19 @@ namespace entity
         public payment_behaviours payment_behavior { get; set; }
         public bool is_direct { get; set; }
         public bool is_default { get; set; }
-        public bool is_active { get; set; }
-      //  public bool can_print { get; set; }
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public bool has_bank { get; set; }
 
         public virtual app_document app_document { get; set; }

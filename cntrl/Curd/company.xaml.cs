@@ -48,11 +48,6 @@ namespace cntrl
                 btnSave.IsEnabled = true;
             }
 
-            if (candelete == false)
-            {
-                btnDelete.IsEnabled = false;
-            }
-
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 try

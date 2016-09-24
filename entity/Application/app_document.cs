@@ -35,9 +35,20 @@ namespace entity
         public bool style_printer { get; set; }
         public bool filterby_branch { get; set; }
         public bool filterby_tearminal { get; set; }
-        
-        public bool is_active { get; set; }
 
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public int? line_limit { get; set; }
 
         public string reciept_header { get; set; }

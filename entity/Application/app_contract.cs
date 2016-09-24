@@ -17,8 +17,19 @@ namespace entity
         [Required]
         public string name { get; set; }
         [Required]
-        public bool is_active { get; set; }
-        [Required]
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;[Required]
         public bool is_default { get; set; }
         [Required]
         public bool is_promissory { get; set; }

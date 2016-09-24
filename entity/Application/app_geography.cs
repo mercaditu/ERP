@@ -29,8 +29,19 @@ namespace entity
         public Status.geo_types type { get; set; }
         public decimal? geo_long { get; set; }
         public decimal? geo_lat { get; set; }
-        public bool is_active { get; set; }
-
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         //Heirarchy Nav Properties
         public app_geography parent { get; set; }
         public ICollection<app_geography> child { get; set; }

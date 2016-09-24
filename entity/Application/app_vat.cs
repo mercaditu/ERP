@@ -31,9 +31,20 @@ namespace entity
         public bool on_product { get; set; }
         public bool on_branch { get; set; }
         public bool on_destination { get; set; }
-        
-        public bool is_active { get; set; }
 
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public virtual IEnumerable<app_branch> app_branch { get; set; }
 
         public string Error

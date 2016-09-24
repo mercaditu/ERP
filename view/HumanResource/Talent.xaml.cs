@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
@@ -24,8 +14,8 @@ namespace Cognitivo.HumanResource
     {
        
         //entity.dbContext dbContext = new entity.dbContext();
-        entity.hr_TalentDB dbContext = new entity.hr_TalentDB();
-       CollectionViewSource hr_talentViewSource;
+        hr_TalentDB dbContext = new hr_TalentDB();
+        CollectionViewSource hr_talentViewSource;
         public Talent()
         {
             InitializeComponent();
@@ -36,11 +26,8 @@ namespace Cognitivo.HumanResource
             hr_talentViewSource = (CollectionViewSource)this.FindResource("hr_talentViewSource");
 
             dbContext.hr_talent.Where(a => a.is_active == true
-            && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).Load();
+            && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_talentViewSource.Source = dbContext.hr_talent.Local;
-
-
-          
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -122,10 +109,6 @@ namespace Cognitivo.HumanResource
                 hr_talent.IsSelected = true;
                 hr_talent.State = EntityState.Modified;
                 dbContext.Entry(hr_talent).State = EntityState.Modified;
-            }
-            else
-            {
-                //toolBar.msgWarning("Please Select a record");
             }
 
         }

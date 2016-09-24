@@ -43,7 +43,7 @@
         <TextBlock Style="{StaticResource text_Instructions}" Text="Coeficient are decimal values of vat percentages."/>
         <StackPanel HorizontalAlignment="Center">
             <Label Content="{lex:Loc Coeficient}" Style="{StaticResource input_label}"/>
-            <TextBox x:Name="tbxCoeficient" LostFocus="tbxCoeficient_LostFocus" 
+            <TextBox x:Name="tbxCoeficient" 
                      
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"

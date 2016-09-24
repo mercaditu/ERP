@@ -30,8 +30,19 @@ namespace entity
         public int? id_country { get; set; }
         [Required]
         public bool is_priority { get; set; }
-        public bool is_active { get; set; }
-        public bool has_rounding { get; set; }
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active; public bool has_rounding { get; set; }
         public bool is_reverse { get; set; }
 
         [NotMapped]

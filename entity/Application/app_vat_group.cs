@@ -24,7 +24,19 @@
         public int id_vat_group { get; set; }
         [Required]
         public string name { get; set; }
-        public bool is_active { get; set; }
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public bool is_default { get; set; }
 
         public virtual ICollection<app_vat_group_details> app_vat_group_details { get; set; }

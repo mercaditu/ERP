@@ -15,7 +15,19 @@ namespace entity
         public int? id_geography { get; set; }
         [Required]
         public string name { get; set; }
-        public bool is_active { get; set; }
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
 
         public app_bank()
         { 
@@ -42,7 +54,7 @@ namespace entity
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
-                    String propertyError = this[prop.Name];
+                    string propertyError = this[prop.Name];
                     if (propertyError != string.Empty)
                     {
                         error.Append((error.Length != 0 ? ", " : "") + propertyError);

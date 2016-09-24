@@ -28,8 +28,19 @@ namespace entity
         [Required]
         public string name { get; set; }
         public string code_iso { get; set; }
-        public bool is_active { get; set; }
-    
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
         public virtual app_measurement_type app_measurement_type { get; set; }
         public virtual IEnumerable<project_task_dimension> project_task_dimension { get; set; }
         public virtual ICollection<item_dimension> item_dimension { get; set; }

@@ -89,7 +89,6 @@ namespace cntrl
             app_currency objCurrency = new app_currency();
             entity.db.app_currency.Add(objCurrency);
             app_currencyViewSource.View.MoveCurrentToLast();
-            btnDelete.Visibility = Visibility.Collapsed;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

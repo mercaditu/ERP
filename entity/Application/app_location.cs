@@ -31,9 +31,20 @@ namespace entity
 
         [Required]
         public string name { get; set; }
-        
-        public bool is_active { get; set; }
-        public bool is_default { get; set; }
+
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active; public bool is_default { get; set; }
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }

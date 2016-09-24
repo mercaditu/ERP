@@ -15,8 +15,20 @@ namespace entity
         [Required] 
         public string name { get; set; }
         [Required]
-        public bool is_active { get; set; }
-        
+        public bool is_active
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
+
         public app_condition()
         {
             app_contract = new List<app_contract>();

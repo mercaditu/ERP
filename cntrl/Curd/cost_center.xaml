@@ -11,7 +11,7 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" BorderBrush="#FFBC0000" BorderThickness="2"
              Width="300" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:InitialsConverter x:Key="InitialsConverter"/>
@@ -56,8 +56,8 @@
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

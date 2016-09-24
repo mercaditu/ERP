@@ -1,16 +1,17 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:convert="clr-namespace:Cognitivo.Converters"
     xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
     VerticalAlignment="Center" BorderBrush="#990066" BorderThickness="2"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.currency"
-             Width="300" Loaded="UserControl_Loaded">
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.currency"
+    Width="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <convert:InitialsConverter x:Key="InitialsConverter"/>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -34,28 +35,25 @@
         </Grid>
         <TextBlock Text="All monetary transactions related to the information stated on this page." Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center">
-            <!--<Label Content="{lex:Loc Country}" Style="{StaticResource input_label}"/>
-            <ComboBox x:Name="cbxCountry" Style="{StaticResource input_combobox}"
-                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                      DataContext="{StaticResource app_currencyViewSource}"
-                      ItemsSource="{Binding Source={StaticResource geo_countryViewSource}}"
-                      DisplayMemberPath="name" SelectedValuePath="id_country"
-                      SelectedValue="{Binding id_country, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                      SelectionChanged="cbxCountry_SelectionChanged"/>-->
-            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <TextBox Name="tbxCurrency" DataContext="{StaticResource app_currencyViewSource}" Style="{StaticResource input_textbox}"
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                <TextBox Name="tbxCurrency" DataContext="{StaticResource app_currencyViewSource}" Style="{StaticResource input_textbox}"
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-            <CheckBox x:Name="chkIsPriority" Content="{lex:Loc Default}"
+                <CheckBox x:Name="chkIsPriority" Content="{lex:Loc Default}"
                   Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				  IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-            <CheckBox x:Name="chkhasrounding" Content="{lex:Loc Rounding}"
+                <CheckBox x:Name="chkhasrounding" Content="{lex:Loc Rounding}"
                   Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				  IsChecked="{Binding has_rounding, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <CheckBox x:Name="chbxDivisible" Content="{lex:Loc IsDivisible}"
+                  Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
+				  IsChecked="{Binding is_divisible, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            </StackPanel>
+
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
 
             <Label Content="{lex:Loc Rate}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center"/>
@@ -67,13 +65,14 @@
                 <Button Content="Add" Click="Button_Click" Margin="8,0"/>
             </StackPanel>-->
            
-            <DataGrid x:Name="dataCurrencyfx" HorizontalScrollBarVisibility="Disabled" Width="256" Margin="8"
-                      DataContext="{StaticResource app_currencyapp_currencyfxViewSource}" MaxHeight="256" CanUserDeleteRows="False"
+            <DataGrid x:Name="dataCurrencyfx" HorizontalScrollBarVisibility="Disabled" Width="380" Margin="8"
+                      DataContext="{StaticResource app_currencyapp_currencyfxViewSource}" MaxHeight="256"
+                      CanUserDeleteRows="False"
                       ItemsSource="{Binding}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="64" IsReadOnly="True" Binding="{Binding timestamp, StringFormat={}{0:d}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Buy}" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Sell}" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:BuyRate}" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SellRate}" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <DataGridTemplateColumn Header="Is Divisible" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -96,8 +95,8 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

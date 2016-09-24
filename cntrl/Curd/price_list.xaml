@@ -12,7 +12,8 @@
              VerticalAlignment="Center"
              xmlns:local="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
-             Width="320" Loaded="UserControl_Loaded">
+             Width="320" Loaded="UserControl_Loaded"
+             BorderBrush="#00cc99" BorderThickness="2">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
     </UserControl.Resources>
@@ -20,15 +21,12 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#00cc99">
-                <Image Source="/cntrl;component/Images/Outline_White/price_tag_USD_filled-100.png" Height="32" Opacity="0.64"/>
-            </Border>
-            <Label x:Name="lblTitle" Content="{lex:Loc PriceList}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="#00cc99">
+            <Image Source="/cntrl;component/Images/Outline_White/price_tag_USD_filled-100.png" Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0"/>
+            <Label x:Name="lblTitle" Content="{lex:Loc PriceList}" Foreground="White" FontSize="25" Margin="50,0,0,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
@@ -48,8 +46,8 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

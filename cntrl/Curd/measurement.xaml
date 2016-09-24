@@ -12,6 +12,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:entity="clr-namespace:entity;assembly=entity" 
         mc:Ignorable="d" 
+        BorderBrush="#ffcc00" BorderThickness="2"
         Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:InitialsConverter x:Key="InitialsConverter"/>
@@ -23,12 +24,8 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#ffcc00">
-                <Image Source="/cntrl;component/Images/Outline_White/length_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
+        <Grid Background="#ffcc00">
+            <Image Source="/cntrl;component/Images/Outline_White/length_filled-100.png" HorizontalAlignment="Left" Margin="8,0" Height="32" Opacity="0.64"/>
             <Label Content="{lex:Loc Measurement}" FontSize="25" Margin="50,0,0,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                      Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
@@ -65,8 +62,8 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

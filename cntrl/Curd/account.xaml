@@ -10,7 +10,8 @@
             lex:ResxLocalizationProvider.DefaultDictionary="local"
             lex:LocalizeDictionary.DesignCulture="en-US"
             mc:Ignorable="d" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-            Width="360" VerticalAlignment="Center" Loaded="UserControl_Loaded" KeyUp="UserControl_KeyUp">
+            Width="360" VerticalAlignment="Center" Loaded="UserControl_Loaded" KeyUp="UserControl_KeyUp"
+             BorderBrush="#0099ff" BorderThickness="2">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <converter:BankAccountTypeVisibilityConverter x:Key="BankAcTypeConverter"/>
@@ -25,17 +26,16 @@
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMainAc" Background="White">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#0099ff">
+            <Grid Background="#0099ff">
+                <Border Width="45" HorizontalAlignment="Left">
                     <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
                        Height="32" Opacity="0.64"/>
                 </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Account}" FontSize="25" Margin="50,0,0,0"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc Account}" Foreground="White" FontSize="25" Margin="50,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             <TextBlock Style="{StaticResource text_Instructions}" 
@@ -80,9 +80,9 @@
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+                        FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

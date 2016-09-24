@@ -7,7 +7,7 @@
              lex:LocalizeDictionary.DesignCulture="en-US" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:local="clr-namespace:Cognitivo.Converters"
+             xmlns:local="clr-namespace:Cognitivo.Converters" BorderBrush="#990099" BorderThickness="2"
              xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
              VerticalAlignment="Center" Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -19,16 +19,13 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#990099">
-                <Image Source="/cntrl;component/Images/Outline_White/museum_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc Bank}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="#990099">
+            <Image Source="/cntrl;component/Images/Outline_White/museum_filled-100.png" Margin="8,0"
+                       HorizontalAlignment="Left" Height="32" Opacity="0.64"/>
+            <Label Content="{lex:Loc Bank}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
@@ -40,29 +37,23 @@
                      Text="{Binding name, Mode=TwoWay, 
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,
                                     ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-            <!--<Label Content="{lex:Loc Country}" Style="{StaticResource input_label}"/>
-            <ComboBox x:Name="cbxCountry"
-                      DisplayMemberPath="name" SelectedValuePath="id_country" 
-                      ItemsSource="{Binding Source={StaticResource geo_countryViewSource}}"
-                      SelectedValue="{Binding id_country, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                      Style="{StaticResource input_combobox}"/>-->
 
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
 
             <DataGrid x:Name="app_bankapp_accountdatagrid" ItemsSource="{Binding app_account}" AutoGenerateColumns="False" MaxWidth="260"
                           BorderThickness="1" BorderBrush="WhiteSmoke">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Account" Width="*" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="Number" Width="*" Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="Initial Amount" Width="*" Binding="{Binding initial_amount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Account}" Width="*" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Width="*" Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Amount}" Width="*" Binding="{Binding initial_amount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

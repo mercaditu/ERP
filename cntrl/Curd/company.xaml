@@ -13,27 +13,24 @@
              VerticalAlignment="Center"
              xmlns:local="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
-             mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded">
+             mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
+             BorderBrush="#cc3333" BorderThickness="2">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <!--<CollectionViewSource x:Key="geo_countryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:geo_country}, CreateList=True}"/>-->
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White" >
         <StackPanel x:Name="stackMain">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#cc3333">
-                    <Image Source="/cntrl;component/Images/Outline_White/home_filled-100.png" 
-                           Height="32" Opacity="0.64"/>
-                </Border>
-                <Label Content="{lex:Loc Company}" FontSize="25" Margin="50,0,0,0"/>
+            <Grid Background="#cc3333">
+                <Image Source="/cntrl;component/Images/Outline_White/home_filled-100.png" 
+                           Height="32" Opacity="0.64" HorizontalAlignment="Left" Margin="8,0"/>
+                <Label Content="{lex:Loc Company}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             <!--<TextBlock Text="{lex:Loc desc_company}" Style="{StaticResource text_Instructions}"/>-->
@@ -91,9 +88,9 @@
 
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0,0,0,-0.5" VerticalAlignment="Bottom"/>
+                        FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

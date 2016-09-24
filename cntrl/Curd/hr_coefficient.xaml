@@ -10,7 +10,7 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" BorderBrush="#ffcc00" BorderThickness="2"
              Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <convert:InitialsConverter x:Key="InitialsConverter"/>
@@ -20,13 +20,9 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#ffcc00">
-                <Image Source="/cntrl;component/Images/Outline_White/group_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label x:Name="lblTitle" Content="{lex:Loc Overtime}" FontSize="25" Margin="50,0"/>
+        <Grid Background="#ffcc00">
+            <Label />
+            <Label x:Name="lblTitle" Content="{lex:Loc HourCoeficient}" FontSize="25" Margin="50,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
@@ -63,8 +59,7 @@
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

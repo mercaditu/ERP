@@ -5,16 +5,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using entity;
-using System.Data.Entity.Validation;
 using System.Data.Entity;
 
 namespace cntrl.Curd
 {
     public partial class PurchaseTender : UserControl
     {
-        
-
-
         public ProjectTaskDB ProjectTaskDB { get; set; }
 
         public List<project_task> project_taskList { get; set; }

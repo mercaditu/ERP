@@ -20,7 +20,7 @@
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
-    <StackPanel x:Name="stackMain" Background="White" Height="600">
+    <StackPanel x:Name="stackMain" Background="White">
         <Grid>
             <Border Background="WhiteSmoke" />
             <Border Width="45" HorizontalAlignment="Left" Background="#990099">
@@ -82,7 +82,6 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
         		FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-
         </Grid>
     </StackPanel>
 </UserControl>

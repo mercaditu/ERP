@@ -39,16 +39,12 @@
     
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White" >
         <StackPanel x:Name="stackMain">
-            <Grid >
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#344C6B">
-                    <Image Source="/cntrl;component/Images/Outline_White/filled_box-25.png" 
-                           Height="32" Opacity="0.64"/>
-                </Border>
-                <Label Content="{lex:Loc Project}" FontSize="25" Margin="50,0,0,0"/>
+            <Grid Background="#344C6B">
+                <Image Source="/cntrl;component/Images/Outline_White/filled_box-25.png" Height="32" HorizontalAlignment="Left" Margin="8,0" Opacity="0.9"/>
+                <Label Content="{lex:Loc Project}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
@@ -82,9 +78,10 @@
                           DisplayMemberPath="name" SelectedValuePath="id_currency" 
                           SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
-                <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select"/>
+                <control:SmartBox_Contact x:Name="contactComboBox" HorizontalAlignment="Left"
+                                          Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select"/>
                 <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Left" 
                                                  CollectionViewSource="{StaticResource project_tagViewSource}"
                                                  focusGrid="True" Height="27" Width="256"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
@@ -125,8 +122,8 @@
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0,0,0,-0.5" VerticalAlignment="Bottom"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

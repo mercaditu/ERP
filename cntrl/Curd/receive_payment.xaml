@@ -12,7 +12,8 @@
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
-             Width="360" Loaded="UserControl_Loaded">
+             Width="360" Loaded="UserControl_Loaded"
+             BorderBrush="#66ccff" BorderThickness="2">
     <UserControl.Resources>
         <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
     </UserControl.Resources>
@@ -20,9 +21,8 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#66ccff">
+        <Grid Background="#66ccff">
+            <Border Width="45" HorizontalAlignment="Left">
                 <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
                        Height="32" Opacity="0.64"/>
             </Border>
@@ -48,6 +48,8 @@
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

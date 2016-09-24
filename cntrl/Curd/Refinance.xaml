@@ -92,8 +92,8 @@
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_MouseUp"/>
-                <!--<Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                         HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0,0,0,-0.5" VerticalAlignment="Bottom"/>-->
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
            
 

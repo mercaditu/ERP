@@ -12,8 +12,9 @@
             lex:ResxLocalizationProvider.DefaultDictionary="local"
             lex:LocalizeDictionary.DesignCulture="en-US" 
             VerticalAlignment="Center"
-             mc:Ignorable="d" 
-             Width="360" Loaded="UserControl_Loaded">
+            mc:Ignorable="d" 
+            Width="360" Loaded="UserControl_Loaded"
+            BorderBrush="#66ccff" BorderThickness="2">
     <UserControl.Resources>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
     </UserControl.Resources>
@@ -21,16 +22,15 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#66ccff">
+        <Grid Background="#66ccff">
+            <Border Width="45" HorizontalAlignment="Left">
                 <Image Source="/cntrl;component/Images/Outline_White/line_spliting_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
+                       Height="32" Opacity="0.9"/>
             </Border>
-            <Label x:Name="lblTitle" Content="{lex:Loc IncotermCondition}" FontSize="25" Margin="50,0,0,0"/>
+            <Label Content="{lex:Loc IncotermCondition}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="PaleGreen"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                     Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseDown="Image_MouseDown" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
@@ -50,6 +50,8 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="Button_Click"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

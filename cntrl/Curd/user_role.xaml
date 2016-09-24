@@ -13,7 +13,8 @@
              
             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
             lex:ResxLocalizationProvider.DefaultDictionary="local"
-            lex:LocalizeDictionary.DesignCulture="en-US">
+            lex:LocalizeDictionary.DesignCulture="en-US"
+             BorderBrush="Gray" BorderThickness="2">
     <UserControl.Resources>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="security_roleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}"/>
@@ -22,17 +23,14 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" DataContext="{StaticResource security_roleViewSource}">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#ffcc00">
-                <Image Source="/cntrl;component/Images/Outline_White/user_male_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc UserRole}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="Gray">
+            <Label Content="R" FontSize="23" HorizontalAlignment="Left" Margin="8,0" Foreground="White"
+                   VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" />
+            <Label Content="{lex:Loc UserRole}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                      Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Define role of user in system." Style="{StaticResource text_Instructions}"/>
@@ -50,8 +48,8 @@
         <Grid Background="WhiteSmoke" Margin="0,4,0,0">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <!--<Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0,0,0,-0.5" VerticalAlignment="Bottom"/>-->
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

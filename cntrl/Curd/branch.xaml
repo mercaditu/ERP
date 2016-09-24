@@ -11,7 +11,7 @@
             xmlns:local="clr-namespace:Cognitivo.Converters"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:entity="clr-namespace:entity;assembly=entity" 
-            mc:Ignorable="d" 
+            mc:Ignorable="d" BorderBrush="#0099ff" BorderThickness="2"
             Width="320" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -48,9 +48,6 @@
                 <Label Content="{lex:Loc Shop}" HorizontalAlignment="Center" FontSize="14"
                        Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
 
-                <Label Content="{lex:Loc Area}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding area}" Style="{StaticResource input_textbox}"/>
-
                 <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                 <cntrl:SmartBox_Geography x:Name="sbxGeography" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 
@@ -61,7 +58,7 @@
                                  Text="{Binding geo_lat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     </StackPanel>
                     <StackPanel>
-                        <Label Content="{lex:Loc Longitude}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc Longitud}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" Width="122"
                                  Text="{Binding geo_long, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     </StackPanel>
@@ -115,8 +112,8 @@
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

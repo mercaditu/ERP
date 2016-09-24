@@ -32,12 +32,12 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
 
-            <TextBlock Style="{StaticResource text_Instructions}" Text="desc_ItemRequest" />
+            <TextBlock Style="{StaticResource text_Instructions}" Text="" />
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{lex:Loc name}" Style="{StaticResource input_label}"/>
                 <TextBox Text="{Binding name,ElementName=Item_Request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource input_textbox}"/>
-                <Label Content="{lex:Loc DateNeeded}" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc NeededbyDate}" Style="{StaticResource input_label}"/>
                 <DatePicker x:Name="cbxdate" Style="{StaticResource input_datepicker}"
                              SelectedDate="{Binding neededDate, ElementName=Item_Request, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Urgency}" Style="{StaticResource input_label}"/>

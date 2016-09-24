@@ -12,6 +12,7 @@
                 lex:LocalizeDictionary.DesignCulture="en-US" 
              xmlns:entity="clr-namespace:entity;assembly=entity" 
              mc:Ignorable="d" 
+             BorderBrush="#ff3300" BorderThickness="2"
              Width="360"  Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -23,17 +24,13 @@
     </UserControl.Effect>
     <Grid>
         <StackPanel x:Name="stackMain" Background="White">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#ff3300">
-                    <Image Source="/cntrl;component/Images/Outline_White/price_tag_filled-100.png" 
-                           Height="32" Opacity="0.64"/>
-                </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Tags}" FontSize="25" Margin="50,0,0,0"/>
+            <Grid Background="#ff3300">
+                <Image Source="/cntrl;component/Images/Outline_White/price_tag_filled-100.png" HorizontalAlignment="Left" Margin="8,0" Height="32" Opacity="0.9"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc Tags}" Foreground="White" FontSize="25" Margin="50,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
 
@@ -50,7 +47,7 @@
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
             <TextBlock Text="Projects associated with tag. Add Tags to Project from the Project Window." Style="{StaticResource text_Instructions}"/>
             <DataGrid x:Name="Project_tag_detailDataGrid" IsReadOnly="True"
-                      AutoGenerateColumns="False" EnableRowVirtualization="True"
+                      AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="256"
                       ItemsSource="{Binding project_tag_detail}" Margin="52,4" Width="256"
                       RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
@@ -63,8 +60,8 @@
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </StackPanel>
     </Grid>

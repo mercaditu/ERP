@@ -10,7 +10,8 @@
              lex:LocalizeDictionary.DesignCulture="en-US" 
              xmlns:local="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity"
-             VerticalAlignment="Center" Width="360" Loaded="UserControl_Loaded">
+             VerticalAlignment="Center" Width="360" Loaded="UserControl_Loaded"
+             BorderBrush="Aquamarine" BorderThickness="2">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <local:InitialsConverter x:Key="InitialsConverter"/>
@@ -19,23 +20,20 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#990099">
-                <Image Source="/cntrl;component/Images/Outline_White/design_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc ByDimension}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="Aquamarine">
+            <Image Source="/cntrl;component/Images/Outline_White/design_filled-100.png" 
+                       Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0"/>
+            <Label Content="{lex:Loc Dimension}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="PaleGreen"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Specify item dimension" 
                    Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{lex:Loc ByDimension}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Dimension}" Style="{StaticResource input_label}"/>
             <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
                      Text="{Binding name, Mode=TwoWay, 
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,
@@ -44,8 +42,8 @@
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="SaveButton_Click"/>
-            <!--<Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>-->
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

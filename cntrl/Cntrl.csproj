@@ -352,9 +352,6 @@
     <Compile Include="Curd\price_list.xaml.cs">
       <DependentUpon>price_list.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Curd\status.xaml.cs">
-      <DependentUpon>status.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Curd\user_role.xaml.cs">
       <DependentUpon>user_role.xaml</DependentUpon>
     </Compile>
@@ -869,10 +866,6 @@
     <Page Include="Curd\range.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Curd\status.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\terminal.xaml">
       <Generator>MSBuild:Compile</Generator>

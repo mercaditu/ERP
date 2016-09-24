@@ -13,7 +13,8 @@
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
              mc:Ignorable="d" 
-             Width="360" Loaded="UserControl_Loaded">
+             Width="360" Loaded="UserControl_Loaded"
+             BorderBrush="RoyalBlue" BorderThickness="2">
     <UserControl.Resources>
         <convert:InitialsConverter x:Key="InitialsConverter"/>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -23,16 +24,13 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="RoyalBlue">
-                <Image Source="/cntrl;component/Images/Outline_White/flag2_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc Geography}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="RoyalBlue">
+            <Image Source="/cntrl;component/Images/Outline_White/flag2_filled-100.png" 
+                       Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0"/>
+            <Label Content="{lex:Loc Geography}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
@@ -54,7 +52,6 @@
                         metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Rectangle Fill="Silver" Margin="32,0" Height="1"/>
             <StackPanel Orientation="Horizontal" Margin="8">
@@ -80,8 +77,8 @@
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>
+            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+
         </Grid>
     </StackPanel>
 </UserControl>

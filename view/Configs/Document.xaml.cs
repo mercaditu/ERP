@@ -10,15 +10,11 @@ using System.Data.Entity;
 using entity; 
 using System.Data; 
 using System.IO;
-using System.Data.Entity.Validation; 
-
 
 namespace Cognitivo.Configs
 { 
     public partial class Document : Page
     {
-        //entity.dbContext entity = new entity.dbContext();
-        
         DocumentDB dbcontext = new DocumentDB();
         CollectionViewSource app_documentViewSource;
 

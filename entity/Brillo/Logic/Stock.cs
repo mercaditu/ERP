@@ -533,17 +533,6 @@ namespace entity.Brillo.Logic
                 }
 
             }
-            //else if (Application_ID == App.Names.ProductionExecution)
-            //{
-            //    production_execution production_execution = Transcation as production_execution;
-            //    foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
-            //    {
-            //        // item_movement.transaction_id = TransactionID;
-            //        item_movementList.AddRange(db.item_movement.Where(x => x.id_execution_detail == production_execution_detail.id_execution_detail)
-            //                                                         .ToList());
-            //    }
-
-            //}
             else if (Application_ID == App.Names.PurchaseInvoice)
             {
                 purchase_invoice purchase_invoice = Transcation as purchase_invoice;

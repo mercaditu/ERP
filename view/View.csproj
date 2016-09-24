@@ -935,8 +935,6 @@
     <Resource Include="Images\Application\128\IOU.png" />
     <Resource Include="Images\Application\128\Line.png" />
     <Resource Include="Images\Application\128\Maintainance.png" />
-    <Resource Include="Resources\Entypo-license.txt" />
-    <Resource Include="Resources\WindowsIcons-license.txt" />
     <Resource Include="Images\DebeHaber_Logo.png" />
     <Resource Include="Images\space_invaders.png" />
     <Resource Include="bin\Debug\Data.xml" />

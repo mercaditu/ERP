@@ -77,7 +77,6 @@ namespace Cognitivo.Accounting
             {
                 MessageBox.Show("0 Companies Found with these credentials. Please check and try again.");
             }
-
         }
 
         static async Task<string> DownloadPage(string url)

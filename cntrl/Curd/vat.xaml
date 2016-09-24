@@ -11,7 +11,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.vat"
-            Width="300" Loaded="UserControl_Loaded">
+            Width="300" Loaded="UserControl_Loaded" BorderBrush="#9999ff" BorderThickness="2">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
     </UserControl.Resources>
@@ -19,13 +19,10 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#9999ff">
-                <Image Source="/cntrl;component/Images/Outline_White/percentage_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc VAT}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="#9999ff">
+            <Label Content="%" Foreground="White" FontWeight="Bold" FontSize="24" Margin="8,0" HorizontalAlignment="Left"/>
+
+            <Label Content="{lex:Loc VAT}" FontSize="25" Foreground="White" Margin="42,0,0,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                      Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
@@ -36,13 +33,11 @@
         <StackPanel HorizontalAlignment="Center">
             <Label Content="{lex:Loc VAT}" Style="{StaticResource input_label}"/>
             <TextBox Style="{StaticResource input_textbox}"
-                     
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                     metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
+                     metro:TextBoxHelper.ClearTextButton="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                     
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
         </StackPanel>
         <Rectangle Height="1" Margin="4" Fill="Silver"/>
         <TextBlock Style="{StaticResource text_Instructions}" Text="Coeficient are decimal values of vat percentages."/>
@@ -64,7 +59,7 @@
 
             <Label Content="{lex:Loc Calculated}" Style="{StaticResource input_label}"/>
             <StackPanel>
-                <RadioButton Content="{lex:Loc Item}" Style="{StaticResource input_radiobutton}"
+                <RadioButton Content="{lex:Loc Items}" Style="{StaticResource input_radiobutton}"
                              IsChecked="{Binding on_product, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <RadioButton Content="{lex:Loc Branch}" Style="{StaticResource input_radiobutton}"
                              IsChecked="{Binding on_branch, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -75,8 +70,8 @@
         <Grid Background="WhiteSmoke" Margin="0,4,0,0">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0" VerticalAlignment="Bottom"/>
+            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </StackPanel>
 </UserControl>

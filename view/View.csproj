@@ -547,6 +547,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reporting\Views\Production_HumanResources.xaml.cs">
+      <DependentUpon>Production_HumanResources.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\Subscription.xaml.cs">
       <DependentUpon>Subscription.xaml</DependentUpon>
     </Compile>
@@ -577,8 +580,8 @@
     <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
       <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\EmployeesInProduction.xaml.cs">
-      <DependentUpon>EmployeesInProduction.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\HR_Used.xaml.cs">
+      <DependentUpon>HR_Used.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\Project.xaml.cs">
       <DependentUpon>Project.xaml</DependentUpon>
@@ -1523,6 +1526,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\Production_HumanResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\Subscription.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1563,7 +1570,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\Views\EmployeesInProduction.xaml">
+    <Page Include="Reporting\Views\HR_Used.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

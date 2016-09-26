@@ -320,8 +320,6 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnend_date;
             
-            private global::System.Data.DataColumn columnid_production_execution;
-            
             private global::System.Data.DataColumn columnCoefficient;
             
             private global::System.Data.DataColumn columnHours;
@@ -386,14 +384,6 @@ namespace Cognitivo.Reporting.Data {
             public global::System.Data.DataColumn end_dateColumn {
                 get {
                     return this.columnend_date;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn id_production_executionColumn {
-                get {
-                    return this.columnid_production_execution;
                 }
             }
             
@@ -474,13 +464,12 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EmployeesInProductionRow AddEmployeesInProductionRow(string item_description, System.DateTime start_date, System.DateTime end_date, int id_production_execution, string Coefficient, decimal Hours, decimal ComputeHours, string Employee, string Project) {
+            public EmployeesInProductionRow AddEmployeesInProductionRow(string item_description, System.DateTime start_date, System.DateTime end_date, string Coefficient, decimal Hours, decimal ComputeHours, string Employee, string Project) {
                 EmployeesInProductionRow rowEmployeesInProductionRow = ((EmployeesInProductionRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         item_description,
                         start_date,
                         end_date,
-                        id_production_execution,
                         Coefficient,
                         Hours,
                         ComputeHours,
@@ -511,7 +500,6 @@ namespace Cognitivo.Reporting.Data {
                 this.columnitem_description = base.Columns["item_description"];
                 this.columnstart_date = base.Columns["start_date"];
                 this.columnend_date = base.Columns["end_date"];
-                this.columnid_production_execution = base.Columns["id_production_execution"];
                 this.columnCoefficient = base.Columns["Coefficient"];
                 this.columnHours = base.Columns["Hours"];
                 this.columnComputeHours = base.Columns["ComputeHours"];
@@ -528,8 +516,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnstart_date);
                 this.columnend_date = new global::System.Data.DataColumn("end_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnend_date);
-                this.columnid_production_execution = new global::System.Data.DataColumn("id_production_execution", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid_production_execution);
                 this.columnCoefficient = new global::System.Data.DataColumn("Coefficient", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCoefficient);
                 this.columnHours = new global::System.Data.DataColumn("Hours", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -542,7 +528,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnProject);
                 this.columnstart_date.AllowDBNull = false;
                 this.columnend_date.AllowDBNull = false;
-                this.columnid_production_execution.AllowDBNull = false;
                 this.columnCoefficient.AllowDBNull = false;
             }
             
@@ -1067,17 +1052,6 @@ namespace Cognitivo.Reporting.Data {
                 }
                 set {
                     this[this.tableEmployeesInProduction.end_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int id_production_execution {
-                get {
-                    return ((int)(this[this.tableEmployeesInProduction.id_production_executionColumn]));
-                }
-                set {
-                    this[this.tableEmployeesInProduction.id_production_executionColumn] = value;
                 }
             }
             
@@ -1618,7 +1592,6 @@ namespace Cognitivo.Reporting.Data.ProductionDSTableAdapters {
             tableMapping.ColumnMappings.Add("item_description", "item_description");
             tableMapping.ColumnMappings.Add("start_date", "start_date");
             tableMapping.ColumnMappings.Add("end_date", "end_date");
-            tableMapping.ColumnMappings.Add("id_production_execution", "id_production_execution");
             tableMapping.ColumnMappings.Add("Coefficient", "Coefficient");
             tableMapping.ColumnMappings.Add("Hours", "Hours");
             tableMapping.ColumnMappings.Add("ComputeHours", "ComputeHours");
@@ -1640,25 +1613,24 @@ namespace Cognitivo.Reporting.Data.ProductionDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @" select ped.id_production_execution,
-	c.name as Employee,
+            this._commandCollection[0].CommandText = @"  select c.name as Employee,
     pt.item_description,
     p.name as Project,
     
-    start_date,
+     start_date,
     end_date,
       htc.name as Coefficient,
-	sum(time_to_sec(timediff(end_date,start_date)) / 3600) as Hours,
+	sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
     sum(quantity)  as ComputeHours
    
-from production_execution_detail as ped
-inner join hr_time_coefficient as htc on  ped.id_time_coefficient=htc.id_time_coefficient
+from production_execution_detail as ped 
+inner join  hr_time_coefficient as htc on  ped.id_time_coefficient=htc.id_time_coefficient 
 left join contacts as c
-on c.id_contact = ped.id_contact
+on c.id_contact  = ped.id_contact 
 left join  project_task as pt
-on pt.id_project_task = ped.id_project_task
+ on pt.id_project_task = ped.id_project_task 
 left join projects as p
-on p.id_project = pt.id_project
+on  p.id_project = pt.id_project
  where ped.id_contact is not null
  and ped.id_company = @id_company
  and ped.trans_date >= @start_date
@@ -1867,13 +1839,13 @@ order by c.name";
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,i.name as ItemName,
 po.work_number as OrderNumber,po.name as OrderName,pod.quantity as OrderQuantity,ped.quantity as ExecustionQuantity,
-ped.unit_cost as ExecustionCost
+ ped.unit_cost as ExecustionCost 
 from production_order po inner join production_order_detail pod on po.id_production_order=pod.id_production_order
-left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail
-left join project_task pt on pod.id_project_task = pt.id_project_task
-left join projects as project on pt.id_project=project.id_project
+ left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail
+ left join project_task pt on pod.id_project_task = pt.id_project_task 
+left join projects as project on pt.id_project=project.id_project 
 inner join items i on pod.id_item=i.id_item
-where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate)  and po.id_company=@CompanyID 
+ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) and po.id_company=@CompanyID 
 group by pod.id_order_detail";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();

@@ -54,7 +54,7 @@
 			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding code}" 
+                    <cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

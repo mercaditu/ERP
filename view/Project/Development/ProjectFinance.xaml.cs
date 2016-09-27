@@ -118,7 +118,15 @@ namespace Cognitivo.Project
 
                 objSalesOrder.project = project;
                 objSalesOrder.SalesOrderDB = SalesOrderDB;
-                objSalesOrder.Percentage =Convert.ToDecimal(txtPercentage.Text);
+                if (txtPercentage.Text!="")
+                {
+                    objSalesOrder.Percentage = Convert.ToDecimal(txtPercentage.Text);
+                }
+                else
+                {
+                    objSalesOrder.Percentage = 0;
+                }
+               
                 objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
                 objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
 

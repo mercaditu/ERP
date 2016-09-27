@@ -84,6 +84,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit", entity.CurrentSession.Versions.Medium, "0");
+           //
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Item", entity.App.Names.Items, "Item", entity.CurrentSession.Versions.Lite, "0");
@@ -153,7 +154,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "Fraction", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.Production_HumanResources", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.ProductionOrderStatus", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
 
             //Application

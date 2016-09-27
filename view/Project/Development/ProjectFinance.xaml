@@ -182,6 +182,8 @@
                         <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtPercentage" Style="{StaticResource input_textbox}"/>
 
                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
                                             IsCheckedChanged="toggleQuantity_CheckedChange"

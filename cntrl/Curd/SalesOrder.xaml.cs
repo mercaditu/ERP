@@ -51,7 +51,8 @@ namespace cntrl
         public SalesOrderDB SalesOrderDB { get; set; }
         public Boolean Generate_Invoice { get; set; }
         public Boolean Generate_Budget { get; set; }
-        
+        public decimal Percentage { get; set; }
+
         public SalesOrder()
         {
             InitializeComponent();
@@ -83,6 +84,15 @@ namespace cntrl
 
                     foreach (project_task _project_task in project_taskLIST)
                     {
+                        decimal UnitPrice_Vat;
+                        if (_project_task.UnitPrice_Vat==0 || _project_task.UnitPrice_Vat==null)
+                        {
+                            UnitPrice_Vat = Convert.ToDecimal(_project_task.unit_cost_est * (1 + Percentage));
+                        }
+                        else
+                        {
+                            UnitPrice_Vat = Convert.ToDecimal(_project_task.UnitPrice_Vat);
+                        }
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.State = EntityState.Added;
                         sales_budget_detail.id_sales_budget = sales_budget.id_sales_budget;
@@ -100,9 +110,9 @@ namespace cntrl
                         }
                         
                         
-                        if (_project_task.UnitPrice_Vat != null)
+                        if (UnitPrice_Vat != null)
                         {
-                            sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
+                            sales_budget_detail.UnitPrice_Vat = UnitPrice_Vat;
                         }
 
                         sales_budget_detail.id_project_task = _project_task.id_project_task;
@@ -183,6 +193,15 @@ namespace cntrl
 
                     foreach (project_task _project_task in project_taskLIST)
                     {
+                        decimal UnitPrice_Vat;
+                        if (_project_task.UnitPrice_Vat == 0 || _project_task.UnitPrice_Vat == null)
+                        {
+                            UnitPrice_Vat = Convert.ToDecimal(_project_task.unit_cost_est * (1 + Percentage));
+                        }
+                        else
+                        {
+                            UnitPrice_Vat = Convert.ToDecimal(_project_task.UnitPrice_Vat);
+                        }
                         if (_project_task.items.id_item_type == item.item_type.Task || _project_task.sales_detail == null)
                         {
                             sales_order_detail = new sales_order_detail();
@@ -206,9 +225,9 @@ namespace cntrl
                             }
 
 
-                            if (_project_task.UnitPrice_Vat != null)
+                            if (UnitPrice_Vat != null)
                             {
-                                sales_order_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
+                                sales_order_detail.UnitPrice_Vat = UnitPrice_Vat;
                             }
 
                             sales_order_detail.id_project_task = _project_task.id_project_task;
@@ -252,6 +271,15 @@ namespace cntrl
 
                             foreach (project_task _project_task in project_taskLIST)
                             {
+                                decimal UnitPrice_Vat;
+                                if (_project_task.UnitPrice_Vat == 0 || _project_task.UnitPrice_Vat == null)
+                                {
+                                    UnitPrice_Vat = Convert.ToDecimal(_project_task.unit_cost_est * (1 + Percentage));
+                                }
+                                else
+                                {
+                                    UnitPrice_Vat = Convert.ToDecimal(_project_task.UnitPrice_Vat);
+                                }
                                 sales_invoice_detail = new sales_invoice_detail();
                                 sales_invoice_detail.State = EntityState.Added;
                                 sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
@@ -268,9 +296,9 @@ namespace cntrl
                                     sales_invoice_detail.quantity = (decimal)_project_task.quantity_est;
                                 }
 
-                                if (_project_task.UnitPrice_Vat != null)
+                                if (UnitPrice_Vat != null)
                                 {
-                                    sales_invoice_detail.UnitPrice_Vat = (decimal)_project_task.UnitPrice_Vat;
+                                    sales_invoice_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                                 }
 

@@ -48,7 +48,12 @@ namespace cntrl.PanelAdv
             if (project_taskLIST.Count() > 0)
             {
                 production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
-                
+                contact contact = project_taskLIST.FirstOrDefault().project.contact;
+                if (contact != null)
+                {
+                    production_order.project_cost_center = contact.app_cost_center.name;
+                }
+            
                 //Get Name.
                 production_order.name = project_taskLIST.FirstOrDefault().project.name;
                 production_order.RaisePropertyChanged("name");

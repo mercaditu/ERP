@@ -60,7 +60,9 @@ namespace entity
                             if (project.CurrecyFx_ID != null)
                             {
                                 _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                                        _unit_cost_est = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
                                 RaisePropertyChanged("unit_price_vat");
+                                RaisePropertyChanged("unit_cost_est");
                             }
 
                         }
@@ -147,14 +149,14 @@ namespace entity
 
         public decimal? unit_cost_est
         {
-            get { return _unit_price_vat; }
+            get { return _unit_cost_est; }
             set
             {
-                _unit_price_vat = value;
+                _unit_cost_est = value;
                 RaisePropertyChanged("unit_cost_est");
             }
         }
-
+        private decimal? _unit_cost_est;
         [NotMapped]
         public decimal? UnitPrice_Vat
         {

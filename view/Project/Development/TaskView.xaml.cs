@@ -28,6 +28,7 @@ namespace Cognitivo.Project.Development
 
         public TaskView()
         {
+           
             InitializeComponent();
         }
 
@@ -38,7 +39,7 @@ namespace Cognitivo.Project.Development
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
 
-            ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
+            ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
 
             //Bad Code. Will bring too many items into view.

@@ -1,6 +1,6 @@
 ﻿<Page x:Class="Cognitivo.Project.Development.Project"
      Title="{lex:Loc Project}" x:Name="_Project"
-                     xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

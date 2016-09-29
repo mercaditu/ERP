@@ -47,6 +47,7 @@ namespace cntrl.PanelAdv
                 project_task project_task=db.project_task.FirstOrDefault();
              
                 project_task.id_range=id_range;
+                project_task.CalcRange_TimerTaks();
                 number = project_task.NumberWatermark;
                 RaisePropertyChanged("number");
             }
@@ -82,6 +83,7 @@ namespace cntrl.PanelAdv
                     project_task project_task = db.project_task.FirstOrDefault();
                     project_task.State = System.Data.Entity.EntityState.Modified;
                     project_task.id_range =(int)cbxDocument.SelectedValue;
+                    project_task.CalcRange_TimerTaks();
                     number = project_task.NumberWatermark;
                     RaisePropertyChanged("number"); 
                 }

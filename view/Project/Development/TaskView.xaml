@@ -134,7 +134,7 @@
                 </StackPanel>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Center" 
                        Text="{Binding parent.name, FallbackValue=---}" TextTrimming="CharacterEllipsis"/>
-                <TextBlock Text="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" TextTrimming="CharacterEllipsis"
+                <TextBlock Text="{Binding item_description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" TextTrimming="CharacterEllipsis"
                            Style="{StaticResource text_H3}" HorizontalAlignment="Center"/>
                 <cntrl:toolBar_Mini appName="ActivityPlan" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                     Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

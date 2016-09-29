@@ -46,26 +46,8 @@ namespace entity
                     if (_id_item != value)
                     {
                         _id_item = value;
-                        using (db db = new db())
-                        {
-                            if (db.items.Where(x => x.id_item == value).FirstOrDefault() != null)
-                            {
-                                name = db.items.Where(x => x.id_item == value).FirstOrDefault().name;
-                            }
-                        }
+                       
 
-                        if (project != null)
-                        {
-
-                            if (project.CurrecyFx_ID != null)
-                            {
-                                _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
-                                        _unit_cost_est = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
-                                RaisePropertyChanged("unit_price_vat");
-                                RaisePropertyChanged("unit_cost_est");
-                            }
-
-                        }
 
                     }
                 }
@@ -235,7 +217,7 @@ namespace entity
                     {
                         _item_description = items.name;
                         RaisePropertyChanged("item_description");
-                        name = items.name;
+                      //  name = items.name;
                     }
                 }
             }
@@ -259,37 +241,7 @@ namespace entity
                 {
 
                     _id_range = value;
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
-                    {
-
-                        using (db db = new db())
-                        {
-                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
-                            {
-                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-                                if (project != null)
-                                {
-
-
-                                    if (db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault() != null)
-                                    {
-                                        Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault().code;
-                                    }
-
-                                    if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
-                                    {
-                                        Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
-                                    }
-                                    if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
-                                    {
-                                        Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
-                                    }
-                                }
-                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
-                                RaisePropertyChanged("NumberWatermark");
-                            }
-                        }
-                    }
+                 
                 }
             }
         }
@@ -458,7 +410,56 @@ namespace entity
             catch
             { }
         }
-   
+
+        public void CalcCost_TimerTaks()
+        {
+            if (project != null)
+            {
+
+                if (project.CurrecyFx_ID != null)
+                {
+                    _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                    _unit_cost_est = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                    RaisePropertyChanged("unit_price_vat");
+                    RaisePropertyChanged("unit_cost_est");
+                }
+
+            }
+        }
+        public void CalcRange_TimerTaks()
+        {
+            if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+            {
+
+                using (db db = new db())
+                {
+                    if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                    {
+                        app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                        if (project != null)
+                        {
+
+
+                            if (db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault() != null)
+                            {
+                                Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault().code;
+                            }
+
+                            if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                            {
+                                Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                            }
+                            if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                            {
+                                Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                            }
+                        }
+                        NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                        RaisePropertyChanged("NumberWatermark");
+                    }
+                }
+            }
+        }
 
         #endregion
     }

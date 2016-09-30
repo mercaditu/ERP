@@ -141,8 +141,8 @@ namespace Cognitivo.Product
                         item_transfer_detail.quantity_origin = 1;
 
                         int BranchID = (int)id_branch_originComboBox.SelectedValue;
-
-                        item_transfer_detail.Quantity_InStock = (decimal)StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+                        decimal? stock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+                        item_transfer_detail.Quantity_InStock = Convert.ToDecimal(stock != null ? stock : 0);
 
                         if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
                         {

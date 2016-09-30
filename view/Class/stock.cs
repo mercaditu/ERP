@@ -50,7 +50,6 @@ namespace Cognitivo.Class
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement, 
                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
                                  from item_movement as mov
-                                 inner join item_movement_value as val on mov.id_movement = val.id_movement 
                                  inner join app_location as loc on mov.id_location = loc.id_location
                                  inner join app_branch as branch on loc.id_branch = branch.id_branch
                                  inner join item_product as prod on mov.id_item_product = prod.id_item_product 

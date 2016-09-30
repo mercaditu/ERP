@@ -272,7 +272,7 @@ namespace entity.Brillo.Logic
                             item_movement_dimensionLIST = new List<item_movement_dimension>();
                             foreach (item_inventory_dimension item_inventory_dimension in item_inventory_detail.item_inventory_dimension)
                             {
-                                item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
+                                item_movement_dimension item_movement_dimension = new item_movement_dimension();
                                 item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
                                 item_movement_dimension.value = item_inventory_dimension.value;
                                 item_movement_dimensionLIST.Add(item_movement_dimension);
@@ -293,7 +293,7 @@ namespace entity.Brillo.Logic
                                  item_product,
                                  item_inventory_detail.app_location,
                                  (decimal)item_inventory_detail.value_counted,
-                                 item_inventory_detail.item_inventory.timestamp,
+                                 item_inventory_detail.item_inventory.trans_date,
                                  item_inventory_detail.unit_value,
                                  comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
                               ));
@@ -323,7 +323,7 @@ namespace entity.Brillo.Logic
                                         item_product,
                                         item_inventory_detail.app_location,
                                         delta,
-                                        item_inventory_detail.item_inventory.timestamp,
+                                        item_inventory_detail.item_inventory.trans_date,
                                         item_inventory_detail.unit_value,
                                         comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null
                                         ));
@@ -342,7 +342,7 @@ namespace entity.Brillo.Logic
                                         item_product,
                                         item_inventory_detail.app_location,
                                         Math.Abs(delta),
-                                        item_inventory_detail.item_inventory.timestamp,
+                                        item_inventory_detail.item_inventory.trans_date,
                                         comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
                                         ));
                             }

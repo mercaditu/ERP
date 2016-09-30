@@ -293,7 +293,7 @@ namespace entity.Brillo.Logic
                                  item_product,
                                  item_inventory_detail.app_location,
                                  (decimal)item_inventory_detail.value_counted,
-                                 item_inventory_detail.timestamp,
+                                 item_inventory_detail.item_inventory.timestamp,
                                  item_inventory_detail.unit_value,
                                  comment_Generator(App.Names.Inventory, Brillo.Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
                               ));
@@ -323,7 +323,7 @@ namespace entity.Brillo.Logic
                                         item_product,
                                         item_inventory_detail.app_location,
                                         delta,
-                                        item_inventory_detail.timestamp,
+                                        item_inventory_detail.item_inventory.timestamp,
                                         item_inventory_detail.unit_value,
                                         comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null
                                         ));
@@ -342,7 +342,7 @@ namespace entity.Brillo.Logic
                                         item_product,
                                         item_inventory_detail.app_location,
                                         Math.Abs(delta),
-                                        item_inventory_detail.timestamp,
+                                        item_inventory_detail.item_inventory.timestamp,
                                         comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
                                         ));
                             }

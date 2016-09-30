@@ -37,25 +37,39 @@ namespace entity
             {
                 if (_id_currency != value)
                 {
-                    _id_currency = value;
-
-                    if (value != null)
-                    {
-                        using (db db = new db())
-                        {
-                            if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
-                            {
-                                CurrecyFx_ID = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
-                            }
-                        }
-                    }   
+                    _id_currency = value;  
                 }
             }
         }
         int? _id_currency;
 
         [NotMapped]
-        public int? CurrecyFx_ID { get; set; }
+        public int? CurrecyFx_ID
+        {
+            get
+            {
+                if (id_currency != null)
+                {
+                    using (db db = new db())
+                    {
+                        app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == id_currency && x.is_active).FirstOrDefault();
+                        if (app_currencyfx != null)
+                        {
+                            return app_currencyfx.id_currencyfx;
+                        }
+                    }
+                }
+                return null;
+            }
+            set
+            {
+                if (_CurrecyFx_ID != value)
+                {
+                    _CurrecyFx_ID = value;
+                }
+            }
+        }
+        int? _CurrecyFx_ID;
 
         [Required]
         public string name 

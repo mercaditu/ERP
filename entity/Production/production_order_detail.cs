@@ -2,11 +2,9 @@ namespace entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using System.Threading;
 
     public partial class production_order_detail : Audit
     {
@@ -22,16 +20,6 @@ namespace entity
             production_execution_detail = new List<production_execution_detail>();
             item_request_detail = new List<item_request_detail>();
             trans_date = DateTime.Now;
-
-
-            //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
-            //{
-            //    while (true)
-            //    {
-            //        CalcExecutedQty_TimerTaks();
-            //        Thread.Sleep(5000);
-            //    }
-            //});
         }
 
         [Key]
@@ -62,16 +50,11 @@ namespace entity
                                 parent.quantity = objclsproject.getsumquantityProduction(parent.id_order_detail, parent.child);
                                 parent.RaisePropertyChanged("quantity");
                             }
-
-
                         }
-
                     }
                   
                     if (this.item != null)
                     {
-
-
                         if (this.item.is_autorecepie)
                         {
 
@@ -81,14 +64,9 @@ namespace entity
                                 {
                                     production_order_detail.quantity = production_order_detail.item.item_recepie_detail.FirstOrDefault().quantity * this.quantity;
                                     production_order_detail.RaisePropertyChanged("quantity");
-
-
-
                                 }
 
                             }
-
-
                         }
                     }
 
@@ -114,14 +92,6 @@ namespace entity
         }
         private string _code;
 
-        //[NotMapped]
-        //public bool TrickleDown_IsSelected 
-        //{
-        //    get { return _TrickleDown_IsSelected; }
-        //    set { _TrickleDown_IsSelected = value; }
-        //}
-        //private bool _TrickleDown_IsSelected = true;
-
         [NotMapped]
         public new bool IsSelected
         {
@@ -133,11 +103,6 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-                    //if (parent != null)
-                    //{
-                    //    parent.IsSelected = value;
-                    //    parent.RaisePropertyChanged("IsSelected");
-                    //}
 
                     if (child != null)
                     {

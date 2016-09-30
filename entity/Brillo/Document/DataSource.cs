@@ -580,7 +580,7 @@ namespace entity.Brillo.Document
                 .Select(g => new
                 {
                     ProjectName = g.item_transfer != null ? g.item_transfer.project != null ? g.item_transfer.project.name : "" : "",
-                    ProjectTaskName = g.project_task != null ? g.project_task.name : "",
+                    ProjectTaskName = g.project_task != null ? g.project_task.item_description : "",
                     ProjectTaskCode = g.project_task != null ? g.project_task.code : "",
 
                     DepartmentName = g.item_transfer != null ? g.item_transfer.app_department != null ? g.item_transfer.app_department.name : "" : "",
@@ -613,7 +613,7 @@ namespace entity.Brillo.Document
                 .Select(g => new
                 {
                     ProjectName = g.item_request != null ? g.item_request.project != null ? g.item_request.project.name : "" : "",
-                    ProjectTaskName = g.project_task != null ? g.project_task.name : "",
+                    ProjectTaskName = g.project_task != null ? g.project_task.item_description : "",
                     ProjectTaskCode = g.project_task != null ? g.project_task.code : "",
 
                     DepartmentName = g.item_request != null ? g.item_request.app_department != null ? g.item_request.app_department.name : "" : "",

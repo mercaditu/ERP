@@ -68,11 +68,12 @@ namespace entity
                     _hour = (decimal)time.TotalMinutes / 60;
                     RaisePropertyChanged("hours");
 
-                    if (id_time_coefficient > 0)
+                    if (id_time_coefficient > 0 && quantity == 0)
                     {
                         using (db db = new db())
                         {
                             quantity = Convert.ToDecimal(time.TotalHours) * db.hr_time_coefficient.Where(x => x.id_time_coefficient == id_time_coefficient).FirstOrDefault().coefficient;
+                            RaisePropertyChanged("quantity");
                         }
                     }
                 }

@@ -89,7 +89,7 @@ namespace entity
                     if (parent != null && parent.items != null && parent.items.item_recepie.Count()==0)
                     {
                         //This stops the Recepie from Adding
-                        //Also stops the Rejecte Tasks from Adding
+                        //Also stops the Rejected Tasks from Adding
                         if (!parent.items.is_autorecepie || this.status != Status.Project.Rejected)
                         {
                             parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
@@ -195,16 +195,12 @@ namespace entity
         }
         private bool _is_selected;
 
-        [NotMapped]
-        public string name { get; set; }
-
         public virtual project project { get; set; }
 
         public virtual item items
         {
             get
             {
-
                 return _items;
             }
             set
@@ -217,7 +213,6 @@ namespace entity
                     {
                         _item_description = items.name;
                         RaisePropertyChanged("item_description");
-                      //  name = items.name;
                     }
                 }
             }
@@ -438,8 +433,6 @@ namespace entity
                         app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
                         if (project != null)
                         {
-
-
                             if (db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault() != null)
                             {
                                 Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault().code;

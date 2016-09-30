@@ -22,10 +22,12 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            Properties.Settings _settings = new Properties.Settings();
             trans_date = DateTime.Now;
             production_order_detail = new List<production_order_detail>();
-            item_request = new List<item_request>();           
+            item_request = new List<item_request>();
+
+            id_branch = CurrentSession.Id_Branch;
+            id_terminal = CurrentSession.Id_Terminal;
         }
 
         [Key]
@@ -38,33 +40,9 @@ namespace entity
 
         public int? id_project { get; set; }
 
-        public int id_branch
-        {
-            get
-            {
-                if (_Id_Branch == 0)
-                {
-                    _Id_Branch = Properties.Settings.Default.branch_ID;
-                };
-                return _Id_Branch;
-            }
-            set { _Id_Branch = value; }
-        }
-        int _Id_Branch;
+        public int id_branch { get; set; }
 
-        public int id_terminal
-        {
-            get
-            {
-                if (_Id_terminal == 0)
-                {
-                    _Id_terminal = Properties.Settings.Default.terminal_ID;
-                };
-                return _Id_terminal;
-            }
-            set { _Id_terminal = value; }
-        }
-        int _Id_terminal;
+        public int id_terminal { get; set; }
 
         /// <summary>
         /// 
@@ -81,7 +59,7 @@ namespace entity
                 {
                     _id_range = value;
 
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified) // || State == 0
                     {
                         using (db db = new db())
                         {

@@ -13,8 +13,7 @@ namespace Cognitivo.Product
     public partial class Inventory : Page
     {
         InventoryDB InventoryDB = new InventoryDB();
-        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource,
-            app_branchapp_locationViewSource, app_branchViewSource;
+        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
 
         int CurrencyID = 0;
 
@@ -47,6 +46,7 @@ namespace Cognitivo.Product
                   && a.id_company == CurrentSession.Id_Company)
               .OrderBy(a => a.name).Load();
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
+
             app_branchViewSource.View.MoveCurrentToFirst();
 
             app_branchapp_locationViewSource.View.MoveCurrentToFirst();

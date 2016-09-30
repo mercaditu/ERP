@@ -342,10 +342,16 @@ namespace Cognitivo.Purchase
         }
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            OrderSetting _pref_PurchaseOrder = new OrderSetting();
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+
+            OrderSetting _pref_PurchaseOrder = new OrderSetting();
             OrderSetting.Default.Save();
             _pref_PurchaseOrder = OrderSetting.Default;
+
+            InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
+            InvoiceSetting.Default.Save();
+            _pref_PurchaseInvoice = InvoiceSetting.Default;
+
             popupCustomize.IsOpen = false;
         }
 
@@ -437,7 +443,7 @@ namespace Cognitivo.Purchase
             //ItemLink 
             if (item != null)
             {
-                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null  || AllowDuplicate)
+                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null  && AllowDuplicate == false)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_order_detail _purchase_order_detail = purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();

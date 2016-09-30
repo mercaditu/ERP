@@ -9,7 +9,6 @@ namespace entity
     {
         public item_inventory()
         {
-            id_branch =  CurrentSession.Id_Branch;
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;

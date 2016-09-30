@@ -15,7 +15,6 @@ namespace entity
         {
             is_head = true;
             is_issued = false;
-            //is_accounted = false;
 
             status = Status.Documents_General.Pending;
 
@@ -190,7 +189,7 @@ namespace entity
         private decimal _DiscountWithoutPercentage;
 
         [NotMapped]
-        public Boolean displayexpire
+        public bool displayexpire
         {
             get
             {
@@ -205,10 +204,8 @@ namespace entity
                                 _displayexpire = true;
                                 return _displayexpire;
                             }
-
                         }
                     }
-
                 }
                 _displayexpire = false;
                 return _displayexpire;

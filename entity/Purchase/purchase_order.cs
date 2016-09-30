@@ -15,13 +15,13 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            Properties.Settings _settings = new Properties.Settings();
+
             purchase_order_detail = new List<purchase_order_detail>();
             purchase_invoice = new List<purchase_invoice>();
             trans_date = DateTime.Now;
 
-            if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
-            if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
             status = Status.Documents_General.Pending;
          
         }
@@ -79,7 +79,6 @@ namespace entity
                     decimal DifferenceValue = OriginalValue / purchase_order_detail.Count;
                     foreach (var item in purchase_order_detail)
                     {
-
                         item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
                         item.RaisePropertyChanged("UnitCost_Vat");
                     }

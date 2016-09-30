@@ -177,6 +177,15 @@ namespace Cognitivo.Security
             }
         }
 
+        private void cbxVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxVersion.SelectedIndex>0)
+            {
+                add_MissingRecords();
+            }
+           
+        }
+
         private void add_MissingRecords()
         {
             AppList appList = new AppList();

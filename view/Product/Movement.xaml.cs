@@ -362,19 +362,30 @@ namespace Cognitivo.Product
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            //if (item_transfer != null)
+            //{
+            //    if (item_transfer.app_branch_destination!=null)
+            //    {
+            //        CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
+            //        location_destViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.app_branch_destination.id_branch).OrderBy(a => a.name).ToList();
+            //    }
+            //    if (item_transfer.app_branch_origin!=null)
+            //    {
+            //        CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
+            //        location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.app_branch_origin.id_branch).OrderBy(a => a.name).ToList();
+            //    }
+
+            //}
             if (item_transfer != null)
             {
-                if (item_transfer.app_branch_destination!=null)
-                {
+                
                     CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
-                    location_destViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.app_branch_destination.id_branch).OrderBy(a => a.name).ToList();
-                }
-                if (item_transfer.app_branch_origin!=null)
-                {
+                    location_destViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
+               
                     CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
-                    location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.app_branch_origin.id_branch).OrderBy(a => a.name).ToList();
-                }
-          
+                    location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
+              
+
             }
         }
 

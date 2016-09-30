@@ -82,7 +82,7 @@
             <StackPanel Margin="8" Grid.Column="1">
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
                 <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" 
-                     >
+                     SelectionChanged="cbxVersion_SelectionChanged">
                 
                 </ComboBox>
                 <StackPanel Orientation="Horizontal">

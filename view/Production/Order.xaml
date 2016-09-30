@@ -350,6 +350,7 @@
                                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Icon="" Click="btnRequestResource_Click" 
                                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Visible">
                                 <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                 		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" 
                                           LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
@@ -386,6 +387,7 @@
                                         </DataTemplate>
                                     </DataGrid.RowDetailsTemplate>
                                 </DataGrid>
+                                </ScrollViewer>
                             </StackPanel>
                         </Grid>
                     </Grid>

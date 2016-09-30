@@ -601,7 +601,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem_;
             if (production_order_detail != null)
             {
-                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                production_execution_detailServiceViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
             }
         }
@@ -1136,7 +1136,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem;
             if (production_order_detail != null)
             {
-                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                production_execution_detailSupplyViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
             }
         }
@@ -1146,7 +1146,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeServicecontract.SelectedItem_;
             if (production_order_detail != null)
             {
-                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                production_execution_detailServiceContractViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
             }
 
@@ -1157,7 +1157,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem_;
             if (production_order_detail != null)
             {
-                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                production_execution_detailRawViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
             }
 
@@ -1188,7 +1188,7 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem_;
             if (production_order_detail != null)
             {
-                production_execution_detailProductViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
+                production_execution_detailAssetViewSource.Source = await ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
                 //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
             }
         }        

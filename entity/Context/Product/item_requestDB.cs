@@ -185,7 +185,7 @@ namespace entity
                                 app_location app_location_Destination = base.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
                                 item_transfer.app_location_destination = app_location_Destination;
                                 //Get Branch based on Location
-                                item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
+                                item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location_Destination.id_branch).FirstOrDefault();
                             }
 
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
@@ -222,14 +222,14 @@ namespace entity
                                 item_transfertrans.app_branch_destination = item_request.sales_order.app_branch;
                             }
                             if (item_request_detail.id_order_detail != null)
-                            {
-                                if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task != null)
-                                {
-                                    int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
-                                    int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
-                                    item_transfertrans.app_location_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-                                    item_transfertrans.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
-                                }
+                            { 
+                                //Get Production Line
+                                int id_production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.id_production_line;
+                                //Get Location based on Line
+                                app_location app_location_Destination = base.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
+                                item_transfertrans.app_location_destination = app_location_Destination;
+                                //Get Branch based on Location
+                                item_transfertrans.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location_Destination.id_branch).FirstOrDefault();
                             }
 
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();

@@ -8,7 +8,7 @@
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"  
 	  xmlns:pref="clr-namespace:Cognitivo.Purchase"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
-      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+	  xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl" 
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -113,18 +113,18 @@
 								<CheckBox Content="{lex:Loc PurchaseTender}" Style="{StaticResource input_checkbox}"
 											  IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_PurchaseTender, Mode=TwoWay}"/>
 
-                                <CheckBox Content="{lex:Loc AllowDuplicateItems}" Style="{StaticResource input_checkbox}" Foreground="Purple"
-                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+								<CheckBox Content="{lex:Loc AllowDuplicateItems}" Style="{StaticResource input_checkbox}" Foreground="Purple"
+										  IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
-                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=chkfilterbyBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="Filter By Branch" Foreground="Purple"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkshowconversion" 
-                                          IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="Show Purchase Detail" Foreground="Purple"/>
-                                </CheckBox>
-                            </StackPanel>
+								<CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
+										  IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=chkfilterbyBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+									<Label Content="Filter By Branch" Foreground="Purple"/>
+								</CheckBox>
+								<CheckBox Margin="6,0,0,0" x:Name="chkshowconversion" 
+										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+									<Label Content="Show Purchase Detail" Foreground="Purple"/>
+								</CheckBox>
+							</StackPanel>
 						</Border>
 					</Popup>
 				</StackPanel>
@@ -332,7 +332,7 @@
 												ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
 												DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
 												SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-						<DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
 											Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
 						<DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
 											Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"

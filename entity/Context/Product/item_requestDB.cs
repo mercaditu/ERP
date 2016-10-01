@@ -285,6 +285,24 @@ namespace entity
                             //production_execution.id_production_line = production_order.id_production_line;
                             //production_execution.trans_date = DateTime.Now;
                         }
+                        else if (item.decision==entity.item_request_decision.Decisions.Internal)
+                        {
+                            List<entity.Brillo.StockList> Items_InStockLIST;
+                            entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+                            item_product item_product = item.item_request_detail.item.item_product.FirstOrDefault();
+                            app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+                            if (item_product != null && app_location != null)
+                            {
+                                Items_InStockLIST = stockBrillo.List(item_request.app_branch, item_request.app_branch.app_location.Where(x=>x.is_default).FirstOrDefault(), item.item_request_detail.item.item_product.FirstOrDefault());
+                                entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
+                                List<item_movement> item_movement_originList;
+                                item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail, CurrentSession.CurrencyFX_Default, item_product, app_location,
+                                        item.quantity, item_request.timestamp, stock.comment_Generator(entity.App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
+
+                                base.item_movement.AddRange(item_movement_originList);
+                            }
+                          
+                        }
                         else
                         {
 

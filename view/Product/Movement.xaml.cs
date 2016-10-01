@@ -192,11 +192,23 @@ namespace Cognitivo.Product
                 app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                 app_location app_location = item_transfer_detail.item_transfer.app_location_origin;
 
-                if (itemMovement.item_movement != null)
+                if (item_transfer_detail.movement_id!=null)
                 {
-                    entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-                    Items_InStockLIST = stockBrillo.ScalarMovement(itemMovement.item_movement);
+
+                    if (itemMovement.item_movement != null)
+                    {
+                        entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.ScalarMovement(itemMovement.item_movement);
+                    }
+                    else
+                    {
+                        entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+                        item_movement item_movement = dbContext.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
+                        Items_InStockLIST = stockBrillo.ScalarMovement(item_movement);
+                    }
                 }
+               
+              
                 else
                 {
                     entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
@@ -205,7 +217,7 @@ namespace Cognitivo.Product
 
                 ///Debit Movement from Origin.
                 List<item_movement> item_movement_originList;
-                item_movement_originList = stock.DebitOnly_MovementLIST(ProductMovementDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                item_movement_originList = stock.DebitOnly_MovementLIST(ProductMovementDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
                         item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                 ProductMovementDB.item_movement.AddRange(item_movement_originList);
@@ -231,7 +243,7 @@ namespace Cognitivo.Product
                 item_movement_dest =
                             stock.CreditOnly_Movement(
                                 Status.Stock.InStock,
-                                entity.App.Names.Movement,
+                                entity.App.Names.Transfer,
                                 item_transfer_detail.id_transfer,
                                 item_transfer_detail.id_transfer_detail,
                                 app_currencyfx,
@@ -400,7 +412,7 @@ namespace Cognitivo.Product
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
                     item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
                     item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
-                    item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
+                    item_transfer_detail.movement_id = (int?)itemMovement.item_movement.id_movement;
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
                     item item = ((item)cbxItem.Data);

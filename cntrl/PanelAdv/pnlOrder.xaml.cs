@@ -51,7 +51,11 @@ namespace cntrl.PanelAdv
                 contact contact = project_taskLIST.FirstOrDefault().project.contact;
                 if (contact != null)
                 {
-                    production_order.project_cost_center = contact.app_cost_center.name;
+                    if (contact.app_cost_center!=null)
+                    {
+                        production_order.project_cost_center = contact.app_cost_center.name;
+                    }
+              
                 }
             
                 //Get Name.

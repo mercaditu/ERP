@@ -105,11 +105,11 @@
                                                   FontFamily="/Cognitivo;component/Resources/#cognitivo" Foreground="RoyalBlue"
                                                   Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
                                 </Grid>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,44,0,0">
-                                    <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"   
+                              
+                                    <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="0,44,0,0"  
                                                         VirtualizingPanel.VirtualizationMode="Recycling" 
                                                         VirtualizingPanel.IsVirtualizing="True" 
-                                                        ScrollViewer.CanContentScroll="True">
+                                                        ScrollViewer.CanContentScroll="True" >
                                         <TreeView.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel/>
@@ -121,7 +121,7 @@
                                             </Style>
                                         </TreeView.ItemContainerStyle>
                                     </cntrl:ExtendedTreeView>
-                                </ScrollViewer>
+                            
                             </Grid>
 
                         </Grid>
@@ -341,7 +341,7 @@
                             </TabItem>
                         </TabControl>
                         <Grid Grid.Column="1">
-                            <StackPanel Grid.Row="0" Margin="0,10,0,0">
+                            <StackPanel Grid.Row="0" Margin="0,10,0,0" >
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Total Requested Quntity :"/>
                                     <Label x:Name="lblTotalRequest"/>
@@ -350,45 +350,45 @@
                                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Icon="" Click="btnRequestResource_Click" 
                                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
-                		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                            
+                             
+                            </StackPanel>
+                            <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,72,0,0"
+                		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Auto"
                                           LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
-                                    <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
                                                                 EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                                        <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />
-                                        <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" 
+                                    <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />
+                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" 
                                                             ElementStyle="{StaticResource RightAlignStyle}"
                                                             Width="auto" IsReadOnly="True" />
-                                    </DataGrid.Columns>
-                                    <DataGrid.RowDetailsTemplate>
-                                        <DataTemplate>
-                                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
+                                </DataGrid.Columns>
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
                                                       ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
                                                       RowDetailsVisibilityMode="VisibleWhenSelected">
-                                                <DataGrid.Columns>
-                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
+                                            <DataGrid.Columns>
+                                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
 									                                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" 
                                                                             DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
                                                                         Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
                                                                         Width="auto"/>
-                                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+                                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
 									                                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                             Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-                                        </DataTemplate>
-                                    </DataGrid.RowDetailsTemplate>
-                                </DataGrid>
-                                </ScrollViewer>
-                            </StackPanel>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
+                            </DataGrid>
                         </Grid>
                     </Grid>
                 </TabItem>

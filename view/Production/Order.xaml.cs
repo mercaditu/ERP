@@ -439,6 +439,11 @@ namespace Cognitivo.Production
                 OrderDB.item_request.Add(item_request);
                 OrderDB.SaveChanges();
 
+                item_ProductDataGrid_SelectionChanged(sender, null);
+                item_RawDataGrid_SelectionChanged(sender, null);
+                item_CapitalDataGrid_SelectionChanged(sender, null);
+                item_SupplierDataGrid_SelectionChanged(sender, null);
+
                 //item_requestViewSource.View.Filter = i =>
                 //{
                 //    item_request _item_request = (item_request)i;
@@ -448,7 +453,7 @@ namespace Cognitivo.Production
                 //        return false;
                 //};
             }
-
+            
             crud_modal_request.Children.Clear();
             crud_modal_request.Visibility = System.Windows.Visibility.Collapsed;
         }

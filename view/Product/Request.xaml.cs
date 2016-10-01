@@ -25,10 +25,6 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DesignerProperties.GetIsInDesignMode(this))
-            {
-                return;
-            }
 
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
             await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
@@ -171,6 +167,13 @@ namespace Cognitivo.Product
                 purchasedesion.decisionqty = 0;
                 list_desion_purchase.Add(purchasedesion);
                 item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
+
+                List<desion> list_desion_internal = new List<desion>();
+                desion internaldesion = new desion();
+                internaldesion.decisionState = state.added;
+                internaldesion.decisionqty = 0;
+                list_desion_internal.Add(internaldesion);
+                item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
 
 
                 List<desion> list_desion_production = new List<desion>();
@@ -574,6 +577,35 @@ namespace Cognitivo.Product
             {
                 toolBar.msgWarning("Please select");
             }
+        }
+
+        private void item_request_decisioninternalDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
+            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+
+            if (item_request_decisioninternalDataGrid.SelectedItem != null)
+            {
+                desion desion = (desion)item_request_decisioninternalDataGrid.SelectedItem;
+
+                if (desion.decisionState == state.added)
+                {
+                    desion.decisionState = state.modified;
+                    item_request_decision item_request_decision = new global::entity.item_request_decision();
+                    item_request_decision.IsSelected = true;
+                    item_request_decision.quantity = desion.decisionqty;
+                    item_request_decision.decision = global::entity.item_request_decision.Decisions.Internal;
+                    item_request_detail.item_request_decision.Add(item_request_decision);
+                }
+            }
+
+            item_request_detail.item_request.GetTotalDecision();
+            item_request_detail.RaisePropertyChanged("balance");
+            dbContext.SaveChanges();
+            item_requestViewSource.View.MoveCurrentToLast();
+            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            item_request_detailitem_request_decisionViewSource.View.Refresh();
+            toolBar_btnEdit_Click(sender);
         }
 
         private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)

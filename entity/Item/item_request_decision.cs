@@ -11,13 +11,14 @@ namespace entity
             Movement = 0,
             Transfer = 1,
             Purchase = 2,
-            Production=3
+            Production = 3,
+            Internal = 4
         }
 
         public item_request_decision()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 

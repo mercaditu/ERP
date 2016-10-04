@@ -1,5 +1,6 @@
 ﻿using Cognitivo.Menu;
 using entity;
+using entity.Brillo;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,6 +21,7 @@ namespace Cognitivo.Security
             security_privilageViewSource,
             security_rolesecurity_role_privilageViewSource;
 
+        entity.CurrentSession.Versions oldversion;
         public UserRole()
         {
             InitializeComponent();
@@ -47,6 +49,7 @@ namespace Cognitivo.Security
 
             add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(entity.CurrentSession.Versions));
+           
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -93,12 +96,12 @@ namespace Cognitivo.Security
             security_role.State = EntityState.Added;
             security_role.IsSelected = true;
             dbContext.security_role.Add(security_role);
-           
-          
+
+
 
             security_roleViewSource.View.Refresh();
             security_roleViewSource.View.MoveCurrentToLast();
-          
+
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -111,7 +114,7 @@ namespace Cognitivo.Security
                 security_role.IsSelected = true;
                 security_role.State = EntityState.Modified;
                 dbContext.Entry(security_role).State = EntityState.Modified;
-                
+
             }
             else
             {
@@ -125,7 +128,7 @@ namespace Cognitivo.Security
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             foreach (entity.App.Names Names in Application)
             {
-                if (Names == entity.App.Names.SalesInvoice )
+                if (Names == entity.App.Names.SalesInvoice)
                 {
                     foreach (entity.Privilage.Privilages Privilage in Privilages)
                     {
@@ -160,7 +163,7 @@ namespace Cognitivo.Security
 
             foreach (security_privilage security_privilage in security_privilageList)
             {
-                if (security_privilage.id_application == entity.App.Names.SalesInvoice || 
+                if (security_privilage.id_application == entity.App.Names.SalesInvoice ||
                     security_privilage.id_application == entity.App.Names.ProductionExecution)
                 {
                     if (security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage).Count() == 0)
@@ -177,13 +180,14 @@ namespace Cognitivo.Security
             }
         }
 
-        private void cbxVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+      
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (cbxVersion.SelectedIndex>0)
+            if (cbxVersion.SelectedIndex > 0)
             {
                 add_MissingRecords();
             }
-           
         }
 
         private void add_MissingRecords()
@@ -192,98 +196,89 @@ namespace Cognitivo.Security
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             List<security_crud> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
 
-            CurrentSession.Versions version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-          
-
-                List<entity.App.Names> _DbApplicationDelete = security_curd.Select(x => x.id_application).ToList();
-                List<entity.App.Names> ApplicationDelete = new List<entity.App.Names>();
-                foreach (DataRow item in appList.dtApp.Rows)
+            if (security_curd.Count() == 0)
+            {
+                List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
+                foreach (entity.App.Names AppName in Application)
                 {
-                    entity.CurrentSession.Versions dtVersion = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(item["Version"]));
-                    if (dtVersion > version)
+                    security_crud _security_curd = new security_crud();
+                    _security_curd.id_application = AppName;
+                    _security_curd.can_update = false;
+                    _security_curd.can_read = false;
+                    _security_curd.can_delete = false;
+                    _security_curd.can_create = false;
+                    _security_curd.can_approve = false;
+                    _security_curd.can_annul = false;
+                    security_role.security_curd.Add(_security_curd);
+                }
+            }
+            else
+            {
+                Activation _Activation = new Activation();
+                CurrentSession.Versions version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                if (oldversion < version)
+                {
+                    List<entity.App.Names> dtApplication = new List<entity.App.Names>();
+                    foreach (DataRow item in appList.dtApp.Select("Version='" + version + "'"))
                     {
                         if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
                         {
-                            ApplicationDelete.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+                            dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
                         }
+
                     }
 
-                }
-
-
-
-                foreach (entity.App.Names AppName in ApplicationDelete)
-                {
-
-                    security_crud _security_curd = dbContext.security_curd.Where(x => x.id_application == AppName && x.id_role == security_role.id_role).FirstOrDefault();
-                    if (_security_curd != null)
+                    List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
+                    List<entity.App.Names> AddList = Enumerable.Except<entity.App.Names>(dtApplication, (IEnumerable<entity.App.Names>)_security_curdApplication).ToList();
+                    foreach (entity.App.Names AppName in AddList)
                     {
-                        dbContext.security_curd.Remove(_security_curd);
+                        security_crud _security_curd = new security_crud();
+                        _security_curd.id_application = AppName;
+                        _security_curd.can_update = false;
+                        _security_curd.can_read = false;
+                        _security_curd.can_delete = false;
+                        _security_curd.can_create = false;
+                        _security_curd.can_approve = false;
+                        _security_curd.can_annul = false;
+                        security_role.security_curd.Add(_security_curd);
+                    }
+                    oldversion = version;
+                }
+                else
+                {
+                    List<entity.App.Names> dtApplication = new List<entity.App.Names>();
+                    foreach (DataRow item in appList.dtApp.Select("Version='" + version + "'"))
+                    {
+                        if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
+                        {
+                            dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+                        }
+
                     }
 
+                    List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
+                    List<entity.App.Names> AddList = Enumerable.Except<entity.App.Names>( (IEnumerable<entity.App.Names>)_security_curdApplication, dtApplication).ToList();
+                    foreach (entity.App.Names AppName in AddList)
+                    {
+                        security_crud _security_curd = dbContext.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+                        if (_security_curd != null)
+                        {
+                            security_role.security_curd.Remove(_security_curd);
+                        }
 
+                    }
+                    oldversion = version;
                 }
-                dbContext.SaveChanges();
-            
-          
 
 
 
 
-            List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
-            List<entity.App.Names> Application = new List<entity.App.Names>();
-            foreach (DataRow item in appList.dtApp.Select("Version='" + version + "'"))
-            {
-                if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
-                {
-                    Application.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
-                }
-                
+
             }
-
-            List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
-
-            foreach (entity.App.Names AppName in finalapplicaiton)
-            {
-                security_crud _security_curd = new security_crud();
-                _security_curd.id_application = AppName;
-                _security_curd.can_update = false;
-                _security_curd.can_read = false;
-                _security_curd.can_delete = false;
-                _security_curd.can_create = false;
-                _security_curd.can_approve = false;
-                _security_curd.can_annul = false;
-                security_role.security_curd.Add(_security_curd);
-            }
-
-            //Remove Addtional
-
             security_rolesecurity_curdViewSource.View.Refresh();
             security_rolesecurity_role_privilageViewSource.View.Refresh();
 
-            //if (security_rolesecurity_curdViewSource.View != null)
-            //{
-            //    security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-            //    List<security_crud> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
-            //    List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
-            //    List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
-            //    List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
-
-            //    foreach (entity.App.Names AppName in finalapplicaiton)
-            //    {
-            //        security_crud _security_curd = new security_crud();
-            //        _security_curd.id_application = AppName;
-            //        _security_curd.can_update = false;
-            //        _security_curd.can_read = false;
-            //        _security_curd.can_delete = false;
-            //        _security_curd.can_create = false;
-            //        _security_curd.can_approve = false;
-            //        _security_curd.can_annul = false;
-            //        security_role.security_curd.Add(_security_curd);
-            //    }
-            //    security_rolesecurity_curdViewSource.View.Refresh();
-            //    security_rolesecurity_role_privilageViewSource.View.Refresh();
-            //}
+          
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -310,7 +305,7 @@ namespace Cognitivo.Security
             }
         }
 
-     
+
 
         private void security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -320,6 +315,7 @@ namespace Cognitivo.Security
                 entity.Brillo.Activation Activation = new entity.Brillo.Activation();
                 CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
                 cbxVersion.SelectedItem = version;
+                oldversion = version;
             }
         }
     }

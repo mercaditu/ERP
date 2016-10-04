@@ -213,7 +213,7 @@ namespace entity.Brillo.Logic
                 return item_movementList;
             }
 
-                ///SALES PACKING
+            ///SALES PACKING
             else if (obj_entity.GetType().BaseType == typeof(sales_packing) || obj_entity.GetType() == typeof(sales_packing))
             {
                 sales_packing sales_packing = (sales_packing)obj_entity;
@@ -248,7 +248,7 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
-                //Inventory
+            //Inventory
             else if (obj_entity.GetType().BaseType == typeof(item_inventory) || obj_entity.GetType() == typeof(item_inventory))
             {
                 item_inventory item_inventory = (item_inventory)obj_entity;
@@ -606,6 +606,7 @@ namespace entity.Brillo.Logic
             int id_location = app_location.id_location;
             int id_item_product = item_product.id_item_product;
             int id_movement = 0;
+            decimal Unitcost = 0;
 
             if (item_product.cogs_type == item_product.COGS_Types.LIFO && Items_InStockLIST != null)
             {
@@ -681,11 +682,16 @@ namespace entity.Brillo.Logic
                     else if (ApplicationID == App.Names.Inventory)
                     {
                         item_movement.id_inventory_detail = TransactionDetailID;
+                        item_inventory_detail item_inventory_detail = db.item_inventory_detail.Where(x => x.id_inventory_detail == TransactionDetailID).FirstOrDefault();
+                        if (item_inventory_detail.unit_value > 0)
+                        {
+                            Unitcost = item_inventory_detail.unit_value;
+                        }
                     }
 
                     item_movement.trans_date = TransDate;
 
-                    decimal Dimension_Cost = 0;
+
                     if (ApplicationID == App.Names.ProductionExecution)
                     {
 
@@ -711,9 +717,9 @@ namespace entity.Brillo.Logic
 
                                     if (ParentDimesion > 0 && ChildDimesion > 0)
                                     {
-                                        Dimension_Cost = parent_Movement.Cost;
+                                        Unitcost = parent_Movement.Cost;
                                         decimal ChildPaticipantion = (ChildDimesion / ParentDimesion);
-                                        Dimension_Cost = Dimension_Cost * ChildPaticipantion;
+                                        Unitcost = Unitcost * ChildPaticipantion;
                                     }
                                 }
                             }
@@ -724,9 +730,9 @@ namespace entity.Brillo.Logic
                     if (app_currencyfx != null)
                     {
                         item_movement_value item_movement_value = new item_movement_value();
-                        if (Dimension_Cost > 0)
+                        if (Unitcost > 0)
                         {
-                            item_movement_value.unit_value = Dimension_Cost;
+                            item_movement_value.unit_value = Unitcost;
                         }
                         else
                         {
@@ -818,10 +824,22 @@ namespace entity.Brillo.Logic
                     //Logic for Value in case Parent does not Exist, we will take from 
 
                     item_movement_value item_movement_value = new item_movement_value();
-                    if (item_product.item.unit_cost != null)
+
+                    if (Unitcost > 0)
                     {
-                        item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+
+                        item_movement_value.unit_value = Unitcost;
+
                     }
+                    else
+                    {
+                        if (item_product.item.unit_cost != null)
+                        {
+                            item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                        }
+                    }
+
+
 
                     item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                     item_movement_value.comment = Brillo.Localize.StringText("DirectCost");

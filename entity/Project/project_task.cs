@@ -413,7 +413,7 @@ namespace entity
 
                 if (project.CurrecyFx_ID != null)
                 {
-                    _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                    //_unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
                     _unit_cost_est = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
                     RaisePropertyChanged("unit_price_vat");
                     RaisePropertyChanged("unit_cost_est");

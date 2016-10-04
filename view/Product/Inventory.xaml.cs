@@ -49,7 +49,7 @@ namespace Cognitivo.Product
 
             app_branchViewSource.View.MoveCurrentToFirst();
 
-            app_branchapp_locationViewSource.View.MoveCurrentToFirst();
+            //app_branchapp_locationViewSource.View.MoveCurrentToFirst();
             filetr_detail();
         }
 

@@ -149,15 +149,12 @@ namespace cntrl
                 _ReportColumn = value;
                 foreach (ReportColumns ReportColumns in _ReportColumn)
                 {
-                                    
-                        CheckBox chkbox = new CheckBox();
-                        chkbox.Content = ReportColumns.Columname;
-                        chkbox.IsChecked = ReportColumns.IsVisibility;
-                        stpColumn.Children.Add(chkbox);
-                        chkbox.Checked += CheckBox_Checked;
-                        chkbox.Unchecked += CheckBox_Checked;
-                    
-                  
+                    CheckBox chkbox = new CheckBox();
+                    chkbox.Content = ReportColumns.Columname;
+                    chkbox.IsChecked = ReportColumns.IsVisibility;
+                    stpColumn.Children.Add(chkbox);
+                    chkbox.Checked += CheckBox_Checked;
+                    chkbox.Unchecked += CheckBox_Checked;
                 }
             }
         }
@@ -170,13 +167,7 @@ namespace cntrl
 
         public ReportPanel()
         {
-         
             InitializeComponent();
-            ShowBranch = false;
-
-
-
-          
         }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {

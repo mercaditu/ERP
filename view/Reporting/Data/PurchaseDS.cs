@@ -1,11 +1,13 @@
-﻿namespace Cognitivo.Reporting.Data {
-    
-    
-    public partial class PurchaseDS {
+﻿namespace Cognitivo.Reporting.Data
+{
+
+
+    public partial class PurchaseDS
+    {
         partial class PurchaseTenderSummaryDataTable
         {
         }
-    
+
         partial class PurchaseInvoiceSummaryDataTable
         {
         }

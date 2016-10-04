@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Forms;
 using entity;
-using Microsoft.Reporting.WinForms.Internal.Soap.ReportingServices2005.Execution;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -46,21 +32,13 @@ namespace Cognitivo.Reporting.Views
             }
             else
             {
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
             }
 
-            //ReportParameter[] parameters = new ReportParameter[x+1];
-
-            reportDataSource1.Name = "PurchaseInvoiceSummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Name = "PurchaseInvoice"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = dt; 
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseInvoiceSummary.rdlc";
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //this.reportViewer.LocalReport.SetParameters("EndDate", dtEndDate, false);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseInvoice.rdlc";
 
             PurchaseDB.EndInit();
 

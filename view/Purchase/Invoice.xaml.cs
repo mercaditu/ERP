@@ -824,5 +824,18 @@ namespace Cognitivo.Purchase
                 toolBar.msgWarning("Please select");
             }
         }
+
+        private void btnInvoiceNumber_LostFocus(object sender, RoutedEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+            if (purchase_invoice != null && purchase_invoice.number != null)
+            {
+                bool is_repeated = PurchaseInvoiceDB.purchase_invoice.Where(x => x.number == purchase_invoice.number).FirstOrDefaultAsync() != null ? true : false;
+                if (is_repeated)
+                {
+                    toolBar.msgWarning("Duplicate Invoice");
+                }
+            }
+        }
     }
 }

@@ -257,8 +257,7 @@ namespace entity
         /// <param name="invoice"></param>
         public void Discount_Items_Origin(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
         {
-
-            entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
+            Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             if (item_transfer_detail.item_product != null)
             {
@@ -266,19 +265,16 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
-                    List<entity.Brillo.StockList> Items_InStockLIST;
+                    List<Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
                         Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
-
                     }
                     else
                     {
-                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
                         Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
-
-
                     }
 
                     List<item_movement> item_movement_originList;
@@ -311,19 +307,17 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
-                    List<entity.Brillo.StockList> Items_InStockLIST;
+                    List<Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
                         Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
 
                     }
                     else
                     {
-                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
                         Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
-
-
                     }
 
 

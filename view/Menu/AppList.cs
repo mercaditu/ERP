@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPFLocalizeExtension.Extensions;
-using entity.Brillo;
 
 namespace Cognitivo.Menu
 {
@@ -151,7 +150,7 @@ namespace Cognitivo.Menu
 
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Form, "Production.Line", entity.App.Names.Line, "Line", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "Fraction", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.Production_HumanResources", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");

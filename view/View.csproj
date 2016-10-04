@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\6.64\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\6.70\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>62</ApplicationRevision>
+    <ApplicationRevision>66</ApplicationRevision>
     <ApplicationVersion>2.1.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -547,6 +547,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
+      <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\Production_HumanResources.xaml.cs">
       <DependentUpon>Production_HumanResources.xaml</DependentUpon>
     </Compile>
@@ -610,8 +613,8 @@
     <Compile Include="Reporting\Views\SalesBudget.xaml.cs">
       <DependentUpon>SalesBudget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
-      <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\ProductionOrder.xaml.cs">
+      <DependentUpon>ProductionOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\PurchaseOrder.xaml.cs">
       <DependentUpon>PurchaseOrder.xaml</DependentUpon>
@@ -1024,12 +1027,13 @@
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\PurchaseInvoiceSummary.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PurchaseInvoice.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PurchaseOrderSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PurchaseTenderSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetSummary.rdlc" />
@@ -1528,6 +1532,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\ProductionOrderStatus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\Production_HumanResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1612,7 +1620,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\ProductionOrderStatus.xaml">
+    <Page Include="Reporting\Views\ProductionOrder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

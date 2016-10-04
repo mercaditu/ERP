@@ -91,7 +91,7 @@
                                                Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </AdornerDecorator>
                     <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}"/>
-                    <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"
+                    <TextBox Style="{StaticResource input_textbox}" LostFocus="btnInvoiceNumber_LostFocus"
                          Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
                     <AdornerDecorator>

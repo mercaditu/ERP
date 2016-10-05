@@ -32,7 +32,7 @@ namespace entity.BrilloQuery
                                 is_employee as IsEmployee,
                                 is_active as IsActive
                                 from contacts
-                                where id_company = {0} and is_active = 1
+                                where (id_company = {0} or id_company is null ) and is_active = 1
                                 order by name
                                 ";
 

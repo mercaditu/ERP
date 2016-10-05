@@ -389,10 +389,10 @@
                 <TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
-                    <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
-                                  IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Rectangle Height="1" Fill="Silver" Margin="16,4"/>
+                    <metro:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                    <metro:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
+                <Rectangle Height="1" Fill="Silver" Margin="16,4"/>
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
                 <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
                     <Label Content="A" Style="{StaticResource btn_Label}"/>
@@ -402,7 +402,7 @@
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                         <Border BorderThickness="1" BorderBrush="Gray">
                             <StackPanel Background="WhiteSmoke" Width="180">
-                                <Label Content="{lex:Loc Filter}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                <Label Content="{lex:Loc Filter}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                 <CheckBox Margin="6,0,0,0" 
                                 IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=Product, Mode=TwoWay}">
                                     <Label Content="{lex:Loc Product}" Style="{StaticResource generic_Label}"/>
@@ -431,7 +431,7 @@
                                 IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=ServiceContract, Mode=TwoWay}">
                                     <Label Content="{lex:Loc ServiceContract}" Style="{StaticResource generic_Label}"/>
                                 </CheckBox>
-                                <Label Content="{lex:Loc PriceList}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                <Label Content="{lex:Loc PriceList}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                 <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithVAT"
                                           IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Included, Mode=TwoWay}">
                                     <Label Content="{lex:Loc VATIncluded}" Style="{StaticResource generic_Label}"/>
@@ -447,8 +447,8 @@
                 <StackPanel x:Name="stackpnlCost" Orientation="Horizontal" Margin="3,2,0,5" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="$" Style="{StaticResource btn_Label}"/>
                     <TextBlock x:Name="tbCost" VerticalAlignment="Center">
-                            <Hyperlink x:Name="hrefCost" Click="hrefCost_Click"><Run Text="{lex:Loc Cost}"/></Hyperlink></TextBlock>
-
+                            <Hyperlink x:Name="hrefCost" Click="hrefCost_Click"><Run Text="{lex:Loc Cost}"/></Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

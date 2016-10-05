@@ -166,6 +166,34 @@ namespace entity
         public BloodTypes? blood_type { get; set; }
         public CivilStatus? marital_status { get; set; }
 
+        [NotMapped]
+        public bool is_shared
+        {
+            get
+            {
+                if (id_company == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (value == true)
+                {
+                    id_company = null;
+                    this.app_company = null;
+                }
+                else
+                {
+                    id_company = CurrentSession.Id_Company;
+                }
+            }
+        }
+
         //Calculated Fields
         [NotMapped]
         public decimal? credit_availability { get; set; }

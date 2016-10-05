@@ -66,7 +66,7 @@ namespace Cognitivo.Product
         private async void load_PrimaryDataThread()
         {
             var predicate = PredicateBuilder.True<item>();
-            predicate = (x => x.is_active && x.id_company == CurrentSession.Id_Company);
+            predicate = (x => (x.id_company == CurrentSession.Id_Company || x.id_company == null));
 
             var predicateOR = PredicateBuilder.False<item>();
 

@@ -1,13 +1,12 @@
 namespace entity
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
-    using entity.Class;
+    using Class;
 
     public partial class item : AuditGeneric, IDataErrorInfo
     {
@@ -58,10 +57,11 @@ namespace entity
         public int id_item { get; set; }
      
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(EntityValidation), "CheckId")]
         public item_type id_item_type { get; set; }
+
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(EntityValidation), "CheckId")]
         public int id_vat_group
         {
             get { return _id_vat_group; }
@@ -70,14 +70,13 @@ namespace entity
                 if (_id_vat_group != value)
                 {
                     _id_vat_group = value;
-                    if (item_price!=null)
+                    if (item_price != null)
                     {
                         foreach (item_price _item_price in item_price)
                         {
                             _item_price.return_ValueWithVAT(_id_vat_group);
                         }
                     }
-                   
                 }
             }
         }
@@ -98,8 +97,8 @@ namespace entity
                 if (code=="" || code==null)
                 {
                     _code = value;
+                    RaisePropertyChanged("code");
                 }
-                RaisePropertyChanged("code");
             }
         }
         string _name;
@@ -109,12 +108,36 @@ namespace entity
         public string variation { get; set; }
         public string description { get; set; }
         public decimal? unit_cost { get; set; }
-        //public int? link_code { get; set; }
         public bool is_autorecepie { get; set; }
-        //public bool has_promo { get; set; }
         public bool is_active { get; set; }
-        //public bool is_substitute { get; set; }
 
+        [NotMapped]
+        public bool is_shared
+        {
+            get
+            {
+                if (id_company == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (value == true)
+                {
+                    id_company = null;
+                    this.app_company = null;
+                }
+                else
+                {
+                    id_company = CurrentSession.Id_Company;
+                }
+            }
+        }
 
         public virtual ICollection<item_price> item_price { get; set; }
         public virtual ICollection<contact_subscription> contact_subscription { get; set; }
@@ -166,7 +189,7 @@ namespace entity
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
-                    String propertyError = this[prop.Name];
+                    string propertyError = this[prop.Name];
                     if (propertyError != string.Empty)
                     {
                         error.Append((error.Length != 0 ? ", " : "") + propertyError);
@@ -175,6 +198,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

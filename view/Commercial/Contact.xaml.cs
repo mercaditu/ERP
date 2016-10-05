@@ -31,7 +31,7 @@ namespace Cognitivo.Commercial
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
 
             //Contact
-            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.name).Load();
+            ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;

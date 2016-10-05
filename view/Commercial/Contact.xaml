@@ -69,7 +69,8 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 
-		<StackPanel Grid.Column="1" Grid.Row="1" Background="White" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+		<StackPanel Grid.Column="1" Grid.Row="1" 
+                    Background="White" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 
 			<Border CornerRadius="64" Background="WhiteSmoke"
 					Width="100" Height="100" Margin="24"
@@ -86,7 +87,14 @@
 			</StackPanel>
 		</StackPanel>
 
-		<TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
+        <StackPanel IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Column="1" Grid.Row="1"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16">
+            <Label Content="{lex:Loc Properties}" FontWeight="Medium" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
+            <Custom:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+            <Custom:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
 					SelectedIndex="0" Margin="0,128,0,0" >
 			<TabItem Header="{lex:Loc Information}">
 				<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="8">
@@ -125,12 +133,7 @@
 
 					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						<Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
-							<!--<Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
-								   Style="{StaticResource btn_Label}"/>-->
-						</StackPanel>
-
+						<Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
 						<TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -177,43 +180,42 @@
 					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
 								IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						<Label Content="{lex:Loc Extras}" Style="{StaticResource H2}"/>
-						<Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-						<cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
-												 CollectionViewSource="{StaticResource contact_tagViewSource}"
-												 focusGrid="True" Width="256"
-												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-							<cntrl:SearchableTextbox.Columns>
-								<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
-														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-							</cntrl:SearchableTextbox.Columns>
-						</cntrl:SearchableTextbox>
-						<DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-									  HeadersVisibility="None"
-									  ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-													IsReadOnly="True" Width="*"/>
-								<DataGridTemplateColumn Width="26" Header="">
-									<DataGridTemplateColumn.CellTemplate>
-										<DataTemplate>
-											<Button Command="customcmd:CustomCommands.Delete"
-													Style="{StaticResource btnDeleteChildStyle}"
-													CommandParameter="{Binding}"/>
-										</DataTemplate>
-									</DataGridTemplateColumn.CellTemplate>
-								</DataGridTemplateColumn>
-							</DataGrid.Columns>
-						</DataGrid>
+						
 						<Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
 						<TextBox TextWrapping="Wrap"
 								 Style="{StaticResource input_textbox}"
 								 Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
 						<Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-						<DatePicker Style="{StaticResource input_datepicker}"
+                        <DatePicker Style="{StaticResource input_datepicker}"
 									SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-						<CheckBox x:Name="chbxIsActive" Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-								  IsChecked="{Binding is_active, FallbackValue=False}"/>
-					</StackPanel>
+                        <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                        <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
+												 CollectionViewSource="{StaticResource contact_tagViewSource}"
+												 focusGrid="True" Width="256"
+												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                            <cntrl:SearchableTextbox.Columns>
+                                <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                            </cntrl:SearchableTextbox.Columns>
+                        </cntrl:SearchableTextbox>
+                        <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+									  HeadersVisibility="None"
+									  ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+													IsReadOnly="True" Width="*"/>
+                                <DataGridTemplateColumn Width="26" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
+													Style="{StaticResource btnDeleteChildStyle}"
+													CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
 
 				</WrapPanel>
 			</TabItem>

@@ -107,10 +107,10 @@ group by s.id_purchase_invoice, vatco.id_vat_group
     p.status as Status,
 	DATE_FORMAT(p.trans_date,'%d %b %y') as InvoiceDate, 
     contact.name as Supplier, 
-    
-    p.number as InvoiceNumber,
+    cont.name as PurchaseCondition,
+    p.number as InvoiceNumber, 
     pd.item_description as Item,
-    
+    cc.name as CostCenter,
 	sum(pd.quantity) AS Quantity,
     round(pd.unit_cost, 4) as UnitPrice,
 	round(pd.discount * vatco.coef,4) as Discount,
@@ -122,9 +122,11 @@ group by s.id_purchase_invoice, vatco.id_vat_group
 FROM purchase_invoice p 
 left join app_currencyfx as fx on p.id_currencyfx = fx.id_currencyfx
 left join app_currency as f on fx.id_currency = f.id_currency
+inner join app_contract as cont on p.id_contract = cont.id_contract
 INNER JOIN contacts as contact ON p.id_contact = contact.id_contact 
 INNER JOIN app_branch as branch on p.id_branch = branch.id_branch
 inner join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice 
+inner join app_cost_center cc on pd.id_cost_center = cc.id_cost_center
          LEFT OUTER JOIN 
          items i ON i.id_item = pd.id_item 
          LEFT OUTER JOIN 
@@ -133,7 +135,7 @@ inner join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_
                      app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
                      app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
             GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.id_vat_group
- where (p.trans_date &gt;= @StartDate) AND (p.trans_date &lt;= @EndDate) and p.id_company = @CompanyID
+where (p.trans_date &gt;= @StartDate) AND (p.trans_date &lt;= @EndDate) and p.id_company = @CompanyID -- and p.id_contact = @ContactID
  group by pd.id_purchase_invoice_detail
  order by p.trans_date</CommandText>
                     <Parameters>
@@ -160,47 +162,55 @@ inner join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_
               <Mapping SourceColumn="Discount" DataSetColumn="Discount" />
               <Mapping SourceColumn="UnitPrice_VAT" DataSetColumn="UnitPrice_VAT" />
               <Mapping SourceColumn="Currency" DataSetColumn="Currency" />
+              <Mapping SourceColumn="CostCenter" DataSetColumn="CostCenter" />
+              <Mapping SourceColumn="PurchaseCondition" DataSetColumn="PurchaseCondition" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByBranch" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByBranch" GeneratorSourceName="FillByBranch" GetMethodModifier="Public" GetMethodName="GetDataByBranch" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByBranch" UserSourceName="FillByBranch">
+              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBySupplier" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBySupplier" GeneratorSourceName="FillBySupplier" GetMethodModifier="Public" GetMethodName="GetDataBySupplier" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBySupplier" UserSourceName="FillBySupplier">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT 
 	branch.name as Branch,
+    f.name as Currency,
     p.status as Status,
 	DATE_FORMAT(p.trans_date,'%d %b %y') as InvoiceDate, 
     contact.name as Supplier, 
+    cont.name as PurchaseCondition,
     p.number as InvoiceNumber, 
-	sum(pd.quantity) AS Quantity, 
-	
-    round(sum(pd.quantity * pd.unit_cost),4) as Total,
-    round(sum(pd.quantity * pd.unit_cost * vatco.coef),4) as TotalVAT,
-	round(sum(pd.quantity * pd.discount * vatco.coef),4) as SubTotalDiscountVAT,
-	round(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal
+    pd.item_description as Item,
+    cc.name as CostCenter,
+	sum(pd.quantity) AS Quantity,
+    round(pd.unit_cost, 4) as UnitPrice,
+	round(pd.discount * vatco.coef,4) as Discount,
+    round(pd.unit_cost * vatco.coef, 4) as UnitPrice_VAT,
+    round(pd.quantity * pd.unit_cost,4) as Total,
+    round(pd.quantity * pd.unit_cost * vatco.coef,4) as TotalVAT,
+	round(pd.quantity * pd.unit_cost * vatco.vat,4) as VATTotal
     
-FROM purchase_invoice p INNER JOIN
-         contacts as contact ON p.id_contact = contact.id_contact 
-         INNER JOIN 
-         app_branch as branch on p.id_branch = branch.id_branch
-         inner join 
-         purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice 
+FROM purchase_invoice p 
+left join app_currencyfx as fx on p.id_currencyfx = fx.id_currencyfx
+left join app_currency as f on fx.id_currency = f.id_currency
+inner join app_contract as cont on p.id_contract = cont.id_contract
+INNER JOIN contacts as contact ON p.id_contact = contact.id_contact 
+INNER JOIN app_branch as branch on p.id_branch = branch.id_branch
+inner join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice 
+inner join app_cost_center cc on pd.id_cost_center = cc.id_cost_center
          LEFT OUTER JOIN 
          items i ON i.id_item = pd.id_item 
-         left outer join
-         payment_schedual as schedual on p.id_purchase_invoice = schedual.id_sales_invoice
          LEFT OUTER JOIN 
              (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
             FROM  app_vat_group LEFT OUTER JOIN 
                      app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
                      app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
             GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.id_vat_group
- where p.id_branch = @BranchID and (p.trans_date &gt;= @StartDate) AND (p.trans_date &lt;= @EndDate) 
-group by p.id_purchase_invoice
-order by p.trans_date</CommandText>
+where (p.trans_date &gt;= @StartDate) AND (p.trans_date &lt;= @EndDate) and p.id_company = @CompanyID and p.id_contact = @ContactID
+ group by pd.id_purchase_invoice_detail
+ order by p.trans_date</CommandText>
                     <Parameters>
-                      <Parameter AllowDbNull="false" AutogeneratedName="BranchID" ColumnName="id_branch" DataSourceName="GoldenDuty.purchase_invoice" DataTypeServer="int(11)" DbType="Int32" Direction="Input" ParameterName="@BranchID" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="id_branch" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="StartDate" ColumnName="trans_date" DataSourceName="GoldenDuty.purchase_invoice" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@StartDate" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="trans_date" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="EndDate" ColumnName="trans_date" DataSourceName="GoldenDuty.purchase_invoice" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@EndDate" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="trans_date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="StartDate" ColumnName="trans_date" DataSourceName="cognitivo.purchase_invoice" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@StartDate" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="trans_date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="EndDate" ColumnName="trans_date" DataSourceName="cognitivo.purchase_invoice" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@EndDate" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="trans_date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="CompanyID" ColumnName="id_company" DataSourceName="cognitivo.purchase_invoice" DataTypeServer="int(11)" DbType="Int32" Direction="Input" ParameterName="@CompanyID" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="id_company" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="ContactID" ColumnName="id_contact" DataSourceName="cognitivo.purchase_invoice" DataTypeServer="int(11)" DbType="Int32" Direction="Input" ParameterName="@ContactID" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="id_contact" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </SelectCommand>
@@ -387,7 +397,7 @@ group by p.id_purchase_order
   <xs:element name="PurchaseDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PurchaseDS" msprop:Generator_UserDSName="PurchaseDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="PurchaseVatReport" msprop:Generator_TableClassName="PurchaseVatReportDataTable" msprop:Generator_TableVarName="tablePurchaseVatReport" msprop:Generator_TablePropName="PurchaseVatReport" msprop:Generator_RowDeletingName="PurchaseVatReportRowDeleting" msprop:Generator_RowChangingName="PurchaseVatReportRowChanging" msprop:Generator_RowEvHandlerName="PurchaseVatReportRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseVatReportRowDeleted" msprop:Generator_UserTableName="PurchaseVatReport" msprop:Generator_RowChangedName="PurchaseVatReportRowChanged" msprop:Generator_RowEvArgName="PurchaseVatReportRowChangeEvent" msprop:Generator_RowClassName="PurchaseVatReportRow">
+        <xs:element name="PurchaseVatReport" msprop:Generator_TableClassName="PurchaseVatReportDataTable" msprop:Generator_TableVarName="tablePurchaseVatReport" msprop:Generator_RowChangedName="PurchaseVatReportRowChanged" msprop:Generator_TablePropName="PurchaseVatReport" msprop:Generator_RowDeletingName="PurchaseVatReportRowDeleting" msprop:Generator_RowChangingName="PurchaseVatReportRowChanging" msprop:Generator_RowEvHandlerName="PurchaseVatReportRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseVatReportRowDeleted" msprop:Generator_RowClassName="PurchaseVatReportRow" msprop:Generator_UserTableName="PurchaseVatReport" msprop:Generator_RowEvArgName="PurchaseVatReportRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -407,7 +417,7 @@ group by p.id_purchase_order
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseInvoiceSummary" msprop:Generator_TableClassName="PurchaseInvoiceSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseInvoiceSummary" msprop:Generator_RowChangedName="PurchaseInvoiceSummaryRowChanged" msprop:Generator_TablePropName="PurchaseInvoiceSummary" msprop:Generator_RowDeletingName="PurchaseInvoiceSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseInvoiceSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseInvoiceSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseInvoiceSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseInvoiceSummaryRow" msprop:Generator_UserTableName="PurchaseInvoiceSummary" msprop:Generator_RowEvArgName="PurchaseInvoiceSummaryRowChangeEvent">
+        <xs:element name="PurchaseInvoiceSummary" msprop:Generator_TableClassName="PurchaseInvoiceSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseInvoiceSummary" msprop:Generator_TablePropName="PurchaseInvoiceSummary" msprop:Generator_RowDeletingName="PurchaseInvoiceSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseInvoiceSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseInvoiceSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseInvoiceSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseInvoiceSummary" msprop:Generator_RowChangedName="PurchaseInvoiceSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseInvoiceSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseInvoiceSummaryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -430,10 +440,12 @@ group by p.id_purchase_order
               <xs:element name="Discount" msprop:Generator_ColumnVarNameInTable="columnDiscount" msprop:Generator_ColumnPropNameInRow="Discount" msprop:Generator_ColumnPropNameInTable="DiscountColumn" msprop:Generator_UserColumnName="Discount" type="xs:decimal" minOccurs="0" />
               <xs:element name="UnitPrice_VAT" msprop:Generator_ColumnVarNameInTable="columnUnitPrice_VAT" msprop:Generator_ColumnPropNameInRow="UnitPrice_VAT" msprop:Generator_ColumnPropNameInTable="UnitPrice_VATColumn" msprop:Generator_UserColumnName="UnitPrice_VAT" type="xs:decimal" minOccurs="0" />
               <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
+              <xs:element name="CostCenter" msprop:Generator_ColumnVarNameInTable="columnCostCenter" msprop:Generator_ColumnPropNameInRow="CostCenter" msprop:Generator_ColumnPropNameInTable="CostCenterColumn" msprop:Generator_UserColumnName="CostCenter" type="xs:string" />
+              <xs:element name="PurchaseCondition" msprop:Generator_ColumnVarNameInTable="columnPurchaseCondition" msprop:Generator_ColumnPropNameInRow="PurchaseCondition" msprop:Generator_ColumnPropNameInTable="PurchaseConditionColumn" msprop:Generator_UserColumnName="PurchaseCondition" type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseOrderSummary" msprop:Generator_TableClassName="PurchaseOrderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseOrderSummary" msprop:Generator_RowChangedName="PurchaseOrderSummaryRowChanged" msprop:Generator_TablePropName="PurchaseOrderSummary" msprop:Generator_RowDeletingName="PurchaseOrderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseOrderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseOrderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseOrderSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseOrderSummaryRow" msprop:Generator_UserTableName="PurchaseOrderSummary" msprop:Generator_RowEvArgName="PurchaseOrderSummaryRowChangeEvent">
+        <xs:element name="PurchaseOrderSummary" msprop:Generator_TableClassName="PurchaseOrderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseOrderSummary" msprop:Generator_TablePropName="PurchaseOrderSummary" msprop:Generator_RowDeletingName="PurchaseOrderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseOrderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseOrderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseOrderSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseOrderSummary" msprop:Generator_RowChangedName="PurchaseOrderSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseOrderSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseOrderSummaryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -457,7 +469,7 @@ group by p.id_purchase_order
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseTenderSummary" msprop:Generator_TableClassName="PurchaseTenderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseTenderSummary" msprop:Generator_RowChangedName="PurchaseTenderSummaryRowChanged" msprop:Generator_TablePropName="PurchaseTenderSummary" msprop:Generator_RowDeletingName="PurchaseTenderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseTenderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseTenderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseTenderSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseTenderSummaryRow" msprop:Generator_UserTableName="PurchaseTenderSummary" msprop:Generator_RowEvArgName="PurchaseTenderSummaryRowChangeEvent">
+        <xs:element name="PurchaseTenderSummary" msprop:Generator_TableClassName="PurchaseTenderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseTenderSummary" msprop:Generator_TablePropName="PurchaseTenderSummary" msprop:Generator_RowDeletingName="PurchaseTenderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseTenderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseTenderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseTenderSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseTenderSummary" msprop:Generator_RowChangedName="PurchaseTenderSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseTenderSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseTenderSummaryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="TenderName" msprop:Generator_ColumnVarNameInTable="columnTenderName" msprop:Generator_ColumnPropNameInRow="TenderName" msprop:Generator_ColumnPropNameInTable="TenderNameColumn" msprop:Generator_UserColumnName="TenderName" type="xs:string" minOccurs="0" />

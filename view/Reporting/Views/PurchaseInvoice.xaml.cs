@@ -28,7 +28,7 @@ namespace Cognitivo.Reporting.Views
 
             if (ReportPanel.Branch != null)
             {
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.Branch.id_branch, ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = PurchaseInvoiceSummaryTableAdapter.GetDataBySupplier(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, 1);
             }
             else
             {

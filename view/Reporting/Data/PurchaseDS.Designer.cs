@@ -760,6 +760,10 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnCurrency;
             
+            private global::System.Data.DataColumn columnCostCenter;
+            
+            private global::System.Data.DataColumn columnPurchaseCondition;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseInvoiceSummaryDataTable() {
@@ -907,6 +911,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CostCenterColumn {
+                get {
+                    return this.columnCostCenter;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PurchaseConditionColumn {
+                get {
+                    return this.columnPurchaseCondition;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -942,7 +962,23 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseInvoiceSummaryRow AddPurchaseInvoiceSummaryRow(string Branch, int Status, string InvoiceDate, decimal Quantity, string Supplier, string InvoiceNumber, decimal Total, decimal TotalVAT, decimal VATTotal, string Item, decimal UnitPrice, decimal Discount, decimal UnitPrice_VAT, string Currency) {
+            public PurchaseInvoiceSummaryRow AddPurchaseInvoiceSummaryRow(
+                        string Branch, 
+                        int Status, 
+                        string InvoiceDate, 
+                        decimal Quantity, 
+                        string Supplier, 
+                        string InvoiceNumber, 
+                        decimal Total, 
+                        decimal TotalVAT, 
+                        decimal VATTotal, 
+                        string Item, 
+                        decimal UnitPrice, 
+                        decimal Discount, 
+                        decimal UnitPrice_VAT, 
+                        string Currency, 
+                        string CostCenter, 
+                        string PurchaseCondition) {
                 PurchaseInvoiceSummaryRow rowPurchaseInvoiceSummaryRow = ((PurchaseInvoiceSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Branch,
@@ -958,7 +994,9 @@ namespace Cognitivo.Reporting.Data {
                         UnitPrice,
                         Discount,
                         UnitPrice_VAT,
-                        Currency};
+                        Currency,
+                        CostCenter,
+                        PurchaseCondition};
                 rowPurchaseInvoiceSummaryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPurchaseInvoiceSummaryRow);
                 return rowPurchaseInvoiceSummaryRow;
@@ -995,6 +1033,8 @@ namespace Cognitivo.Reporting.Data {
                 this.columnDiscount = base.Columns["Discount"];
                 this.columnUnitPrice_VAT = base.Columns["UnitPrice_VAT"];
                 this.columnCurrency = base.Columns["Currency"];
+                this.columnCostCenter = base.Columns["CostCenter"];
+                this.columnPurchaseCondition = base.Columns["PurchaseCondition"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1032,12 +1072,18 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnUnitPrice_VAT);
                 this.columnCurrency = new global::System.Data.DataColumn("Currency", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCurrency);
+                this.columnCostCenter = new global::System.Data.DataColumn("CostCenter", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCostCenter);
+                this.columnPurchaseCondition = new global::System.Data.DataColumn("PurchaseCondition", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPurchaseCondition);
                 this.columnBranch.AllowDBNull = false;
                 this.columnStatus.AllowDBNull = false;
                 this.columnInvoiceDate.MaxLength = 38;
                 this.columnSupplier.AllowDBNull = false;
                 this.columnTotal.AllowDBNull = false;
                 this.columnUnitPrice.AllowDBNull = false;
+                this.columnCostCenter.AllowDBNull = false;
+                this.columnPurchaseCondition.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2402,6 +2448,28 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CostCenter {
+                get {
+                    return ((string)(this[this.tablePurchaseInvoiceSummary.CostCenterColumn]));
+                }
+                set {
+                    this[this.tablePurchaseInvoiceSummary.CostCenterColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PurchaseCondition {
+                get {
+                    return ((string)(this[this.tablePurchaseInvoiceSummary.PurchaseConditionColumn]));
+                }
+                set {
+                    this[this.tablePurchaseInvoiceSummary.PurchaseConditionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsInvoiceDateNull() {
                 return this.IsNull(this.tablePurchaseInvoiceSummary.InvoiceDateColumn);
             }
@@ -3615,6 +3683,8 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             tableMapping.ColumnMappings.Add("Discount", "Discount");
             tableMapping.ColumnMappings.Add("UnitPrice_VAT", "UnitPrice_VAT");
             tableMapping.ColumnMappings.Add("Currency", "Currency");
+            tableMapping.ColumnMappings.Add("CostCenter", "CostCenter");
+            tableMapping.ColumnMappings.Add("PurchaseCondition", "PurchaseCondition");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -3633,26 +3703,29 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    f.name as Currency,\n    p.status as Status,\n\t" +
                 "DATE_FORMAT(p.trans_date,\'%d %b %y\') as InvoiceDate, \n    contact.name as Suppli" +
-                "er, \n    \n    p.number as InvoiceNumber,\n    pd.item_description as Item,\n    \n\t" +
-                "sum(pd.quantity) AS Quantity,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd" +
-                ".discount * vatco.coef,4) as Discount,\n    round(pd.unit_cost * vatco.coef, 4) a" +
-                "s UnitPrice_VAT,\n    round(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd." +
-                "quantity * pd.unit_cost * vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.uni" +
-                "t_cost * vatco.vat,4) as VATTotal\n    \nFROM purchase_invoice p \nleft join app_cu" +
-                "rrencyfx as fx on p.id_currencyfx = fx.id_currencyfx\nleft join app_currency as f" +
-                " on fx.id_currency = f.id_currency\nINNER JOIN contacts as contact ON p.id_contac" +
-                "t = contact.id_contact \nINNER JOIN app_branch as branch on p.id_branch = branch." +
-                "id_branch\ninner join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id" +
-                "_purchase_invoice \n         LEFT OUTER JOIN \n         items i ON i.id_item = pd." +
-                "id_item \n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_gro" +
-                "up, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n      " +
-                "      FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_de" +
-                "tails ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OU" +
-                "TER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_vat" +
-                ".id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_g" +
-                "roup = pd.id_vat_group\n where (p.trans_date >= @StartDate) AND (p.trans_date <= " +
-                "@EndDate) and p.id_company = @CompanyID\n group by pd.id_purchase_invoice_detail\n" +
-                " order by p.trans_date";
+                "er, \n    cont.name as PurchaseCondition,\n    p.number as InvoiceNumber, \n    pd." +
+                "item_description as Item,\n    cc.name as CostCenter,\n\tsum(pd.quantity) AS Quanti" +
+                "ty,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd.discount * vatco.coef,4) " +
+                "as Discount,\n    round(pd.unit_cost * vatco.coef, 4) as UnitPrice_VAT,\n    round" +
+                "(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd.quantity * pd.unit_cost * " +
+                "vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.unit_cost * vatco.vat,4) as V" +
+                "ATTotal\n    \nFROM purchase_invoice p \nleft join app_currencyfx as fx on p.id_cur" +
+                "rencyfx = fx.id_currencyfx\nleft join app_currency as f on fx.id_currency = f.id_" +
+                "currency\ninner join app_contract as cont on p.id_contract = cont.id_contract\nINN" +
+                "ER JOIN contacts as contact ON p.id_contact = contact.id_contact \nINNER JOIN app" +
+                "_branch as branch on p.id_branch = branch.id_branch\ninner join purchase_invoice_" +
+                "detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice \ninner join app_cost" +
+                "_center cc on pd.id_cost_center = cc.id_cost_center\n         LEFT OUTER JOIN \n  " +
+                "       items i ON i.id_item = pd.id_item \n         LEFT OUTER JOIN \n            " +
+                " (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_va" +
+                "t.coefficient) + 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n    " +
+                "                 app_vat_group_details ON app_vat_group.id_vat_group = app_vat_g" +
+                "roup_details.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_v" +
+                "at_group_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_v" +
+                "at_group) vatco ON vatco.id_vat_group = pd.id_vat_group\nwhere (p.trans_date >= @" +
+                "StartDate) AND (p.trans_date <= @EndDate) and p.id_company = @CompanyID -- and p" +
+                ".id_contact = @ContactID\n group by pd.id_purchase_invoice_detail\n order by p.tra" +
+                "ns_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -3677,35 +3750,32 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this._commandCollection[0].Parameters.Add(param);
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    p.status as Status,\n\tDATE_FORMAT(p.trans_date" +
-                ",\'%d %b %y\') as InvoiceDate, \n    contact.name as Supplier, \n    p.number as Inv" +
-                "oiceNumber, \n\tsum(pd.quantity) AS Quantity, \n\t\n    round(sum(pd.quantity * pd.un" +
-                "it_cost),4) as Total,\n    round(sum(pd.quantity * pd.unit_cost * vatco.coef),4) " +
-                "as TotalVAT,\n\tround(sum(pd.quantity * pd.discount * vatco.coef),4) as SubTotalDi" +
-                "scountVAT,\n\tround(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal\n   " +
-                " \nFROM purchase_invoice p INNER JOIN\n         contacts as contact ON p.id_contac" +
-                "t = contact.id_contact \n         INNER JOIN \n         app_branch as branch on p." +
-                "id_branch = branch.id_branch\n         inner join \n         purchase_invoice_deta" +
-                "il pd ON p.id_purchase_invoice = pd.id_purchase_invoice \n         LEFT OUTER JOI" +
-                "N \n         items i ON i.id_item = pd.id_item \n         left outer join\n        " +
-                " payment_schedual as schedual on p.id_purchase_invoice = schedual.id_sales_invoi" +
-                "ce\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, su" +
-                "m(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            " +
-                "FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_details " +
-                "ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JO" +
-                "IN \n                     app_vat ON app_vat_group_details.id_vat = app_vat.id_va" +
-                "t\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group =" +
-                " pd.id_vat_group\n where p.id_branch = @BranchID and (p.trans_date >= @StartDate)" +
-                " AND (p.trans_date <= @EndDate) \ngroup by p.id_purchase_invoice\norder by p.trans" +
-                "_date";
+            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    f.name as Currency,\n    p.status as Status,\n\t" +
+                "DATE_FORMAT(p.trans_date,\'%d %b %y\') as InvoiceDate, \n    contact.name as Suppli" +
+                "er, \n    cont.name as PurchaseCondition,\n    p.number as InvoiceNumber, \n    pd." +
+                "item_description as Item,\n    cc.name as CostCenter,\n\tsum(pd.quantity) AS Quanti" +
+                "ty,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd.discount * vatco.coef,4) " +
+                "as Discount,\n    round(pd.unit_cost * vatco.coef, 4) as UnitPrice_VAT,\n    round" +
+                "(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd.quantity * pd.unit_cost * " +
+                "vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.unit_cost * vatco.vat,4) as V" +
+                "ATTotal\n    \nFROM purchase_invoice p \nleft join app_currencyfx as fx on p.id_cur" +
+                "rencyfx = fx.id_currencyfx\nleft join app_currency as f on fx.id_currency = f.id_" +
+                "currency\ninner join app_contract as cont on p.id_contract = cont.id_contract\nINN" +
+                "ER JOIN contacts as contact ON p.id_contact = contact.id_contact \nINNER JOIN app" +
+                "_branch as branch on p.id_branch = branch.id_branch\ninner join purchase_invoice_" +
+                "detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice \ninner join app_cost" +
+                "_center cc on pd.id_cost_center = cc.id_cost_center\n         LEFT OUTER JOIN \n  " +
+                "       items i ON i.id_item = pd.id_item \n         LEFT OUTER JOIN \n            " +
+                " (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_va" +
+                "t.coefficient) + 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n    " +
+                "                 app_vat_group_details ON app_vat_group.id_vat_group = app_vat_g" +
+                "roup_details.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_v" +
+                "at_group_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_v" +
+                "at_group) vatco ON vatco.id_vat_group = pd.id_vat_group\nwhere (p.trans_date >= @" +
+                "StartDate) AND (p.trans_date <= @EndDate) and p.id_company = @CompanyID and p.id" +
+                "_contact = @ContactID\n group by pd.id_purchase_invoice_detail\n order by p.trans_" +
+                "date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
             param.DbType = global::System.Data.DbType.DateTime;
@@ -3719,6 +3789,20 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
+            this._commandCollection[1].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@CompanyID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_company";
+            this._commandCollection[1].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@ContactID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_contact";
             this._commandCollection[1].Parameters.Add(param);
         }
         
@@ -3756,11 +3840,12 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable, int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int FillBySupplier(PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int ContactID) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
+            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(ContactID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -3772,11 +3857,12 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual PurchaseDS.PurchaseInvoiceSummaryDataTable GetDataByBranch(int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual PurchaseDS.PurchaseInvoiceSummaryDataTable GetDataBySupplier(System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int ContactID) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
+            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(ContactID));
             PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable = new PurchaseDS.PurchaseInvoiceSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

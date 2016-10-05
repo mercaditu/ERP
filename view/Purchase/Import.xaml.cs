@@ -38,17 +38,15 @@ namespace Cognitivo.Purchase
                     .LoadAsync();
                 impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
-
-
+                
                 //incotermViewSource
                 CollectionViewSource incotermViewSource = FindResource("incotermViewSource") as CollectionViewSource;
                 incotermViewSource.Source = await ImpexDB.impex_incoterm.OrderBy(a => a.name).AsNoTracking().ToListAsync();
-
-                CollectionViewSource itemsViewSource = FindResource("itemsViewSource") as CollectionViewSource;
-                itemsViewSource.Source = await ImpexDB.items.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToListAsync();
+                
                 //CurrencyFx
                 CollectionViewSource currencyfxViewSource = FindResource("currencyfxViewSource") as CollectionViewSource;
                 currencyfxViewSource.Source = await ImpexDB.app_currencyfx.Include("app_currency").AsNoTracking().Where(a => a.is_active == true && a.app_currency.id_company == CurrentSession.Id_Company).ToListAsync();
+                
                 //incotermconditionViewSource
                 CollectionViewSource incotermconditionViewSource = FindResource("incotermconditionViewSource") as CollectionViewSource;
                 incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
@@ -265,7 +263,6 @@ namespace Cognitivo.Purchase
                     {
                         ImpexImportDetails.unit_Importcost = Math.Round(((_purchase_invoice_detail.SubTotal / GrandTotal) * totalExpense) / _purchase_invoice_detail.quantity,2);
                         ImpexImportDetails.prorated_cost = _purchase_invoice_detail.unit_cost + ImpexImportDetails.unit_Importcost;
-                    
                     }
 
                     decimal SubTotal = (_purchase_invoice_detail.quantity * ImpexImportDetails.prorated_cost);

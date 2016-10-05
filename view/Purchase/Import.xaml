@@ -22,7 +22,6 @@
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
         <CollectionViewSource x:Key="statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}"/>
-        <CollectionViewSource x:Key="itemsViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="impeximpex_expenseViewSource" Source="{Binding impex_expense, Source={StaticResource impexViewSource}}"/>
         <CollectionViewSource x:Key="currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="incotermconditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm_condition}, CreateList=True}"/>
@@ -183,17 +182,13 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1"
-                                EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,38"
+                                EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,4"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="productDataGrid_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-
-
-                        <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
-                                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
                     </Grid>
                 </TabItem>
             </TabControl>

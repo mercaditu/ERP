@@ -1,6 +1,6 @@
 namespace entity
 {
-    using Brillo;
+
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -33,7 +33,6 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order { get; set; }
         public int? id_department { get; set; }
@@ -250,7 +249,7 @@ namespace entity
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
-                    String propertyError = this[prop.Name];
+                    string propertyError = this[prop.Name];
                     if (propertyError != string.Empty)
                     {
                         error.Append((error.Length != 0 ? ", " : "") + propertyError);
@@ -286,7 +285,7 @@ namespace entity
                 }
                 if (columnName == "id_currencyfx")
                 {
-                    if (id_currencyfx == 0)
+                    if (id_currencyfx == 0 && app_currencyfx == null)
                         return "Currency needs to be selected";
                 }
                 return "";

@@ -10,7 +10,7 @@ namespace entity
         public item New()
         {
             item item = new item();
-            item.State = System.Data.Entity.EntityState.Added;
+            item.State = EntityState.Added;
             item.IsSelected = true;
             item.unit_cost = 0;
 
@@ -72,7 +72,7 @@ namespace entity
                     }
                     NumberOfRecords += 1;
                 }
-                else if (item.State > 0)
+                else // if (item.State > 0)
                 {
                     if (item.State != EntityState.Unchanged)
                     {

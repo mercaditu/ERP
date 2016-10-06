@@ -95,7 +95,11 @@ namespace cntrl
         {
             get
             {
-                return (cbBranch.SelectedItem as entity.app_branch);
+                if ((bool)cbxBranch.IsChecked)
+                {
+                    return (cbBranch.SelectedItem as entity.app_branch);
+                }
+                return null;
             }
         }
 
@@ -111,7 +115,11 @@ namespace cntrl
         {
             get
             {
-                return sbxItem.ItemID;
+                if ((bool)cbxProduct.IsChecked)
+                {
+                    return sbxItem.ItemID;
+                }
+                return 0;
             }
         }
 
@@ -119,7 +127,11 @@ namespace cntrl
         {
             get
             {
-                return sbxSupplier.ContactID;
+                if ((bool)cbxSupplier.IsChecked)
+                {
+                    return sbxSupplier.ContactID;
+                }
+                return 0;
             }
         }
 
@@ -127,7 +139,11 @@ namespace cntrl
         {
             get
             {
-                return sbxCustomer.ContactID;
+                if ((bool)cbxCustomer.IsChecked)
+                {
+                    return sbxCustomer.ContactID;
+                }
+                return 0;
             }
         }
 

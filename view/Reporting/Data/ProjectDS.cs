@@ -1,7 +1,9 @@
-﻿namespace Cognitivo.Reporting.Data {
-    
-    
-    public partial class ProjectDS {
+﻿namespace Cognitivo.Reporting.Data
+{
+
+
+    public partial class ProjectDS
+    {
     }
 }
 

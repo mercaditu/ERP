@@ -26,9 +26,9 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
+            if (ReportPanel.SupplierID > 0)
             {
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataBySupplier(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, 1);
+                dt = PurchaseInvoiceSummaryTableAdapter.GetDataBySupplier(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, ReportPanel.SupplierID);
             }
             else
             {

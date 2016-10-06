@@ -444,6 +444,7 @@ namespace entity.Brillo.Document
                     gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.gov_code : "" : "",
                     Number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "" : "" : "",
                     DimensionString = g.DimensionString,
+                    Measurement = g.purchase_tender_item!=null? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.app_measurement != null ? g.purchase_tender_item.item.app_measurement.name : "" : "":"",
                     AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
                  // Text -> Words
@@ -487,6 +488,7 @@ namespace entity.Brillo.Document
                     Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
                     code = g.purchase_order.code,
                     contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
+                    Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     trans_date = g.purchase_order.trans_date,
                     id_vat_group = g.id_vat_group,
                     vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
@@ -547,6 +549,7 @@ namespace entity.Brillo.Document
                     PurchaseNumber = g.purchase_invoice.number,
                     PurchaseCode = g.purchase_invoice.code,
                     PurchaseDate = g.purchase_invoice.trans_date,
+                 
 
                     AmountWords = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding ?
 

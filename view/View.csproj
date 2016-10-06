@@ -1533,8 +1533,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\ProductionOrderStatus.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\Production_HumanResources.xaml">
       <Generator>MSBuild:Compile</Generator>

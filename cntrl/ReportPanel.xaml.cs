@@ -207,6 +207,8 @@ namespace cntrl
         {
             Data_Update(null, null);
         }
+
+       
     }
 
     public static class AbsoluteDate

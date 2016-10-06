@@ -385,7 +385,7 @@ namespace Cognitivo.Product
             public string location { get; set; }
             public string branch { get; set; }
             public decimal avlqty { get; set; }
-            public int decisionqty { get; set; }
+            public decimal decisionqty { get; set; }
             public state decisionState { get; set; }
         }
 

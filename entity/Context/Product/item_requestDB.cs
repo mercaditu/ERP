@@ -119,6 +119,22 @@ namespace entity
                 {
                     foreach (item_request_decision item in item_request_detail.item_request_decision)
                     {
+                        if ((item_request.number == null || item_request.number == string.Empty) && item_request.id_range > 0)
+                        {
+                            if (item_request.id_branch > 0)
+                            {
+                                Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == item_request.id_branch).FirstOrDefault().code;
+                            }
+
+
+                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
+
+
+                            item_request.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                            item_request.RaisePropertyChanged("number");
+                           
+                        }
+
                         //if (item.IsSelected == true)
                         //{
                         if (item.decision == entity.item_request_decision.Decisions.Movement)
@@ -379,19 +395,10 @@ namespace entity
 
                         if ((item_request.number == null || item_request.number == string.Empty) && item_request.id_range > 0)
                         {
-                            if (item_request.id_branch > 0)
-                            {
-                                Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == item_request.id_branch).FirstOrDefault().code;
-                            }
-
-
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
-
-
-                            item_request.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                            item_request.RaisePropertyChanged("number");
                             Brillo.Document.Start.Automatic(item_request, app_document_range);
                         }
+
                     }
                 }
                 if (purchase_tender.purchase_tender_item_detail.Count() > 0)

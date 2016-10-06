@@ -190,6 +190,7 @@ namespace Cognitivo.Project
                                     else
                                     {
                                         project_event_variable project_event_variable = new project_event_variable();
+                                        project_event_variable.id_project_event = project_event.id_project_event;
                                         project_event_variable.project_event = project_event;
                                         project_event_variable.item = tag_detail.item;
                                         project_event_variable.id_item = tag_detail.id_item;
@@ -226,6 +227,7 @@ namespace Cognitivo.Project
                                     {
                                         project_event_fixed services_per_event_details = project_event.project_event_fixed.Where(x => x.id_item == tag_detail.item.id_item).FirstOrDefault();
                                         services_per_event_details.project_event = project_event;
+                                        services_per_event_details.id_project_event = project_event.id_project_event;
                                         services_per_event_details.consumption = services_per_event_details.consumption;
 
                                     }
@@ -233,6 +235,7 @@ namespace Cognitivo.Project
                                     {
                                         project_event_fixed services_per_event_details = new project_event_fixed();
                                         services_per_event_details.project_event = project_event;
+                                        services_per_event_details.id_project_event = project_event.id_project_event;
                                         services_per_event_details.item = tag_detail.item;
                                         services_per_event_details.id_item = tag_detail.id_item;
                                         services_per_event_details.item_tag = tag_detail.item_tag;

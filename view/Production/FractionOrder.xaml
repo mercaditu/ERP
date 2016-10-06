@@ -33,7 +33,7 @@
         <converter:TreeViewchildFilter x:Key="tree"/>
         <converter:Type2Enable x:Key="Type2Enable"/>
         <converter:SecurityConverter x:Key="SecurityConverter"/>
-        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
+        <converter:Status_Production_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
         <converter:NotConverter x:Key="NotConverter"/>
         <converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
@@ -137,10 +137,6 @@
                                     <VirtualizingStackPanel/>
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
-                        </ComboBox>
-                        <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-                        <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
-					              SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
                         </ComboBox>
                         <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                         <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />

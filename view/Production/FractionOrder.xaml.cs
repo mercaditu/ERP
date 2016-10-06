@@ -52,6 +52,7 @@ namespace Cognitivo.Production
             production_order production_order = new production_order();
             production_order.State = EntityState.Added;
             production_order.status = Status.Production.Pending;
+            production_order.type = production_order.ProductionOrderTypes.Fraction;
             production_order.IsSelected = true;
             ExecutionDB.production_order.Add(production_order);
 
@@ -134,7 +135,6 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource = FindResource("production_orderproduction_order_detailViewSource") as CollectionViewSource;
             production_order_dimensionViewSource = FindResource("production_order_dimensionViewSource") as CollectionViewSource;
 
-            cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(ExecutionDB, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             item_movementViewSource = FindResource("item_movementViewSource") as CollectionViewSource;
@@ -420,7 +420,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in production_order_detailLIST)
             {
-                production_order_detail.status = Status.Production.QA_Rejected;
+                production_order_detail.status = Status.Production.Anull;
                 production_order_detail.IsSelected = false;
             }
 

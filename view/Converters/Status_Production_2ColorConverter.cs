@@ -30,6 +30,10 @@ namespace Cognitivo.Converters
             {
                 return Brushes.Crimson;
             }
+            else if (status == entity.Status.Production.Anull)
+            {
+                return Brushes.Crimson;
+            }
             else
             { 
                 return Brushes.WhiteSmoke; //Pending

@@ -1,31 +1,33 @@
-﻿namespace Cognitivo.Reporting.Data {
-    
-    
-    public partial class SalesDS {
+﻿namespace Cognitivo.Reporting.Data
+{
+
+
+    public partial class SalesDS
+    {
         partial class ContactSubscriptionDataTable
         {
         }
-    
+
         partial class SalesVATReportDataTable
         {
         }
-    
+
         partial class SalesBySalesRepDataTable
         {
         }
-    
+
         partial class DeliveryByZoneDataTable
         {
         }
-    
+
         partial class AvgSalesDataTable
         {
         }
-    
+
         //partial class SalesByTagDataTable
         //{
         //}
-    
+
         //partial class SalesByItemDataTable
         //{
         //}
@@ -33,7 +35,7 @@
         //partial class SalesInvoiceSummaryDataTable
         //{
         //}
-    
+
         //partial class SalesByBrandDataTable
         //{
         //}

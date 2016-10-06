@@ -40,7 +40,7 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
+            if (ReportPanel.SupplierID > 0)
             {
                 dt = PurchaseOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
             }
@@ -49,18 +49,10 @@ namespace Cognitivo.Reporting.Views
                 dt = PurchaseOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
 
-            //ReportParameter[] parameters = new ReportParameter[x+1];
-
-            reportDataSource1.Name = "PurchaseOrderSummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Name = "PurchaseOrderSummary";
+            reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseOrderSummary.rdlc";
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //this.reportViewer.LocalReport.SetParameters("EndDate", dtEndDate, false);
 
             PurchaseDB.EndInit();
 

@@ -1,28 +1,28 @@
 ﻿<Page x:Class="Cognitivo.Reporting.Views.DeliveryByZone" x:Name="_DeliveryByZone"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-          xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
-      xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-      mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+		  xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
+	  xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+	  mc:Ignorable="d" 
+	  d:DesignHeight="600" d:DesignWidth="800"
 	Title="Delivery By Customer">
-    <Grid Background="Gainsboro">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <StackPanel>
-                <Label Content="Date" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding ElementName=_DeliveryByZone, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            Style="{StaticResource input_datepicker}"/>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Zone" Style="{StaticResource input_label}"/>
-                 <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
-            </StackPanel>
-            <Button Content="Filter" VerticalAlignment="Center" Click="Fill"/>
-        </StackPanel>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,58,0,0">
-            <rv:ReportViewer x:Name="reportViewer"/>
-        </WindowsFormsHost>
-    </Grid>
+	<Grid Background="Gainsboro">
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+			<StackPanel>
+				<Label Content="Date" Style="{StaticResource input_label}"/>
+				<DatePicker SelectedDate="{Binding ElementName=_DeliveryByZone, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+							Style="{StaticResource input_datepicker}"/>
+			</StackPanel>
+			<StackPanel>
+				<Label Content="Zone" Style="{StaticResource input_label}"/>
+				 <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
+			</StackPanel>
+			<Button Content="Filter" VerticalAlignment="Center" Click="Fill"/>
+		</StackPanel>
+		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,58,0,0">
+			<rv:ReportViewer x:Name="reportViewer"/>
+		</WindowsFormsHost>
+	</Grid>
 </Page>

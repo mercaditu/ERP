@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Reporting.Views.CostOfGoodsSold" x:Name="_CostOfGoodsSold"
+﻿<Page x:Class="Cognitivo.Reporting.Views.CostOfGoodsSold" x:Name="this"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:Cntrl="clr-namespace:cntrl;assembly=cntrl"

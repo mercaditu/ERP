@@ -72,7 +72,7 @@ namespace entity
 
                     NumberOfRecords += 1;
                 }
-                else if (sales_order.State > 0)
+                if (sales_order.State > 0)
                 {
                     if (sales_order.State != EntityState.Unchanged)
                     {

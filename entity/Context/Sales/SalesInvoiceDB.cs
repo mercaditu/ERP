@@ -97,7 +97,7 @@ namespace entity
                     }
                     NumberOfRecords += 1;
                 }
-                else if (invoice.State > 0)
+                 if (invoice.State > 0)
                 {
                     if (invoice.State != EntityState.Unchanged)
                     {

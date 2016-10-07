@@ -66,6 +66,15 @@ namespace cntrl.Curd
                 {
                     payment_detail payment_detail = PaymentDB.payment_detail.Where(x => x.id_payment_detail == payment_schedual.id_payment_detail).FirstOrDefault();
                     payment_detail.IsSelected = true;
+                    payment_detail.payment = payment;
+                    if (Mode == Modes.Recievable)
+                    {
+                        payment_detail.value = payment_schedual.AccountReceivableBalance;
+                    }
+                    else
+                    {
+                        payment_detail.value = payment_schedual.AccountPayableBalance;
+                    }
                     payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
                     payment.payment_detail.Add(payment_detail);
                 }

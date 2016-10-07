@@ -58,7 +58,7 @@ namespace entity
                         Entry(sales_packing).State = EntityState.Modified;
                     }
                 }
-                else if (sales_packing.State > 0)
+                if (sales_packing.State > 0)
                 {
                     if (sales_packing.State != EntityState.Unchanged)
                     {

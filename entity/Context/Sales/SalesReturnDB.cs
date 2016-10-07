@@ -68,7 +68,7 @@ namespace entity
                         Entry(sales_return).State = EntityState.Modified;
                     }
                 }
-                else if (sales_return.State > 0)
+                if (sales_return.State > 0)
                 {
                     if (sales_return.State != EntityState.Unchanged)
                     {

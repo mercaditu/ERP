@@ -45,7 +45,7 @@ namespace entity
                         base.sales_rep.Remove(sales_rep);
                     }
                 }
-                else if (sales_rep.State > 0)
+                if (sales_rep.State > 0)
                 {
                     if (sales_rep.State != EntityState.Unchanged)
                     {

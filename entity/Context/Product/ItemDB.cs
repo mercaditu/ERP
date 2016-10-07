@@ -72,7 +72,7 @@ namespace entity
                     }
                     NumberOfRecords += 1;
                 }
-                else // if (item.State > 0)
+                if (item.State > 0)
                 {
                     if (item.State != EntityState.Unchanged)
                     {

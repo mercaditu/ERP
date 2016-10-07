@@ -63,6 +63,13 @@ namespace cntrl
             set { SetValue(ShowCustomerProperty, value); }
         }
 
+        public static DependencyProperty ShowProjectProperty = DependencyProperty.Register("ShowProject", typeof(bool), typeof(ReportPanel));
+        public bool ShowProject
+        {
+            get { return (bool)GetValue(ShowProjectProperty); }
+            set { SetValue(ShowProjectProperty, value); }
+        }
+
         public static DependencyProperty ShowCurrencyProperty = DependencyProperty.Register("ShowCurrency", typeof(bool), typeof(ReportPanel));
         public bool ShowCurrency
         {
@@ -215,7 +222,15 @@ namespace cntrl
         {
             using (entity.db db = new entity.db())
             {
-                cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active);
+                cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active).ToList();
+            }
+        }
+
+        private void cbxProject_Checked(object sender, RoutedEventArgs e)
+        {
+            using (entity.db db = new entity.db())
+            {
+                cbProject.ItemsSource = db.projects.Where(x => x.id_company == entity.CurrentSession.Id_Company).ToList();
             }
         }
 
@@ -223,8 +238,6 @@ namespace cntrl
         {
             Data_Update(null, null);
         }
-
-       
     }
 
     public static class AbsoluteDate

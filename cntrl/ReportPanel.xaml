@@ -39,39 +39,47 @@
                     <CheckBox Content="Branch" x:Name="cbxBranch" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxBranch_Checked"/>
                     <ComboBox x:Name="cbBranch" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name"
-                      Visibility="{Binding ElementName=cbxBranch, Path=IsChecked, Converter={StaticResource Bool2Visibility}}" Margin="4" Width="128"/>
+                      Visibility="{Binding ElementName=cbxBranch, Path=IsChecked, Converter={StaticResource Bool2Visibility}}" Margin="4"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowTag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Tag" x:Name="cbxTag" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxTag_Checked"/>
                     <ComboBox x:Name="cbTag" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       Visibility="{Binding ElementName=cbxTag, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       SelectedValue="{Binding id_tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_tag" DisplayMemberPath="name"
-                      Margin="4" Width="128"/>
+                      Margin="4"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowProduct, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Product" x:Name="cbxProduct" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Item x:Name="sbxItem" Select="Data_Update" 
                       Visibility="{Binding ElementName=cbxProduct, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
-                      Margin="4" Width="128"/>
+                      Margin="4"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                            Visibility="{Binding ElementName=this, Path=ShowProject, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                    <CheckBox Content="Project" x:Name="cbxProject" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxProject_Checked"/>
+                    <ComboBox x:Name="cbProject" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
+                      Visibility="{Binding ElementName=cbxProject, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
+                      SelectedValue="{Binding id_project, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_project" DisplayMemberPath="name"
+                      Margin="4"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowSupplier, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Supplier" x:Name="cbxSupplier" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Contact x:Name="sbxSupplier" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxSupplier, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
-                      Margin="4" Width="128"/>
+                      Margin="4"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowCustomer, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Customer" x:Name="cbxCustomer" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Contact x:Name="sbxCustomer" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxCustomer, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
-                      Margin="4" Width="128"/>
+                      Margin="4"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowCurrency, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Currency" x:Name="cbxCurrency" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <ComboBox x:Name="cbCurrency" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                               Visibility="{Binding ElementName=cbxCurrency, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                               SelectedValue="{Binding id_currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_currency" DisplayMemberPath="name"
-                              Margin="4" Width="128"/>
+                              Margin="4"/>
                 </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>

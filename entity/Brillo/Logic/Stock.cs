@@ -718,7 +718,8 @@ namespace entity.Brillo.Logic
                                     if (ParentDimesion > 0 && ChildDimesion > 0)
                                     {
                                         Unitcost = parent_Movement.Cost;
-                                        decimal ChildPaticipantion = (ChildDimesion / ParentDimesion);
+                                        //decimal ChildPaticipantion = (ChildDimesion / ParentDimesion);
+                                        decimal ChildPaticipantion = (ParentDimesion / ChildDimesion);
                                         Unitcost = Unitcost * ChildPaticipantion;
                                     }
                                 }

@@ -331,7 +331,7 @@ namespace Cognitivo.Production
                         production_order_detail_output.id_item = item.id_item;
                         production_order_detail_output.item = item;
                         production_order_detail_output.RaisePropertyChanged("item");
-                        production_order_detail_output.is_input = true;
+                       // production_order_detail_output.is_input = true;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
                     }
@@ -388,6 +388,7 @@ namespace Cognitivo.Production
             {
                 //Adding First Item
                 production_order_detail n_production_order_detail = new production_order_detail();
+                n_production_order_detail.is_input = false;
                 n_production_order_detail.status = Status.Production.Pending;
                 production_order.production_order_detail.Add(n_production_order_detail);
 
@@ -495,6 +496,8 @@ namespace Cognitivo.Production
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail n_production_order_detail = new production_order_detail();
             n_production_order_detail.status = Status.Production.Pending;
+            n_production_order_detail.is_input =false;
+
             production_order.production_order_detail.Add(n_production_order_detail);
 
             production_orderproduction_order_detailViewSource.View.Refresh();
@@ -509,12 +512,12 @@ namespace Cognitivo.Production
             {
                 if (production_order_detail.is_input)
                 {
-                    ToggleQuantity.IsChecked = false;
+                    ToggleQuantity.IsChecked = true;
                     stpproduct.Visibility = System.Windows.Visibility.Collapsed;
                 }
                 else
                 {
-                    ToggleQuantity.IsChecked = true;
+                    ToggleQuantity.IsChecked = false;
                     stpproduct.Visibility = System.Windows.Visibility.Visible;
                 }
 
@@ -586,6 +589,20 @@ namespace Cognitivo.Production
                     n_production_order_detail.quantity = 0;
                     n_production_order_detail.status = Status.Production.Pending;
                     production_order_detail.parent = n_production_order_detail;
+                    if (n_production_order_detail.item != null)
+                    {
+                        foreach (item_dimension item_dimension in n_production_order_detail.item.item_dimension)
+                        {
+                            production_order_dimension production_order_dimension = new production_order_dimension();
+                            production_order_dimension.id_dimension = item_dimension.id_app_dimension;
+                            production_order_dimension.app_dimension = item_dimension.app_dimension;
+                            production_order_dimension.id_measurement = item_dimension.id_measurement;
+                            production_order_dimension.app_measurement = item_dimension.app_measurement;
+                            production_order_dimension.value = 0;
+                            n_production_order_detail.production_order_dimension.Add(production_order_dimension);
+                        }
+                    }
+
                     n_production_order_detail.child.Add(production_order_detail);
                     ExecutionDB.production_order_detail.Add(n_production_order_detail);
                     production_orderproduction_order_detailViewSource.View.Refresh();

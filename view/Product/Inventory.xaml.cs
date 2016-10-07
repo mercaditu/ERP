@@ -161,8 +161,6 @@ namespace Cognitivo.Product
                 app_branchapp_locationViewSource.View.MoveCurrentToFirst();
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentToLast();
-
-
             }
             catch (Exception ex)
             {

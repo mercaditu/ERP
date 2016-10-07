@@ -35,8 +35,15 @@ namespace Cognitivo.Reporting.Views
                 dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
             }
 
+            string where = string.Empty;
+
+            if (ReportPanel.CustomerID > 0)
+            {
+                where = where + "ProjectID = " + ReportPanel.CustomerID;
+            }
+
             reportDataSource1.Name = "PurchaseInvoice"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; 
+            reportDataSource1.Value = dt.Select(where); 
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseInvoice.rdlc";
 

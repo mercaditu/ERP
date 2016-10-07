@@ -764,6 +764,8 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnPurchaseCondition;
             
+            private global::System.Data.DataColumn columnProjectID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseInvoiceSummaryDataTable() {
@@ -927,6 +929,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProjectIDColumn {
+                get {
+                    return this.columnProjectID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -978,7 +988,8 @@ namespace Cognitivo.Reporting.Data {
                         decimal UnitPrice_VAT, 
                         string Currency, 
                         string CostCenter, 
-                        string PurchaseCondition) {
+                        string PurchaseCondition, 
+                        int ProjectID) {
                 PurchaseInvoiceSummaryRow rowPurchaseInvoiceSummaryRow = ((PurchaseInvoiceSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Branch,
@@ -996,7 +1007,8 @@ namespace Cognitivo.Reporting.Data {
                         UnitPrice_VAT,
                         Currency,
                         CostCenter,
-                        PurchaseCondition};
+                        PurchaseCondition,
+                        ProjectID};
                 rowPurchaseInvoiceSummaryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPurchaseInvoiceSummaryRow);
                 return rowPurchaseInvoiceSummaryRow;
@@ -1035,6 +1047,7 @@ namespace Cognitivo.Reporting.Data {
                 this.columnCurrency = base.Columns["Currency"];
                 this.columnCostCenter = base.Columns["CostCenter"];
                 this.columnPurchaseCondition = base.Columns["PurchaseCondition"];
+                this.columnProjectID = base.Columns["ProjectID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1076,6 +1089,8 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnCostCenter);
                 this.columnPurchaseCondition = new global::System.Data.DataColumn("PurchaseCondition", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPurchaseCondition);
+                this.columnProjectID = new global::System.Data.DataColumn("ProjectID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProjectID);
                 this.columnBranch.AllowDBNull = false;
                 this.columnStatus.AllowDBNull = false;
                 this.columnInvoiceDate.MaxLength = 38;
@@ -2470,6 +2485,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ProjectID {
+                get {
+                    try {
+                        return ((int)(this[this.tablePurchaseInvoiceSummary.ProjectIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProjectID\' in table \'PurchaseInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePurchaseInvoiceSummary.ProjectIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsInvoiceDateNull() {
                 return this.IsNull(this.tablePurchaseInvoiceSummary.InvoiceDateColumn);
             }
@@ -2574,6 +2605,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCurrencyNull() {
                 this[this.tablePurchaseInvoiceSummary.CurrencyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProjectIDNull() {
+                return this.IsNull(this.tablePurchaseInvoiceSummary.ProjectIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProjectIDNull() {
+                this[this.tablePurchaseInvoiceSummary.ProjectIDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3685,6 +3728,7 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             tableMapping.ColumnMappings.Add("Currency", "Currency");
             tableMapping.ColumnMappings.Add("CostCenter", "CostCenter");
             tableMapping.ColumnMappings.Add("PurchaseCondition", "PurchaseCondition");
+            tableMapping.ColumnMappings.Add("ProjectID", "ProjectID");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -3701,31 +3745,31 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    f.name as Currency,\n    p.status as Status,\n\t" +
-                "DATE_FORMAT(p.trans_date,\'%d %b %y\') as InvoiceDate, \n    contact.name as Suppli" +
-                "er, \n    cont.name as PurchaseCondition,\n    p.number as InvoiceNumber, \n    pd." +
-                "item_description as Item,\n    cc.name as CostCenter,\n\tsum(pd.quantity) AS Quanti" +
-                "ty,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd.discount * vatco.coef,4) " +
-                "as Discount,\n    round(pd.unit_cost * vatco.coef, 4) as UnitPrice_VAT,\n    round" +
-                "(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd.quantity * pd.unit_cost * " +
-                "vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.unit_cost * vatco.vat,4) as V" +
-                "ATTotal\n    \nFROM purchase_invoice p \nleft join app_currencyfx as fx on p.id_cur" +
-                "rencyfx = fx.id_currencyfx\nleft join app_currency as f on fx.id_currency = f.id_" +
-                "currency\ninner join app_contract as cont on p.id_contract = cont.id_contract\nINN" +
-                "ER JOIN contacts as contact ON p.id_contact = contact.id_contact \nINNER JOIN app" +
-                "_branch as branch on p.id_branch = branch.id_branch\ninner join purchase_invoice_" +
-                "detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice \ninner join app_cost" +
-                "_center cc on pd.id_cost_center = cc.id_cost_center\n         LEFT OUTER JOIN \n  " +
-                "       items i ON i.id_item = pd.id_item \n         LEFT OUTER JOIN \n            " +
-                " (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_va" +
-                "t.coefficient) + 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n    " +
-                "                 app_vat_group_details ON app_vat_group.id_vat_group = app_vat_g" +
-                "roup_details.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_v" +
-                "at_group_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_v" +
-                "at_group) vatco ON vatco.id_vat_group = pd.id_vat_group\nwhere (p.trans_date >= @" +
-                "StartDate) AND (p.trans_date <= @EndDate) and p.id_company = @CompanyID -- and p" +
-                ".id_contact = @ContactID\n group by pd.id_purchase_invoice_detail\n order by p.tra" +
-                "ns_date";
+            this._commandCollection[0].CommandText = "SELECT p.id_project as ProjectID, branch.name as Branch,\n    f.name as Currency,\n" +
+                "    p.status as Status,\n\tDATE_FORMAT(p.trans_date,\'%d %b %y\') as InvoiceDate, \n " +
+                "   contact.name as Supplier, \n    cont.name as PurchaseCondition,\n    p.number a" +
+                "s InvoiceNumber, \n    pd.item_description as Item,\n    cc.name as CostCenter,\n\ts" +
+                "um(pd.quantity) AS Quantity,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd." +
+                "discount * vatco.coef,4) as Discount,\n    round(pd.unit_cost * vatco.coef, 4) as" +
+                " UnitPrice_VAT,\n    round(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd.q" +
+                "uantity * pd.unit_cost * vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.unit" +
+                "_cost * vatco.vat,4) as VATTotal\n    \nFROM purchase_invoice p \nleft join app_cur" +
+                "rencyfx as fx on p.id_currencyfx = fx.id_currencyfx\nleft join app_currency as f " +
+                "on fx.id_currency = f.id_currency\ninner join app_contract as cont on p.id_contra" +
+                "ct = cont.id_contract\nINNER JOIN contacts as contact ON p.id_contact = contact.i" +
+                "d_contact \nINNER JOIN app_branch as branch on p.id_branch = branch.id_branch\ninn" +
+                "er join purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_inv" +
+                "oice \ninner join app_cost_center cc on pd.id_cost_center = cc.id_cost_center\n   " +
+                "      LEFT OUTER JOIN \n         items i ON i.id_item = pd.id_item \n         LEFT" +
+                " OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coeffi" +
+                "cient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_gr" +
+                "oup LEFT OUTER JOIN \n                     app_vat_group_details ON app_vat_group" +
+                ".id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n            " +
+                "         app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            GR" +
+                "OUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.id_vat_group" +
+                "\nwhere (p.trans_date >= @StartDate) AND (p.trans_date <= @EndDate) and p.id_comp" +
+                "any = @CompanyID -- and p.id_contact = @ContactID\n group by pd.id_purchase_invoi" +
+                "ce_detail\n order by p.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";

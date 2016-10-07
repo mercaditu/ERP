@@ -88,15 +88,29 @@ namespace Cognitivo.Product
 
             if (app_location != null && item_inventory != null)
             {
-                if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
+                if (app_location != null)
                 {
-                    if (app_location != null)
-                    {
-                        List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
-                        Class.StockCalculations Stock = new Class.StockCalculations();
-                        List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, DateTime.Now);
+                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
+                    Class.StockCalculations Stock = new Class.StockCalculations();
+                    List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
 
-                        foreach (item_product i in item_productLIST)
+                    foreach (item_product i in item_productLIST)
+                    {
+                        if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i.id_item_product).Any())
+                        {
+                            item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i.id_item_product).FirstOrDefault();
+                            if (StockList.Where(x => x.ProductID == i.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i.id_item_product).FirstOrDefault().Quantity;
+                                item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i.id_item_product).FirstOrDefault().Cost;
+                            }
+                            else
+                            {
+                                item_inventory_detail.value_system = 0;
+                                item_inventory_detail.unit_value = 0;
+                            }
+                        }
+                        else
                         {
                             item_inventory_detail item_inventory_detail = new item_inventory_detail();
                             item_inventory_detail.State = EntityState.Added;

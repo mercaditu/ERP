@@ -101,8 +101,7 @@ group by s.id_purchase_invoice, vatco.id_vat_group
               <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByDate" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetDataByDate" GeneratorSourceName="FillByDate" GetMethodModifier="Public" GetMethodName="GetDataByDate" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetDataByDate" UserSourceName="FillByDate">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT 
-	branch.name as Branch,
+                    <CommandText>SELECT p.id_project as ProjectID, branch.name as Branch,
     f.name as Currency,
     p.status as Status,
 	DATE_FORMAT(p.trans_date,'%d %b %y') as InvoiceDate, 
@@ -164,6 +163,7 @@ where (p.trans_date &gt;= @StartDate) AND (p.trans_date &lt;= @EndDate) and p.id
               <Mapping SourceColumn="Currency" DataSetColumn="Currency" />
               <Mapping SourceColumn="CostCenter" DataSetColumn="CostCenter" />
               <Mapping SourceColumn="PurchaseCondition" DataSetColumn="PurchaseCondition" />
+              <Mapping SourceColumn="ProjectID" DataSetColumn="ProjectID" />
             </Mappings>
             <Sources>
               <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBySupplier" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBySupplier" GeneratorSourceName="FillBySupplier" GetMethodModifier="Public" GetMethodName="GetDataBySupplier" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBySupplier" UserSourceName="FillBySupplier">
@@ -397,7 +397,7 @@ group by p.id_purchase_order
   <xs:element name="PurchaseDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PurchaseDS" msprop:Generator_UserDSName="PurchaseDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="PurchaseVatReport" msprop:Generator_TableClassName="PurchaseVatReportDataTable" msprop:Generator_TableVarName="tablePurchaseVatReport" msprop:Generator_RowChangedName="PurchaseVatReportRowChanged" msprop:Generator_TablePropName="PurchaseVatReport" msprop:Generator_RowDeletingName="PurchaseVatReportRowDeleting" msprop:Generator_RowChangingName="PurchaseVatReportRowChanging" msprop:Generator_RowEvHandlerName="PurchaseVatReportRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseVatReportRowDeleted" msprop:Generator_RowClassName="PurchaseVatReportRow" msprop:Generator_UserTableName="PurchaseVatReport" msprop:Generator_RowEvArgName="PurchaseVatReportRowChangeEvent">
+        <xs:element name="PurchaseVatReport" msprop:Generator_TableClassName="PurchaseVatReportDataTable" msprop:Generator_TableVarName="tablePurchaseVatReport" msprop:Generator_TablePropName="PurchaseVatReport" msprop:Generator_RowDeletingName="PurchaseVatReportRowDeleting" msprop:Generator_RowChangingName="PurchaseVatReportRowChanging" msprop:Generator_RowEvHandlerName="PurchaseVatReportRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseVatReportRowDeleted" msprop:Generator_UserTableName="PurchaseVatReport" msprop:Generator_RowChangedName="PurchaseVatReportRowChanged" msprop:Generator_RowEvArgName="PurchaseVatReportRowChangeEvent" msprop:Generator_RowClassName="PurchaseVatReportRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -417,7 +417,7 @@ group by p.id_purchase_order
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseInvoiceSummary" msprop:Generator_TableClassName="PurchaseInvoiceSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseInvoiceSummary" msprop:Generator_TablePropName="PurchaseInvoiceSummary" msprop:Generator_RowDeletingName="PurchaseInvoiceSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseInvoiceSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseInvoiceSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseInvoiceSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseInvoiceSummary" msprop:Generator_RowChangedName="PurchaseInvoiceSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseInvoiceSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseInvoiceSummaryRow">
+        <xs:element name="PurchaseInvoiceSummary" msprop:Generator_TableClassName="PurchaseInvoiceSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseInvoiceSummary" msprop:Generator_RowChangedName="PurchaseInvoiceSummaryRowChanged" msprop:Generator_TablePropName="PurchaseInvoiceSummary" msprop:Generator_RowDeletingName="PurchaseInvoiceSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseInvoiceSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseInvoiceSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseInvoiceSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseInvoiceSummaryRow" msprop:Generator_UserTableName="PurchaseInvoiceSummary" msprop:Generator_RowEvArgName="PurchaseInvoiceSummaryRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -442,10 +442,11 @@ group by p.id_purchase_order
               <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
               <xs:element name="CostCenter" msprop:Generator_ColumnVarNameInTable="columnCostCenter" msprop:Generator_ColumnPropNameInRow="CostCenter" msprop:Generator_ColumnPropNameInTable="CostCenterColumn" msprop:Generator_UserColumnName="CostCenter" type="xs:string" />
               <xs:element name="PurchaseCondition" msprop:Generator_ColumnVarNameInTable="columnPurchaseCondition" msprop:Generator_ColumnPropNameInRow="PurchaseCondition" msprop:Generator_ColumnPropNameInTable="PurchaseConditionColumn" msprop:Generator_UserColumnName="PurchaseCondition" type="xs:string" />
+              <xs:element name="ProjectID" msprop:Generator_ColumnVarNameInTable="columnProjectID" msprop:Generator_ColumnPropNameInRow="ProjectID" msprop:Generator_ColumnPropNameInTable="ProjectIDColumn" msprop:Generator_UserColumnName="ProjectID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseOrderSummary" msprop:Generator_TableClassName="PurchaseOrderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseOrderSummary" msprop:Generator_TablePropName="PurchaseOrderSummary" msprop:Generator_RowDeletingName="PurchaseOrderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseOrderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseOrderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseOrderSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseOrderSummary" msprop:Generator_RowChangedName="PurchaseOrderSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseOrderSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseOrderSummaryRow">
+        <xs:element name="PurchaseOrderSummary" msprop:Generator_TableClassName="PurchaseOrderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseOrderSummary" msprop:Generator_RowChangedName="PurchaseOrderSummaryRowChanged" msprop:Generator_TablePropName="PurchaseOrderSummary" msprop:Generator_RowDeletingName="PurchaseOrderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseOrderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseOrderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseOrderSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseOrderSummaryRow" msprop:Generator_UserTableName="PurchaseOrderSummary" msprop:Generator_RowEvArgName="PurchaseOrderSummaryRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Branch" msprop:Generator_ColumnVarNameInTable="columnBranch" msprop:Generator_ColumnPropNameInRow="Branch" msprop:Generator_ColumnPropNameInTable="BranchColumn" msprop:Generator_UserColumnName="Branch" type="xs:string" />
@@ -469,7 +470,7 @@ group by p.id_purchase_order
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PurchaseTenderSummary" msprop:Generator_TableClassName="PurchaseTenderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseTenderSummary" msprop:Generator_TablePropName="PurchaseTenderSummary" msprop:Generator_RowDeletingName="PurchaseTenderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseTenderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseTenderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseTenderSummaryRowDeleted" msprop:Generator_UserTableName="PurchaseTenderSummary" msprop:Generator_RowChangedName="PurchaseTenderSummaryRowChanged" msprop:Generator_RowEvArgName="PurchaseTenderSummaryRowChangeEvent" msprop:Generator_RowClassName="PurchaseTenderSummaryRow">
+        <xs:element name="PurchaseTenderSummary" msprop:Generator_TableClassName="PurchaseTenderSummaryDataTable" msprop:Generator_TableVarName="tablePurchaseTenderSummary" msprop:Generator_RowChangedName="PurchaseTenderSummaryRowChanged" msprop:Generator_TablePropName="PurchaseTenderSummary" msprop:Generator_RowDeletingName="PurchaseTenderSummaryRowDeleting" msprop:Generator_RowChangingName="PurchaseTenderSummaryRowChanging" msprop:Generator_RowEvHandlerName="PurchaseTenderSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseTenderSummaryRowDeleted" msprop:Generator_RowClassName="PurchaseTenderSummaryRow" msprop:Generator_UserTableName="PurchaseTenderSummary" msprop:Generator_RowEvArgName="PurchaseTenderSummaryRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="TenderName" msprop:Generator_ColumnVarNameInTable="columnTenderName" msprop:Generator_ColumnPropNameInRow="TenderName" msprop:Generator_ColumnPropNameInTable="TenderNameColumn" msprop:Generator_UserColumnName="TenderName" type="xs:string" minOccurs="0" />

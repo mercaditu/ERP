@@ -130,7 +130,7 @@
 
 			<Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
 
-				<Button Style="{StaticResource btn_green}" Content="{lex:Loc Extract}" Click="location_ListBox_SelectionChanged"
+				<Button Style="{StaticResource btn_green}" Content="{lex:Loc Refresh}" Click="location_ListBox_SelectionChanged"
 						VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"/>
 
 				<Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2">

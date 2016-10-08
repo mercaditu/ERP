@@ -177,7 +177,9 @@ namespace cntrl
                     stackcolumn.Children.Add(desccolumn);
                     ComboBox combocolumndata = new ComboBox();
                     DataView view = new DataView(_ReportDt);
-                    combocolumndata.DataContext = view.ToTable(true, item.ColumnName);
+                    combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
+                    combocolumndata.SelectedValuePath = item.ColumnName;
+                    combocolumndata.DisplayMemberPath = item.ColumnName;
                     stackcolumn.Children.Add(combocolumndata);
                     stpColumn.Children.Add(stackcolumn);
                 }

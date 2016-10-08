@@ -87,9 +87,11 @@
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
 
                 <Label Content="Columns" Style="{StaticResource input_label}"/>
-                <StackPanel Name="stpColumn">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <StackPanel Name="stpColumn" Height="300">
                   
                 </StackPanel>
+                </ScrollViewer>
             </StackPanel>
         </Border>
     </Grid>

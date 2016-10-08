@@ -51,6 +51,7 @@ namespace Cognitivo.Reporting.Views
             {
                 dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
+            ReportPanel.ReportDt = dt;
             if (ReportColumnsList.Count() == 0)
             {
                 foreach (DataColumn item in dt.Columns)

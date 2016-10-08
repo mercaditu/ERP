@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,7 @@ namespace cntrl
             set { SetValue(ReportDescriptionProperty, value); }
         }
 
-       
+
         public static DependencyProperty ShowBranchProperty = DependencyProperty.Register("ShowBranch", typeof(bool), typeof(ReportPanel));
         public bool ShowBranch
         {
@@ -161,6 +162,29 @@ namespace cntrl
                 return (cbCurrency.SelectedItem as entity.app_currency);
             }
         }
+        public DataTable ReportDt
+        {
+            get { return _ReportDt; }
+            set
+            {
+                _ReportDt = value;
+                foreach (DataColumn item in _ReportDt.Columns)
+                {
+                    StackPanel stackcolumn = new StackPanel();
+                    Label desccolumn = new Label();
+                    desccolumn.Name = item.ColumnName;
+                    desccolumn.Content = item.ColumnName;
+                    stackcolumn.Children.Add(desccolumn);
+                    ComboBox combocolumndata = new ComboBox();
+                    DataView view = new DataView(_ReportDt);
+                    combocolumndata.DataContext = view.ToTable(true, item.ColumnName);
+                    stackcolumn.Children.Add(combocolumndata);
+                    stpColumn.Children.Add(stackcolumn);
+                }
+            }
+        }
+
+        public DataTable _ReportDt;
         public List<ReportColumns> ReportColumn
         {
             get
@@ -195,13 +219,13 @@ namespace cntrl
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;
-           
-            if (chk!=null)
+
+            if (chk != null)
             {
                 string name = chk.Content.ToString();
                 ReportColumns ReportColumns = ReportColumn.Where(x => x.Columname.Contains(name)).FirstOrDefault();
 
-                if (chk.IsChecked==true)
+                if (chk.IsChecked == true)
                 {
                     ReportColumns.IsVisibility = true;
                 }

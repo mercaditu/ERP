@@ -364,24 +364,27 @@ namespace Cognitivo.Purchase
 
             decimal totalExpense = 0;
 
-            Impex_ItemDetails = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList();
-            //Total of General expenses asigned to no item.
-            totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
-            
-            foreach (entity.Class.Impex_ItemDetail Detail in Impex_ItemDetails)
+            if (impex_importDataGrid.ItemsSource != null)
             {
-                //Adds extra expenses asigend to this product.
-                totalExpense += (decimal)impex.impex_expense.Where(x => x.id_item == Detail.id_item).Sum(x => x.value);
+                Impex_ItemDetails = impex_importDataGrid.ItemsSource.OfType<entity.Class.Impex_ItemDetail>().ToList();
+                //Total of General expenses asigned to no item.
+                totalExpense = (decimal)impex.impex_expense.Where(x => x.id_item == 0).Sum(x => x.value);
 
-                if (totalExpense > 0)
+                foreach (entity.Class.Impex_ItemDetail Detail in Impex_ItemDetails)
                 {
-                    decimal percentage = ((Detail.unit_cost * Detail.quantity) / GrandTotal);
-                    decimal participation = percentage * totalExpense;
-                    Detail.unit_Importcost = Math.Round(participation / Detail.quantity, 2);
-                    Detail.prorated_cost = Detail.unit_cost + Detail.unit_Importcost;
+                    //Adds extra expenses asigend to this product.
+                    totalExpense += (decimal)impex.impex_expense.Where(x => x.id_item == Detail.id_item).Sum(x => x.value);
 
-                    decimal SubTotal = (Detail.quantity * Detail.prorated_cost);
-                    Detail.sub_total = Math.Round(SubTotal, 2);
+                    if (totalExpense > 0)
+                    {
+                        decimal percentage = ((Detail.unit_cost * Detail.quantity) / GrandTotal);
+                        decimal participation = percentage * totalExpense;
+                        Detail.unit_Importcost = Math.Round(participation / Detail.quantity, 2);
+                        Detail.prorated_cost = Detail.unit_cost + Detail.unit_Importcost;
+
+                        decimal SubTotal = (Detail.quantity * Detail.prorated_cost);
+                        Detail.sub_total = Math.Round(SubTotal, 2);
+                    }
                 }
             }
         }
@@ -469,6 +472,11 @@ namespace Cognitivo.Purchase
                     crud_modal.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Calculate_Click(sender, e);
         }
 
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

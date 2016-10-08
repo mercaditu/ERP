@@ -83,14 +83,17 @@
                 </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
-                
+
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
 
                 <Label Content="Columns" Style="{StaticResource input_label}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
-                <StackPanel Name="stpColumn" Height="300">
-                  
-                </StackPanel>
+                   
+                   
+                        <StackPanel Name="stpColumn" >
+
+                        </StackPanel>
+             
                 </ScrollViewer>
             </StackPanel>
         </Border>

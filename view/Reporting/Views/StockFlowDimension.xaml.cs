@@ -55,7 +55,7 @@ namespace Cognitivo.Reporting.Views
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
             reportDataSource1.Name = "StockFlowDimension"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.StockFlowDimension.rdlc";
             //parameters[0] = new ReportParameter("name1", value1);
@@ -71,9 +71,29 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.RefreshReport();
         }
 
-        private void rptPanel_Update(object sender, RoutedEventArgs e)
+        public void Filter(object sender, RoutedEventArgs e)
         {
-            Fill(null, null);
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+           
+            //ReportParameter[] parameters = new ReportParameter[x+1];
+
+            reportDataSource1.Name = "StockFlowDimension"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.StockFlowDimension.rdlc";
+            //parameters[0] = new ReportParameter("name1", value1);
+            //parameters[0] = new ReportParameter("name1", value1);
+            //parameters[0] = new ReportParameter("name1", value1);
+            //parameters[0] = new ReportParameter("name1", value1);
+            //parameters[0] = new ReportParameter("name1", value1);
+            //this.reportViewer.LocalReport.SetParameters("EndDate", dtEndDate, false);
+
+           
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
         }
     }
 }

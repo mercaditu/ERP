@@ -54,7 +54,7 @@ namespace Cognitivo.Reporting.Views
                 ReportPanel.ReportDt = dt;
             }
             reportDataSource1.Name = "InventorySummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.InventorySummary.rdlc";
 
@@ -64,9 +64,22 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.RefreshReport();
         }
 
-        private void rptPanel_Update(object sender, RoutedEventArgs e)
+        public void Filter(object sender, RoutedEventArgs e)
         {
-            Fill(null, null);
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+         
+            reportDataSource1.Name = "InventorySummary"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.InventorySummary.rdlc";
+
+         
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
         }
+     
     }
 }

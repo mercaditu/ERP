@@ -19,6 +19,7 @@
 			ReportDescription="Employees In Production"
 			ShowBranch="True"
 			Update="Fill"
+            Filter="Filter"
 			Grid.Column="0"/>
 		
 		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">

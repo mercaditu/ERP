@@ -32,7 +32,7 @@ namespace Cognitivo.Reporting.Views
                 ReportPanel.ReportDt = dt;
             }
             reportDataSource1.Name = "ProductionOrder"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionOrder.rdlc";
 
@@ -42,9 +42,20 @@ namespace Cognitivo.Reporting.Views
             reportViewer.RefreshReport();
         }
 
-        private void rptPanel_Update(object sender, RoutedEventArgs e)
+        public void Filter(object sender, RoutedEventArgs e)
         {
-            Fill(null, null);
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+          
+            reportDataSource1.Name = "ProductionOrder"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionOrder.rdlc";
+
+           
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
         }
     }
 }

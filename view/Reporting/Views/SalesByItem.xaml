@@ -24,6 +24,7 @@
             ShowCustomer="True"
             ShowBranch="True"
             Update="Fill"
+            Filter="Filter"
             Grid.Column="0"/>
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <rv:ReportViewer x:Name="reportViewer"/>

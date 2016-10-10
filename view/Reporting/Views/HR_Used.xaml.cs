@@ -31,7 +31,7 @@ namespace Cognitivo.Reporting.Views
                 ReportPanel.ReportDt = dt;
             }
             reportDataSource1.Name = "ProductionEmployee";
-            reportDataSource1.Value = ReportPanel.Filterdt;
+            reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionEmployee.rdlc";
 
@@ -39,6 +39,22 @@ namespace Cognitivo.Reporting.Views
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();  
+        }
+        public void Filter(object sender, EventArgs e)
+        {
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+         
+            reportDataSource1.Name = "ProductionEmployee";
+            reportDataSource1.Value = ReportPanel.Filterdt;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionEmployee.rdlc";
+
+     
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
         }
     }
 }

@@ -45,11 +45,27 @@ namespace Cognitivo.Reporting.Views
                 ReportPanel.ReportDt = dt;
             }
             reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesReturnDetail.rdlc";
 
             SalesDB.EndInit();
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
+        }
+        public void Filter(object sender, EventArgs e)
+        {
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+       
+            reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesReturnDetail.rdlc";
+
+   
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();

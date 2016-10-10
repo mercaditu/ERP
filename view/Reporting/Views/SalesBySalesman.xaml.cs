@@ -33,9 +33,12 @@ namespace Cognitivo.Reporting.Views
             DataTable dt = new DataTable();
 
             dt = SalesBySalesRepTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
+            }
             reportDataSource1.Name = "SalesBySalesRep"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt;
+            reportDataSource1.Value = ReportPanel.Filterdt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesBySalesRep.rdlc";
 

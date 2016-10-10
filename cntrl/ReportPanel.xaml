@@ -62,7 +62,7 @@
                       SelectedValue="{Binding id_project, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_project" DisplayMemberPath="name"
                       Margin="4"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowSupplier, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <!--<StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowSupplier, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Supplier" x:Name="cbxSupplier" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Contact x:Name="sbxSupplier" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxSupplier, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
@@ -80,7 +80,7 @@
                               Visibility="{Binding ElementName=cbxCurrency, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                               SelectedValue="{Binding id_currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_currency" DisplayMemberPath="name"
                               Margin="4"/>
-                </StackPanel>
+                </StackPanel>-->
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
 

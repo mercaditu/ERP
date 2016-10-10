@@ -26,9 +26,12 @@ namespace Cognitivo.Reporting.Views
 
             Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter EmployeesInProductionTableAdapter = new Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter();
             DataTable dt = EmployeesInProductionTableAdapter.GetData(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
-
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
+            }
             reportDataSource1.Name = "ProductionEmployee";
-            reportDataSource1.Value = dt;
+            reportDataSource1.Value = ReportPanel.Filterdt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionEmployee.rdlc";
 

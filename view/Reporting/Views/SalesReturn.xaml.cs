@@ -20,36 +20,39 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class SalesReturn : Page
     {
-      
+
 
         public SalesReturn()
         {
             InitializeComponent();
-            
+
             Fill(null, null);
         }
 
         public void Fill(object sender, EventArgs e)
         {
-                this.reportViewer.Reset();
+            this.reportViewer.Reset();
 
-                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                Data.SalesDS SalesDB = new Data.SalesDS();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Data.SalesDS SalesDB = new Data.SalesDS();
 
-                SalesDB.BeginInit();
+            SalesDB.BeginInit();
 
-                Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter SalesReturnDetailTableAdapter = new Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter();
-                DataTable dt = SalesReturnDetailTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate);
+            Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter SalesReturnDetailTableAdapter = new Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter();
+            DataTable dt = SalesReturnDetailTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate);
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
+            }
+            reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesReturnDetail.rdlc";
 
-                reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
-                reportDataSource1.Value = dt; //SalesDB.SalesByDate;
-                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesReturnDetail.rdlc";
+            SalesDB.EndInit();
 
-                SalesDB.EndInit();
-
-                this.reportViewer.Refresh();
-                this.reportViewer.RefreshReport();
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
         }
     }
 }

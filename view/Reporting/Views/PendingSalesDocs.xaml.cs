@@ -42,10 +42,14 @@ namespace Cognitivo.Reporting.Views
                 DataTable dt = new DataTable();
                 adpt.Fill(dt);
 
+                if (ReportPanel.ReportDt == null)
+                {
+                    ReportPanel.ReportDt = dt;
+                }
                 Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
                 reportDataSource1.Name = "PendingSalesDocs"; //Name of the report dataset in our .RDLC file
-                reportDataSource1.Value = dt;
+                reportDataSource1.Value = ReportPanel.Filterdt;
                 this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
                 this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingSalesDocs.rdlc";
 

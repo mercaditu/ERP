@@ -131,37 +131,37 @@ namespace cntrl
             }
         }
 
-        public int SupplierID
-        {
-            get
-            {
-                if ((bool)cbxSupplier.IsChecked)
-                {
-                    return sbxSupplier.ContactID;
-                }
-                return 0;
-            }
-        }
+        //public int SupplierID
+        //{
+        //    get
+        //    {
+        //        if ((bool)cbxSupplier.IsChecked)
+        //        {
+        //            return sbxSupplier.ContactID;
+        //        }
+        //        return 0;
+        //    }
+        //}
 
-        public int CustomerID
-        {
-            get
-            {
-                if ((bool)cbxCustomer.IsChecked)
-                {
-                    return sbxCustomer.ContactID;
-                }
-                return 0;
-            }
-        }
+        //public int CustomerID
+        //{
+        //    get
+        //    {
+        //        if ((bool)cbxCustomer.IsChecked)
+        //        {
+        //            return sbxCustomer.ContactID;
+        //        }
+        //        return 0;
+        //    }
+        //}
 
-        public entity.app_currency Currency
-        {
-            get
-            {
-                return (cbCurrency.SelectedItem as entity.app_currency);
-            }
-        }
+        //public entity.app_currency Currency
+        //{
+        //    get
+        //    {
+        //        return (cbCurrency.SelectedItem as entity.app_currency);
+        //    }
+        //}
         public DataTable ReportDt
         {
             get

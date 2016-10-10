@@ -243,6 +243,12 @@ namespace cntrl
             Update(this, new RoutedEventArgs());
         }
 
+        public event RoutedEventHandler Filter;
+        private void Data_Filter(object sender, RoutedEventArgs e)
+        {
+            Filter(this, new RoutedEventArgs());
+        }
+
         public ReportPanel()
         {
             InitializeComponent();
@@ -252,7 +258,7 @@ namespace cntrl
             ComboBox comboobox = sender as ComboBox;
             string filter = comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
             Filterdt = ReportDt.Select(filter).CopyToDataTable();
-            Data_Update(null, null);
+            Data_Filter(null, null);
         }
 
 

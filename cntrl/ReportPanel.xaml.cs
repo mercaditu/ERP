@@ -164,29 +164,58 @@ namespace cntrl
         }
         public DataTable ReportDt
         {
-            get { return _ReportDt; }
+            get
+            {
+
+                return _ReportDt;
+
+
+            }
             set
             {
-                _ReportDt = value;
-                foreach (DataColumn item in _ReportDt.Columns)
+             
+
+                if (_ReportDt == null)
                 {
-                    StackPanel stackcolumn = new StackPanel();
-                    Label desccolumn = new Label();
-                    desccolumn.Name = item.ColumnName;
-                    desccolumn.Content = item.ColumnName;
-                    stackcolumn.Children.Add(desccolumn);
-                    ComboBox combocolumndata = new ComboBox();
-                    DataView view = new DataView(_ReportDt);
-                    combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
-                    combocolumndata.SelectedValuePath = item.ColumnName;
-                    combocolumndata.DisplayMemberPath = item.ColumnName;
-                    stackcolumn.Children.Add(combocolumndata);
-                    stpColumn.Children.Add(stackcolumn);
+                
+
+                    stpColumn.Children.Clear();
+                    foreach (DataColumn item in value.Columns)
+                    {
+
+                        if (item.DataType == typeof(System.String))
+                        {
+
+                            StackPanel stackcolumn = new StackPanel();
+                            stackcolumn.Name = "stp" + item.ColumnName;
+                            Label desccolumn = new Label();
+                            desccolumn.Name = item.ColumnName;
+                            desccolumn.Content = item.ColumnName;
+                            stackcolumn.Children.Add(desccolumn);
+                            ComboBox combocolumndata = new ComboBox();
+                            DataView view = new DataView(value);
+                            combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
+                            combocolumndata.SelectedValuePath = item.ColumnName;
+                            combocolumndata.DisplayMemberPath = item.ColumnName;
+                            combocolumndata.Name = "cbx" + item.ColumnName;
+                            combocolumndata.SelectionChanged += Cmb_SelectionChanged;
+                            stackcolumn.Children.Add(combocolumndata);
+                            stpColumn.Children.Add(stackcolumn);
+
+
+                        }
+                    }
                 }
+
+                _ReportDt = value;
+                Filterdt = value;
             }
         }
 
         public DataTable _ReportDt;
+
+        public DataTable Filterdt { get; set; }
+        
         public List<ReportColumns> ReportColumn
         {
             get
@@ -218,6 +247,15 @@ namespace cntrl
         {
             InitializeComponent();
         }
+        private void Cmb_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            ComboBox comboobox = sender as ComboBox;
+            string filter = comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
+            Filterdt = ReportDt.Select(filter).CopyToDataTable();
+            Data_Update(null, null);
+        }
+
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;

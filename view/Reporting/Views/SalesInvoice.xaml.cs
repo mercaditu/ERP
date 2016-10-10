@@ -51,7 +51,11 @@ namespace Cognitivo.Reporting.Views
             {
                 dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
-            ReportPanel.ReportDt = dt;
+            if (ReportPanel.ReportDt==null)
+            {
+                ReportPanel.ReportDt = dt;
+            }
+        
             if (ReportColumnsList.Count() == 0)
             {
                 foreach (DataColumn item in dt.Columns)
@@ -84,7 +88,7 @@ namespace Cognitivo.Reporting.Views
 
 
             reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
 

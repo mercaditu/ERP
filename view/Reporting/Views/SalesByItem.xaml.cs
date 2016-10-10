@@ -32,34 +32,39 @@ namespace Cognitivo.Reporting.Views
             SalesByItemTableAdapter.ClearBeforeFill = true;
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = SalesByItemTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch, CurrentSession.Id_Company);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = SalesByItemTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch, CurrentSession.Id_Company);
+            //}
+            //else
+            //{
                 dt = SalesByItemTableAdapter.GetDataByGeneral(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-            }
+            //}
 
-            string where = string.Empty;
+            //string where = string.Empty;
 
-            if (ReportPanel.CustomerID > 0)
+            //if (ReportPanel.CustomerID > 0)
+            //{
+            //    where = where + "CustomerID = " + ReportPanel.CustomerID;
+            //}
+
+            //if (ReportPanel.CustomerID > 0 && ReportPanel.Branch != null)
+            //{
+            //    where = where + " and ";
+            //}
+
+            //if (ReportPanel.Branch != null)
+            //{
+            //    where = where + "BranchID = " + ReportPanel.Branch.id_branch;
+            //}
+
+            if (ReportPanel.ReportDt == null)
             {
-                where = where + "CustomerID = " + ReportPanel.CustomerID;
-            }
-
-            if (ReportPanel.CustomerID > 0 && ReportPanel.Branch != null)
-            {
-                where = where + " and ";
-            }
-
-            if (ReportPanel.Branch != null)
-            {
-                where = where + "BranchID = " + ReportPanel.Branch.id_branch;
+                ReportPanel.ReportDt = dt;
             }
 
             reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt.Select(where);
+            reportDataSource1.Value = ReportPanel.Filterdt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
 

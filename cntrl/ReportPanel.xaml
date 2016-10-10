@@ -34,7 +34,7 @@
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
 
-                <StackPanel Orientation="Horizontal" 
+                <!--<StackPanel Orientation="Horizontal" 
                     Visibility="{Binding ElementName=this, Path=ShowBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Branch" x:Name="cbxBranch" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxBranch_Checked"/>
                     <ComboBox x:Name="cbBranch" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
@@ -47,7 +47,7 @@
                       Visibility="{Binding ElementName=cbxTag, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       SelectedValue="{Binding id_tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_tag" DisplayMemberPath="name"
                       Margin="4"/>
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowProduct, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Product" x:Name="cbxProduct" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Item x:Name="sbxItem" Select="Data_Update" 

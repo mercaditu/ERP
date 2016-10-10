@@ -40,19 +40,22 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = SalesOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = SalesOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+            //}
+            //else
+            //{
                 dt = SalesOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+            //}
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
             }
-
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
             reportDataSource1.Name = "SalesOrderSummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesOrderSummary.rdlc";
             //parameters[0] = new ReportParameter("name1", value1);

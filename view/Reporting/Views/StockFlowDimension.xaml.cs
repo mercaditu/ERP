@@ -40,19 +40,22 @@ namespace Cognitivo.Reporting.Views
 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = StockFlowDimensionTableAdapter.GetDataByBranch(CurrentSession.Id_Company, ReportPanel.Branch.id_branch, ReportPanel.StartDate, ReportPanel.EndDate);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = StockFlowDimensionTableAdapter.GetDataByBranch(CurrentSession.Id_Company, ReportPanel.Branch.id_branch, ReportPanel.StartDate, ReportPanel.EndDate);
+            //}
+            //else
+            //{
                 dt = StockFlowDimensionTableAdapter.GetDataBy(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
+            //}
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
             }
-
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
             reportDataSource1.Name = "StockFlowDimension"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.StockFlowDimension.rdlc";
             //parameters[0] = new ReportParameter("name1", value1);

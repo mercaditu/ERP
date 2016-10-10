@@ -99,25 +99,25 @@ namespace cntrl
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
-        public entity.app_branch Branch
-        {
-            get
-            {
-                if ((bool)cbxBranch.IsChecked)
-                {
-                    return (cbBranch.SelectedItem as entity.app_branch);
-                }
-                return null;
-            }
-        }
+        //public entity.app_branch Branch
+        //{
+        //    get
+        //    {
+        //        if ((bool)cbxBranch.IsChecked)
+        //        {
+        //            return (cbBranch.SelectedItem as entity.app_branch);
+        //        }
+        //        return null;
+        //    }
+        //}
 
-        public entity.item_tag ItemTag
-        {
-            get
-            {
-                return (cbTag.SelectedItem as entity.item_tag);
-            }
-        }
+        //public entity.item_tag ItemTag
+        //{
+        //    get
+        //    {
+        //        return (cbTag.SelectedItem as entity.item_tag);
+        //    }
+        //}
 
         public int ProductID
         {
@@ -277,18 +277,18 @@ namespace cntrl
             Data_Update(null, null);
         }
 
-        private void cbxBranch_Checked(object sender, RoutedEventArgs e)
-        {
-            cbBranch.ItemsSource = entity.CurrentSession.Get_Branch();
-        }
+        //private void cbxBranch_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    cbBranch.ItemsSource = entity.CurrentSession.Get_Branch();
+        //}
 
-        private void cbxTag_Checked(object sender, RoutedEventArgs e)
-        {
-            using (entity.db db = new entity.db())
-            {
-                cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active).ToList();
-            }
-        }
+        //private void cbxTag_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    using (entity.db db = new entity.db())
+        //    {
+        //        cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active).ToList();
+        //    }
+        //}
 
         private void cbxProject_Checked(object sender, RoutedEventArgs e)
         {

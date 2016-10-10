@@ -26,17 +26,20 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = ProductionStatusTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch,CurrentSession.Id_Company);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = ProductionStatusTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch,CurrentSession.Id_Company);
+            //}
+            //else
+            //{
                 dt = ProductionStatusTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
+            //}
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
             }
-
             reportDataSource1.Name = "ProductionStatus"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionStatus.rdlc";
 

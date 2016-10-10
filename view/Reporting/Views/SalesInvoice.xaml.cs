@@ -43,14 +43,14 @@ namespace Cognitivo.Reporting.Views
 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = SalesInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = SalesInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+            //}
+            //else
+            //{
                 dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
-            }
+           // }
             if (ReportPanel.ReportDt==null)
             {
                 ReportPanel.ReportDt = dt;

@@ -40,17 +40,21 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.SupplierID > 0)
-            {
-                dt = PurchaseOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
-            }
-            else
-            {
+            //if (ReportPanel.SupplierID > 0)
+            //{
+            //    dt = PurchaseOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+            //}
+            //else
+            //{
                 dt = PurchaseOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+            //}
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
             }
 
             reportDataSource1.Name = "PurchaseOrderSummary";
-            reportDataSource1.Value = dt;
+            reportDataSource1.Value = ReportPanel.Filterdt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseOrderSummary.rdlc";
 

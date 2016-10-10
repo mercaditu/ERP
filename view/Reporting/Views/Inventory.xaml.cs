@@ -40,17 +40,21 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = InventorySummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, ReportPanel.Branch.id_branch);
-            }
-            else
-            {
+            //if (ReportPanel.Branch != null)
+            //{
+            //    dt = InventorySummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, ReportPanel.Branch.id_branch);
+            //}
+            //else
+            //{
                 dt = InventorySummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-            }
+//            }
 
+            if (ReportPanel.ReportDt == null)
+            {
+                ReportPanel.ReportDt = dt;
+            }
             reportDataSource1.Name = "InventorySummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.InventorySummary.rdlc";
 

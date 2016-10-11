@@ -20,7 +20,6 @@
             x:Name="ReportPanel"
             ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
             ReportDescription="List of Sales grouped by Status, Branch, and Date."
-            ShowBranch="True"
             Update="Fill"
             Filter="Filter"
             Grid.Column="0"/>

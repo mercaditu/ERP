@@ -17,8 +17,6 @@
 			x:Name="ReportPanel"
 			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
 			ReportDescription="List of Inventory."
-			ShowBranch="True"
-            ShowProduct="True"
 			Update="Fill"
 			Grid.Column="0"/>
 		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" >

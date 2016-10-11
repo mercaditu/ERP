@@ -20,9 +20,6 @@
             x:Name="ReportPanel"
             ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
             ReportDescription="List"
-            ShowProduct="True"
-            ShowCustomer="True"
-            ShowBranch="True"
             Update="Fill"
             Filter="Filter"
             Grid.Column="0"/>

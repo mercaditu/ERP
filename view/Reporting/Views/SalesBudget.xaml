@@ -20,7 +20,6 @@
 			x:Name="ReportPanel"
 			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
 			ReportDescription="Get List of Sales per Brand. Helps calculate which brand offer the best returns."
-			ShowBranch="True"
 			Update="Fill"
             Filter="Filter"
 			Grid.Column="0"/>

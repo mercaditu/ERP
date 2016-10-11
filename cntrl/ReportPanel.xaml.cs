@@ -28,63 +28,6 @@ namespace cntrl
             set { SetValue(ReportDescriptionProperty, value); }
         }
 
-
-        public static DependencyProperty ShowBranchProperty = DependencyProperty.Register("ShowBranch", typeof(bool), typeof(ReportPanel));
-        public bool ShowBranch
-        {
-            get { return (bool)GetValue(ShowBranchProperty); }
-            set { SetValue(ShowBranchProperty, value); }
-        }
-
-        public static DependencyProperty ShowTagProperty = DependencyProperty.Register("ShowTag", typeof(bool), typeof(ReportPanel));
-        public bool ShowTag
-        {
-            get { return (bool)GetValue(ShowTagProperty); }
-            set { SetValue(ShowTagProperty, value); }
-        }
-
-        public static DependencyProperty ShowProductProperty = DependencyProperty.Register("ShowProduct", typeof(bool), typeof(ReportPanel));
-        public bool ShowProduct
-        {
-            get { return (bool)GetValue(ShowProductProperty); }
-            set { SetValue(ShowProductProperty, value); }
-        }
-
-        public static DependencyProperty ShowSupplierProperty = DependencyProperty.Register("ShowSupplier", typeof(bool), typeof(ReportPanel));
-        public bool ShowSupplier
-        {
-            get { return (bool)GetValue(ShowSupplierProperty); }
-            set { SetValue(ShowSupplierProperty, value); }
-        }
-
-        public static DependencyProperty ShowCustomerProperty = DependencyProperty.Register("ShowCustomer", typeof(bool), typeof(ReportPanel));
-        public bool ShowCustomer
-        {
-            get { return (bool)GetValue(ShowCustomerProperty); }
-            set { SetValue(ShowCustomerProperty, value); }
-        }
-
-        public static DependencyProperty ShowProjectProperty = DependencyProperty.Register("ShowProject", typeof(bool), typeof(ReportPanel));
-        public bool ShowProject
-        {
-            get { return (bool)GetValue(ShowProjectProperty); }
-            set { SetValue(ShowProjectProperty, value); }
-        }
-
-        public static DependencyProperty ShowCurrencyProperty = DependencyProperty.Register("ShowCurrency", typeof(bool), typeof(ReportPanel));
-        public bool ShowCurrency
-        {
-            get { return (bool)GetValue(ShowCurrencyProperty); }
-            set { SetValue(ShowCurrencyProperty, value); }
-        }
-
-        public static DependencyProperty ShowDatesProperty = DependencyProperty.Register("ShowDates", typeof(bool), typeof(ReportPanel));
-        public bool ShowDates
-        {
-            get { return (bool)GetValue(ShowDatesProperty); }
-            set { SetValue(ShowDatesProperty, value); }
-        }
-
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
@@ -99,93 +42,21 @@ namespace cntrl
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
-        //public entity.app_branch Branch
-        //{
-        //    get
-        //    {
-        //        if ((bool)cbxBranch.IsChecked)
-        //        {
-        //            return (cbBranch.SelectedItem as entity.app_branch);
-        //        }
-        //        return null;
-        //    }
-        //}
-
-        //public entity.item_tag ItemTag
-        //{
-        //    get
-        //    {
-        //        return (cbTag.SelectedItem as entity.item_tag);
-        //    }
-        //}
-
-        public int ProductID
-        {
-            get
-            {
-                if ((bool)cbxProduct.IsChecked)
-                {
-                    return sbxItem.ItemID;
-                }
-                return 0;
-            }
-        }
-
-        //public int SupplierID
-        //{
-        //    get
-        //    {
-        //        if ((bool)cbxSupplier.IsChecked)
-        //        {
-        //            return sbxSupplier.ContactID;
-        //        }
-        //        return 0;
-        //    }
-        //}
-
-        //public int CustomerID
-        //{
-        //    get
-        //    {
-        //        if ((bool)cbxCustomer.IsChecked)
-        //        {
-        //            return sbxCustomer.ContactID;
-        //        }
-        //        return 0;
-        //    }
-        //}
-
-        //public entity.app_currency Currency
-        //{
-        //    get
-        //    {
-        //        return (cbCurrency.SelectedItem as entity.app_currency);
-        //    }
-        //}
         public DataTable ReportDt
         {
             get
             {
-
                 return _ReportDt;
-
-
             }
             set
             {
-             
-
                 if (_ReportDt == null)
                 {
-                
-
                     stpColumn.Children.Clear();
                     foreach (DataColumn item in value.Columns)
                     {
-
-                        if (item.DataType == typeof(System.String))
+                        if (item.DataType == typeof(string))
                         {
-
                             StackPanel stackcolumn = new StackPanel();
                             stackcolumn.Name = "stp" + item.ColumnName;
                             Label desccolumn = new Label();
@@ -201,12 +72,9 @@ namespace cntrl
                             combocolumndata.SelectionChanged += Cmb_SelectionChanged;
                             stackcolumn.Children.Add(combocolumndata);
                             stpColumn.Children.Add(stackcolumn);
-
-
                         }
                     }
                 }
-
                 _ReportDt = value;
                 Filterdt = value;
             }
@@ -281,27 +149,6 @@ namespace cntrl
                 }
             }
             Data_Update(null, null);
-        }
-
-        //private void cbxBranch_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    cbBranch.ItemsSource = entity.CurrentSession.Get_Branch();
-        //}
-
-        //private void cbxTag_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    using (entity.db db = new entity.db())
-        //    {
-        //        cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active).ToList();
-        //    }
-        //}
-
-        private void cbxProject_Checked(object sender, RoutedEventArgs e)
-        {
-            using (entity.db db = new entity.db())
-            {
-                cbProject.ItemsSource = db.projects.Where(x => x.id_company == entity.CurrentSession.Id_Company).ToList();
-            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

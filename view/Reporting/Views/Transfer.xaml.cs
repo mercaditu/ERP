@@ -35,7 +35,7 @@ namespace Cognitivo.Reporting.Views
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
             reportDataSource1.Name = "TransferSummary"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = Stock.TransferSummary(ReportPanel.StartDate, ReportPanel.EndDate, 0, null,null, ReportPanel.ProductID);
+            reportDataSource1.Value = Stock.TransferSummary(ReportPanel.StartDate, ReportPanel.EndDate);
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.TransferSummary.rdlc";
 

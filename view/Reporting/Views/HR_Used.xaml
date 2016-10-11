@@ -17,7 +17,6 @@
 			x:Name="ReportPanel"
 			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
 			ReportDescription="Employees In Production"
-			ShowBranch="True"
 			Update="Fill"
             Filter="Filter"
 			Grid.Column="0"/>

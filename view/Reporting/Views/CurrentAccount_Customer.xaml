@@ -16,8 +16,7 @@
         <Cntrl:ReportPanel 
 			x:Name="ReportPanel"
 			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
-			ReportDescription="Current Account."
-			ShowBranch="True"
+			ReportDescription="Current Account"
 			Update="Fill"
 			Grid.Column="0"/>
 		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">

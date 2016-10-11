@@ -3505,17 +3505,10 @@ FROM  purchase_invoice s INNER JOIN
                      app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
                      app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
             GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
-  where s.id_branch = @BranchID and s.status = 2 and (s.trans_date >= @StartDate) and (s.trans_date <= @EndDate) 
+  where s.status = 2 and (s.trans_date >= @StartDate) and (s.trans_date <= @EndDate) 
 group by s.id_purchase_invoice, vatco.id_vat_group
  order by s.trans_date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
             param.DbType = global::System.Data.DbType.DateTime;
@@ -3564,11 +3557,10 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(PurchaseDS.PurchaseVatReportDataTable dataTable, int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int FillByBranch(PurchaseDS.PurchaseVatReportDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -3580,11 +3572,10 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual PurchaseDS.PurchaseVatReportDataTable GetDataByBranch(int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual PurchaseDS.PurchaseVatReportDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             PurchaseDS.PurchaseVatReportDataTable dataTable = new PurchaseDS.PurchaseVatReportDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -3742,7 +3733,7 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT p.id_project as ProjectID, branch.name as Branch,\n    f.name as Currency,\n" +
@@ -3792,62 +3783,6 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             param.IsNullable = true;
             param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    f.name as Currency,\n    p.status as Status,\n\t" +
-                "DATE_FORMAT(p.trans_date,\'%d %b %y\') as InvoiceDate, \n    contact.name as Suppli" +
-                "er, \n    cont.name as PurchaseCondition,\n    p.number as InvoiceNumber, \n    pd." +
-                "item_description as Item,\n    cc.name as CostCenter,\n\tsum(pd.quantity) AS Quanti" +
-                "ty,\n    round(pd.unit_cost, 4) as UnitPrice,\n\tround(pd.discount * vatco.coef,4) " +
-                "as Discount,\n    round(pd.unit_cost * vatco.coef, 4) as UnitPrice_VAT,\n    round" +
-                "(pd.quantity * pd.unit_cost,4) as Total,\n    round(pd.quantity * pd.unit_cost * " +
-                "vatco.coef,4) as TotalVAT,\n\tround(pd.quantity * pd.unit_cost * vatco.vat,4) as V" +
-                "ATTotal\n    \nFROM purchase_invoice p \nleft join app_currencyfx as fx on p.id_cur" +
-                "rencyfx = fx.id_currencyfx\nleft join app_currency as f on fx.id_currency = f.id_" +
-                "currency\ninner join app_contract as cont on p.id_contract = cont.id_contract\nINN" +
-                "ER JOIN contacts as contact ON p.id_contact = contact.id_contact \nINNER JOIN app" +
-                "_branch as branch on p.id_branch = branch.id_branch\ninner join purchase_invoice_" +
-                "detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice \ninner join app_cost" +
-                "_center cc on pd.id_cost_center = cc.id_cost_center\n         LEFT OUTER JOIN \n  " +
-                "       items i ON i.id_item = pd.id_item \n         LEFT OUTER JOIN \n            " +
-                " (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_va" +
-                "t.coefficient) + 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n    " +
-                "                 app_vat_group_details ON app_vat_group.id_vat_group = app_vat_g" +
-                "roup_details.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_v" +
-                "at_group_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_v" +
-                "at_group) vatco ON vatco.id_vat_group = pd.id_vat_group\nwhere (p.trans_date >= @" +
-                "StartDate) AND (p.trans_date <= @EndDate) and p.id_company = @CompanyID and p.id" +
-                "_contact = @ContactID\n group by pd.id_purchase_invoice_detail\n order by p.trans_" +
-                "date";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CompanyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@ContactID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_contact";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3875,38 +3810,6 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable = new PurchaseDS.PurchaseInvoiceSummaryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBySupplier(PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int ContactID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(ContactID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual PurchaseDS.PurchaseInvoiceSummaryDataTable GetDataBySupplier(System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int ContactID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(ContactID));
             PurchaseDS.PurchaseInvoiceSummaryDataTable dataTable = new PurchaseDS.PurchaseInvoiceSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -4059,7 +3962,7 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    p.status as Status,\n\tDATE_FORMAT(p.trans_date" +
@@ -4099,53 +4002,6 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    p.status as Status,\n\tDATE_FORMAT(p.trans_date" +
-                ",\'%d %b %y\') as OrderDate, \n    contact.name as Customer, \n    p.number as Purch" +
-                "aseOrder, \n\tsum(pd.quantity) AS Quantity, \n    \n    round(sum(pd.quantity * pd.u" +
-                "nit_cost * vatco.coef),4) as SubTotalVAT,\n\tround(sum(pd.quantity * pd.discount *" +
-                " vatco.coef),4) as SubTotalDiscountVAT,\n   \n\tround(sum(pd.quantity * pd.unit_cos" +
-                "t * vatco.vat),4) as VAT_SubTotal,\n    \n\n\tround(sum(pd.quantity * pd.unit_cost)," +
-                "4) as SubTotal,\n\n\tround(sum(pid.quantity * pid.unit_cost * vatco.coef),4) as Ful" +
-                "lfilmentVAT,\n    round(sum(pid.quantity * pid.unit_cost),4) as Fullfilment\n    \n" +
-                "   \n   \n\nFROM  purchase_order p INNER JOIN\n         contacts as contact ON p.id_" +
-                "contact = contact.id_contact \n         INNER JOIN \n         app_branch as branch" +
-                " on p.id_branch = branch.id_branch\n         inner join \n         purchase_order_" +
-                "detail pd ON p.id_purchase_order = pd.id_purchase_order \n         LEFT OUTER JOI" +
-                "N \n         items i ON i.id_item = pd.id_item \n         left outer join\n        " +
-                " purchase_invoice_detail as pid on pd.id_purchase_order_detail = pid.id_purchase" +
-                "_order_detail\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_va" +
-                "t_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n " +
-                "           FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_gro" +
-                "up_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LE" +
-                "FT OUTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = ap" +
-                "p_vat.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_" +
-                "vat_group = pd.id_vat_group\n where (p.trans_date >= @StartDate) AND (p.trans_dat" +
-                "e <= @EndDate) AND p.id_branch = @BranchID \ngroup by p.id_purchase_order\n order " +
-                "by p.trans_date";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4171,36 +4027,6 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            PurchaseDS.PurchaseOrderSummaryDataTable dataTable = new PurchaseDS.PurchaseOrderSummaryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(PurchaseDS.PurchaseOrderSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual PurchaseDS.PurchaseOrderSummaryDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
             PurchaseDS.PurchaseOrderSummaryDataTable dataTable = new PurchaseDS.PurchaseOrderSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

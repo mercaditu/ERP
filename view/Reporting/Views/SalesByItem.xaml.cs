@@ -38,7 +38,7 @@ namespace Cognitivo.Reporting.Views
             //}
             //else
             //{
-                dt = SalesByItemTableAdapter.GetDataByGeneral(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
+                dt = SalesByItemTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
             //}
 
             //string where = string.Empty;

@@ -92,7 +92,7 @@ namespace Cognitivo.Class
             return exeDT(query);
         }
 
-        public DataTable TransferSummary(DateTime StartDate, DateTime EndDate, int TransferNumber, entity.project Project, entity.security_user User, int ItemID)
+        public DataTable TransferSummary(DateTime StartDate, DateTime EndDate)
         {
             string query = @" select 
                               it.trans_date Date, 
@@ -113,20 +113,20 @@ namespace Cognitivo.Class
             
             string WhereQuery = String.Format("it.id_company = {0} and ", entity.CurrentSession.Id_Company);
 
-            if (TransferNumber < 0)
-            {
-                WhereQuery = WhereQuery + " it.number like '%" + TransferNumber + "%' and ";
-            }
+            //if (TransferNumber < 0)
+            //{
+            //    WhereQuery = WhereQuery + " it.number like '%" + TransferNumber + "%' and ";
+            //}
 
-            if (Project != null)
-            {
-                WhereQuery = WhereQuery + " it.id_project =" + Project.id_project + " and ";
-            }
+            //if (Project != null)
+            //{
+            //    WhereQuery = WhereQuery + " it.id_project =" + Project.id_project + " and ";
+            //}
 
-            if (ItemID > 0)
-            {
-                WhereQuery = WhereQuery + " ip.id_item =" + ItemID + " and ";
-            }
+            //if (ItemID > 0)
+            //{
+            //    WhereQuery = WhereQuery + " ip.id_item =" + ItemID + " and ";
+            //}
 
             query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
             

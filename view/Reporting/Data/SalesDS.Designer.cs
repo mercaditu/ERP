@@ -10367,7 +10367,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    s.status as Status,\n\tDATE_FORMAT(s.trans_date" +
@@ -10394,8 +10394,8 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "p.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n           " +
                 "          app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            G" +
                 "ROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_grou" +
-                "p\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_br" +
-                "anch = @BranchID \ngroup by s.id_sales_invoice\norder by s.trans_date";
+                "p\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_co" +
+                "mpany = @CompanyID \ngroup by s.id_sales_invoice\norder by s.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -10412,66 +10412,23 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
+            param.ParameterName = "@CompanyID";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "id_branch";
+            param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    s.status as Status,\n\tDATE_FORMAT(s.trans_date" +
-                ",\'%d %b %y\') as InvoiceDate, \n    contact.name as Customer, \n    s.number as Inv" +
-                "oice, \n\tsum(sd.quantity) AS Quantity, \n    \n    round(sum(sd.quantity * sd.unit_" +
-                "price * vatco.coef),4) as SubTotalVAT,\n\tround(sum(sd.quantity * sd.discount * va" +
-                "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
-                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_price * vatc" +
-                "o.vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as " +
-                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\t\n    \n  " +
-                "  ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_co" +
-                "st * vatco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n  " +
-                "  ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_co" +
-                "st * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n   " +
-                "  (sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cos" +
-                "t * vatco.coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contac" +
-                "ts as contact ON s.id_contact = contact.id_contact \n         INNER JOIN \n       " +
-                "  app_branch as branch on s.id_branch = branch.id_branch\n         inner join \n  " +
-                "       sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n    " +
-                "     LEFT OUTER JOIN \n         items i ON i.id_item = sd.id_item \n              " +
-                "   LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat" +
-                ".coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app" +
-                "_vat_group LEFT OUTER JOIN \n                     app_vat_group_details ON app_va" +
-                "t_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n     " +
-                "                app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n       " +
-                "     GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_va" +
-                "t_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) \ngrou" +
-                "p by s.id_sales_invoice\norder by s.trans_date";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillByBranch(SalesDS.SalesInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual int FillBy(SalesDS.SalesInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -10483,39 +10440,11 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesInvoiceSummaryDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual SalesDS.SalesInvoiceSummaryDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            SalesDS.SalesInvoiceSummaryDataTable dataTable = new SalesDS.SalesInvoiceSummaryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBy(SalesDS.SalesInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual SalesDS.SalesInvoiceSummaryDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             SalesDS.SalesInvoiceSummaryDataTable dataTable = new SalesDS.SalesInvoiceSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -10672,7 +10601,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = " SELECT \n s.id_branch as BranchID, s.id_contact as CustomerID,\t\tbranch.name as Br" +
@@ -10697,9 +10626,9 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "details.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_vat_gr" +
                 "oup_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_vat_gr" +
                 "oup) vatco ON vatco.id_vat_group = sd.id_vat_group\n            \n where (s.status" +
-                " = 2) and (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_b" +
-                "ranch = @BranchID  and s.id_company=@CompanyID \n group by branch.id_branch, item" +
-                ".id_item,s.id_sales_invoice \n order by item.id_item";
+                " = 2) and (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) and s.id_c" +
+                "ompany=@CompanyID \n group by branch.id_branch, item.id_item,s.id_sales_invoice \n" +
+                " order by item.id_item";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -10716,107 +10645,20 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             param.SourceColumn = "InvoiceDate";
             this._commandCollection[0].Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "BranchID";
-            this._commandCollection[0].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT \n s.id_branch as BranchID, s.id_contact as CustomerID,\tbranch.name as Bran" +
-                "ch,\n    tag.name as TagName,\n\titem.code as ItemCode,\n    item.name as ItemName,\n" +
-                "    sd.quantity AS Quantity, \n    s.number as Invoice,s.trans_date as InvoiceDat" +
-                "e,\n    round((sd.unit_cost * vatco.coef),4) as Cost,\n\tround(sd.quantity * sd.uni" +
-                "t_cost * vatco.coef,4) as TotalCost,\n\tround(sd.unit_price * vatco.coef,4) as Ret" +
-                "ail,\n    round((sd.unit_price * vatco.coef) * sd.quantity ,4)as TotalRetail,\n   " +
-                " round((sd.discount * vatco.coef) / ((sd.discount * vatco.coef) + (sd.unit_price" +
-                " * vatco.coef)),4) as Discountper,\n    round(sd.unit_price * vatco.coef,4) - rou" +
-                "nd(sd.unit_cost * vatco.coef,4) as Profit,\n    (((sd.quantity * sd.unit_price * " +
-                "vatco.coef) - (sd.quantity * sd.unit_cost * vatco.coef)) / (sd.quantity * sd.uni" +
-                "t_price * vatco.coef)) as Margin\n\n   \nFROM  sales_invoice s INNER JOIN\n         " +
-                "app_branch as branch on s.id_branch = branch.id_branch\n         inner join \n    " +
-                "     sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OU" +
-                "TER JOIN \n         items as item ON item.id_item = sd.id_item \n         left joi" +
-                "n item_tag_detail as td on item.id_item = td.id_item\n         left join item_tag" +
-                " as tag on td.id_tag = tag.id_tag\n         LEFT OUTER JOIN \n             (SELECT" +
-                " app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coeffi" +
-                "cient) + 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n            " +
-                "         app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_det" +
-                "ails.id_vat_group LEFT OUTER JOIN \n                     app_vat ON app_vat_group" +
-                "_details.id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_vat_group" +
-                ") vatco ON vatco.id_vat_group = sd.id_vat_group\n           where (s.status = 2) " +
-                "and (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate)  and s.id_compan" +
-                "y=@CompanyID  \ngroup by  item.id_item,s.id_sales_invoice \norder by item.id_item";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "InvoiceDate";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "InvoiceDate";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CompanyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillByBranch(SalesDS.SalesByItemDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID, int CompanyID) {
+        public virtual int FillBy(SalesDS.SalesByItemDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(CompanyID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesByItemDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID, int CompanyID) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(CompanyID));
-            SalesDS.SalesByItemDataTable dataTable = new SalesDS.SalesByItemDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByGeneral(SalesDS.SalesByItemDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
@@ -10830,9 +10672,9 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual SalesDS.SalesByItemDataTable GetDataByGeneral(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual SalesDS.SalesByItemDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));

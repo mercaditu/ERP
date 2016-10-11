@@ -34,7 +34,7 @@ namespace Cognitivo.Reporting.Views
         {
             this.reportViewer.Reset();
 
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            ReportDataSource reportDataSource1 = new ReportDataSource();
             Data.SalesDS SalesDB = new Data.SalesDS();
 
             SalesDB.BeginInit();
@@ -43,14 +43,8 @@ namespace Cognitivo.Reporting.Views
 
             DataTable dt = new DataTable();
 
-            //if (ReportPanel.Branch != null)
-            //{
-            //    dt = SalesInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
-            //}
-            //else
-            //{
-                dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
-           // }
+            dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
+
             if (ReportPanel.ReportDt==null)
             {
                 ReportPanel.ReportDt = dt;

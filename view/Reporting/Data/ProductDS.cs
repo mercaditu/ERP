@@ -1,4 +1,8 @@
-﻿namespace Cognitivo.Reporting.Data {
+﻿namespace Cognitivo.Reporting.Data
+{
+}
+
+namespace Cognitivo.Reporting.Data {
     
     
     //public partial class ProductDS {

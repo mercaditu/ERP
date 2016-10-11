@@ -4340,7 +4340,7 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"select mov.id_movement, mov.trans_date, mov.id_location, loc.name, mov.comment, item.code, item.name, mov.debit, mov.credit, sum(val.unit_value) as value
@@ -4368,41 +4368,6 @@ order by mov.trans_date, mov.id_movement";
             param.IsNullable = true;
             param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"select   mov.id_movement, mov.trans_date, mov.id_location, loc.name, mov.comment, item.code, item.name, mov.debit, mov.credit, sum(val.unit_value) as value 
-from item_movement as mov inner join item_movement_value as val on mov.id_movement = val.id_movement 
-inner join app_location as loc on mov.id_location = loc.id_location
- inner join item_product as prod on mov.id_item_product = prod.id_item_product 
-inner join items as item on prod.id_item = item.id_item 
-where item.id_item = @id_item and mov.id_company = @id_company
- and loc.id_location=@LocationID
-group by id_movement 
-order by mov.trans_date
-
-";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@id_item";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_item";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@id_company";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@LocationID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_location";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4428,36 +4393,6 @@ order by mov.trans_date
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id_item));
             this.Adapter.SelectCommand.Parameters[1].Value = ((int)(id_company));
-            ProductDS.stockflowDataTable dataTable = new ProductDS.stockflowDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByItemLocation(ProductDS.stockflowDataTable dataTable, int id_item, int id_company, int LocationID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id_item));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(id_company));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(LocationID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ProductDS.stockflowDataTable GetDataByItemLocation(int id_item, int id_company, int LocationID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id_item));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(id_company));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(LocationID));
             ProductDS.stockflowDataTable dataTable = new ProductDS.stockflowDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -4792,7 +4727,7 @@ order by mov.trans_date
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT 
@@ -4845,63 +4780,6 @@ order by i.name";
             param.IsNullable = true;
             param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT 
-ii.trans_date as InventoryDate, 
-u.name_full as UserName,
-i.code as ItemCode, 
-i.name as ItemName, 
-sum(iid.value_system) as SystemQuantity,
-sum(iid.value_counted) as CountedQuantity,(sum(iid.value_counted) - sum(iid.value_system)) as Difference,
-iid.unit_value as ItemCost,
- (sum(iid.value_counted) - sum(iid.value_system)) * iid.unit_value as TotalCost,
-
-iid.comment as Comment,
-branch.name as Branch,
-location.name as Location  
-
-FROM item_inventory_detail iid inner join item_inventory as ii on iid.id_inventory=ii.id_inventory
-inner join item_product as ip  on iid.id_item_product=ip.id_item_product 
-inner join app_branch as branch on ii.id_branch=branch.id_branch 
-inner join app_location as location on iid.id_location=location.id_location
-left join items as i on ip.id_item = i.id_item
- 
- inner join security_user as u on ii.id_user = u.id_user
-
- 
-where ii.status = 1 and (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID and ii.id_branch = @BranchID 
-group by iid.id_item_product
-order by i.name";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "InventoryDate";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "InventoryDate";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CompanyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4929,38 +4807,6 @@ order by i.name";
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            ProductDS.InventorySummaryDataTable dataTable = new ProductDS.InventorySummaryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(ProductDS.InventorySummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(BranchID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ProductDS.InventorySummaryDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int CompanyID, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(BranchID));
             ProductDS.InventorySummaryDataTable dataTable = new ProductDS.InventorySummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -5113,7 +4959,7 @@ order by i.name";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @" select branch.name as Branch
@@ -5153,52 +4999,6 @@ order by i.name";
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @" select branch.name as Branch
- ,loc.name as Location,imd.id_movement,item.code as  ItemCode,item.name as Item,im.debit,im.credit,sum(imv.unit_value) as Cost,
- dimension.name as Dimension,imd.value,im.trans_date,su.name_full  as UserName
- from item_movement_dimension as imd 
- inner join item_movement as im  on imd.id_movement=im.id_movement
- inner join app_dimension as dimension on imd.id_dimension=dimension.id_dimension
- inner join app_location as loc on im.id_location=loc.id_location
- inner join app_branch as branch on loc.id_branch=branch.id_branch
- inner join item_product as ip on im.id_item_product=ip.id_item_product
- inner join items as item on ip.id_item=item.id_item 
- inner join security_user as su on im.id_user=su.id_user
- left outer join item_movement_value as imv on imd.id_movement=imv.id_movement
- where im.id_company = @CompanyID and branch.id_branch = @BranchID and (im.trans_date >= @StartDate) AND (im.trans_date <= @EndDate) 
- group by imd.id_movement_property
- order by id_movement";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CompanyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5226,38 +5026,6 @@ order by i.name";
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(CompanyID));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
-            ProductDS.StockFlowDimensionDataTable dataTable = new ProductDS.StockFlowDimensionDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(ProductDS.StockFlowDimensionDataTable dataTable, int CompanyID, int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((System.DateTime)(EndDate));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ProductDS.StockFlowDimensionDataTable GetDataByBranch(int CompanyID, int BranchID, System.DateTime StartDate, System.DateTime EndDate) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(CompanyID));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(BranchID));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[3].Value = ((System.DateTime)(EndDate));
             ProductDS.StockFlowDimensionDataTable dataTable = new ProductDS.StockFlowDimensionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

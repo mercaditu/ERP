@@ -36,10 +36,9 @@ namespace Cognitivo.Reporting.Views
             MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adpt.Fill(dt);
-            if (ReportPanel.ReportDt == null)
-            {
+         
                 ReportPanel.ReportDt = dt;
-            }
+          
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
@@ -52,6 +51,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
           

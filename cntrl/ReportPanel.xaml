@@ -32,11 +32,21 @@
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
+                <Label Content="filter" Style="{StaticResource input_label}"/>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+
+
+                    <StackPanel Name="stpFilter" >
+
+                    </StackPanel>
+
+                </ScrollViewer>
                 <Label Content="Columns" Style="{StaticResource input_label}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Name="stpColumn" >
                     </StackPanel>
                 </ScrollViewer>
+               
             </StackPanel>
         </Border>
     </Grid>

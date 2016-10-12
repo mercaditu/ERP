@@ -149,8 +149,8 @@ namespace cntrl.Curd
                 stackDocument.Visibility = System.Windows.Visibility.Visible;
             }
 
-            paymentViewSource.View.Refresh();
-            paymentpayment_detailViewSource.View.Refresh();
+            //paymentViewSource.View.Refresh();
+            //paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (payment != null)
             {
@@ -163,7 +163,8 @@ namespace cntrl.Curd
                     }
                 }
             }
-            paymentpayment_detailViewSource.View.Refresh();
+            //paymentpayment_detailViewSource.View.Refresh();
+            //paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
         #region Events
@@ -440,9 +441,9 @@ namespace cntrl.Curd
 
         private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+           // payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
 
-            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
+            //paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
 
 

@@ -45,10 +45,9 @@ namespace Cognitivo.Reporting.Views
 
             dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
 
-            if (ReportPanel.ReportDt==null)
-            {
+         
                 ReportPanel.ReportDt = dt;
-            }
+           
         
             if (ReportColumnsList.Count() == 0)
             {
@@ -128,6 +127,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, RoutedEventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

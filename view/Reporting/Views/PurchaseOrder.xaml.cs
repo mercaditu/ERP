@@ -48,10 +48,9 @@ namespace Cognitivo.Reporting.Views
             //{
                 dt = PurchaseOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             //}
-            if (ReportPanel.ReportDt == null)
-            {
+         
                 ReportPanel.ReportDt = dt;
-            }
+            
 
             reportDataSource1.Name = "PurchaseOrderSummary";
             reportDataSource1.Value = dt;
@@ -66,6 +65,7 @@ namespace Cognitivo.Reporting.Views
 
         public void Filter(object sender, RoutedEventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

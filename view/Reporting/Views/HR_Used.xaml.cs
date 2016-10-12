@@ -26,10 +26,9 @@ namespace Cognitivo.Reporting.Views
 
             Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter EmployeesInProductionTableAdapter = new Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter();
             DataTable dt = EmployeesInProductionTableAdapter.GetData(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
-            if (ReportPanel.ReportDt == null)
-            {
+           
                 ReportPanel.ReportDt = dt;
-            }
+          
             reportDataSource1.Name = "ProductionEmployee";
             reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
@@ -42,6 +41,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

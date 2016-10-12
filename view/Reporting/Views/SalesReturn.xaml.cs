@@ -40,10 +40,8 @@ namespace Cognitivo.Reporting.Views
 
             Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter SalesReturnDetailTableAdapter = new Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter();
             DataTable dt = SalesReturnDetailTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate);
-            if (ReportPanel.ReportDt == null)
-            {
-                ReportPanel.ReportDt = dt;
-            }
+
+            ReportPanel.ReportDt = dt;
             reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
@@ -56,16 +54,17 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-       
+
             reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesReturnDetail.rdlc";
 
-   
+
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();

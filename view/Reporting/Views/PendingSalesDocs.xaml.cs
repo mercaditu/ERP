@@ -42,10 +42,9 @@ namespace Cognitivo.Reporting.Views
                 DataTable dt = new DataTable();
                 adpt.Fill(dt);
 
-                if (ReportPanel.ReportDt == null)
-                {
+               
                     ReportPanel.ReportDt = dt;
-                }
+             
                 Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
                 reportDataSource1.Name = "PendingSalesDocs"; //Name of the report dataset in our .RDLC file
@@ -63,6 +62,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             try

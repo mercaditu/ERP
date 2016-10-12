@@ -50,40 +50,48 @@ namespace cntrl
             }
             set
             {
-                if (_ReportDt == null)
-                {
-                    stpColumn.Children.Clear();
-                    foreach (DataColumn item in value.Columns)
-                    {
-                        if (item.DataType == typeof(string))
-                        {
-                            StackPanel stackcolumn = new StackPanel();
-                            stackcolumn.Name = "stp" + item.ColumnName;
-                            Label desccolumn = new Label();
-                            desccolumn.Name = item.ColumnName;
-                            desccolumn.Content = item.ColumnName;
-                            stackcolumn.Children.Add(desccolumn);
-                            ComboBox combocolumndata = new ComboBox();
-                            DataView view = new DataView(value);
-                            combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
-                            combocolumndata.SelectedValuePath = item.ColumnName;
-                            combocolumndata.DisplayMemberPath = item.ColumnName;
-                            combocolumndata.Name = "cbx" + item.ColumnName;
-                            combocolumndata.SelectionChanged += Cmb_SelectionChanged;
-                            stackcolumn.Children.Add(combocolumndata);
-                            stpColumn.Children.Add(stackcolumn);
-                        }
-                    }
-                }
+
+
+
                 _ReportDt = value;
                 Filterdt = value;
+
+                stpFilter.Children.Clear();
+                foreach (DataColumn item in value.Columns)
+                {
+
+                    if (item.DataType == typeof(System.String))
+                    {
+
+                        StackPanel stackcolumn = new StackPanel();
+                        stackcolumn.Name = "stp" + item.ColumnName;
+                        Label desccolumn = new Label();
+                        desccolumn.Name = item.ColumnName;
+                        desccolumn.Content = item.ColumnName;
+                        stpFilter.Children.Add(desccolumn);
+                        ComboBox combocolumndata = new ComboBox();
+                        DataView view = new DataView(value);
+                        combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
+                        combocolumndata.SelectedValuePath = item.ColumnName;
+                        combocolumndata.DisplayMemberPath = item.ColumnName;
+                        combocolumndata.Name = "cbx" + item.ColumnName;
+                        combocolumndata.SelectionChanged += Cmb_SelectionChanged;
+                        stpFilter.Children.Add(combocolumndata);
+                        stpFilter.Children.Add(stackcolumn);
+
+
+                    }
+                }
+
+
+
             }
         }
 
         public DataTable _ReportDt;
 
         public DataTable Filterdt { get; set; }
-        
+
         public List<ReportColumns> ReportColumn
         {
             get

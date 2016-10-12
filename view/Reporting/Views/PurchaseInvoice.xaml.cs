@@ -41,10 +41,9 @@ namespace Cognitivo.Reporting.Views
             //{
             //    where = where + "ProjectID = " + ReportPanel.CustomerID;
             //}
-            if (ReportPanel.ReportDt == null)
-            {
+         
                 ReportPanel.ReportDt = dt;
-            }
+         
             reportDataSource1.Name = "PurchaseInvoice"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value =dt; 
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
@@ -58,6 +57,7 @@ namespace Cognitivo.Reporting.Views
 
         public void Filter(object sender, RoutedEventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

@@ -58,10 +58,9 @@ namespace Cognitivo.Reporting.Views
             //    where = where + "BranchID = " + ReportPanel.Branch.id_branch;
             //}
 
-            if (ReportPanel.ReportDt == null)
-            {
+           
                 ReportPanel.ReportDt = dt;
-            }
+            
 
             reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
@@ -75,6 +74,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

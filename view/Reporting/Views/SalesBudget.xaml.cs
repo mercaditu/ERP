@@ -48,10 +48,9 @@ namespace Cognitivo.Reporting.Views
             //{
                 dt = SalesBudgetSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             //}
-            if (ReportPanel.ReportDt == null)
-            {
+          
                 ReportPanel.ReportDt = dt;
-            }
+            
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
             reportDataSource1.Name = "SalesBudgetSummary"; //Name of the report dataset in our .RDLC file
@@ -73,6 +72,7 @@ namespace Cognitivo.Reporting.Views
 
         public void Filter(object sender, RoutedEventArgs e)
         {
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

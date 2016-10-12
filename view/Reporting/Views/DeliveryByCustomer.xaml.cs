@@ -50,10 +50,9 @@ namespace Cognitivo.Reporting.Views
 
             Data.SalesDSTableAdapters.DeliveryByCustomerTableAdapter DeliveryByCustomerTableAdapter = new Data.SalesDSTableAdapters.DeliveryByCustomerTableAdapter();
             DataTable dt = DeliveryByCustomerTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-            if (ReportPanel.ReportDt == null)
-            {
+          
                 ReportPanel.ReportDt = dt;
-            }
+       
             reportDataSource1.Name = " DeliveryByCustomer"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value =dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
@@ -71,6 +70,7 @@ namespace Cognitivo.Reporting.Views
 
             //if (app_branch != null)
             //{
+            ReportPanel.ReportDt = ReportPanel.Filterdt;
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

@@ -45,7 +45,7 @@ namespace Cognitivo.Reporting.Views
 
                     foreach (contact contactChild in _Contact.child)
                     {
-                        Parent.Children += ", " + contactChild.name;
+                        Parent.Children += "\n" + contactChild.name;
                     }
 
                     

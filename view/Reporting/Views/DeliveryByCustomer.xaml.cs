@@ -70,7 +70,7 @@ namespace Cognitivo.Reporting.Views
 
             //if (app_branch != null)
             //{
-            ReportPanel.ReportDt = ReportPanel.Filterdt;
+     
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

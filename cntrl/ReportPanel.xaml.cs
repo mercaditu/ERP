@@ -63,6 +63,7 @@ namespace cntrl
                     if (item.DataType == typeof(System.String))
                     {
 
+
                         StackPanel stackcolumn = new StackPanel();
                         stackcolumn.Name = "stp" + item.ColumnName;
                         Label desccolumn = new Label();
@@ -90,7 +91,46 @@ namespace cntrl
 
         public DataTable _ReportDt;
 
-        public DataTable Filterdt { get; set; }
+        public DataTable Filterdt
+        {
+            get
+            {
+                return _Filterdt;
+            }
+            set
+            {
+
+
+
+
+                _Filterdt = value;
+
+              
+                foreach (DataColumn item in value.Columns)
+                {
+
+                    if (item.DataType == typeof(System.String))
+                    {
+                        if (stpFilter.FindName("cbx" + item.ColumnName) !=null)
+                        {
+                            ComboBox combocolumndata = stpFilter.FindName("cbx" + item.ColumnName) as ComboBox;
+                            DataView view = new DataView(value);
+                            combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
+                        }
+                     
+                     
+
+
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        public DataTable _Filterdt;
 
         public List<ReportColumns> ReportColumn
         {
@@ -132,9 +172,15 @@ namespace cntrl
         private void Cmb_SelectionChanged(object sender, RoutedEventArgs e)
         {
             ComboBox comboobox = sender as ComboBox;
+
             string filter = comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
-            Filterdt = ReportDt.Select(filter).CopyToDataTable();
+
+            if (ReportDt.Select(filter).CopyToDataTable().Rows.Count > 0)
+            {
+                Filterdt = ReportDt.Select(filter).CopyToDataTable();
+            }
             Data_Filter(null, null);
+
         }
 
 

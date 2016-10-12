@@ -62,7 +62,7 @@ namespace Cognitivo.Reporting.Views
         }
         public void Filter(object sender, EventArgs e)
         {
-            ReportPanel.ReportDt = ReportPanel.Filterdt;
+         
             this.reportViewer.Reset();
 
             try

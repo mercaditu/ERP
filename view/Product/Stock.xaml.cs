@@ -97,10 +97,7 @@ namespace Cognitivo.Product
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,17 +107,17 @@ namespace Cognitivo.Product
             if (_item_movement != null)
             {
                 int id_item_product = _item_movement.ProductID;
-
                 int id_location = _item_movement.LocationID;
+
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-                    item_movementViewSource.Source = await db.item_movement.Where(x => x.id_company == entity.CurrentSession.Id_Company
+                    item_movementViewSource.Source = await db.item_movement.Where(x => x.id_company == CurrentSession.Id_Company
                                                         && x.id_item_product == id_item_product
                                                         && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
-                                                        ).OrderByDescending(x => x.trans_date).ToListAsync();
+                                                        ).OrderByDescending(x => x.trans_date).Take(25).ToListAsync();
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {

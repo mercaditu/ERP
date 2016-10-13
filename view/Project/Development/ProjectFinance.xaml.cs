@@ -90,14 +90,15 @@ namespace Cognitivo.Project
 
                 objSalesOrder.project = project;
                 objSalesOrder.SalesOrderDB = SalesOrderDB;
-                if (txtPercentage.Text != "")
-                {
-                    objSalesOrder.Percentage = Convert.ToDecimal(txtPercentage.Text);
-                }
-                else
-                {
-                    objSalesOrder.Percentage = 0;
-                }
+                //if (txtPercentage.Text != "")
+                //{
+                //    objSalesOrder.Percentage = Convert.ToDecimal(txtPercentage.Text);
+                //}
+                //else
+                //{
+                //    objSalesOrder.Percentage = 0;
+                //}
+                objSalesOrder.Percentage = 0;
 
                 objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
                 objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
@@ -120,7 +121,7 @@ namespace Cognitivo.Project
                         List<entity.project_tag_detail> project_tag_detail = new List<entity.project_tag_detail>();
                         project_tag_detail = project.project_tag_detail.ToList();
 
-                        if (project.name.ToLower().Contains(query.ToLower()) || project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any())
+                        if (project.name.ToLower().Contains(query.ToLower()) || project.code.ToLower().Contains(query.ToLower()) || project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any())
                         {
                             return true;
                         }
@@ -157,24 +158,24 @@ namespace Cognitivo.Project
             }
         }
 
-        private void toggleQuantity_CheckedChange(object sender, EventArgs e)
-        {
-            project project = projectViewSource.View.CurrentItem as project;
+        //private void toggleQuantity_CheckedChange(object sender, EventArgs e)
+        //{
+        //    project project = projectViewSource.View.CurrentItem as project;
 
-            if (project != null)
-            {
-                if (ToggleQuantity.IsChecked == true)
-                {
-                    foreach (project_task project_task in project.project_task)
-                    {
-                        project_task.CalcExecutedQty_TimerTaks();
-                    }
-                }
-            }
-        }
+        //    if (project != null)
+        //    {
+        //        if (ToggleQuantity.IsChecked == true)
+        //        {
+        //            foreach (project_task project_task in project.project_task)
+        //            {
+        //                project_task.CalcExecutedQty_TimerTaks();
+        //            }
+        //        }
+        //    }
+        //}
 
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Price_Click(object sender, RoutedEventArgs e)
         {
             set_price();
         }
@@ -187,7 +188,7 @@ namespace Cognitivo.Project
                 {
                     if (project != null)
                     {
-                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x=>x.id_project_task).ToList();
+                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x => x.id_project_task).ToList();
                         foreach (project_task project_task in project_taskLIST)
                         {
                             if (project_task.items.id_item_type == item.item_type.Task)
@@ -204,5 +205,26 @@ namespace Cognitivo.Project
                 }
             }
         }
+
+        private void Quantity_Click(object sender, RoutedEventArgs e)
+        {
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project_taskViewSource != null)
+            {
+                if (project_taskViewSource.View != null)
+                {
+                    if (project != null)
+                    {
+                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x => x.id_project_task).ToList();
+                        foreach (project_task project_task in project_taskLIST)
+                        {
+
+                            project_task.CalcExecutedQty_TimerTaks();
+
+                        }
+
+                    }
+                }
+            }
+        }
     }
-}

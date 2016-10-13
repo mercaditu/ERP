@@ -178,33 +178,32 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <Button Content="{lex:Loc Price}" Style="{StaticResource btn_green}" Click="Button_Click_1"/>
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_cost_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtPercentage" Style="{StaticResource input_textbox}" Text="0.1"/>
+                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtQuantityExe" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
-                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
+                        <!--<Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtPercentage" Style="{StaticResource input_textbox}"/>-->
+
+                        <!--<metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
                                             IsCheckedChanged="toggleQuantity_CheckedChange"
                                             IsChecked="{Binding is_Executable, Source={StaticResource projectViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
+                                            HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>-->
 
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
 
-                        <CheckBox x:Name="chkinvoice" Style="{StaticResource input_checkbox}">
+                        <RadioButton x:Name="chkbudget" Content="{lex:Loc SalesBudget}" Style="{StaticResource input_radiobutton}"/>
+                        <RadioButton x:Name="chkorder" Content="{lex:Loc SalesOrder}" Style="{StaticResource input_radiobutton}"/>
+                        <CheckBox x:Name="chkinvoice" Style="{StaticResource input_checkbox}" Visibility="{Binding ElementName=chkorder, Path=IsChecked, Converter={StaticResource Bool2Visibility}}">
                             <TextBlock Style="{StaticResource text_Label}">
                                 <Run Text="{lex:Loc Create}" />
                                 <Run Text="{lex:Loc SalesInvoice}"/>
                             </TextBlock>
                         </CheckBox>
-                        <CheckBox x:Name="chkbudget" Style="{StaticResource input_checkbox}">
-                            <TextBlock Style="{StaticResource text_Label}">
-                                <Run Text="{lex:Loc Create}" />
-                                <Run Text="{lex:Loc SalesBudget}"/>
-                            </TextBlock>
-                        </CheckBox>
-                        <Button Content="{lex:Loc Generate Price}" Style="{StaticResource btn_green}" Click="Button_Click_1"/>
                         <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
                 </StackPanel>

@@ -395,38 +395,39 @@ namespace entity
             {
                 if (production_execution_detail != null && production_execution_detail.Count > 0)
                 {
-                    using (db db = new db())
-                    {
-                        quantity_exe = db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
-                        RaisePropertyChanged("quantity_exe");
-                    }
+                    quantity_exe = production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
+                    RaisePropertyChanged("quantity_exe");
                 }
             }
             catch
             { }
         }
 
-        public void CalcCost_TimerTaks()
+
+
+        public void CalcSalePrice_TimerTaks()
         {
             if (project != null)
             {
 
                 if (project.CurrecyFx_ID != null)
                 {
-                    //_unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
-                    _unit_cost_est = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
-                   // RaisePropertyChanged("unit_price_vat");
+                    if (_unit_price_vat == null || _unit_price_vat == 0)
+                    {
+                        _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                    }
+
                     RaisePropertyChanged("unit_cost_est");
                 }
 
             }
         }
-        public void CalcCost_TimerParentTaks()
+        public void CalcSalePrice_TimerParentTaks()
         {
             if (child != null)
             {
 
-                _unit_cost_est = child.Sum(x => x._unit_cost_est);
+                _unit_price_vat = child.Sum(x => x._unit_price_vat);
 
             }
         }

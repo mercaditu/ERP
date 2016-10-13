@@ -192,11 +192,11 @@ namespace Cognitivo.Project
                         {
                             if (project_task.items.id_item_type == item.item_type.Task)
                             {
-                                project_task.CalcCost_TimerParentTaks();
+                                project_task.CalcSalePrice_TimerParentTaks();
                             }
                             else
                             {
-                                project_task.CalcCost_TimerTaks();
+                                project_task.CalcSalePrice_TimerTaks();
                             }
                         }
                     }

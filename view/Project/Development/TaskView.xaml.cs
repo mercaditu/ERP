@@ -639,7 +639,7 @@ namespace Cognitivo.Project.Development
                         project_task_dimensionViewSource.View.MoveCurrentToLast();
                     }
                 }
-                project_task_output.CalcCost_TimerTaks();
+                project_task_output.CalcSalePrice_TimerTaks();
                 try
                 {
                     if (project_task_dimensionViewSource != null)

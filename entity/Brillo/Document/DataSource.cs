@@ -738,8 +738,9 @@ namespace entity.Brillo.Document
                                 currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
                                 number = g.payment != null ? g.payment.number : "Not Ref",
                                 SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
+                                BankAccount = g.app_account != null ? g.app_account.name : "",
                                 AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
-
+                             
                     // Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
                     :

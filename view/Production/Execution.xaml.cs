@@ -65,6 +65,7 @@ namespace Cognitivo.Production
 
             //This prevents bringing multiple
             filter_task();
+            RefreshData();
         }
 
         private void toolBar_btnSave_Click(object sender)

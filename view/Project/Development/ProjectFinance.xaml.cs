@@ -31,30 +31,11 @@ namespace Cognitivo.Project
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
-            set_price();
+
             filter_task();
         }
 
-        public void set_price()
-        {
-            if (project_taskViewSource != null)
-            {
-                if (project_taskViewSource.View != null)
-                {
-                    foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
-                    {
-                        if (project_task.sales_detail != null)
-                        {
-                            project_task.UnitPrice_Vat = project_task.sales_detail.UnitPrice_Vat;
-                            project_task.RaisePropertyChanged("unit_price_vat");
 
-
-                        }
-                      
-                    }
-                }
-            }
-        }
 
         public void filter_task()
         {
@@ -67,7 +48,7 @@ namespace Cognitivo.Project
                         project_taskViewSource.View.Filter = i =>
                         {
                             project_task _project_task = (project_task)i;
-                            if (_project_task.parent == null && _project_task.is_active == true && _project_task.status!=Status.Project.Rejected)
+                            if (_project_task.parent == null && _project_task.is_active == true && _project_task.status != Status.Project.Rejected)
                                 return true;
                             else
                                 return false;
@@ -95,21 +76,21 @@ namespace Cognitivo.Project
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            set_price();
+
             filter_task();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             project project = projectViewSource.View.CurrentItem as project;
-            
+
             if (project != null)
             {
                 cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
 
                 objSalesOrder.project = project;
                 objSalesOrder.SalesOrderDB = SalesOrderDB;
-                if (txtPercentage.Text!="")
+                if (txtPercentage.Text != "")
                 {
                     objSalesOrder.Percentage = Convert.ToDecimal(txtPercentage.Text);
                 }
@@ -117,13 +98,13 @@ namespace Cognitivo.Project
                 {
                     objSalesOrder.Percentage = 0;
                 }
-               
+
                 objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
                 objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
 
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(objSalesOrder);   
+                crud_modal.Children.Add(objSalesOrder);
             }
         }
 
@@ -179,7 +160,7 @@ namespace Cognitivo.Project
         private void toggleQuantity_CheckedChange(object sender, EventArgs e)
         {
             project project = projectViewSource.View.CurrentItem as project;
-            
+
             if (project != null)
             {
                 if (ToggleQuantity.IsChecked == true)
@@ -192,11 +173,36 @@ namespace Cognitivo.Project
             }
         }
 
-        private void toolBar_btnSearch_Click_1(object sender, string query)
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            set_price();
         }
+        public void set_price()
+        {
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project_taskViewSource != null)
+            {
+                if (project_taskViewSource.View != null)
+                {
+                    if (project != null)
+                    {
+                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x=>x.id_project_task).ToList();
+                        foreach (project_task project_task in project_taskLIST)
+                        {
+                            if (project_task.items.id_item_type == item.item_type.Task)
+                            {
+                                project_task.CalcCost_TimerParentTaks();
+                            }
+                            else
+                            {
+                                project_task.CalcCost_TimerTaks();
+                            }
+                        }
+                    }
 
-
+                }
+            }
+        }
     }
 }

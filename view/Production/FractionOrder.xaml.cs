@@ -298,6 +298,17 @@ namespace Cognitivo.Production
                         production_order_detail_output.quantity = 1;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
+                        foreach (item_dimension item_dimension in item.item_dimension)
+                        {
+                            production_order_dimension production_order_dimension = new production_order_dimension();
+                            production_order_dimension.id_dimension = item_dimension.id_app_dimension;
+                            production_order_dimension.app_dimension = item_dimension.app_dimension;
+                            production_order_dimension.id_measurement = item_dimension.id_measurement;
+                            production_order_dimension.app_measurement = item_dimension.app_measurement;
+                            production_order_dimension.value = item_dimension.value;
+                            production_order_detail_output.production_order_dimension.Add(production_order_dimension);
+                            project_task_dimensionDataGrid.ItemsSource = production_order_detail_output.production_order_dimension.ToList();
+                        }
                         foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
                             production_order_detail production_order_detail = new production_order_detail();
@@ -314,11 +325,13 @@ namespace Cognitivo.Production
                             }
 
                             production_order_detail.is_input = true;
+                      
                             production_order_detail_output.child.Add(production_order_detail);
                         }
 
                         filter_task();
                     }
+                 
                 }
                 else
                 {
@@ -331,9 +344,20 @@ namespace Cognitivo.Production
                         production_order_detail_output.id_item = item.id_item;
                         production_order_detail_output.item = item;
                         production_order_detail_output.RaisePropertyChanged("item");
-                        production_order_detail_output.is_input = true;
+                        production_order_detail_output.is_input = false;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
+                        foreach (item_dimension item_dimension in item.item_dimension)
+                        {
+                            production_order_dimension production_order_dimension = new production_order_dimension();
+                            production_order_dimension.id_dimension = item_dimension.id_app_dimension;
+                            production_order_dimension.app_dimension = item_dimension.app_dimension;
+                            production_order_dimension.id_measurement = item_dimension.id_measurement;
+                            production_order_dimension.app_measurement = item_dimension.app_measurement;
+                            production_order_dimension.value = item_dimension.value;
+                            production_order_detail_output.production_order_dimension.Add(production_order_dimension);
+                            project_task_dimensionDataGrid.ItemsSource = production_order_detail_output.production_order_dimension.ToList();
+                        }
                     }
                 }
             }
@@ -857,6 +881,7 @@ namespace Cognitivo.Production
             RefreshCollection(production_order_detaillAssetViewSource);
             RefreshCollection(production_order_detaillServiceViewSource);
             RefreshCollection(production_order_detaillServiceContractViewSource);
+            RefreshCollection(production_order_dimensionViewSource);
         }
 
         public void RefreshTree()

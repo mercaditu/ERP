@@ -46,7 +46,7 @@
             <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
             <Label Content="{Binding name}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding gov_code}" Style="{StaticResource generic_Label}"/>
+            <Label Content="{Binding contact.gov_code}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   IsSynchronizedWithCurrentItem= "true"

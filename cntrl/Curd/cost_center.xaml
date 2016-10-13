@@ -50,7 +50,7 @@
                 <RadioButton Content="{lex:Loc Product}" Margin="0,3"
                       IsChecked="{Binding is_product, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                       Style="{StaticResource input_radiobutton}"/>
-                <RadioButton Content="{lex:Loc FixedAssets}" Margin="0,3" 
+                <RadioButton Content="{lex:Loc FixedAssets}" Margin="0,3"  IsChecked="{Binding is_fixedasset, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                       Style="{StaticResource input_radiobutton}"/>
             </StackPanel>
             <Grid Background="WhiteSmoke">

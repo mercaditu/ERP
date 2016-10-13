@@ -204,6 +204,7 @@
                                 <Run Text="{lex:Loc SalesBudget}"/>
                             </TextBlock>
                         </CheckBox>
+                        <Button Content="{lex:Loc Generate Price}" Style="{StaticResource btn_green}" Click="Button_Click_1"/>
                         <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
                 </StackPanel>

@@ -209,6 +209,11 @@ namespace cntrl
         {
             Data_Update(null, null);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Data_Update(null, null);
+        }
     }
 
     public static class AbsoluteDate

@@ -66,7 +66,7 @@ namespace cntrl
                 List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
 
                 sales_order sales_order = new entity.sales_order();
-                if (Generate_Budget)
+                if (Generate_Budget )
                 {
                     SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
@@ -128,128 +128,134 @@ namespace cntrl
                 }
                 else
                 {
-                    //if (Generate_Budget)
-                    //{
-                    //    sales_order.id_sales_budget = sales_budget.id_sales_budget;
-                    //}
-                    if (SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault() != null)
+                    if (project.sales_order.Count() == 0)
                     {
-                        sales_order.id_contact = (int)project.id_contact;
-                        sales_order.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-                    }
-                    else
-                    {
-                        toolBar.msgWarning("Contact Not Found...");
-                        return;
-                    }
 
-                    if (Generate_Invoice)
-                    {
-                        if (cbxDocument.SelectedValue != null)
+
+                        //if (Generate_Budget)
+                        //{
+                        //    sales_order.id_sales_budget = sales_budget.id_sales_budget;
+                        //}
+                        if (SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault() != null)
                         {
-                            sales_order.id_range = (int)cbxDocument.SelectedValue;
+                            sales_order.id_contact = (int)project.id_contact;
+                            sales_order.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
                         }
                         else
                         {
-                            toolBar.msgWarning("Document Range Needed for Approval");
-                            // return;
+                            toolBar.msgWarning("Contact Not Found...");
+                            return;
                         }
-                    }
-                    sales_order.id_project = project.id_project;
 
-                    if (Convert.ToInt16(cbxCondition.SelectedValue) > 0)
-                    {
-                        sales_order.id_condition = (int)cbxCondition.SelectedValue;
-                    }
-                    else
-                    {
-                        toolBar.msgWarning("Condition Not Found...");
-                        return;
-                    }
-
-                    if (Convert.ToInt16(cbxContract.SelectedValue) > 0)
-                    {
-                        sales_order.id_contract = (int)cbxContract.SelectedValue;
-                    }
-                    else
-                    {
-                        toolBar.msgWarning("Contract Not Found...");
-                        return;
-                    }
-
-                    if (Convert.ToInt16(cbxCurrency.SelectedValue) > 0)
-                    {
-                        sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
-                    }
-                    else
-                    {
-                        toolBar.msgWarning("Currency Not Found...");
-                        return;
-                    }
-
-                    sales_order.comment = "Project -> " + project.name;
-
-                    sales_order_detail sales_order_detail = null;
-
-                    foreach (project_task _project_task in project_taskLIST)
-                    {
-                        decimal UnitPrice_Vat;
-                        if (_project_task.UnitPrice_Vat == 0 || _project_task.UnitPrice_Vat == null)
+                        if (Generate_Invoice)
                         {
-                            UnitPrice_Vat = Convert.ToDecimal(_project_task.unit_cost_est * (1 + Percentage));
-                        }
-                        else
-                        {
-                            UnitPrice_Vat = Convert.ToDecimal(_project_task.UnitPrice_Vat);
-                        }
-                        if (_project_task.items.id_item_type == item.item_type.Task || _project_task.sales_detail == null)
-                        {
-                            sales_order_detail = new sales_order_detail();
-                            sales_order_detail.State = EntityState.Added;
-                            sales_order_detail.id_sales_order = sales_order.id_sales_order;
-                            sales_order_detail.sales_order = sales_order;
-                            if (Convert.ToInt16(_project_task.id_item) > 0)
+                            if (cbxDocument.SelectedValue != null)
                             {
-                                sales_order_detail.id_item = (int)_project_task.id_item;
-                            }
-
-                            sales_order_detail.item_description = _project_task.item_description;
-
-                            if (project.is_Executable)
-                            {
-                                sales_order_detail.quantity = (decimal)_project_task.quantity_exe;
+                                sales_order.id_range = (int)cbxDocument.SelectedValue;
                             }
                             else
                             {
-                                sales_order_detail.quantity = (decimal)_project_task.quantity_est;
+                                toolBar.msgWarning("Document Range Needed for Approval");
+                                // return;
                             }
-
-
-                            if (UnitPrice_Vat != null)
-                            {
-                                sales_order_detail.UnitPrice_Vat = UnitPrice_Vat;
-                            }
-
-                            sales_order_detail.id_project_task = _project_task.id_project_task;
-                            _project_task.IsSelected = false;
-                            _project_task.sales_detail = sales_order_detail;
                         }
+                        sales_order.id_project = project.id_project;
 
-                        if (sales_order_detail != null)
+                        if (Convert.ToInt16(cbxCondition.SelectedValue) > 0)
                         {
-                            sales_order.sales_order_detail.Add(sales_order_detail);
+                            sales_order.id_condition = (int)cbxCondition.SelectedValue;
                         }
-                    }
+                        else
+                        {
+                            toolBar.msgWarning("Condition Not Found...");
+                            return;
+                        }
 
-                    if (sales_order.sales_order_detail.Count() > 0)
-                    {
+                        if (Convert.ToInt16(cbxContract.SelectedValue) > 0)
+                        {
+                            sales_order.id_contract = (int)cbxContract.SelectedValue;
+                        }
+                        else
+                        {
+                            toolBar.msgWarning("Contract Not Found...");
+                            return;
+                        }
+
+                        if (Convert.ToInt16(cbxCurrency.SelectedValue) > 0)
+                        {
+                            sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
+                        }
+                        else
+                        {
+                            toolBar.msgWarning("Currency Not Found...");
+                            return;
+                        }
+
+                        sales_order.comment = "Project -> " + project.name;
+
+                        sales_order_detail sales_order_detail = null;
+
+                        foreach (project_task _project_task in project_taskLIST)
+                        {
+                            decimal UnitPrice_Vat;
+                            if (_project_task.UnitPrice_Vat == 0 || _project_task.UnitPrice_Vat == null)
+                            {
+                                UnitPrice_Vat = Convert.ToDecimal(_project_task.unit_cost_est * (1 + Percentage));
+                            }
+                            else
+                            {
+                                UnitPrice_Vat = Convert.ToDecimal(_project_task.UnitPrice_Vat);
+                            }
+                            if (_project_task.items.id_item_type == item.item_type.Task || _project_task.sales_detail == null)
+                            {
+                                sales_order_detail = new sales_order_detail();
+                                sales_order_detail.State = EntityState.Added;
+                                sales_order_detail.id_sales_order = sales_order.id_sales_order;
+                                sales_order_detail.sales_order = sales_order;
+                                if (Convert.ToInt16(_project_task.id_item) > 0)
+                                {
+                                    sales_order_detail.id_item = (int)_project_task.id_item;
+                                }
+
+                                sales_order_detail.item_description = _project_task.item_description;
+
+                                if (project.is_Executable)
+                                {
+                                    sales_order_detail.quantity = (decimal)_project_task.quantity_exe;
+                                }
+                                else
+                                {
+                                    sales_order_detail.quantity = (decimal)_project_task.quantity_est;
+                                }
+
+
+                                if (UnitPrice_Vat != null)
+                                {
+                                    sales_order_detail.UnitPrice_Vat = UnitPrice_Vat;
+                                }
+
+                                sales_order_detail.id_project_task = _project_task.id_project_task;
+                                _project_task.IsSelected = false;
+                                _project_task.sales_detail = sales_order_detail;
+                            }
+
+                            if (sales_order_detail != null)
+                            {
+                                sales_order.sales_order_detail.Add(sales_order_detail);
+                            }
+                        }
                         sales_order.State = EntityState.Added;
                         sales_order.IsSelected = true;
 
                         SalesOrderDB.sales_order.Add(sales_order);
                         SalesOrderDB.SaveChanges();
+                    }
 
-                        if (Generate_Invoice)
+                    if (sales_order.sales_order_detail.Count() > 0)
+                    {
+                     
+
+                        if (Generate_Invoice && project.sales_invoice.Count()==0)
                         {
                             SalesOrderDB.Approve();
                             sales_invoice sales_invoice = new entity.sales_invoice();
@@ -267,6 +273,7 @@ namespace cntrl
                             sales_invoice.id_currencyfx = (int)cbxCurrency.SelectedValue;
                             sales_invoice.comment = "Project -> " + project.name;
                             sales_invoice.trans_date = DateTime.Now;
+                            
                             sales_invoice_detail sales_invoice_detail = null;
 
                             foreach (project_task _project_task in project_taskLIST)

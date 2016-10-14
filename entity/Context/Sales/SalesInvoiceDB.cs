@@ -97,7 +97,7 @@ namespace entity
                     }
                     NumberOfRecords += 1;
                 }
-                 if (invoice.State > 0)
+                if (invoice.State > 0)
                 {
                     if (invoice.State != EntityState.Unchanged)
                     {
@@ -135,16 +135,18 @@ namespace entity
 
         public bool Approve(bool IsDiscountStock)
         {
+            bool ApprovalStatus = false;
             NumberOfRecords = 0;
-            foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
+            List<sales_invoice> SalesInvoiceList = sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
-                                                        && x.IsSelected && x.Error == null))
+                                                        && x.IsSelected && x.Error == null).ToList();
+            foreach (sales_invoice invoice in SalesInvoiceList)
             {
                 SpiltInvoice(invoice);
             }
 
             foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
-                                                x.status != Status.Documents_General.Approved
+                                                x.status != Status.Documents_General.Approved && x.is_head
                                                         && x.IsSelected && x.Error == null))
             {
                 if (invoice.id_sales_invoice == 0)
@@ -153,7 +155,7 @@ namespace entity
                 }
                 if (Check_CreditLimit(invoice))
                 {
-                  
+
 
                     //Logic
                     List<payment_schedual> payment_schedualList = new List<payment_schedual>();
@@ -196,7 +198,7 @@ namespace entity
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
 
-                        
+
 
                         //Generate BarCode
 
@@ -218,10 +220,10 @@ namespace entity
                     NumberOfRecords += 1;
                     invoice.IsSelected = false;
                 }
-                return true;
+                ApprovalStatus= true;
             }
 
-            return false;
+            return ApprovalStatus; ;
         }
 
 
@@ -271,11 +273,11 @@ namespace entity
 
 
 
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo==false ).FirstOrDefault() == null || AllowDuplicateItem)
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
             {
-               return AddDetail(ref sales_invoice,item);
+                return AddDetail(ref sales_invoice, item);
             }
-           else
+            else
             {
                 sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
                 sales_invoice_detail.quantity += 1;
@@ -329,30 +331,42 @@ namespace entity
                         sales_invoice _invoice = new sales_invoice();
                         _invoice.code = invoice.code;
                         _invoice.comment = invoice.comment;
-                       // _invoice.CreditLimit = invoice.CreditLimit;
+                        // _invoice.CreditLimit = invoice.CreditLimit;
+                        _invoice.app_branch = invoice.app_branch;
                         _invoice.id_branch = invoice.id_branch;
+                        _invoice.app_company = invoice.app_company;
                         _invoice.id_company = invoice.id_company;
+                        _invoice.app_condition = invoice.app_condition;
                         _invoice.id_condition = invoice.id_condition;
+                        _invoice.contact = invoice.contact;
                         _invoice.id_contact = invoice.id_contact;
+                        _invoice.app_contract = invoice.app_contract;
                         _invoice.id_contract = invoice.id_contract;
+                        _invoice.app_currencyfx = invoice.app_currencyfx;
                         _invoice.id_currencyfx = invoice.id_currencyfx;
                         _invoice.id_opportunity = invoice.id_opportunity;
+                        _invoice.project = invoice.project;
                         _invoice.id_project = invoice.id_project;
+                        _invoice.app_document_range = invoice.app_document_range;
                         _invoice.id_range = invoice.id_range;
+                        _invoice.sales_order = invoice.sales_order;
                         _invoice.id_sales_order = invoice.id_sales_order;
+                        _invoice.sales_rep = invoice.sales_rep;
                         _invoice.id_sales_rep = invoice.id_sales_rep;
+                        _invoice.app_terminal = invoice.app_terminal;
                         _invoice.id_terminal = invoice.id_terminal;
+                        _invoice.security_user = invoice.security_user;
                         _invoice.id_user = invoice.id_user;
                         _invoice.id_weather = invoice.id_weather;
                         _invoice.number = invoice.number;
                         _invoice.GrandTotal = invoice.GrandTotal;
-                      //  _invoice.accounting_journal = invoice.accounting_journal;
+                        //  _invoice.accounting_journal = invoice.accounting_journal;
                         _invoice.is_head = invoice.is_head;
                         _invoice.is_issued = invoice.is_issued;
                         _invoice.IsSelected = invoice.IsSelected;
                         _invoice.State = EntityState.Added;
                         _invoice.status = Status.Documents_General.Pending;
-
+                        _invoice.trans_date = invoice.trans_date;
 
                         foreach (sales_invoice_detail detail in invoice.sales_invoice_detail.Skip(position).Take(document_line_limit))
                         {
@@ -360,6 +374,7 @@ namespace entity
                             sales_invoice_detail.item_description = detail.item_description;
                             sales_invoice_detail.discount = detail.discount;
                             sales_invoice_detail.id_company = detail.id_company;
+                            sales_invoice_detail.item = detail.item;
                             sales_invoice_detail.id_item = detail.id_item;
                             sales_invoice_detail.id_location = detail.id_location;
                             sales_invoice_detail.id_project_task = detail.id_project_task;
@@ -458,7 +473,7 @@ namespace entity
                             return false;
                         }
                     }
-                }   
+                }
             }
 
             return true;

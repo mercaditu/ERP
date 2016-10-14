@@ -181,7 +181,7 @@
                         <Button Content="{lex:Loc Price}"  Click="Price_Click"/>
                         <Button Content="{lex:Loc Quantity}"  Click="Quantity_Click"/>
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding UnitPrice_Vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>

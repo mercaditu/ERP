@@ -21,6 +21,7 @@ namespace entity
             est_start_date = DateTime.Now.Date;
             est_end_date = DateTime.Now.Date;
             sales_invoice = new List<sales_invoice>();
+            sales_order = new List<sales_order>();
         }
 
         [Key]
@@ -109,7 +110,7 @@ namespace entity
         public virtual project_template project_template { get; set; }
 
         public virtual ICollection<sales_invoice> sales_invoice { get; set; }
-        public virtual IEnumerator<sales_order> sales_order { get; set; }
+        public virtual ICollection<sales_order> sales_order { get; set; }
         public virtual IEnumerator<purchase_order> purchase_order { get; set; }
         public virtual IEnumerator<purchase_tender> purchase_tender { get; set; }
         public virtual IEnumerable<item_request> item_request { get; set; }

@@ -520,22 +520,32 @@ namespace Cognitivo.Sales
 
         private void item_Select(object sender, EventArgs e)
         {
+           
             if (sbxItem.ItemID > 0)
             {
-                int BranchID = (int)cbxBranch.SelectedValue;
-                Class.StockCalculations StockCalculations = new Cognitivo.Class.StockCalculations();
                 Settings SalesSettings = new Settings();
+                Class.StockCalculations StockCalculations = new Cognitivo.Class.StockCalculations();
+
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                if (SalesSettings.SpiltInvoice == false && sales_invoice.sales_invoice_detail.Count+1>sales_invoice.app_document_range.app_document.line_limit)
+                {
+                    toolBar.msgWarning("Your Item Limit is Exceed");
+                }
+                else
+                {
+                    int BranchID = (int)cbxBranch.SelectedValue;
+                 
+                    item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
 
-                sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
+                    sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
 
-                _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+                    _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
 
 
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                sales_invoice.RaisePropertyChanged("GrandTotal");
+                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    sales_invoice.RaisePropertyChanged("GrandTotal");
+                }
             }
         }
 

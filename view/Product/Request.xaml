@@ -110,7 +110,7 @@
                             metro:ControlsHelper.MouseOverBorderBrush="Silver" Text="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             
-            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="32,0" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="32,0" >
                 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>

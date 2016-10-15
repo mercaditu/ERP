@@ -233,11 +233,11 @@ namespace Cognitivo.Sales
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).Include(y => y.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).Include(y => y.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -554,9 +554,14 @@ namespace Cognitivo.Sales
                             //Protect the code against null values.
                             string number = sales_invoice.number != null ? sales_invoice.number : "";
                             string customer = sales_invoice.contact != null ? sales_invoice.contact.name : "";
+                            string gov_code = sales_invoice.contact != null ? sales_invoice.contact.gov_code : "";
 
-                            if ((customer.ToLower().Contains(query.ToLower()))
-                                || number.Contains(query))
+                            if (
+                                customer.ToLower().Contains(query.ToLower())
+                                || 
+                                number.Contains(query)
+                                ||
+                                gov_code.ToLower().Contains(query.ToLower()))
                             {
                                 return true;
                             }
@@ -564,7 +569,6 @@ namespace Cognitivo.Sales
                             {
                                 return false;
                             }
-
                         }
                         else
                         {

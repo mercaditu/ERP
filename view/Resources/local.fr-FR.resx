@@ -225,6 +225,9 @@
   <data name="Bank" xml:space="preserve">
     <value>Banque</value>
   </data>
+  <data name="BankReconciliation" xml:space="preserve">
+    <value>Rapprochement Bancaire</value>
+  </data>
   <data name="BaseSalary" xml:space="preserve">
     <value>Salaire De Base</value>
   </data>
@@ -236,9 +239,6 @@
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>Appartient À</value>
-  </data>
-  <data name="Billing" xml:space="preserve">
-    <value>Facturation</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>Groupe Sanguin</value>
@@ -260,6 +260,9 @@
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>Acheteur</value>
+  </data>
+  <data name="BuyRate" xml:space="preserve">
+    <value>Acheter Taux</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>Dimension</value>
@@ -405,6 +408,9 @@
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>Compte Courant Client</value>
   </data>
+  <data name="CurrentAccountEvent" xml:space="preserve">
+    <value>Compte Courant De L'Événement</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>Actuellement Compte</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
     <value>Client Compte Courant</value>
+  </data>
+  <data name="CustomerDeliveryList" xml:space="preserve">
+    <value>Client Liste De Livraison</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>Personnaliser</value>
@@ -536,6 +545,9 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>Remise</value>
+  </data>
+  <data name="Divisable" xml:space="preserve">
+    <value>Divisible</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Document</value>
@@ -692,6 +704,9 @@
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>Historiques Stock Valeurs</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Heure</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>Heure Coeficient</value>
@@ -864,6 +879,9 @@
   <data name="MaritalStatus" xml:space="preserve">
     <value>État Civil</value>
   </data>
+  <data name="Mask" xml:space="preserve">
+    <value>Masque</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>La Mesure</value>
   </data>
@@ -884,6 +902,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>Nationalité</value>
+  </data>
+  <data name="NeededbyDate" xml:space="preserve">
+    <value>Nécessaire Par Date</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>Nouveau</value>
@@ -993,6 +1014,9 @@
   <data name="Product" xml:space="preserve">
     <value>Produit</value>
   </data>
+  <data name="ProductDeliveryList" xml:space="preserve">
+    <value>Liste De Livraison De Produit</value>
+  </data>
   <data name="Production" xml:space="preserve">
     <value>Production</value>
   </data>
@@ -1004,6 +1028,9 @@
   </data>
   <data name="ProductionOrder" xml:space="preserve">
     <value>Ordre De Production</value>
+  </data>
+  <data name="ProductionOrderStatus" xml:space="preserve">
+    <value>Production Suivi De Commande</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>Statut De Production</value>
@@ -1236,6 +1263,9 @@
   <data name="Seller" xml:space="preserve">
     <value>Vendeur</value>
   </data>
+  <data name="SellRate" xml:space="preserve">
+    <value>Vendre Taux</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>Un Service</value>
   </data>
@@ -1262,6 +1292,9 @@
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>Id Social</value>
+  </data>
+  <data name="SoleCurrency" xml:space="preserve">
+    <value>Monnaie Sole</value>
   </data>
   <data name="Special" xml:space="preserve">
     <value>Spécial</value>
@@ -1341,6 +1374,9 @@
   <data name="Terminal" xml:space="preserve">
     <value>Terminal</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Termes</value>
+  </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
@@ -1412,6 +1448,9 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Attention</value>
+  </data>
+  <data name="Weekend" xml:space="preserve">
+    <value>Fin De Semaine</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Largeur</value>

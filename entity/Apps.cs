@@ -159,7 +159,7 @@ namespace entity
             [LocalizedDescription("ProductionTemplate")]
             ProductionTemplate = 21,
             [LocalizedDescription("ProductionOrderStatus")]
-            ProductionOrderStatus = 121,
+            ProductionOrderStatus = 131,
 
             //Project
             [LocalizedDescription("Template")]

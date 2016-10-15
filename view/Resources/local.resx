@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account" xml:space="preserve">
-    <value>@Account</value>
-  </data>
   <data name="Accountant" xml:space="preserve">
     <value>@Accountant</value>
   </data>
@@ -225,6 +222,9 @@
   <data name="Bank" xml:space="preserve">
     <value>@Bank</value>
   </data>
+  <data name="BankReconciliation" xml:space="preserve">
+    <value>@BankReconciliation</value>
+  </data>
   <data name="BaseSalary" xml:space="preserve">
     <value>@BaseSalary</value>
   </data>
@@ -236,9 +236,6 @@
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>@BelongsTo</value>
-  </data>
-  <data name="Billing" xml:space="preserve">
-    <value>@Billing</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>@BloodType</value>
@@ -260,6 +257,9 @@
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>@Buyer</value>
+  </data>
+  <data name="BuyRate" xml:space="preserve">
+    <value>@BuyRate</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>@ByDimension</value>
@@ -405,6 +405,9 @@
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>@CurrentAccountCustomer</value>
   </data>
+  <data name="CurrentAccountEvent" xml:space="preserve">
+    <value>@CurrentAccountEvent</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>@CurrentlyinAccount</value>
   </data>
@@ -416,6 +419,9 @@
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
     <value>@CustomerCurrentAccount</value>
+  </data>
+  <data name="CustomerDeliveryList" xml:space="preserve">
+    <value>@CustomerDeliveryList</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>@Customize</value>
@@ -536,6 +542,9 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>@Discount</value>
+  </data>
+  <data name="Divisable" xml:space="preserve">
+    <value>@Divisable</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>@Document</value>
@@ -692,6 +701,9 @@
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>@HistoricStockValues</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>@Hour</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>@HourCoeficient</value>
@@ -864,6 +876,9 @@
   <data name="MaritalStatus" xml:space="preserve">
     <value>@MaritalStatus</value>
   </data>
+  <data name="Mask" xml:space="preserve">
+    <value>@Mask</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>@Measurement</value>
   </data>
@@ -884,6 +899,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>@Nationality</value>
+  </data>
+  <data name="NeededbyDate" xml:space="preserve">
+    <value>@NeededbyDate</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>@New</value>
@@ -993,6 +1011,9 @@
   <data name="Product" xml:space="preserve">
     <value>@Product</value>
   </data>
+  <data name="ProductDeliveryList" xml:space="preserve">
+    <value>@ProductDeliveryList</value>
+  </data>
   <data name="Production" xml:space="preserve">
     <value>@Production</value>
   </data>
@@ -1004,6 +1025,9 @@
   </data>
   <data name="ProductionOrder" xml:space="preserve">
     <value>@ProductionOrder</value>
+  </data>
+  <data name="ProductionOrderStatus" xml:space="preserve">
+    <value>@ProductionOrderStatus</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>@ProductionStatus</value>
@@ -1236,6 +1260,9 @@
   <data name="Seller" xml:space="preserve">
     <value>@Seller</value>
   </data>
+  <data name="SellRate" xml:space="preserve">
+    <value>@SellRate</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>@Service</value>
   </data>
@@ -1262,6 +1289,9 @@
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>@SocialID</value>
+  </data>
+  <data name="SoleCurrency" xml:space="preserve">
+    <value>@SoleCurrency</value>
   </data>
   <data name="Special" xml:space="preserve">
     <value>@Special</value>
@@ -1341,6 +1371,9 @@
   <data name="Terminal" xml:space="preserve">
     <value>@Terminal</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>@Terms</value>
+  </data>
   <data name="Total" xml:space="preserve">
     <value>@Total</value>
   </data>
@@ -1412,6 +1445,9 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>@Warning</value>
+  </data>
+  <data name="Weekend" xml:space="preserve">
+    <value>@Weekend</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>@Width</value>

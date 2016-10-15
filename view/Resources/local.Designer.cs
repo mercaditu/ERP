@@ -61,15 +61,6 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Account.
-        /// </summary>
-        public static string Account {
-            get {
-                return ResourceManager.GetString("Account", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @Accountant.
         /// </summary>
         public static string Accountant {
@@ -385,6 +376,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @BankReconciliation.
+        /// </summary>
+        public static string BankReconciliation {
+            get {
+                return ResourceManager.GetString("BankReconciliation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @BaseSalary.
         /// </summary>
         public static string BaseSalary {
@@ -417,15 +417,6 @@ namespace Cognitivo.Resources {
         public static string BelongsTo {
             get {
                 return ResourceManager.GetString("BelongsTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @Billing.
-        /// </summary>
-        public static string Billing {
-            get {
-                return ResourceManager.GetString("Billing", resourceCulture);
             }
         }
         
@@ -489,6 +480,15 @@ namespace Cognitivo.Resources {
         public static string Buyer {
             get {
                 return ResourceManager.GetString("Buyer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @BuyRate.
+        /// </summary>
+        public static string BuyRate {
+            get {
+                return ResourceManager.GetString("BuyRate", resourceCulture);
             }
         }
         
@@ -925,6 +925,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @CurrentAccountEvent.
+        /// </summary>
+        public static string CurrentAccountEvent {
+            get {
+                return ResourceManager.GetString("CurrentAccountEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @CurrentlyinAccount.
         /// </summary>
         public static string CurrentlyinAccount {
@@ -957,6 +966,15 @@ namespace Cognitivo.Resources {
         public static string CustomerCurrentAccount {
             get {
                 return ResourceManager.GetString("CustomerCurrentAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CustomerDeliveryList.
+        /// </summary>
+        public static string CustomerDeliveryList {
+            get {
+                return ResourceManager.GetString("CustomerDeliveryList", resourceCulture);
             }
         }
         
@@ -1317,6 +1335,15 @@ namespace Cognitivo.Resources {
         public static string Discount {
             get {
                 return ResourceManager.GetString("Discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Divisable.
+        /// </summary>
+        public static string Divisable {
+            get {
+                return ResourceManager.GetString("Divisable", resourceCulture);
             }
         }
         
@@ -1785,6 +1812,15 @@ namespace Cognitivo.Resources {
         public static string HistoricStockValues {
             get {
                 return ResourceManager.GetString("HistoricStockValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Hour.
+        /// </summary>
+        public static string Hour {
+            get {
+                return ResourceManager.GetString("Hour", resourceCulture);
             }
         }
         
@@ -2302,6 +2338,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Mask.
+        /// </summary>
+        public static string Mask {
+            get {
+                return ResourceManager.GetString("Mask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Measurement.
         /// </summary>
         public static string Measurement {
@@ -2361,6 +2406,15 @@ namespace Cognitivo.Resources {
         public static string Nationality {
             get {
                 return ResourceManager.GetString("Nationality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @NeededbyDate.
+        /// </summary>
+        public static string NeededbyDate {
+            get {
+                return ResourceManager.GetString("NeededbyDate", resourceCulture);
             }
         }
         
@@ -2689,6 +2743,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ProductDeliveryList.
+        /// </summary>
+        public static string ProductDeliveryList {
+            get {
+                return ResourceManager.GetString("ProductDeliveryList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Production.
         /// </summary>
         public static string Production {
@@ -2721,6 +2784,15 @@ namespace Cognitivo.Resources {
         public static string ProductionOrder {
             get {
                 return ResourceManager.GetString("ProductionOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ProductionOrderStatus.
+        /// </summary>
+        public static string ProductionOrderStatus {
+            get {
+                return ResourceManager.GetString("ProductionOrderStatus", resourceCulture);
             }
         }
         
@@ -3418,6 +3490,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SellRate.
+        /// </summary>
+        public static string SellRate {
+            get {
+                return ResourceManager.GetString("SellRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Service.
         /// </summary>
         public static string Service {
@@ -3495,6 +3576,15 @@ namespace Cognitivo.Resources {
         public static string SocialID {
             get {
                 return ResourceManager.GetString("SocialID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SoleCurrency.
+        /// </summary>
+        public static string SoleCurrency {
+            get {
+                return ResourceManager.GetString("SoleCurrency", resourceCulture);
             }
         }
         
@@ -3733,6 +3823,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Terms.
+        /// </summary>
+        public static string Terms {
+            get {
+                return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Total.
         /// </summary>
         public static string Total {
@@ -3945,6 +4044,15 @@ namespace Cognitivo.Resources {
         public static string Warning {
             get {
                 return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Weekend.
+        /// </summary>
+        public static string Weekend {
+            get {
+                return ResourceManager.GetString("Weekend", resourceCulture);
             }
         }
         

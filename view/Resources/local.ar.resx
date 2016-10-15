@@ -225,6 +225,9 @@
   <data name="Bank" xml:space="preserve">
     <value>بنك</value>
   </data>
+  <data name="BankReconciliation" xml:space="preserve">
+    <value>التسويات المصرفية</value>
+  </data>
   <data name="BaseSalary" xml:space="preserve">
     <value>الراتب الاساسي</value>
   </data>
@@ -236,9 +239,6 @@
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>ينتمي ل</value>
-  </data>
-  <data name="Billing" xml:space="preserve">
-    <value>الفواتير</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>فصيلة الدم</value>
@@ -260,6 +260,9 @@
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>مشتر</value>
+  </data>
+  <data name="BuyRate" xml:space="preserve">
+    <value>بيع السعر</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>بواسطة البعد</value>
@@ -405,6 +408,9 @@
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>الحساب الجاري العملاء</value>
   </data>
+  <data name="CurrentAccountEvent" xml:space="preserve">
+    <value>حدث الحساب الجاري</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>حاليا في حساب</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
     <value>العملاء الحساب الجاري</value>
+  </data>
+  <data name="CustomerDeliveryList" xml:space="preserve">
+    <value>العملاء قائمة تسليم</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>تخصيص</value>
@@ -536,6 +545,9 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>خصم</value>
+  </data>
+  <data name="Divisable" xml:space="preserve">
+    <value>Divisable</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>وثيقة</value>
@@ -692,6 +704,9 @@
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>القيم المالية التاريخية</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>ساعة</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>ساعة معامل</value>
@@ -864,6 +879,9 @@
   <data name="MaritalStatus" xml:space="preserve">
     <value>الحالة الحالة الإجتماعية</value>
   </data>
+  <data name="Mask" xml:space="preserve">
+    <value>قناع</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>قياس</value>
   </data>
@@ -884,6 +902,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>جنسية</value>
+  </data>
+  <data name="NeededbyDate" xml:space="preserve">
+    <value>مطلوب حسب التاريخ</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>جديد</value>
@@ -993,6 +1014,9 @@
   <data name="Product" xml:space="preserve">
     <value>المنتج</value>
   </data>
+  <data name="ProductDeliveryList" xml:space="preserve">
+    <value>قائمة منتج تسليم</value>
+  </data>
   <data name="Production" xml:space="preserve">
     <value>إنتاج</value>
   </data>
@@ -1004,6 +1028,9 @@
   </data>
   <data name="ProductionOrder" xml:space="preserve">
     <value>أمر الإنتاج</value>
+  </data>
+  <data name="ProductionOrderStatus" xml:space="preserve">
+    <value>إنتاج ترتيب أوضاع</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>مركز الإنتاج</value>
@@ -1236,6 +1263,9 @@
   <data name="Seller" xml:space="preserve">
     <value>بائع</value>
   </data>
+  <data name="SellRate" xml:space="preserve">
+    <value>بيع السعر</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>خدمة</value>
   </data>
@@ -1262,6 +1292,9 @@
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>معرف الاجتماعية</value>
+  </data>
+  <data name="SoleCurrency" xml:space="preserve">
+    <value>العملة الوحيدة</value>
   </data>
   <data name="Special" xml:space="preserve">
     <value>خاص</value>
@@ -1341,6 +1374,9 @@
   <data name="Terminal" xml:space="preserve">
     <value>محطة</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>شروط</value>
+  </data>
   <data name="Total" xml:space="preserve">
     <value>مجموع</value>
   </data>
@@ -1412,6 +1448,9 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>تحذير</value>
+  </data>
+  <data name="Weekend" xml:space="preserve">
+    <value>نهاية الأسبوع</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>عرض</value>

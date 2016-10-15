@@ -225,6 +225,9 @@
   <data name="Bank" xml:space="preserve">
     <value>은행</value>
   </data>
+  <data name="BankReconciliation" xml:space="preserve">
+    <value>은행 조정</value>
+  </data>
   <data name="BaseSalary" xml:space="preserve">
     <value>기본 연봉</value>
   </data>
@@ -236,9 +239,6 @@
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>에 속하는</value>
-  </data>
-  <data name="Billing" xml:space="preserve">
-    <value>결제</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>혈액형</value>
@@ -260,6 +260,9 @@
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>사는 사람</value>
+  </data>
+  <data name="BuyRate" xml:space="preserve">
+    <value>구매 평가</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>차원으로</value>
@@ -405,6 +408,9 @@
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>현재 계정 고객</value>
   </data>
+  <data name="CurrentAccountEvent" xml:space="preserve">
+    <value>현재 계정 이벤트</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>현재 계정에서</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
     <value>고객 당좌 계정</value>
+  </data>
+  <data name="CustomerDeliveryList" xml:space="preserve">
+    <value>고객 납품 목록</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>사용자 정의</value>
@@ -536,6 +545,9 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>할인</value>
+  </data>
+  <data name="Divisable" xml:space="preserve">
+    <value>DIVISABLE</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>문서</value>
@@ -692,6 +704,9 @@
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>역사적인 주식 값</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>시간</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>시간 계수 (減 衰 係數)</value>
@@ -864,6 +879,9 @@
   <data name="MaritalStatus" xml:space="preserve">
     <value>결혼 여부</value>
   </data>
+  <data name="Mask" xml:space="preserve">
+    <value>마스크</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>측정</value>
   </data>
@@ -884,6 +902,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>국적</value>
+  </data>
+  <data name="NeededbyDate" xml:space="preserve">
+    <value>날짜가 필요</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>새로운</value>
@@ -993,6 +1014,9 @@
   <data name="Product" xml:space="preserve">
     <value>생성물</value>
   </data>
+  <data name="ProductDeliveryList" xml:space="preserve">
+    <value>제품 배송 목록</value>
+  </data>
   <data name="Production" xml:space="preserve">
     <value>생산</value>
   </data>
@@ -1004,6 +1028,9 @@
   </data>
   <data name="ProductionOrder" xml:space="preserve">
     <value>생산 주문</value>
+  </data>
+  <data name="ProductionOrderStatus" xml:space="preserve">
+    <value>생산 주문 상태</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>생산 현황</value>
@@ -1236,6 +1263,9 @@
   <data name="Seller" xml:space="preserve">
     <value>파는 사람</value>
   </data>
+  <data name="SellRate" xml:space="preserve">
+    <value>속도를 판매</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>서비스</value>
   </data>
@@ -1262,6 +1292,9 @@
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>사회 ID</value>
+  </data>
+  <data name="SoleCurrency" xml:space="preserve">
+    <value>솔 환율</value>
   </data>
   <data name="Special" xml:space="preserve">
     <value>특별한</value>
@@ -1341,6 +1374,9 @@
   <data name="Terminal" xml:space="preserve">
     <value>단말기</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>자귀</value>
+  </data>
   <data name="Total" xml:space="preserve">
     <value>합계</value>
   </data>
@@ -1412,6 +1448,9 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>경고</value>
+  </data>
+  <data name="Weekend" xml:space="preserve">
+    <value>주말</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>폭</value>

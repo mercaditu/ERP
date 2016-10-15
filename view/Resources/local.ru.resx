@@ -225,6 +225,9 @@
   <data name="Bank" xml:space="preserve">
     <value>Банка</value>
   </data>
+  <data name="BankReconciliation" xml:space="preserve">
+    <value>Банк примирения</value>
+  </data>
   <data name="BaseSalary" xml:space="preserve">
     <value>Базовая зарплата</value>
   </data>
@@ -236,9 +239,6 @@
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>Принадлежит</value>
-  </data>
-  <data name="Billing" xml:space="preserve">
-    <value>Платежный</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>Группа крови</value>
@@ -260,6 +260,9 @@
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>Покупатель</value>
+  </data>
+  <data name="BuyRate" xml:space="preserve">
+    <value>Купить Оценить</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>По измерению</value>
@@ -405,6 +408,9 @@
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>Текущий счет клиента</value>
   </data>
+  <data name="CurrentAccountEvent" xml:space="preserve">
+    <value>Текущее событие Счет</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>В настоящее время на счету</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
     <value>Клиент Расчетный счет</value>
+  </data>
+  <data name="CustomerDeliveryList" xml:space="preserve">
+    <value>Список клиентов Доставка</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>Настроить</value>
@@ -536,6 +545,9 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>скидка</value>
+  </data>
+  <data name="Divisable" xml:space="preserve">
+    <value>Divisable</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Документ</value>
@@ -692,6 +704,9 @@
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>Исторические ценности фонда</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Час</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>час Коэффициент</value>
@@ -864,6 +879,9 @@
   <data name="MaritalStatus" xml:space="preserve">
     <value>Семейное положение</value>
   </data>
+  <data name="Mask" xml:space="preserve">
+    <value>маска</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>измерение</value>
   </data>
@@ -884,6 +902,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>Национальность</value>
+  </data>
+  <data name="NeededbyDate" xml:space="preserve">
+    <value>Необходимые по дате</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>новый</value>
@@ -993,6 +1014,9 @@
   <data name="Product" xml:space="preserve">
     <value>Продукт</value>
   </data>
+  <data name="ProductDeliveryList" xml:space="preserve">
+    <value>Список поставки товаров</value>
+  </data>
   <data name="Production" xml:space="preserve">
     <value>производство</value>
   </data>
@@ -1004,6 +1028,9 @@
   </data>
   <data name="ProductionOrder" xml:space="preserve">
     <value>Производственный заказ</value>
+  </data>
+  <data name="ProductionOrderStatus" xml:space="preserve">
+    <value>Производство Статус заказа</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>Производство Статус</value>
@@ -1236,6 +1263,9 @@
   <data name="Seller" xml:space="preserve">
     <value>продавец</value>
   </data>
+  <data name="SellRate" xml:space="preserve">
+    <value>Продать Оценить</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>обслуживание</value>
   </data>
@@ -1262,6 +1292,9 @@
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>Социальный ID</value>
+  </data>
+  <data name="SoleCurrency" xml:space="preserve">
+    <value>Sole валюты</value>
   </data>
   <data name="Special" xml:space="preserve">
     <value>Особый</value>
@@ -1341,6 +1374,9 @@
   <data name="Terminal" xml:space="preserve">
     <value>Терминал</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>сроки</value>
+  </data>
   <data name="Total" xml:space="preserve">
     <value>Всего</value>
   </data>
@@ -1412,6 +1448,9 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Предупреждение</value>
+  </data>
+  <data name="Weekend" xml:space="preserve">
+    <value>выходные</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Ширина</value>

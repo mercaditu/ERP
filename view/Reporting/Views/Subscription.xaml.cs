@@ -88,6 +88,34 @@ namespace Cognitivo.Reporting.Views
 
             window.ShowDialog();
         }
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as ContactInfo != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ContactInfo ContactInfo = contactViewSource.View.CurrentItem as ContactInfo;
+                    //DeleteDetailGridRow
+                    dgvContacts.CancelEdit();
+                    ContactInfoList.Remove(ContactInfo);
+                    contactViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                //toolBar.msgError(ex);
+            }
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿<Page x:Class="Cognitivo.Reporting.Views.ContactSubscription"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:l="clr-namespace:Cognitivo.Reporting.Views"
@@ -8,6 +9,11 @@
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="800"
 	Title="ContactSubscription">
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type l:ContactInfo}, CreateList=True}" />
     </Page.Resources>
@@ -30,6 +36,15 @@
                                                 Header="Code" IsReadOnly="True" Width="100"/>
                 <DataGridTextColumn Binding="{Binding Name,  UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="Name" IsReadOnly="True" Width="*"/>
+                <DataGridTemplateColumn Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="customcmd:CustomCommands.Delete"
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="2" Content="Generate" Click="Button_Click" Style="{StaticResource btn_green}" Margin="4" HorizontalAlignment="Center"/>

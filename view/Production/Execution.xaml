@@ -421,7 +421,9 @@
 								<DataGrid.Columns>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-									<DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:TransDate}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding timestamp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <DataGridTemplateColumn Width="Auto" Header="">
 										<DataGridTemplateColumn.CellTemplate>
 											<DataTemplate>
 												<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>

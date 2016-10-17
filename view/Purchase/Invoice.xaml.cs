@@ -166,6 +166,7 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
+        
             if (PurchaseInvoiceDB.SaveChanges() > 0)
             {
                 purchase_invoiceViewSource.View.Refresh();

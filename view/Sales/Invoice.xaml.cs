@@ -336,6 +336,14 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender)
         {
+            app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
+            if (app_document_range != null)
+            {
+                if (app_document_range.range_current > app_document_range.range_end)
+                {
+                    toolBar.msgWarning("Document range is Over");
+                }
+            }
             if (SalesInvoiceDB.SaveChanges() > 0)
             {
                 sales_invoiceViewSource.View.Refresh();
@@ -941,6 +949,6 @@ namespace Cognitivo.Sales
             }
         }
 
-      
+    
     }
 }

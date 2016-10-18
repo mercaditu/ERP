@@ -135,30 +135,40 @@ namespace Cognitivo.Product
                         item.id_item_type != entity.item.item_type.Service &&
                         item.id_item_type != entity.item.item_type.ServiceContract)
                     {
-                        item_transfer_detail item_transfer_detail = new item_transfer_detail();
-
-                        item_transfer_detail.status = Status.Documents_General.Pending;
-                        item_transfer_detail.quantity_origin = 1;
-
-                        int BranchID = (int)id_branch_originComboBox.SelectedValue;
-                        decimal? stock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
-                        item_transfer_detail.Quantity_InStock = Convert.ToDecimal(stock != null ? stock : 0);
-
-                        if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
+                        if (item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault() == null)
                         {
-                            item_transfer_detail.StockLevel = Status.Documents_General.Pending;
+                            item_transfer_detail item_transfer_detail = new item_transfer_detail();
+
+                            item_transfer_detail.status = Status.Documents_General.Pending;
+                            item_transfer_detail.quantity_origin = 1;
+
+                            int BranchID = (int)id_branch_originComboBox.SelectedValue;
+                            decimal? stock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+                            item_transfer_detail.Quantity_InStock = Convert.ToDecimal(stock != null ? stock : 0);
+
+                            if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
+                            {
+                                item_transfer_detail.StockLevel = Status.Documents_General.Pending;
+                            }
+                            else
+                            {
+                                item_transfer_detail.StockLevel = Status.Documents_General.Annulled;
+                            }
+
+                            item_transfer_detail.timestamp = DateTime.Now;
+                            item_transfer_detail.item_product = item.item_product.FirstOrDefault();
+                            item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
+                            item_transfer_detail.RaisePropertyChanged("item_product");
+
+                            item_transfer.item_transfer_detail.Add(item_transfer_detail);
                         }
                         else
                         {
-                            item_transfer_detail.StockLevel = Status.Documents_General.Annulled;
+                            item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
+                            item_transfer_detail.quantity_origin += 1;
+                         
                         }
-
-                        item_transfer_detail.timestamp = DateTime.Now;
-                        item_transfer_detail.item_product = item.item_product.FirstOrDefault();
-                        item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
-                        item_transfer_detail.RaisePropertyChanged("item_product");
-
-                        item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                      
                     }
                     else
                     {

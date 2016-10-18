@@ -16,6 +16,7 @@
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="app_vatViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_companyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_company}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -37,6 +38,9 @@
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{lex:Loc Branch}" HorizontalAlignment="Center" FontSize="14"
                        Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
+                <Label Content="{lex:Loc Company}" Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}"
+                        DisplayMemberPath="name" SelectedValuePath="id_company" ItemsSource="{Binding Source={StaticResource app_companyViewSource}}" SelectedValue="{Binding id_company, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
                 <TextBox Style="{StaticResource input_textbox}"
                              Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

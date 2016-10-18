@@ -186,10 +186,10 @@
 						<ColumnDefinition Width="1*"/>
 					</Grid.ColumnDefinitions>
 					<DataGrid x:Name="item_transfer_detailDataGrid" 
-					  AutoGenerateColumns="False" Grid.Column="0"
+					  AutoGenerateColumns="False"
 					  EnableRowVirtualization="True" 
 					  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
-					  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="350">
+					  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" >
 						<DataGrid.Columns>
 							<DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
 							<DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>

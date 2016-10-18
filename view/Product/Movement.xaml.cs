@@ -390,7 +390,11 @@ namespace Cognitivo.Product
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
                     item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
                     item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
-                    item_transfer_detail.movement_id = (int?)itemMovement.item_movement.id_movement;
+                    if (itemMovement.item_movement!=null)
+                    {
+                        item_transfer_detail.movement_id = (int?)itemMovement.item_movement.id_movement;
+                    }
+                
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
                     item item = ((item)cbxItem.Data);

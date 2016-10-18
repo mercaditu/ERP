@@ -31,6 +31,7 @@ namespace cntrl
 
                 CollectionViewSource app_vatViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vatViewSource")));
                 app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+              
             }
         }
 

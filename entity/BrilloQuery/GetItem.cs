@@ -57,7 +57,11 @@ namespace entity.BrilloQuery
                     Item.Type = (item.item_type)type;
                     Item.IsProduct = Is_Product;
                     Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
-                    Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
+                    if (!(DataRow["CompanyID"] is DBNull))
+                    {
+                       Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
+                    }
+                   
                     Item.Name = Convert.ToString(DataRow["Name"]);
                     Item.Code = Convert.ToString(DataRow["Code"]);
                     Item.Brand = Convert.ToString(DataRow["Brand"]);
@@ -99,7 +103,7 @@ namespace entity.BrilloQuery
 
     public class Item
     {
-        public int ComapnyID { get; set; }
+        public int? ComapnyID { get; set; }
         public int ID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }

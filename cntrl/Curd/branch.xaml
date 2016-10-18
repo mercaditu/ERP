@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="app_vatViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_companyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_company}, CreateList=True}"/>
+        
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>

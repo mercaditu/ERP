@@ -216,11 +216,11 @@ namespace cntrl.Controls
 
             if (smartBoxItemSetting.Default.ExactSearch)
             {
-                predicate = (x => x.IsActive && x.ComapnyID == entity.CurrentSession.Id_Company && ( x.Code == SearchText ));
+                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID==null) && ( x.Code == SearchText ));
             }
             else
             {
-                predicate = (x => x.IsActive && x.ComapnyID == entity.CurrentSession.Id_Company &&
+                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) &&
                     (
                         x.Code.ToLower().Contains(SearchText.ToLower()) ||
                         x.Name.ToLower().Contains(SearchText.ToLower()) ||

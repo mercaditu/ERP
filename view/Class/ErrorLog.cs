@@ -29,7 +29,7 @@ namespace Cognitivo.Class
                 Directory.CreateDirectory(path + SubFolder);
             }
 
-            path = path + SubFolder + "\\" + AppName + " : " + DateTime.Now + "." + FileType;
+            path = path + SubFolder + "\\" + AppName + " : " + DateTime.Now.ToString() + "." + FileType;
 
             using (FileStream fs = File.Create(path))
             {

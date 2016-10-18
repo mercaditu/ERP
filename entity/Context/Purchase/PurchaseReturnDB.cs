@@ -107,6 +107,8 @@ namespace entity
 
                             payment payment = new payment();
                             payment.id_contact = purchase_return.id_contact;
+                            payment.status = Status.Documents_General.Approved;
+
                             payment_detail payment_detailreturn = new payment_detail();
                             // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
                             payment_detailreturn.id_currencyfx = purchase_return.id_currencyfx;

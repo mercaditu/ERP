@@ -2,20 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
 using entity;
-using System.Data.Entity.Validation;
 using System.ComponentModel;
 
 namespace Cognitivo.Commercial
@@ -23,7 +14,7 @@ namespace Cognitivo.Commercial
     public partial class Payments : Page, INotifyPropertyChanged
     {
         CollectionViewSource payment_detailMadeViewSource, payment_detailReceive, contactViewSource;
-        PaymentDB PaymentDB = new entity.PaymentDB();
+        PaymentDB PaymentDB = new PaymentDB();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,10 +37,7 @@ namespace Cognitivo.Commercial
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Payments()
@@ -57,7 +45,7 @@ namespace Cognitivo.Commercial
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             PaymentDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.name).Load();
@@ -65,9 +53,8 @@ namespace Cognitivo.Commercial
 
             payment_detailMadeViewSource = (CollectionViewSource)FindResource("payment_detailMadeViewSource");
             payment_detailReceive = (CollectionViewSource)FindResource("payment_detailReceive");
-            PaymentDB.payments.Load();
+            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             //Logic to bring Data into view.
-
 
             payment_detailReceive.Source = PaymentDB.payments.Local;
             payment_detailMadeViewSource.Source = PaymentDB.payments.Local;

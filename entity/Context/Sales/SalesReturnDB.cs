@@ -155,8 +155,9 @@ namespace entity
                         {
                             payment payment = new payment();
                             payment.id_contact = sales_return.id_contact;
+                            payment.status = Status.Documents_General.Approved;
+
                             payment_detail payment_detailreturn = new payment_detail();
-                            // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
                             payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
 
                             //Check for Credit Note PaymentType.
@@ -186,7 +187,7 @@ namespace entity
                             payment_schedualReturn.sales_return = sales_return;
                             payment_schedualReturn.trans_date = sales_return.trans_date;
                             payment_schedualReturn.expire_date = sales_return.trans_date;
-                            payment_schedualReturn.status = entity.Status.Documents_General.Approved;
+                            payment_schedualReturn.status = Status.Documents_General.Approved;
                             payment_schedualReturn.id_contact = sales_return.id_contact;
                             payment_schedualReturn.can_calculate = true;
                             payment_schedualReturn.parent = sales_return.sales_invoice.payment_schedual.FirstOrDefault();

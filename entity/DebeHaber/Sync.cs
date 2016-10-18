@@ -453,7 +453,6 @@ namespace DebeHaber
             Currency = schedual.payment_detail.app_currencyfx.app_currency.code;
 
             TransDate = schedual.payment_detail.payment.trans_date;
-            Account = schedual.payment_detail.app_account.name;
         }
     }
 

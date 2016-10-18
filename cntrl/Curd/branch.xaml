@@ -38,9 +38,7 @@
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{lex:Loc Branch}" HorizontalAlignment="Center" FontSize="14"
                        Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
-                <Label Content="{lex:Loc Company}" Style="{StaticResource input_label}"/>
-                <ComboBox Style="{StaticResource input_combobox}"
-                        DisplayMemberPath="name" SelectedValuePath="id_company" ItemsSource="{Binding Source={StaticResource app_companyViewSource}}" SelectedValue="{Binding id_company, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+              
                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
                 <TextBox Style="{StaticResource input_textbox}"
                              Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

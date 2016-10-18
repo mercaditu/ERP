@@ -8,7 +8,7 @@ namespace Cognitivo.Class
 
         public static void DebeHaber(string Data)
         {
-            CreateFile(entity.App.Names.DebeHaberSync, Data, "json");
+            CreateFile(entity.App.Names.DebeHaberSync, Data, "txt");
         }
 
         private static void CreateFile(entity.App.Names AppName, string Data, string FileType)

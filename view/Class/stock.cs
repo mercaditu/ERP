@@ -98,7 +98,6 @@ namespace Cognitivo.Class
                                 where inv.credit > 0
                                 group by inv.id_movement";
             query = String.Format(query, TransDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
-            MessageBox.Show(query);
             return exeDT(query);
         }
 
@@ -148,7 +147,7 @@ namespace Cognitivo.Class
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
+            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
             decimal? i = QueriesTableAdapter.GetStock_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ItemID);
@@ -163,7 +162,7 @@ namespace Cognitivo.Class
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
+            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
             decimal? i = QueriesTableAdapter.GetStock_ByLocation(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
@@ -186,10 +185,7 @@ namespace Cognitivo.Class
                 da.Fill(dt);
                 sqlConn.Close();
             }
-            catch
-            {
-                //MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
-            }
+            catch {  }
             return dt;
         }
 

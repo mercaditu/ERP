@@ -76,14 +76,11 @@ namespace cntrl.Curd
             if (contact != null)
             {
                 ContactName = contact.name;
-                
-                if (btnSave_Click != null)
-                {
-                    btnSave_Click(sender);
-                }
-            }
 
-         
+                btnSave_Click?.Invoke(sender);
+                //Reloads all Data.
+                CurrentSession.Load_BasicData();
+            }
 
             btnCancel_MouseDown(null, null);
         }

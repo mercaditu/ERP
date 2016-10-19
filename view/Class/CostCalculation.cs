@@ -14,7 +14,6 @@ namespace Cognitivo.Class
             List<CostList> costLists = new List<Class.CostList>();
             foreach (production_order_detail production_order_detail in Listproduction_order_detail)
             {
-
                 entity.Brillo.Stock stock = new entity.Brillo.Stock();
                 CostList CostList = new Class.CostList();
                 CostList.Name = production_order_detail.item.name;

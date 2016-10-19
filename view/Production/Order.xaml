@@ -502,7 +502,7 @@
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                       Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,150,0">
-            <Button x:Name="btnapprove" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
+            <Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
 
         </StackPanel>
     </Grid>

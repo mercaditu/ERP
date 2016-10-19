@@ -8,6 +8,7 @@ using System.Data;
 using System;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Cognitivo.Production
 {
@@ -62,7 +63,10 @@ namespace Cognitivo.Production
 
             dtpenddate.Text = DateTime.Now.ToString();
             dtpstartdate.Text = DateTime.Now.ToString();
-
+            if (!CurrentSession.User.security_role.see_cost)
+            {
+                btncost.Visibility = Visibility.Collapsed;
+            }
             //This prevents bringing multiple
             filter_task();
             RefreshData();
@@ -696,6 +700,21 @@ namespace Cognitivo.Production
         {
             filter_task();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
+            Cognitivo.Class.CostCalculation CostCalculation = new Class.CostCalculation();
+            CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
+            crud_modal_cost.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            crud_modal_cost.Visibility = Visibility.Collapsed;
+        }
+
 
         public void filter_task()
         {

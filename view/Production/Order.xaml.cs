@@ -119,6 +119,10 @@ namespace Cognitivo.Production
                 filter_task();
             }
 
+            if (!CurrentSession.User.security_role.see_cost)
+            {
+                btncost.Visibility = Visibility.Collapsed;
+            }
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(OrderDB, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);

@@ -46,6 +46,7 @@ namespace Cognitivo.Class
 
             return costLists;
         }
+ 
     }
     public class CostList
     {

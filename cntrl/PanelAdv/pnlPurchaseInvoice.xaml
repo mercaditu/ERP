@@ -39,7 +39,7 @@
                                     IsCheckedChanged="ToggleSwitch_IsCheckedChanged"/>
             </Grid>
             <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_invoiceDatagrid_LoadingRowDetails"
-                      EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="Collapsed"
+                      EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="Collapsed" VerticalScrollBarVisibility="Visible"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

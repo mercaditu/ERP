@@ -14,16 +14,16 @@ namespace Cognitivo.Production
     {
         OrderDB OrderDB = new OrderDB();
 
-        CollectionViewSource 
+        CollectionViewSource
             project_task_dimensionViewSource,
-            projectViewSource, 
+            projectViewSource,
             production_orderViewSource,
-            production_lineViewSource, 
+            production_lineViewSource,
             production_orderproduction_order_detailViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
         public bool ViewAll { get; set; }
-      
+
         public Order()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnNew_Click(object sender)
         {
-            production_order production_order =OrderDB.New("",production_order.ProductionOrderTypes.Production,0);
+            production_order production_order = OrderDB.New("", production_order.ProductionOrderTypes.Production, 0);
             production_order.State = EntityState.Added;
             OrderDB.production_order.Add(production_order);
 
@@ -102,7 +102,7 @@ namespace Cognitivo.Production
             production_lineViewSource.Source = OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type==production_order.ProductionOrderTypes.Production).Load();
+            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Load();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
@@ -150,7 +150,7 @@ namespace Cognitivo.Production
             {
                 toolBar.msgApproved(1);
             }
-            
+
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -192,32 +192,32 @@ namespace Cognitivo.Production
                                                  from IM in a.DefaultIfEmpty()
                                                  group IT by new { IM, IT.item }
                                                      into last
-                                                     select new
-                                                     {
-                                                         _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
-                                                         _code = last.Key.item != null ? last.Key.item.code : "",
-                                                         _name = last.Key.item != null ? last.Key.item.name : "",
-                                                         _id_task = last.Max(x => x.id_project_task),
-                                                         _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
-                                                         item = last.Key.item,
-                                                         avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
-                                                         buyqty = (last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0) - (last.Key.IM != null ? last.Key.IM.credit : 0 - (last.Key.IM != null ? last.Key.IM.debit : 0))
-                                                     }).ToList();
+                                                 select new
+                                                 {
+                                                     _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                                     _code = last.Key.item != null ? last.Key.item.code : "",
+                                                     _name = last.Key.item != null ? last.Key.item.name : "",
+                                                     _id_task = last.Max(x => x.id_project_task),
+                                                     _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
+                                                     item = last.Key.item,
+                                                     avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
+                                                     buyqty = (last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0) - (last.Key.IM != null ? last.Key.IM.credit : 0 - (last.Key.IM != null ? last.Key.IM.debit : 0))
+                                                 }).ToList();
 
                     var item_List_group = (from PL in item_List_group_basic
                                            group PL by new { PL.item }
                                                into last
-                                               select new
-                                               {
-                                                   _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
-                                                   _code = last.Key.item != null ? last.Key.item.code : "",
-                                                   _name = last.Key.item != null ? last.Key.item.name : "",
-                                                   _id_task = last.Max(x => x._id_task),
-                                                   _ordered_quantity = last.Max(x => x._ordered_quantity),
-                                                   avlqtyColumn = last.Sum(x => x.avlqtyColumn),
-                                                   buyqty = last.Sum(x => x.avlqtyColumn) < last.Max(x => x._ordered_quantity) ? (last.Max(x => x._ordered_quantity) != 0 ? last.Max(x => x._ordered_quantity) : 0) - (last.Sum(x => x.avlqtyColumn) != 0 ? last.Sum(x => x.avlqtyColumn) : 0) : 0,
-                                                   item = last.Key.item
-                                               }).ToList();
+                                           select new
+                                           {
+                                               _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                               _code = last.Key.item != null ? last.Key.item.code : "",
+                                               _name = last.Key.item != null ? last.Key.item.name : "",
+                                               _id_task = last.Max(x => x._id_task),
+                                               _ordered_quantity = last.Max(x => x._ordered_quantity),
+                                               avlqtyColumn = last.Sum(x => x.avlqtyColumn),
+                                               buyqty = last.Sum(x => x.avlqtyColumn) < last.Max(x => x._ordered_quantity) ? (last.Max(x => x._ordered_quantity) != 0 ? last.Max(x => x._ordered_quantity) : 0) - (last.Sum(x => x.avlqtyColumn) != 0 ? last.Sum(x => x.avlqtyColumn) : 0) : 0,
+                                               item = last.Key.item
+                                           }).ToList();
 
                     item_ProductDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.Product);
                     item_RawDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
@@ -265,14 +265,14 @@ namespace Cognitivo.Production
             int _id_production_order = 0;
             _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
             dynamic obj = (dynamic)item_ProductDataGrid.SelectedItem;
-            
+
             if (obj != null)
             {
                 int _id_item = obj._id_item;
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.Product && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
-              
+
             }
         }
 
@@ -288,8 +288,8 @@ namespace Cognitivo.Production
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
-               
-               
+
+
             }
         }
 
@@ -307,7 +307,7 @@ namespace Cognitivo.Production
                     production_orderViewSource.View.Filter = i =>
                     {
                         production_order production_order = i as production_order;
-                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.type==entity.production_order.ProductionOrderTypes.Production)
+                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.type == entity.production_order.ProductionOrderTypes.Production)
                         {
                             return true;
                         }
@@ -337,7 +337,7 @@ namespace Cognitivo.Production
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.FixedAssets && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
-             
+
             }
         }
 
@@ -351,12 +351,12 @@ namespace Cognitivo.Production
 
                 if (production_order_detaillist.Count() > 0)
                 {
-                                     
+
                     ItemRequest = new cntrl.Curd.ItemRequest();
                     crud_modal_request.Visibility = Visibility.Visible;
                     ItemRequest.listdepartment = OrderDB.app_department.ToList();
                     ItemRequest.item_request_Click += item_request_Click;
-                    if (production_order.id_project>0 && production_order.project!=null )
+                    if (production_order.id_project > 0 && production_order.project != null)
                     {
                         ItemRequest.name = production_order.project.name;
                     }
@@ -382,7 +382,7 @@ namespace Cognitivo.Production
                 item_request item_request = new item_request();
                 item_request.name = ItemRequest.name;
                 item_request.comment = ItemRequest.comment;
-              
+
                 item_request.id_department = ItemRequest.id_department;
                 item_request.id_production_order = id_production_order;
                 if (production_order.id_project != null)
@@ -391,7 +391,7 @@ namespace Cognitivo.Production
                     item_request.id_project = production_order.id_project;
                     item_request.id_branch = production_order.id_branch;
                 }
-            
+
                 item_request.request_date = DateTime.Now;
 
                 foreach (production_order_detail data in production_order_detaillist.Where(x => x.IsSelected == true))
@@ -412,7 +412,7 @@ namespace Cognitivo.Production
                     if (data.project_task != null)
                     {
                         item_request_detail.id_project_task = data.project_task.id_project_task;
-                       
+
                         List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
                         foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                         {
@@ -430,7 +430,7 @@ namespace Cognitivo.Production
                         }
                     }
 
-                
+
                     item_request_detail.quantity = data.quantity;
 
                     item_request.item_request_detail.Add(item_request_detail);
@@ -453,7 +453,7 @@ namespace Cognitivo.Production
                 //        return false;
                 //};
             }
-            
+
             crud_modal_request.Children.Clear();
             crud_modal_request.Visibility = System.Windows.Visibility.Collapsed;
         }
@@ -494,7 +494,7 @@ namespace Cognitivo.Production
                 int _id_item = obj._id_item;
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.Supplies && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
-                
+
             }
         }
 
@@ -601,7 +601,7 @@ namespace Cognitivo.Production
                 filter_task();
                 treeProject.SelectedItem_ = n_production_order_detail;
             }
-           
+
         }
 
         private void btnEditTask_Click(object sender)
@@ -669,16 +669,16 @@ namespace Cognitivo.Production
                 OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Load();
                 production_orderViewSource.Source = OrderDB.production_order.Local;
 
-                
-                    toolBar.msgSaved(OrderDB.NumberOfRecords);
-                    filter_task();
-                
+
+                toolBar.msgSaved(OrderDB.NumberOfRecords);
+                filter_task();
+
                 treeProject.UpdateLayout();
             }
 
-          
 
-            
+
+
         }
 
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -758,9 +758,9 @@ namespace Cognitivo.Production
             {
                 int _id_item = obj._id_item;
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(
-                    od => od.item.id_item_type == item.item_type.ServiceContract && 
-                         (od.production_order.status != Status.Production.Pending || od.production_order.status != null) && 
-                          od.id_production_order == _id_production_order && 
+                    od => od.item.id_item_type == item.item_type.ServiceContract &&
+                         (od.production_order.status != Status.Production.Pending || od.production_order.status != null) &&
+                          od.id_production_order == _id_production_order &&
                           od.id_item == _id_item)
                             .ToList();
                 itemDataGrid.ItemsSource = list.ToList();
@@ -782,6 +782,20 @@ namespace Cognitivo.Production
             treeProject.SelectedItem_ = n_production_order_detail;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
+            Cognitivo.Class.CostCalculation CostCalculation = new Class.CostCalculation();
+            CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
+            crud_modal_cost.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            crud_modal_cost.Visibility = Visibility.Collapsed;
+        }
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update_request();
@@ -799,9 +813,9 @@ namespace Cognitivo.Production
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-       
 
-    
+
+
 
     }
 }

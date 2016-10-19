@@ -34,7 +34,7 @@
             </StackPanel>
             <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
         </Grid>
-        <DataGrid x:Name="sales_invocieDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_invocieDatagrid_LoadingRowDetails"
+        <DataGrid x:Name="sales_invocieDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_invocieDatagrid_LoadingRowDetails" VerticalScrollBarVisibility="Visible"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" Height="402"  >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

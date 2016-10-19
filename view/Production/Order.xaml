@@ -41,7 +41,31 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Name="crud_modal_request" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Background="White">
+                <Button Width="50" Height="10"  Content="close" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Button_Click_1"/>
+            </StackPanel>
+            <DataGrid x:Name="CostDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1"
+                                EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
+                                RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+                <DataGrid.Columns>
+                    
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="64" MaxWidth="256" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" MaxWidth="256" Binding="{Binding Quantity}"/>
+                    <DataGridTextColumn Binding="{Binding Cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:Cost}" Width="128"
+                                                ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
+                                                ElementStyle="{StaticResource RightAlignStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
         </Grid>
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
@@ -62,12 +86,13 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        
         <Grid Grid.Column="1" Grid.Row="1" Margin="0" IsEnabled="{Binding State}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
+           
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
                         Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
                 <TabItem Header="{lex:Loc Order}">
@@ -125,7 +150,7 @@
                             </Grid>
 
                         </Grid>
-
+                        
                         <TabControl Grid.Column="1">
                             <TabItem Header="Data">
                                 <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center" 
@@ -223,6 +248,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
+                     
                         <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
                             <TabItem Header="{lex:Loc Product}">
                                 <TabItem.IsEnabled>
@@ -462,7 +488,7 @@
                 </TabItem>
             </TabControl>-->
         </Grid>
-
+       
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar"
                        btnNew_Click="toolBar_btnNew_Click"
                        btnDelete_Click="toolBar_btnDelete_Click"
@@ -475,5 +501,9 @@
                        appName="ProductionOrder"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                       Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,150,0">
+            <Button x:Name="btnapprove" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
+
+        </StackPanel>
     </Grid>
 </Page>

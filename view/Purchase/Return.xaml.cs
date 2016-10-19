@@ -409,6 +409,8 @@ namespace Cognitivo.Purchase
             calculate_vat(sender, e);
         }
 
+      
+
         private void btnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;

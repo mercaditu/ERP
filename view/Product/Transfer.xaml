@@ -167,13 +167,10 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" VerticalAlignment="Top">
-                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
                         <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Exclude_OutOfStock="True" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"/>
-                        <Grid Grid.Row="2" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top" Height="26" Width="155">
-                            <TextBox Width="155" x:Name="txtsearch" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
-                            <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
-                        </Grid>
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable, Converter={StaticResource True2False}}"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
@@ -289,6 +286,11 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
+
+            <Grid Grid.Row="2" Margin="16" Grid.Column="1" VerticalAlignment="Top" Height="26" Width="155">
+                <TextBox Width="155" x:Name="txtsearch" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged"/>
+                <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
+            </Grid>
         </Grid>
         <cntrl:toolBar Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
                        btnNew_Click="toolBar_btnNew_Click" 

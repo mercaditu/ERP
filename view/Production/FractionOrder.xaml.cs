@@ -569,6 +569,7 @@ namespace Cognitivo.Production
             if (production_order_detail != null)
             {
                 production_order_detail.is_input = false;
+                production_order_detail.RaisePropertyChanged("is_input");
             }
         }
 
@@ -578,6 +579,7 @@ namespace Cognitivo.Production
             if (production_order_detail != null)
             {
                 production_order_detail.is_input = true;
+                production_order_detail.RaisePropertyChanged("is_input");
             }
         }
 

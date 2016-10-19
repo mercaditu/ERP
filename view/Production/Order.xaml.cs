@@ -93,23 +93,23 @@ namespace Cognitivo.Production
             //OrderDB.CancelAllChanges();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            projectViewSource.Source = OrderDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            //projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
+            //projectViewSource.Source = OrderDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_lineViewSource = (CollectionViewSource)FindResource("production_lineViewSource");
-            production_lineViewSource.Source = OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            production_lineViewSource.Source = await OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Load();
+            await OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).LoadAsync();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            app_dimensionViewSource.Source = OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_dimensionViewSource.Source = await OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_measurementViewSource.Source = await OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             production_orderproduction_order_detailViewSource = ((CollectionViewSource)(FindResource("production_orderproduction_order_detailViewSource")));
 
@@ -123,6 +123,7 @@ namespace Cognitivo.Production
             {
                 btncost.Visibility = Visibility.Collapsed;
             }
+
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(OrderDB, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -790,7 +791,7 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-            Cognitivo.Class.CostCalculation CostCalculation = new Class.CostCalculation();
+            Class.CostCalculation CostCalculation = new Class.CostCalculation();
             CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
             crud_modal_cost.Visibility = Visibility.Visible;
         }
@@ -798,6 +799,26 @@ namespace Cognitivo.Production
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             crud_modal_cost.Visibility = Visibility.Collapsed;
+        }
+
+        private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+                production_order_detail.is_input = false;
+                production_order_detail.RaisePropertyChanged("is_input");
+            }
+        }
+
+        private void ToggleQuantity_Unchecked(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+                production_order_detail.is_input = true;
+                production_order_detail.RaisePropertyChanged("is_input");
+            }
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

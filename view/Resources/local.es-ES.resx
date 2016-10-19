@@ -345,6 +345,9 @@
   <data name="ConnectionString" xml:space="preserve">
     <value>Cadena De Conexión</value>
   </data>
+  <data name="Consume" xml:space="preserve">
+    <value>Consumir</value>
+  </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>Consumir Siguiente Rango</value>
   </data>
@@ -546,7 +549,7 @@
   <data name="Discount" xml:space="preserve">
     <value>Descuento</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
+  <data name="Divisible" xml:space="preserve">
     <value>Divisible</value>
   </data>
   <data name="Document" xml:space="preserve">
@@ -1011,6 +1014,9 @@
   <data name="PrintingPress" xml:space="preserve">
     <value>Imprenta</value>
   </data>
+  <data name="Produce" xml:space="preserve">
+    <value>Produce</value>
+  </data>
   <data name="Product" xml:space="preserve">
     <value>Producto</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Resumen De Órdenes De Compra</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
-    <value>Devolcuión De Compra</value>
+    <value>Devolución De Compra</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
     <value>Oferta De Compra</value>

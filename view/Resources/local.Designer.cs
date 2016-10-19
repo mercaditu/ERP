@@ -61,6 +61,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Accountant.
         /// </summary>
         public static string Accountant {
@@ -736,6 +745,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Consume.
+        /// </summary>
+        public static string Consume {
+            get {
+                return ResourceManager.GetString("Consume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ConsumeNextRange.
         /// </summary>
         public static string ConsumeNextRange {
@@ -1339,11 +1357,11 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Divisable.
+        ///   Looks up a localized string similar to @Divisible.
         /// </summary>
-        public static string Divisable {
+        public static string Divisible {
             get {
-                return ResourceManager.GetString("Divisable", resourceCulture);
+                return ResourceManager.GetString("Divisible", resourceCulture);
             }
         }
         
@@ -2730,6 +2748,15 @@ namespace Cognitivo.Resources {
         public static string PrintingPress {
             get {
                 return ResourceManager.GetString("PrintingPress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Produce.
+        /// </summary>
+        public static string Produce {
+            get {
+                return ResourceManager.GetString("Produce", resourceCulture);
             }
         }
         

@@ -345,6 +345,9 @@
   <data name="ConnectionString" xml:space="preserve">
     <value>Connection String</value>
   </data>
+  <data name="Consume" xml:space="preserve">
+    <value>Verbrauchen</value>
+  </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>Verbrauchen Nächsten Bereich</value>
   </data>
@@ -546,8 +549,8 @@
   <data name="Discount" xml:space="preserve">
     <value>Rabatt</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
-    <value>Parzellierbar</value>
+  <data name="Divisible" xml:space="preserve">
+    <value>Teilbar</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Dokument</value>
@@ -1010,6 +1013,9 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Druckerpresse</value>
+  </data>
+  <data name="Produce" xml:space="preserve">
+    <value>Produzieren</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>Produkt</value>

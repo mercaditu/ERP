@@ -301,6 +301,33 @@ namespace Cognitivo.Product
             }
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtsearch.Text != string.Empty)
+            {
+                if (item_transferitem_transfer_detailViewSource != null)
+                {
+                    if (item_transferitem_transfer_detailViewSource.View != null)
+                    {
+                        item_transferitem_transfer_detailViewSource.View.Filter = i =>
+                        {
+                            item_transfer_detail item_transfer_detail = (item_transfer_detail)i;
+                            item item = item_transfer_detail.item_product != null ? item_transfer_detail.item_product.item != null ? item_transfer_detail.item_product.item : null : null;
+                            if (item != null)
+                            {
+                                if (item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) || item.code.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                                    return true;
+                                else
+                                    return false;
+                            }
+
+                            return false;
+                        };
+                    }
+                }
+            }
+        }
+
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 

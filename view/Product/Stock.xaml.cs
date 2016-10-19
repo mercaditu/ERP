@@ -6,8 +6,6 @@ using System.Data.Entity;
 using System.Data;
 using entity;
 using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {

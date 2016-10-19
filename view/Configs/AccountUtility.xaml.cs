@@ -213,6 +213,16 @@ namespace Cognitivo.Configs
             {
                 app_account_listViewSource.Source = db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal).ToList();
                 app_account_listViewSource.View.Refresh();
+             
+            }
+            if (app_accountViewSource!=null)
+            {
+                app_accountViewSource.View.Refresh();
+              
+            }
+            if (app_accountapp_account_detailViewSource != null)
+            {
+                app_accountapp_account_detailViewSource.View.Refresh();
             }
         }
     }

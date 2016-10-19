@@ -19,7 +19,7 @@ namespace Cognitivo.Production
         ExecutionDB ExecutionDB = new ExecutionDB();
 
         //Production EXECUTION CollectionViewSource
-        CollectionViewSource projectViewSource, project_task_dimensionViewSource, production_execution_detailViewSource;
+        CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
 
         //Production ORDER CollectionViewSource
         CollectionViewSource
@@ -33,31 +33,31 @@ namespace Cognitivo.Production
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
-            item_dimensionViewSource.Source = ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            
+            item_dimensionViewSource.Source = await ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
        
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.type != production_order.ProductionOrderTypes.Fraction).Load();
+            await ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.type != production_order.ProductionOrderTypes.Fraction).LoadAsync();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
-            projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
-            ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            projectViewSource.Source = ExecutionDB.projects.Local;
+            //projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
+            //ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            //projectViewSource.Source = ExecutionDB.projects.Local;
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
-            ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            await ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_dimensionViewSource.Source = await ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_measurementViewSource.Source = await ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).ToListAsync();
 
             cmbcoefficient.SelectedIndex = -1;
 
@@ -704,10 +704,16 @@ namespace Cognitivo.Production
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-            Cognitivo.Class.CostCalculation CostCalculation = new Class.CostCalculation();
-            CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
-            crud_modal_cost.Visibility = Visibility.Visible;
+            if (production_order != null)
+            {
+                List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
+                if (production_order_detailList.Count > 0)
+                {
+                    Class.CostCalculation CostCalculation = new Class.CostCalculation();
+                    CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
+                    crud_modal_cost.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

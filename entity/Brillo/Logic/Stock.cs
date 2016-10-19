@@ -480,6 +480,19 @@ namespace entity.Brillo.Logic
                             {
                                 Cost = parent_order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
                             }
+                            else if (production_execution_detail.production_order_detail.child.Count() > 0)
+                            {
+                                if (production_execution_detail.quantity > 0)
+                                {
+                                    foreach (production_order_detail child_order in production_execution_detail.production_order_detail.child)
+                                    {
+                                        foreach (production_execution_detail child_exe in child_order.production_execution_detail)
+                                        {
+                                            Cost += (child_exe.quantity * child_exe.unit_cost * PercentOfTotal) / production_execution_detail.quantity;
+                                        }
+                                    }
+                                }
+                            }
 
                             //In case of wrong configuration.
                             production_execution_detail.unit_cost = Cost;

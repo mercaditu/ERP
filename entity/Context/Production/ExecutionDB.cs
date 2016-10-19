@@ -72,7 +72,7 @@ namespace entity
 
         }
 
-        public int Approve(entity.production_order.ProductionOrderTypes Type)
+        public int Approve(production_order.ProductionOrderTypes Type)
         {
             foreach (production_order_detail production_order_detail in base.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {
@@ -85,7 +85,7 @@ namespace entity
                         ///Fraction: Takes a Fraction of the parent. 
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
-                        entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.insert_Stock(this, production_execution_detail);
 

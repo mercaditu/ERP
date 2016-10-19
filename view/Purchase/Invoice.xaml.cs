@@ -831,7 +831,8 @@ namespace Cognitivo.Purchase
             purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
             if (purchase_invoice != null && purchase_invoice.number != null)
             {
-                bool is_repeated = PurchaseInvoiceDB.purchase_invoice.Where(x => x.number == purchase_invoice.number).FirstOrDefaultAsync() != null ? true : false;
+                bool is_repeated = PurchaseInvoiceDB.purchase_invoice
+                    .Where(x => x.number == purchase_invoice.number && x.id_purchase_invoice != 0).FirstOrDefaultAsync() != null ? true : false;
                 if (is_repeated)
                 {
                     toolBar.msgWarning("Duplicate Invoice");

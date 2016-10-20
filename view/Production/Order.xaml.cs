@@ -791,16 +791,12 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-            Class.CostCalculation CostCalculation = new Class.CostCalculation();
-            CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
+            cntrl.PanelAdv.pnlCostCalculation pnlCostCalculation = new cntrl.PanelAdv.pnlCostCalculation();
             crud_modal_cost.Visibility = Visibility.Visible;
+            crud_modal_cost.Children.Add(pnlCostCalculation);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            crud_modal_cost.Visibility = Visibility.Collapsed;
-        }
-
+     
         private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
         {
             production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;

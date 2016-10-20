@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsCommon.cs" />
+    <Compile Include="Class\CostCalculation.cs" />
     <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
@@ -412,6 +413,9 @@
     </Compile>
     <Compile Include="PanelAdv\pnlOrder.xaml.cs">
       <DependentUpon>pnlOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlCostCalculation.xaml.cs">
+      <DependentUpon>pnlCostCalculation.xaml</DependentUpon>
     </Compile>
     <Compile Include="PanelAdv\pnlPacking.xaml.cs">
       <DependentUpon>pnlPacking.xaml</DependentUpon>
@@ -902,6 +906,10 @@
     <Page Include="PanelAdv\pnlOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlCostCalculation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PanelAdv\pnlPacking.xaml">
       <SubType>Designer</SubType>

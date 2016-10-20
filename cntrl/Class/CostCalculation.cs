@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using entity;
-namespace Cognitivo.Class
+namespace cntrl.Class
 {
     public class CostCalculation
     {

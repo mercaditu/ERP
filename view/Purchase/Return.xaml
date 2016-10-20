@@ -133,6 +133,9 @@
                         </ItemsControl>
 
                     </StackPanel>
+                    <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+                    <TextBox x:Name="CodeTextBox"
+                             Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
                     <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" Width="140"
                               Name="cbxReturnType" 

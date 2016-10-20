@@ -71,6 +71,8 @@ namespace Cognitivo.HumanResource
             hr_contract hr_contract = new hr_contract();
             hr_contract.start_date = DateTime.Now;
             hr_contract.end_date = DateTime.Now.AddYears(1);
+            hr_contract.id_department = dbContext.app_department.FirstOrDefault().id_department;
+            hr_contract.app_department = dbContext.app_department.FirstOrDefault();
             hr_contract.is_active = true;
             contact.hr_contract.Add(hr_contract);
             contacthr_contractViewSource.View.MoveCurrentToLast();

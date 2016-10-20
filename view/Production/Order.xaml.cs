@@ -16,7 +16,6 @@ namespace Cognitivo.Production
 
         CollectionViewSource
             project_task_dimensionViewSource,
-            projectViewSource,
             production_orderViewSource,
             production_lineViewSource,
             production_orderproduction_order_detailViewSource;
@@ -833,10 +832,5 @@ namespace Cognitivo.Production
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-
-
-
-
-
     }
 }

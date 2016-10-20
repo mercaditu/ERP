@@ -154,7 +154,6 @@ namespace Cognitivo.Production
             {
                 toolBar.msgApproved(1);
             }
-
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -724,15 +723,6 @@ namespace Cognitivo.Production
                 production_order_detail.status = entity.Status.Production.Approved;
             }
 
-            //if (production_order.production_execution.Count() == 0)
-            //{
-            //    production_execution production_execution = new production_execution();
-            //    production_execution.production_order = production_order;
-            //    production_execution.id_production_line = production_order.id_production_line;
-            //    production_execution.trans_date = DateTime.Now;
-            //    OrderDB.production_execution.Add(production_execution);
-            //}
-
             if (OrderDB.SaveChanges() > 0)
             {
                 filter_task();
@@ -789,10 +779,17 @@ namespace Cognitivo.Production
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-            cntrl.PanelAdv.pnlCostCalculation pnlCostCalculation = new cntrl.PanelAdv.pnlCostCalculation();
-            crud_modal_cost.Visibility = Visibility.Visible;
-            crud_modal_cost.Children.Add(pnlCostCalculation);
+            if (production_order != null)
+            {
+                List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
+
+                if (production_order_detailList.Count > 0)
+                {
+                    cntrl.PanelAdv.pnlCostCalculation pnlCostCalculation = new cntrl.PanelAdv.pnlCostCalculation();
+                    crud_modal_cost.Visibility = Visibility.Visible;
+                    crud_modal_cost.Children.Add(pnlCostCalculation);
+                }
+            }
         }
 
      

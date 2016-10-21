@@ -48,18 +48,15 @@ namespace cntrl.Class
         public List<OutputList> CalculateOutputOrder(List<production_order_detail> Listproduction_order_detail)
         {
             db db = new db();
-            List<OutputList> OutputLists = new List<Class.OutputList>();
+            List<OutputList> OutputLists = new List<OutputList>();
             foreach (production_order_detail production_order_detail in Listproduction_order_detail)
             {
-
-                OutputList OutputList = new Class.OutputList();
+                OutputList OutputList = new OutputList();
                 OutputList.id_order_detail = production_order_detail.id_order_detail;
                 OutputList.Name = production_order_detail.item.name;
                 OutputList.Code = production_order_detail.item.code;
                 OutputLists.Add(OutputList);
             }
-
-
             return OutputLists;
         }
     }

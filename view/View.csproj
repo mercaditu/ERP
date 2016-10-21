@@ -348,6 +348,9 @@
     <Compile Include="Configs\Geography.xaml.cs">
       <DependentUpon>Geography.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\Hr_position.xaml.cs">
+      <DependentUpon>Hr_position.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Hr_coefficient.xaml.cs">
       <DependentUpon>Hr_coefficient.xaml</DependentUpon>
     </Compile>
@@ -1390,6 +1393,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Geography.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\Hr_position.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

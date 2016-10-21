@@ -340,7 +340,15 @@
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                     </StackPanel>
+                    <StackPanel Margin="32,5">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/EntryExit.png" />
+                            <TextBlock Text="{lex:Loc Position}" MouseUp="config_MouseUp" Tag="Hr_position"
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
+                
                 <StackPanel Margin="16,8" Width="270">
                     <Label Content="{lex:Loc Transaction}" Style="{StaticResource H2}"/>
                     <StackPanel Margin="32,5">

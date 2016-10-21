@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 129
+            /// Last Used : 130
             /// </summary>
 
 
@@ -193,6 +193,8 @@ namespace entity
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
             HourCoeficient = 48,
+            [LocalizedDescription("Position")]
+            Position = 130,
             [LocalizedDescription("EmpRecievable")]
             EmpRecievable = 101,
 

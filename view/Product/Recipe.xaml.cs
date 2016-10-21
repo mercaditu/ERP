@@ -170,11 +170,24 @@ namespace Cognitivo.Product
 
           foreach (item_recepie_detail item_recepie_detail in item_recepie.item_recepie_detail)
           {
-              if (item_recepie_detail.item != null)
-              {
-                  Cost += (decimal)item_recepie_detail.item.unit_cost * item_recepie_detail.quantity;
-              }
-          }
+                if (item_recepie_detail.item.item_product!=null)
+                {
+                    int id_item_product = item_recepie_detail.item.item_product.FirstOrDefault().id_item_product;
+                    item_movement item_movement = ProductRecipeDB.item_movement
+                      .Where(x => x.id_item_product == id_item_product && x.credit > 0)
+                      .OrderByDescending(y => y.trans_date)
+                      .FirstOrDefault();
+                    if (item_movement != null)
+                    {
+                        Cost += item_movement.item_movement_value.Sum(x => x.unit_value);
+                    }
+                    else
+                    {
+                        Cost += item_recepie_detail.item.unit_cost != null ? (decimal)item_recepie_detail.item.unit_cost : 0;
+                    }
+                }
+            
+            }
 
           tbxCalculateCost.Text = entity.Brillo.Localize.StringText("Cost") + " : " + Math.Round(Cost) + " " + CurrentSession.Currency_Default.name;
       }

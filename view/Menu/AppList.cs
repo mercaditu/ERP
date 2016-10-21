@@ -83,6 +83,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_position", entity.App.Names.Position, "EntryExit", entity.CurrentSession.Versions.Medium, "0");
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Item", entity.App.Names.Items, "Item", entity.CurrentSession.Versions.Lite, "0");
@@ -183,6 +184,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Financial, "Configs.Account", "Account", "BankAccountTrans", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Financial, "Configs.FiscalPeriod", "FiscalPeriod", "BankAccountTrans", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Financial, "Configs.Hr_coefficient", "Hr_coefficient", "", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Financial, "Configs.Hr_position", "Hr_position", "", entity.CurrentSession.Versions.Medium, "0");
+
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.Condition", "Condition", "Condition", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.Contract", "Contract", "Contract", entity.CurrentSession.Versions.Lite, "0");

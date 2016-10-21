@@ -242,6 +242,9 @@
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\hr_coefficient.xaml.cs">
+      <DependentUpon>hr_coefficient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\impexcurrency.xaml.cs">
       <DependentUpon>impexcurrency.xaml</DependentUpon>
     </Compile>
@@ -278,8 +281,8 @@
     <Compile Include="Curd\VATWithholding.xaml.cs">
       <DependentUpon>VATWithholding.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Curd\hr_coefficient.xaml.cs">
-      <DependentUpon>hr_coefficient.xaml</DependentUpon>
+    <Compile Include="Curd\hr_position.xaml.cs">
+      <DependentUpon>hr_position.xaml</DependentUpon>
     </Compile>
     <Compile Include="Curd\geography.xaml.cs">
       <DependentUpon>geography.xaml</DependentUpon>
@@ -691,6 +694,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Curd\hr_coefficient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Curd\impexcurrency.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -739,7 +746,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Curd\hr_coefficient.xaml">
+    <Page Include="Curd\hr_position.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

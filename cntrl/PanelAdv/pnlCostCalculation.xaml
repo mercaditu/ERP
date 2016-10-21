@@ -29,8 +29,8 @@
         </Grid>
         <StackPanel Orientation="Horizontal">
             <DataGrid x:Name="OutPutDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1"
-								EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
-								RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+								EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible"
+								RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="OutPutDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" MaxWidth="256" Binding="{Binding Code}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="64" MaxWidth="256" Binding="{Binding Name}"/>
@@ -41,8 +41,8 @@
             <StackPanel>
                 <Label></Label>
                 <DataGrid x:Name="InputDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1"
-								EnableRowVirtualization="True" Height="Auto"  HorizontalScrollBarVisibility="Auto"
-								RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+								EnableRowVirtualization="True" Height="Auto"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible"
+								RowDetailsVisibilityMode="VisibleWhenSelected" Width="366">
                     <DataGrid.Columns>
 
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="64" MaxWidth="256" Binding="{Binding Name}"/>
@@ -51,7 +51,7 @@
 												Header="{lex:Loc Cognitivo:local:Cost}" Width="128"
 												ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-												Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
+												Header="{lex:Loc Cognitivo:local:ProductionCost}" Width="128"
 												ElementStyle="{StaticResource RightAlignStyle}"/>
                     </DataGrid.Columns>
                 </DataGrid>

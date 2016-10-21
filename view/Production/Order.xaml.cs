@@ -148,6 +148,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
+
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
             if (OrderDB.SaveChanges() > 0)
@@ -651,7 +652,13 @@ namespace Cognitivo.Production
                         {
                             if (production_order_detail.id_project_task != 0)
                             {
-                                db.production_order_detail.Remove(db.production_order_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).FirstOrDefault());
+                                production_order_detail deltproduction_order_detail = db.production_order_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).FirstOrDefault();
+                                List<production_order_detail> production_order_detaillist = deltproduction_order_detail.child.ToList();
+                                foreach (production_order_detail childproduction_order_detail in production_order_detaillist)
+                                {
+                                    db.production_order_detail.Remove(childproduction_order_detail);
+                                }
+                                db.production_order_detail.Remove(deltproduction_order_detail);
                                 db.SaveChanges();
                             }
                             else
@@ -782,17 +789,19 @@ namespace Cognitivo.Production
             if (production_order != null)
             {
                 List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-
+                List<production_order_detail> production_order_detailOutputList = production_order.production_order_detail.Where(x => x.is_input == false).ToList();
                 if (production_order_detailList.Count > 0)
                 {
                     cntrl.PanelAdv.pnlCostCalculation pnlCostCalculation = new cntrl.PanelAdv.pnlCostCalculation();
+                    pnlCostCalculation.Inputproduction_order_detailList = production_order_detailList;
+                    pnlCostCalculation.Outputproduction_order_detailList = production_order_detailOutputList;
                     crud_modal_cost.Visibility = Visibility.Visible;
                     crud_modal_cost.Children.Add(pnlCostCalculation);
                 }
             }
         }
 
-     
+
         private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
         {
             production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;

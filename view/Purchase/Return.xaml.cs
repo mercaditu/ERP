@@ -283,6 +283,7 @@ namespace Cognitivo.Purchase
                         _purchase_return_detail.purchase_return = purchase_return;
                         _purchase_return_detail.item = item;
                         _purchase_return_detail.id_item = sbxItem.ItemID;
+                        _purchase_return_detail.item_description = item.name;
                         purchase_return.purchase_return_detail.Add(_purchase_return_detail);
                     }
                     else
@@ -441,7 +442,7 @@ namespace Cognitivo.Purchase
 
                 foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
                 {
-                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Any())
+                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Count()==0)
                     {
                         purchase_return_detail purchase_return_detail = new purchase_return_detail();
                         purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;

@@ -91,7 +91,7 @@ namespace Cognitivo.Product
             {
                 if (app_location != null)
                 {
-                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList(); //.Select(x=>x.id_item_product).ToList();
+                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Include(y => y.item).ToList(); //.Select(x=>x.id_item_product).ToList();
                     Class.StockCalculations Stock = new Class.StockCalculations();
                     List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
 

@@ -166,10 +166,10 @@
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
-						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Value}" Binding="{Binding unit_value, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
-						<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
+						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
+						<!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
 															ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
 						<DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto"/>
 					</DataGrid.Columns>
 				</DataGrid>

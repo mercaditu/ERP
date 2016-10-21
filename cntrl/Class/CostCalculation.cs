@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using entity;
 namespace cntrl.Class
 {
@@ -11,11 +8,11 @@ namespace cntrl.Class
         public List<CostList> CalculateOrderCost(List<production_order_detail> Listproduction_order_detail)
         {
             db db = new db();
-            List<CostList> costLists = new List<Class.CostList>();
+            List<CostList> costLists = new List<CostList>();
             foreach (production_order_detail production_order_detail in Listproduction_order_detail)
             {
                 entity.Brillo.Stock stock = new entity.Brillo.Stock();
-                CostList CostList = new Class.CostList();
+                CostList CostList = new CostList();
                 CostList.parent_id_order_detail = production_order_detail.parent.id_order_detail;
                 CostList.Name = production_order_detail.item.name;
                 CostList.Name = production_order_detail.item.name;
@@ -23,10 +20,11 @@ namespace cntrl.Class
                 if (production_order_detail.item.item_product.FirstOrDefault() != null)
                 {
                     int id_item_product = production_order_detail.item.item_product.FirstOrDefault().id_item_product;
+
                     item_movement item_movement = db.item_movement
-                      .Where(x => x.id_item_product == id_item_product && x.credit > 0)
-                      .OrderByDescending(y => y.trans_date)
-                      .FirstOrDefault();
+                                  .Where(x => x.id_item_product == id_item_product && x.credit > 0)
+                                  .OrderByDescending(y => y.trans_date)
+                                  .FirstOrDefault();
                     if (item_movement != null)
                     {
                         CostList.Cost = item_movement.item_movement_value.Sum(x => x.unit_value);
@@ -49,7 +47,6 @@ namespace cntrl.Class
         }
         public List<OutputList> CalculateOutputOrder(List<production_order_detail> Listproduction_order_detail)
         {
-
             db db = new db();
             List<OutputList> OutputLists = new List<Class.OutputList>();
             foreach (production_order_detail production_order_detail in Listproduction_order_detail)
@@ -78,10 +75,10 @@ namespace cntrl.Class
 
     public class OutputList
     {
-
         public int id_order_detail { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
 
+        ICollection<CostList> Costs { get; set; }
     }
 }

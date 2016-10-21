@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using Cognitivo.Reporting.Data;
 using MySql.Data.MySqlClient;
-using System.Windows;
 
 namespace Cognitivo.Class
 {
@@ -121,21 +120,6 @@ namespace Cognitivo.Class
                               order by it.trans_date";
             
             string WhereQuery = String.Format("it.id_company = {0} and ", entity.CurrentSession.Id_Company);
-
-            //if (TransferNumber < 0)
-            //{
-            //    WhereQuery = WhereQuery + " it.number like '%" + TransferNumber + "%' and ";
-            //}
-
-            //if (Project != null)
-            //{
-            //    WhereQuery = WhereQuery + " it.id_project =" + Project.id_project + " and ";
-            //}
-
-            //if (ItemID > 0)
-            //{
-            //    WhereQuery = WhereQuery + " ip.id_item =" + ItemID + " and ";
-            //}
 
             query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
             

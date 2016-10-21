@@ -270,6 +270,7 @@
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\RichTextBoxHelper.cs" />
     <Compile Include="Class\CreditLimit.cs" />
+    <Compile Include="Class\Finance.cs" />
     <Compile Include="Class\Stock.cs" />
     <Compile Include="Class\transfercost.cs" />
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
@@ -1062,6 +1063,7 @@
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PendingRecievables.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />

@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 130
+            /// Last Used : 133
             /// </summary>
 
 
@@ -57,6 +57,8 @@ namespace entity
             SalesBudget = 15,
             [LocalizedDescription("PointOfSale")]
             PointOfSale = 78,
+            [LocalizedDescription("PendingReceivables")]
+            PendingReceivables = 132,
 
             //Purchase
             [LocalizedDescription("PurchaseTender")]
@@ -69,6 +71,8 @@ namespace entity
             PurchaseReturn = 8,
             [LocalizedDescription("PackingList")]
             PurchasePacking = 106,
+            [LocalizedDescription("PendingPayables")]
+            PendingPayables = 133,
 
             //Commercial
             [LocalizedDescription("AccountsPayable")]

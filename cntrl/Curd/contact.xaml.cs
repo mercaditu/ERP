@@ -63,7 +63,20 @@ namespace cntrl.Curd
             }
         }
 
-        public event btnSave_ClickedEventHandler btnSave_Click;
+        public event btnLoad_ClickedEventHandler LoadContact_Click;
+        public delegate void btnLoad_ClickedEventHandler();
+        public void btnLoad_MouseUp(object sender, EventArgs e)
+        {
+
+
+            if (LoadContact_Click != null)
+            {
+                LoadContact_Click();
+            }
+        }
+    
+
+    public event btnSave_ClickedEventHandler btnSave_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {

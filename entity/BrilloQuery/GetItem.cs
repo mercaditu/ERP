@@ -11,7 +11,7 @@ namespace entity.BrilloQuery
         public GetItems()
         {
             Items = new List<Item>();
-            string query = @"
+            string query = @"SET sql_mode = '';
                             select 
 	                             item.id_item as ID, 
 	                             item.code as Code, 

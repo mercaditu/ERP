@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -115,7 +114,7 @@ namespace cntrl.Controls
 
             contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
 
-            Task task = Task.Factory.StartNew(() => LoadData());
+            LoadData();
 
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
 
@@ -139,17 +138,19 @@ namespace cntrl.Controls
 
         private void LoadData()
         {
+            progBar.Visibility = Visibility.Visible;
+            Task task = Task.Factory.StartNew(() => LoadData_Thread());
+        }
+
+        private void LoadData_Thread()
+        {
             ContactList = null;
             using (entity.BrilloQuery.GetContacts Execute = new entity.BrilloQuery.GetContacts())
             {
-                Dispatcher.BeginInvoke(
-               DispatcherPriority.ContextIdle,
-               new Action(delegate()
-               {
-
-                   ContactList = Execute.List.AsQueryable();
-               }));
+                ContactList = Execute.List.AsQueryable();
             }
+
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
         }
 
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -358,7 +359,7 @@ namespace cntrl.Controls
 
         private void popCrud_Closed(object sender)
         {
-            Task task = Task.Factory.StartNew(() => LoadData());
+            LoadData();
         }
 
     }

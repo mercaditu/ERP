@@ -123,23 +123,31 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
-            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }
 
-            Task task = Task.Factory.StartNew(() => LoadData());
+            LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
         }
 
         private void LoadData()
         {
+            progBar.Visibility = Visibility.Visible;
+            Task task = Task.Factory.StartNew(() => LoadData_Thread());
+        }
+
+        private void LoadData_Thread()
+        {
             Items = null;
             using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
             {
                 Items = Execute.Items.AsQueryable();
             }
+
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
         }
 
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -148,7 +156,7 @@ namespace cntrl.Controls
             {
                 Dispatcher.BeginInvoke(
                 DispatcherPriority.ContextIdle,
-                new Action(delegate()
+                new Action(delegate ()
                 {
                     tbxSearch.Focus();
                 }));
@@ -191,7 +199,7 @@ namespace cntrl.Controls
             {
                 string SearchText = tbxSearch.Text;
 
-                if(SearchText.Count() >= 1)
+                if (SearchText.Count() >= 1)
                 {
                     if (taskSearch != null)
                     {
@@ -200,8 +208,6 @@ namespace cntrl.Controls
                             tokenSource.Cancel();
                         }
                     }
-
-                    progBar.IsActive = true;
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
@@ -216,7 +222,7 @@ namespace cntrl.Controls
 
             if (smartBoxItemSetting.Default.ExactSearch)
             {
-                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID==null) && ( x.Code == SearchText ));
+                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.Code == SearchText));
             }
             else
             {
@@ -233,14 +239,13 @@ namespace cntrl.Controls
                 }
                 if (Exclude_OutOfStock == true)
                 {
-                    predicate = predicate.And(x => x.InStock>0);
+                    predicate = predicate.And(x => x.InStock > 0);
                 }
-                
+
             }
 
             itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
             ItemPopUp.IsOpen = true;
-            progBar.IsActive = false;
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -251,7 +256,7 @@ namespace cntrl.Controls
                 cntrl.Curd.item item = new Curd.item();
                 item.itemobject = new entity.item();
                 popCrud.IsOpen = true;
-                popCrud.Visibility = System.Windows.Visibility.Visible;
+                popCrud.Visibility = Visibility.Visible;
                 ContactPopUp.Children.Add(item);
             }
         }
@@ -264,46 +269,23 @@ namespace cntrl.Controls
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             popupCustomize.IsOpen = false;
-            popupCustomize.Visibility = System.Windows.Visibility.Collapsed;
+            popupCustomize.Visibility = Visibility.Collapsed;
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.IsOpen = true;
-            popupCustomize.Visibility = System.Windows.Visibility.Visible;
+            popupCustomize.Visibility = Visibility.Visible;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            //if (Controls.smartBoxItemSetting.Default.SearchFilter != null)
-            //{
-            //    Controls.smartBoxItemSetting.Default.SearchFilter.Clear();
-            //}
-
-            //if (rbtnCode.IsChecked == true)
-            //{
-            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Code");
-            //}
-            //if (rbtnName.IsChecked == true)
-            //{
-            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Name");
-            //}
-            //if (rbtnTag.IsChecked == true)
-            //{
-            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
-            //}
-            //if (rbtnExactCode.IsChecked == true)
-            //{
-            //    Controls.smartBoxItemSetting.Default.SearchFilter.Add("ExactCode");
-            //}
-
-            Controls.smartBoxItemSetting.Default.Save();
+            smartBoxItemSetting.Default.Save();
         }
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
-            Task task = Task.Factory.StartNew(() => LoadData());
+            LoadData();
         }
     }
 }

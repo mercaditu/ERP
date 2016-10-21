@@ -22,7 +22,6 @@
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
             <StackPanel x:Name="ContactPopUp"/>
         </Popup>
-        
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
                  Text="{Binding Path=Text, Delay=2000, ElementName=_SmartBox_Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -55,24 +54,24 @@
                             <DropShadowEffect Color="Purple" BlurRadius="3" ShadowDepth="0"/>
                         </ToggleButton.Effect>
                     </ToggleButton>
-                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
+                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                            <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
+                        <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
                             <StackPanel Orientation="Vertical" Background="White">
                                 <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc InStock}" 
                                       IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"/>
-                                    <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
+                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=1}"
                                       Checked="RadioButton_Checked"/>
-                                    <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
+                                <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=2}" 
                                       Checked="RadioButton_Checked"/>
-                                    <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tags}"
+                                <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tags}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=3}" 
                                       Checked="RadioButton_Checked"/>
-                                </StackPanel>
-                            </Border>
-                        </Popup>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
                 </StackPanel>
                 <Button Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="White" Background="Silver" BorderBrush="White"
                         Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"
@@ -91,10 +90,10 @@
                 </Button>
             </StackPanel>
         </Border>
-        
+
         <!-- Progress Ring -->
-        <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Left"
-                            Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
+        <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26" Opacity=".32"
+                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939"/>
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>

@@ -72,6 +72,11 @@
                    PreviewMouseUp="openContactCRUD" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
         </StackPanel>
+        
+        <!-- Progress Ring -->
+        <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26" Opacity=".32"
+                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939"/>
+
 
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"

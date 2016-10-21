@@ -349,17 +349,15 @@ namespace Cognitivo.Sales
 
                 //Add CRUD Panel into View.
                 cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
-                ContactCURD.LoadContact_Click += crudContact_btnCancel_Click;
+                ContactCURD.btnSave_Click += crudContact_btnCancel_Click;
                 ContactCURD.IsCustomer = true;
                 stackCustomer.Children.Add(ContactCURD);
             }
         }
 
-        private void crudContact_btnCancel_Click()
+        private void crudContact_btnCancel_Click(object sender)
         {
-            Task task = Task.Factory.StartNew(() => sbxContact.LoadData());
-
-
+            sbxContact.LoadData();
         }
 
         #endregion

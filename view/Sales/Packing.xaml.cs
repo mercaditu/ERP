@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using entity;
-using System.Windows.Input;
 using System.Data.Entity;
 
 namespace Cognitivo.Sales
@@ -70,7 +68,7 @@ namespace Cognitivo.Sales
 
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product.Count>0))
                 {
-                    item_movement item_movement = new entity.item_movement();
+                    item_movement item_movement = new item_movement();
 
                     item_movement.trans_date = DateTime.Now;
                     item_movement.id_item_product = sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
@@ -81,7 +79,7 @@ namespace Cognitivo.Sales
                     item_movement.credit = 0;
                     item_movement.status = Status.Stock.InStock;
                     item_movement.timestamp = DateTime.Now;
-                    item_movement.State = System.Data.Entity.EntityState.Added;
+                    item_movement.State = EntityState.Added;
 
                     if (sales_invoice_detail.id_location != null || sales_invoice_detail.id_location > 0)
                     {

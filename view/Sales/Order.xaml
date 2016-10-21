@@ -336,7 +336,7 @@
                             </Popup>
                         </StackPanel>
                         <StackPanel >
-                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Margin="0,0,436,0"/>
+                            <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Margin="0,0,436,0"/>
                             <Grid>
                                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" 
                                                      can_New="True"    Width="256" Height="26" Select="item_Select"

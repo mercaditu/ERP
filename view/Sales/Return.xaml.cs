@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Data.Entity;
 using entity;
-using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 
@@ -34,7 +31,7 @@ namespace Cognitivo.Sales
             try
             {
                 salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-                SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Load();
+                SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Load();
                 salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
                 sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
 

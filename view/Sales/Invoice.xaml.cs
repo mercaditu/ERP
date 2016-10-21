@@ -156,9 +156,9 @@ namespace Cognitivo.Sales
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Expression<Func<entity.sales_invoice, bool>> QueryBuilder()
+        private Expression<Func<sales_invoice, bool>> QueryBuilder()
         {
-            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+            var predicate = PredicateBuilder.True<sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
 
@@ -224,17 +224,17 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesInvoiceDB = new entity.SalesInvoiceDB();
+            SalesInvoiceDB = new SalesInvoiceDB();
             Settings SalesSettings = new Settings();
             var predicate = QueryBuilder();
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>

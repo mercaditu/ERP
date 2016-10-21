@@ -31,10 +31,7 @@ namespace Cognitivo.Purchase
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void load_PrimaryData()
@@ -45,14 +42,14 @@ namespace Cognitivo.Purchase
 
         private async void load_PrimaryDataThread()
         {
-            Cognitivo.Purchase.InvoiceSetting InvoiceSetting = new Cognitivo.Purchase.InvoiceSetting();
+            InvoiceSetting InvoiceSetting = new InvoiceSetting();
             if (InvoiceSetting.filterbyBranch)
             {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             else
             {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>

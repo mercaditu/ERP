@@ -42,31 +42,13 @@ namespace Cognitivo.Menu
             catch
             {
                 var obj = Assembly.GetExecutingAssembly().GetName().Version;
-                lblVersion.Content = string.Format("Application Version {0}.{1}.{2}.{3}", obj.Major, obj.Minor, obj.Build, obj.Revision);
+                lblVersion.Content = string.Format("Cognitivo ERP Version {0}.{1}.{2}.{3}", obj.Major, obj.Minor, obj.Build, obj.Revision);
             }
 
             myFrame = myWindow.mainFrame;
 
-            //string imgSource = "http://images2.fanpop.com/image/photos/12900000/Tony-Stark-tony-stark-12952919-387-528.jpg";
-            //BitmapImage bitmap = new BitmapImage();
-            //bitmap.BeginInit();
-            //bitmap.UriSource = new Uri(imgSource, UriKind.Absolute);
-            //bitmap.EndInit();
-            //imgAvatar.ImageSource = bitmap;
-
+            //Threads DB Creation Code on StartUp.
             Task taskdb = Task.Factory.StartNew(() => check_createdb());
-
-            entity.Properties.Settings Settings = new entity.Properties.Settings();
-            if (Settings.user_Name != null && Settings.user_UserName != "")
-            {
-                tbxUser.Text = Settings.user_UserName;
-                tbxPassword.Focus();
-                chbxRemember.IsChecked = true;
-            }
-            else
-            {
-                tbxUser.Focus();
-            }
         }
 
         private void check_createdb()
@@ -81,8 +63,21 @@ namespace Cognitivo.Menu
                 }
                 else
                 {
+                    entity.Properties.Settings Settings = new entity.Properties.Settings();
+
+                    if (Settings.user_Name != null && Settings.user_UserName != "")
+                    {
+                        tbxUser.Text = Settings.user_UserName;
+                        tbxPassword.Focus();
+                        chbxRemember.IsChecked = true;
+                    }
+                    else
+                    {
+                        tbxUser.Focus();
+                    }
+
                     string company_Alias = string.Empty;
-                    app_company app_company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
+                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
                     
                     if (app_company != null)
                     {
@@ -96,7 +91,6 @@ namespace Cognitivo.Menu
                         }
                     }
 
-                    entity.Properties.Settings Settings = new entity.Properties.Settings();
                     Settings.company_Name = company_Alias;
                     Dispatcher.BeginInvoke((Action)(() =>
                     {

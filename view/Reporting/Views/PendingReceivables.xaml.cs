@@ -19,7 +19,7 @@ namespace Cognitivo.Reporting.Views
 
         public void Fill(object sender, EventArgs e)
         {
-            this.reportViewer.Reset();
+            reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             
@@ -34,27 +34,27 @@ namespace Cognitivo.Reporting.Views
 
             reportDataSource1.Name = "PendingReceivables"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingReceivables.rdlc";
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingReceivables.rdlc";
 
-            this.reportViewer.Refresh();
-            this.reportViewer.RefreshReport();
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
         }
         public void Filter(object sender, EventArgs e)
         {
           
-            this.reportViewer.Reset();
+            reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
            
             reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportPanel.Filterdt;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
  
 
-            this.reportViewer.Refresh();
-            this.reportViewer.RefreshReport();
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
         }
     }
 }

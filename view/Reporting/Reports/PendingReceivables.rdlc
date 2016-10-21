@@ -1480,7 +1480,7 @@
             <TablixMember />
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>PendingRecievables</DataSetName>
+        <DataSetName>PendingReceivables</DataSetName>
         <Height>1.20312in</Height>
         <Width>7.46354in</Width>
         <Style>
@@ -1634,7 +1634,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="PendingRecievables">
+    <DataSet Name="PendingReceivables">
       <Query>
         <DataSourceName>FinanceDS</DataSourceName>
         <CommandText>/* Local Query */</CommandText>

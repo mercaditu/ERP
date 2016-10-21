@@ -4,7 +4,6 @@ using MySql.Data.MySqlClient;
 
 namespace Cognitivo.Class
 {
-
 	public class Finance
 	{
 		public DataTable PendingRecievables(DateTime TransDate)

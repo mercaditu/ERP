@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using entity;
+using System;
 
 namespace cntrl.PanelAdv
 {
@@ -11,7 +13,8 @@ namespace cntrl.PanelAdv
     {
         public List<production_order_detail> Inputproduction_order_detailList { get; set; }
         public List<production_order_detail> Outputproduction_order_detailList { get; set; }
-
+        CollectionViewSource inputViewSource;
+        CollectionViewSource outputViewSource;
         public pnlCostCalculation()
         {
             InitializeComponent();
@@ -29,23 +32,16 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                //Load your data here and assign the result to the CollectionViewSource.
                 Class.CostCalculation CostCalculation = new Class.CostCalculation();
-                InputDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(Inputproduction_order_detailList);
-                OutPutDataGrid.ItemsSource = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList);
+                inputViewSource = FindResource("inputViewSource") as CollectionViewSource;
+
+                outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
+                outputViewSource.Source = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList,Inputproduction_order_detailList);
+
 
             }
         }
 
-        private void OutPutDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (OutPutDataGrid.SelectedItem!=null)
-            {
-                Class.OutputList OutputList = OutPutDataGrid.SelectedItem as Class.OutputList;
-
-                Class.CostCalculation CostCalculation = new Class.CostCalculation();
-                InputDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(Inputproduction_order_detailList.Where(x=>x.parent.id_order_detail == OutputList.id_order_detail).ToList());
-            }
-        }
+      
     }
 }

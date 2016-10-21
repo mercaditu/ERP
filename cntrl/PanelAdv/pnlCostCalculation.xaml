@@ -13,10 +13,11 @@
 	         lex:LocalizeDictionary.DesignCulture="en-US"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" Background="White"
-			 Height="256" Width="512" Loaded="UserControl_Loaded">
+			 Height="256" Width="600" Loaded="UserControl_Loaded">
 	<UserControl.Resources>
         <CollectionViewSource x:Key="outputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
-        <CollectionViewSource x:Key="inputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:CostList}, CreateList=True}"/>
+        <CollectionViewSource x:Key="inputViewSource" Source="{Binding Costs, Source={StaticResource outputViewSource}}"/>
+        
     </UserControl.Resources>
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
@@ -33,16 +34,16 @@
 			<ListBox Background="{StaticResource AccentColor_Brush}" Width="256"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-					 SelectionChanged="OutPutDataGrid_SelectionChanged"
-					 ItemContainerStyle="{StaticResource nav_ListSelection}">
+					
+					 ItemContainerStyle="{StaticResource nav_ListSelection}" ItemsSource="{Binding Source={StaticResource outputViewSource}}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<control:navList recordCode="{Binding Code}" recordName="{Binding Name}"/>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-			<Grid Margin="4">
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+			<Grid Margin="4" >
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource outputViewSource}}">
 					<Grid AllowDrop="True" Background="White">
 						<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
 											FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
@@ -56,7 +57,7 @@
 				</StackPanel>
 				<DataGrid x:Name="InputDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" Margin="0,80,0,0"
 								EnableRowVirtualization="True" Height="Auto"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible"
-								RowDetailsVisibilityMode="VisibleWhenSelected">
+								RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource inputViewSource}}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="128" MaxWidth="512" Binding="{Binding Name}"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" MaxWidth="256" Binding="{Binding Quantity}"/>

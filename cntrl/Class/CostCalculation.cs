@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using entity;
+using System.ComponentModel;
+
 namespace cntrl.Class
 {
     public class CostCalculation
@@ -8,13 +10,12 @@ namespace cntrl.Class
         public List<CostList> CalculateOrderCost(List<production_order_detail> Listproduction_order_detail)
         {
             db db = new db();
-            List<CostList> costLists = new List<CostList>();
+            List<CostList> costlists = new List<Class.CostList>();
             foreach (production_order_detail production_order_detail in Listproduction_order_detail)
             {
                 entity.Brillo.Stock stock = new entity.Brillo.Stock();
                 CostList CostList = new CostList();
-                CostList.parent_id_order_detail = production_order_detail.parent.id_order_detail;
-                CostList.Name = production_order_detail.item.name;
+           
                 CostList.Name = production_order_detail.item.name;
                 CostList.Quantity = production_order_detail.quantity;
                 if (production_order_detail.item.item_product.FirstOrDefault() != null)
@@ -39,13 +40,13 @@ namespace cntrl.Class
                     CostList.Cost = (decimal)production_order_detail.item.unit_cost;
                 }
                 CostList.SubTotal = CostList.Quantity * CostList.Cost;
-                costLists.Add(CostList);
+                costlists.Add(CostList);
             }
+            return costlists;
 
-
-            return costLists;
+           
         }
-        public List<OutputList> CalculateOutputOrder(List<production_order_detail> Listproduction_order_detail)
+        public List<OutputList> CalculateOutputOrder(List<production_order_detail> Listproduction_order_detail, List<production_order_detail> Listinputproduction_order_detail)
         {
             db db = new db();
             List<OutputList> OutputLists = new List<OutputList>();
@@ -55,6 +56,12 @@ namespace cntrl.Class
                 OutputList.id_order_detail = production_order_detail.id_order_detail;
                 OutputList.Name = production_order_detail.item.name;
                 OutputList.Code = production_order_detail.item.code;
+                List<CostList> costlists = CalculateOrderCost(Listinputproduction_order_detail.Where(x => x.parent.id_order_detail == OutputList.id_order_detail).ToList());
+                foreach (CostList CostList in costlists)
+                {
+                    OutputList.Costs.Add(CostList);
+                }
+              
                 OutputLists.Add(OutputList);
             }
             return OutputLists;
@@ -63,19 +70,46 @@ namespace cntrl.Class
 
     public class CostList
     {
-        public int parent_id_order_detail { get; set; }
+    
         public string Name { get; set; }
+
         public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
+
         public decimal SubTotal { get; set; }
+       public OutputList OutputList { get; set; }
     }
 
-    public class OutputList
+    public class OutputList:INotifyPropertyChanged
     {
+        public OutputList()
+        {
+            Costs = new List<CostList>();
+        }
         public int id_order_detail { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public decimal GrandTotal
+        {
+            get
+            {
+                _GrandTotal = Costs.Sum(x => x.Cost);
 
-        ICollection<CostList> Costs { get; set; }
+                //calc_credit(_GrandTotal);
+                return _GrandTotal;
+            }
+            set
+            {
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        decimal _GrandTotal;
+        public ICollection<CostList> Costs { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

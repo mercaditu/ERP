@@ -102,9 +102,7 @@ namespace cntrl.Curd
                     throw;
                 }
 
-                if (SaveChanges != null)
-                { SaveChanges(this, new RoutedEventArgs()); }
-
+                SaveChanges?.Invoke(this, new RoutedEventArgs());
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = Visibility.Hidden;

@@ -590,6 +590,9 @@
     <Compile Include="Reporting\Views\Production_HumanResources.xaml.cs">
       <DependentUpon>Production_HumanResources.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\PendingReceivables.xaml.cs">
+      <DependentUpon>PendingReceivables.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\Subscription.xaml.cs">
       <DependentUpon>Subscription.xaml</DependentUpon>
     </Compile>
@@ -1063,7 +1066,7 @@
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\PendingRecievables.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PendingReceivables.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
@@ -1579,6 +1582,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\Production_HumanResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\PendingReceivables.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -692,9 +692,12 @@ namespace entity.Brillo.Document
 
         public ReportDataSource PaymentSchedual(payment_schedual payment_schedual)
         {
+            /// Pankeel we need to change some things here.
+            /// 1) Create query based on Payment Schedual.
+            /// 
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
-            List<payment_schedual> SchedualList = new List<entity.payment_schedual>();
+            List<payment_schedual> SchedualList = new List<payment_schedual>();
             SchedualList.Add(payment_schedual);
 
             reportDataSource.Value = SchedualList
@@ -712,7 +715,9 @@ namespace entity.Brillo.Document
                                 InvoiceCurrency = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.name : "" : "" : "",
                                 InvoiceGrandTotal = g.purchase_invoice != null ? g.purchase_invoice.GrandTotal.ToString() : "",
 
-                                PaymentExpiryDate = g.expire_date.ToShortDateString()
+                                PaymentExpiryDate = g.expire_date.ToShortDateString(),
+
+
                             }).ToList();
 
             return reportDataSource;

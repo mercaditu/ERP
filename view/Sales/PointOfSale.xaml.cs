@@ -358,6 +358,8 @@ namespace Cognitivo.Sales
         {
             stackCustomer.Children.RemoveAt(0);
             popCrud.IsOpen = false;
+           
+
         }
 
         #endregion
@@ -425,8 +427,7 @@ namespace Cognitivo.Sales
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
         }
 
-
-
+       
 
     }
 }

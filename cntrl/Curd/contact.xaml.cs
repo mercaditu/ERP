@@ -7,6 +7,7 @@ using entity;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace cntrl.Curd
 {
@@ -80,6 +81,7 @@ namespace cntrl.Curd
                 btnSave_Click?.Invoke(sender);
                 //Reloads all Data.
                 CurrentSession.Load_BasicData();
+           
             }
 
             btnCancel_MouseDown(null, null);

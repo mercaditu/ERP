@@ -133,7 +133,7 @@ namespace cntrl.Controls
             }
         }
 
-        private void LoadData()
+        public void LoadData()
         {
             progBar.Visibility = Visibility.Visible;
             Task task = Task.Factory.StartNew(() => LoadData_Thread());

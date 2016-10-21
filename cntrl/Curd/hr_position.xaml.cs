@@ -83,9 +83,7 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
-                    Grid parentGrid = (Grid)this.Parent;
-                    parentGrid.Children.Clear();
-                    parentGrid.Visibility = System.Windows.Visibility.Hidden;
+                    btnCancel_Click(sender,e);
                 }
             }
             catch (Exception ex)

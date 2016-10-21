@@ -31,6 +31,7 @@ namespace Cognitivo.Product
             item_inventoryitem_inventory_detailViewSource = (CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource"));
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
+
             await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
@@ -90,12 +91,14 @@ namespace Cognitivo.Product
             {
                 if (app_location != null)
                 {
-                    List<int> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Select(x=>x.id_item_product).ToList();
+                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList(); //.Select(x=>x.id_item_product).ToList();
                     Class.StockCalculations Stock = new Class.StockCalculations();
                     List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
 
-                    foreach (int i in item_productLIST)
+                    foreach (item_product item_product in item_productLIST)
                     {
+                        int i = item_product.id_item_product;
+
                         if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).Any())
                         {
                             item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).FirstOrDefault();
@@ -114,7 +117,7 @@ namespace Cognitivo.Product
                         {
                             item_inventory_detail item_inventory_detail = new item_inventory_detail();
                             item_inventory_detail.State = EntityState.Added;
-                            //item_inventory_detail.item_product = i;
+                            item_inventory_detail.item_product = item_product;
                             item_inventory_detail.id_item_product = i;
 
                             item_inventory_detail.app_location = app_location;

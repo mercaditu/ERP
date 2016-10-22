@@ -30,10 +30,10 @@ namespace Cognitivo.Reporting.Views
             
             ReportPanel.ReportDt = dt;
 
-            reportDataSource1.Name = "PendingReceivables"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "PendingAccounts"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingReceivables.rdlc";
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
             reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingPayable");
 
             reportViewer.Refresh();

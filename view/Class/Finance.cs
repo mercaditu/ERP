@@ -56,13 +56,13 @@ namespace Cognitivo.Class
 								contact.name as Contact,
 								si.number as Number,
                                 si.comment as Comment,
-								cond.name as Condition,
+								cond.name as Conditions,
 								contract.name as Contract,
 								DATE_FORMAT(schedual.expire_date,'%d %b %y') as ExpiryDate,
 								curr.name as CurrencyName,
 								fx.buy_value as Rate,
 								schedual.debit as Value, 
-								schedual.CreditChild as Paid, 
+								schedual.DebitChild as Paid, 
 								(schedual.credit - schedual.DebitChild) as Balance,
 								schedual.trans_date as TransDate
 								from(

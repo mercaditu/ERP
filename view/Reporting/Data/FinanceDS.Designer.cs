@@ -667,7 +667,7 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnNumber;
             
-            private global::System.Data.DataColumn columnCondition;
+            private global::System.Data.DataColumn columnConditions;
             
             private global::System.Data.DataColumn columnContract;
             
@@ -742,9 +742,9 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ConditionColumn {
+            public global::System.Data.DataColumn ConditionsColumn {
                 get {
-                    return this.columnCondition;
+                    return this.columnConditions;
                 }
             }
             
@@ -873,12 +873,12 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingAccountsRow AddPendingAccountsRow(string Contact, string Number, string Condition, string Contract, string ExpiryDate, string CurrencyName, decimal Rate, decimal Value, decimal Paid, decimal Balance, string TransDate, string Code, string GovID, string Comment) {
+            public PendingAccountsRow AddPendingAccountsRow(string Contact, string Number, string Conditions, string Contract, string ExpiryDate, string CurrencyName, decimal Rate, decimal Value, decimal Paid, decimal Balance, string TransDate, string Code, string GovID, string Comment) {
                 PendingAccountsRow rowPendingAccountsRow = ((PendingAccountsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Contact,
                         Number,
-                        Condition,
+                        Conditions,
                         Contract,
                         ExpiryDate,
                         CurrencyName,
@@ -914,7 +914,7 @@ namespace Cognitivo.Reporting.Data {
             internal void InitVars() {
                 this.columnContact = base.Columns["Contact"];
                 this.columnNumber = base.Columns["Number"];
-                this.columnCondition = base.Columns["Condition"];
+                this.columnConditions = base.Columns["Conditions"];
                 this.columnContract = base.Columns["Contract"];
                 this.columnExpiryDate = base.Columns["ExpiryDate"];
                 this.columnCurrencyName = base.Columns["CurrencyName"];
@@ -935,8 +935,8 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnContact);
                 this.columnNumber = new global::System.Data.DataColumn("Number", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNumber);
-                this.columnCondition = new global::System.Data.DataColumn("Condition", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCondition);
+                this.columnConditions = new global::System.Data.DataColumn("Conditions", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnConditions);
                 this.columnContract = new global::System.Data.DataColumn("Contract", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContract);
                 this.columnExpiryDate = new global::System.Data.DataColumn("ExpiryDate", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1305,17 +1305,17 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Condition {
+            public string Conditions {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingAccounts.ConditionColumn]));
+                        return ((string)(this[this.tablePendingAccounts.ConditionsColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Condition\' in table \'PendingAccounts\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Conditions\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingAccounts.ConditionColumn] = value;
+                    this[this.tablePendingAccounts.ConditionsColumn] = value;
                 }
             }
             
@@ -1521,14 +1521,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsConditionNull() {
-                return this.IsNull(this.tablePendingAccounts.ConditionColumn);
+            public bool IsConditionsNull() {
+                return this.IsNull(this.tablePendingAccounts.ConditionsColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetConditionNull() {
-                this[this.tablePendingAccounts.ConditionColumn] = global::System.Convert.DBNull;
+            public void SetConditionsNull() {
+                this[this.tablePendingAccounts.ConditionsColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

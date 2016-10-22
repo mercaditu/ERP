@@ -106,13 +106,14 @@ namespace entity
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
 
-        public static void Start(security_user User, security_role Role)
+        public static void Start(security_user Sec_User, security_role Role)
         {
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
 
-            if (User != null)
+            if (Sec_User != null)
             {
+                User = Sec_User;
                 Id_User = User.id_user;
                 UserRole = Role;
 

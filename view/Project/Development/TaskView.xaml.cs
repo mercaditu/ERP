@@ -28,34 +28,33 @@ namespace Cognitivo.Project.Development
 
         public TaskView()
         {
-           
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
 
-            ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            await ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
 
             //Bad Code. Will bring too many items into view.
-            ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_dimensionViewSource.Source = ProjectTaskDB.app_dimension.Local;
 
             CollectionViewSource app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
-            ProjectTaskDB.app_property.Load();
+            await ProjectTaskDB.app_property.LoadAsync();
             app_propertyViewSource.Source = ProjectTaskDB.app_property.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            await ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_measurementViewSource.Source = ProjectTaskDB.app_measurement.Local;
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
@@ -85,13 +84,13 @@ namespace Cognitivo.Project.Development
 
             if (ToggleQuantity.IsChecked == true)
             {
-                stpexcustion.Visibility = System.Windows.Visibility.Visible;
-                stpestimate.Visibility = System.Windows.Visibility.Collapsed;
+                stpexcustion.Visibility = Visibility.Visible;
+                stpestimate.Visibility = Visibility.Collapsed;
             }
             else
             {
-                stpestimate.Visibility = System.Windows.Visibility.Visible;
-                stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
+                stpestimate.Visibility = Visibility.Visible;
+                stpexcustion.Visibility = Visibility.Collapsed;
             }
         }
 

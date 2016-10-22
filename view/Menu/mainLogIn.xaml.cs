@@ -56,7 +56,8 @@ namespace Cognitivo.Menu
             entity.Properties.Settings Settings = new entity.Properties.Settings();
             app_company app_company = null;
 
-            Dispatcher.BeginInvoke((Action)(() => {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
                 if (Settings.user_Name != null || Settings.user_UserName != "")
                 {
                     tbxUser.Text = Settings.user_UserName;
@@ -80,6 +81,15 @@ namespace Cognitivo.Menu
                     return;
                 }
 
+                if (CurrentSession.Id_Company == 0)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        myFrame.Navigate(new Configs.Settings());
+                        return;
+                    }));
+                }
+
                 app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
             }
 
@@ -94,7 +104,7 @@ namespace Cognitivo.Menu
         {
             if (taskAuth == null)
             {
-                string u = tbxUser.Text; 
+                string u = tbxUser.Text;
                 string p = tbxPassword.Password;
                 taskAuth = Task.Factory.StartNew(() => auth_Login(u, p));
             }
@@ -117,36 +127,37 @@ namespace Cognitivo.Menu
                                                  && x.password == p
                                                  && x.id_company == CurrentSession.Id_Company)
                                        .FirstOrDefault();
-
-                Role = User.security_role;
+                if (User != null)
+                {
+                    Role = User.security_role;
+                }
+                else
+                {
+                    //Incorrect user credentials.
+                    Dispatcher.BeginInvoke((Action)(() => { tbxPassword.Focus(); }));
+                    return;
+                }
             }
 
             try
             {
-                if (User != null && Role != null)
+                Properties.Settings ViewSettings = new Properties.Settings();
+                CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
+
+                CurrentSession.Start(User, Role);
+
+                Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    Properties.Settings ViewSettings = new Properties.Settings();
-                    CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
-
-                    CurrentSession.Start(User, Role);
-
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    if (chbxRemember.IsChecked == true)
                     {
-                        if (chbxRemember.IsChecked == true)
-                        {
-                            entity.Properties.Settings Settings = new entity.Properties.Settings();
-                            Settings.user_UserName = tbxUser.Text;
-                            Settings.Save();
-                        }
-                    }));
+                        entity.Properties.Settings Settings = new entity.Properties.Settings();
+                        Settings.user_UserName = tbxUser.Text;
+                        Settings.Save();
+                    }
+                }));
 
-                    myWindow.is_LoggedIn = true;
-                    Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));
-                }
-                else
-                {
-                    Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));
-                }
+                myWindow.is_LoggedIn = true;
+                Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));
             }
             catch { } //Do Nothing
             finally

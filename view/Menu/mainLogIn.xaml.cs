@@ -53,19 +53,28 @@ namespace Cognitivo.Menu
 
         private void check_createdb()
         {
-            using (var db = new db())
+            bool db_exists = false;
+
+            using (db db = new db())
             {
-                bool db_exists = db.Database.Exists();
+                db.Configuration.LazyLoadingEnabled = false;
+                db.Configuration.AutoDetectChangesEnabled = false;
 
-                if (!db_exists)
-                {
-                    Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
-                }
-                else
-                {
-                    entity.Properties.Settings Settings = new entity.Properties.Settings();
+                db_exists = db.Database.Exists();
+            }
 
-                    if (Settings.user_Name != null && Settings.user_UserName != "")
+            if (db_exists == false)
+            {
+                //Go to StartUp to create DB or connect to another Database.
+                Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
+            }
+            else
+            {
+                entity.Properties.Settings Settings = new entity.Properties.Settings();
+
+
+                Dispatcher.BeginInvoke((Action)(() => {
+                    if (Settings.user_Name != null || Settings.user_UserName != "")
                     {
                         tbxUser.Text = Settings.user_UserName;
                         tbxPassword.Focus();
@@ -75,10 +84,16 @@ namespace Cognitivo.Menu
                     {
                         tbxUser.Focus();
                     }
+                }));
+
+                using (db db = new db())
+                {
+                    db.Configuration.LazyLoadingEnabled = false;
+                    db.Configuration.AutoDetectChangesEnabled = false;
 
                     string company_Alias = string.Empty;
                     app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                    
+
                     if (app_company != null)
                     {
                         if (!string.IsNullOrEmpty(app_company.alias))
@@ -114,7 +129,7 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { this.Cursor = Cursors.AppStarting; }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
-            
+
             try
             {
                 entity.Properties.Settings Settings = new entity.Properties.Settings();
@@ -133,7 +148,7 @@ namespace Cognitivo.Menu
 
                 if (CurrentSession.User != null)
                 {
-                    Dispatcher.BeginInvoke((Action)(() => 
+                    Dispatcher.BeginInvoke((Action)(() =>
                     {
                         if (chbxRemember.IsChecked == true)
                         {
@@ -147,19 +162,14 @@ namespace Cognitivo.Menu
                 }
                 else
                 {
-                    Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));                        
+                    Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));
                 }
             }
-            catch 
-            {
-                //Dispatcher.BeginInvoke((Action)(() => 
-                //{
-                //    MessageBox.Show(ex.InnerException.ToString(), "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}));
-            }
+            catch { } //Do Nothing
             finally
             {
-                Dispatcher.BeginInvoke((Action)(() => {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
                     Cursor = Cursors.Arrow;
                     progBar.IsIndeterminate = false;
                 }));

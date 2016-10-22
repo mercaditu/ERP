@@ -66,7 +66,7 @@ namespace Cognitivo.Security
                 entity.Brillo.Activation Activation = new entity.Brillo.Activation();
                 Activation.VersionEncrypt(version, security_role);
                 dbContext.SaveChanges();
-                entity.CurrentSession.Refresh_Security();
+                entity.CurrentSession.Load_Security();
                 security_roleViewSource.View.Refresh();
             }
             catch (Exception ex)

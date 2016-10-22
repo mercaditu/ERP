@@ -52,7 +52,7 @@ namespace entity
                 if (_Id_Branch == 0)
                 {
                     _Id_Branch = Properties.Settings.Default.branch_ID;
-                };
+                }
                 return _Id_Branch;
             }
             set { _Id_Branch = value; }
@@ -91,7 +91,6 @@ namespace entity
         {
             get
             {
-              
                 return _ConnectionString;
             }
             set { _ConnectionString = value; }
@@ -131,34 +130,27 @@ namespace entity
                     Id_Company = User.app_company.id_company;
 
                     //Check if Branch Exists
-                    app_branch app_branch = User.app_company.app_branch.Where(branch =>
-                                    branch.id_company == Id_Company &&
-                                    branch.id_branch == Properties.Settings.Default.branch_ID)
-                                    .FirstOrDefault();
-                    if (app_branch != null)
-                    {
-                        Id_Branch = app_branch.id_branch;
-                    }
+                    //app_branch app_branch = User.app_company.app_branch.Where(branch =>
+                    //                branch.id_company == Id_Company &&
+                    //                branch.id_branch == Properties.Settings.Default.branch_ID)
+                    //                .FirstOrDefault();
+                    //if (app_branch != null)
+                    //{
+                    //    Id_Branch = app_branch.id_branch;
+                    //}
 
-                    //Check if Terminal Exists inside Branch
-                    app_terminal app_terminal = ctx.app_terminal.Where(terminal =>
-                                    terminal.id_branch == Id_Branch &&
-                                    terminal.id_terminal == Properties.Settings.Default.terminal_ID)
-                                    .FirstOrDefault();
-                    if (app_terminal != null)
-                    {
-                        Id_Terminal = app_terminal.id_terminal;
-                    }
-
-                    //Default Currency
-                    Currency_Default = ctx.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
-                    if (Currency_Default != null)
-                    {
-                        CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
-                    }
+                    ////Check if Terminal Exists inside Branch
+                    //app_terminal app_terminal = ctx.app_terminal.Where(terminal =>
+                    //                terminal.id_branch == Id_Branch &&
+                    //                terminal.id_terminal == Properties.Settings.Default.terminal_ID)
+                    //                .FirstOrDefault();
+                    //if (app_terminal != null)
+                    //{
+                    //    Id_Terminal = app_terminal.id_terminal;
+                    //}
 
                     //Setting Security, once CurrentSession Data is set.
-                    Refresh_Security();
+                    Load_Security();
 
                     //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
                     Load_BasicData();
@@ -169,7 +161,12 @@ namespace entity
             }
         }
 
-        public static void Refresh_Security()
+        public static void Load_Security()
+        {
+            Task taskAuth = Task.Factory.StartNew(() => Thread_Security());
+        }
+
+        private static void Thread_Security()
         {
             Security_CurdList.Clear();
             Security_role_privilageList.Clear();
@@ -189,15 +186,22 @@ namespace entity
 
         public static void Load_BasicData()
         {
-            Task taskAuth = Task.Factory.StartNew(() => Load_Data());
+            Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
         }
 
-        private static void Load_Data()
+        private static void Thread_Data()
         {
             using (db cntx = new db())
             {
                 cntx.Configuration.LazyLoadingEnabled = false;
                 cntx.Configuration.AutoDetectChangesEnabled = false;
+
+                //Default Currency
+                Currency_Default = cntx.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
+                if (Currency_Default != null)
+                {
+                    CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
+                }
 
                 SalesRep = cntx.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contract = cntx.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -209,13 +213,13 @@ namespace entity
             }
         }
 
-        private static List<entity.sales_rep> SalesRep { get; set; }
-        private static List<entity.app_contract> Contract { get; set; }
-        private static List<entity.app_condition> Condition { get; set; }
-        private static List<entity.app_vat_group> VAT_G { get; set; }
-        private static List<entity.app_branch> Branch { get; set; }
-        private static List<entity.app_terminal> Terminal { get; set; }
-        private static List<entity.app_currency> Currency { get; set; }
+        private static List<sales_rep> SalesRep { get; set; }
+        private static List<app_contract> Contract { get; set; }
+        private static List<app_condition> Condition { get; set; }
+        private static List<app_vat_group> VAT_G { get; set; }
+        private static List<app_branch> Branch { get; set; }
+        private static List<app_terminal> Terminal { get; set; }
+        private static List<app_currency> Currency { get; set; }
 
         public static app_currency Currency_Default { get; set; }
         public static app_currencyfx CurrencyFX_Default { get; set; }

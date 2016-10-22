@@ -278,7 +278,7 @@ namespace entity
                 {
                     _item = value;
 
-                    if (_item != null && item_description == null)
+                    if (_item != null && string.IsNullOrEmpty(item_description))
                     {
                         item_description = _item.name;
                         RaisePropertyChanged("item_description");

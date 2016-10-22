@@ -126,29 +126,6 @@ namespace entity
                     Properties.Settings.Default.user_Name = User.name_full;
                     Properties.Settings.Default.Save();
 
-                    //Set the Company
-                    Id_Company = User.app_company.id_company;
-
-                    //Check if Branch Exists
-                    //app_branch app_branch = User.app_company.app_branch.Where(branch =>
-                    //                branch.id_company == Id_Company &&
-                    //                branch.id_branch == Properties.Settings.Default.branch_ID)
-                    //                .FirstOrDefault();
-                    //if (app_branch != null)
-                    //{
-                    //    Id_Branch = app_branch.id_branch;
-                    //}
-
-                    ////Check if Terminal Exists inside Branch
-                    //app_terminal app_terminal = ctx.app_terminal.Where(terminal =>
-                    //                terminal.id_branch == Id_Branch &&
-                    //                terminal.id_terminal == Properties.Settings.Default.terminal_ID)
-                    //                .FirstOrDefault();
-                    //if (app_terminal != null)
-                    //{
-                    //    Id_Terminal = app_terminal.id_terminal;
-                    //}
-
                     //Setting Security, once CurrentSession Data is set.
                     Load_Security();
 

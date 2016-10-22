@@ -53,66 +53,41 @@ namespace Cognitivo.Menu
 
         private void check_createdb()
         {
-            bool db_exists = false;
+            entity.Properties.Settings Settings = new entity.Properties.Settings();
+            app_company app_company = null;
+
+            Dispatcher.BeginInvoke((Action)(() => {
+                if (Settings.user_Name != null || Settings.user_UserName != "")
+                {
+                    tbxUser.Text = Settings.user_UserName;
+                    tbxPassword.Focus();
+                    chbxRemember.IsChecked = true;
+                }
+                else
+                {
+                    tbxUser.Focus();
+                }
+            }));
 
             using (db db = new db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-                db_exists = db.Database.Exists();
-            }
-
-            if (db_exists == false)
-            {
-                //Go to StartUp to create DB or connect to another Database.
-                Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
-            }
-            else
-            {
-                entity.Properties.Settings Settings = new entity.Properties.Settings();
-
-
-                Dispatcher.BeginInvoke((Action)(() => {
-                    if (Settings.user_Name != null || Settings.user_UserName != "")
-                    {
-                        tbxUser.Text = Settings.user_UserName;
-                        tbxPassword.Focus();
-                        chbxRemember.IsChecked = true;
-                    }
-                    else
-                    {
-                        tbxUser.Focus();
-                    }
-                }));
-
-                using (db db = new db())
+                if (db.Database.Exists() == false)
                 {
-                    db.Configuration.LazyLoadingEnabled = false;
-                    db.Configuration.AutoDetectChangesEnabled = false;
-
-                    string company_Alias = string.Empty;
-                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-
-                    if (app_company != null)
-                    {
-                        if (!string.IsNullOrEmpty(app_company.alias))
-                        {
-                            company_Alias = app_company.alias;
-                        }
-                        else
-                        {
-                            company_Alias = app_company.name;
-                        }
-                    }
-
-                    Settings.company_Name = company_Alias;
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        Settings.Save();
-                    }));
+                    Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
+                    return;
                 }
+
+                app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
             }
+
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Settings.company_Name = app_company != null ? string.IsNullOrEmpty(app_company.alias) ? app_company.alias : app_company.name : "";
+                Settings.Save();
+            }));
         }
 
         private void btnLogIn_Click(object sender, EventArgs e)
@@ -130,28 +105,36 @@ namespace Cognitivo.Menu
             Dispatcher.BeginInvoke((Action)(() => { this.Cursor = Cursors.AppStarting; }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
 
+            security_user User = null;
+            security_role Role = null;
+
+            //Originally inside Current Session. I have removed it to take advantage of Warm Queries, to help speed up process.
+            using (db db = new db())
+            {
+                db.Configuration.AutoDetectChangesEnabled = false;
+
+                User = db.security_user.Where(x => x.name == u
+                                                 && x.password == p
+                                                 && x.id_company == CurrentSession.Id_Company)
+                                       .FirstOrDefault();
+
+                Role = User.security_role;
+            }
+
             try
             {
-                entity.Properties.Settings Settings = new entity.Properties.Settings();
-                if (Settings.company_ID == 0)
+                if (User != null && Role != null)
                 {
-                    using (db db = new db())
-                    {
-                        Settings.company_ID = db.app_company.FirstOrDefault().id_company;
-                        Settings.Save();
-                    }
-                }
+                    Properties.Settings ViewSettings = new Properties.Settings();
+                    CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
 
-                Properties.Settings ViewSettings = new Properties.Settings();
-                CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
-                CurrentSession.Start(u, p);
+                    CurrentSession.Start(User, Role);
 
-                if (CurrentSession.User != null)
-                {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         if (chbxRemember.IsChecked == true)
                         {
+                            entity.Properties.Settings Settings = new entity.Properties.Settings();
                             Settings.user_UserName = tbxUser.Text;
                             Settings.Save();
                         }

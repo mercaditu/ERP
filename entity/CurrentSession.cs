@@ -106,35 +106,27 @@ namespace entity
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
 
-        public static void Start(string UserName, string Password)
+        public static void Start(security_user User, security_role Role)
         {
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
 
-            using (db ctx = new db())
+            if (User != null)
             {
-                //Set the User
-                User = ctx.security_user.Where(x => x.name == UserName
-                                                 && x.password == Password
-                                                 && x.id_company == Id_Company)
-                                       .FirstOrDefault();
-                if (User != null)
-                {
-                    Id_User = User.id_user;
-                    UserRole = ctx.security_role.Where(x => x.id_role == User.id_role).FirstOrDefault();
+                Id_User = User.id_user;
+                UserRole = Role;
 
-                    Properties.Settings.Default.user_Name = User.name_full;
-                    Properties.Settings.Default.Save();
+                Properties.Settings.Default.user_Name = User.name_full;
+                Properties.Settings.Default.Save();
 
-                    //Setting Security, once CurrentSession Data is set.
-                    Load_Security();
+                //Setting Security, once CurrentSession Data is set.
+                Load_Security();
 
-                    //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
-                    Load_BasicData();
-                   
-                    Brillo.Activation Activation = new Brillo.Activation();
-                    Version = Activation.VersionDecrypt();
-                }
+                //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
+                Load_BasicData();
+
+                Brillo.Activation Activation = new Brillo.Activation();
+                Version = Activation.VersionDecrypt();
             }
         }
 

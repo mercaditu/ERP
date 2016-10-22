@@ -43,8 +43,6 @@ namespace entity.Brillo
                     {
                         companycode = version[2];
                     }
-
-
                 }
             }
 
@@ -113,8 +111,6 @@ namespace entity.Brillo
                     {
                         companycode = version[2];
                     }
-
-
                 }
             }
 

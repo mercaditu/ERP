@@ -1,6 +1,7 @@
 ﻿using entity;
 using System;
 using System.Data;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Cognitivo.Reporting.Views
@@ -28,9 +29,8 @@ namespace Cognitivo.Reporting.Views
 
             Class.Finance Finance = new Class.Finance();
             dt = Finance.PendingRecievables(ReportPanel.EndDate);
-
-            ReportPanel.ReportDt = dt;
             
+            ReportPanel.ReportDt = dt;
 
             reportDataSource1.Name = "PendingReceivables"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;

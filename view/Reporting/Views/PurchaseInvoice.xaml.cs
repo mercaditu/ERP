@@ -26,23 +26,8 @@ namespace Cognitivo.Reporting.Views
                 
             DataTable dt = new DataTable();
 
-            //if (ReportPanel.SupplierID > 0)
-            //{
-            //    dt = PurchaseInvoiceSummaryTableAdapter.GetDataBySupplier(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, ReportPanel.SupplierID);
-            //}
-            //else
-            //{
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-            //}
-
-            //string where = string.Empty;
-
-            //if (ReportPanel.CustomerID > 0)
-            //{
-            //    where = where + "ProjectID = " + ReportPanel.CustomerID;
-            //}
-         
-                ReportPanel.ReportDt = dt;
+            dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
+            ReportPanel.ReportDt = dt;
          
             reportDataSource1.Name = "PurchaseInvoice"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value =dt; 

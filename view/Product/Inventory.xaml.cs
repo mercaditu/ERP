@@ -48,9 +48,6 @@ namespace Cognitivo.Product
               .OrderBy(a => a.name).Load();
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
 
-            app_branchViewSource.View.MoveCurrentToFirst();
-
-            //app_branchapp_locationViewSource.View.MoveCurrentToFirst();
             filetr_detail();
         }
 

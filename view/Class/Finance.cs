@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace Cognitivo.Class
 {
@@ -29,7 +30,7 @@ namespace Cognitivo.Class
 									from payment_schedual as child where child.parent_id_payment_schedual = parent.id_payment_schedual
 									) as CreditChild
 								from payment_schedual as parent
-								where parent.id_company = {0} and parent.trans_date <= {1}
+								where parent.id_company = {0} and parent.trans_date <= '{1}'
 								group by parent.id_payment_schedual
 								) as schedual
 
@@ -44,8 +45,7 @@ namespace Cognitivo.Class
 								order by schedual.expire_date";
 			
 			query = string.Format(query, entity.CurrentSession.Id_Company, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-			
-			return exeDT(query);
+            return exeDT(query);
 		}
 
 		private DataTable exeDT(string sql)

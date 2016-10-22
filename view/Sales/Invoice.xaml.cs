@@ -786,6 +786,8 @@ namespace Cognitivo.Sales
                     sales_invoice_detail.sales_order_detail = _sales_order_detail;
                     sales_invoice_detail.Contact = _sales_invoice.contact;
                     sales_invoice_detail.sales_invoice = _sales_invoice;
+                    sales_invoice_detail.app_vat_group = _sales_order_detail.app_vat_group;
+                    sales_invoice_detail.id_vat_group = _sales_order_detail.id_vat_group;
                     sales_invoice_detail.item = _sales_order_detail.item;
                     sales_invoice_detail.id_item = _sales_order_detail.id_item;
                     sales_invoice_detail.quantity = _sales_order_detail.quantity - SalesInvoiceDB.sales_invoice_detail

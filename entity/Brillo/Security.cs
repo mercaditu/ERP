@@ -20,17 +20,17 @@
             approve = true;
             annul = true;
 
-            if (CurrentSession.UserRole == null)
-            {
-                db db = new db();
-                security_role security_role = new security_role();
-                security_role.name = "Master";
-                security_role.is_active = true;
-                security_role.is_master = true;
-                db.security_role.Add(security_role);
-                db.SaveChanges();
-                CurrentSession.UserRole = security_role;
-            }
+            //if (CurrentSession.UserRole == null)
+            //{
+            //    db db = new db();
+            //    security_role security_role = new security_role();
+            //    security_role.name = "Master";
+            //    security_role.is_active = true;
+            //    security_role.is_master = true;
+            //    db.security_role.Add(security_role);
+            //    db.SaveChanges();
+            //    CurrentSession.UserRole = security_role;
+            //}
 
             if (CurrentSession.UserRole.is_master == false)
             {

@@ -61,11 +61,6 @@ namespace entity.Brillo
             return false;
         }
 
-        public void Recieve()
-        {
-
-        }
-
         private void SendEmail(string SendTo, string Message)
         {
             //string body = @"Using this new feature, you can send an e-mail message from an application very easily.";

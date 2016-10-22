@@ -20,10 +20,5 @@ namespace entity.Brillo
             }
             return null;
         }
-
-        public static int? CurrencyFX(System.Data.Entity.EntityState State)
-        {
-            return null;
-        }
     }
 }

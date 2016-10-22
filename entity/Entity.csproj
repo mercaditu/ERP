@@ -137,7 +137,6 @@
     <Compile Include="Brillo\Activation.cs" />
     <Compile Include="Brillo\ConversionFactor.cs" />
     <Compile Include="Brillo\Currency.cs" />
-    <Compile Include="Brillo\DeepCopy.cs" />
     <Compile Include="Brillo\Document\DataSource.cs" />
     <Compile Include="Brillo\Document\Normal.cs" />
     <Compile Include="Brillo\Document\NumToWords.cs" />
@@ -307,12 +306,10 @@
     <Compile Include="Application\app_vat_group_details.cs" />
     <Compile Include="Application\app_weather.cs" />
     <Compile Include="Brillo\General.cs" />
-    <Compile Include="Brillo\ImpexBrillo.cs" />
     <Compile Include="Brillo\Location.cs" />
     <Compile Include="Brillo\Logic\Document.cs" />
     <Compile Include="Brillo\Logic\Stock.cs" />
     <Compile Include="Brillo\Security.cs" />
-    <Compile Include="Brillo\Status.cs" />
     <Compile Include="Brillo\Vat.cs" />
     <Compile Include="Class\EntityValidation.cs" />
     <Compile Include="Commercial\contact.cs" />

@@ -18,6 +18,7 @@ namespace entity.Brillo
                 }
             }
         }
+
         public int get_price_list(int id_company)
         {
             using (db db = new db())

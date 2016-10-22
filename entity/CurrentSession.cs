@@ -182,6 +182,7 @@ namespace entity
                 Branch = cntx.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminal = cntx.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Currency = cntx.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
             }
         }
 
@@ -194,6 +195,7 @@ namespace entity
         private static List<app_branch> Branch { get; set; }
         private static List<app_terminal> Terminal { get; set; }
         private static List<app_currency> Currency { get; set; }
+        private static List<item_price_list> PriceList { get; set; }
 
         public static app_currency Currency_Default { get; set; }
         public static app_currencyfx CurrencyFX_Default { get; set; }

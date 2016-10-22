@@ -1,6 +1,5 @@
 namespace entity
 {
-    using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -20,7 +19,7 @@ namespace entity
             if (item != null && item.State > 0)
             {
                 Brillo.General general = new Brillo.General();
-                id_currency = general.Get_Currency(CurrentSession.Id_Company);
+                id_currency = CurrentSession.Currency_Default.id_currency;
                 id_price_list = general.get_price_list(CurrentSession.Id_Company);
             }
         }
@@ -84,10 +83,6 @@ namespace entity
              
               if (id_item>0)
               {
-                  //using (db db = new db())
-                  //{
-                  //    id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
-                  //}
                   _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
                   
               }
@@ -110,11 +105,9 @@ namespace entity
                     id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
                 }
                 _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
-
             }
             else
             {
-                // id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
                 _valuewithVAT = Brillo.Vat.return_ValueWithVAT(item.id_vat_group, _value);
             }
 
@@ -160,11 +153,6 @@ namespace entity
                     if (id_currency == 0)
                         return "Currency needs to be selected";
                 }
-                //if (columnName == "value")
-                //{
-                //    if (value == 0)
-                //        return "Value needs to be filled";
-                //}
                 return "";
             }
         }

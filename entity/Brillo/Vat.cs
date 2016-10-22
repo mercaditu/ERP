@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace entity.Brillo
@@ -29,13 +28,9 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                using (db db = new db())
+                foreach (app_vat_group_details app_vat_group in CurrentSession.Get_VAT_GroupDetails().Where(x => x.id_vat_group == id_vat_group))
                 {
-                    List<app_vat_group_details> app_vat_group_details = db.app_vat_group_details.Where(x => x.id_vat_group == id_vat_group).ToList();
-                    foreach (app_vat_group_details app_vat_group in app_vat_group_details)
-                    {
-                        coefficient = coefficient + app_vat_group.app_vat.coefficient;
-                    }
+                    coefficient = coefficient + CurrentSession.Get_VAT().Where(x => x.id_vat == app_vat_group.id_vat).FirstOrDefault().coefficient;
                 }
             }
 
@@ -48,15 +43,12 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                using (db db = new db())
-                {
-                    List<app_vat_group_details> app_vat_group_details = new List<entity.app_vat_group_details>();
-                    app_vat_group_details = db.app_vat_group_details.Where(x => x.id_vat_group == id_vat_group).ToList();
+                List<app_vat_group_details> app_vat_group_details = new List<app_vat_group_details>();
+                app_vat_group_details = CurrentSession.Get_VAT_GroupDetails().Where(x => x.id_vat_group == id_vat_group).ToList();
 
-                    foreach (app_vat_group_details app_vat_group in app_vat_group_details)
-                    {
-                        VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group.app_vat.coefficient);
-                    }
+                foreach (app_vat_group_details app_vat_group_detail in app_vat_group_details)
+                {
+                    VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.app_vat.coefficient);
                 }
             }
 
@@ -86,21 +78,6 @@ namespace entity.Brillo
                 using (db db = new db())
                 {
                     return db.app_vat_group.Where(i => i.is_default && i.id_company == Properties.Settings.Default.company_ID).FirstOrDefault().id_vat_group;
-                }
-            }
-        }
-
-        public static app_vat_group getItemVatgroup(item item)
-        {
-            if (item.app_vat_group != null)
-            {
-                return item.app_vat_group;
-            }
-            else
-            {
-                using (db db = new db())
-                {
-                    return db.app_vat_group.Where(i => i.is_default && i.id_company == Properties.Settings.Default.company_ID).FirstOrDefault();
                 }
             }
         }

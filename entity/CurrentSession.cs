@@ -176,7 +176,9 @@ namespace entity
                 SalesRep = cntx.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contract = cntx.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Condition = cntx.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                VAT_G = cntx.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                VAT_Group = cntx.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                VAT_GroupDetail = cntx.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
+                VAT = cntx.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Branch = cntx.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminal = cntx.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Currency = cntx.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -186,13 +188,16 @@ namespace entity
         private static List<sales_rep> SalesRep { get; set; }
         private static List<app_contract> Contract { get; set; }
         private static List<app_condition> Condition { get; set; }
-        private static List<app_vat_group> VAT_G { get; set; }
+        private static List<app_vat_group> VAT_Group { get; set; }
+        private static List<app_vat_group_details> VAT_GroupDetail { get; set; }
+        private static List<app_vat> VAT { get; set; }
         private static List<app_branch> Branch { get; set; }
         private static List<app_terminal> Terminal { get; set; }
         private static List<app_currency> Currency { get; set; }
 
         public static app_currency Currency_Default { get; set; }
         public static app_currencyfx CurrencyFX_Default { get; set; }
+
 
         public static List<sales_rep> Get_SalesRep()
         {
@@ -211,7 +216,17 @@ namespace entity
 
         public static List<app_vat_group> Get_VAT_Group()
         {
-            return VAT_G;
+            return VAT_Group;
+        }
+
+        public static List<app_vat_group_details> Get_VAT_GroupDetails()
+        {
+            return VAT_GroupDetail;
+        }
+
+        public static List<app_vat> Get_VAT()
+        {
+            return VAT;
         }
 
         public static List<app_branch> Get_Branch()

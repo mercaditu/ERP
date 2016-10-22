@@ -12,7 +12,8 @@ namespace entity
         {
             purchase_order purchase_order = new purchase_order();
             purchase_order.State = EntityState.Added;
-            purchase_order.id_range = Brillo.GetDefault.Return_RangeID(App.Names.PurchaseOrder);
+            purchase_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now;
             purchase_order.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();

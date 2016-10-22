@@ -16,18 +16,13 @@ namespace entity
         /// <returns>Payment Instance ready for use.</returns>
         public payment New(bool Is_PaymentRecievable)
         {
-            payment payment = new entity.payment();
+            payment payment = new payment();
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
 
             if (Is_PaymentRecievable)
             {
-                payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
-                app_document_range _app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
-                if (_app_document_range != null)
-                {
-                    payment.app_document_range = _app_document_range;
-                }
+                payment.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             }
 
             payment.IsSelected = true;

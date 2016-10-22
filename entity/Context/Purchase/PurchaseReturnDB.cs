@@ -12,7 +12,7 @@ namespace entity
         {
             purchase_return purchase_return = new purchase_return();
 
-            purchase_return.id_range = Brillo.GetDefault.Return_RangeID(App.Names.PurchaseReturn);
+            purchase_return.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PurchaseReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             purchase_return.status = Status.Documents_General.Pending;
             purchase_return.trans_date = DateTime.Now;
 

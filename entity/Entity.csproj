@@ -143,7 +143,6 @@
     <Compile Include="Brillo\Document\Start.cs" />
     <Compile Include="Brillo\Email.cs" />
     <Compile Include="Brillo\EncryptDecrypt.cs" />
-    <Compile Include="Brillo\GetDefault.cs" />
     <Compile Include="Brillo\Localize.cs" />
     <Compile Include="Brillo\Logic\AccountReceivable.cs" />
     <Compile Include="Brillo\Logic\Payment.cs">

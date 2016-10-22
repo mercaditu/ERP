@@ -13,7 +13,7 @@ namespace entity
         {
             sales_return sales_return = new sales_return();
             sales_return.State = EntityState.Added;
-            sales_return.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesReturn);
+            sales_return.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(); //Brillo.GetDefault.Return_RangeID(App.Names.SalesReturn);
             sales_return.status = Status.Documents_General.Pending;
             sales_return.trans_date = DateTime.Now;
 
@@ -117,9 +117,11 @@ namespace entity
                     {
                         if (sales_return.number == null && sales_return.id_range != null)
                         {
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == sales_return.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Get_Branch().Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Get_Terminal().Where(x => x.id_terminal == sales_return.id_terminal).FirstOrDefault().code;
+
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == sales_return.id_range).FirstOrDefault();
+
                             sales_return.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_return.RaisePropertyChanged("number");
                             sales_return.is_issued = true;

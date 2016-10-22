@@ -12,7 +12,7 @@ namespace entity
         {
             sales_order sales_order = new sales_order();
             sales_order.State = EntityState.Added;
-            sales_order.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesOrder);
+            sales_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(); //Brillo.GetDefault.Return_RangeID(App.Names.SalesBudget);
             sales_order.status = Status.Documents_General.Pending;
 
             security_user security_user = base.security_user.Where(x => x.id_user == sales_order.id_user).FirstOrDefault();

@@ -65,7 +65,7 @@ namespace entity
             {
                 item_transfer item_transfer = new item_transfer();
                 item_transfer.status = Status.Transfer.Pending;
-                entity.Properties.Settings setting = new Properties.Settings();
+               // entity.Properties.Settings setting = new Properties.Settings();
                 item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 item_transfer.id_item_request = item_request.id_item_request;
                 if (base.app_department.FirstOrDefault() != null)

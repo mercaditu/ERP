@@ -8,7 +8,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         //CollectionViewSource app_statusViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+     //   entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Status()
         {

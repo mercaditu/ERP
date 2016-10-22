@@ -24,7 +24,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_geographyViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Geography()
         {
@@ -33,7 +33,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_geographyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_geographyViewSource")));
-            entity.db.app_geography.Where(a => a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+            entity.db.app_geography.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_geographyViewSource.Source = entity.db.app_geography.Local;
         }
 

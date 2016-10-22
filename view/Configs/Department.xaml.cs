@@ -24,7 +24,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_departmentViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Department()
         {
@@ -34,7 +34,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_departmentViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_departmentViewSource")));
-            entity.db.app_department.Where(a => a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+            entity.db.app_department.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_departmentViewSource.Source = entity.db.app_department.Local;
         }
 

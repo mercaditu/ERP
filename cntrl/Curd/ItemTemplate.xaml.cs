@@ -22,7 +22,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class ItemTemplate : UserControl
     {
-         entity.Properties.Settings _setting = new entity.Properties.Settings();
+        // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
          CollectionViewSource _item_templateViewSource = null;
          public CollectionViewSource item_templateViewSource { get { return _item_templateViewSource; } set { _item_templateViewSource = value; } }

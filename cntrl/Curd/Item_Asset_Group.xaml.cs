@@ -26,7 +26,7 @@ namespace cntrl
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
 
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+       // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public Item_Asset_Group()
         {
@@ -40,7 +40,7 @@ namespace cntrl
                // 
 
                 item_asset_groupViewSource = (CollectionViewSource)FindResource("item_asset_groupViewSource");
-                entity.db.item_asset_group.Where(x => x.id_company == _settings.company_ID).ToList();
+                entity.db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
                 item_asset_groupViewSource.Source = entity.db.item_asset_group.Local;
           
              

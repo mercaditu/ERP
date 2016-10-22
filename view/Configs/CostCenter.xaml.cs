@@ -11,7 +11,7 @@ namespace Cognitivo.Configs
     {
         dbContext entity = new dbContext();
         CollectionViewSource cost_centerViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public CostCenter()
         {
@@ -20,7 +20,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cost_centerViewSource = ((CollectionViewSource)(this.FindResource("app_cost_centerViewSource")));
-            entity.db.app_cost_center.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             cost_centerViewSource.Source = entity.db.app_cost_center.Local;
         }
 

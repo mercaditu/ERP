@@ -26,7 +26,7 @@ namespace cntrl
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
 
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+      //  entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public account()
         {
@@ -40,20 +40,20 @@ namespace cntrl
                // 
  
                 accountsViewSource = (CollectionViewSource)FindResource("accountsViewSource");
-                entity.db.app_account.Where(x => x.is_active == true && x.id_company == _settings.company_ID).ToList();
+                entity.db.app_account.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).ToList();
                 accountsViewSource.Source = entity.db.app_account.Local;
           
              
                 cbxAccountType.ItemsSource = Enum.GetValues(typeof(app_account.app_account_type));
 
                 CollectionViewSource app_bankViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_bankViewSource");
-                app_bankViewSource.Source = entity.db.app_bank.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).ToList();
+                app_bankViewSource.Source = entity.db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_terminalViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_terminalViewSource");
                 app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_currencyViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_currencyViewSource");
-                app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).ToList();
+                app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                 if (operationMode == Class.clsCommon.Mode.Add)
                 {
                     app_account app_account = new app_account();

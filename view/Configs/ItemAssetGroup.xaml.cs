@@ -12,7 +12,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource item_asset_groupViewSource;        
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ItemAssetGroup()
         {
@@ -21,7 +21,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_asset_groupViewSource = ((CollectionViewSource)(FindResource("item_asset_groupViewSource")));
-            entity.db.item_asset_group.Where(a => a.id_company == _entity.company_ID ).OrderBy(a => a.name).Load();
+            entity.db.item_asset_group.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             item_asset_groupViewSource.Source = entity.db.item_asset_group.Local;
         }
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace Cognitivo.Configs
         {
 
             item_asset_groupViewSource = ((CollectionViewSource)(FindResource("item_asset_groupViewSource")));
-            entity.db.item_asset_group.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.item_asset_group.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             item_asset_groupViewSource.Source = entity.db.item_asset_group.Local;
             
         }

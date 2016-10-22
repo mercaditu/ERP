@@ -26,25 +26,25 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _setting = new entity.Properties.Settings();
+            //entity.Properties.Settings _setting = new entity.Properties.Settings();
 
             sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
-            dbContext.sales_packing.Where(a => a.id_company == _setting.company_ID).Include("sales_packing_detail").Load();
+            dbContext.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include("sales_packing_detail").Load();
             sales_packingViewSource.Source = dbContext.sales_packing.Local;
             sales_packingsales_packinglist_detailViewSource = FindResource("sales_packingsales_packing_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_branchViewSource = FindResource("app_branchViewSource") as CollectionViewSource;
-            app_branchViewSource.Source = dbContext.app_branch.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+            app_branchViewSource.Source = dbContext.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             CollectionViewSource app_terminalViewSource = FindResource("app_terminalViewSource") as CollectionViewSource;
-            app_terminalViewSource.Source = dbContext.app_terminal.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+            app_terminalViewSource.Source = dbContext.app_terminal.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
-            sales_orderViewSource.Source = dbContext.sales_order.Where(a => a.id_company == _setting.company_ID && a.status == Status.Documents_General.Approved).Include(a => a.sales_order_detail).ToList();
+            sales_orderViewSource.Source = dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.status == Status.Documents_General.Approved).Include(a => a.sales_order_detail).ToList();
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, _setting.branch_ID, _setting.terminal_ID);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
             }));
         }

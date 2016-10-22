@@ -91,8 +91,8 @@ namespace Cognitivo.Product
 
         private void item_request_detailMovementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            entity.Properties.Settings setting = new entity.Properties.Settings();
-            int id_branch = setting.branch_ID;
+           // entity.Properties.Settings setting = new entity.Properties.Settings();
+            int id_branch = CurrentSession.Id_Branch;
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (item_request_detail != null)

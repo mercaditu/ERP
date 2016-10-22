@@ -25,7 +25,7 @@ namespace Cognitivo.Configs
         entity.dbContext _entity = new entity.dbContext();
         CollectionViewSource app_vat_groupViewSource;
         Cognitivo.Properties.Settings _pref_Cognitivo = new Cognitivo.Properties.Settings();
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+       // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public VATGroup()
         {
@@ -35,7 +35,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_vat_groupViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vat_groupViewSource")));
-            _entity.db.app_vat_group.Where(a => a.id_company == _settings.company_ID).OrderByDescending(a => a.is_active).Load();
+            _entity.db.app_vat_group.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_vat_groupViewSource.Source = _entity.db.app_vat_group.Local;
         }
 

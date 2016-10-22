@@ -24,7 +24,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext _entity = new entity.dbContext();
         CollectionViewSource item_brandViewSource;
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+        //entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public ItemBrand()
         {
@@ -34,7 +34,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_brandViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_brandViewSource")));
-            _entity.db.item_brand.Where(a => a.id_company == _settings.company_ID).OrderByDescending(a => a.name).Load();
+            _entity.db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.name).Load();
             item_brandViewSource.Source = _entity.db.item_brand.Local;
         }
 

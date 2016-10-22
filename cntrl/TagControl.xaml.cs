@@ -16,8 +16,8 @@ namespace cntrl
     /// </summary>
     public partial class TagControl : UserControl
     {
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
-        entity.Properties.Settings _settings_entity = new entity.Properties.Settings();
+        //entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //entity.Properties.Settings _settings_entity = new entity.Properties.Settings();
         CollectionViewSource item_tagViewSource;
 
         public static DependencyProperty CollectionViewSourceProperty = DependencyProperty.Register("ItemsSource", typeof(CollectionViewSource), typeof(TagControl), new PropertyMetadata(null));
@@ -55,7 +55,7 @@ namespace cntrl
             {
                 item_tagViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_tagViewSource")));
                 entity.item_tag_detail.Load();
-                entity.item_tag.Where(x => x.id_company == _settings_entity.company_ID && x.is_active == true).OrderBy(x => x.name).Load();
+                entity.item_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
                 item_tagViewSource.Source = entity.item_tag.Local;
             }
 
@@ -99,7 +99,7 @@ namespace cntrl
                 
                 db.item_tag.Add(item_tag);
                 db.SaveChanges();
-                entity.item_tag.Where(x => x.id_company == _settings_entity.company_ID && x.is_active == true).OrderBy(x => x.name).Load();
+                entity.item_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
                 itemComboBox.Data = item_tag;
 
 

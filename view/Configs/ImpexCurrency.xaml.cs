@@ -23,7 +23,7 @@ namespace Cognitivo.Configs
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_currencyViewSource;
         private int _IdCurrency;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ImpexCurrency()
         {
@@ -33,7 +33,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             app_currencyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_currencyViewSource")));
-            entity.db.app_currency.Where(a => a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+            entity.db.app_currency.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_currencyViewSource.Source = entity.db.app_currency.Local;
         }
 
@@ -53,7 +53,7 @@ namespace Cognitivo.Configs
                 app_currency objCurrency = entity.db.app_currency.Where(x => x.id_currency == _IdCurrency).FirstOrDefault();
                 if (objCurrency != null)
                     entity.db.Entry<app_currency>(objCurrency).Reload();
-                entity.db.app_currency.Where(a => a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+                entity.db.app_currency.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 app_currencyViewSource.Source = entity.db.app_currency.Local;
                 app_currencyViewSource.View.Refresh();
             }

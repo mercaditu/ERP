@@ -21,16 +21,16 @@ namespace Cognitivo.Project
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _settings = new entity.Properties.Settings();
+            //entity.Properties.Settings _settings = new entity.Properties.Settings();
 
             template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
-            ProjectTemplateDB.project_event_template.Where(a => a.is_active == true && a.id_company == _settings.company_ID).Load();
+            ProjectTemplateDB.project_event_template.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             template_designerViewSource.Source = ProjectTemplateDB.project_event_template.Local;
             template_designerservices_per_eventViewSource = FindResource("template_designerservices_per_eventViewSource") as CollectionViewSource;
             template_designerproject_event_template_variableViewSource = FindResource("template_designerproject_event_template_variableViewSource") as CollectionViewSource;
 
             List<item_tag> item_tag = new List<item_tag>();
-            item_tag = ProjectTemplateDB.item_tag.Where(a => a.id_company == _settings.company_ID && a.is_active == true).OrderBy(x => x.name).ToList();
+            item_tag = ProjectTemplateDB.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(x => x.name).ToList();
             CollectionViewSource item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
             item_tagViewSource.Source = item_tag;
             CollectionViewSource item_tagViewSourceForEvents = FindResource("item_tagViewSourceForEvents") as CollectionViewSource;

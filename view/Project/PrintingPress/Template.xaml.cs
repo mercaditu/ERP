@@ -25,7 +25,7 @@ namespace Cognitivo.Project.PrintingPress
     {
         db entity = new db();
         CollectionViewSource project_templateViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Template()
         {
@@ -38,17 +38,17 @@ namespace Cognitivo.Project.PrintingPress
             try
             {
                 project_templateViewSource = (CollectionViewSource)this.FindResource("project_templateViewSource");
-                entity.project_template.Include("project_template_detail").Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+                entity.project_template.Include("project_template_detail").Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 project_templateViewSource.Source = entity.project_template.Local;
 
                 CollectionViewSource itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
-                itemViewSource.Source = entity.items.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+                itemViewSource.Source = entity.items.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource item_tagViewSource = (CollectionViewSource)this.FindResource("item_tagViewSource");
-                item_tagViewSource.Source = entity.item_tag.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).ToList();
+                item_tagViewSource.Source = entity.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource project_taskViewSource = (CollectionViewSource)this.FindResource("project_taskViewSource");
-                project_taskViewSource.Source = entity.project_task.Where(a=>a.id_company == _entity.company_ID).OrderBy(a => a.item_description).ToList();
+                project_taskViewSource.Source = entity.project_task.Where(a=>a.id_company == CurrentSession.Id_Company).OrderBy(a => a.item_description).ToList();
 
                 List<Class.clsLogic> list_cls_logic = new List<Class.clsLogic>();
                 Class.clsLogic objpaper = new Class.clsLogic();

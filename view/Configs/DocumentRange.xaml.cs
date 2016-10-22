@@ -20,7 +20,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource document_rangeViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public DocumentRange()
         { 
@@ -32,7 +32,7 @@ namespace Cognitivo.Configs
             try
             {
                 document_rangeViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_document_rangeViewSource")));
-                entity.db.app_document_range.Include("app_document").Where(a=>a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+                entity.db.app_document_range.Include("app_document").Where(a=>a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 document_rangeViewSource.Source = entity.db.app_document_range.Local;
             }
             catch { }

@@ -65,8 +65,8 @@ namespace cntrl.Controls
             {
                 using (db db = new db())
                 {
-                    entity.Properties.Settings _setting = new entity.Properties.Settings();
-                    app_currencyList = db.app_currency.Where(x => x.id_company == _setting.company_ID && x.is_active == true).ToList();
+                 //   entity.Properties.Settings _setting = new entity.Properties.Settings();
+                    app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).ToList();
                     cbCurrency.ItemsSource = app_currencyList;
                 }
             }

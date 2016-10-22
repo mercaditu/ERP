@@ -19,7 +19,7 @@ namespace cntrl
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
 
         private dbContext entity = new dbContext();
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         private entity.hr_position _hr_positionobj = null;
         public entity.hr_position hr_positionobject { get { return _hr_positionobj; } set { _hr_positionobj = value; } }

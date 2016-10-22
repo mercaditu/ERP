@@ -12,7 +12,7 @@ namespace Cognitivo.Contact
     {
         dbContext entity = new dbContext();
         CollectionViewSource contact_tagViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ContactTag()
         {
@@ -22,7 +22,7 @@ namespace Cognitivo.Contact
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contact_tagViewSource = (CollectionViewSource)Resources["contact_tagViewSource"];
-            entity.db.contact_tag.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).Load();
+            entity.db.contact_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).Load();
             contact_tagViewSource.Source = entity.db.contact_tag.Local;
         }
 

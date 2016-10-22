@@ -23,7 +23,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_contractViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Contract()
         {
@@ -33,7 +33,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             app_contractViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_contractViewSource")));
-            entity.db.app_contract.Include(i => i.app_contract_detail).Include(i => i.app_condition).Where(a => a.id_company == _entity.company_ID).OrderByDescending(i => i.is_active).Load();
+            entity.db.app_contract.Include(i => i.app_contract_detail).Include(i => i.app_condition).Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(i => i.is_active).Load();
             app_contractViewSource.Source = entity.db.app_contract.Local;
         }
 

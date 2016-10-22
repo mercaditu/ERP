@@ -12,7 +12,7 @@ namespace cntrl
     public partial class location : UserControl
     {
         //public db db { get; set; }
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+       // entity.Properties.Settings _setting = new entity.Properties.Settings();
         CollectionViewSource _app_locationViewSource = null;
         public CollectionViewSource app_locationViewSource { get { return _app_locationViewSource; } set { _app_locationViewSource = value; } }
 
@@ -32,7 +32,7 @@ namespace cntrl
                 stackMain.DataContext = app_locationViewSource;
 
                 CollectionViewSource branchViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_branchViewSource");
-                branchViewSource.Source = _entity.db.app_branch.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+                branchViewSource.Source = _entity.db.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             }
         }
 

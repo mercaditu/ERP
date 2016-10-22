@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using entity;
 
 namespace cntrl.Curd
 {
@@ -23,7 +24,7 @@ namespace cntrl.Curd
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource security_roleViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       /// entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public user_role()
         {
@@ -35,7 +36,7 @@ namespace cntrl.Curd
              if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
              {
                  security_roleViewSource = this.FindResource("security_roleViewSource") as CollectionViewSource;
-                 entity.db.security_role.Where(a=>a.is_active == true && a.id_company == _entity.company_ID).Load();
+                 entity.db.security_role.Where(a=>a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
                  security_roleViewSource.Source = entity.db.security_role.Local;
                  addNew();
              }

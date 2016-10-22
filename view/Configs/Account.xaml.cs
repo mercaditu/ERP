@@ -12,7 +12,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_accountViewSource;        
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Account()
         {
@@ -21,7 +21,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-            entity.db.app_account.Where(a => a.id_company == _entity.company_ID && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
+            entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
             app_accountViewSource.Source = entity.db.app_account.Local;
         }
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace Cognitivo.Configs
         {
             
                 app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-                entity.db.app_account.Where(a => a.id_company == _entity.company_ID && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
+                entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
                 app_accountViewSource.Source = entity.db.app_account.Local;
             
         }

@@ -16,7 +16,7 @@ namespace Cognitivo.Configs
 
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource hr_positionViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
         public Hr_position()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             hr_positionViewSource = ((CollectionViewSource)(FindResource("hr_positionViewSource")));
-            entity.db.hr_position.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.hr_position.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_positionViewSource.Source = entity.db.hr_position.Local;
         }
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -64,7 +64,7 @@ namespace Cognitivo.Configs
         {
 
             hr_positionViewSource = ((CollectionViewSource)(FindResource("hr_positionViewSource")));
-            entity.db.hr_position.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.hr_position.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_positionViewSource.Source = entity.db.hr_position.Local;
 
         }

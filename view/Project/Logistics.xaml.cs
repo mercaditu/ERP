@@ -14,7 +14,7 @@ namespace Cognitivo.Production
     {
         dbContext _entity = new dbContext();
         CollectionViewSource project_ViewSource,contractViewSource;
-        entity.Properties.Settings _Setting = new entity.Properties.Settings();
+        //entity.Properties.Settings _Setting = new entity.Properties.Settings();
         List<project_task> Project_task = new List<project_task>();
 
         //SetIsEnableProperty
@@ -29,16 +29,16 @@ namespace Cognitivo.Production
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_ViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
-            _entity.db.projects.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).Load();
+            _entity.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             project_ViewSource.Source = _entity.db.projects.Local;
 
             project_ViewSource.Source = _entity.db.projects.Local;
 
             contractViewSource = (CollectionViewSource)this.FindResource("contractViewSource");
-            contractViewSource.Source = _entity.db.app_contract.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).ToList();
+            contractViewSource.Source = _entity.db.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource conditionViewSource = (CollectionViewSource)this.FindResource("conditionViewSource");
-            conditionViewSource.Source = _entity.db.app_condition.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).OrderBy(a => a.name).ToList();
+            conditionViewSource.Source = _entity.db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
         }
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

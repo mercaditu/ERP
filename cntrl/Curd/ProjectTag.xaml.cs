@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using entity;
 
 namespace cntrl.Curd
 {
@@ -21,7 +22,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class ProjectTag : UserControl
     {
-         entity.Properties.Settings _setting = new entity.Properties.Settings();
+       //  entity.Properties.Settings _setting = new entity.Properties.Settings();
 
          CollectionViewSource _project_tagViewSource = null;
          public CollectionViewSource project_tagViewSource { get { return _project_tagViewSource; } set { _project_tagViewSource = value; } }
@@ -44,7 +45,7 @@ namespace cntrl.Curd
                 {
                     stackMain.DataContext = project_tagViewSource;
                     CollectionViewSource projectsViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("projectsViewSource");
-                    projectsViewSource.Source = entity.db.projects.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+                    projectsViewSource.Source = entity.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                 }
                 catch (Exception ex)
                 {

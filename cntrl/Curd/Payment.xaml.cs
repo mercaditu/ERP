@@ -106,6 +106,8 @@ namespace cntrl.Curd
                 }
             }
 
+            payment.RaisePropertyChanged("GrandTotalDetail");
+
             paymentViewSource.View.MoveCurrentTo(payment);
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }

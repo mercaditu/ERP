@@ -26,7 +26,7 @@ namespace cntrl.Curd
         CollectionViewSource _item_transferViewSource = null;
         public CollectionViewSource item_transferViewSource { get { return _item_transferViewSource; } set { _item_transferViewSource = value; } }
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+        //entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         private Class.clsCommon.Mode _operationMode = 0;
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }

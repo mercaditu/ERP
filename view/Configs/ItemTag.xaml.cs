@@ -12,7 +12,7 @@ namespace Cognitivo.Product
     {
         dbContext entity = new dbContext();
         CollectionViewSource item_tagViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ItemTag()
         {
@@ -22,7 +22,7 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_tagViewSource = (CollectionViewSource)Resources["item_tagViewSource"];
-            entity.db.item_tag.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).Load();
+            entity.db.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).Load();
             item_tagViewSource.Source = entity.db.item_tag.Local;
         }
 

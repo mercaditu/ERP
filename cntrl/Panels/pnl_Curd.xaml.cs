@@ -14,6 +14,7 @@ namespace cntrl.Panels
         public pnl_Curd()
         {
             InitializeComponent();
+           
         }
 
         private void pnlCurd_MouseEnter(object sender, MouseEventArgs e)
@@ -30,6 +31,8 @@ namespace cntrl.Panels
         //Edit link click.
         public delegate void linkedit_ClickEventHandlar(object sender, int intId);
         public event linkedit_ClickEventHandlar linkEdit_click;
+
+ 
         private void txtName_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (linkEdit_click != null)
@@ -67,5 +70,21 @@ namespace cntrl.Panels
             get { return Convert.ToInt32(GetValue(IdProperty)); }
             set { SetValue(IdProperty, value); }
         }
+        //public static readonly DependencyProperty IsChangedProperty =
+        //  DependencyProperty.Register("IsChanged", typeof(bool), typeof(pnl_Curd),
+        //  new FrameworkPropertyMetadata(false));
+        //public bool IsChanged
+        //{
+        //    get { return Convert.ToBoolean(GetValue(IsChangedProperty)); }
+        //    set { SetValue(IsChangedProperty, value); }
+        //}
+
+        //private void chbxSelected_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if (chbxSelected.IsChecked==true && IsChanged)
+        //    {
+        //        entity.CurrentSession.Id_Company = Id;
+        //    }
+        //}
     }
 }

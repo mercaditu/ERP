@@ -17,7 +17,7 @@ namespace Cognitivo.Configs
         CollectionViewSource app_companyViewSource;
         
         //security_curd security_curd = null;
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+       // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         public Company()
         {
@@ -89,5 +89,7 @@ namespace Cognitivo.Configs
             //    objCompany.candelete = true;
             //}
         }
+
+      
     }
 }

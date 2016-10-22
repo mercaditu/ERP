@@ -19,7 +19,7 @@ namespace cntrl
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
 
         private dbContext entity = new dbContext();
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         private entity.hr_time_coefficient _hr_time_coefficientobject = null;
         public entity.hr_time_coefficient hr_time_coefficientobject { get { return _hr_time_coefficientobject; } set { _hr_time_coefficientobject = value; } }
@@ -37,7 +37,7 @@ namespace cntrl
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                
-                entity.db.hr_time_coefficient.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+                entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 objCollectionViewSource.Source = entity.db.hr_time_coefficient.Local;
 
                 if (operationMode == Class.clsCommon.Mode.Add)

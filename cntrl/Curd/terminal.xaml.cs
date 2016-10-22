@@ -11,7 +11,7 @@ namespace cntrl
 {
     public partial class terminal : UserControl
     {
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         CollectionViewSource _app_terminalViewSource = null;
         public CollectionViewSource app_terminalViewSource { get { return _app_terminalViewSource; } set { _app_terminalViewSource = value; } }
@@ -31,7 +31,7 @@ namespace cntrl
                 stackMain.DataContext = app_terminalViewSource;
 
                 CollectionViewSource app_branchViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_branchViewSource");
-                app_branchViewSource.Source = entity.db.app_branch.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+                app_branchViewSource.Source = entity.db.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             }
         }
 

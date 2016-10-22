@@ -12,7 +12,7 @@ namespace Cognitivo.Commercial
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource contact_roleViewSource = null;
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+       // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         public ContactRole()
         {
@@ -22,7 +22,7 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contact_roleViewSource = (CollectionViewSource)this.FindResource("contact_roleViewSource");
-            entity.db.contact_role.Where(a => a.id_company == _setting.company_ID).OrderBy(a => a.name).Load();
+            entity.db.contact_role.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             contact_roleViewSource.Source = entity.db.contact_role.Local;
         }
 

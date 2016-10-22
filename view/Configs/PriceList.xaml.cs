@@ -24,7 +24,7 @@ namespace Cognitivo.Product
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource item_price_listViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public PriceList()
         {
@@ -36,7 +36,7 @@ namespace Cognitivo.Product
             try
             {
                 item_price_listViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("item_price_listViewSource");
-                entity.db.item_price_list.Where(a=>a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+                entity.db.item_price_list.Where(a=>a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 item_price_listViewSource.Source = entity.db.item_price_list.Local;
             }
             catch { }

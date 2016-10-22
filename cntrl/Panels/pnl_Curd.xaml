@@ -23,7 +23,7 @@
         </Border>
         <CheckBox Name="chbxSelected" HorizontalAlignment="Left" VerticalAlignment="Center"
                   Visibility="Collapsed"
-                  Margin="8" Width="18">
+                  Margin="8" Width="18" >
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
             </CheckBox.LayoutTransform>

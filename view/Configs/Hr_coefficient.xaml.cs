@@ -16,7 +16,7 @@ namespace Cognitivo.Configs
 
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource hr_time_coefficientViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
         public Hr_coefficient()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             hr_time_coefficientViewSource = ((CollectionViewSource)(FindResource("hr_time_coefficientViewSource")));
-            entity.db.hr_time_coefficient.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_time_coefficientViewSource.Source = entity.db.hr_time_coefficient.Local;
         }
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -64,7 +64,7 @@ namespace Cognitivo.Configs
         {
 
             hr_time_coefficientViewSource = ((CollectionViewSource)(FindResource("hr_time_coefficientViewSource")));
-            entity.db.hr_time_coefficient.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_time_coefficientViewSource.Source = entity.db.hr_time_coefficient.Local;
 
         }

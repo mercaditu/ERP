@@ -15,7 +15,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class ContactTag : UserControl
     {
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+        //entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         CollectionViewSource _contact_tagViewSource = null;
         public CollectionViewSource contact_tagViewSource { get { return _contact_tagViewSource; } set { _contact_tagViewSource = value; } }
@@ -38,7 +38,7 @@ namespace cntrl.Curd
                 {
                     stackMain.DataContext = contact_tagViewSource;
                     CollectionViewSource contactsViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("contactsViewSource");
-                    contactsViewSource.Source = entity.db.contacts.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+                    contactsViewSource.Source = entity.db.contacts.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
                 }
                 catch (Exception ex)
                 {

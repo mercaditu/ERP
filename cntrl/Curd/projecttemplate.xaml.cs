@@ -21,7 +21,7 @@ namespace cntrl.Curd
         CollectionViewSource _projecttemplatedetailViewSource = null;
         public CollectionViewSource projecttemplatedetailViewSource { get { return _projecttemplatedetailViewSource; } set { _projecttemplatedetailViewSource = value; } }
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+       // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         private Class.clsCommon.Mode _operationMode = 0;
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }

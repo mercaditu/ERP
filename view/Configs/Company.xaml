@@ -33,6 +33,7 @@
                 <TextBlock Text="Company holds your data." 
                                HorizontalAlignment="Center" Margin="10,0"
                                Style="{StaticResource text_Instructions}"/>
+             
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
                 <ItemsControl x:Name="itemsource" ItemsSource="{Binding}" Margin="0">
@@ -49,6 +50,7 @@
                                                DisplayName="{Binding name}" 
                                                Id="{Binding id_company}"
                                                linkEdit_click="pnl_Company_Edit_Click"
+                                           
                                                Status="{Binding is_active, Converter={StaticResource IsActive2ColorConverter}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

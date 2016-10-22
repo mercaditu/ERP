@@ -25,7 +25,7 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource dimension_viewsource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Dimension()
         {
@@ -35,7 +35,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             dimension_viewsource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_dimensionViewSource")));
-            entity.db.app_dimension.Where(a=>a.id_company == _entity.company_ID).Load();
+            entity.db.app_dimension.Where(a=>a.id_company == CurrentSession.Id_Company).Load();
             dimension_viewsource.Source = entity.db.app_dimension.Local;
         }
 

@@ -21,8 +21,8 @@ namespace entity
             purchase_packing_detail = new List<purchase_packing_detail>();
             purchase_packing_relation = new List<purchase_packing_relation>();
             trans_date = DateTime.Now;
-            Properties.Settings _settings = new Properties.Settings();
-            if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
+           // Properties.Settings _settings = new Properties.Settings();
+            //if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

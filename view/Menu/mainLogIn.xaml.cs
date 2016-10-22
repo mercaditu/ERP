@@ -134,7 +134,13 @@ namespace Cognitivo.Menu
                 else
                 {
                     //Incorrect user credentials.
-                    Dispatcher.BeginInvoke((Action)(() => { tbxPassword.Focus(); }));
+                    Dispatcher.BeginInvoke((Action)(() => 
+                    {
+                        tbxPassword.Focus();
+                        Cursor = Cursors.Arrow;
+                        progBar.IsIndeterminate = false;
+                    }));
+                    taskAuth = null;
                     return;
                 }
             }

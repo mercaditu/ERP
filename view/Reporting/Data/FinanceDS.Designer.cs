@@ -24,11 +24,9 @@ namespace Cognitivo.Reporting.Data {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class FinanceDS : global::System.Data.DataSet {
         
-        private AccountsRecievableDataTable tableAccountsRecievable;
-        
         private CurrentAccount_CustomerDataTable tableCurrentAccount_Customer;
         
-        private PendingRecievablesDataTable tablePendingRecievables;
+        private PendingAccountsDataTable tablePendingAccounts;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -58,14 +56,11 @@ namespace Cognitivo.Reporting.Data {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["AccountsRecievable"] != null)) {
-                    base.Tables.Add(new AccountsRecievableDataTable(ds.Tables["AccountsRecievable"]));
-                }
                 if ((ds.Tables["CurrentAccount_Customer"] != null)) {
                     base.Tables.Add(new CurrentAccount_CustomerDataTable(ds.Tables["CurrentAccount_Customer"]));
                 }
-                if ((ds.Tables["PendingRecievables"] != null)) {
-                    base.Tables.Add(new PendingRecievablesDataTable(ds.Tables["PendingRecievables"]));
+                if ((ds.Tables["PendingAccounts"] != null)) {
+                    base.Tables.Add(new PendingAccountsDataTable(ds.Tables["PendingAccounts"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -89,16 +84,6 @@ namespace Cognitivo.Reporting.Data {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public AccountsRecievableDataTable AccountsRecievable {
-            get {
-                return this.tableAccountsRecievable;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public CurrentAccount_CustomerDataTable CurrentAccount_Customer {
             get {
                 return this.tableCurrentAccount_Customer;
@@ -109,9 +94,9 @@ namespace Cognitivo.Reporting.Data {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public PendingRecievablesDataTable PendingRecievables {
+        public PendingAccountsDataTable PendingAccounts {
             get {
-                return this.tablePendingRecievables;
+                return this.tablePendingAccounts;
             }
         }
         
@@ -182,14 +167,11 @@ namespace Cognitivo.Reporting.Data {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["AccountsRecievable"] != null)) {
-                    base.Tables.Add(new AccountsRecievableDataTable(ds.Tables["AccountsRecievable"]));
-                }
                 if ((ds.Tables["CurrentAccount_Customer"] != null)) {
                     base.Tables.Add(new CurrentAccount_CustomerDataTable(ds.Tables["CurrentAccount_Customer"]));
                 }
-                if ((ds.Tables["PendingRecievables"] != null)) {
-                    base.Tables.Add(new PendingRecievablesDataTable(ds.Tables["PendingRecievables"]));
+                if ((ds.Tables["PendingAccounts"] != null)) {
+                    base.Tables.Add(new PendingAccountsDataTable(ds.Tables["PendingAccounts"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -224,22 +206,16 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableAccountsRecievable = ((AccountsRecievableDataTable)(base.Tables["AccountsRecievable"]));
-            if ((initTable == true)) {
-                if ((this.tableAccountsRecievable != null)) {
-                    this.tableAccountsRecievable.InitVars();
-                }
-            }
             this.tableCurrentAccount_Customer = ((CurrentAccount_CustomerDataTable)(base.Tables["CurrentAccount_Customer"]));
             if ((initTable == true)) {
                 if ((this.tableCurrentAccount_Customer != null)) {
                     this.tableCurrentAccount_Customer.InitVars();
                 }
             }
-            this.tablePendingRecievables = ((PendingRecievablesDataTable)(base.Tables["PendingRecievables"]));
+            this.tablePendingAccounts = ((PendingAccountsDataTable)(base.Tables["PendingAccounts"]));
             if ((initTable == true)) {
-                if ((this.tablePendingRecievables != null)) {
-                    this.tablePendingRecievables.InitVars();
+                if ((this.tablePendingAccounts != null)) {
+                    this.tablePendingAccounts.InitVars();
                 }
             }
         }
@@ -252,18 +228,10 @@ namespace Cognitivo.Reporting.Data {
             this.Namespace = "http://tempuri.org/FinanceDS.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableAccountsRecievable = new AccountsRecievableDataTable();
-            base.Tables.Add(this.tableAccountsRecievable);
             this.tableCurrentAccount_Customer = new CurrentAccount_CustomerDataTable();
             base.Tables.Add(this.tableCurrentAccount_Customer);
-            this.tablePendingRecievables = new PendingRecievablesDataTable();
-            base.Tables.Add(this.tablePendingRecievables);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeAccountsRecievable() {
-            return false;
+            this.tablePendingAccounts = new PendingAccountsDataTable();
+            base.Tables.Add(this.tablePendingAccounts);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -274,7 +242,7 @@ namespace Cognitivo.Reporting.Data {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializePendingRecievables() {
+        private bool ShouldSerializePendingAccounts() {
             return false;
         }
         
@@ -334,335 +302,10 @@ namespace Cognitivo.Reporting.Data {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void AccountsRecievableRowChangeEventHandler(object sender, AccountsRecievableRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void CurrentAccount_CustomerRowChangeEventHandler(object sender, CurrentAccount_CustomerRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void PendingRecievablesRowChangeEventHandler(object sender, PendingRecievablesRowChangeEvent e);
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class AccountsRecievableDataTable : global::System.Data.TypedTableBase<AccountsRecievableRow> {
-            
-            private global::System.Data.DataColumn columnid_contact;
-            
-            private global::System.Data.DataColumn columncliente;
-            
-            private global::System.Data.DataColumn columnRUC;
-            
-            private global::System.Data.DataColumn _columnyear_trans_date_;
-            
-            private global::System.Data.DataColumn _columnmonth_trans_date_;
-            
-            private global::System.Data.DataColumn columnvalordolar;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableDataTable() {
-                this.TableName = "AccountsRecievable";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal AccountsRecievableDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected AccountsRecievableDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn id_contactColumn {
-                get {
-                    return this.columnid_contact;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn clienteColumn {
-                get {
-                    return this.columncliente;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn RUCColumn {
-                get {
-                    return this.columnRUC;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn _year_trans_date_Column {
-                get {
-                    return this._columnyear_trans_date_;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn _month_trans_date_Column {
-                get {
-                    return this._columnmonth_trans_date_;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn valordolarColumn {
-                get {
-                    return this.columnvalordolar;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableRow this[int index] {
-                get {
-                    return ((AccountsRecievableRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AccountsRecievableRowChangeEventHandler AccountsRecievableRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AccountsRecievableRowChangeEventHandler AccountsRecievableRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AccountsRecievableRowChangeEventHandler AccountsRecievableRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AccountsRecievableRowChangeEventHandler AccountsRecievableRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddAccountsRecievableRow(AccountsRecievableRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableRow AddAccountsRecievableRow(int id_contact, string cliente, string RUC, long _year_trans_date_, long _month_trans_date_, decimal valordolar) {
-                AccountsRecievableRow rowAccountsRecievableRow = ((AccountsRecievableRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        id_contact,
-                        cliente,
-                        RUC,
-                        _year_trans_date_,
-                        _month_trans_date_,
-                        valordolar};
-                rowAccountsRecievableRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowAccountsRecievableRow);
-                return rowAccountsRecievableRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                AccountsRecievableDataTable cln = ((AccountsRecievableDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new AccountsRecievableDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal void InitVars() {
-                this.columnid_contact = base.Columns["id_contact"];
-                this.columncliente = base.Columns["cliente"];
-                this.columnRUC = base.Columns["RUC"];
-                this._columnyear_trans_date_ = base.Columns["year(trans_date)"];
-                this._columnmonth_trans_date_ = base.Columns["month(trans_date)"];
-                this.columnvalordolar = base.Columns["valordolar"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            private void InitClass() {
-                this.columnid_contact = new global::System.Data.DataColumn("id_contact", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid_contact);
-                this.columncliente = new global::System.Data.DataColumn("cliente", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncliente);
-                this.columnRUC = new global::System.Data.DataColumn("RUC", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRUC);
-                this._columnyear_trans_date_ = new global::System.Data.DataColumn("year(trans_date)", typeof(long), null, global::System.Data.MappingType.Element);
-                this._columnyear_trans_date_.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "_columnyear_trans_date_");
-                this._columnyear_trans_date_.ExtendedProperties.Add("Generator_UserColumnName", "year(trans_date)");
-                base.Columns.Add(this._columnyear_trans_date_);
-                this._columnmonth_trans_date_ = new global::System.Data.DataColumn("month(trans_date)", typeof(long), null, global::System.Data.MappingType.Element);
-                this._columnmonth_trans_date_.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "_columnmonth_trans_date_");
-                this._columnmonth_trans_date_.ExtendedProperties.Add("Generator_UserColumnName", "month(trans_date)");
-                base.Columns.Add(this._columnmonth_trans_date_);
-                this.columnvalordolar = new global::System.Data.DataColumn("valordolar", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnvalordolar);
-                this.columnid_contact.AllowDBNull = false;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableRow NewAccountsRecievableRow() {
-                return ((AccountsRecievableRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new AccountsRecievableRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(AccountsRecievableRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.AccountsRecievableRowChanged != null)) {
-                    this.AccountsRecievableRowChanged(this, new AccountsRecievableRowChangeEvent(((AccountsRecievableRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.AccountsRecievableRowChanging != null)) {
-                    this.AccountsRecievableRowChanging(this, new AccountsRecievableRowChangeEvent(((AccountsRecievableRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.AccountsRecievableRowDeleted != null)) {
-                    this.AccountsRecievableRowDeleted(this, new AccountsRecievableRowChangeEvent(((AccountsRecievableRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.AccountsRecievableRowDeleting != null)) {
-                    this.AccountsRecievableRowDeleting(this, new AccountsRecievableRowChangeEvent(((AccountsRecievableRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveAccountsRecievableRow(AccountsRecievableRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                FinanceDS ds = new FinanceDS();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "AccountsRecievableDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
+        public delegate void PendingAccountsRowChangeEventHandler(object sender, PendingAccountsRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1018,15 +661,15 @@ namespace Cognitivo.Reporting.Data {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PendingRecievablesDataTable : global::System.Data.TypedTableBase<PendingRecievablesRow> {
+        public partial class PendingAccountsDataTable : global::System.Data.TypedTableBase<PendingAccountsRow> {
             
-            private global::System.Data.DataColumn columnCustomer;
+            private global::System.Data.DataColumn columnContact;
             
-            private global::System.Data.DataColumn columnSalesNumber;
+            private global::System.Data.DataColumn columnNumber;
             
-            private global::System.Data.DataColumn columnSalesCondition;
+            private global::System.Data.DataColumn columnCondition;
             
-            private global::System.Data.DataColumn columnSalesContract;
+            private global::System.Data.DataColumn columnContract;
             
             private global::System.Data.DataColumn columnExpiryDate;
             
@@ -1034,9 +677,9 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnRate;
             
-            private global::System.Data.DataColumn columnDebit;
+            private global::System.Data.DataColumn columnValue;
             
-            private global::System.Data.DataColumn columnCreditChild;
+            private global::System.Data.DataColumn columnPaid;
             
             private global::System.Data.DataColumn columnBalance;
             
@@ -1046,10 +689,12 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnGovID;
             
+            private global::System.Data.DataColumn columnComment;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesDataTable() {
-                this.TableName = "PendingRecievables";
+            public PendingAccountsDataTable() {
+                this.TableName = "PendingAccounts";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -1057,7 +702,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PendingRecievablesDataTable(global::System.Data.DataTable table) {
+            internal PendingAccountsDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -1074,40 +719,40 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected PendingRecievablesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected PendingAccountsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CustomerColumn {
+            public global::System.Data.DataColumn ContactColumn {
                 get {
-                    return this.columnCustomer;
+                    return this.columnContact;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SalesNumberColumn {
+            public global::System.Data.DataColumn NumberColumn {
                 get {
-                    return this.columnSalesNumber;
+                    return this.columnNumber;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SalesConditionColumn {
+            public global::System.Data.DataColumn ConditionColumn {
                 get {
-                    return this.columnSalesCondition;
+                    return this.columnCondition;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SalesContractColumn {
+            public global::System.Data.DataColumn ContractColumn {
                 get {
-                    return this.columnSalesContract;
+                    return this.columnContract;
                 }
             }
             
@@ -1137,17 +782,17 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DebitColumn {
+            public global::System.Data.DataColumn ValueColumn {
                 get {
-                    return this.columnDebit;
+                    return this.columnValue;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CreditChildColumn {
+            public global::System.Data.DataColumn PaidColumn {
                 get {
-                    return this.columnCreditChild;
+                    return this.columnPaid;
                 }
             }
             
@@ -1185,6 +830,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CommentColumn {
+                get {
+                    return this.columnComment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1194,57 +847,58 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesRow this[int index] {
+            public PendingAccountsRow this[int index] {
                 get {
-                    return ((PendingRecievablesRow)(this.Rows[index]));
+                    return ((PendingAccountsRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PendingRecievablesRowChangeEventHandler PendingRecievablesRowChanging;
+            public event PendingAccountsRowChangeEventHandler PendingAccountsRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PendingRecievablesRowChangeEventHandler PendingRecievablesRowChanged;
+            public event PendingAccountsRowChangeEventHandler PendingAccountsRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PendingRecievablesRowChangeEventHandler PendingRecievablesRowDeleting;
+            public event PendingAccountsRowChangeEventHandler PendingAccountsRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PendingRecievablesRowChangeEventHandler PendingRecievablesRowDeleted;
+            public event PendingAccountsRowChangeEventHandler PendingAccountsRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddPendingRecievablesRow(PendingRecievablesRow row) {
+            public void AddPendingAccountsRow(PendingAccountsRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesRow AddPendingRecievablesRow(string Customer, string SalesNumber, string SalesCondition, string SalesContract, string ExpiryDate, string CurrencyName, decimal Rate, decimal Debit, decimal CreditChild, decimal Balance, string TransDate, string Code, string GovID) {
-                PendingRecievablesRow rowPendingRecievablesRow = ((PendingRecievablesRow)(this.NewRow()));
+            public PendingAccountsRow AddPendingAccountsRow(string Contact, string Number, string Condition, string Contract, string ExpiryDate, string CurrencyName, decimal Rate, decimal Value, decimal Paid, decimal Balance, string TransDate, string Code, string GovID, string Comment) {
+                PendingAccountsRow rowPendingAccountsRow = ((PendingAccountsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        Customer,
-                        SalesNumber,
-                        SalesCondition,
-                        SalesContract,
+                        Contact,
+                        Number,
+                        Condition,
+                        Contract,
                         ExpiryDate,
                         CurrencyName,
                         Rate,
-                        Debit,
-                        CreditChild,
+                        Value,
+                        Paid,
                         Balance,
                         TransDate,
                         Code,
-                        GovID};
-                rowPendingRecievablesRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowPendingRecievablesRow);
-                return rowPendingRecievablesRow;
+                        GovID,
+                        Comment};
+                rowPendingAccountsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowPendingAccountsRow);
+                return rowPendingAccountsRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                PendingRecievablesDataTable cln = ((PendingRecievablesDataTable)(base.Clone()));
+                PendingAccountsDataTable cln = ((PendingAccountsDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1252,48 +906,49 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new PendingRecievablesDataTable();
+                return new PendingAccountsDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnCustomer = base.Columns["Customer"];
-                this.columnSalesNumber = base.Columns["SalesNumber"];
-                this.columnSalesCondition = base.Columns["SalesCondition"];
-                this.columnSalesContract = base.Columns["SalesContract"];
+                this.columnContact = base.Columns["Contact"];
+                this.columnNumber = base.Columns["Number"];
+                this.columnCondition = base.Columns["Condition"];
+                this.columnContract = base.Columns["Contract"];
                 this.columnExpiryDate = base.Columns["ExpiryDate"];
                 this.columnCurrencyName = base.Columns["CurrencyName"];
                 this.columnRate = base.Columns["Rate"];
-                this.columnDebit = base.Columns["Debit"];
-                this.columnCreditChild = base.Columns["CreditChild"];
+                this.columnValue = base.Columns["Value"];
+                this.columnPaid = base.Columns["Paid"];
                 this.columnBalance = base.Columns["Balance"];
                 this.columnTransDate = base.Columns["TransDate"];
                 this.columnCode = base.Columns["Code"];
                 this.columnGovID = base.Columns["GovID"];
+                this.columnComment = base.Columns["Comment"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnCustomer = new global::System.Data.DataColumn("Customer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCustomer);
-                this.columnSalesNumber = new global::System.Data.DataColumn("SalesNumber", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSalesNumber);
-                this.columnSalesCondition = new global::System.Data.DataColumn("SalesCondition", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSalesCondition);
-                this.columnSalesContract = new global::System.Data.DataColumn("SalesContract", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSalesContract);
+                this.columnContact = new global::System.Data.DataColumn("Contact", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContact);
+                this.columnNumber = new global::System.Data.DataColumn("Number", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumber);
+                this.columnCondition = new global::System.Data.DataColumn("Condition", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCondition);
+                this.columnContract = new global::System.Data.DataColumn("Contract", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContract);
                 this.columnExpiryDate = new global::System.Data.DataColumn("ExpiryDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnExpiryDate);
                 this.columnCurrencyName = new global::System.Data.DataColumn("CurrencyName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCurrencyName);
                 this.columnRate = new global::System.Data.DataColumn("Rate", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRate);
-                this.columnDebit = new global::System.Data.DataColumn("Debit", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDebit);
-                this.columnCreditChild = new global::System.Data.DataColumn("CreditChild", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCreditChild);
+                this.columnValue = new global::System.Data.DataColumn("Value", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValue);
+                this.columnPaid = new global::System.Data.DataColumn("Paid", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaid);
                 this.columnBalance = new global::System.Data.DataColumn("Balance", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBalance);
                 this.columnTransDate = new global::System.Data.DataColumn("TransDate", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1302,32 +957,34 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnCode);
                 this.columnGovID = new global::System.Data.DataColumn("GovID", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGovID);
+                this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComment);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesRow NewPendingRecievablesRow() {
-                return ((PendingRecievablesRow)(this.NewRow()));
+            public PendingAccountsRow NewPendingAccountsRow() {
+                return ((PendingAccountsRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new PendingRecievablesRow(builder);
+                return new PendingAccountsRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(PendingRecievablesRow);
+                return typeof(PendingAccountsRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.PendingRecievablesRowChanged != null)) {
-                    this.PendingRecievablesRowChanged(this, new PendingRecievablesRowChangeEvent(((PendingRecievablesRow)(e.Row)), e.Action));
+                if ((this.PendingAccountsRowChanged != null)) {
+                    this.PendingAccountsRowChanged(this, new PendingAccountsRowChangeEvent(((PendingAccountsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1335,8 +992,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.PendingRecievablesRowChanging != null)) {
-                    this.PendingRecievablesRowChanging(this, new PendingRecievablesRowChangeEvent(((PendingRecievablesRow)(e.Row)), e.Action));
+                if ((this.PendingAccountsRowChanging != null)) {
+                    this.PendingAccountsRowChanging(this, new PendingAccountsRowChangeEvent(((PendingAccountsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1344,8 +1001,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.PendingRecievablesRowDeleted != null)) {
-                    this.PendingRecievablesRowDeleted(this, new PendingRecievablesRowChangeEvent(((PendingRecievablesRow)(e.Row)), e.Action));
+                if ((this.PendingAccountsRowDeleted != null)) {
+                    this.PendingAccountsRowDeleted(this, new PendingAccountsRowChangeEvent(((PendingAccountsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1353,14 +1010,14 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.PendingRecievablesRowDeleting != null)) {
-                    this.PendingRecievablesRowDeleting(this, new PendingRecievablesRowChangeEvent(((PendingRecievablesRow)(e.Row)), e.Action));
+                if ((this.PendingAccountsRowDeleting != null)) {
+                    this.PendingAccountsRowDeleting(this, new PendingAccountsRowChangeEvent(((PendingAccountsRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovePendingRecievablesRow(PendingRecievablesRow row) {
+            public void RemovePendingAccountsRow(PendingAccountsRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -1387,7 +1044,7 @@ namespace Cognitivo.Reporting.Data {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "PendingRecievablesDataTable";
+                attribute2.FixedValue = "PendingAccountsDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1425,173 +1082,6 @@ namespace Cognitivo.Reporting.Data {
                 }
                 xs.Add(dsSchema);
                 return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class AccountsRecievableRow : global::System.Data.DataRow {
-            
-            private AccountsRecievableDataTable tableAccountsRecievable;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal AccountsRecievableRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableAccountsRecievable = ((AccountsRecievableDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int id_contact {
-                get {
-                    return ((int)(this[this.tableAccountsRecievable.id_contactColumn]));
-                }
-                set {
-                    this[this.tableAccountsRecievable.id_contactColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string cliente {
-                get {
-                    try {
-                        return ((string)(this[this.tableAccountsRecievable.clienteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cliente\' in table \'AccountsRecievable\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableAccountsRecievable.clienteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string RUC {
-                get {
-                    try {
-                        return ((string)(this[this.tableAccountsRecievable.RUCColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'RUC\' in table \'AccountsRecievable\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableAccountsRecievable.RUCColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public long _year_trans_date_ {
-                get {
-                    try {
-                        return ((long)(this[this.tableAccountsRecievable._year_trans_date_Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'year(trans_date)\' in table \'AccountsRecievable\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableAccountsRecievable._year_trans_date_Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public long _month_trans_date_ {
-                get {
-                    try {
-                        return ((long)(this[this.tableAccountsRecievable._month_trans_date_Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'month(trans_date)\' in table \'AccountsRecievable\' is DBNull." +
-                                "", e);
-                    }
-                }
-                set {
-                    this[this.tableAccountsRecievable._month_trans_date_Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal valordolar {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableAccountsRecievable.valordolarColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'valordolar\' in table \'AccountsRecievable\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableAccountsRecievable.valordolarColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsclienteNull() {
-                return this.IsNull(this.tableAccountsRecievable.clienteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetclienteNull() {
-                this[this.tableAccountsRecievable.clienteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsRUCNull() {
-                return this.IsNull(this.tableAccountsRecievable.RUCColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetRUCNull() {
-                this[this.tableAccountsRecievable.RUCColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Is_year_trans_date_Null() {
-                return this.IsNull(this.tableAccountsRecievable._year_trans_date_Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Set_year_trans_date_Null() {
-                this[this.tableAccountsRecievable._year_trans_date_Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Is_month_trans_date_Null() {
-                return this.IsNull(this.tableAccountsRecievable._month_trans_date_Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Set_month_trans_date_Null() {
-                this[this.tableAccountsRecievable._month_trans_date_Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsvalordolarNull() {
-                return this.IsNull(this.tableAccountsRecievable.valordolarColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetvalordolarNull() {
-                this[this.tableAccountsRecievable.valordolarColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1770,78 +1260,78 @@ namespace Cognitivo.Reporting.Data {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class PendingRecievablesRow : global::System.Data.DataRow {
+        public partial class PendingAccountsRow : global::System.Data.DataRow {
             
-            private PendingRecievablesDataTable tablePendingRecievables;
+            private PendingAccountsDataTable tablePendingAccounts;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PendingRecievablesRow(global::System.Data.DataRowBuilder rb) : 
+            internal PendingAccountsRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablePendingRecievables = ((PendingRecievablesDataTable)(this.Table));
+                this.tablePendingAccounts = ((PendingAccountsDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Customer {
+            public string Contact {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.CustomerColumn]));
+                        return ((string)(this[this.tablePendingAccounts.ContactColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Customer\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Contact\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.CustomerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string SalesNumber {
-                get {
-                    try {
-                        return ((string)(this[this.tablePendingRecievables.SalesNumberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SalesNumber\' in table \'PendingRecievables\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePendingRecievables.SalesNumberColumn] = value;
+                    this[this.tablePendingAccounts.ContactColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string SalesCondition {
+            public string Number {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.SalesConditionColumn]));
+                        return ((string)(this[this.tablePendingAccounts.NumberColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SalesCondition\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Number\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.SalesConditionColumn] = value;
+                    this[this.tablePendingAccounts.NumberColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string SalesContract {
+            public string Condition {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.SalesContractColumn]));
+                        return ((string)(this[this.tablePendingAccounts.ConditionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SalesContract\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Condition\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.SalesContractColumn] = value;
+                    this[this.tablePendingAccounts.ConditionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Contract {
+                get {
+                    try {
+                        return ((string)(this[this.tablePendingAccounts.ContractColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Contract\' in table \'PendingAccounts\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePendingAccounts.ContractColumn] = value;
                 }
             }
             
@@ -1850,14 +1340,14 @@ namespace Cognitivo.Reporting.Data {
             public string ExpiryDate {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.ExpiryDateColumn]));
+                        return ((string)(this[this.tablePendingAccounts.ExpiryDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ExpiryDate\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ExpiryDate\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.ExpiryDateColumn] = value;
+                    this[this.tablePendingAccounts.ExpiryDateColumn] = value;
                 }
             }
             
@@ -1866,14 +1356,14 @@ namespace Cognitivo.Reporting.Data {
             public string CurrencyName {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.CurrencyNameColumn]));
+                        return ((string)(this[this.tablePendingAccounts.CurrencyNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CurrencyName\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CurrencyName\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.CurrencyNameColumn] = value;
+                    this[this.tablePendingAccounts.CurrencyNameColumn] = value;
                 }
             }
             
@@ -1882,46 +1372,46 @@ namespace Cognitivo.Reporting.Data {
             public decimal Rate {
                 get {
                     try {
-                        return ((decimal)(this[this.tablePendingRecievables.RateColumn]));
+                        return ((decimal)(this[this.tablePendingAccounts.RateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Rate\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Rate\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.RateColumn] = value;
+                    this[this.tablePendingAccounts.RateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Debit {
+            public decimal Value {
                 get {
                     try {
-                        return ((decimal)(this[this.tablePendingRecievables.DebitColumn]));
+                        return ((decimal)(this[this.tablePendingAccounts.ValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Debit\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Value\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.DebitColumn] = value;
+                    this[this.tablePendingAccounts.ValueColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal CreditChild {
+            public decimal Paid {
                 get {
                     try {
-                        return ((decimal)(this[this.tablePendingRecievables.CreditChildColumn]));
+                        return ((decimal)(this[this.tablePendingAccounts.PaidColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CreditChild\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Paid\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.CreditChildColumn] = value;
+                    this[this.tablePendingAccounts.PaidColumn] = value;
                 }
             }
             
@@ -1930,14 +1420,14 @@ namespace Cognitivo.Reporting.Data {
             public decimal Balance {
                 get {
                     try {
-                        return ((decimal)(this[this.tablePendingRecievables.BalanceColumn]));
+                        return ((decimal)(this[this.tablePendingAccounts.BalanceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Balance\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Balance\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.BalanceColumn] = value;
+                    this[this.tablePendingAccounts.BalanceColumn] = value;
                 }
             }
             
@@ -1946,14 +1436,14 @@ namespace Cognitivo.Reporting.Data {
             public string TransDate {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.TransDateColumn]));
+                        return ((string)(this[this.tablePendingAccounts.TransDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TransDate\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TransDate\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.TransDateColumn] = value;
+                    this[this.tablePendingAccounts.TransDateColumn] = value;
                 }
             }
             
@@ -1962,14 +1452,14 @@ namespace Cognitivo.Reporting.Data {
             public string Code {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.CodeColumn]));
+                        return ((string)(this[this.tablePendingAccounts.CodeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Code\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Code\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.CodeColumn] = value;
+                    this[this.tablePendingAccounts.CodeColumn] = value;
                 }
             }
             
@@ -1978,205 +1468,199 @@ namespace Cognitivo.Reporting.Data {
             public string GovID {
                 get {
                     try {
-                        return ((string)(this[this.tablePendingRecievables.GovIDColumn]));
+                        return ((string)(this[this.tablePendingAccounts.GovIDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'GovID\' in table \'PendingRecievables\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'GovID\' in table \'PendingAccounts\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePendingRecievables.GovIDColumn] = value;
+                    this[this.tablePendingAccounts.GovIDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCustomerNull() {
-                return this.IsNull(this.tablePendingRecievables.CustomerColumn);
+            public string Comment {
+                get {
+                    try {
+                        return ((string)(this[this.tablePendingAccounts.CommentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'PendingAccounts\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePendingAccounts.CommentColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCustomerNull() {
-                this[this.tablePendingRecievables.CustomerColumn] = global::System.Convert.DBNull;
+            public bool IsContactNull() {
+                return this.IsNull(this.tablePendingAccounts.ContactColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSalesNumberNull() {
-                return this.IsNull(this.tablePendingRecievables.SalesNumberColumn);
+            public void SetContactNull() {
+                this[this.tablePendingAccounts.ContactColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSalesNumberNull() {
-                this[this.tablePendingRecievables.SalesNumberColumn] = global::System.Convert.DBNull;
+            public bool IsNumberNull() {
+                return this.IsNull(this.tablePendingAccounts.NumberColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSalesConditionNull() {
-                return this.IsNull(this.tablePendingRecievables.SalesConditionColumn);
+            public void SetNumberNull() {
+                this[this.tablePendingAccounts.NumberColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSalesConditionNull() {
-                this[this.tablePendingRecievables.SalesConditionColumn] = global::System.Convert.DBNull;
+            public bool IsConditionNull() {
+                return this.IsNull(this.tablePendingAccounts.ConditionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSalesContractNull() {
-                return this.IsNull(this.tablePendingRecievables.SalesContractColumn);
+            public void SetConditionNull() {
+                this[this.tablePendingAccounts.ConditionColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSalesContractNull() {
-                this[this.tablePendingRecievables.SalesContractColumn] = global::System.Convert.DBNull;
+            public bool IsContractNull() {
+                return this.IsNull(this.tablePendingAccounts.ContractColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetContractNull() {
+                this[this.tablePendingAccounts.ContractColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsExpiryDateNull() {
-                return this.IsNull(this.tablePendingRecievables.ExpiryDateColumn);
+                return this.IsNull(this.tablePendingAccounts.ExpiryDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetExpiryDateNull() {
-                this[this.tablePendingRecievables.ExpiryDateColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.ExpiryDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCurrencyNameNull() {
-                return this.IsNull(this.tablePendingRecievables.CurrencyNameColumn);
+                return this.IsNull(this.tablePendingAccounts.CurrencyNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCurrencyNameNull() {
-                this[this.tablePendingRecievables.CurrencyNameColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.CurrencyNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsRateNull() {
-                return this.IsNull(this.tablePendingRecievables.RateColumn);
+                return this.IsNull(this.tablePendingAccounts.RateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRateNull() {
-                this[this.tablePendingRecievables.RateColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.RateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDebitNull() {
-                return this.IsNull(this.tablePendingRecievables.DebitColumn);
+            public bool IsValueNull() {
+                return this.IsNull(this.tablePendingAccounts.ValueColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDebitNull() {
-                this[this.tablePendingRecievables.DebitColumn] = global::System.Convert.DBNull;
+            public void SetValueNull() {
+                this[this.tablePendingAccounts.ValueColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCreditChildNull() {
-                return this.IsNull(this.tablePendingRecievables.CreditChildColumn);
+            public bool IsPaidNull() {
+                return this.IsNull(this.tablePendingAccounts.PaidColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCreditChildNull() {
-                this[this.tablePendingRecievables.CreditChildColumn] = global::System.Convert.DBNull;
+            public void SetPaidNull() {
+                this[this.tablePendingAccounts.PaidColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsBalanceNull() {
-                return this.IsNull(this.tablePendingRecievables.BalanceColumn);
+                return this.IsNull(this.tablePendingAccounts.BalanceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBalanceNull() {
-                this[this.tablePendingRecievables.BalanceColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.BalanceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTransDateNull() {
-                return this.IsNull(this.tablePendingRecievables.TransDateColumn);
+                return this.IsNull(this.tablePendingAccounts.TransDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTransDateNull() {
-                this[this.tablePendingRecievables.TransDateColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.TransDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCodeNull() {
-                return this.IsNull(this.tablePendingRecievables.CodeColumn);
+                return this.IsNull(this.tablePendingAccounts.CodeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCodeNull() {
-                this[this.tablePendingRecievables.CodeColumn] = global::System.Convert.DBNull;
+                this[this.tablePendingAccounts.CodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsGovIDNull() {
-                return this.IsNull(this.tablePendingRecievables.GovIDColumn);
+                return this.IsNull(this.tablePendingAccounts.GovIDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGovIDNull() {
-                this[this.tablePendingRecievables.GovIDColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class AccountsRecievableRowChangeEvent : global::System.EventArgs {
-            
-            private AccountsRecievableRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableRowChangeEvent(AccountsRecievableRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
+                this[this.tablePendingAccounts.GovIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AccountsRecievableRow Row {
-                get {
-                    return this.eventRow;
-                }
+            public bool IsCommentNull() {
+                return this.IsNull(this.tablePendingAccounts.CommentColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
+            public void SetCommentNull() {
+                this[this.tablePendingAccounts.CommentColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2218,22 +1702,22 @@ namespace Cognitivo.Reporting.Data {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class PendingRecievablesRowChangeEvent : global::System.EventArgs {
+        public class PendingAccountsRowChangeEvent : global::System.EventArgs {
             
-            private PendingRecievablesRow eventRow;
+            private PendingAccountsRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesRowChangeEvent(PendingRecievablesRow row, global::System.Data.DataRowAction action) {
+            public PendingAccountsRowChangeEvent(PendingAccountsRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PendingRecievablesRow Row {
+            public PendingAccountsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -2251,194 +1735,6 @@ namespace Cognitivo.Reporting.Data {
 }
 namespace Cognitivo.Reporting.Data.FinanceDSTableAdapters {
     
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class AccountsRecievableTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
-        
-        private global::MySql.Data.MySqlClient.MySqlConnection _connection;
-        
-        private global::MySql.Data.MySqlClient.MySqlTransaction _transaction;
-        
-        private global::MySql.Data.MySqlClient.MySqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public AccountsRecievableTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected internal global::MySql.Data.MySqlClient.MySqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::MySql.Data.MySqlClient.MySqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::MySql.Data.MySqlClient.MySqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected global::MySql.Data.MySqlClient.MySqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "AccountsRecievable";
-            tableMapping.ColumnMappings.Add("id_contact", "id_contact");
-            tableMapping.ColumnMappings.Add("cliente", "cliente");
-            tableMapping.ColumnMappings.Add("RUC", "RUC");
-            tableMapping.ColumnMappings.Add("year(trans_date)", "year(trans_date)");
-            tableMapping.ColumnMappings.Add("month(trans_date)", "month(trans_date)");
-            tableMapping.ColumnMappings.Add("valordolar", "valordolar");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::MySql.Data.MySqlClient.MySqlConnection();
-            this._connection.ConnectionString = global::Cognitivo.Properties.Settings.Default.MySQLconnString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
-            this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select 
-	ps.id_contact,
-	c.name as cliente,
-	c.gov_code as RUC,
-    year(trans_date),
-    month(trans_date),
-    sum(ps.debit)-sum(crddolar.credit) as valordolar
-from payment_schedual as ps
-left join contacts as c
-on c.id_contact = ps.id_contact
-left join(select ps.id_payment_schedual,IFNULL ((ps.credit/fx.buy_value),0) as credit from 
-			payment_schedual as ps left join 
-            payment_detail as pd on pd.id_payment_detail = ps.id_payment_detail left join
-            app_currencyfx fx on fx.id_currencyfx = pd.id_currencyfx) as crddolar
-            on crddolar.id_payment_schedual = ps.id_payment_schedual
-group by ps.id_contact,month(trans_date),year(trans_date)
-order by c.name";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(FinanceDS.AccountsRecievableDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual FinanceDS.AccountsRecievableDataTable GetData() {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            FinanceDS.AccountsRecievableDataTable dataTable = new FinanceDS.AccountsRecievableDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-    }
     
     /// <summary>
     ///Represents the connection and commands used to retrieve and save data.

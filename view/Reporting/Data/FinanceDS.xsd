@@ -7,43 +7,6 @@
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="MySQLconnString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MySQLconnString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Cognitivo.Properties.Settings.GlobalReference.Default.MySQLconnString" Provider="MySql.Data.MySqlClient" />
         </Connections>
         <Tables>
-          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AccountsRecievableTableAdapter" GeneratorDataComponentClassName="AccountsRecievableTableAdapter" Name="AccountsRecievable" UserDataComponentName="AccountsRecievableTableAdapter">
-            <MainSource>
-              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
-                <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>select 
-	ps.id_contact,
-	c.name as cliente,
-	c.gov_code as RUC,
-    year(trans_date),
-    month(trans_date),
-    sum(ps.debit)-sum(crddolar.credit) as valordolar
-from payment_schedual as ps
-left join contacts as c
-on c.id_contact = ps.id_contact
-left join(select ps.id_payment_schedual,IFNULL ((ps.credit/fx.buy_value),0) as credit from 
-			payment_schedual as ps left join 
-            payment_detail as pd on pd.id_payment_detail = ps.id_payment_detail left join
-            app_currencyfx fx on fx.id_currencyfx = pd.id_currencyfx) as crddolar
-            on crddolar.id_payment_schedual = ps.id_payment_schedual
-group by ps.id_contact,month(trans_date),year(trans_date)
-order by c.name</CommandText>
-                    <Parameters />
-                  </DbCommand>
-                </SelectCommand>
-              </DbSource>
-            </MainSource>
-            <Mappings>
-              <Mapping SourceColumn="id_contact" DataSetColumn="id_contact" />
-              <Mapping SourceColumn="cliente" DataSetColumn="cliente" />
-              <Mapping SourceColumn="RUC" DataSetColumn="RUC" />
-              <Mapping SourceColumn="year(trans_date)" DataSetColumn="year(trans_date)" />
-              <Mapping SourceColumn="month(trans_date)" DataSetColumn="month(trans_date)" />
-              <Mapping SourceColumn="valordolar" DataSetColumn="valordolar" />
-            </Mappings>
-            <Sources />
-          </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CurrentAccount_CustomerTableAdapter" GeneratorDataComponentClassName="CurrentAccount_CustomerTableAdapter" Name="CurrentAccount_Customer" UserDataComponentName="CurrentAccount_CustomerTableAdapter">
             <MainSource>
               <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
@@ -131,18 +94,6 @@ as Balance
   <xs:element name="FinanceDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FinanceDS" msprop:Generator_UserDSName="FinanceDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="AccountsRecievable" msprop:Generator_TableClassName="AccountsRecievableDataTable" msprop:Generator_TableVarName="tableAccountsRecievable" msprop:Generator_RowChangedName="AccountsRecievableRowChanged" msprop:Generator_TablePropName="AccountsRecievable" msprop:Generator_RowDeletingName="AccountsRecievableRowDeleting" msprop:Generator_RowChangingName="AccountsRecievableRowChanging" msprop:Generator_RowEvHandlerName="AccountsRecievableRowChangeEventHandler" msprop:Generator_RowDeletedName="AccountsRecievableRowDeleted" msprop:Generator_RowClassName="AccountsRecievableRow" msprop:Generator_UserTableName="AccountsRecievable" msprop:Generator_RowEvArgName="AccountsRecievableRowChangeEvent">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="id_contact" msprop:Generator_ColumnVarNameInTable="columnid_contact" msprop:Generator_ColumnPropNameInRow="id_contact" msprop:Generator_ColumnPropNameInTable="id_contactColumn" msprop:Generator_UserColumnName="id_contact" type="xs:int" />
-              <xs:element name="cliente" msprop:Generator_ColumnVarNameInTable="columncliente" msprop:Generator_ColumnPropNameInRow="cliente" msprop:Generator_ColumnPropNameInTable="clienteColumn" msprop:Generator_UserColumnName="cliente" type="xs:string" minOccurs="0" />
-              <xs:element name="RUC" msprop:Generator_ColumnVarNameInTable="columnRUC" msprop:Generator_ColumnPropNameInRow="RUC" msprop:Generator_ColumnPropNameInTable="RUCColumn" msprop:Generator_UserColumnName="RUC" type="xs:string" minOccurs="0" />
-              <xs:element name="year_x0028_trans_date_x0029_" msprop:Generator_ColumnVarNameInTable="_columnyear_trans_date_" msprop:Generator_ColumnPropNameInRow="_year_trans_date_" msprop:Generator_ColumnPropNameInTable="_year_trans_date_Column" msprop:Generator_UserColumnName="year(trans_date)" type="xs:long" minOccurs="0" />
-              <xs:element name="month_x0028_trans_date_x0029_" msprop:Generator_ColumnVarNameInTable="_columnmonth_trans_date_" msprop:Generator_ColumnPropNameInRow="_month_trans_date_" msprop:Generator_ColumnPropNameInTable="_month_trans_date_Column" msprop:Generator_UserColumnName="month(trans_date)" type="xs:long" minOccurs="0" />
-              <xs:element name="valordolar" msprop:Generator_ColumnVarNameInTable="columnvalordolar" msprop:Generator_ColumnPropNameInRow="valordolar" msprop:Generator_ColumnPropNameInTable="valordolarColumn" msprop:Generator_UserColumnName="valordolar" type="xs:decimal" minOccurs="0" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
         <xs:element name="CurrentAccount_Customer" msprop:Generator_TableClassName="CurrentAccount_CustomerDataTable" msprop:Generator_TableVarName="tableCurrentAccount_Customer" msprop:Generator_TablePropName="CurrentAccount_Customer" msprop:Generator_RowDeletingName="CurrentAccount_CustomerRowDeleting" msprop:Generator_RowChangingName="CurrentAccount_CustomerRowChanging" msprop:Generator_RowEvHandlerName="CurrentAccount_CustomerRowChangeEventHandler" msprop:Generator_RowDeletedName="CurrentAccount_CustomerRowDeleted" msprop:Generator_UserTableName="CurrentAccount_Customer" msprop:Generator_RowChangedName="CurrentAccount_CustomerRowChanged" msprop:Generator_RowEvArgName="CurrentAccount_CustomerRowChangeEvent" msprop:Generator_RowClassName="CurrentAccount_CustomerRow">
           <xs:complexType>
             <xs:sequence>
@@ -157,22 +108,23 @@ as Balance
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PendingRecievables" msprop:Generator_TableClassName="PendingRecievablesDataTable" msprop:Generator_TableVarName="tablePendingRecievables" msprop:Generator_TablePropName="PendingRecievables" msprop:Generator_RowDeletingName="PendingRecievablesRowDeleting" msprop:Generator_RowChangingName="PendingRecievablesRowChanging" msprop:Generator_RowEvHandlerName="PendingRecievablesRowChangeEventHandler" msprop:Generator_RowDeletedName="PendingRecievablesRowDeleted" msprop:Generator_UserTableName="PendingRecievables" msprop:Generator_RowChangedName="PendingRecievablesRowChanged" msprop:Generator_RowEvArgName="PendingRecievablesRowChangeEvent" msprop:Generator_RowClassName="PendingRecievablesRow">
+        <xs:element name="PendingAccounts" msprop:Generator_TableClassName="PendingAccountsDataTable" msprop:Generator_TableVarName="tablePendingAccounts" msprop:Generator_TablePropName="PendingAccounts" msprop:Generator_RowDeletingName="PendingAccountsRowDeleting" msprop:Generator_RowChangingName="PendingAccountsRowChanging" msprop:Generator_RowEvHandlerName="PendingAccountsRowChangeEventHandler" msprop:Generator_RowDeletedName="PendingAccountsRowDeleted" msprop:Generator_UserTableName="PendingAccounts" msprop:Generator_RowChangedName="PendingAccountsRowChanged" msprop:Generator_RowEvArgName="PendingAccountsRowChangeEvent" msprop:Generator_RowClassName="PendingAccountsRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="Customer" msprop:Generator_ColumnVarNameInTable="columnCustomer" msprop:Generator_ColumnPropNameInRow="Customer" msprop:Generator_ColumnPropNameInTable="CustomerColumn" msprop:Generator_UserColumnName="Customer" type="xs:string" minOccurs="0" />
-              <xs:element name="SalesNumber" msprop:Generator_ColumnVarNameInTable="columnSalesNumber" msprop:Generator_ColumnPropNameInRow="SalesNumber" msprop:Generator_ColumnPropNameInTable="SalesNumberColumn" msprop:Generator_UserColumnName="SalesNumber" type="xs:string" minOccurs="0" />
-              <xs:element name="SalesCondition" msprop:Generator_ColumnVarNameInTable="columnSalesCondition" msprop:Generator_ColumnPropNameInRow="SalesCondition" msprop:Generator_ColumnPropNameInTable="SalesConditionColumn" msprop:Generator_UserColumnName="SalesCondition" type="xs:string" minOccurs="0" />
-              <xs:element name="SalesContract" msprop:Generator_ColumnVarNameInTable="columnSalesContract" msprop:Generator_ColumnPropNameInRow="SalesContract" msprop:Generator_ColumnPropNameInTable="SalesContractColumn" msprop:Generator_UserColumnName="SalesContract" type="xs:string" minOccurs="0" />
+              <xs:element name="Contact" msprop:Generator_ColumnVarNameInTable="columnContact" msprop:Generator_ColumnPropNameInRow="Contact" msprop:Generator_ColumnPropNameInTable="ContactColumn" msprop:Generator_UserColumnName="Contact" type="xs:string" minOccurs="0" />
+              <xs:element name="Number" msprop:Generator_ColumnVarNameInTable="columnNumber" msprop:Generator_ColumnPropNameInRow="Number" msprop:Generator_ColumnPropNameInTable="NumberColumn" msprop:Generator_UserColumnName="Number" type="xs:string" minOccurs="0" />
+              <xs:element name="Condition" msprop:Generator_ColumnVarNameInTable="columnCondition" msprop:Generator_ColumnPropNameInRow="Condition" msprop:Generator_ColumnPropNameInTable="ConditionColumn" msprop:Generator_UserColumnName="Condition" type="xs:string" minOccurs="0" />
+              <xs:element name="Contract" msprop:Generator_ColumnVarNameInTable="columnContract" msprop:Generator_ColumnPropNameInRow="Contract" msprop:Generator_ColumnPropNameInTable="ContractColumn" msprop:Generator_UserColumnName="Contract" type="xs:string" minOccurs="0" />
               <xs:element name="ExpiryDate" msprop:Generator_ColumnVarNameInTable="columnExpiryDate" msprop:Generator_ColumnPropNameInRow="ExpiryDate" msprop:Generator_ColumnPropNameInTable="ExpiryDateColumn" msprop:Generator_UserColumnName="ExpiryDate" type="xs:string" minOccurs="0" />
               <xs:element name="CurrencyName" msprop:Generator_ColumnVarNameInTable="columnCurrencyName" msprop:Generator_ColumnPropNameInRow="CurrencyName" msprop:Generator_ColumnPropNameInTable="CurrencyNameColumn" msprop:Generator_UserColumnName="CurrencyName" type="xs:string" minOccurs="0" />
               <xs:element name="Rate" msprop:Generator_ColumnVarNameInTable="columnRate" msprop:Generator_ColumnPropNameInRow="Rate" msprop:Generator_ColumnPropNameInTable="RateColumn" msprop:Generator_UserColumnName="Rate" type="xs:decimal" minOccurs="0" />
-              <xs:element name="Debit" msprop:Generator_ColumnVarNameInTable="columnDebit" msprop:Generator_ColumnPropNameInRow="Debit" msprop:Generator_ColumnPropNameInTable="DebitColumn" msprop:Generator_UserColumnName="Debit" type="xs:decimal" minOccurs="0" />
-              <xs:element name="CreditChild" msprop:Generator_ColumnVarNameInTable="columnCreditChild" msprop:Generator_ColumnPropNameInRow="CreditChild" msprop:Generator_ColumnPropNameInTable="CreditChildColumn" msprop:Generator_UserColumnName="CreditChild" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Paid" msprop:Generator_ColumnVarNameInTable="columnPaid" msprop:Generator_ColumnPropNameInRow="Paid" msprop:Generator_ColumnPropNameInTable="PaidColumn" msprop:Generator_UserColumnName="Paid" type="xs:decimal" minOccurs="0" />
               <xs:element name="Balance" msprop:Generator_ColumnVarNameInTable="columnBalance" msprop:Generator_ColumnPropNameInRow="Balance" msprop:Generator_ColumnPropNameInTable="BalanceColumn" msprop:Generator_UserColumnName="Balance" type="xs:decimal" minOccurs="0" />
               <xs:element name="TransDate" msprop:Generator_ColumnVarNameInTable="columnTransDate" msprop:Generator_ColumnPropNameInRow="TransDate" msprop:Generator_ColumnPropNameInTable="TransDateColumn" msprop:Generator_UserColumnName="TransDate" type="xs:string" minOccurs="0" />
               <xs:element name="Code" msprop:Generator_ColumnVarNameInTable="columnCode" msprop:Generator_ColumnPropNameInRow="Code" msprop:Generator_ColumnPropNameInTable="CodeColumn" msprop:Generator_UserColumnName="Code" type="xs:string" minOccurs="0" />
               <xs:element name="GovID" msprop:Generator_ColumnVarNameInTable="columnGovID" msprop:Generator_ColumnPropNameInRow="GovID" msprop:Generator_ColumnPropNameInTable="GovIDColumn" msprop:Generator_UserColumnName="GovID" type="xs:string" minOccurs="0" />
+              <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

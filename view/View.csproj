@@ -584,6 +584,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reporting\Views\PendingPayables.xaml.cs">
+      <DependentUpon>PendingPayables.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
       <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
     </Compile>
@@ -619,9 +622,6 @@
     </Compile>
     <Compile Include="Reporting\Views\PriceList.xaml.cs">
       <DependentUpon>PriceList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
-      <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\HR_Used.xaml.cs">
       <DependentUpon>HR_Used.xaml</DependentUpon>
@@ -1066,7 +1066,7 @@
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\PendingReceivables.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PendingAccounts.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
@@ -1577,6 +1577,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\PendingPayables.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\ProductionOrderStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1624,10 +1628,6 @@
     <Page Include="Reporting\Views\PriceList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\PendingSalesDocs.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\HR_Used.xaml">
       <Generator>MSBuild:Compile</Generator>

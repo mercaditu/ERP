@@ -80,6 +80,7 @@ namespace Cognitivo.Product
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            sbxitem.item_types = item.item_type.FixedAssets;
             item_asset_maintainanceitem_asset_maintainance_detailViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceitem_asset_maintainance_detailViewSource")));
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
             db.db.item_asset_maintainance.Load();
@@ -150,7 +151,7 @@ namespace Cognitivo.Product
         {
             if (dgvMaintainceDetail.ItemsSource != null)
             {
-                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = db.db.item_asset_maintainance_detail.ToList();
+                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = item_asset_maintainanceitem_asset_maintainance_detailViewSource.View.OfType<item_asset_maintainance_detail>().ToList();
                 item_asset_maintainance_detaillist = item_asset_maintainance_detaillist.Where(x => x.IsSelected == true).ToList();
 
                 if (item_asset_maintainance_detaillist.Count() > 0)
@@ -231,6 +232,34 @@ namespace Cognitivo.Product
             foreach (item_asset_maintainance item_asset_maintainance in item_asset_maintainanceViewSource.View.OfType<item_asset_maintainance>().ToList())
             {
                 item_asset_maintainance.status = entity.item_asset_maintainance.Status.Done;
+            }
+        }
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_asset_maintainance_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
+                    //DeleteDetailGridRow
+                    dgvMaintainceDetail.CancelEdit();
+                    db.db.item_asset_maintainance_detail.Remove(e.Parameter as item_asset_maintainance_detail);
+                    item_asset_maintainanceitem_asset_maintainance_detailViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
             }
         }
     }

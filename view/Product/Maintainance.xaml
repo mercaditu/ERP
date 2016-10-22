@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity"
+        xmlns:customcmd="clr-namespace:Cognitivo.Class"
        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
  
@@ -16,7 +17,11 @@
         lex:LocalizeDictionary.DesignCulture="en-US" 
       
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="600" Loaded="Page_Loaded">
-
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
@@ -136,7 +141,15 @@
                                                     DisplayMemberPath="app_currency.name" 
                                                     SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="64"/>
                                 <!-- UnitPrice_Vat -->
-
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>

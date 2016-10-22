@@ -62,19 +62,19 @@ namespace cntrl
         {
             if (project != null)
             {
-                toolBar toolBar = new cntrl.toolBar();
+                toolBar toolBar = new toolBar();
                 List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
 
-                sales_order sales_order = new entity.sales_order();
-                if (Generate_Budget )
+                sales_order sales_order = new sales_order();
+                if (Generate_Budget)
                 {
                     SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
-                    sales_budget sales_budget = new entity.sales_budget();
+                    sales_budget sales_budget = new sales_budget();
 
                     sales_budget.id_contact = (int)project.id_contact;
                     sales_budget.contact = SalesBudgetDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-                    
+                    sales_budget.status = Status.Documents_General.Pending;
                     sales_budget.id_project = project.id_project;
                     sales_budget.id_condition = (int)cbxCondition.SelectedValue;
                     sales_budget.id_contract = (int)cbxContract.SelectedValue;

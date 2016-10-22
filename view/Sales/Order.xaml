@@ -286,12 +286,13 @@
 
 
                             <StackPanel Margin="2" VerticalAlignment="Center" Orientation="Horizontal"
-                                    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                        Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                 <Label Content="" Style="{StaticResource ico_Label}"/>
                                 <TextBlock Text="{lex:Loc Code}" Style="{StaticResource text_Label}"/>
                                 <TextBox Text="{Binding code, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                     Style="{StaticResource TextToLabelStyle}"/>
+                                         Style="{StaticResource TextToLabelStyle}"/>
                             </StackPanel>
+                            
                             <StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                 <Label Content="" FontSize="16" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                                 <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}" />

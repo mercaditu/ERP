@@ -103,7 +103,7 @@ namespace entity.Brillo.Logic
                 payment_schedual.sales_return = sales_return;
                 payment_schedual.trans_date = sales_return.trans_date;
                 payment_schedual.expire_date = sales_return.trans_date;
-                payment_schedual.status = entity.Status.Documents_General.Approved;
+                payment_schedual.status = Status.Documents_General.Approved;
                 payment_schedual.id_contact = sales_return.id_contact;
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
@@ -123,7 +123,7 @@ namespace entity.Brillo.Logic
                 payment_schedual.purchase_return = purchase_return;
                 payment_schedual.trans_date = purchase_return.trans_date;
                 payment_schedual.expire_date = purchase_return.trans_date;
-                payment_schedual.status = entity.Status.Documents_General.Approved;
+                payment_schedual.status = Status.Documents_General.Approved;
                 payment_schedual.id_contact = purchase_return.id_contact;
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
@@ -146,7 +146,7 @@ namespace entity.Brillo.Logic
                     payment_schedual.sales_order = sales_order;
                     payment_schedual.trans_date = sales_order.trans_date;
                     payment_schedual.expire_date = sales_order.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = entity.Status.Documents_General.Approved;
+                    payment_schedual.status = Status.Documents_General.Approved;
                     payment_schedual.id_contact = sales_order.id_contact;
                     payment_schedualList.Add(payment_schedual);
                 }
@@ -169,7 +169,7 @@ namespace entity.Brillo.Logic
                     payment_schedual.purchase_invoice = purchase_invoice;
                     payment_schedual.trans_date = purchase_invoice.trans_date;
                     payment_schedual.expire_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = entity.Status.Documents_General.Pending;
+                    payment_schedual.status = Status.Documents_General.Pending;
                     payment_schedual.id_contact = purchase_invoice.id_contact;
                     payment_schedualList.Add(payment_schedual);
                 }
@@ -191,7 +191,7 @@ namespace entity.Brillo.Logic
                     payment_schedual.purchase_order = purchase_order;
                     payment_schedual.trans_date = purchase_order.trans_date;
                     payment_schedual.expire_date = purchase_order.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = entity.Status.Documents_General.Pending;
+                    payment_schedual.status = Status.Documents_General.Pending;
                     payment_schedual.id_contact = purchase_order.id_contact;
                     payment_schedualList.Add(payment_schedual);
                 }

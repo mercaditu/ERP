@@ -10,25 +10,6 @@ namespace entity.Brillo
         private static decimal Rate_Previous { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="db"></param>
-        /// <returns>CurrencyFX Entity</returns>
-        public static app_currencyfx get_DefaultFX(db db)
-        {
-            if (CurrentSession.Id_Company > 0)
-            {
-                app_currency app_currency = db.app_currency.Where(x => x.is_priority && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                if (app_currency != null)
-                {
-                    return db.app_currencyfx.Where(x => x.is_active && x.id_currency == app_currency.id_currency).FirstOrDefault();
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Convert values from one currency to another.
         /// </summary>
         /// <param name="OriginalValue"></param>

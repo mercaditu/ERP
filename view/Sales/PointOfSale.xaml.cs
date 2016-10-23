@@ -187,7 +187,7 @@ namespace Cognitivo.Sales
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
-            cbxSalesRep.ItemsSource = await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
+            cbxSalesRep.ItemsSource = CurrentSession.SalesReps; //await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Currencies;

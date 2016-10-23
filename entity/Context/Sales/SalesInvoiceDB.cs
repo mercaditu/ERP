@@ -19,9 +19,9 @@ namespace entity
             sales_invoice.timestamp = DateTime.Now;
 
             //Navigation Properties
-            sales_invoice.id_currencyfx = Brillo.Currency.get_DefaultFX(this).id_currencyfx;
-
-            sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            sales_invoice.app_currencyfx = app_currencyfx.Find(CurrentSession.CurrencyFX_Default.id_currencyfx);
+            sales_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
+            
 
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
@@ -272,21 +272,25 @@ namespace entity
         }
         public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item)
         {
-            sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
+            sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
-            _sales_invoice_detail.State = EntityState.Added;
-            _sales_invoice_detail.sales_invoice = sales_invoice;
+            sales_invoice_detail.State = EntityState.Added;
+            sales_invoice_detail.sales_invoice = sales_invoice;
 
-            _sales_invoice_detail.CurrencyFX_ID = sales_invoice.app_currencyfx.id_currencyfx;
-            _sales_invoice_detail.Contact = sales_invoice.contact;
-            _sales_invoice_detail.item_description = item.name;
-            _sales_invoice_detail.item = item;
-            _sales_invoice_detail.id_item = item.id_item;
+            sales_invoice_detail.CurrencyFX_ID = sales_invoice.id_currencyfx;
+            sales_invoice_detail.Contact = sales_invoice.contact;
 
-            _sales_invoice_detail.quantity += 1;
-            _sales_invoice_detail.app_vat_group = base.app_vat_group.Where(x => x.id_vat_group == _sales_invoice_detail.id_vat_group).FirstOrDefault();
-            sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-            return _sales_invoice_detail;
+            sales_invoice_detail.item_description = item.name;
+            sales_invoice_detail.item = item;
+            sales_invoice_detail.id_item = item.id_item;
+
+            int VatGroupID = (int)sales_invoice_detail.id_vat_group;
+            sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);
+
+            sales_invoice_detail.quantity += 1;
+
+            sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+            return sales_invoice_detail;
         }
 
         /// <summary>

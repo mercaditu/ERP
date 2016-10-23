@@ -28,14 +28,14 @@ namespace entity
             {
                 sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
-                app_contract _app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
+                app_contract _app_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault(); // app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
                 if (_app_contract != null)
                 {
-                    app_condition _app_condition = _app_contract.app_condition;
-                    if (_app_condition != null)
+                    int id_condition = _app_contract.id_condition;
+                    if (id_condition > 0)
                     {
-                        sales_invoice.app_condition = _app_condition;
-                        sales_invoice.app_contract = _app_contract;
+                        sales_invoice.id_condition = id_condition;
+                        sales_invoice.id_contract = _app_contract.id_contract;
                     }
                 }
             }

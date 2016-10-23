@@ -37,7 +37,7 @@ namespace entity
 
         public payment_detail NewPaymentDetail(ref payment payment)
         {
-            payment_detail payment_detail = new entity.payment_detail();
+            payment_detail payment_detail = new payment_detail();
             payment_detail.State = EntityState.Added;
             payment_detail.id_payment_type = payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_payment_type;
             payment_detail.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;

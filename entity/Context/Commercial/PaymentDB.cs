@@ -128,8 +128,12 @@ namespace entity
                 //Assigns appCurrencyFX ID & Entity
                 if (payment_detail.id_currencyfx == 0)
                 {
-                    payment_detail.id_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
-                    payment_detail.app_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                    app_currencyfx _currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                    if (_currencyfx != null)
+                    {
+                        payment_detail.id_currencyfx = _currencyfx.id_currencyfx;
+                        payment_detail.app_currencyfx = _currencyfx;
+                    }
                 }
 
                 ///Assigns appCurrencyFX Entity which is needed for Printing.
@@ -297,7 +301,7 @@ namespace entity
                             number = Parent_Schedual.sales_invoice.number;
                         }
                     }
-                    app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
+                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                      base.app_account_detail.Add(app_account_detail);
                 }
@@ -313,7 +317,7 @@ namespace entity
 
             if (RequirePrint)
             {
-                entity.Brillo.Document.Start.Automatic(payment, app_document_range);
+                Brillo.Document.Start.Automatic(payment, app_document_range);
             }
 
         }

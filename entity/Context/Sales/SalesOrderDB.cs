@@ -141,8 +141,9 @@ namespace entity
 
                         if (sales_order.number == null && sales_order.id_range != null)
                         {
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == sales_order.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == sales_order.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == sales_order.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == sales_order.id_terminal).FirstOrDefault().code;
+
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == sales_order.id_range).FirstOrDefault();
                             sales_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_order.RaisePropertyChanged("number");
@@ -177,7 +178,7 @@ namespace entity
 
                         foreach (sales_order_detail data in sales_order.sales_order_detail.Where(x=>x.IsSelected))
                         {
-                            item_request_detail item_request_detail = new entity.item_request_detail();
+                            item_request_detail item_request_detail = new item_request_detail();
                             item_request_detail.date_needed_by = (DateTime)sales_order.delivery_date;
                             item_request_detail.id_sales_order_detail = data.id_sales_order_detail;
                             item_request_detail.urgency =entity.item_request_detail.Urgencies.Medium;

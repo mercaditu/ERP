@@ -105,7 +105,7 @@ namespace Cognitivo.Purchase
             purchase_tenderpurchase_tender_itemViewSource = FindResource("purchase_tenderpurchase_tender_itemViewSource") as CollectionViewSource;
             purchase_tenderpurchase_tender_item_detailViewSource = FindResource("purchase_tenderpurchase_tender_item_detailViewSource") as CollectionViewSource;
 
-            cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseTenderDB.app_branch.Local;
+            cbxBranch.ItemsSource = CurrentSession.Branches; //PurchaseTenderDB.app_branch.Local;
 
             await PurchaseTenderDB.app_department.Where(b => b.is_active && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
@@ -113,17 +113,17 @@ namespace Cognitivo.Purchase
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseTenderDB, entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             CollectionViewSource app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
-            app_conditionViewSource.Source = CurrentSession.Get_Condition();
+            app_conditionViewSource.Source = CurrentSession.Conditions;
 
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
-            app_contractViewSource.Source = CurrentSession.Get_Contract();
+            app_contractViewSource.Source = CurrentSession.Contracts;
 
             PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             CollectionViewSource app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
 
             app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();

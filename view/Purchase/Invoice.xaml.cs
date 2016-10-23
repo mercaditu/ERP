@@ -67,19 +67,19 @@ namespace Cognitivo.Purchase
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
             }));
 
-            cbxContract.ItemsSource = CurrentSession.Get_Contract();
-            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+            cbxContract.ItemsSource = CurrentSession.Contracts;
+            cbxCondition.ItemsSource = CurrentSession.Conditions;
 
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseInvoiceDB.app_branch.Local;
+                cbxBranch.ItemsSource = CurrentSession.Branches; //PurchaseInvoiceDB.app_branch.Local;
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //PurchaseInvoiceDB.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //PurchaseInvoiceDB.app_vat_group.Local;
             }));
 
             await PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
@@ -124,7 +124,7 @@ namespace Cognitivo.Purchase
 
             purchase_invoice purchase_invoice = PurchaseInvoiceDB.New();
             purchase_invoice.trans_date = DateTime.Now.AddDays(_pref_PurchaseInvoice.TransDate_OffSet);
-            PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Added;
+            
 
             purchase_invoiceViewSource.View.MoveCurrentToLast();
         }

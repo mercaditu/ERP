@@ -146,7 +146,7 @@ namespace Cognitivo.Product
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //ItemDB.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //ItemDB.app_vat_group.Local;
             }));
 
             await ItemDB.item_tag
@@ -170,7 +170,7 @@ namespace Cognitivo.Product
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-                app_currencyViewSource.Source = CurrentSession.Get_Currency(); //ItemDB.app_currency.Local;
+                app_currencyViewSource.Source = CurrentSession.Currencies; //ItemDB.app_currency.Local;
             }));
 
             await ItemDB.hr_talent
@@ -181,12 +181,9 @@ namespace Cognitivo.Product
                 hr_talentViewSource.Source = ItemDB.hr_talent.Local;
             }));
 
-            await ItemDB.item_price_list
-               .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-               .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                item_price_listViewSource.Source = ItemDB.item_price_list.Local;
+                item_price_listViewSource.Source = CurrentSession.PriceLists;
             }));
 
             await ItemDB.item_brand

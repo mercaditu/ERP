@@ -161,89 +161,42 @@ namespace entity
 
         private static void Thread_Data()
         {
-            using (db cntx = new db())
+            using (db db = new db())
             {
-                cntx.Configuration.LazyLoadingEnabled = false;
-                cntx.Configuration.AutoDetectChangesEnabled = false;
-
                 //Default Currency
-                Currency_Default = cntx.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
+                Currency_Default = db.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
                 if (Currency_Default != null)
                 {
                     CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
                 }
 
-                SalesRep = cntx.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Contract = cntx.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Condition = cntx.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                VAT_Group = cntx.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                VAT_GroupDetail = cntx.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
-                VAT = cntx.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Branch = cntx.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Terminal = cntx.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Currency = cntx.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-
+                SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                VAT_GroupDetails = db.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
+                VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             }
         }
 
-        private static List<sales_rep> SalesRep { get; set; }
-        private static List<app_contract> Contract { get; set; }
-        private static List<app_condition> Condition { get; set; }
-        private static List<app_vat_group> VAT_Group { get; set; }
-        private static List<app_vat_group_details> VAT_GroupDetail { get; set; }
-        private static List<app_vat> VAT { get; set; }
-        private static List<app_branch> Branch { get; set; }
-        private static List<app_terminal> Terminal { get; set; }
-        private static List<app_currency> Currency { get; set; }
-        private static List<item_price_list> PriceList { get; set; }
+        public static List<sales_rep> SalesReps { get; set; }
+        public static List<app_contract> Contracts { get; set; }
+        public static List<app_condition> Conditions { get; set; }
+        public static List<app_vat_group> VAT_Groups { get; set; }
+        public static List<app_vat_group_details> VAT_GroupDetails { get; set; }
+        public static List<app_vat> VATs { get; set; }
+        public static List<app_branch> Branches { get; set; }
+        public static List<app_location>Locations { get; set; }
+        public static List<app_terminal> Terminals { get; set; }
+        public static List<app_currency> Currencies { get; set; }
+        public static List<item_price_list> PriceLists { get; set; }
 
         public static app_currency Currency_Default { get; set; }
         public static app_currencyfx CurrencyFX_Default { get; set; }
-
-
-        public static List<sales_rep> Get_SalesRep()
-        {
-            return SalesRep;
-        }
-
-        public static List<app_contract> Get_Contract()
-        {
-            return Contract;
-        }
-
-        public static List<app_condition> Get_Condition()
-        {
-            return Condition;
-        }
-
-        public static List<app_vat_group> Get_VAT_Group()
-        {
-            return VAT_Group;
-        }
-
-        public static List<app_vat_group_details> Get_VAT_GroupDetails()
-        {
-            return VAT_GroupDetail;
-        }
-
-        public static List<app_vat> Get_VAT()
-        {
-            return VAT;
-        }
-
-        public static List<app_branch> Get_Branch()
-        {
-            return Branch;
-        }
-
-        public static List<app_terminal> Get_Terminal()
-        {
-            return Terminal;
-        }
-
-        public static List<app_currency> Get_Currency()
-        {
-            return Currency;
-        }
     }
 }

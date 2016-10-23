@@ -43,7 +43,6 @@ namespace entity
                         purchase_packing.timestamp = DateTime.Now;
                         purchase_packing.State = EntityState.Unchanged;
                         Entry(purchase_packing).State = EntityState.Added;
-                      //  add_CRM(purchase_packing);
                     }
                     else if (purchase_packing.State == EntityState.Modified)
                     {
@@ -68,24 +67,6 @@ namespace entity
                 }
             }
         }
-
-        //private void add_CRM(purchase_packing purchase_packing)
-        //{
-        //    if (purchase_packing.id_purchase_packing == 0 || purchase_packing == null)
-        //    {
-        //        crm_opportunity crm_opportunity = new crm_opportunity();
-        //        crm_opportunity.id_contact = purchase_packing.id_contact;
-
-        //        crm_opportunity.purchase_packing.Add(purchase_packing);
-        //        base.crm_opportunity.Add(crm_opportunity);
-        //    }
-        //    else
-        //    {
-        //        crm_opportunity crm_opportunity = sales_order.Where(x => x.id_sales_order == purchase_packing.id_purchase_packing).FirstOrDefault().crm_opportunity;
-        //        crm_opportunity.purchase_packing.Add(purchase_packing);
-        //        base.crm_opportunity.Attach(crm_opportunity);
-        //    }
-        //}
 
         public void Approve(bool IsDiscountStock)
         {
@@ -116,16 +97,18 @@ namespace entity
 
                         if (purchase_packing.number == null && purchase_packing.id_range > 0)
                         {
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == purchase_packing.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_packing.id_branch).FirstOrDefault().code;
+
+                            if (purchase_packing.app_terminal != null)
+                            {
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_branch == purchase_packing.app_terminal.id_terminal).FirstOrDefault().code;
+                            }
+
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_packing.id_range).FirstOrDefault();
                             purchase_packing.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                            purchase_packing.RaisePropertyChanged("number");
-                          
-
-                           
+                            purchase_packing.RaisePropertyChanged("number");  
                         }
                      
-
                         purchase_packing.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }

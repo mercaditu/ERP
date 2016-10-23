@@ -44,8 +44,6 @@ namespace cntrl.PanelAdv
             }
             if (_contact != null)
             {
-
-
                 sbxContact.Text = _contact.name;
                 load_SalesOrder(_contact.id_contact);
             }

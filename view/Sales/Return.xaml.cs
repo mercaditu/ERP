@@ -26,31 +26,30 @@ namespace Cognitivo.Sales
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-                SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Load();
+                await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
                 salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
                 sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
 
                 //sales_invoiceViewSource = (CollectionViewSource)FindResource("sales_invoiceViewSource");
                 //sales_invoiceViewSource.Source = SalesReturnDB.sales_invoice.Where(a => a.status == Status.Documents_General.Approved && a.id_company == CurrentSession.Id_Company).ToList();
 
-                CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("app_currencyfxViewSource");
-                currencyfxViewSource.Source = CurrentSession.Get_Currency();
+                //CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("app_currencyfxViewSource");
+                //currencyfxViewSource.Source = CurrentSession.Currencies;
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //SalesReturnDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //SalesReturnDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
                 cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
 
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
                 CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-                //SalesReturnDB.app_branch.Load();
-                app_branchViewSource.Source = CurrentSession.Get_Branch(); //SalesReturnDB.app_branch.Local;
+                app_branchViewSource.Source = CurrentSession.Branches; //SalesReturnDB.app_branch.Local;
             }
 
             catch (Exception ex)

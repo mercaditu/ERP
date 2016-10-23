@@ -60,7 +60,7 @@ namespace Cognitivo.Commercial
         {
             load_Schedual();
 
-            foreach (app_condition app_condition in CurrentSession.Get_Condition())
+            foreach (app_condition app_condition in CurrentSession.Conditions)
             {
                 Label lbl = new Label();
                 lbl.Content = app_condition.name;

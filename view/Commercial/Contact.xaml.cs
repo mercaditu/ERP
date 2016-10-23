@@ -45,7 +45,7 @@ namespace Cognitivo.Commercial
 
             //AppContract
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = CurrentSession.Get_Contract().OrderBy(x => x.name);
+            appContractViewSource.Source = CurrentSession.Contracts.OrderBy(x => x.name);
 
             //AppCostCenter
             CollectionViewSource appCostCenterViewSource = (CollectionViewSource)FindResource("appCostCenterViewSource");
@@ -53,20 +53,20 @@ namespace Cognitivo.Commercial
 
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
-            itemPriceListViewSource.Source = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            itemPriceListViewSource.Source = CurrentSession.PriceLists; //ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //SalesRep
             //ContactDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
             
             CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
-            salesRepViewSource.Source = CurrentSession.Get_SalesRep().OrderBy(a => a.name);
+            salesRepViewSource.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
 
             CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)FindResource("salesRepViewSourceCollector");
-            salesRepViewSourceCollector.Source = CurrentSession.Get_SalesRep().OrderBy(a => a.name);
+            salesRepViewSourceCollector.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
 
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            app_currencyViewSource.Source = CurrentSession.Currencies; //ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
             
             //Fields
             CollectionViewSource app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
@@ -86,7 +86,7 @@ namespace Cognitivo.Commercial
             contact_tagViewSource.Source = ContactDB.contact_tag.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group().OrderBy(a => a.name);
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.OrderBy(a => a.name);
         }
         #endregion
 

@@ -37,7 +37,7 @@ namespace Cognitivo.Product
 
         private void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            dgvBranch.ItemsSource = CurrentSession.Get_Branch(); //StockDB.app_branch.Local;
+            dgvBranch.ItemsSource = CurrentSession.Branches; //StockDB.app_branch.Local;
             InventoryDate = DateTime.Now;
         }
 

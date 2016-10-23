@@ -193,20 +193,18 @@ namespace cntrl.Controls
 
         public void get_ActiveRateXContact(ref contact contact)
         {
-            app_currencyfx app_currencyfx = null;
-            if (contact.app_currency != null && contact.app_currency.app_currencyfx != null && contact.app_currency.app_currencyfx.Count > 0)
+            //Company Default Currency && Contact Currency are the same. Use default currency if Contact does not have currency assigned.
+            if (contact.id_currency == CurrentSession.Currency_Default.id_currency || contact.app_currency == null)
             {
-                app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault();
+                SelectedValue = CurrentSession.CurrencyFX_Default.id_currencyfx;
             }
-
-            if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-            { 
-                SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
-            else
+            else //Company Default Currency is not same as Customers. Customer might be empty too. We need to check.
             {
-                app_currency app_currency=CurrentSession.Currency_Default;
-                SelectedValue = app_currency.app_currencyfx.FirstOrDefault().id_currencyfx;
-                // cbCurrency.SelectedValue = -1;
+                app_currencyfx app_currencyfx = contact.app_currency != null ? contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault() : null;
+                if (app_currencyfx != null)
+                {
+                    SelectedValue = app_currencyfx.id_currencyfx;
+                }
             }
         }
 

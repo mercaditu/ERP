@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace entity.Brillo
 {
@@ -28,9 +27,9 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                foreach (app_vat_group_details app_vat_group in CurrentSession.Get_VAT_GroupDetails().Where(x => x.id_vat_group == id_vat_group))
+                foreach (app_vat_group_details app_vat_group in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
                 {
-                    coefficient = coefficient + CurrentSession.Get_VAT().Where(x => x.id_vat == app_vat_group.id_vat).FirstOrDefault().coefficient;
+                    coefficient = coefficient + CurrentSession.VATs.Where(x => x.id_vat == app_vat_group.id_vat).FirstOrDefault().coefficient;
                 }
             }
 
@@ -43,10 +42,7 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                List<app_vat_group_details> app_vat_group_details = new List<app_vat_group_details>();
-                app_vat_group_details = CurrentSession.Get_VAT_GroupDetails().Where(x => x.id_vat_group == id_vat_group).ToList();
-
-                foreach (app_vat_group_details app_vat_group_detail in app_vat_group_details)
+                foreach (app_vat_group_details app_vat_group_detail in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
                 {
                     VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.app_vat.coefficient);
                 }
@@ -75,10 +71,7 @@ namespace entity.Brillo
             }
             else
             {
-                using (db db = new db())
-                {
-                    return db.app_vat_group.Where(i => i.is_default && i.id_company == Properties.Settings.Default.company_ID).FirstOrDefault().id_vat_group;
-                }
+                return CurrentSession.VAT_Groups.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
         }
     }

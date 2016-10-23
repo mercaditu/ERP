@@ -26,12 +26,7 @@ namespace entity
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
             {
-                app_document_range app_document_range = entity.Brillo.Logic.Range.List_Range(this, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-                if (app_document_range != null)
-                {
-                    //Gets List of Ranges avaiable for this Document.
-                    sales_invoice.id_range = app_document_range.id_range;
-                }
+                sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
                 app_contract _app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
                 if (_app_contract != null)
@@ -156,7 +151,6 @@ namespace entity
                 if (Check_CreditLimit(invoice))
                 {
 
-
                     //Logic
                     List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                     Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
@@ -183,11 +177,11 @@ namespace entity
                     {
                         if (invoice.id_branch > 0)
                         {
-                            Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
                         }
                         if (invoice.id_terminal > 0)
                         {
-                            Brillo.Logic.Range.terminal_Code = app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
                         }
 
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
@@ -197,10 +191,6 @@ namespace entity
                         invoice.RaisePropertyChanged("number");
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
-
-
-
-                        //Generate BarCode
 
                         //Save Changes before Printing, so that all fields show up.
                         SaveChanges();
@@ -235,7 +225,6 @@ namespace entity
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
-            ///
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
             item_movementList = _Stock.insert_Stock(this, invoice);
 
@@ -249,8 +238,7 @@ namespace entity
                     {
                         if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
                         {
-                            sales_detail.unit_cost =
-                                entity.Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                            sales_detail.unit_cost = Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
                             sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
                             sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
                         }
@@ -270,9 +258,6 @@ namespace entity
 
         private sales_invoice_detail select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
-
-
-
             if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 return AddDetail(ref sales_invoice, item);
@@ -459,14 +444,8 @@ namespace entity
                     //Check if Availability is greater than 0.
                     if (sales_invoice.contact.credit_availability > 0)
                     {
-                        Decimal TotalSales = sales_invoice.GrandTotal;
-
-                        //if (sales_invoice.app_currencyfx.id_currency != CurrentSession.Currency_Default.id_currency)
-                        //{
-                        //    TotalSales = Brillo.Currency.convert_Values(TotalSales, sales_invoice.id_currencyfx, CurrentSession.CurrencyFX_Default.id_currencyfx, App.Modules.Sales);
-                        //}
-
-                        Decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
+                        decimal TotalSales = sales_invoice.GrandTotal;
+                        decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
 
                         if (CreditAvailability < TotalSales)
                         {

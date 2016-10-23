@@ -77,7 +77,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-            cbxContract.ItemsSource = CurrentSession.Get_Contract();
+            cbxContract.ItemsSource = CurrentSession.Contracts;
 
             await PurchaseOrderDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             cbxDepartment.ItemsSource = PurchaseOrderDB.app_department.Local;
@@ -89,18 +89,18 @@ namespace Cognitivo.Purchase
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+                cbxCondition.ItemsSource = CurrentSession.Conditions;
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = CurrentSession.Get_Branch();
+                cbxBranch.ItemsSource = CurrentSession.Branches;
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
             }));
 
             await PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).ToListAsync();

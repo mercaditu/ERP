@@ -70,8 +70,8 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
-            cbxContract.ItemsSource = CurrentSession.Get_Contract();
+            cbxCondition.ItemsSource = CurrentSession.Conditions;
+            cbxContract.ItemsSource = CurrentSession.Contracts;
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -80,18 +80,18 @@ namespace Cognitivo.Sales
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = CurrentSession.Get_Branch();
+                cbxBranch.ItemsSource = CurrentSession.Branches;
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep();
+                cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
             }));
         }
 
@@ -242,7 +242,7 @@ namespace Cognitivo.Sales
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 if (app_condition != null)
                 {
-                    cbxContract.ItemsSource = CurrentSession.Get_Contract().Where(x => x.id_condition == app_condition.id_condition).ToList();
+                    cbxContract.ItemsSource = CurrentSession.Contracts.Where(x => x.id_condition == app_condition.id_condition).ToList();
                 }
 
                 if (sales_order != null)

@@ -103,14 +103,12 @@ namespace entity
 
                         if (purchase_return.purchase_invoice != null)
                         {
-
-
                             payment payment = new payment();
                             payment.id_contact = purchase_return.id_contact;
                             payment.status = Status.Documents_General.Approved;
 
                             payment_detail payment_detailreturn = new payment_detail();
-                            // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
+
                             payment_detailreturn.id_currencyfx = purchase_return.id_currencyfx;
                             if (base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault() != null)
                             {
@@ -129,12 +127,12 @@ namespace entity
 
                             payment_schedual payment_schedualReturn = new payment_schedual();
                             payment_schedualReturn.debit = purchase_return.GrandTotal;
-                            payment_schedualReturn.credit =0 ;
+                            payment_schedualReturn.credit = 0;
                             payment_schedualReturn.id_currencyfx = purchase_return.id_currencyfx;
                             payment_schedualReturn.purchase_return = purchase_return;
                             payment_schedualReturn.trans_date = purchase_return.trans_date;
                             payment_schedualReturn.expire_date = purchase_return.trans_date;
-                            payment_schedualReturn.status = entity.Status.Documents_General.Approved;
+                            payment_schedualReturn.status = Status.Documents_General.Approved;
                             payment_schedualReturn.id_contact = purchase_return.id_contact;
                             payment_schedualReturn.can_calculate = true;
                             payment_schedualReturn.parent = purchase_return.purchase_invoice.payment_schedual.FirstOrDefault();

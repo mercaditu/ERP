@@ -91,9 +91,9 @@ namespace entity
                     {
                         if (purchase_order.number == null && purchase_order.id_range != null)
                         {
-                            //Brillo.Logic.Document _Document = new Brillo.Logic.Document();
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == purchase_order.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == purchase_order.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_order.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_order.id_terminal).FirstOrDefault().code;
+
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
                             purchase_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             purchase_order.RaisePropertyChanged("number");

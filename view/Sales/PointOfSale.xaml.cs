@@ -8,9 +8,6 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Data;
-using System.Data.Entity.Validation;
-using entity.Brillo;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Sales
 {
@@ -28,7 +25,6 @@ namespace Cognitivo.Sales
         /// </summary>
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource paymentViewSource;
-        CollectionViewSource app_currencyViewSource;
 
         public PointOfSale()
         {
@@ -193,8 +189,8 @@ namespace Cognitivo.Sales
 
             cbxSalesRep.ItemsSource = await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
-            app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = CurrentSession.Get_Currency();
+            CollectionViewSource app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
+            app_currencyViewSource.Source = CurrentSession.Currencies;
 
             int Id_Account = CurrentSession.Id_Account;
             app_account app_account = await SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();

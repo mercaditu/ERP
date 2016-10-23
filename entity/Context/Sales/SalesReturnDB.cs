@@ -117,8 +117,8 @@ namespace entity
                     {
                         if (sales_return.number == null && sales_return.id_range != null)
                         {
-                            Brillo.Logic.Range.branch_Code = CurrentSession.Get_Branch().Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = CurrentSession.Get_Terminal().Where(x => x.id_terminal == sales_return.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == sales_return.id_terminal).FirstOrDefault().code;
 
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == sales_return.id_range).FirstOrDefault();
 

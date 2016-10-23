@@ -46,7 +46,7 @@ namespace Cognitivo.Purchase
             app_cost_centerViewSource.Source = dbContext.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
         }

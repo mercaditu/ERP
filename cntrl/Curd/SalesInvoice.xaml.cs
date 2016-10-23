@@ -78,7 +78,7 @@ namespace cntrl
                 sales_invoice_detail.id_item = item.id_item;
                 sales_invoice_detail.item = item;
 
-                sales_invoice_detail.id_vat_group = CurrentSession.Get_VAT_Group().Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                sales_invoice_detail.id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group;
                              
                 sales_invoice_detail.quantity = 1;
                 sales_invoice_detail.UnitPrice_Vat = Convert.ToDecimal(txtvalue.Text);
@@ -123,8 +123,8 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxContract.ItemsSource = CurrentSession.Get_Contract();
-            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+            cbxContract.ItemsSource = CurrentSession.Contracts;
+            cbxCondition.ItemsSource = CurrentSession.Conditions;
 
             stackMain.DataContext = project;
             decimal TotalValue = TotalCost - project.sales_invoice.Where(x => x.status == Status.Documents_General.Approved).Sum(x => x.GrandTotal);
@@ -144,9 +144,8 @@ namespace cntrl
 
                 if (app_condition != null)
                 {
-                    cbxContract.ItemsSource = CurrentSession.Get_Contract()
-                        .Where(a => a.is_active == true && 
-                                    a.id_company == CurrentSession.Id_Company && 
+                    cbxContract.ItemsSource = CurrentSession.Contracts
+                        .Where(a => a.is_active == true &&
                                     a.id_condition == app_condition.id_condition).ToList();
                 }
 

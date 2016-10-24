@@ -193,7 +193,7 @@ namespace cntrl.Controls
 
         public void get_ActiveRateXContact(ref contact contact)
         {
-            int CurrencyID = (int)contact.id_currency;
+            int CurrencyID = (contact.app_currency != null ? contact.app_currency.id_currency : 0);
 
             //Company Default Currency && Contact Currency are the same. Use default currency if Contact does not have currency assigned.
             if (CurrencyID == 0)

@@ -42,8 +42,8 @@ namespace entity.Brillo
                     if (db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product && x.app_location.id_branch == app_branch.id_branch).Any())
                     {
                         id_location = Convert.ToInt16(db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product
-                                        && x.app_location.id_branch == app_branch.id_branch)
-                                        .FirstOrDefault().id_location);
+                                        && x.app_location.id_branch == app_branch.id_branch).Select(y => y.id_location)
+                                        .FirstOrDefault());
                     }
                     else
                     {
@@ -62,7 +62,7 @@ namespace entity.Brillo
             {
                 if (app_branch.app_location.Any(x => x.is_default))
                 {
-                    id_location = app_branch.app_location.Where(x => x.is_default == true).FirstOrDefault().id_location;
+                    id_location = app_branch.app_location.Where(x => x.is_default == true).Select(y => y.id_location).FirstOrDefault();
                 }
                 else
                 {

@@ -63,72 +63,56 @@ namespace cntrl.Controls
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                using (db db = new db())
-                {
-                 //   entity.Properties.Settings _setting = new entity.Properties.Settings();
-                    app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).ToList();
-                    cbCurrency.ItemsSource = app_currencyList;
-                }
+                app_currencyList = CurrentSession.Currencies.ToList();
+                cbCurrency.ItemsSource = app_currencyList;
             }
         }
 
         private void cbCurrency_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RaisePropertyChanged("id_currency");
+            app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == id_currency).FirstOrDefault();
 
-
-            using (db db = new db())
+            if (app_currencyfx != null)
             {
-                app_currencyfx app_currencyfx;
+                Rate_Previous = Rate_Current;
 
-                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == (int)id_currency && x.is_active == true).FirstOrDefault();
-
-                if (app_currencyfx != null)
+                if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
                 {
-                    Rate_Previous = Rate_Current;
-
-                        if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
-                        {
-                            Rate_Current = app_currencyfx.sell_value;
-                        }
-                        else
-                        {
-                            Rate_Current = app_currencyfx.buy_value;
-                        }
-
-                    RaisePropertyChanged("Rate_Current");
-
-                    SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
-
-
-
+                    Rate_Current = app_currencyfx.sell_value;
                 }
                 else
-                { Rate_Current = 0.0M; }
+                {
+                    Rate_Current = app_currencyfx.buy_value;
+                }
 
+                RaisePropertyChanged("Rate_Current");
+                SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
             }
+            else
+            { Rate_Current = 0.0M; }
 
         }
 
-        private void lblExchangeValue_LostFocus(object sender, RoutedEventArgs e)
+        private async void lblExchangeValue_LostFocus(object sender, RoutedEventArgs e)
         {
-            using (db db = new db())
+
+            if (SelectedValue > 0)
             {
-                if (SelectedValue > 0)
+                using (db db = new db())
                 {
-                    app_currencyfx app_currencyfx = new app_currencyfx();
-                    app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == SelectedValue).FirstOrDefault();
+                    app_currencyfx app_currencyfx = await db.app_currencyfx.FindAsync(SelectedValue);
 
                     decimal rate = 0;
 
-                        if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
-                        {
-                            rate = app_currencyfx.sell_value;
-                        }
-                        else
-                        {
-                            rate = app_currencyfx.buy_value;
-                        }
+                    if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
+                    {
+                        rate = app_currencyfx.sell_value;
+                    }
+                    else
+                    {
+                        rate = app_currencyfx.buy_value;
+                    }
                     if (Convert.ToDecimal(Rate_Current) != rate)
                     {
                         if (cbCurrency.SelectedValue != null)
@@ -144,49 +128,38 @@ namespace cntrl.Controls
 
         private int save_Rate(int id_currency)
         {
-            using (db db = new db())
+            if (CurrentSession.Currencies.Where(x => x.id_currency == id_currency) != null)
             {
-                if (db.app_currency.Where(x => x.id_currency == id_currency).FirstOrDefault() != null)
+                app_currencyfx app_currencyfx = new app_currencyfx();
+                app_currencyfx.id_currency = id_currency;
+                app_currencyfx.buy_value = Rate_Current;
+                app_currencyfx.sell_value = Rate_Current;
+                app_currencyfx.is_active = false;
+
+                using (db db = new db())
                 {
-                    app_currencyfx app_currencyfx = new app_currencyfx();
-                    app_currencyfx.id_currency = id_currency;
-                    app_currencyfx.app_currency = db.app_currency.Where(x => x.id_currency == id_currency).FirstOrDefault();
-                    app_currencyfx.buy_value = Rate_Current;
-                    app_currencyfx.sell_value = Rate_Current;
-                    app_currencyfx.is_active = false;
                     db.app_currencyfx.Add(app_currencyfx);
                     db.SaveChanges();
-                    return app_currencyfx.id_currencyfx;
                 }
-                return 0;
+
+                return app_currencyfx.id_currencyfx;
             }
+            return 0;
         }
 
         public void get_DefaultCurrencyActiveRate()
         {
-            using (db db = new db())
+            if (SelectedValue == 0)
             {
-                int company_ID = entity.Properties.Settings.Default.company_ID;
-                if (SelectedValue == 0)
+                app_currencyfx app_currencyfx = CurrentSession.Get_Currency_Default_Rate();
+
+                if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
                 {
-
-
-                    if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == company_ID) != null)
-                    {
-                        app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active
-                                                                             && x.app_currency.is_priority
-                                                                             && x.id_company == company_ID)
-                                                                         .FirstOrDefault();
-                        if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-                        {
-                            SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
-                        }
-                        else
-                        {
-                            SelectedValue = 1;
-                            // cbCurrency.SelectedValue = -1;
-                        }
-                    }
+                    SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+                }
+                else
+                {
+                    SelectedValue = 1;
                 }
             }
         }
@@ -213,10 +186,7 @@ namespace cntrl.Controls
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

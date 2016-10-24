@@ -190,7 +190,7 @@ namespace Cognitivo.Purchase
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = await PurchaseOrderDB.contacts.FindAsync(sbxContact.ContactID);
+                contact contact = await PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefaultAsync();
                 if (contact != null)
                 {
                     purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;

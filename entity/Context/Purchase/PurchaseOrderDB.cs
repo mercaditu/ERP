@@ -13,12 +13,13 @@ namespace entity
             purchase_order purchase_order = new purchase_order();
             purchase_order.State = EntityState.Added;
             purchase_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-
+            purchase_order.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+            purchase_order.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_order.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             purchase_order.app_terminal = app_terminal.Find(CurrentSession.Id_Terminal);
-          purchase_order.IsSelected = true;
+            purchase_order.IsSelected = true;
             
             return purchase_order;
         }
@@ -96,7 +97,7 @@ namespace entity
                             Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_order.id_branch).FirstOrDefault().code;
                             Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_order.id_terminal).FirstOrDefault().code;
 
-                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
+                            app_document_range app_document_range = base.app_document_range.Find(purchase_order.id_range);
                             purchase_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             purchase_order.RaisePropertyChanged("number");
                             purchase_order.is_issued = true;
@@ -110,19 +111,10 @@ namespace entity
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                         payment_schedualList = _Payment.insert_Schedual(purchase_order);
 
-                        //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        //List<item_movement> item_movementList = new List<item_movement>();
-                        //item_movementList = _Stock.insert_Stock(this, purchase_order);
-
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
                         }
-
-                        //if (item_movementList != null && item_movementList.Count > 0)
-                        //{
-                        //    item_movement.AddRange(item_movementList);
-                        //}
 
                         purchase_order.status = Status.Documents_General.Approved;
                         SaveChanges();

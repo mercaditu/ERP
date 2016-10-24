@@ -10,6 +10,7 @@ using System.Data.Entity;
 using entity; 
 using System.Data; 
 using System.IO;
+using System.Linq;
 
 namespace Cognitivo.Configs
 { 
@@ -77,7 +78,7 @@ namespace Cognitivo.Configs
             dbcontext.app_document.Where(a=>a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_documentViewSource.Source = dbcontext.app_document.Local;
 
-            cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names));
+            cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names)).OfType<entity.App.Names>().ToList().OrderBy(x=>x);
 
             if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Documents\\"))
             {

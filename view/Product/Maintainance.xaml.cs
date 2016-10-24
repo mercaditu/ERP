@@ -232,7 +232,10 @@ namespace Cognitivo.Product
             foreach (item_asset_maintainance item_asset_maintainance in item_asset_maintainanceViewSource.View.OfType<item_asset_maintainance>().ToList())
             {
                 item_asset_maintainance.status = entity.item_asset_maintainance.Status.Done;
+
             }
+            db.db.SaveChanges();
+            item_asset_maintainanceViewSource.View.Refresh();
         }
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

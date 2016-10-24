@@ -39,7 +39,7 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            db.Configuration.AutoDetectChangesEnabled = false;
+                          //  db.Configuration.AutoDetectChangesEnabled = false;
                             item _item = db.items.Find(_id_item);
 
                             id_vat_group = Vat.getItemVat(_item);

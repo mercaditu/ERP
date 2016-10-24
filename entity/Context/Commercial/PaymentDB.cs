@@ -118,9 +118,9 @@ namespace entity
             {
                 if (payment_detail.id_payment_schedual > 0)
                 {
-                   Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
+                    Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
                 }
-               
+
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();
@@ -154,8 +154,12 @@ namespace entity
                     payment_detail.id_account = CurrentSession.Id_Account;
                 }
 
+
+
                 ///Logic for Value in Balance Payment Schedual.
-                if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
+                if ((Parent_Schedual.id_purchase_invoice != null && Parent_Schedual.id_purchase_invoice > 0) ||
+                   (Parent_Schedual.id_purchase_order != null && Parent_Schedual.id_purchase_order > 0)
+                    || (  Parent_Schedual.id_sales_return != null && Parent_Schedual.id_sales_return > 0 ))
                 {
                     ///If PaymentDetail Value is Negative.
                     ///
@@ -171,15 +175,16 @@ namespace entity
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-                    if (payment_detail.app_currencyfx.id_currency!=Parent_Schedual.app_currencyfx.id_currency)
+                    if (payment_detail.app_currencyfx.id_currency != Parent_Schedual.app_currencyfx.id_currency)
                     {
                         balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
                     }
                     else
                     {
                         balance_payment_schedual.credit = payment_detail.value;
-                    }  
+                    }
                 }
+
 
                 balance_payment_schedual.parent = Parent_Schedual;
                 balance_payment_schedual.status = Status.Documents_General.Approved;

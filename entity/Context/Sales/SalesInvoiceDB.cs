@@ -36,6 +36,8 @@ namespace entity
                     {
                         sales_invoice.id_condition = id_condition;
                         sales_invoice.id_contract = _app_contract.id_contract;
+                        sales_invoice.app_condition = _app_contract.app_condition;
+                        sales_invoice.app_contract = _app_contract;
                     }
                 }
             }

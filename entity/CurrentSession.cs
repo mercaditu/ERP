@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace entity
 {
@@ -98,13 +99,14 @@ namespace entity
         static string _ConnectionString;
 
         public static Versions Version { get; set; }
-        public static int NumberOfSeats { get; set; }
 
         public static List<security_crud> Security_CurdList { get; set; }
         public static List<security_role_privilage> Security_role_privilageList { get; set; }
 
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
+
+        public static bool IsDataLoading { get; set; }
 
         public static void Start(security_user Sec_User, security_role Role)
         {
@@ -124,7 +126,12 @@ namespace entity
                 Load_Security();
 
                 //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
-                Load_BasicData();
+                Load_BasicData(null, null);
+                //Load Basic Data into Timer.
+                Timer myTimer = new Timer();
+                myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
+                myTimer.Interval = 300000;
+                myTimer.Enabled = true;
 
                 Brillo.Activation Activation = new Brillo.Activation();
                 Version = Activation.VersionDecrypt();
@@ -154,7 +161,7 @@ namespace entity
             }
         }
 
-        public static void Load_BasicData()
+        public static void Load_BasicData(object sender, ElapsedEventArgs e)
         {
             Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
         }
@@ -164,22 +171,25 @@ namespace entity
             using (db db = new db())
             {
                 db.Configuration.AutoDetectChangesEnabled = false;
-                 
-                //Default Currency
-                Currency_Default = db.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
+                db.Configuration.LazyLoadingEnabled = false;
 
+                //Default Currency
+                Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Currency_Default = Currencies.Where(x => x.is_priority).FirstOrDefault();
                 CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
                 SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
                 VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 VAT_GroupDetails = db.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
                 VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
                 Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             }
         }
 

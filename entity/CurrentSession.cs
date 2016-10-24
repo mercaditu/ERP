@@ -163,13 +163,12 @@ namespace entity
         {
             using (db db = new db())
             {
+                db.Configuration.AutoDetectChangesEnabled = false;
+                 
                 //Default Currency
                 Currency_Default = db.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
-                if (Currency_Default != null)
-                {
-                    CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
-                }
 
+                CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -197,6 +196,11 @@ namespace entity
         public static List<item_price_list> PriceLists { get; set; }
 
         public static app_currency Currency_Default { get; set; }
-        public static app_currencyfx CurrencyFX_Default { get; set; }
+        public static List<app_currencyfx> CurrencyFX_ActiveRates { get; set; }
+
+        public static app_currencyfx Get_Currency_Default_Rate()
+        {
+            return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();
+        }
     }
 }

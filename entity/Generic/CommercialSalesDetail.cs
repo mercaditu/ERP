@@ -39,7 +39,8 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+                            db.Configuration.AutoDetectChangesEnabled = false;
+                            item _item = db.items.Find(_id_item);
 
                             id_vat_group = Vat.getItemVat(_item);
                             RaisePropertyChanged("id_vat_group");
@@ -369,25 +370,21 @@ namespace entity
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
                 if (PriceList_ID == 0)
                 {
-                    using (db db = new db())
-                    {
-                        if (db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID) != null)
-                        {
-                            PriceList_ID = db.item_price_list.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
-                        }
-                    }
+                    PriceList_ID = CurrentSession.PriceLists.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
                 }
 
                 //Step 1 1/2. Check if Quantity gets us a better Price List.
 
 
                 //Step 2. Get Price in Currency.
-                using (db db = new db())
+                if (CurrencyFX_ID > 0)
                 {
-                    app_currencyfx app_currencyfx = null;
-                    if (db.app_currencyfx.Where(x => x.id_currencyfx == CurrencyFX_ID).FirstOrDefault() != null)
+                    using (db db = new db())
                     {
-                        app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == CurrencyFX_ID).FirstOrDefault();
+                        db.Configuration.AutoDetectChangesEnabled = false;
+                        db.Configuration.LazyLoadingEnabled = false;
+
+                        app_currencyfx app_currencyfx = db.app_currencyfx.Find(CurrencyFX_ID);
 
                         //Check if we have available Price for this Product, Currency, and List.
                         item_price item_price = db.item_price.Where(x => x.id_item == id_item
@@ -401,23 +398,25 @@ namespace entity
                         else
                         {
                             //If Perfect Value not found, get one pased on Product and List. (Ignore Currency and Convert Later basd on Current Rate.)
-                            if (db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault() != null)
+                            List<item_price> ItemPrices = db.item_price.Where(x => x.id_item == id_item).ToList();
+
+                            if (ItemPrices.Where(x => x.id_price_list == PriceList_ID).Any())
                             {
-                                item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
-                                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
-                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
+                                item_price = ItemPrices.Where(x => x.id_price_list == PriceList_ID).FirstOrDefault();
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
-                            else if (db.item_price.Where(x => x.id_item == id_item && x.id_currency == app_currencyfx.id_currency).FirstOrDefault() != null)
+                            else if (ItemPrices.Where(x => x.id_currency == app_currencyfx.id_currency).Any())
                             {
-                                item_price = db.item_price.Where(x => x.id_item == id_item && x.id_currency == app_currencyfx.id_currency).FirstOrDefault();
-                                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
-                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
+                                item_price = ItemPrices.Where(x => x.id_currency == app_currencyfx.id_currency).FirstOrDefault();
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
-                            else if (db.item_price.Where(x => x.id_item == id_item).FirstOrDefault() != null)
+                            else if (ItemPrices.FirstOrDefault() != null)
                             {
-                                item_price = db.item_price.Where(x => x.id_item == id_item).FirstOrDefault();
-                                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
-                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
+                                item_price = ItemPrices.FirstOrDefault();
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
                         }
                     }
@@ -498,6 +497,7 @@ namespace entity
             }
         }
         private decimal _Discount_SubTotal;
+
 
         /// <summary>
         /// 
@@ -580,7 +580,7 @@ namespace entity
         /// <param name="discount"></param>
         public void Calculate_SubTotalDiscount(decimal discount)
         {
-            _Discount_SubTotal = discount * _quantity;
+            Discount_SubTotal = discount * _quantity;
             RaisePropertyChanged("Discount_SubTotal");
         }
 
@@ -593,7 +593,6 @@ namespace entity
             _Discount_SubTotal_Vat = DiscountVat * _quantity;
             RaisePropertyChanged("Discount_SubTotal_Vat");
         }
-
 
         public void Calculate_PercentageDiscount(decimal Percentage)
         {

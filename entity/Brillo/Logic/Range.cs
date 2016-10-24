@@ -111,7 +111,7 @@ namespace entity.Brillo.Logic
                                     &&
                                     x.is_active && x.id_company == CurrentSession.Id_Company && 
                                     x.app_document.id_application == AppName
-                                    )
+                                    ).OrderBy(x => x.expire_date)
                              .ToList();
         }
     }

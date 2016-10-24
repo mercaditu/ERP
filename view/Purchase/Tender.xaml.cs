@@ -246,9 +246,9 @@ namespace Cognitivo.Purchase
                     if (purchase_tender_contact.contact.id_currency == 0 || purchase_tender_contact.contact.id_currency == null)
                     {
                         //Contact does not have Currency, take default currency from Company.
-                        if (CurrentSession.CurrencyFX_Default != null)
+                        if (CurrentSession.Get_Currency_Default_Rate() != null)
                         {
-                            purchase_tender_contact.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                            purchase_tender_contact.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         }
                     }
                     else

@@ -392,7 +392,7 @@ namespace entity.Brillo.Logic
                                                     App.Names.ProductionExecution,
                                                     production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
-                                                    CurrentSession.CurrencyFX_Default,
+                                                    CurrentSession.Get_Currency_Default_Rate(),                                                    
                                                     item_product,
                                                     production_execution_detail.production_order_detail.production_order.production_line.app_location,
                                                     production_execution_detail.quantity,
@@ -502,7 +502,7 @@ namespace entity.Brillo.Logic
                                                     App.Names.ProductionExecution,
                                                     production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
-                                                    CurrentSession.CurrencyFX_Default,
+                                                    CurrentSession.Get_Currency_Default_Rate(),
                                                     item_product,
                                                     production_execution_detail.production_order_detail.production_order.production_line.app_location,
                                                     production_execution_detail.quantity,
@@ -951,7 +951,7 @@ namespace entity.Brillo.Logic
 
                     using (db db = new db())
                     {
-                        int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                        int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, app_currencyfx.id_currencyfx, ID_CurrencyFX_Default, null);
 
                         item_movement_value.unit_value = DefaultCurrency_Cost;

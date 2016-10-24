@@ -40,7 +40,7 @@ namespace entity
             payment_detail payment_detail = new payment_detail();
             payment_detail.State = EntityState.Added;
             payment_detail.id_payment_type = payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_payment_type;
-            payment_detail.id_currencyfx = CurrentSession.CurrencyFX_Default.id_currencyfx;
+            payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             payment.payment_detail.Add(payment_detail);
 
             return payment_detail;
@@ -105,20 +105,20 @@ namespace entity
                 }
 
                 //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-                payment_schedual _payment_schedual = payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
+                payment_schedual _payment_schedual = payment_schedual.Find(id_payment_schedual);
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(_payment_schedual, payment, PrintRequire);
             }
         }
 
-        public void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
+        public async void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
         {
-            foreach (payment_detail payment_detail in payment.payment_detail.Where(x=>x.IsSelected))
+            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
                 if (payment_detail.id_payment_schedual > 0)
                 {
-                   Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
+                   Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
                 }
                
                 ///Creates counter balanced in payment schedual.
@@ -128,7 +128,7 @@ namespace entity
                 //Assigns appCurrencyFX ID & Entity
                 if (payment_detail.id_currencyfx == 0)
                 {
-                    app_currencyfx _currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                    app_currencyfx _currencyfx = await app_currencyfx.FindAsync(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
                     if (_currencyfx != null)
                     {
                         payment_detail.id_currencyfx = _currencyfx.id_currencyfx;
@@ -139,13 +139,13 @@ namespace entity
                 ///Assigns appCurrencyFX Entity which is needed for Printing.
                 if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
                 {
-                    payment_detail.app_currencyfx = app_currencyfx.Where(x => x.id_currencyfx == payment_detail.id_currencyfx && x.is_active).FirstOrDefault();
+                    payment_detail.app_currencyfx = await app_currencyfx.FindAsync(payment_detail.id_currencyfx);
                 }
 
                 ///If by chance Payment Type is Blank, will get Default Payment Type.
                 if (payment_detail.id_payment_type == 0)
                 {
-                    payment_detail.id_payment_type = payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                    payment_detail.id_payment_type = await payment_type.Where(x => x.is_default).Select(x => x.id_payment_type).FirstOrDefaultAsync();
                 }
 
                 ///Checks if Account ID is set.
@@ -173,15 +173,12 @@ namespace entity
                     ///If PaymentDetail Value is Positive.
                     if (payment_detail.app_currencyfx.id_currency!=Parent_Schedual.app_currencyfx.id_currency)
                     {
-
                         balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
                     }
                     else
                     {
                         balance_payment_schedual.credit = payment_detail.value;
-                    }
-                 
-                   
+                    }  
                 }
 
                 balance_payment_schedual.parent = Parent_Schedual;
@@ -204,7 +201,7 @@ namespace entity
 
                 if (payment_detail.payment_schedual.FirstOrDefault() != null)
                 {
-                    balance_payment_schedual.id_purchase_order = payment_detail.payment_schedual.FirstOrDefault().id_purchase_order;
+                    balance_payment_schedual.id_purchase_order = payment_detail.payment_schedual.Select(x => x.id_purchase_order).FirstOrDefault();
                     ModuleName = "PurchaseOrder";
                 }
 
@@ -242,7 +239,8 @@ namespace entity
 
                 ///Code to specify Accounts.
                 ///
-                payment_type _payment_type=payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault();
+                payment_type _payment_type = await payment_type.FindAsync(payment_detail.id_payment_type);
+
                 if (_payment_type.payment_behavior == entity.payment_type.payment_behaviours.Normal)
                 {
                     ///Creates new Account Detail for each Payment Detail.
@@ -264,9 +262,11 @@ namespace entity
                     }
 
                     ///Gets the Session ID necesary for cashier movement.
-                    if (base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                    int id_account_session = await base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).Select(y => y.id_session).FirstOrDefaultAsync();
+
+                    if (id_account_session > 0)
                     {
-                        app_account_detail.id_session = base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                        app_account_detail.id_session = id_account_session;
                     }
 
                     //Logic for Account Detail based on Payment Detail Logic.
@@ -287,12 +287,10 @@ namespace entity
                     string number = "";
                     if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                     {
-
                         if (Parent_Schedual.purchase_invoice != null)
                         {
                             number = Parent_Schedual.purchase_invoice.number;
                         }
-
                     }
                     else
                     {
@@ -301,15 +299,16 @@ namespace entity
                             number = Parent_Schedual.sales_invoice.number;
                         }
                     }
+
                     app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
-                     base.app_account_detail.Add(app_account_detail);
+                    base.app_account_detail.Add(app_account_detail);
                 }
                 //pankeel
             }
 
             payment.status = Status.Documents_General.Approved;
-            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+            app_document_range app_document_range = await base.app_document_range.FindAsync(payment.id_range);
             payment.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
             payment.RaisePropertyChanged("number");
             base.SaveChanges();
@@ -335,14 +334,11 @@ namespace entity
                         int id_currency = parent.app_currencyfx.id_currency;
                         DateTime timestamp = child.payment_detail.trans_date;
 
-                        if (base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
-                                                             x.id_currency == id_currency && x.timestamp <= timestamp)
-                                                            .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
-                        {
-                            app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
+                        app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                              x.id_currency == id_currency && x.timestamp <= timestamp)
                                                             .OrderByDescending(x => x.timestamp).FirstOrDefault();
-
+                        if (app_currencyfx != null)
+                        {
                             if (child.debit > 0)
                             {
                                 child.debit = Currency.convert_Values(child.payment_detail.value, child.payment_detail.id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Purchase);

@@ -166,7 +166,7 @@ namespace Cognitivo.Product
       {
           item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
           decimal Cost = 0;
-          int id_currency = CurrentSession.CurrencyFX_Default.id_currency;
+          int id_currency = CurrentSession.Get_Currency_Default_Rate().id_currency;
 
           foreach (item_recepie_detail item_recepie_detail in item_recepie.item_recepie_detail)
           {

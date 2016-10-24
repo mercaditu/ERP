@@ -169,7 +169,7 @@ namespace Cognitivo.Sales
                                         //Improve this in future. For now take from Purchase
                                         using (db db = new db())
                                         {
-                                            int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                                            int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                                             decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, sales_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
 
                                             item_movement_detail.unit_value = DefaultCurrency_Cost;

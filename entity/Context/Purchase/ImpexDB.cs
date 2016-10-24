@@ -157,7 +157,7 @@ namespace entity
                                     //Coeficient is used to get prorated cost of one item
                                     item_movement_value item_movement_value = new item_movement_value();
 
-                                    int ID_CurrencyFX_Default = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                                    int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                                     item_movement_value.unit_value = Impex_CostDetail.unit_Importcost;
                                     item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
                                     item_movement_value.comment = _impex_expense.impex_incoterm_condition.name;

@@ -19,7 +19,7 @@ namespace entity
             sales_invoice.timestamp = DateTime.Now;
 
             //Navigation Properties
-            sales_invoice.app_currencyfx = app_currencyfx.Find(CurrentSession.CurrencyFX_Default.id_currencyfx);
+            sales_invoice.app_currencyfx = app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
             sales_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             
 
@@ -275,7 +275,7 @@ namespace entity
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
             sales_invoice_detail.State = EntityState.Added;
-            sales_invoice_detail.sales_invoice = sales_invoice;
+            //sales_invoice_detail.sales_invoice = sales_invoice;
 
             sales_invoice_detail.CurrencyFX_ID = sales_invoice.id_currencyfx;
             sales_invoice_detail.Contact = sales_invoice.contact;

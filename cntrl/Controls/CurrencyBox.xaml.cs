@@ -196,7 +196,7 @@ namespace cntrl.Controls
             //Company Default Currency && Contact Currency are the same. Use default currency if Contact does not have currency assigned.
             if (contact.id_currency == CurrentSession.Currency_Default.id_currency || contact.app_currency == null)
             {
-                SelectedValue = CurrentSession.CurrencyFX_Default.id_currencyfx;
+                SelectedValue = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             }
             else //Company Default Currency is not same as Customers. Customer might be empty too. We need to check.
             {

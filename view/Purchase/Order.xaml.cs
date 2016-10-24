@@ -56,7 +56,7 @@ namespace Cognitivo.Purchase
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
 
-            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));

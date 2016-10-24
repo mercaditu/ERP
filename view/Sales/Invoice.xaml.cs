@@ -25,8 +25,8 @@ namespace Cognitivo.Sales
 
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
 
-        //cntrl.PanelAdv.pnlPacking pnlPacking;
-        //cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
+        cntrl.PanelAdv.pnlPacking pnlPacking;
+        cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
         public DateTime start_Range
         {
@@ -512,135 +512,135 @@ namespace Cognitivo.Sales
 
         private void btnPackingList_Click(object sender, RoutedEventArgs e)
         {
-            //sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
 
-            //if (sales_invoice != null)
-            //{
-            //    crud_modal.Visibility = Visibility.Visible;
+            if (sales_invoice != null)
+            {
+                crud_modal.Visibility = Visibility.Visible;
 
-            //    pnlPacking = new cntrl.PanelAdv.pnlPacking();
-            //    pnlPacking._entity = SalesInvoiceDB;
-            //    pnlPacking._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); //sbxContact.Contact as contact;
-            //    pnlPacking.Link_Click += Link_Click;
-            //    crud_modal.Children.Add(pnlPacking);
-            //    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-            //    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            //}
-            //else
-            //{
-            //    toolBar.msgWarning("Check Sales Invoice");
-            //}
+                pnlPacking = new cntrl.PanelAdv.pnlPacking();
+                pnlPacking._entity = SalesInvoiceDB;
+                pnlPacking._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); //sbxContact.Contact as contact;
+                pnlPacking.Link_Click += Link_Click;
+                crud_modal.Children.Add(pnlPacking);
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            }
+            else
+            {
+                toolBar.msgWarning("Check Sales Invoice");
+            }
         }
 
         public void Link_Click(object sender)
         {
-            //sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
-            //foreach (sales_packing item in pnlPacking.selected_sales_packing)
-            //{
-            //    sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
+            sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
+            foreach (sales_packing item in pnlPacking.selected_sales_packing)
+            {
+                sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
 
-            //    foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
-            //    {
+                foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
+                {
 
-            //        if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
-            //        {
-            //            sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-            //            sales_invoice_detail.sales_invoice = _sales_invoice;
-            //            sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();// sbxContact.Contact;
-            //            sales_invoice_detail.item = _sales_packing_detail.item;
-            //            sales_invoice_detail.id_item = _sales_packing_detail.id_item;
-            //            sales_invoice_detail.quantity = _sales_packing_detail.quantity;
+                    if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
+                    {
+                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                        sales_invoice_detail.sales_invoice = _sales_invoice;
+                        sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();// sbxContact.Contact;
+                        sales_invoice_detail.item = _sales_packing_detail.item;
+                        sales_invoice_detail.id_item = _sales_packing_detail.id_item;
+                        sales_invoice_detail.quantity = _sales_packing_detail.quantity;
 
-            //            sales_packing_relation sales_packing_relation = new sales_packing_relation();
-            //            sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
-            //            sales_packing_relation.sales_packing_detail = _sales_packing_detail;
+                        sales_packing_relation sales_packing_relation = new sales_packing_relation();
+                        sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
+                        sales_packing_relation.sales_packing_detail = _sales_packing_detail;
 
-            //            sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
-            //            _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-            //        }
-            //    }
+                        sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
+                        _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    }
+                }
 
-            //    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-            //    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            //    sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
 
-            //}
-            //CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-            //if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
-            //{
-            //    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == _sales_invoice.id_sales_invoice).ToList();
-            //}
-            //else
-            //{
-            //    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
+            }
+            CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+            if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == _sales_invoice.id_sales_invoice).ToList();
+            }
+            else
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
 
-            //}
-            //crud_modal.Children.Clear();
-            //crud_modal.Visibility = Visibility.Collapsed;
-            //_sales_invoice.RaisePropertyChanged("GrandTotal");
+            }
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Collapsed;
+            _sales_invoice.RaisePropertyChanged("GrandTotal");
 
         }
 
         private void btnSalesOrder_Click(object sender, RoutedEventArgs e)
         {
-            //crud_modal.Visibility = Visibility.Visible;
-            //pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
-            //pnlSalesOrder._entity = SalesInvoiceDB;
-            //pnlSalesOrder._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); // sbxContact.Contact;
-            //pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
-            //pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;
-            //crud_modal.Children.Add(pnlSalesOrder);
+            crud_modal.Visibility = Visibility.Visible;
+            pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
+            pnlSalesOrder._entity = SalesInvoiceDB;
+            pnlSalesOrder._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); // sbxContact.Contact;
+            pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
+            pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;
+            crud_modal.Children.Add(pnlSalesOrder);
         }
 
         public void SalesOrder_Click(object sender)
         {
-            //sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
+            sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
 
-            //sbxContact.Text = pnlSalesOrder.selected_sales_order.FirstOrDefault().contact.name;
-            //foreach (sales_order sales_order in pnlSalesOrder.selected_sales_order)
-            //{
-            //    _sales_invoice.State = EntityState.Modified;
-            //    _sales_invoice.contact = sales_order.contact;
+            sbxContact.Text = pnlSalesOrder.selected_sales_order.FirstOrDefault().contact.name;
+            foreach (sales_order sales_order in pnlSalesOrder.selected_sales_order)
+            {
+                _sales_invoice.State = EntityState.Modified;
+                _sales_invoice.contact = sales_order.contact;
 
-            //    cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == sales_order.contact.id_contact).ToList();
+                cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == sales_order.contact.id_contact).ToList();
 
-            //    _sales_invoice.id_contact = sales_order.contact.id_contact;
-            //    _sales_invoice.id_condition = sales_order.id_condition;
-            //    _sales_invoice.id_contract = sales_order.id_contract;
-            //    _sales_invoice.id_currencyfx = sales_order.id_currencyfx;
-            //    _sales_invoice.app_currencyfx = sales_order.app_currencyfx;
-            //    _sales_invoice.id_sales_order = sales_order.id_sales_order;
+                _sales_invoice.id_contact = sales_order.contact.id_contact;
+                _sales_invoice.id_condition = sales_order.id_condition;
+                _sales_invoice.id_contract = sales_order.id_contract;
+                _sales_invoice.id_currencyfx = sales_order.id_currencyfx;
+                _sales_invoice.app_currencyfx = sales_order.app_currencyfx;
+                _sales_invoice.id_sales_order = sales_order.id_sales_order;
 
-            //    foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
-            //    {
-            //        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
+                {
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
-            //        //There is an issue that the detail does not know of the currency previously selected. Maybe this can help.
-            //        sales_invoice_detail.CurrencyFX_ID = sales_order.app_currencyfx.id_currencyfx;
+                    //There is an issue that the detail does not know of the currency previously selected. Maybe this can help.
+                    sales_invoice_detail.CurrencyFX_ID = sales_order.app_currencyfx.id_currencyfx;
 
-            //        sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
-            //        sales_invoice_detail.sales_order_detail = _sales_order_detail;
-            //        sales_invoice_detail.Contact = _sales_invoice.contact;
-            //        sales_invoice_detail.sales_invoice = _sales_invoice;
-            //        sales_invoice_detail.item = _sales_order_detail.item;
-            //        sales_invoice_detail.id_item = _sales_order_detail.id_item;
-            //        sales_invoice_detail.quantity = _sales_order_detail.quantity - SalesInvoiceDB.sales_invoice_detail
-            //                                                                     .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
-            //                                                                     .GroupBy(x => x.id_sales_order_detail)
-            //                                                                     .Select(x => x.Sum(y => y.quantity))
-            //                                                                     .FirstOrDefault();
+                    sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
+                    sales_invoice_detail.sales_order_detail = _sales_order_detail;
+                    sales_invoice_detail.Contact = _sales_invoice.contact;
+                    sales_invoice_detail.sales_invoice = _sales_invoice;
+                    sales_invoice_detail.item = _sales_order_detail.item;
+                    sales_invoice_detail.id_item = _sales_order_detail.id_item;
+                    sales_invoice_detail.quantity = _sales_order_detail.quantity - SalesInvoiceDB.sales_invoice_detail
+                                                                                 .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
+                                                                                 .GroupBy(x => x.id_sales_order_detail)
+                                                                                 .Select(x => x.Sum(y => y.quantity))
+                                                                                 .FirstOrDefault();
 
-            //        sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
-            //        _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-            //    }
+                    sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
+                    _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                }
 
-            //    SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
-            //    crud_modal.Children.Clear();
-            //    crud_modal.Visibility = Visibility.Collapsed;
-            //    sales_invoiceViewSource.View.Refresh();
-            //    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            //}
-            //_sales_invoice.RaisePropertyChanged("GrandTotal");
+                SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
+                crud_modal.Children.Clear();
+                crud_modal.Visibility = Visibility.Collapsed;
+                sales_invoiceViewSource.View.Refresh();
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            }
+            _sales_invoice.RaisePropertyChanged("GrandTotal");
         }
 
         private void salesorder_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -788,5 +788,7 @@ namespace Cognitivo.Sales
                 Limit.Check_CreditAvailability(sales_invoice);
             }
         }
+
+     
     }
 }

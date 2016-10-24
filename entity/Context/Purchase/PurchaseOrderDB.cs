@@ -17,7 +17,8 @@ namespace entity
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_order.app_branch = app_branch.Find(CurrentSession.Id_Branch);
-            purchase_order.IsSelected = true;
+            purchase_order.app_terminal = app_terminal.Find(CurrentSession.Id_Terminal);
+          purchase_order.IsSelected = true;
             
             return purchase_order;
         }
@@ -87,6 +88,7 @@ namespace entity
                         SaveChanges();
                     }
 
+                   
                     if (purchase_order.status != Status.Documents_General.Approved)
                     {
                         if (purchase_order.number == null && purchase_order.id_range != null)

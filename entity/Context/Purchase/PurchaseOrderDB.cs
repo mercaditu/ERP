@@ -13,8 +13,8 @@ namespace entity
             purchase_order purchase_order = new purchase_order();
             purchase_order.State = EntityState.Added;
             purchase_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-            purchase_order.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
             purchase_order.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+            purchase_order.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_order.app_branch = app_branch.Find(CurrentSession.Id_Branch);

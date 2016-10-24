@@ -15,8 +15,14 @@ namespace entity
             sales_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(); //Brillo.GetDefault.Return_RangeID(App.Names.SalesBudget);
             sales_order.status = Status.Documents_General.Pending;
 
-            security_user security_user = base.security_user.Where(x => x.id_user == sales_order.id_user).FirstOrDefault();
+            app_contract _app_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault(); // app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
+            if (_app_contract != null)
+            {
+                sales_order.id_condition = _app_contract.id_condition;
+                sales_order.id_contract = _app_contract.id_contract;
+            }
 
+            security_user security_user = base.security_user.Find(sales_order.id_user);
             if (security_user != null)
             {
                 sales_order.security_user = security_user;

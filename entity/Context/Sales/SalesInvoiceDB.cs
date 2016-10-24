@@ -31,14 +31,8 @@ namespace entity
                 app_contract _app_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault(); // app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
                 if (_app_contract != null)
                 {
-                    int id_condition = _app_contract.id_condition;
-                    if (id_condition > 0)
-                    {
-                        sales_invoice.id_condition = id_condition;
-                        sales_invoice.id_contract = _app_contract.id_contract;
-                        sales_invoice.app_condition = _app_contract.app_condition;
-                        sales_invoice.app_contract = _app_contract;
-                    }
+                    sales_invoice.id_condition = _app_contract.id_condition;
+                    sales_invoice.id_contract = _app_contract.id_contract;
                 }
             }
 

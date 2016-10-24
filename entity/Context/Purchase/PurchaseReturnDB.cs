@@ -18,7 +18,7 @@ namespace entity
 
             purchase_return.State = EntityState.Added;
             purchase_return.IsSelected = true;
-            purchase_return.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            purchase_return.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             return purchase_return;
         }
 

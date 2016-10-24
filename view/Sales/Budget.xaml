@@ -95,7 +95,8 @@
 									 metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 									 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 							<Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
-							<ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
+							<ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 
+                                      ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
 									  Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id_condition" 
 									  SelectedValue="{Binding id_condition, Source={StaticResource sales_budgetViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 									  SelectionChanged="id_conditionComboBox_SelectionChanged">

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace entity
@@ -127,7 +125,6 @@ namespace entity
                                     base.app_cost_center.Add(app_cost_center);
                                     purchase_order_detail.app_cost_center = app_cost_center;
                                 }
-
                             }
                             else
                             {
@@ -174,7 +171,7 @@ namespace entity
 
                     if (purchase_tender.id_range != null || purchase_tender.id_range > 0)
                     {
-                        app_document_range app_document_range = base.app_document_range.Where(x => x.id_range== purchase_tender.id_range).FirstOrDefault();
+                        app_document_range app_document_range = base.app_document_range.Find(purchase_tender.id_range);
                         purchase_tender.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         purchase_tender.RaisePropertyChanged("number");
                     }

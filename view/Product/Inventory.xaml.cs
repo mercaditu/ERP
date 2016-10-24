@@ -13,7 +13,9 @@ namespace Cognitivo.Product
     public partial class Inventory : Page
     {
         InventoryDB InventoryDB = new InventoryDB();
-        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
+        CollectionViewSource item_inventoryViewSource, 
+            item_inventoryitem_inventory_detailViewSource, 
+            app_branchapp_locationViewSource, app_branchViewSource;
 
         int CurrencyID = 0;
 
@@ -35,17 +37,17 @@ namespace Cognitivo.Product
             await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
-            CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            await InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).LoadAsync();
-            app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
+            //CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
+            //await InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).LoadAsync();
+            //app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
 
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
             // app_branchViewSource.Source = CurrentSession.Get_Branch().OrderBy(x => x.name);
-             InventoryDB.app_branch
-              .Where(a => a.is_active == true
-                  && a.can_stock == true
-                  && a.id_company == CurrentSession.Id_Company)
-              .OrderBy(a => a.name).Load();
+            await InventoryDB.app_branch
+             .Where(a => a.is_active == true
+                 && a.can_stock == true
+                 && a.id_company == CurrentSession.Id_Company).Include(x => x.app_location)
+             .OrderBy(a => a.name).LoadAsync();
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
 
             filetr_detail();

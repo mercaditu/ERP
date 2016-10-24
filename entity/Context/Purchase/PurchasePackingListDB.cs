@@ -16,7 +16,7 @@ namespace entity
             purchase_packing.status= Status.Documents_General.Pending;
             purchase_packing.id_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
             purchase_packing.IsSelected = true;
-            purchase_packing.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            purchase_packing.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             return purchase_packing;
         }
 

@@ -18,13 +18,17 @@ namespace entity
             sales_return.trans_date = DateTime.Now;
 
             sales_return.id_branch = CurrentSession.Id_Branch;
-            sales_return.app_branch = base.app_branch.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault();
+            sales_return.app_branch = base.app_branch.Find(sales_return.id_branch);
             sales_return.State = EntityState.Added;
             sales_return.IsSelected = true;
 
             //Get any value, so that it doesn't cause NotNull Exception. This data is not important.
-            sales_return.app_condition = base.app_condition.FirstOrDefault();
-            sales_return.app_contract = base.app_contract.Where(x => x.id_condition == sales_return.app_condition.id_condition).FirstOrDefault();
+            app_contract _app_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault(); // app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
+            if (_app_contract != null)
+            {
+                sales_return.id_condition = _app_contract.id_condition;
+                sales_return.id_contract = _app_contract.id_contract;
+            }
 
             return sales_return;
         }

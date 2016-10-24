@@ -80,7 +80,7 @@ namespace entity
             }
             else
             {
-                crm_opportunity crm_opportunity = sales_order.Where(x => x.id_sales_order == sales_packing.id_sales_packing).FirstOrDefault().crm_opportunity;
+                crm_opportunity crm_opportunity = sales_order.Find(sales_packing.id_sales_packing).crm_opportunity;
                 crm_opportunity.sales_packing.Add(sales_packing);
                 base.crm_opportunity.Attach(crm_opportunity);
             }
@@ -118,7 +118,7 @@ namespace entity
                             Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == sales_packing.id_branch).FirstOrDefault().code;
                             Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == sales_packing.id_terminal).FirstOrDefault().code;
 
-                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == sales_packing.id_range).FirstOrDefault();
+                            app_document_range app_document_range = base.app_document_range.Find(sales_packing.id_range);
                             sales_packing.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_packing.RaisePropertyChanged("number");
                             sales_packing.is_issued = true;

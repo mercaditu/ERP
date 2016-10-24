@@ -247,30 +247,25 @@ namespace entity
             }
         }
 
-        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
+        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem)
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-                return select_Item(ref sales_invoice, item, AllowDuplicateItem);
+                if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
+                {
+                    return AddDetail(ref sales_invoice, item, QuantityInStock);
+                }
+                else
+                {
+                    sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                    sales_invoice_detail.quantity += 1;
+                    return sales_invoice_detail;
+                }
             }
             return null;
         }
 
-        private sales_invoice_detail select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
-        {
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
-            {
-                return AddDetail(ref sales_invoice, item);
-            }
-            else
-            {
-                sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_invoice_detail.quantity += 1;
-                return sales_invoice_detail;
-            }
-
-        }
-        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item)
+        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock)
         {
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
@@ -283,6 +278,7 @@ namespace entity
             sales_invoice_detail.item_description = item.name;
             sales_invoice_detail.item = item;
             sales_invoice_detail.id_item = item.id_item;
+            sales_invoice_detail.Quantity_InStock = QuantityInStock;
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);

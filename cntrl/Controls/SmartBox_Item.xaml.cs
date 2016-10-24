@@ -73,6 +73,8 @@ namespace cntrl.Controls
         }
         bool _can_edit;
 
+        public decimal QuantityInStock { get; set; }
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Item));
         public string Text
         {

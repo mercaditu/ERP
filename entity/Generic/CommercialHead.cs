@@ -225,13 +225,19 @@ namespace entity
                                 {
                                     Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
                                 }
-                                if (db.security_user.Find(id_user) != null)
+                                if (id_user > 0)
                                 {
-                                    Brillo.Logic.Range.user_Code = db.security_user.Find(id_user).code;
+                                    if (db.security_user.Find(id_user) != null)
+                                    {
+                                        Brillo.Logic.Range.user_Code = db.security_user.Find(id_user).code;
+                                    }
                                 }
-                                if (db.projects.Find(id_project) != null)
+                                if (id_project > 0)
                                 {
-                                    Brillo.Logic.Range.project_Code = db.projects.Find(id_project).code;
+                                    if (db.projects.Find(id_project) != null)
+                                    {
+                                        Brillo.Logic.Range.project_Code = db.projects.Find(id_project).code;
+                                    }
                                 }
 
                                 return Brillo.Logic.Range.calc_Range(_app_range, false);

@@ -70,37 +70,16 @@ namespace Cognitivo.Purchase
 
                 app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
             }));
-           
-           
-           
         }
 
         private async void load_SecondaryDataThread()
         {
-            cbxContract.ItemsSource = CurrentSession.Contracts;
-
             await PurchaseOrderDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             cbxDepartment.ItemsSource = PurchaseOrderDB.app_department.Local;
             
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseOrderDB, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxCondition.ItemsSource = CurrentSession.Conditions;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxBranch.ItemsSource = CurrentSession.Branches;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
             }));
 
             await PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).ToListAsync();
@@ -207,17 +186,20 @@ namespace Cognitivo.Purchase
         #region Filter Data
 
 
-        private void set_ContactPref(object sender, EventArgs e)
+        private async void set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
-                purchase_order.id_contact = contact.id_contact;
-                purchase_order.contact = contact;
+                contact contact = await PurchaseOrderDB.contacts.FindAsync(sbxContact.ContactID);
+                if (contact != null)
+                {
+                    purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
+                    purchase_order.id_contact = contact.id_contact;
+                    purchase_order.contact = contact;
 
-                ///Start Thread to get Data.
-                Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    ///Start Thread to get Data.
+                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                }
             }
         }
 

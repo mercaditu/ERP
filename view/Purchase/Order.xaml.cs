@@ -221,16 +221,14 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = await PurchaseOrderDB.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == CurrentSession.Id_Company
-                                                                        && a.id_condition == app_condition.id_condition).ToListAsync();
+                cbxContract.ItemsSource = CurrentSession.Contracts.Where(x => x.id_condition == app_condition.id_condition).ToList();
                 //Selects first Item
                 if (purchase_order != null)
                 {

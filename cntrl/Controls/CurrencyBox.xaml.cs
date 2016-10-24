@@ -10,8 +10,6 @@ namespace cntrl.Controls
 {
     public partial class CurrencyBox : UserControl, INotifyPropertyChanged
     {
-        List<app_currency> app_currencyList;
-
         public decimal Rate_Previous { get; set; }
         public decimal Rate_Current { get; set; }
         public int id_currency { get; set; }
@@ -28,8 +26,7 @@ namespace cntrl.Controls
             }
         }
 
-        public static DependencyProperty SelectedValueProperty
-            = DependencyProperty.Register("SelectedValue", typeof(int), typeof(CurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
+        public static DependencyProperty SelectedValueProperty = DependencyProperty.Register("SelectedValue", typeof(int), typeof(CurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
 
         #region "INotifyPropertyChanged"
         private static void OnCurrencyChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -48,7 +45,6 @@ namespace cntrl.Controls
                 if (db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault() != null)
                 {
                     cbCurrency.SelectedValue = db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault().app_currency.id_currency;
-
                 }
             }
         }

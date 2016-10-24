@@ -106,7 +106,12 @@ namespace entity
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
 
-        public static bool IsDataLoading { get; set; }
+        public static bool IsDataLoading
+        {
+            get { return _IsDataLoading; }
+            set { _IsDataLoading = value; }
+        }
+        private static bool _IsDataLoading = false;
 
         public static void Start(security_user Sec_User, security_role Role)
         {
@@ -131,7 +136,6 @@ namespace entity
                 Timer myTimer = new Timer();
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                 myTimer.Interval = 300000;
-                myTimer.Enabled = true;
 
                 Brillo.Activation Activation = new Brillo.Activation();
                 Version = Activation.VersionDecrypt();
@@ -164,6 +168,8 @@ namespace entity
         public static void Load_BasicData(object sender, ElapsedEventArgs e)
         {
             Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
+            IsDataLoading = true;
+            //RaisePropertyChanged("IsDataLoading");
         }
 
         private static void Thread_Data()
@@ -190,6 +196,9 @@ namespace entity
                 Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
+                IsDataLoading = false;
+                //RaisePropertyChanged("IsDataLoading");
             }
         }
 

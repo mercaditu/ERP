@@ -26,11 +26,11 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            sales_repViewSource = this.FindResource("sales_repViewSource") as CollectionViewSource;
+            sales_repViewSource = FindResource("sales_repViewSource") as CollectionViewSource;
             dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             sales_repViewSource.Source = dbContext.sales_rep.Local;
 
-            contactViewSource = ((CollectionViewSource)(this.FindResource("contactViewSource")));
+            contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
             dbContext.contacts.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             contactViewSource.Source = dbContext.contacts.Local;
 
@@ -55,7 +55,7 @@ namespace Cognitivo.Sales
             {
                 sales_repViewSource.View.Refresh();
                 toolBar.msgSaved(dbContext.NumberOfRecords);
-                CurrentSession.Load_BasicData();
+                CurrentSession.Load_BasicData(null, null);
             }
         }
 

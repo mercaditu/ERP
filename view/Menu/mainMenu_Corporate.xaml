@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:my="clr-namespace:entity.Properties;assembly=entity"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
           xmlns:lex="http://wpflocalizeextension.codeplex.com" 
           lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -44,6 +45,7 @@
         </EventTrigger>
     </Page.Triggers>
     <Grid>
+        <ProgressBar IsIndeterminate="{Binding Source={x:Static entity:CurrentSession.IsDataLoading}}" Height="4" Background="Transparent" BorderThickness="0" Margin="0" VerticalAlignment="Top"/>
         <Grid VerticalAlignment="Top">
             <Grid.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.5"/>
@@ -112,7 +114,7 @@
                                         VerticalAlignment="Center" HorizontalAlignment="Center" 
                                         FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
             </StackPanel>
-            
+
             <TextBox HorizontalContentAlignment="Center" FontSize="26" x:Name="tbxSearch" TextChanged="tbxSearch_TextChanged"
                      Controls:TextBoxHelper.ClearTextButton="True" Visibility="Collapsed"
                      Controls:TextBoxHelper.Watermark="{lex:Loc Search}"

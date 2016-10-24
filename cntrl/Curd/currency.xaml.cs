@@ -57,7 +57,7 @@ namespace cntrl
                 throw ex;
             }
 
-            CurrentSession.Load_BasicData();
+            CurrentSession.Load_BasicData(null, null);
         }
 
         private void _SaveChanges()

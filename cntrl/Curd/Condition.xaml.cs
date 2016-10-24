@@ -106,7 +106,7 @@ namespace cntrl
                 throw ex;
             }
 
-            CurrentSession.Load_BasicData();
+            CurrentSession.Load_BasicData(null, null);
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {

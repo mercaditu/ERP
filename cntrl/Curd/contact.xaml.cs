@@ -93,7 +93,7 @@ namespace cntrl.Curd
 
                 btnSave_Click?.Invoke(sender);
                 //Reloads all Data.
-                CurrentSession.Load_BasicData();
+                CurrentSession.Load_BasicData(null, null);
            
             }
 

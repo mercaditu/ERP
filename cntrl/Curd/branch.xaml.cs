@@ -29,7 +29,7 @@ namespace cntrl
             {
                 stackMain.DataContext = app_branchViewSource;
 
-                CollectionViewSource app_vatViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vatViewSource")));
+                CollectionViewSource app_vatViewSource = ((CollectionViewSource)(this.FindResource("app_vatViewSource")));
                 app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
               
             }
@@ -43,7 +43,7 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
-                    CurrentSession.Load_BasicData();
+                    CurrentSession.Load_BasicData(null, null);
 
                     if (CurrentSession.Id_Branch == 0)
                     {

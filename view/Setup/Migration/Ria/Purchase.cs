@@ -73,7 +73,7 @@ namespace Cognitivo.Setup.Migration
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
 
-                    purchase_invoice purchase_invoice = db.New();
+                    purchase_invoice purchase_invoice = db.New(0);
 
                     purchase_invoice.number = purchaserow["NUMCOMPRA"] is DBNull ? null : purchaserow["NUMCOMPRA"].ToString();
                     if (!(purchaserow["FECHACOMPRA"] is DBNull))

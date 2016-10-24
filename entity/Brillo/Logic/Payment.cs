@@ -31,7 +31,7 @@ namespace entity.Brillo.Logic
 
                 using (db db = new db())
                 {
-                    app_contract app_contract = db.app_contract.Where(x => x.id_contract == sales_invoice.id_contract).FirstOrDefault();
+                    app_contract app_contract = db.app_contract.Find(sales_invoice.id_contract);
                     app_contract_details = app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
                     IsPromisorry = app_contract.is_promissory;
                 }

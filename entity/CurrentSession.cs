@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -7,6 +9,16 @@ namespace entity
 {
     public static class CurrentSession
     {
+        #region PropertyChanged
+        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged  = delegate { };
+        private static void NotifyStaticPropertyChanged(string propertyName)
+        {
+            StaticPropertyChanged(null, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Properties
+
         public enum Versions
         {
             Lite,           //     0 USD //   0 USD
@@ -22,7 +34,7 @@ namespace entity
             Himayuddin_51, //Lite
             Bathua_102,    //Basic
             Mankurad_153,  //Medium
-            Alphonso_255, //Full
+            Alphonso_255,  //Full
             Gulabkhas_306, //PrintingPress
             Chausa_357     //EventManagement
         }
@@ -113,6 +125,8 @@ namespace entity
         }
         private static bool _IsDataLoading = false;
 
+        #endregion
+
         public static void Start(security_user Sec_User, security_role Role)
         {
             Security_CurdList = new List<security_crud>();
@@ -135,7 +149,8 @@ namespace entity
                 //Load Basic Data into Timer.
                 Timer myTimer = new Timer();
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                myTimer.Interval = 300000;
+                myTimer.Interval = 60000;
+                myTimer.Start();
 
                 Brillo.Activation Activation = new Brillo.Activation();
                 Version = Activation.VersionDecrypt();
@@ -169,7 +184,7 @@ namespace entity
         {
             Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
             IsDataLoading = true;
-            //RaisePropertyChanged("IsDataLoading");
+            NotifyStaticPropertyChanged("IsDataLoading");
         }
 
         private static void Thread_Data()
@@ -198,7 +213,7 @@ namespace entity
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
 
                 IsDataLoading = false;
-                //RaisePropertyChanged("IsDataLoading");
+                NotifyStaticPropertyChanged("IsDataLoading");
             }
         }
 
@@ -209,7 +224,7 @@ namespace entity
         public static List<app_vat_group_details> VAT_GroupDetails { get; set; }
         public static List<app_vat> VATs { get; set; }
         public static List<app_branch> Branches { get; set; }
-        public static List<app_location>Locations { get; set; }
+        public static List<app_location> Locations { get; set; }
         public static List<app_terminal> Terminals { get; set; }
         public static List<app_currency> Currencies { get; set; }
         public static List<item_price_list> PriceLists { get; set; }

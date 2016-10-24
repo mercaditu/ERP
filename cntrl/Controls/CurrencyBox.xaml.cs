@@ -193,14 +193,16 @@ namespace cntrl.Controls
 
         public void get_ActiveRateXContact(ref contact contact)
         {
+            int CurrencyID = (int)contact.id_currency;
+
             //Company Default Currency && Contact Currency are the same. Use default currency if Contact does not have currency assigned.
-            if (contact.id_currency == CurrentSession.Currency_Default.id_currency || contact.app_currency == null)
+            if (CurrencyID == 0)
             {
                 SelectedValue = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             }
             else //Company Default Currency is not same as Customers. Customer might be empty too. We need to check.
             {
-                app_currencyfx app_currencyfx = contact.app_currency != null ? contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault() : null;
+                app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrencyID).FirstOrDefault();
                 if (app_currencyfx != null)
                 {
                     SelectedValue = app_currencyfx.id_currencyfx;

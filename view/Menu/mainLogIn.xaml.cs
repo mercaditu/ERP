@@ -51,12 +51,12 @@ namespace Cognitivo.Menu
             Task taskdb = Task.Factory.StartNew(() => check_createdb());
         }
 
-        private void check_createdb()
+        private async void check_createdb()
         {
             entity.Properties.Settings Settings = new entity.Properties.Settings();
             app_company app_company = null;
 
-            Dispatcher.BeginInvoke((Action)(() =>
+            await Dispatcher.BeginInvoke((Action)(() =>
             {
                 if (Settings.user_Name != null || Settings.user_UserName != "")
                 {
@@ -77,23 +77,23 @@ namespace Cognitivo.Menu
 
                 if (db.Database.Exists() == false)
                 {
-                    Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
+                    await Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
                     return;
                 }
 
                 if (CurrentSession.Id_Company == 0)
                 {
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    await Dispatcher.BeginInvoke((Action)(() =>
                     {
                         myFrame.Navigate(new Configs.Settings());
                         return;
                     }));
                 }
 
-                app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                app_company = await db.app_company.FindAsync(CurrentSession.Id_Company);
             }
 
-            Dispatcher.BeginInvoke((Action)(() =>
+            await Dispatcher.BeginInvoke((Action)(() =>
             {
                 Settings.company_Name = app_company != null ? string.IsNullOrEmpty(app_company.alias) ? app_company.alias : app_company.name : "";
                 Settings.Save();

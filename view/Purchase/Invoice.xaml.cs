@@ -67,21 +67,6 @@ namespace Cognitivo.Purchase
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
             }));
 
-            cbxContract.ItemsSource = CurrentSession.Contracts;
-            cbxCondition.ItemsSource = CurrentSession.Conditions;
-
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxBranch.ItemsSource = CurrentSession.Branches; //PurchaseInvoiceDB.app_branch.Local;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //PurchaseInvoiceDB.app_vat_group.Local;
-            }));
-
             await PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {

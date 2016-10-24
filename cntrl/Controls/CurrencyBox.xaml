@@ -2,12 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             Margin="4,0,4,4" mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" 
-             Loaded="CurrencyBox_Loaded">
+             Margin="4,0,4,4" mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256">
     <Grid x:Name="MainGrid">
-        <ComboBox x:Name="cbCurrency" 
+        <ComboBox x:Name="cbCurrency" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Currencies}}"
                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                   SelectedValuePath="id_currency" DisplayMemberPath="name" 

@@ -59,15 +59,6 @@ namespace cntrl.Controls
             InitializeComponent();
         }
 
-        private void CurrencyBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                app_currencyList = CurrentSession.Currencies.ToList();
-                cbCurrency.ItemsSource = app_currencyList;
-            }
-        }
-
         private void cbCurrency_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RaisePropertyChanged("id_currency");

@@ -73,21 +73,6 @@ namespace Cognitivo.Sales
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
 
-            //if (ConditionArray != null)
-            //{
-            //    if (ConditionArray.Count() > 0)
-            //    {
-            //        predicate = predicate.And(x => ConditionArray.Contains(x.app_condition.name));
-            //    }
-            //}
-
-            //if (ContractArray != null)
-            //{
-            //    if (ContractArray.Count() > 0)
-            //    {
-            //        predicate = predicate.And(x => ContractArray.Contains(x.app_contract.name));
-            //    }
-            //}
             if (start_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date >= start_Range.Date);
@@ -96,11 +81,6 @@ namespace Cognitivo.Sales
             {
                 predicate = predicate.And(x => x.trans_date <= end_Range.Date);
             }
-
-            //if (Contact != null)
-            //{
-            //    predicate = predicate.And(x => x.contact == Contact);
-            //}
             return predicate;
         }
 
@@ -136,21 +116,12 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            cbxContract.ItemsSource = CurrentSession.Contracts;
-            cbxCondition.ItemsSource = CurrentSession.Conditions;
-
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesInvoiceDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
-            cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
-            cbxBranch.ItemsSource = CurrentSession.Branches;
-            cbxTerminal.ItemsSource = CurrentSession.Terminals;
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
-
-            CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
         }
         #endregion
 

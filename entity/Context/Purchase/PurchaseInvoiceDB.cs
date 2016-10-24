@@ -17,6 +17,9 @@ namespace entity
             purchase_invoice.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_invoice.State = EntityState.Added;
             purchase_invoice.IsSelected = true;
+            purchase_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+            purchase_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+
             purchase_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             base.Entry(purchase_invoice).State = EntityState.Added;
             return purchase_invoice;

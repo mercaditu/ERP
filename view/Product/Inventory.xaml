@@ -19,10 +19,6 @@
 		<CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
-		<CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
-		<!--<CollectionViewSource x:Key="app_branchapp_locationitem_movementViewSource" Source="{Binding item_movement, Source={StaticResource app_branchapp_locationViewSource}}"/>-->
-		<!--<CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>-->
-		<!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
 		<CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}"/>
 	</Page.Resources>
 	<Page.CommandBindings>

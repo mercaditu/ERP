@@ -29,20 +29,14 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             item_inventoryitem_inventory_detailViewSource = (CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource"));
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
 
             await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
-
-            //CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            //await InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).LoadAsync();
-            //app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
-
+            
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
-            // app_branchViewSource.Source = CurrentSession.Get_Branch().OrderBy(x => x.name);
             await InventoryDB.app_branch
              .Where(a => a.is_active == true
                  && a.can_stock == true

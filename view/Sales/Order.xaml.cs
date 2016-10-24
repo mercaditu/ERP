@@ -18,7 +18,7 @@ namespace Cognitivo.Sales
     public partial class Order : Page
     {
         CollectionViewSource sales_orderViewSource;
-        SalesOrderDB dbContext = new SalesOrderDB();
+        SalesOrderDB SalesOrderDB = new SalesOrderDB();
 
         public Order()
         {
@@ -43,7 +43,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
             if (SalesSettings.FilterByBranch)
             {
-                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
+                await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
                                             && (
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
@@ -52,7 +52,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
+                await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
@@ -63,35 +63,16 @@ namespace Cognitivo.Sales
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
-                sales_orderViewSource.Source = dbContext.sales_order.Local;
+                sales_orderViewSource.Source = SalesOrderDB.sales_order.Local;
             }));
 
         }
 
         private async void load_SecondaryDataThread()
         {
-            cbxCondition.ItemsSource = CurrentSession.Conditions;
-            cbxContract.ItemsSource = CurrentSession.Contracts;
-
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxBranch.ItemsSource = CurrentSession.Branches;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesOrderDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
         }
 
@@ -108,11 +89,11 @@ namespace Cognitivo.Sales
         {
             Settings SalesSettings = new Settings();
 
-            sales_order sales_order = dbContext.New();
+            sales_order sales_order = SalesOrderDB.New();
             sales_order.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
 
             cbxCurrency.get_DefaultCurrencyActiveRate();
-            dbContext.sales_order.Add(sales_order);
+            SalesOrderDB.sales_order.Add(sales_order);
             sales_orderViewSource.View.MoveCurrentTo(sales_order);
         }
 
@@ -123,7 +104,7 @@ namespace Cognitivo.Sales
                 sales_order sales_order_old = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order_old.IsSelected = true;
                 sales_order_old.State = EntityState.Modified;
-                dbContext.Entry(sales_order_old).State = EntityState.Modified;
+                SalesOrderDB.Entry(sales_order_old).State = EntityState.Modified;
             }
             else
             {
@@ -152,9 +133,9 @@ namespace Cognitivo.Sales
         {
             try
             {
-                if (dbContext.SaveChanges() > 0)
+                if (SalesOrderDB.SaveChanges() > 0)
                 {
-                    toolBar.msgSaved(dbContext.NumberOfRecords);
+                    toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
                     sales_orderViewSource.View.Refresh();
                     sbxContact.Text = "";
                 }
@@ -167,24 +148,24 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            SalesOrderDB.CancelAllChanges();
         }
 
         private void btnApprove_Click(object sender)
         {
-            if (dbContext.Approve())
+            if (SalesOrderDB.Approve())
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesOrderDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
-                toolBar.msgApproved(dbContext.NumberOfRecords);
+                toolBar.msgApproved(SalesOrderDB.NumberOfRecords);
             }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            if (dbContext.Annull())
+            if (SalesOrderDB.Annull())
             {
-                toolBar.msgAnnulled(dbContext.NumberOfRecords);
+                toolBar.msgAnnulled(SalesOrderDB.NumberOfRecords);
             }
         }
         #endregion
@@ -195,7 +176,7 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
@@ -209,7 +190,7 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxContactRelation.ItemsSource = dbContext.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
                     //Condition
                     if (objContact.app_contract != null)
@@ -267,7 +248,7 @@ namespace Cognitivo.Sales
                 if (sales_order_detail.Count > 0)
                 {
                     dgvvat.ItemsSource = sales_order_detail
-                        .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                        .Join(SalesOrderDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                             , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
                             .GroupBy(a => new { a.name, a.id_vat, a.ad })
                     .Select(g => new
@@ -331,7 +312,7 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-                item item = await dbContext.items.FindAsync(sbxItem.ItemID);
+                item item = await SalesOrderDB.items.FindAsync(sbxItem.ItemID);
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
@@ -423,7 +404,7 @@ namespace Cognitivo.Sales
                     //DeleteDetailGridRow
                     dgvSalesDetail.CancelEdit();
                     sales_order_detail sales_order_detail = e.Parameter as sales_order_detail;
-                    dbContext.sales_order_detail.Remove(sales_order_detail);
+                    SalesOrderDB.sales_order_detail.Remove(sales_order_detail);
                     CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
                     sales_ordersales_order_detailViewSource.View.Refresh();
                 }
@@ -440,11 +421,11 @@ namespace Cognitivo.Sales
             {
                 if (sales_order.id_currencyfx > 0)
                 {
-                    if (dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault() != null)
+                    if (SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault() != null)
                     {
 
 
-                        sales_order.app_currencyfx = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault();
+                        sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault();
                     }
                 }
             }
@@ -501,31 +482,31 @@ namespace Cognitivo.Sales
             crud_modal.Visibility = Visibility.Visible;
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 pnlSalesBudget._contact = contact;
             }
             pnlSalesBudget.SalesBudget_Click += SalesBudget_Click;
 
             sales_order _sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
             pnlSalesBudget.sales_order = _sales_order;
-            pnlSalesBudget.db = dbContext;
+            pnlSalesBudget.db = SalesOrderDB;
             crud_modal.Children.Add(pnlSalesBudget);
         }
 
         public async void SalesBudget_Click(object sender)
         {
             sales_order sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
-            sales_order.contact= await dbContext.contacts.Where(x => x.id_contact== sales_order.id_contact).FirstOrDefaultAsync();
-            sales_order.app_contract = await dbContext.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
+            sales_order.contact= await SalesOrderDB.contacts.Where(x => x.id_contact== sales_order.id_contact).FirstOrDefaultAsync();
+            sales_order.app_contract = await SalesOrderDB.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
             foreach (sales_order_detail detail in sales_order.sales_order_detail)
             {
                 detail.CurrencyFX_ID = sales_order.id_currencyfx;
-                detail.item = await dbContext.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
-                detail.app_vat_group = await dbContext.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
+                detail.item = await SalesOrderDB.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
+                detail.app_vat_group = await SalesOrderDB.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
                 
             }
 
-            cbxContactRelation.ItemsSource = dbContext.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
+            cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
 
             CollectionViewSource sales_ordersales_order_detailViewSource = ((CollectionViewSource)(FindResource("sales_ordersales_order_detailViewSource")));
             sales_orderViewSource.View.Refresh();

@@ -43,26 +43,8 @@ namespace Cognitivo.Sales
 				sales_budgetViewSource.Source = SalesBudgetDB.sales_budget.Local;
 				sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
-				CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
-				branchViewSource.Source = CurrentSession.Branches;
-
-				CollectionViewSource contractViewSource = ((CollectionViewSource)(FindResource("contractViewSource")));
-				contractViewSource.Source = CurrentSession.Contracts;
-
-				CollectionViewSource conditionViewSource = ((CollectionViewSource)(FindResource("conditionViewSource")));
-				conditionViewSource.Source = CurrentSession.Conditions;
-
-				await Dispatcher.InvokeAsync(new Action(() =>
-				{
-					cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
-				}));
-
 				CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
 				app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
-
-				CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-				app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
-				
 			}
 			catch (Exception ex)
 			{

@@ -789,9 +789,9 @@ namespace entity.Brillo.Logic
                 {
                     item_movement.id_execution_detail = TransactionDetailID;
 
-                    if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                    production_execution_detail production_execution_detail = db.production_execution_detail.Find(TransactionDetailID);
+                    if (production_execution_detail != null)
                     {
-                        production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
                         foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                         {
                             item_movement_dimension _item_movement_dimension = new item_movement_dimension();
@@ -837,9 +837,7 @@ namespace entity.Brillo.Logic
 
                     if (Unitcost > 0)
                     {
-
                         item_movement_value.unit_value = Unitcost;
-
                     }
                     else
                     {
@@ -865,7 +863,7 @@ namespace entity.Brillo.Logic
             return Final_ItemMovementLIST;
         }
 
-        public item_movement CreditOnly_Movement(entity.Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
+        public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList)
         {
@@ -889,16 +887,17 @@ namespace entity.Brillo.Logic
                     item_movement.id_execution_detail = TransactionDetailID;
                     using (db db = new db())
                     {
-                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
+                        production_execution_detail production_execution_detail = db.production_execution_detail.Find(TransactionDetailID);
+
+                        if (production_execution_detail != null && production_execution_detail.movement_id != null)
                         {
-                            id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
+                            id_movement = (int)production_execution_detail.movement_id;
                         }
 
                         if (DimensionList == null)
                         {
-                            if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                            if (production_execution_detail != null)
                             {
-                                production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
                                 foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                                 {
                                     item_movement_dimension _item_movement_dimension = new item_movement_dimension();

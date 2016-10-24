@@ -342,7 +342,7 @@ namespace Cognitivo.Sales
 			{
 				await Dispatcher.InvokeAsync(new Action(() =>
 				{
-					cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+					//cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
 					//Condition
 					if (objContact.app_contract != null)

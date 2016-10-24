@@ -140,18 +140,17 @@ namespace entity
                 {
                     _id_range = value;
                     RaisePropertyChanged("NumberWatermark");
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
-                    {
-                        using (db db = new db())
-                        {
-                            app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == value).FirstOrDefault();
-                            if (app_document_range != null)
-                            {
-                                code = app_document_range.code;
-                            }
-
-                        }
-                    }
+                    //if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    //{
+                    //    using (db db = new db())
+                    //    {
+                    //        app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == value).FirstOrDefault();
+                    //        if (app_document_range != null)
+                    //        {
+                    //            code = app_document_range.code;
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
@@ -210,30 +209,29 @@ namespace entity
             {
                 if ((_NumberWatermark == null || _NumberWatermark == string.Empty) && (number == null || number == string.Empty) && id_range > 0)
                 {
-                    //Abhi> removed this from IF, because this will cause dB to run for each sales invoice or purchase. || State == 0
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         using (db db = new db())
                         {
-                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
-                            {
-                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                            app_document_range _app_range = db.app_document_range.Find(_id_range);
 
-                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
+                            if (_app_range != null)
+                            {
+                                if (id_branch > 0)
                                 {
-                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                    Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
                                 }
-                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
+                                if (id_terminal > 0)
                                 {
-                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                    Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
                                 }
-                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                if (db.security_user.Find(id_user) != null)
                                 {
-                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                    Brillo.Logic.Range.user_Code = db.security_user.Find(id_user).code;
                                 }
-                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                if (db.projects.Find(id_project) != null)
                                 {
-                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                    Brillo.Logic.Range.project_Code = db.projects.Find(id_project).code;
                                 }
 
                                 return Brillo.Logic.Range.calc_Range(_app_range, false);
@@ -296,9 +294,7 @@ namespace entity
                 }
             }
         }
-        #region GrandTotal => Variable
         private decimal _GrandTotal;
-        #endregion
 
         /// <summary>
         /// 
@@ -334,67 +330,6 @@ namespace entity
         #endregion
 
         #region Methods
-
-        public void generate_barcode()
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        //protected void calc_credit(decimal GrandTotal)
-        //{
-        //    if (contact != null)
-        //    {
-        //        if (contact.credit_availability != null)
-        //        {
-        //            if (contact.credit_availability > 0)
-        //            {
-        //                CreditLimit = (decimal)contact.credit_availability;
-        //            }
-        //        }
-
-        //        if (app_currencyfx != null)
-        //        {
-        //            decimal rate = app_currencyfx.buy_value;
-        //            CreditLimit = CreditLimit * rate;
-
-        //        }
-        //        CreditLimit = CreditLimit - GrandTotal;
-        //        RaisePropertyChanged("CreditLimit");
-
-        //    }
-
-        //}
-
-        /// <summary>
-        /// Returns the Item Price marked as Default by the Company
-        /// </summary>
-        /// <returns>Item Price</returns>
-        public item_price_list get_Default()
-        {
-            using (db db = new db())
-            {
-                if (db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID) != null)
-                {
-                    return db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault();
-                }
-            }
-            return null;
-        }
-
-        public decimal get_PurchasePrice(item_product item_product, int id_currencyfx, App.Names App_Name)
-        {
-            using (db db = new db())
-            {
-                if (db.item_movement.Where(x => x.item_product == item_product).LastOrDefault() != null)
-                {
-                    return db.item_movement.Where(x => x.item_product == item_product).LastOrDefault().item_movement_value.Sum(x => x.unit_value);
-                }
-            }
-            return 0;
-        }
 
         #endregion
     }

@@ -29,7 +29,7 @@ namespace entity.Brillo.Logic
                     ///Get latest Current Value to be sure we don't use the same value somebody else has already used.
                     using (db db = new db())
                     {
-                        app_document_range _app_document_range = db.app_document_range.Where(x => x.id_range == original_app_document_range.id_range).FirstOrDefault();
+                        app_document_range _app_document_range = db.app_document_range.Find(original_app_document_range.id_range);
 
                         //Range
                         if (prefix.Contains("#Range"))

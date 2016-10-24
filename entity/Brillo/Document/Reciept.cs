@@ -20,8 +20,8 @@
 
             using (db db = new db())
             {
-                app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
-                PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
+                app_document = db.app_document.Find(document_id);
+                PrinterName = app_document.app_document_range.Where(x => x.is_active).FirstOrDefault().printer_name;
 
                 if (app_document.id_application == App.Names.Movement)
                 {
@@ -236,22 +236,17 @@
                             }
                             foreach (item_transfer_dimension item_transfer_dimension in d.item_transfer_dimension)
                             {
-
                                 decimal value = item_transfer_dimension.value;
                                 string name = item_transfer_dimension.app_dimension != null ? item_transfer_dimension.app_dimension.name : "";
                                 string dimension = "\n"
                                 + name + "\t" + value + "\n";
                                 Detail = Detail + dimension + "\n";
-
                             }
                         }
-
                     }
-
                 }
-
-              
             }
+
             Footer = "-------------------------------\n";
             if (i.employee != null)
             {
@@ -301,9 +296,9 @@
             {
                 using (db db = new db())
                 {
-                    if (db.security_user.Where(x => x.id_user == sales_return.id_user).FirstOrDefault() != null)
+                    security_user security_user = db.security_user.Where(x => x.id_user == sales_return.id_user).FirstOrDefault();
+                    if (security_user != null)
                     {
-                        security_user security_user = db.security_user.Where(x => x.id_user == sales_return.id_user).FirstOrDefault();
                         UserGiven = security_user.name;
                     }
                 }
@@ -417,20 +412,10 @@
                 }
             }
 
-            if (sales_invoice.app_branch != null)
+            app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
+            if (app_branch != null)
             {
-                BranchName = sales_invoice.app_branch.name;
-            }
-            else
-            {
-                using (db db = new db())
-                {
-                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
-                    if (app_branch != null)
-                    {                     
-                        BranchName = app_branch.name;
-                    }
-                }
+                BranchName = app_branch.name;
             }
 
             string UserGiven = "";
@@ -452,37 +437,17 @@
             }
 
             string ContractName = "";
-            if (sales_invoice.app_contract != null)
+            app_contract app_contract = CurrentSession.Contracts.Where(x => x.id_contract == sales_invoice.id_contract).FirstOrDefault();
+            if (app_contract != null)
             {
-                ContractName = sales_invoice.app_contract.name;
-            }
-            else
-            {
-                using (db db = new db())
-                {
-                    app_contract app_contract = db.app_contract.Where(x => x.id_contract == sales_invoice.id_contract).FirstOrDefault();
-                    if (app_contract != null)
-                    {
-                        ContractName = app_contract.name;
-                    }
-                }
+                ContractName = app_contract.name;
             }
 
             string ConditionName = "";
-            if (sales_invoice.app_condition != null)
+            app_condition app_condition = CurrentSession.Conditions.Where(x => x.id_condition == sales_invoice.id_condition).FirstOrDefault();
+            if (app_condition != null)
             {
-                ConditionName = sales_invoice.app_condition.name;
-            }
-            else
-            {
-                using (db db = new db())
-                {
-                    app_condition app_condition = db.app_condition.Where(x => x.id_condition == sales_invoice.id_condition).FirstOrDefault();
-                    if (app_condition != null)
-                    {
-                        ConditionName = app_condition.name;
-                    }
-                }
+                ConditionName = app_condition.name;
             }
 
             string CurrencyName = "";
@@ -492,7 +457,6 @@
                 {
                     CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
                 }
-                
             }
             else
             {
@@ -588,17 +552,11 @@
             if (sales_invoice.id_sales_rep > 0)
             {
                 string SalesRep_Name = "";
-
-                if (sales_invoice.sales_rep == null)
+                int RepID= (int)sales_invoice.id_sales_rep;
+                sales_rep sales_rep = CurrentSession.SalesReps.Where(x => x.id_sales_rep == RepID).FirstOrDefault();
+                if (sales_rep != null)
                 {
-                    using (db db = new db())
-                    {
-                        SalesRep_Name = db.sales_rep.Where(x => x.id_sales_rep == (int)sales_invoice.id_sales_rep).FirstOrDefault().name;
-                    }
-                }
-                else
-                {
-                    SalesRep_Name = sales_invoice.sales_rep.name;
+                    SalesRep_Name = sales_rep.name;
                 }
 
                 Footer += "\n";
@@ -765,9 +723,9 @@
             }
             using (db db = new db())
             {
-                if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                if (app_branch != null)
                 {
-                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                     BranchName = app_branch.name;
                 }
             }
@@ -803,8 +761,8 @@
                 if (detail.tran_type == app_account_detail.tran_types.Open)
                 {
                     Detail += "Balance de Apertura : " + Math.Round(detail.credit, 2) + "\n";
-
                 }
+
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
                 {
                     string AccountName = string.Empty;

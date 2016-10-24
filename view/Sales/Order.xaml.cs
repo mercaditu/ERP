@@ -326,29 +326,30 @@ namespace Cognitivo.Sales
             sales_order_detail.sales_order = sales_order;
         }
 
-        private void item_Select(object sender, EventArgs e)
+        private async void item_Select(object sender, EventArgs e)
         {
             if (sbxItem.ItemID > 0)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = await dbContext.items.FindAsync(sbxItem.ItemID);
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
                     Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, SalesSettings.AllowDuplicateItem));
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem));
                 }
                 sales_order.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_order sales_order, item item, bool AllowDuplicateItem)
+        private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem)
         {
             if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.State = EntityState.Added;
                 _sales_order_detail.sales_order = sales_order;
+                _sales_order_detail.Quantity_InStock = QuantityInStock;
                 _sales_order_detail.Contact = sales_order.contact;
                 _sales_order_detail.item_description = item.description;
                 _sales_order_detail.item = item;

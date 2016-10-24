@@ -406,13 +406,9 @@ namespace Cognitivo.Sales
                     {
                         int BranchID = (int)cbxBranch.SelectedValue;
 
-                        item item = await SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefaultAsync();
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
-
-                        Class.StockCalculations StockCalculations = new Class.StockCalculations();
-                        _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
-
-
+                        item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
+                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem);
+                        
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }

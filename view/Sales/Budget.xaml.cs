@@ -240,35 +240,36 @@ namespace Cognitivo.Sales
 			}
 		}
 
-		private void item_Select(object sender, EventArgs e)
+		private async void item_Select(object sender, EventArgs e)
 		{
 		   
 			if (sbxItem.ItemID > 0)
 			{
 				sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-				item item = SalesBudgetDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+				item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
 
 				if (item != null && item.id_item > 0 && sales_budget!= null)
 				{
 					Settings SalesSettings = new Settings();
-					Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, SalesSettings.AllowDuplicateItem));
+					Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem));
 				}
 
 				sales_budget.RaisePropertyChanged("GrandTotal");
 			}
 		}
 
-		private void select_Item(sales_budget sales_budget, item item, bool AllowDuplicateItem)
+		private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem)
 		{
 			if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
 			{
 				sales_budget_detail _sales_budget_detail = new sales_budget_detail();
 				_sales_budget_detail.State = EntityState.Added;
 				_sales_budget_detail.sales_budget = sales_budget;
+                _sales_budget_detail.Quantity_InStock = QuantityInStock;
 				_sales_budget_detail.Contact = sales_budget.contact;
+
 				_sales_budget_detail.item_description = item.description;
 				_sales_budget_detail.item = item;
-			
 				_sales_budget_detail.id_item = item.id_item;
 		   
 				sales_budget.sales_budget_detail.Add(_sales_budget_detail);
@@ -326,7 +327,6 @@ namespace Cognitivo.Sales
 		{
 			try
 			{
-
 				MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
 				if (result == MessageBoxResult.Yes)
 				{
@@ -342,11 +342,11 @@ namespace Cognitivo.Sales
 			}
 		}
 
-		private void set_ContactPref(object sender, EventArgs e)
+		private async void set_ContactPref(object sender, EventArgs e)
 		{
 			if (sbxContact.ContactID > 0)
 			{
-				contact contact = SalesBudgetDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+				contact contact = await SalesBudgetDB.contacts.FindAsync(sbxContact.ContactID);
 				sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
 				sales_budget.id_contact = contact.id_contact;
 				sales_budget.contact = contact;
@@ -375,65 +375,40 @@ namespace Cognitivo.Sales
 
 					//SalesMan
 					if (objContact.sales_rep != null)
-						cbxCondition.SelectedValue = objContact.sales_rep.id_sales_rep;
+						cbxCondition.SelectedValue = objContact.id_sales_rep;
 				}));
 			}
 		}
 
-		private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
+		private async void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
 		{
 			sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-			if (sales_budget != null)
+
+            if (sales_budget != null)
 			{
 				if (sales_budget.id_currencyfx > 0)
 				{
-					if (SalesBudgetDB.app_currencyfx.Where(x => x.id_currencyfx == sales_budget.id_currencyfx).FirstOrDefault() != null)
+                    app_currencyfx app_currencyfx = await SalesBudgetDB.app_currencyfx.FindAsync(sales_budget.id_currencyfx);
+
+                    if (app_currencyfx != null)
 					{
-
-
-						sales_budget.app_currencyfx = SalesBudgetDB.app_currencyfx.Where(x => x.id_currencyfx == sales_budget.id_currencyfx).FirstOrDefault();
+						sales_budget.app_currencyfx = app_currencyfx;
 					}
 				}
 			}
 			calculate_vat(sender, e);
 		}
 
-		private void btnDuplicateInvoice_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-		{
-			sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-			if (sales_budget != null)
-			{
-				if (sales_budget.id_sales_budget != 0)
-				{
-					var originalEntity = SalesBudgetDB.sales_budget.AsNoTracking().FirstOrDefault(x => x.id_sales_budget == sales_budget.id_sales_budget);
-					SalesBudgetDB.sales_budget.Add(originalEntity);
-					sales_budgetViewSource.View.Refresh();
-					sales_budgetViewSource.View.MoveCurrentToLast();
-				}
-				else
-				{
-					toolBar.msgWarning("Please save before duplicating");
-				}
-			}
-		}
-
 		private void sales_budget_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
 		{
-			//calculate_total(sender, e);
 			calculate_vat(sender, e);
 		}
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			//calculate_total(sender, e);
 			calculate_vat(sender, e);
 		}
-
-		private void lblEditProduct_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-		{
-
-		}
-
+        
 		private void Totals_btnClean_Click(object sender)
 		{
 			sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;

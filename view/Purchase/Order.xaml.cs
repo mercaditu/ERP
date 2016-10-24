@@ -129,8 +129,7 @@ namespace Cognitivo.Purchase
         {
             OrderSetting _pref_PurchaseOrder = new OrderSetting();
 
-            purchase_order purchase_order = PurchaseOrderDB.New();
-            purchase_order.trans_date = DateTime.Now.AddDays(_pref_PurchaseOrder.TransDate_OffSet);
+            purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
     
             PurchaseOrderDB.Entry(purchase_order).State = EntityState.Added;
             purchase_orderViewSource.View.MoveCurrentToLast();

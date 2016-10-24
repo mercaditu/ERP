@@ -161,19 +161,18 @@ namespace Cognitivo.Sales
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-                item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
-                decimal QuantityInStock = sbxItem.QuantityInStock;
+                if (sales_invoice != null)
+                {
+                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
+                    decimal QuantityInStock = sbxItem.QuantityInStock;
 
-                sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false);
+                    sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false);
 
-                Class.StockCalculations StockCalculations = new Class.StockCalculations();
-                
-                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    btnPromotion_Click(sender, e);
 
-                sales_invoiceViewSource.View.Refresh();
-                paymentViewSource.View.Refresh();
-                btnPromotion_Click(sender, e);
+                    sales_invoiceViewSource.View.Refresh();
+                    paymentViewSource.View.Refresh();
+                }
             }
         }
 

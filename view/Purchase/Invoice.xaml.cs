@@ -121,10 +121,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnNew_Click(object sender)
         {
             InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
-
-            purchase_invoice purchase_invoice = PurchaseInvoiceDB.New();
-            purchase_invoice.trans_date = DateTime.Now.AddDays(_pref_PurchaseInvoice.TransDate_OffSet);
-            
+            purchase_invoice purchase_invoice = PurchaseInvoiceDB.New(_pref_PurchaseInvoice.TransDate_OffSet);
 
             purchase_invoiceViewSource.View.MoveCurrentToLast();
         }

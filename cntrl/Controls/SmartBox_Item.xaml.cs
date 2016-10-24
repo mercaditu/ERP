@@ -94,6 +94,7 @@ namespace cntrl.Controls
                     if (Item != null)
                     {
                         ItemID = Item.ID;
+                        QuantityInStock = Item.InStock;
                         ItemPopUp.IsOpen = false;
                         Text = Item.Name;
                     }
@@ -255,7 +256,7 @@ namespace cntrl.Controls
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             if (Sec.create)
             {
-                cntrl.Curd.item item = new Curd.item();
+                Curd.item item = new Curd.item();
                 item.itemobject = new entity.item();
                 popCrud.IsOpen = true;
                 popCrud.Visibility = Visibility.Visible;

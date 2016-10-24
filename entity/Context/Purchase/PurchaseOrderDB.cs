@@ -8,15 +8,15 @@ namespace entity
 {
     public partial class PurchaseOrderDB : BaseDB
     {
-        public purchase_order New()
+        public purchase_order New(int DaysOffSet)
         {
             purchase_order purchase_order = new purchase_order();
             purchase_order.State = EntityState.Added;
             purchase_order.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
             purchase_order.status = Status.Documents_General.Pending;
-            purchase_order.trans_date = DateTime.Now;
-            purchase_order.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            purchase_order.trans_date = DateTime.Now.AddDays(DaysOffSet);
+            purchase_order.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             purchase_order.IsSelected = true;
             
             return purchase_order;
@@ -108,18 +108,19 @@ namespace entity
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                         payment_schedualList = _Payment.insert_Schedual(purchase_order);
 
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this, purchase_order);
+                        //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        //List<item_movement> item_movementList = new List<item_movement>();
+                        //item_movementList = _Stock.insert_Stock(this, purchase_order);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
                         }
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            item_movement.AddRange(item_movementList);
-                        }
+
+                        //if (item_movementList != null && item_movementList.Count > 0)
+                        //{
+                        //    item_movement.AddRange(item_movementList);
+                        //}
 
                         purchase_order.status = Status.Documents_General.Approved;
                         SaveChanges();
@@ -127,7 +128,7 @@ namespace entity
 
                     if (purchase_order.is_issued)
                     {
-                        app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
+                        app_document_range app_document_range = base.app_document_range.Find(purchase_order.id_range);
                         Brillo.Document.Start.Automatic(purchase_order, app_document_range);
                     }
 

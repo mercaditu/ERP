@@ -8,17 +8,16 @@ namespace entity
 {
     public partial class PurchaseInvoiceDB : BaseDB
     {
-        public purchase_invoice New()
+        public purchase_invoice New(int DaysOffSet)
         {
             purchase_invoice purchase_invoice = new purchase_invoice();
 
             //purchase_invoice.id_range = Brillo.GetDefault.Range(App.Names.PurchaseInvoice);
             purchase_invoice.status = Status.Documents_General.Pending;
-            purchase_invoice.trans_date = DateTime.Now;
-
+            purchase_invoice.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_invoice.State = EntityState.Added;
             purchase_invoice.IsSelected = true;
-            purchase_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            purchase_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             base.Entry(purchase_invoice).State = EntityState.Added;
             return purchase_invoice;
         }

@@ -88,7 +88,7 @@ namespace Cognitivo.Product
                     Class.StockCalculations Stock = new Class.StockCalculations();
                     List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
 
-                    foreach (item_product item_product in item_productLIST)
+                    foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))
                     {
                         int i = item_product.id_item_product;
 

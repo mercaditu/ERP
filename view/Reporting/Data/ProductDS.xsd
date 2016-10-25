@@ -320,6 +320,21 @@ where mov.id_company = @CompanyID and loc.id_location = @LocationID and mov.tran
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="CostBreakDown" msprop:Generator_TableClassName="CostBreakDownDataTable" msprop:Generator_TableVarName="tableCostBreakDown" msprop:Generator_RowChangedName="CostBreakDownRowChanged" msprop:Generator_TablePropName="CostBreakDown" msprop:Generator_RowDeletingName="CostBreakDownRowDeleting" msprop:Generator_RowChangingName="CostBreakDownRowChanging" msprop:Generator_RowEvHandlerName="CostBreakDownRowChangeEventHandler" msprop:Generator_RowDeletedName="CostBreakDownRowDeleted" msprop:Generator_RowClassName="CostBreakDownRow" msprop:Generator_UserTableName="CostBreakDown" msprop:Generator_RowEvArgName="CostBreakDownRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Code" msprop:Generator_ColumnVarNameInTable="columnCode" msprop:Generator_ColumnPropNameInRow="Code" msprop:Generator_ColumnPropNameInTable="CodeColumn" msprop:Generator_UserColumnName="Code" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="TransDate" msprop:Generator_ColumnVarNameInTable="columnTransDate" msprop:Generator_ColumnPropNameInRow="TransDate" msprop:Generator_ColumnPropNameInTable="TransDateColumn" msprop:Generator_UserColumnName="TransDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" type="xs:string" minOccurs="0" />
+              <xs:element name="MovID" msprop:Generator_ColumnVarNameInTable="columnMovID" msprop:Generator_ColumnPropNameInRow="MovID" msprop:Generator_ColumnPropNameInTable="MovIDColumn" msprop:Generator_UserColumnName="MovID" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitValue" msprop:Generator_ColumnVarNameInTable="columnUnitValue" msprop:Generator_ColumnPropNameInRow="UnitValue" msprop:Generator_ColumnPropNameInTable="UnitValueColumn" msprop:Generator_UserColumnName="UnitValue" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Concept" msprop:Generator_ColumnVarNameInTable="columnConcept" msprop:Generator_ColumnPropNameInRow="Concept" msprop:Generator_ColumnPropNameInTable="ConceptColumn" msprop:Generator_UserColumnName="Concept" type="xs:string" minOccurs="0" />
+              <xs:element name="SubTotal" msprop:Generator_ColumnVarNameInTable="columnSubTotal" msprop:Generator_ColumnPropNameInRow="SubTotal" msprop:Generator_ColumnPropNameInTable="SubTotalColumn" msprop:Generator_UserColumnName="SubTotal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">

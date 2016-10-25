@@ -126,6 +126,24 @@ namespace Cognitivo.Class
             return exeDT(query);
         }
 
+        public DataTable CostBreakDown(DateTime StartDate, DateTime EndDate)
+        {
+            string query = @" select i.code as Code, i.name as Name, im.trans_date as TransDate, im.comment as Comment, imv.id_movement as MovID, imv.unit_value as UnitValue, 
+                                imv.comment as Concept, im.credit as Quantity,
+                                (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
+                                from item_movement_value as imv
+                                inner join item_movement as im on imv.id_movement = im.id_movement
+                                inner join item_product as p on im.id_item_product = p.id_item_product
+                                inner join items as i on p.id_item = i.id_item
+                                where (im.id_purchase_invoice_detail is not null or im.id_execution_detail is not null) 
+                                and {0} im.trans_date >= '{1}' and im.trans_date <= '{2}' 
+                                order by im.trans_date";
+
+            string WhereQuery = String.Format("imv.id_company = {0} and ", entity.CurrentSession.Id_Company);
+            query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
+            return exeDT(query);
+        }
+
         public decimal? Count_ByBranch(int BranchID, int ItemID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();

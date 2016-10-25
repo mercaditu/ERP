@@ -4,9 +4,12 @@ using System.Windows.Controls;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class PendingReceivables : Page
+    /// <summary>
+    /// Interaction logic for SalesByItem.xaml
+    /// </summary>
+    public partial class AccountsPayable : Page
     {
-        public PendingReceivables()
+        public AccountsPayable()
         {
             InitializeComponent();
 
@@ -23,7 +26,7 @@ namespace Cognitivo.Reporting.Views
             DataTable dt = new DataTable();
 
             Class.Finance Finance = new Class.Finance();
-            dt = Finance.PendingRecievables(ReportPanel.EndDate);
+            dt = Finance.PendingPayables(ReportPanel.EndDate);
             
             ReportPanel.ReportDt = dt;
 
@@ -31,7 +34,7 @@ namespace Cognitivo.Reporting.Views
             reportDataSource1.Value = dt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
-            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingReceivables");
+            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingPayable");
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
@@ -43,10 +46,10 @@ namespace Cognitivo.Reporting.Views
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
            
-            reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "PendingAccounts"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportPanel.Filterdt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
  
 
             reportViewer.Refresh();

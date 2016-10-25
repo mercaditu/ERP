@@ -584,8 +584,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reporting\Views\PendingPayables.xaml.cs">
-      <DependentUpon>PendingPayables.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\AccountsPayable.xaml.cs">
+      <DependentUpon>AccountsPayable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
       <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
@@ -593,8 +593,8 @@
     <Compile Include="Reporting\Views\Production_HumanResources.xaml.cs">
       <DependentUpon>Production_HumanResources.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PendingReceivables.xaml.cs">
-      <DependentUpon>PendingReceivables.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\AccountsReceivable.xaml.cs">
+      <DependentUpon>AccountsReceivable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\Subscription.xaml.cs">
       <DependentUpon>Subscription.xaml</DependentUpon>
@@ -610,9 +610,6 @@
     </Compile>
     <Compile Include="Reporting\Views\CurrentAccount_Customer.xaml.cs">
       <DependentUpon>CurrentAccount_Customer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\AccountsRecievableAnalisys.xaml.cs">
-      <DependentUpon>AccountsRecievableAnalisys.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\Movement.xaml.cs">
       <DependentUpon>Movement.xaml</DependentUpon>
@@ -1060,6 +1057,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\Carnet_Contact %282%29.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\CostBreakDown.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
@@ -1577,7 +1575,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\PendingPayables.xaml">
+    <Page Include="Reporting\Views\AccountsPayable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1589,7 +1587,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\PendingReceivables.xaml">
+    <Page Include="Reporting\Views\AccountsReceivable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1610,10 +1608,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\CurrentAccount_Customer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\AccountsRecievableAnalisys.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

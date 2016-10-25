@@ -61,7 +61,7 @@ namespace Cognitivo.Class
 								DATE_FORMAT(schedual.expire_date,'%d %b %y') as ExpiryDate,
 								curr.name as CurrencyName,
 								fx.buy_value as Rate,
-								schedual.debit as Value, 
+								schedual.credit as Value, 
 								schedual.DebitChild as Paid, 
 								(schedual.credit - schedual.DebitChild) as Balance,
 								schedual.trans_date as TransDate

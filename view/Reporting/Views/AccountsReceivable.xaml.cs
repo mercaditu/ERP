@@ -4,15 +4,11 @@ using System.Windows.Controls;
 
 namespace Cognitivo.Reporting.Views
 {
-    /// <summary>
-    /// Interaction logic for SalesByItem.xaml
-    /// </summary>
-    public partial class PendingPayables : Page
+    public partial class AccountsReceivable : Page
     {
-        public PendingPayables()
+        public AccountsReceivable()
         {
             InitializeComponent();
-
             Fill(null, null);
         }
 
@@ -26,7 +22,7 @@ namespace Cognitivo.Reporting.Views
             DataTable dt = new DataTable();
 
             Class.Finance Finance = new Class.Finance();
-            dt = Finance.PendingPayables(ReportPanel.EndDate);
+            dt = Finance.PendingRecievables(ReportPanel.EndDate);
             
             ReportPanel.ReportDt = dt;
 
@@ -34,7 +30,7 @@ namespace Cognitivo.Reporting.Views
             reportDataSource1.Value = dt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
-            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingPayable");
+            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingReceivables");
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();

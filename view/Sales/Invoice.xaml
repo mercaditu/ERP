@@ -256,7 +256,7 @@
 										<ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-											  Style="{StaticResource input_combobox}" 
+											  Style="{StaticResource input_combobox}"  SelectedItem="{Binding app_document_range,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 											  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
 									</StackPanel>
 									<Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}"/>

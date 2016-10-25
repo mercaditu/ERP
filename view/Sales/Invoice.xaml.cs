@@ -118,7 +118,7 @@ namespace Cognitivo.Sales
         {
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesInvoiceDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesInvoiceDB, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
@@ -358,7 +358,7 @@ namespace Cognitivo.Sales
             sales_invoice_detail.sales_invoice = sales_invoice;
         }
 
-        private async void item_Select(object sender, EventArgs e)
+        private  void item_Select(object sender, EventArgs e)
         {
 
             if (sbxItem.ItemID > 0)
@@ -376,7 +376,7 @@ namespace Cognitivo.Sales
                     {
                         int BranchID = (int)cbxBranch.SelectedValue;
 
-                        item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
+                        item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
                         sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem);
                         
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();

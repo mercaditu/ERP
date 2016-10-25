@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
-    public partial class Order : Page, INotifyPropertyChanged
+    public partial class Order : Page, INotifyPropertyChanged, IDisposable
     {
         CollectionViewSource purchase_orderViewSource;
         CollectionViewSource purchase_orderpurchase_order_detailViewSource;
@@ -29,7 +29,24 @@ namespace Cognitivo.Purchase
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (PurchaseOrderDB != null)
+            {
+                if (disposing)
+                {
+                    PurchaseOrderDB.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
+            }
+        }
         private void load_PrimaryData()
         {
             load_PrimaryDataThread();

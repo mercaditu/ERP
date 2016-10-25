@@ -97,7 +97,11 @@ namespace entity.Brillo.Logic
 
         public static List<app_document_range> List_Range(db db, App.Names AppName, int BranchID, int TerminalID)
         {
-            return db.app_document_range.Where(x =>
+
+            List< app_document_range > documentlist= db.app_document_range.Where(x =>x.is_active && x.id_company == CurrentSession.Id_Company &&
+                                    x.app_document.id_application == AppName
+                                    ).OrderBy(x => x.expire_date).ToList();
+            return documentlist.Where(x =>
                                     (
                                     x.app_document.filterby_branch == false && 
                                     x.app_document.filterby_tearminal == false
@@ -108,12 +112,8 @@ namespace entity.Brillo.Logic
                                     x.id_branch == BranchID && 
                                     x.app_document.filterby_tearminal == true && 
                                     x.id_terminal == TerminalID
-                                    ) 
-                                    &&
-                                    x.is_active && x.id_company == CurrentSession.Id_Company && 
-                                    x.app_document.id_application == AppName
-                                    ).OrderBy(x => x.expire_date)
-                             .ToList();
+                                    )) 
+                                    .ToList();
         }
     }
 }

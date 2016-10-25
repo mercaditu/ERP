@@ -26,7 +26,7 @@
 		<converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
 		<converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
 		<converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable"/>
-		<CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget}, CreateList=True}"/>
+		<CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget},CreateList=True}"/>
 		<CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
 		<CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
 
@@ -200,7 +200,8 @@
 									<StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 										<Label Content="X" FontSize="16" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
 										<TextBlock Text="{lex:Loc AvailableCredit}" Style="{StaticResource text_Label}"/>
-										<TextBlock Text="{Binding /contact.credit_availability, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
+                                        <TextBlock><Hyperlink Click="lblCheckCredit">Check</Hyperlink></TextBlock>
+                                        <TextBlock Text="{Binding /contact.credit_availability, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
 										<TextBlock x:Name="tbCurrency" FontWeight="Medium" Style="{StaticResource text_Data}" Text=""/>
 									</StackPanel>
 									<StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
@@ -208,7 +209,7 @@
 										<TextBlock Text="{lex:Loc Telephone}" Style="{StaticResource text_Label}"/>
 										<TextBlock Text="{Binding /contact.telephone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
 									</StackPanel>
-									<!--<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Converter={StaticResource BoolToVisibility}, 
+									<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Converter={StaticResource BoolToVisibility}, 
 											UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 										<Label Content="U" Style="{StaticResource ico_Label}"/>
 										<TextBlock Text="{lex:Loc Contact}" Style="{StaticResource text_Label}"/>
@@ -224,7 +225,7 @@
 												</ItemsPanelTemplate>
 											</ComboBox.ItemsPanel>
 										</ComboBox>
-									</StackPanel>-->
+									</StackPanel>
 									<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Converter={StaticResource BoolToVisibility}, 
 											UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 										<Label Content="S" Style="{StaticResource ico_Label}"/>

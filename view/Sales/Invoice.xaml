@@ -267,7 +267,8 @@
 											 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 									<Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
 									<ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name"
-											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
+											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" 
+                                              ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, 
 											  Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -479,8 +480,8 @@
 										  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 										  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 										  DisplayMemberPath="name" Width="Auto"
-										  SelectedValuePath="id_sales_rep" 
-										  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+										  SelectedValuePath="id_contact" 
+										  SelectedValue="{Binding id_contact, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
 												<ComboBox.ItemsPanel>
 													<ItemsPanelTemplate>
 														<VirtualizingStackPanel/>

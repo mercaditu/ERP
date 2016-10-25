@@ -180,6 +180,7 @@ namespace Cognitivo.Sales
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
+                contact.Check_CreditAvailability();
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
             }
         }
@@ -534,6 +535,18 @@ namespace Cognitivo.Sales
                 decimal TrailingDecimals = sales_order.GrandTotal - Math.Floor(sales_order.GrandTotal);
                 sales_order.DiscountWithoutPercentage += TrailingDecimals;
             }
+        }
+
+        private void lblCheckCredit(object sender, RoutedEventArgs e)
+        {
+           
+            if (sales_orderViewSource != null)
+            {
+                sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+                Class.CreditLimit Limit = new Class.CreditLimit();
+                Limit.Check_CreditAvailability(sales_order);
+            }
+           
         }
     }
 }

@@ -84,7 +84,11 @@ namespace entity
 
         private void add_CRM(sales_return sales_return)
         {
-            sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail;
+            if (true)
+            {
+
+            }
+            sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault() != null? sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail:null;
             if (sales_invoice_detail == null)
             {
                 crm_opportunity crm_opportunity = new crm_opportunity();
@@ -116,7 +120,9 @@ namespace entity
                     {
                         SaveChanges();
                     }
-
+                    sales_return.app_condition = app_condition.Find(sales_return.id_condition);
+                    sales_return.app_contract = app_contract.Find(sales_return.id_contract);
+                    sales_return.app_currencyfx = app_currencyfx.Find(sales_return.id_currencyfx);
                     if (sales_return.status != Status.Documents_General.Approved)
                     {
                         if (sales_return.number == null && sales_return.id_range != null)

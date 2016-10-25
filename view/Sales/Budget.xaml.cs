@@ -315,8 +315,9 @@ namespace Cognitivo.Sales
 				contact contact = await SalesBudgetDB.contacts.FindAsync(sbxContact.ContactID);
 				sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
 				sales_budget.id_contact = contact.id_contact;
-				sales_budget.contact = contact;
-				Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                sales_budget.contact = contact;
+                contact.Check_CreditAvailability();
+                Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
 			}
 		}
 
@@ -326,7 +327,7 @@ namespace Cognitivo.Sales
 			{
 				await Dispatcher.InvokeAsync(new Action(() =>
 				{
-					//cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+					cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
 					//Condition
 					if (objContact.app_contract != null)
@@ -374,8 +375,18 @@ namespace Cognitivo.Sales
 		{
 			calculate_vat(sender, e);
 		}
-		
-		private void Totals_btnClean_Click(object sender)
+
+        private void lblCheckCredit(object sender, RoutedEventArgs e)
+        {
+            if (sales_budgetViewSource != null)
+            {
+                sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
+                Class.CreditLimit Limit = new Class.CreditLimit();
+                Limit.Check_CreditAvailability(sales_budget);
+            }
+        }
+
+        private void Totals_btnClean_Click(object sender)
 		{
 			sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
 

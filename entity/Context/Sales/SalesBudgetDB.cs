@@ -105,7 +105,9 @@ namespace entity
                     {
                         SaveChanges();
                     }
-
+                    sales_budget.app_condition = app_condition.Find(sales_budget.id_condition);
+                    sales_budget.app_contract = app_contract.Find(sales_budget.id_contract);
+                    sales_budget.app_currencyfx = app_currencyfx.Find(sales_budget.id_currencyfx);
                     if (sales_budget.status != Status.Documents_General.Approved)
                     {
                         if (sales_budget.number == null && sales_budget.id_range != null)

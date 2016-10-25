@@ -236,8 +236,7 @@ namespace Cognitivo.Sales
                 contact contact = await SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefaultAsync();
 
                 //Empty so that memory does not bring incorrect currency calculation
-                contact.credit_availability = 0;
-
+                contact.Check_CreditAvailability();
                 sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
                 sales_invoice.contact = contact;
                 sales_invoice.id_contact = contact.id_contact;
@@ -600,7 +599,7 @@ namespace Cognitivo.Sales
                                                                                  .GroupBy(x => x.id_sales_order_detail)
                                                                                  .Select(x => x.Sum(y => y.quantity))
                                                                                  .FirstOrDefault();
-
+                    sales_invoice_detail.id_vat_group = _sales_order_detail.id_vat_group;
                     sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
                     _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }

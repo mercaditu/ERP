@@ -21,7 +21,7 @@ namespace entity
             //Navigation Properties
             sales_invoice.app_currencyfx = app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
             sales_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
-            
+
 
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
@@ -144,6 +144,9 @@ namespace entity
                 {
                     SaveChanges();
                 }
+                invoice.app_condition = app_condition.Find(invoice.id_condition);
+                invoice.app_contract = app_contract.Find(invoice.id_contract);
+                invoice.app_currencyfx = app_currencyfx.Find(invoice.id_currencyfx);
                 if (Check_CreditLimit(invoice))
                 {
 
@@ -206,7 +209,7 @@ namespace entity
                     NumberOfRecords += 1;
                     invoice.IsSelected = false;
                 }
-                ApprovalStatus= true;
+                ApprovalStatus = true;
             }
 
             return ApprovalStatus; ;

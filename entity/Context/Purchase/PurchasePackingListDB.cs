@@ -80,7 +80,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
-
+                
                     if (purchase_packing.status != Status.Documents_General.Approved)
                     {
                         if (IsDiscountStock)

@@ -89,7 +89,7 @@ namespace entity
             {
                 
                 _GrandTotal = purchase_return_detail.Sum(x => x.SubTotal_Vat);
-               
+              
                 return Math.Round(_GrandTotal, 2);
             }
             set

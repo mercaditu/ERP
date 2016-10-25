@@ -198,7 +198,7 @@ namespace entity
                 Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Currency_Default = Currencies.Where(x => x.is_priority).FirstOrDefault();
                 CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-
+                
                 SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -213,6 +213,7 @@ namespace entity
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
 
                 IsDataLoading = false;
+
                 NotifyStaticPropertyChanged("IsDataLoading");
             }
         }

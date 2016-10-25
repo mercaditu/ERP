@@ -80,7 +80,9 @@ namespace entity
                     {
                         SaveChanges();
                     }
-
+                    purchase_return.app_condition = app_condition.Find(purchase_return.id_condition);
+                    purchase_return.app_contract = app_contract.Find(purchase_return.id_contract);
+                    purchase_return.app_currencyfx = app_currencyfx.Find(purchase_return.id_currencyfx);
                     if (purchase_return.status != Status.Documents_General.Approved)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();

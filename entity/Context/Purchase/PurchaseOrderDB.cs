@@ -88,7 +88,9 @@ namespace entity
                     {
                         SaveChanges();
                     }
-                    
+                    purchase_order.app_condition = app_condition.Find(purchase_order.id_condition);
+                    purchase_order.app_contract = app_contract.Find(purchase_order.id_contract);
+                    purchase_order.app_currencyfx = app_currencyfx.Find(purchase_order.id_currencyfx);
                     if (purchase_order.status != Status.Documents_General.Approved)
                     {
                         if (purchase_order.number == null && purchase_order.id_range != null)

@@ -101,7 +101,9 @@ namespace entity
                     {
                         SaveChanges();
                     }
-
+                    invoice.app_condition = app_condition.Find(invoice.id_condition);
+                    invoice.app_contract = app_contract.Find(invoice.id_contract);
+                    invoice.app_currencyfx = app_currencyfx.Find(invoice.id_currencyfx);
                     if (invoice.status != Status.Documents_General.Approved)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();

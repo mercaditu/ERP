@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cognitivo.Reporting.Data;
+using entity;
 
 namespace Cognitivo.Class
 {
@@ -54,14 +55,31 @@ namespace Cognitivo.Class
         //    return GenerateList(dt);
         //}
 
-        public void Check_CreditAvailability(entity.sales_invoice sales_invoice)
+        public void Check_CreditAvailability(object Document)
         {
-            if (sales_invoice != null && sales_invoice.contact != null && sales_invoice.contact.credit_limit != null)
+            string BaseName = Document.GetType().BaseType.ToString();
+            string AppName = Document.GetType().ToString();
+
+            if (AppName == typeof(sales_invoice).ToString() || BaseName == typeof(sales_invoice).ToString())
             {
-                decimal Balance = (decimal)SpecialFXBalance_ByCustomer(sales_invoice.app_currencyfx.buy_value, sales_invoice.id_contact);
-                sales_invoice.contact.credit_availability = Balance;
-                sales_invoice.contact.RaisePropertyChanged("credit_availability");
-            }   
+                sales_invoice sales_invoice = (sales_invoice)Document;
+                if (sales_invoice != null && sales_invoice.contact != null && sales_invoice.contact.credit_limit != null)
+                {
+                    decimal Balance = (decimal)SpecialFXBalance_ByCustomer(sales_invoice.app_currencyfx.buy_value, sales_invoice.id_contact);
+                    sales_invoice.contact.credit_availability = Balance;
+                    sales_invoice.contact.RaisePropertyChanged("credit_availability");
+                }
+            }
+            else if (AppName == typeof(sales_budget).ToString() || BaseName == typeof(sales_budget).ToString())
+            {
+                sales_budget sales_budget = (sales_budget)Document;
+                if (sales_budget != null && sales_budget.contact != null && sales_budget.contact.credit_limit != null)
+                {
+                    decimal Balance = (decimal)SpecialFXBalance_ByCustomer(sales_budget.app_currencyfx.buy_value, sales_budget.id_contact);
+                    sales_budget.contact.credit_availability = Balance;
+                    sales_budget.contact.RaisePropertyChanged("credit_availability");
+                }
+            }
         }
 
         /// <summary>

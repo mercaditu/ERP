@@ -17,14 +17,12 @@ namespace Cognitivo.Product
             item_inventoryitem_inventory_detailViewSource, 
             app_branchapp_locationViewSource, app_branchViewSource;
 
-        int CurrencyID = 0;
-
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
+        int CurrencyID = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
 
         public Inventory()
         {
             InitializeComponent();
-            CurrencyID = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

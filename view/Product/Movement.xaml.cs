@@ -120,8 +120,6 @@ namespace Cognitivo.Product
             app_measurementViewSource.Source = ProductTransferDB.app_measurement.Local;
 
             cbxBranch_SelectionChanged(sender, null);
-
-
         }
 
         private void set_ContactPref(object sender, EventArgs e)
@@ -145,28 +143,30 @@ namespace Cognitivo.Product
                 {
                     if (ProductTransferDB.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
                     {
-                        entity.Brillo.Logic.Range.branch_Code = ProductTransferDB.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
                     }
                 }
                 if (item_transfer.id_terminal > 0)
                 {
                     if (ProductTransferDB.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
                     {
-                        entity.Brillo.Logic.Range.terminal_Code = ProductTransferDB.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
                     }
                 }
                 if (item_transfer.id_user > 0)
                 {
-                    if (ProductTransferDB.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                    security_user security_user = ProductTransferDB.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault();
+                    if (security_user != null)
                     {
-                        entity.Brillo.Logic.Range.user_Code = ProductTransferDB.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.user_Code = security_user.code;
                     }
                 }
                 if (item_transfer.id_project > 0)
                 {
-                    if (ProductTransferDB.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                    project projects = ProductTransferDB.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault();
+                    if (projects != null)
                     {
-                        entity.Brillo.Logic.Range.project_Code = ProductTransferDB.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.project_Code = projects.code;
                     }
                 }
 
@@ -183,7 +183,6 @@ namespace Cognitivo.Product
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {
                 entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
-
                 item_transfer_detail item_transfer_detail = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
 
                 List<entity.Brillo.StockList> Items_InStockLIST;
@@ -266,7 +265,6 @@ namespace Cognitivo.Product
             {
                 toolBar.msgSaved(ProductMovementDB.NumberOfRecords);
                 itemMovement = new Configs.itemMovement();
-
             }
         }
 
@@ -338,36 +336,7 @@ namespace Cognitivo.Product
                     item_transferitem_transfer_detailViewSource.View.Refresh();
                 }
             }
-
-
-
         }
-
-        #region Filter Data
-        //private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        set_ContactPref(sender, e);
-        //    }
-        //}
-
-        //private void set_ContactPref(object sender, EventArgs e)
-        //{
-        //    if (contactComboBox.Data != null)
-        //    {
-        //        int id = ((contact)contactComboBox.Data).id_contact;
-        //        contact contact = dbContext.contacts.Where(x => x.id_contact == id).FirstOrDefault();
-        //        contactComboBox.focusGrid = false;
-        //        contactComboBox.Text = contact.name;
-
-        //    }
-        //}
-
-
-
-
-        #endregion
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -408,10 +377,13 @@ namespace Cognitivo.Product
                         item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                         item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
                         item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
-                        if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+
+                        app_dimension app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                        if (app_dimension != null)
                         {
-                            item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                            item_transfer_dimension.app_dimension = app_dimension;
                         }
+
                         item_transfer_dimension.value = item_movement_dimension.value;
                         item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                     }
@@ -421,9 +393,7 @@ namespace Cognitivo.Product
 
                 CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
                 item_transferitem_transfer_detailViewSource.View.Refresh();
-
             }
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

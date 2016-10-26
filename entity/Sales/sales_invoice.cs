@@ -38,7 +38,7 @@ namespace entity
                 {
                     _State = value;
                     RaisePropertyChanged("State");
-
+                    base.State = value;
                     foreach (sales_invoice_detail detail in sales_invoice_detail)
                     {
                         detail.State = value;

@@ -57,8 +57,6 @@ namespace entity
             SalesBudget = 15,
             [LocalizedDescription("PointOfSale")]
             PointOfSale = 78,
-            [LocalizedDescription("PendingReceivables")]
-            PendingReceivables = 132,
 
             //Purchase
             [LocalizedDescription("PurchaseTender")]
@@ -152,6 +150,8 @@ namespace entity
             ItemAssetGroup = 112,
             [LocalizedDescription("SalesPromotion")]
             SalesPromotion = 123,
+            [LocalizedDescription("CostBreakDown")]
+            CostBreakDown = 132,
 
             //Production
             [LocalizedDescription("ProductionExecution")]

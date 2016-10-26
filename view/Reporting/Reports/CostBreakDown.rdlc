@@ -6,16 +6,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.74479in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76042in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.05208in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.27083in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -31,7 +31,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Transaction Date</Value>
+                              <Value>Trans Date</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -105,7 +105,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Final Cost</Value>
+                              <Value>Cost</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -300,11 +300,12 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Sum(Fields!SubTotal.Value*Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -419,7 +420,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotal.Value)</Value>
+                              <Value>=Sum(Fields!UnitValue.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -463,6 +464,7 @@
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
@@ -620,7 +622,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.375in</Size>
+                <Size>1.80729in</Size>
                 <CellContents>
                   <Textbox Name="Textbox11">
                     <CanGrow>true</CanGrow>
@@ -659,7 +661,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.03125in</Size>
+                    <Size>0.1875in</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -755,7 +757,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.375in</Size>
+                <Size>1.80729in</Size>
                 <CellContents>
                   <Textbox Name="Name">
                     <CanGrow>true</CanGrow>
@@ -794,7 +796,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.03125in</Size>
+                    <Size>0.1875in</Size>
                     <CellContents>
                       <Textbox Name="Code">
                         <CanGrow>true</CanGrow>
@@ -885,7 +887,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.03125in</Size>
+                    <Size>0.1875in</Size>
                     <CellContents>
                       <Textbox Name="MovID">
                         <CanGrow>true</CanGrow>
@@ -985,7 +987,7 @@
         </TablixRowHierarchy>
         <DataSetName>CostBreakDown</DataSetName>
         <Height>0.95833in</Height>
-        <Width>7in</Width>
+        <Width>7.41667in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -996,7 +998,7 @@
     <Height>0.95833in</Height>
     <Style />
   </Body>
-  <Width>7in</Width>
+  <Width>7.41667in</Width>
   <Page>
     <PageHeader>
       <Height>0.4375in</Height>
@@ -1040,7 +1042,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.43105in</Height>
+      <Height>0.3998in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

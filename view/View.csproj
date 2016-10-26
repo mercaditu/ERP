@@ -587,6 +587,9 @@
     <Compile Include="Reporting\Views\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\CostBreakDown.xaml.cs">
+      <DependentUpon>CostBreakDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
       <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
     </Compile>
@@ -1576,6 +1579,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\AccountsPayable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\CostBreakDown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -4,9 +4,9 @@ using System.Windows.Controls;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class AccountsReceivable : Page
+    public partial class CostBreakDown : Page
     {
-        public AccountsReceivable()
+        public CostBreakDown()
         {
             InitializeComponent();
             Fill(null, null);
@@ -21,16 +21,16 @@ namespace Cognitivo.Reporting.Views
             //fill data
             DataTable dt = new DataTable();
 
-            Class.Finance Finance = new Class.Finance();
-            dt = Finance.PendingRecievables(ReportPanel.EndDate);
+            Class.StockCalculations Stock = new Class.StockCalculations();
+            dt = Stock.CostBreakDown(ReportPanel.StartDate, ReportPanel.EndDate);
             
             ReportPanel.ReportDt = dt;
 
-            reportDataSource1.Name = "PendingAccounts"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "CostBreakDown"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
-            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("PendingReceivables");
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.CostBreakDown.rdlc";
+            reportViewer.LocalReport.DisplayName = entity.Brillo.Localize.StringText("CostBreakDown");
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
@@ -41,10 +41,10 @@ namespace Cognitivo.Reporting.Views
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
            
-            reportDataSource1.Name = "PendingAccounts"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "CostBreakDown"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportPanel.Filterdt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PendingAccounts.rdlc";
+            reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.CostBreakDown.rdlc";
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();

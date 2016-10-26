@@ -31,8 +31,8 @@
                 </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
-                <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
-                <Label Content="filter" Style="{StaticResource input_label}"/>
+              
+                <Label Content="Filter" Style="{StaticResource input_label}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
 
 
@@ -46,7 +46,7 @@
                     <StackPanel Name="stpColumn" >
                     </StackPanel>
                 </ScrollViewer>
-                <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click"/>
+                <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click" Width="128"/>
             </StackPanel>
         </Border>
     </Grid>

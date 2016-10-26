@@ -118,8 +118,8 @@ namespace Cognitivo.Purchase
             OrderSetting _pref_PurchaseOrder = new OrderSetting();
             purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
 
-
-            purchase_orderViewSource.View.MoveCurrentTo(purchase_order);
+            purchase_orderViewSource.View.Refresh();
+            purchase_orderViewSource.View.MoveCurrentToLast();
             sbxContact.Text = "";
         }
 

@@ -20,7 +20,7 @@ namespace entity
             purchase_order.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             purchase_order.app_terminal = app_terminal.Find(CurrentSession.Id_Terminal);
             purchase_order.IsSelected = true;
-            
+            base.Entry(purchase_order).State = EntityState.Added;
             return purchase_order;
         }
 

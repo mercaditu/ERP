@@ -203,6 +203,7 @@ namespace Cognitivo.Sales
             Class.CreditLimit Limit = new Class.CreditLimit();
             foreach (sales_invoice sales_invoice in SalesInvoiceDB.sales_invoice.Local.Where(x => x.IsSelected))
             {
+                sales_invoice.app_currencyfx = SalesInvoiceDB.app_currencyfx.Find(sales_invoice.id_currencyfx);
                 Limit.Check_CreditAvailability(sales_invoice);
             }
 
@@ -754,11 +755,11 @@ namespace Cognitivo.Sales
             if (sales_invoiceViewSource != null)
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                sales_invoice.app_currencyfx = SalesInvoiceDB.app_currencyfx.Find(sales_invoice.id_currencyfx);
                 Class.CreditLimit Limit = new Class.CreditLimit();
                 Limit.Check_CreditAvailability(sales_invoice);
             }
         }
 
-     
     }
 }

@@ -543,6 +543,7 @@ namespace Cognitivo.Sales
             if (sales_orderViewSource != null)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+                sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
                 Class.CreditLimit Limit = new Class.CreditLimit();
                 Limit.Check_CreditAvailability(sales_order);
             }

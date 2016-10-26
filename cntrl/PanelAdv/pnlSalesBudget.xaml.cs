@@ -50,7 +50,7 @@ namespace cntrl.PanelAdv
         {
             var salesBudget = (from sales_budget_detail in db.sales_budget_detail
                                where sales_budget_detail.sales_budget.status == Status.Documents_General.Approved
-                               where sales_budget_detail.sales_budget.contact.id_contact == id_contact
+                               && sales_budget_detail.sales_budget.contact.id_contact == id_contact
                                join sales_order_detail in db.sales_order_detail
                               on sales_budget_detail.id_sales_budget_detail equals sales_order_detail.id_sales_budget_detail into lst
                                from list in lst.DefaultIfEmpty()

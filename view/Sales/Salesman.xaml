@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
-      xmlns:curd="clr-namespace:cntrl.Curd"
+      	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       xmlns:Curd="clr-namespace:cntrl.Curd;assembly=cntrl" x:Class="Cognitivo.Sales.Salesman" 
@@ -44,20 +44,11 @@
                 <StackPanel x:Name="stackContact" Background="White">
                     <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
                     <StackPanel Orientation="Horizontal">
-                            <cntrl:SearchableTextbox x:Name="contactComboBox" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref"
-                                            CollectionViewSource="{StaticResource contactViewSource}"
-                                            IsDisplayed="True" 
-                                            Data="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="254">
-                                <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
-                                    <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
-                                </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>
-                        <TextBlock x:Name="txtblkAddContact" Visibility="Collapsed" Margin="2"><Hyperlink PreviewMouseDown="Hyperlink_PreviewMouseDown"><Run Text="Add New Contact"/></Hyperlink></TextBlock>
-                    </StackPanel>
+
+                        <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" 
+															   Select="set_ContactPref"
+															   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="stackExisting">
                     <Label Content="{lex:Loc CommisionBase}" Style="{StaticResource input_label}"/>
@@ -79,6 +70,7 @@
         </ScrollViewer>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Stretch"
 			btnNew_Click="toolBar_btnNew_Click" 
+                       btnSearch_Click="toolBar_btnSearch_Click"
 			btnSave_Click="toolBar_btnSave_Click" 
             btnEdit_Click="toolBar_btnEdit_Click"
 			btnDelete_Click="toolBar_btnDelete_Click" 
@@ -104,7 +96,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding}">
+                 ItemsSource="{Binding}" SelectionChanged="sales_repDataGrid_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <cntrl:navList recordCode="{Binding timestamp, StringFormat=d}" 

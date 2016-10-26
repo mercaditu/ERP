@@ -381,6 +381,7 @@ namespace Cognitivo.Sales
             if (sales_budgetViewSource != null)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
+                sales_budget.app_currencyfx = SalesBudgetDB.app_currencyfx.Find(sales_budget.id_currencyfx);
                 Class.CreditLimit Limit = new Class.CreditLimit();
                 Limit.Check_CreditAvailability(sales_budget);
             }

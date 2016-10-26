@@ -73,20 +73,20 @@ namespace Cognitivo.Purchase
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
 
-            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-                app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
-            }));
+            //await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
+            //    CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            //    app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
+            //}));
 
-            await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            //await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
+            //    CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
 
-                app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
-            }));
+            //    app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
+            //}));
         }
 
         private async void load_SecondaryDataThread()
@@ -99,20 +99,27 @@ namespace Cognitivo.Purchase
                 cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseOrderDB, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
-            await PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).ToListAsync();
+            await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+                app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
+            }));
+
+            await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+                app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
+            }));
+
+            await PurchaseOrderDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
                 app_cost_centerViewSource.Source = PurchaseOrderDB.app_cost_center.Local;
             }));
 
-            await PurchaseOrderDB.app_document_range.Where(d => d.is_active
-                                           && d.app_document.id_application == entity.App.Names.PurchaseOrder
-                                           && d.id_company == CurrentSession.Id_Company).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cmbdocument.ItemsSource = PurchaseOrderDB.app_document_range.Local;
-            }));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -127,7 +134,7 @@ namespace Cognitivo.Purchase
 
             purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
     
-            PurchaseOrderDB.Entry(purchase_order).State = EntityState.Added;
+            
             purchase_orderViewSource.View.MoveCurrentToLast();
 
             sbxContact.Text = "";

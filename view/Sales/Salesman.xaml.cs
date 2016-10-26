@@ -84,7 +84,7 @@ namespace Cognitivo.Sales
             sales_repDataGrid.IsEnabled = true;
             stackExisting.Visibility = Visibility.Visible;
             stackContact.Visibility = Visibility.Visible;
-            txtblkAddContact.Visibility = Visibility.Collapsed;
+            sbxContact.Visibility = Visibility.Collapsed;
         }
 
         private void cbxSalesRepType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,25 +156,71 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void set_ContactPref(object sender, EventArgs e)
+      
+
+        #endregion
+
+        private void toolBar_btnSearch_Click(object sender, string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query) && sales_repViewSource != null)
             {
-                if (contactComboBox.Data != null)
+                try
                 {
-                    contact contact = (contact)contactComboBox.Data;
-                                    contactComboBox.focusGrid = false;
-                    contactComboBox.Text = contact.name;
-                 
+                    sales_repViewSource.View.Filter = i =>
+                    {
+                        sales_rep sales_rep = i as sales_rep;
+
+                        if (sales_rep != null)
+                        {
+                            //Protect the code against null values.
+                           
+                            string name = sales_rep.name;
+
+                            if (name.Contains(query))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch //(Exception ex)
+                {
+                    //throw ex;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                toolBar.msgError(ex);
+                sales_repViewSource.View.Filter = null;
             }
         }
 
-        #endregion
+        private void set_ContactPref(object sender, RoutedEventArgs e)
+        {
+            if (sbxContact.ContactID > 0)
+            {
+                sales_rep sales_rep_rep = (sales_rep)sales_repDataGrid.SelectedItem;
+                sales_rep_rep.id_contact = sbxContact.ContactID;
+            }
+        }
+
+        private void sales_repDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            sales_rep sales_rep_rep = (sales_rep)sales_repDataGrid.SelectedItem;
+            if (sales_rep_rep.id_contact>0)
+            {
+                sbxContact.Text = dbContext.contacts.Find(sales_rep_rep.id_contact).name;
+            }
+          
+        }
 
         public void Save_Click(object sender)
         {
@@ -192,7 +238,7 @@ namespace Cognitivo.Sales
 
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-                contactComboBox.Text = _contact.name;
+             
                 
             }
             else

@@ -67,7 +67,7 @@ namespace Cognitivo.Product
                 }
             }
 
-            TextBox_TextChanged(null, null);
+           // TextBox_TextChanged(null, null);
         }
 
         private void BindItemMovement()

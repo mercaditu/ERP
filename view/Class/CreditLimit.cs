@@ -80,6 +80,16 @@ namespace Cognitivo.Class
                     sales_budget.contact.RaisePropertyChanged("credit_availability");
                 }
             }
+            else if (AppName == typeof(sales_order).ToString() || BaseName == typeof(sales_order).ToString())
+            {
+                sales_order sales_order = (sales_order)Document;
+                if (sales_order != null && sales_order.contact != null && sales_order.contact.credit_limit != null)
+                {
+                    decimal Balance = (decimal)SpecialFXBalance_ByCustomer(sales_order.app_currencyfx.buy_value, sales_order.id_contact);
+                    sales_order.contact.credit_availability = Balance;
+                    sales_order.contact.RaisePropertyChanged("credit_availability");
+                }
+            }
         }
 
         /// <summary>

@@ -168,7 +168,7 @@
 								FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
 						<TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Branch}"/>
 						<ComboBox x:Name="cbxBranch" Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_Branch, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									Style="{StaticResource ComboToLabelStyle}" SelectedItem="{Binding app_branch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+									Style="{StaticResource ComboToLabelStyle}" 
 									DisplayMemberPath="name" SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, Source={StaticResource purchase_orderViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 									ItemsSource="{Binding Source={x:Static entity:CurrentSession.Branches}}"
                                   SelectedValuePath="id_branch">
@@ -256,7 +256,7 @@
 					<ComboBox Style="{DynamicResource input_combobox}" 
 					            x:Name="cbxCondition" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
 					            DisplayMemberPath="name" SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					            SelectedValuePath="id_condition" SelectedItem="{Binding app_condition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+					            SelectedValuePath="id_condition" 
 					            SelectionChanged="cbxCondition_SelectionChanged">
 						<ComboBox.ItemsPanel>
 							<ItemsPanelTemplate>
@@ -266,7 +266,7 @@
 					</ComboBox>
 					<Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
                     <ComboBox Style="{DynamicResource input_combobox}" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
-								DisplayMemberPath="name" x:Name="cbxContract" SelectedItem="{Binding app_contract,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+								DisplayMemberPath="name" x:Name="cbxContract" 
 								SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
 								SelectedValuePath="id_contract" >
                         <ComboBox.ItemsPanel>
@@ -329,7 +329,7 @@
 											Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 						<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"
 												ItemsSource="{Binding Source={x:Static entity:CurrentSession.VAT_Groups}}"  
-												DisplayMemberPath="name" SelectedValuePath="id_vat_group"  SelectedItemBinding="{Binding app_vat_group,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+												DisplayMemberPath="name" SelectedValuePath="id_vat_group"  
 												SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 						<DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
 											Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>

@@ -63,7 +63,7 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_edit;
+        bool _can_edit; 
 
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)

@@ -180,9 +180,7 @@ namespace Cognitivo.Security
             }
         }
 
-      
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnChange(object sender, RoutedEventArgs e)
         {
             if (cbxVersion.SelectedIndex > 0)
             {

@@ -11,17 +11,18 @@
 
     public class Reciept
     {
-        public void Document_Print(int document_id, object obj)
+        public void Document_Print(int RangeID, object obj)
         {
-            app_document app_document;
             string PrinterName;
             string Content = "";
 
 
             using (db db = new db())
             {
-                app_document = db.app_document.Find(document_id);
-                PrinterName = app_document.app_document_range.Where(x => x.is_active).FirstOrDefault().printer_name;
+                app_document_range app_document_range = db.app_document_range.Find(RangeID);
+                app_document app_document = app_document_range.app_document;
+
+                PrinterName = app_document_range.printer_name;
 
                 if (app_document.id_application == App.Names.Movement)
                 {

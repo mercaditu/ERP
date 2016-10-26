@@ -85,7 +85,7 @@
                     >
                    
                 </ComboBox>
-                <Button Content="Change" Click="Button_Click"/>
+                <Button Content="Change" Click="btnChange"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
                     <Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->

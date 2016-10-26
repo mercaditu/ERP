@@ -684,9 +684,9 @@
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
-
             string CompanyName = string.Empty;
             string BranchName = string.Empty;
+
             app_company app_company = null;
 
             if (app_account_session.app_company != null)
@@ -718,18 +718,16 @@
                 {
                     if (db.security_user.Find(app_account_session.id_user) != null)
                     {
-                        security_user security_user = db.security_user.Find(app_account_session.id_user));
+                        security_user security_user = db.security_user.Find(app_account_session.id_user);
                         UserName = security_user.name;
                     }
                 }
             }
-            using (db db = new db())
+
+            app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            if (app_branch != null)
             {
-                app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-                if (app_branch != null)
-                {
-                    BranchName = app_branch.name;
-                }
+                BranchName = app_branch.name;
             }
 
             string SessionID = app_account_session.id_session.ToString();

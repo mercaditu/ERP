@@ -8,36 +8,47 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            entity.Status.Production status = (entity.Status.Production)value;
+            if (value != null)
+            {
 
-            if (status == entity.Status.Production.Approved)
-            {
-                return Brushes.PaleGreen;
-            }
-            else if (status == entity.Status.Production.InProcess)
-            {
-                return Brushes.Gold;
-            }
-            else if (status == entity.Status.Production.Executed)
-            {
-                return Brushes.Coral;
-            }
-            else if (status == entity.Status.Production.QA_Check)
-            {
-                return Brushes.Purple;
-            }
-            else if (status == entity.Status.Production.QA_Rejected)
-            {
-                return Brushes.Crimson;
-            }
-            else if (status == entity.Status.Production.Anull)
-            {
-                return Brushes.Crimson;
+
+                entity.Status.Production status = (entity.Status.Production)value;
+
+                if (status == entity.Status.Production.Approved)
+                {
+                    return Brushes.PaleGreen;
+                }
+                else if (status == entity.Status.Production.InProcess)
+                {
+                    return Brushes.Gold;
+                }
+                else if (status == entity.Status.Production.Executed)
+                {
+                    return Brushes.Coral;
+                }
+                else if (status == entity.Status.Production.QA_Check)
+                {
+                    return Brushes.Purple;
+                }
+                else if (status == entity.Status.Production.QA_Rejected)
+                {
+                    return Brushes.Crimson;
+                }
+                else if (status == entity.Status.Production.Anull)
+                {
+                    return Brushes.Crimson;
+                }
+                else
+                {
+                    return Brushes.WhiteSmoke; //Pending
+                }
             }
             else
-            { 
-                return Brushes.WhiteSmoke; //Pending
+            {
+
+                return Brushes.WhiteSmoke;
             }
+
             
         }
 

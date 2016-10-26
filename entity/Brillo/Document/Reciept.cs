@@ -316,7 +316,7 @@
                 + "***" + app_company.alias + "***" + "\n"
                 + "Timbrado: " + sales_return.app_document_range.code + " Vto: " + sales_return.app_document_range.expire_date
                 + "\n"
-                + "--------------------------------"
+                + "-------------------------------- \n"
                 + "Descripcion, Cantiad, Precio" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
@@ -360,6 +360,7 @@
                           name = g.Key.name,
                           value = g.Sum(a => a.value * a.ad.quantity)
                       }).ToList();
+
                         var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
                         {
                             vatname = g.Max(y => y.vatname),
@@ -367,6 +368,7 @@
                             name = g.Max(y => y.name),
                             value = g.Sum(a => a.value)
                         }).ToList();
+
                         foreach (dynamic item in VAtList)
                         {
                             Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
@@ -376,11 +378,11 @@
                 }
             }
 
-            Footer += "-------------------------------";
+            Footer += "------------------------------- \n";
             Footer += "Cliente   : " + sales_return.contact.name + "\n";
             Footer += "Documento : " + sales_return.contact.gov_code + "\n";
             Footer += "Condicion : " + sales_return.app_condition.name + "\n";
-            Footer += "-------------------------------";
+            Footer += "------------------------------- \n";
             Footer += "Sucursal    : " + sales_return.app_branch.name + " Terminal: " + sales_return.app_terminal.name + "\n";
             Footer += "Cajero/a    : " + UserGiven;
 
@@ -406,9 +408,9 @@
             {
                 using (db db = new db())
                 {
-                    if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
+                    if (db.app_company.Find(sales_invoice.id_company) != null)
                     {
-                        app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
+                        app_company = db.app_company.Find(sales_invoice.id_company);
                     }
                 }
             }
@@ -428,10 +430,9 @@
             {
                 using (db db = new db())
                 {
-                    security_user security_user = db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault();
+                    security_user security_user = db.security_user.Find(sales_invoice.id_user);
                     if (security_user != null)
                     {
-                      
                         UserGiven = security_user.name;
                     }
                 }
@@ -463,7 +464,7 @@
             {
                 using (db db = new db())
                 {
-                    app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                    app_currencyfx app_currencyfx = db.app_currencyfx.Find(sales_invoice.id_currencyfx);
                     if (app_currencyfx != null)
                     {
                         CurrencyName = app_currencyfx.app_currency.name;
@@ -481,7 +482,7 @@
                 + "***" + app_company.alias + "***" + "\n"
                 + "Timbrado    : " + sales_invoice.app_document_range.code + "\n"
                 + "Vencimiento : " + sales_invoice.app_document_range.expire_date + "\n"
-                + "--------------------------------"
+                + "-------------------------------- \n"
                 + "Descripcion, Cantiad, Precio" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
@@ -542,11 +543,11 @@
                 }
             }
 
-            Footer += "-------------------------------";
+            Footer += "------------------------------- \n";
             Footer += "Cliente    : " + sales_invoice.contact.name + "\n";
             Footer += "Documento  : " + sales_invoice.contact.gov_code + "\n";
             Footer += "Condicion  : " + ConditionName + "\n";
-            Footer += "-------------------------------";
+            Footer += "------------------------------- \n";
             Footer += "Sucursal   : " + BranchName + "\n";
             Footer += "Terminal   : " + TerminalName;
 
@@ -628,7 +629,7 @@
                 + "Timbrado : " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
                 + "Fecha    : " + payment.trans_date
                 + "\n"
-                + "--------------------------------"
+                + "-------------------------------- \n"
                 + "Cuenta, Valor, Moneda" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
@@ -697,9 +698,9 @@
             {
                 using (db db = new db())
                 {
-                    if (db.app_company.Where(x => x.id_company == app_account_session.id_company).FirstOrDefault() != null)
+                    if (db.app_company.Find(app_account_session.id_company) != null)
                     {
-                        app_company = db.app_company.Where(x => x.id_company == app_account_session.id_company).FirstOrDefault();
+                        app_company = db.app_company.Find(app_account_session.id_company);
                         CompanyName = app_company.name;
                     }
                 }
@@ -715,9 +716,9 @@
             {
                 using (db db = new db())
                 {
-                    if (db.security_user.Where(x => x.id_user == app_account_session.id_user).FirstOrDefault() != null)
+                    if (db.security_user.Find(app_account_session.id_user) != null)
                     {
-                        security_user security_user = db.security_user.Where(x => x.id_user == app_account_session.id_user).FirstOrDefault();
+                        security_user security_user = db.security_user.Find(app_account_session.id_user));
                         UserName = security_user.name;
                     }
                 }

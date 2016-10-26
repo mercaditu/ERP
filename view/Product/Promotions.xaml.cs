@@ -102,10 +102,19 @@ namespace Cognitivo.Product
                     int BonusID = Convert.ToInt32(sales_promotion.reference_bonus);
                     if (BonusID > 0)
                     {
-                        sbxBonusItem.Text = PromotionDB.items.Where(x => x.id_item == BonusID).FirstOrDefault().name;
+                        item item = PromotionDB.items.Where(x => x.id_item == BonusID).FirstOrDefault();
+                        if (item!=null)
+                        {
+                            sbxBonusItem.Text = item.name;
+                        }
+                      
 
                         int RefID = Convert.ToInt32(sales_promotion.reference);
-                        sbxRefItem.Text = PromotionDB.items.Where(x => x.id_item == RefID).FirstOrDefault().name;
+                        item itemRef = PromotionDB.items.Where(x => x.id_item == RefID).FirstOrDefault();
+                        if (itemRef != null)
+                        {
+                            sbxRefItem.Text = itemRef.name;
+                        }
                     }
 
                     cbxType_SelectionChanged(null, null);

@@ -118,6 +118,10 @@ namespace Cognitivo.Product
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             ProductTransferDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = ProductTransferDB.app_measurement.Local;
+
+            cbxBranch_SelectionChanged(sender, null);
+
+
         }
 
         private void set_ContactPref(object sender, EventArgs e)

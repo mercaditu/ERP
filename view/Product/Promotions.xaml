@@ -50,7 +50,7 @@
             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
             <Label Content="Type" Style="{StaticResource input_label}"/>
             <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" SelectionChanged="cbxType_SelectionChanged"
-                      SelectedValue="{Binding types, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedValue="{Binding type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label Style="{StaticResource input_label}" Content="StartDate" Width="125"/>

@@ -27,12 +27,10 @@
 		<converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
 		<converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck"/>
 		<converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck"/>
-		<CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}"/>
-
-		<CollectionViewSource x:Key="purchase_orderpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource purchase_orderViewSource}}"/>
-		<CollectionViewSource x:Key="purchase_order_detailpurchase_order_dimensionViewSource" Source="{Binding purchase_order_dimension, Source={StaticResource purchase_orderpurchase_order_detailViewSource}}"/>
-
-		<CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
+        <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}"/>
+        <CollectionViewSource x:Key="purchase_orderpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource purchase_orderViewSource}}"/>
+        <CollectionViewSource x:Key="purchase_order_detailpurchase_order_dimensionViewSource" Source="{Binding purchase_order_dimension, Source={StaticResource purchase_orderpurchase_order_detailViewSource}}"/>
+        <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 
@@ -48,7 +46,7 @@
 		</Grid.RowDefinitions>
 		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="5"/>
 
-		<ListBox x:Name="purchase_orderDataGrid"  Background="{StaticResource AccentColor_Brush}"
+		<ListBox x:Name="purchase_orderDataGrid" Background="{StaticResource AccentColor_Brush}"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="purchase_orderDataGrid_SelectionChanged"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"

@@ -72,21 +72,6 @@ namespace Cognitivo.Purchase
                 purchase_orderViewSource = ((CollectionViewSource)(FindResource("purchase_orderViewSource")));
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
-
-            //await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            //    app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
-            //}));
-
-            //await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-
-            //    app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
-            //}));
         }
 
         private async void load_SecondaryDataThread()
@@ -131,12 +116,10 @@ namespace Cognitivo.Purchase
         private void New_Click(object sender)
         {
             OrderSetting _pref_PurchaseOrder = new OrderSetting();
-
             purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
-    
-            
-            purchase_orderViewSource.View.MoveCurrentToLast();
 
+
+            purchase_orderViewSource.View.MoveCurrentTo(purchase_order);
             sbxContact.Text = "";
         }
 

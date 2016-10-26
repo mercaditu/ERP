@@ -169,17 +169,8 @@
 			<Grid Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
 				<StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
 					<Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
-					<cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"
-										 CollectionViewSource="{StaticResource itemViewSource}" Height="26"
-										 KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
-										 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<cntrl:SearchableTextbox.Columns>
-							<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-							<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Product}" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-							<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:ID}" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}" Hide="True" EnableSearch="False"/>
-						</cntrl:SearchableTextbox.Columns>
-					</cntrl:SearchableTextbox>
-				</StackPanel>
+                    <Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"/>
+                </StackPanel>
 				<Grid Grid.Row="1" Margin="0,64,0,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="2*"/>

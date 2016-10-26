@@ -95,9 +95,9 @@ namespace Cognitivo.Product
             ProductTransferDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_type.movemnent).OrderByDescending(x => x.trans_date).Load();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
-            CollectionViewSource itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
-            ProductTransferDB.items.Where(a => a.id_company == CurrentSession.Id_Company && a.item_product.Count() > 0).Load();
-            itemViewSource.Source = ProductTransferDB.items.Local;
+            //CollectionViewSource itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
+            //ProductTransferDB.items.Where(a => a.id_company == CurrentSession.Id_Company && a.item_product.Count() > 0).Load();
+            //itemViewSource.Source = ProductTransferDB.items.Local;
 
             await ProductTransferDB.app_document_range.Where(d => d.is_active == true
                                         && d.app_document.id_application == entity.App.Names.Movement
@@ -108,8 +108,8 @@ namespace Cognitivo.Product
             await ProductTransferDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = ProductTransferDB.app_department.Local;
 
-            await ProductTransferDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
-            cbxBranch.ItemsSource = ProductTransferDB.app_branch.Local;
+            //await ProductTransferDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
+            cbxBranch.ItemsSource = CurrentSession.Branches.ToList(); //ProductTransferDB.app_branch.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             ProductTransferDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
@@ -141,21 +141,23 @@ namespace Cognitivo.Product
                 entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
                 if (item_transfer.id_branch > 0)
                 {
-                    if (ProductTransferDB.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                    app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault();
+                    if (app_branch != null)
                     {
-                        entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.branch_Code = app_branch.code;
                     }
                 }
                 if (item_transfer.id_terminal > 0)
                 {
-                    if (ProductTransferDB.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                    app_terminal app_terminal = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault();
+                    if (app_terminal != null)
                     {
-                        entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.terminal_Code = app_terminal.code;
                     }
                 }
                 if (item_transfer.id_user > 0)
                 {
-                    security_user security_user = ProductTransferDB.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault();
+                    security_user security_user = ProductTransferDB.security_user.Find(item_transfer.id_user);
                     if (security_user != null)
                     {
                         entity.Brillo.Logic.Range.user_Code = security_user.code;
@@ -163,7 +165,7 @@ namespace Cognitivo.Product
                 }
                 if (item_transfer.id_project > 0)
                 {
-                    project projects = ProductTransferDB.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault();
+                    project projects = ProductTransferDB.projects.Find(item_transfer.id_project);
                     if (projects != null)
                     {
                         entity.Brillo.Logic.Range.project_Code = projects.code;
@@ -205,7 +207,6 @@ namespace Cognitivo.Product
                     }
                 }
                
-              
                 else
                 {
                     entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
@@ -268,15 +269,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void cbxItem_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Enter)
-            {
-                insertDetail();
-            }
-        }
-
-        private void cbxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void cbxItem_KeyDown(object sender, RoutedEventArgs e)
         {
             insertDetail();
         }
@@ -284,14 +277,14 @@ namespace Cognitivo.Product
         void insertDetail()
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            item item = ((item)cbxItem.Data);
+            item item = ProductMovementDB.items.Find(sbxItem.ItemID);
 
             if (item != null)
             {
                 if (item.item_dimension.Count() > 0)
                 {
                     crud_modal.Children.Clear();
-                    itemMovement.id_item = (int)((item)cbxItem.Data).id_item;
+                    itemMovement.id_item = item.id_item;
                     itemMovement.id_location = item_transfer.app_location_origin.id_location;
                     itemMovement.db = ProductMovementDB;
 
@@ -303,8 +296,8 @@ namespace Cognitivo.Product
                     if (item_transfer != null)
                     {
                         item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                        item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
-                        item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
+                        item_transfer_detail.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                        item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                         item_transfer_detail.quantity_destination = 1;
                         item_transfer_detail.quantity_origin = 1;
 
@@ -318,9 +311,10 @@ namespace Cognitivo.Product
                                     item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
                                     item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
 
-                                    if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+                                    app_dimension app_dimension = ProductTransferDB.app_dimension.Find(item_movement_dimension.id_dimension);
+                                    if (app_dimension != null)
                                     {
-                                        item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                                        item_transfer_dimension.app_dimension = app_dimension;
                                     }
 
                                     item_transfer_dimension.value = item_movement_dimension.value;
@@ -357,12 +351,14 @@ namespace Cognitivo.Product
             // Selecteditem_movement = itemMovement.item_movement;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
+                item item = ProductMovementDB.items.Find(sbxItem.ItemID);
+
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
                 if (item_transfer != null)
                 {
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                    item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
-                    item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
+                    item_transfer_detail.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                    item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     if (itemMovement.item_movement!=null)
                     {
                         item_transfer_detail.movement_id = (int?)itemMovement.item_movement.id_movement;
@@ -370,7 +366,6 @@ namespace Cognitivo.Product
                 
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
-                    item item = ((item)cbxItem.Data);
 
                     foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {
@@ -378,7 +373,7 @@ namespace Cognitivo.Product
                         item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
                         item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
 
-                        app_dimension app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                        app_dimension app_dimension = ProductTransferDB.app_dimension.Find(item_movement_dimension.id_dimension);
                         if (app_dimension != null)
                         {
                             item_transfer_dimension.app_dimension = app_dimension;

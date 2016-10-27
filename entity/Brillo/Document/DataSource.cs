@@ -696,9 +696,16 @@ namespace entity.Brillo.Document
             /// Pankeel we need to change some things here.
             /// 1) Create query based on Payment Schedual.
             /// 
+
+            if (payment_schedual.payment_detail == null)
+            {
+                return null;
+            }
+
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
             List<payment_detail> DetailList = new List<payment_detail>();
+
             DetailList.Add(payment_schedual.payment_detail);
 
             reportDataSource.Value = DetailList
@@ -706,16 +713,16 @@ namespace entity.Brillo.Document
                             {
                                 //id_company = g.id_company,
                                 payment_type = g.payment_type != null ? g.payment_type.name : "",
-                                comments = g.comment,
+                                comments = string.IsNullOrEmpty(g.comment) ? "" : g.comment,
                                 company_name = g.app_company != null ? g.app_company.name : "",
                                 amount = g.value,
-                                contact_name = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.name : "Not Ref" : "Not Ref",
-                                gov_id = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.gov_code : "" : "",
-                                trans_date = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().trans_date : DateTime.Now,
+                                //contact_name = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.name : "Not Ref" : "Not Ref",
+                                //gov_id = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.gov_code : "" : "",
+                                //trans_date = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().trans_date : DateTime.Now,
                                 currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
                                 currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
-                                number = g.payment != null ? g.payment.number : "Not Ref",
-                                PurchaseNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().purchase_invoice != null ? g.payment_schedual.FirstOrDefault().purchase_invoice.number : "" : "",
+                                //number = g.payment != null ? g.payment.number : "Not Ref",
+                                //PurchaseNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().purchase_invoice != null ? g.payment_schedual.FirstOrDefault().purchase_invoice.number : "" : "",
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
                                 AmountWords = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 

@@ -40,8 +40,7 @@ namespace Cognitivo.Class
                              group by loc.id_location, prod.id_item_product
                              order by item.name";
             query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-            DataTable dt = exeDT(query);
-            return GenerateList(dt);
+            return GenerateList(Generate.DataTable(query));
         }
 
         public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
@@ -60,8 +59,7 @@ namespace Cognitivo.Class
                                  group by loc.id_location, prod.id_item_product 
                                  order by item.name";
             query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-            DataTable dt = exeDT(query);
-            return GenerateList(dt);
+            return GenerateList(Generate.DataTable(query));
         }
 
         public DataTable Inventory_OnDate(DateTime TransDate)
@@ -96,8 +94,8 @@ namespace Cognitivo.Class
                                 inner join app_branch as branch on loc.id_branch = branch.id_branch
                                 where inv.credit > 0
                                 group by inv.id_movement";
-            query = String.Format(query, TransDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
-            return exeDT(query);
+            query = string.Format(query, TransDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
+            return Generate.DataTable(query);
         }
 
         public DataTable TransferSummary(DateTime StartDate, DateTime EndDate)
@@ -123,7 +121,7 @@ namespace Cognitivo.Class
 
             query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
             
-            return exeDT(query);
+            return Generate.DataTable(query);
         }
 
         public DataTable CostBreakDown(DateTime StartDate, DateTime EndDate)
@@ -141,7 +139,7 @@ namespace Cognitivo.Class
 
             string WhereQuery = String.Format("imv.id_company = {0} and ", entity.CurrentSession.Id_Company);
             query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
-            return exeDT(query);
+            return Generate.DataTable(query);
         }
 
         public decimal? Count_ByBranch(int BranchID, int ItemID, DateTime TransDate)
@@ -172,23 +170,6 @@ namespace Cognitivo.Class
             ProductDS.EndInit();
 
             return i;
-        }
-
-        private DataTable exeDT(string sql)
-        {
-            DataTable dt = new DataTable();
-            try
-            {
-                MySqlConnection sqlConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
-                sqlConn.Open();
-                MySqlCommand cmd = new MySqlCommand(sql, sqlConn);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                dt = new DataTable();
-                da.Fill(dt);
-                sqlConn.Close();
-            }
-            catch {  }
-            return dt;
         }
 
         private List<StockList> GenerateList(DataTable dt)

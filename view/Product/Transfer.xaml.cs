@@ -5,13 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Data.Entity;
 using entity;
 using System.Data;
-using System.Data.Entity.Validation;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 
 namespace Cognitivo.Product
@@ -30,11 +26,10 @@ namespace Cognitivo.Product
             InitializeComponent();
         }
 
-
         private void toolBar_btnNew_Click(object sender)
         {
             item_transfer item_transfer = new item_transfer();
-            item_transfer.State = System.Data.Entity.EntityState.Added;
+            item_transfer.State = EntityState.Added;
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
             item_transfer.status = Status.Transfer.Pending;
@@ -66,11 +61,12 @@ namespace Cognitivo.Product
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            if (itemDataGrid.SelectedItem != null)
+            item_transfer item_transfer = itemDataGrid.SelectedItem as item_transfer;
+
+            if (item_transfer != null)
             {
-                item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
                 item_transfer.IsSelected = true;
-                item_transfer.State = System.Data.Entity.EntityState.Modified;
+                item_transfer.State = EntityState.Modified;
                 ProductTransferDB.Entry(item_transfer).State = EntityState.Modified;
             }
             else
@@ -112,7 +108,7 @@ namespace Cognitivo.Product
         {
 
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+            item item = ProductTransferDB.items.Find(sbxItem.ItemID);
 
             if (item != null)
             {
@@ -131,9 +127,9 @@ namespace Cognitivo.Product
                     if (item != null &&
                         item.item_product != null &&
                         item_transfer != null &&
-                        item.id_item_type != entity.item.item_type.Task &&
-                        item.id_item_type != entity.item.item_type.Service &&
-                        item.id_item_type != entity.item.item_type.ServiceContract)
+                        item.id_item_type != item.item_type.Task &&
+                        item.id_item_type != item.item_type.Service &&
+                        item.id_item_type != item.item_type.ServiceContract)
                     {
                         if (item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault() == null)
                         {
@@ -159,14 +155,12 @@ namespace Cognitivo.Product
                             item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                             item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                             item_transfer_detail.RaisePropertyChanged("item_product");
-
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
                         }
                         else
                         {
                             item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
                             item_transfer_detail.quantity_origin += 1;
-                         
                         }
                       
                     }
@@ -191,7 +185,7 @@ namespace Cognitivo.Product
                 item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
                 item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
 
-                TransferSetting TransferSetting = new Product.TransferSetting();
+                TransferSetting TransferSetting = new TransferSetting();
 
                 int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
                 toolBar.msgSaved(NumberofRecords);
@@ -207,7 +201,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApproveDestination_Click(object sender)
         {
-            TransferSetting TransferSetting = new Product.TransferSetting();
+            TransferSetting TransferSetting = new TransferSetting();
 
             item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
             item_transfer.IsSelected = true;
@@ -222,7 +216,7 @@ namespace Cognitivo.Product
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.PopupAnimation = PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
@@ -231,7 +225,7 @@ namespace Cognitivo.Product
         {
             TransferSetting TransferSetting = new TransferSetting();
 
-            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.PopupAnimation = PopupAnimation.Fade;
             TransferSetting.Default.Save();
             TransferSetting = TransferSetting.Default;
             popupCustomize.IsOpen = false;
@@ -363,8 +357,8 @@ namespace Cognitivo.Product
                         if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
                         {
                             item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
-
                         }
+
                         item_transfer_dimension.value = item_movement_dimension.value;
                         item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                     }

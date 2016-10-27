@@ -427,7 +427,7 @@ namespace Cognitivo.Product
             if (data.ContainsFileDropList())
             {
                 var files = data.GetFileDropList();
-                string extension = System.IO.Path.GetExtension(files[0]);
+                string extension = Path.GetExtension(files[0]);
                 if (!string.IsNullOrEmpty(extension) &&
                     (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp"))
                     imageViewer.Source = LoadImageFromFile(files[0]);
@@ -699,14 +699,13 @@ namespace Cognitivo.Product
             }
         }
 
-        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private async void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ItemDB.item_brand
+            await ItemDB.item_brand
               .Where(a => a.id_company == CurrentSession.Id_Company)
-              .OrderBy(a => a.name).Load();
+              .OrderBy(a => a.name).LoadAsync();
 
             item_brandViewSource.Source = ItemDB.item_brand.Local;
-
         }
 
         private void Label_MouseUp(object sender, MouseButtonEventArgs e)

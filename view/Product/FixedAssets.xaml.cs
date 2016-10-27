@@ -28,63 +28,44 @@ namespace Cognitivo.Product
             itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
+            await ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).LoadAsync();
             itemViewSource.Source = ItemDB.items.Local;
 
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
 
-            cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
+            cbxBranch.ItemsSource = CurrentSession.Branches.OrderBy(b => b.name).ToList();
 
-            cbxassetGroup.ItemsSource = ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            cbxassetGroup.ItemsSource = await ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
-            app_departmentViewSource.Source = ItemDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
+            app_departmentViewSource.Source = await ItemDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToListAsync();
             
             CollectionViewSource item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
             ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
             item_brandViewSource.Source = ItemDB.item_brand.Local;
+
             CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
-            contactViewSource.Source = ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToList();
+            contactViewSource.Source = await ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToListAsync();
             cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-             ItemDB.app_vat_group
-                    .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).Load();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-                app_vat_groupViewSource.Source = ItemDB.app_vat_group.Local;
-            //}));
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.ToList();
 
             CollectionViewSource item_price_listViewSource = FindResource("item_price_listViewSource") as CollectionViewSource;
-             ItemDB.item_price_list
-                   .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                   .OrderBy(a => a.name).Load();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-                item_price_listViewSource.Source = ItemDB.item_price_list.Local;
-            //}));
+            item_price_listViewSource.Source = CurrentSession.PriceLists.ToList();
 
-             ItemDB.app_currency
-                    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).ToList();
-           // await Dispatcher.InvokeAsync(new Action(() =>
-           // {
-                CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-                app_currencyViewSource.Source = ItemDB.app_currency.Local;
-           // }));
+            CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
+            app_currencyViewSource.Source = CurrentSession.Currencies.ToList();
 
-             ItemDB.item_tag
+
+            await ItemDB.item_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-                .OrderBy(x => x.name).Load();
-           // await Dispatcher.InvokeAsync(new Action(() =>
-          //  {
-                CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
-                item_tagViewSource.Source = ItemDB.item_tag.Local;
-           // }));
+                .OrderBy(x => x.name).LoadAsync();
+            CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            item_tagViewSource.Source = ItemDB.item_tag.Local;
         }
 
         #region Mini ToolBar
@@ -235,16 +216,6 @@ namespace Cognitivo.Product
                 img.EndInit();
                 return img;
             }
-        }
-
-        private void AddBrand_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void EditBrand_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
         }
 
         private void itemserviceComboBox_MouseDoubleClick(object sender, RoutedEventArgs e)

@@ -23,8 +23,10 @@
 		<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
 		<CollectionViewSource x:Key="item_transferitem_transfer_detailitem_transfer_dimensionViewSource" Source="{Binding item_transfer_dimension, Source={StaticResource item_transferitem_transfer_detailViewSource}}"/>
-		<CollectionViewSource x:Key="location_destViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
-		<CollectionViewSource x:Key="location_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
+		
+		<CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+		<CollectionViewSource x:Key="location_destViewSource" Source="{Binding app_location, Source={StaticResource branchViewSource}}"/>
+		<CollectionViewSource x:Key="location_originViewSource" Source="{Binding app_location, Source={StaticResource branchViewSource}}"/>
 		<CollectionViewSource x:Key="app_statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
 		<CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
@@ -40,8 +42,9 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
+		
 		<Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" 
-			  Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+			  Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
 		<ListBox Background="{StaticResource AccentColor_Brush}" x:Name="item_transferDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
@@ -129,8 +132,8 @@
 									>
 						<Label Content="" Style="{StaticResource ico_Label}"/>
 						<TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
-						<ComboBox Width="Auto" Margin="0" x:Name="cbxBranch" Style="{StaticResource ComboToLabelStyle}"
-									 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+						<ComboBox Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}"
+									 metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={StaticResource branchViewSource}}"
 									 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 									 DisplayMemberPath="name" SelectedValuePath="id_branch" SelectionChanged="cbxBranch_SelectionChanged"
 									 SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

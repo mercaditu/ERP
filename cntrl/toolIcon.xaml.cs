@@ -27,8 +27,7 @@ namespace cntrl
         public event RoutedEventHandler Click;
         private void toolIcon_Click(object sender, RoutedEventArgs e)
         {
-            if(Click != null)
-            { Click(this, new RoutedEventArgs()); }
-       }
+            Click?.Invoke(this, new RoutedEventArgs());
+        }
     }
 }

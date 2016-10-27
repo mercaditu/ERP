@@ -117,14 +117,6 @@ namespace Cognitivo.Product
             await ProductTransferDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             branchViewSource.Source = ProductTransferDB.app_branch.Local; //ProductTransferDB.app_branch.Local;
 
-            ////DESTINATION
-            //CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
-            //location_destViewSource.Source = ProductTransferDB.app_location.Where(a => a.is_active).OrderBy(a => a.name).ToList();
-
-            ////ORIGIN
-            //CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
-            //location_originViewSource.Source = ProductTransferDB.app_location.Where(a => a.is_active).OrderBy(a => a.name).ToList();
-
             cbxBranch_SelectionChanged(sender, null);
         }
 
@@ -199,8 +191,8 @@ namespace Cognitivo.Product
                 item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
             }
 
-            item_transfer.user_requested = ProductTransferDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-            item_transfer.user_given = ProductTransferDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+            //item_transfer.user_requested = ProductTransferDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+            //item_transfer.user_given = ProductTransferDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.status = Status.Transfer.Approved;
 
             ProductTransferDB.SaveChanges();

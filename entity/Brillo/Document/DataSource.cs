@@ -590,7 +590,8 @@ namespace entity.Brillo.Document
                     UserName = g.security_user != null ? g.security_user.name : "",
                     RequstedUserName = g.item_transfer != null ? g.item_transfer.user_requested != null ? g.item_transfer.user_requested.name : "" : "",
                     RequstedUserCode = g.item_transfer != null ? g.item_transfer.user_requested != null ? g.item_transfer.user_requested.code : "" : "",
-
+                    EmployeeName = g.item_transfer != null ? g.item_transfer.employee != null ? g.item_transfer.employee.name : "" : "",
+                    EmployeeCode = g.item_transfer != null ? g.item_transfer.employee != null ? g.item_transfer.employee.code : "" : "",
 
                     transfer_number = g.item_transfer.number,
                     location_origin_name = g.item_transfer != null ? g.item_transfer.app_location_origin != null ? g.item_transfer.app_location_origin.name : "" : "",
@@ -703,26 +704,25 @@ namespace entity.Brillo.Document
             reportDataSource.Value = DetailList
                             .Select(g => new
                             {
-                                id_company = g.id_company,
+                                //id_company = g.id_company,
                                 payment_type = g.payment_type != null ? g.payment_type.name : "",
                                 comments = g.comment,
                                 company_name = g.app_company != null ? g.app_company.name : "",
                                 amount = g.value,
-                                contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
-                                gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
-                                payment_name = g.payment_type != null ? g.payment_type.name : "",
-                                trans_date = g.payment != null ? g.payment.trans_date : DateTime.Now,
+                                contact_name = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.name : "Not Ref" : "Not Ref",
+                                gov_id = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.gov_code : "" : "",
+                                trans_date = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().trans_date : DateTime.Now,
                                 currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
                                 currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
                                 number = g.payment != null ? g.payment.number : "Not Ref",
-                                SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
+                                PurchaseNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().purchase_invoice != null ? g.payment_schedual.FirstOrDefault().purchase_invoice.number : "" : "",
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
-                                AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                AmountWords = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                     // Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
                     :
-                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "" : "",
+                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "",
 
                                 HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false
 

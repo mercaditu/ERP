@@ -188,7 +188,9 @@ namespace cntrl.Curd
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
+
             PaymentDB.SaveChanges();
+
             foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
                 if (Mode == Modes.Recievable)
@@ -266,7 +268,12 @@ namespace cntrl.Curd
                     {
                         stpDetailDocument.Visibility = Visibility.Visible;
                         payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                        payment_detail.id_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault().id_range;
+
+                        app_document_range app_document_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault();
+                        if (app_document_range != null && payment_detail != null)
+                        {
+                            payment_detail.id_range = app_document_range.id_range;
+                        }
                     }
                     else
                     {

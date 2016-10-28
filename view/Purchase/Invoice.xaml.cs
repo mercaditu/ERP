@@ -108,7 +108,10 @@ namespace Cognitivo.Purchase
             InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
             purchase_invoice purchase_invoice = PurchaseInvoiceDB.New(_pref_PurchaseInvoice.TransDate_OffSet);
 
-            purchase_invoiceViewSource.View.MoveCurrentToLast();
+            sbxContact.Text = "";
+            sbxItem.Text = "";
+
+            purchase_invoiceViewSource.View.MoveCurrentTo(purchase_invoice);
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -374,21 +377,23 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
-                    purchase_invoice_detail _purchase_invoice_detail = PurchaseInvoiceDB.purchase_invoice_detail
-                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
-                        .OrderByDescending(y => y.purchase_invoice.trans_date)
-                        .FirstOrDefault();
-                    if (_purchase_invoice_detail != null)
-                    {
-                        purchase_invoice_detail.unit_cost = _purchase_invoice_detail.unit_cost;
-                    }
-
                     //Item DOES NOT Exist in Context
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.item_description = item.name;
                     purchase_invoice_detail.quantity = 1;
+
+                    //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
+                    purchase_invoice_detail old_PurchaseInvoice = PurchaseInvoiceDB.purchase_invoice_detail
+                        .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
+                        .OrderByDescending(y => y.purchase_invoice.trans_date)
+                        .FirstOrDefault();
+
+                    if (old_PurchaseInvoice != null)
+                    {
+                        purchase_invoice_detail.id_vat_group = old_PurchaseInvoice.id_vat_group;
+                        purchase_invoice_detail.unit_cost = old_PurchaseInvoice.unit_cost;
+                    }
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -808,7 +813,7 @@ namespace Cognitivo.Purchase
         private void btnInvoiceNumber_LostFocus(object sender, RoutedEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
-            if (purchase_invoice != null && purchase_invoice.number != null)
+            if (purchase_invoice != null && !string.IsNullOrEmpty(purchase_invoice.number))
             {
                 purchase_invoice tmp_purchase_invoice = PurchaseInvoiceDB.purchase_invoice
                     .Where(x => x.number == purchase_invoice.number && x.id_purchase_invoice > 0).FirstOrDefault();

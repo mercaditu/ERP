@@ -266,6 +266,15 @@ namespace entity
                         app_account_detail.status = Status.Documents_General.Pending;
                     }
 
+
+                    if (payment_detail.id_range > 0)
+                    {
+                        app_document_range detail_document_range = await base.app_document_range.FindAsync(payment_detail.id_range);
+                        payment_detail.payment_type_number = Brillo.Logic.Range.calc_Range(detail_document_range, true);
+                        payment.RaisePropertyChanged("payment_type_number");
+                    }
+
+
                     ///Gets the Session ID necesary for cashier movement.
                     int id_account_session = await base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).Select(y => y.id_session).FirstOrDefaultAsync();
 

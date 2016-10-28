@@ -252,7 +252,7 @@ namespace cntrl.Curd
 
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
                             PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
-                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x => (x.payment_schedual.Where(z => z.can_calculate).Sum(y => y.credit) < x.GrandTotal)); ;
+                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x => (x.payment_schedual.Where(z => z.can_calculate).Sum(y => y.credit) < x.GrandTotal));
                         }
                     }
                     else
@@ -387,12 +387,6 @@ namespace cntrl.Curd
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-
-
-
             payment payment = paymentViewSource.View.CurrentItem as payment;
             payment_detail payment_detail = new payment_detail();
             payment_detail.id_payment = payment.id_payment;
@@ -428,20 +422,6 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
         }
 
-
-
-        private void cbxPaymentSchedual_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            //if (payment_detail != null)
-            //{
-            //    if (cbxPaymentSchedual.SelectedItem != null)
-            //    {
-            //        payment_detail.payment_schedual.Add(cbxPaymentSchedual.SelectedItem as payment_schedual);
-            //    }
-            //}
-
-        }
 
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {

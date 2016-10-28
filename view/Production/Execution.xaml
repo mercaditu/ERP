@@ -143,16 +143,16 @@
 				<Grid.Resources>
 					<HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
 											  ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
 											   HorizontalAlignment="Stretch"
 											   IsInput="{Binding is_input, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											   Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-											   Type_Name="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											   Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
 											   TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
 											   Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-											   QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-					</HierarchicalDataTemplate>
+											   QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    </HierarchicalDataTemplate>
 				</Grid.Resources>
 				<Grid DataContext="{StaticResource production_orderViewSource}">
 					<TextBlock Style="{StaticResource TextAreaH2}" Margin="36,16,0,0"
@@ -513,7 +513,6 @@
 		</Grid>
 
 		<cntrl:toolBar Grid.ColumnSpan="3" x:Name="toolBar"
-					   btnNew_Click="toolBar_btnNew_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click" 

@@ -163,16 +163,6 @@ namespace Cognitivo.Production
             }
         }
 
-
-        private void toolBar_btnNew_Click(object sender)
-        {
-           // production_execution production_execution =OrderDB.NewExecustion();
-     
-           
-
-           // production_executionViewSource.View.MoveCurrentToLast();
-        }
-
         private void toolBar_btnEdit_Click(object sender)
         {
             if (projectDataGrid.SelectedItem != null)
@@ -696,28 +686,7 @@ namespace Cognitivo.Production
         {
             filter_task();
         }
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-        //    if (production_order != null)
-        //    {
-        //        List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
-        //        if (production_order_detailList.Count > 0)
-        //        {
-        //            Class.CostCalculation CostCalculation = new Class.CostCalculation();
-        //            CostDataGrid.ItemsSource = CostCalculation.CalculateOrderCost(production_order_detailList);
-        //            crud_modal_cost.Visibility = Visibility.Visible;
-        //        }
-        //    }
-        //}
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    crud_modal_cost.Visibility = Visibility.Collapsed;
-        //}
-
-
+        
         public void filter_task()
         {
             if (production_order_detaillViewSource != null)

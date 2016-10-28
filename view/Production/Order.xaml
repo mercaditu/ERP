@@ -21,7 +21,7 @@
 	<Page.Resources>
 		<converter:SecurityConverter x:Key="SecurityConverter"/>
 		<converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
-		<converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
+        <converter:ProuctionPending2BooleanConverter x:Key="ProuctionPending2BooleanConverter"/>
 		<CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
 		<CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
 		<CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
@@ -42,10 +42,10 @@
 		</Grid.RowDefinitions>
 		<Grid Name="crud_modal_request" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+		<Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
-        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+		<Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
 		<ListBox x:Name="production_orderDataGrid" Background="{StaticResource AccentColor_Brush}"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -70,20 +70,20 @@
 				<RowDefinition Height="9*"/>
 			</Grid.RowDefinitions>
 
-            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
+			<TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
 						Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
-                <TabItem Header="{lex:Loc Order}">
-                    <Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+				<TabItem Header="{lex:Loc Order}">
+					<Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
 							  DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid>
-                            <Grid.Resources>
-                                <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<Grid>
+							<Grid.Resources>
+								<HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
 															  ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+									<Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 Code="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 HorizontalAlignment="Stretch"
@@ -92,92 +92,92 @@
 														 TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 														 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 														 Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </HierarchicalDataTemplate>
-                            </Grid.Resources>
-                            <Grid Grid.Column="0">
-                                <Grid DataContext="{StaticResource production_orderViewSource}">
-                                    <Label Content="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+								</HierarchicalDataTemplate>
+							</Grid.Resources>
+							<Grid Grid.Column="0">
+								<Grid DataContext="{StaticResource production_orderViewSource}">
+									<Label Content="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 										   HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource generic_Label}"/>
-                                    <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,6,0,0"
+									<TextBlock Style="{StaticResource TextAreaH2}" Margin="36,6,0,0"
 											   Text="{Binding name, FallbackValue=Production, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
-                                    <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,8"  FontSize="16"
+									<ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,8"  FontSize="16"
 												  VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="{StaticResource AccentColor_Brush2}"
 												  Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" 
 												  FontFamily="/Cognitivo;component/Resources/#cognitivo" Foreground="RoyalBlue"
 												  Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
-                                </Grid>
+								</Grid>
 
-                                <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="0,44,0,0"  
+								<cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="0,44,0,0"  
 														VirtualizingPanel.VirtualizationMode="Recycling" 
 														VirtualizingPanel.IsVirtualizing="True" 
 														ScrollViewer.CanContentScroll="True" >
-                                    <TreeView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
-                                        </ItemsPanelTemplate>
-                                    </TreeView.ItemsPanel>
-                                    <TreeView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type TreeViewItem}" >
-                                            <Setter Property="IsExpanded" Value="{Binding ElementName=Productionorder, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </Style>
-                                    </TreeView.ItemContainerStyle>
-                                </cntrl:ExtendedTreeView>
+									<TreeView.ItemsPanel>
+										<ItemsPanelTemplate>
+											<VirtualizingStackPanel/>
+										</ItemsPanelTemplate>
+									</TreeView.ItemsPanel>
+									<TreeView.ItemContainerStyle>
+										<Style TargetType="{x:Type TreeViewItem}" >
+											<Setter Property="IsExpanded" Value="{Binding ElementName=Productionorder, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+										</Style>
+									</TreeView.ItemContainerStyle>
+								</cntrl:ExtendedTreeView>
 
-                            </Grid>
+							</Grid>
 
-                        </Grid>
+						</Grid>
 
-                        <TabControl Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling">
-                            <TabItem Header="Data">
-                                <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center" 
+						<TabControl Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling">
+							<TabItem Header="Data">
+								<StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center" 
 											IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                                        <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding project_cost_center, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
-                                    </StackPanel>
-                                    <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                                    <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                                    <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+									<StackPanel Orientation="Horizontal" >
+										<Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+										<Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+									</StackPanel>
+									<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+										<Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+										<TextBlock Text="{Binding project_cost_center, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
+									</StackPanel>
+									<Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+									<TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+									<Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+									<ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
 							  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
 							  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 							  Style="{StaticResource input_combobox}"
 							  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-                                    <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
-                                    <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
-                                    <ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}" 
+									<Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
+									<TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+									<Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
+									<ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}" 
 							  DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 							  SelectedValuePath="id_production_line"
 							  ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
-                                        <ComboBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel/>
-                                            </ItemsPanelTemplate>
-                                        </ComboBox.ItemsPanel>
-                                    </ComboBox>
-                                    <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-                                    <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
+										<ComboBox.ItemsPanel>
+											<ItemsPanelTemplate>
+												<VirtualizingStackPanel/>
+											</ItemsPanelTemplate>
+										</ComboBox.ItemsPanel>
+									</ComboBox>
+									<Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
+									<ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
 								  SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
-                                    </ComboBox>
-                                    <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
-                                    <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
-                                    <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-                                    <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
-                                </StackPanel>
-                            </TabItem>
-                            <TabItem Header="Item">
-                                <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
-                                    <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+									</ComboBox>
+									<Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+									<DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
+									<Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+									<DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
+								</StackPanel>
+							</TabItem>
+							<TabItem Header="Item">
+								<StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
+									<Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
 									   Content="{Binding parent.name, FallbackValue=---}"/>
-                                    <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
+									<TextBlock Text="{Binding name}" Margin="0,-10,0,8"
 										   Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
-                                    <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+									<cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 													Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													btnNew_Click="btnNewTask_Click"
 													btnEdit_Click="btnEditTask_Click"
@@ -185,215 +185,215 @@
 													btnDelete_Click="btnDeleteTask_Click"
 													btnApprove_Click="toolIcon_Click"
 													btnParent_Click="btnAddParentTask_Click"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,16">
-                                        <StackPanel x:Name="stpcode" IsEnabled="False">
-                                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
-                                            <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
-												  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+									<StackPanel HorizontalAlignment="Center" Margin="0,16">
+										<StackPanel x:Name="stpcode" IsEnabled="False">
+											<Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
+											<ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
+												  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}" 
 												  SelectedValue="{Binding item.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 												  SelectionChanged="cbxItemType_SelectionChanged"/>
 
-                                            <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
-                                            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding  item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                            <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Consume}" OnLabel="{lex:Loc Produce}" HorizontalAlignment="Right" OffSwitchBrush="Silver" 
-                                                                OnSwitchBrush="Gray" UseLayoutRounding="False" 
-                                                                ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" 
-                                                                Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
+											<Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
+											<Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding  item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+											<metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Consume}" OnLabel="{lex:Loc Produce}" HorizontalAlignment="Right" OffSwitchBrush="Silver" 
+																OnSwitchBrush="Gray" UseLayoutRounding="False" 
+																ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" 
+																Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
 
-                                        </StackPanel>
+										</StackPanel>
 
-                                        <StackPanel x:Name="stpdate" Visibility="Collapsed">
-                                            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
-                                            <DatePicker Style="{StaticResource input_datepicker}"
-													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+										<StackPanel x:Name="stpdate" Visibility="Collapsed">
+											<Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+											<DatePicker Style="{StaticResource input_datepicker}"
+													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}" 
 													SelectedDate="{Binding start_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-                                            <DatePicker Style="{StaticResource input_datepicker}"
-													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+											<Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+											<DatePicker Style="{StaticResource input_datepicker}"
+													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}" 
 													SelectedDate="{Binding end_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                        </StackPanel>
+										</StackPanel>
 
-                                        <StackPanel x:Name="stpitem" Visibility="Collapsed">
-                                            <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                                            <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+										<StackPanel x:Name="stpitem" Visibility="Collapsed">
+											<Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
+                                            <TextBox IsEnabled="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"
 											 Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </TabItem>
-                        </TabControl>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="{lex:Loc RequestResource}" VirtualizingPanel.VirtualizationMode="Standard">
-                    <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
+										</StackPanel>
+									</StackPanel>
+								</StackPanel>
+							</TabItem>
+						</TabControl>
+					</Grid>
+				</TabItem>
+				<TabItem Header="{lex:Loc RequestResource}" VirtualizingPanel.VirtualizationMode="Standard">
+					<Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="2*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
 
-                        <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
-                            <TabItem Header="{lex:Loc Product}">
-                                <TabItem.IsEnabled>
-                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+						<TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
+							<TabItem Header="{lex:Loc Product}">
+								<TabItem.IsEnabled>
+									<Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
-                                        <Binding.ConverterParameter>
-                                            <sys:Int32>4</sys:Int32>
-                                        </Binding.ConverterParameter>
-                                    </Binding>
-                                </TabItem.IsEnabled>
-                                <DataGrid x:Name="item_ProductDataGrid" 
+										<Binding.ConverterParameter>
+											<sys:Int32>4</sys:Int32>
+										</Binding.ConverterParameter>
+									</Binding>
+								</TabItem.IsEnabled>
+								<DataGrid x:Name="item_ProductDataGrid" 
 											  VerticalScrollBarVisibility="Auto"
 											  AutoGenerateColumns="False" 
 											  EnableRowVirtualization="True"
 											  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="Logistics_SelectionChanged"   >
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="{lex:Loc RawMaterial}">
-                                <TabItem.IsEnabled>
-                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
+										<DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
+										<DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</TabItem>
+							<TabItem Header="{lex:Loc RawMaterial}">
+								<TabItem.IsEnabled>
+									<Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
-                                        <Binding.ConverterParameter>
-                                            <sys:Int32>5</sys:Int32>
-                                        </Binding.ConverterParameter>
-                                    </Binding>
-                                </TabItem.IsEnabled>
-                                <DataGrid x:Name="item_RawDataGrid" 
+										<Binding.ConverterParameter>
+											<sys:Int32>5</sys:Int32>
+										</Binding.ConverterParameter>
+									</Binding>
+								</TabItem.IsEnabled>
+								<DataGrid x:Name="item_RawDataGrid" 
 											  VerticalScrollBarVisibility="Auto"
 											  AutoGenerateColumns="False" 
 											  EnableRowVirtualization="True"  SelectionChanged="Logistics_SelectionChanged"  
 											  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="{lex:Loc FixedAssets}">
-                                <TabItem.IsEnabled>
-                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
+										<DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
+										<DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</TabItem>
+							<TabItem Header="{lex:Loc FixedAssets}">
+								<TabItem.IsEnabled>
+									<Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
-                                        <Binding.ConverterParameter>
-                                            <sys:Int32>7</sys:Int32>
-                                        </Binding.ConverterParameter>
-                                    </Binding>
-                                </TabItem.IsEnabled>
-                                <DataGrid x:Name="item_CapitalDataGrid" 
+										<Binding.ConverterParameter>
+											<sys:Int32>7</sys:Int32>
+										</Binding.ConverterParameter>
+									</Binding>
+								</TabItem.IsEnabled>
+								<DataGrid x:Name="item_CapitalDataGrid" 
 										VerticalScrollBarVisibility="Auto"
 										AutoGenerateColumns="False" Grid.Column="1"
 										EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="Logistics_SelectionChanged" 
 										RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="{lex:Loc Supplies}">
-                                <TabItem.IsEnabled>
-                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
+										<DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</TabItem>
+							<TabItem Header="{lex:Loc Supplies}">
+								<TabItem.IsEnabled>
+									<Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
-                                        <Binding.ConverterParameter>
-                                            <sys:Int32>9</sys:Int32>
-                                        </Binding.ConverterParameter>
-                                    </Binding>
-                                </TabItem.IsEnabled>
-                                <DataGrid x:Name="item_SupplierDataGrid" 
+										<Binding.ConverterParameter>
+											<sys:Int32>9</sys:Int32>
+										</Binding.ConverterParameter>
+									</Binding>
+								</TabItem.IsEnabled>
+								<DataGrid x:Name="item_SupplierDataGrid" 
 											  VerticalScrollBarVisibility="Auto"
 											  AutoGenerateColumns="False" Grid.Column="1"
 											  EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="Logistics_SelectionChanged" 
 											  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="{lex:Loc ServiceContract}">
-                                <TabItem.IsEnabled>
-                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
+										<DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
+										<DataGridTextColumn Binding="{Binding Availability, StringFormat={}{0:N2}}" Header="{lex:Loc Available}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</TabItem>
+							<TabItem Header="{lex:Loc ServiceContract}">
+								<TabItem.IsEnabled>
+									<Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
-                                        <Binding.ConverterParameter>
-                                            <sys:Int32>10</sys:Int32>
-                                        </Binding.ConverterParameter>
-                                    </Binding>
-                                </TabItem.IsEnabled>
-                                <DataGrid x:Name="item_ServiceContractDataGrid" 
+										<Binding.ConverterParameter>
+											<sys:Int32>10</sys:Int32>
+										</Binding.ConverterParameter>
+									</Binding>
+								</TabItem.IsEnabled>
+								<DataGrid x:Name="item_ServiceContractDataGrid" 
 										  VerticalScrollBarVisibility="Auto"
 										  AutoGenerateColumns="False" Grid.Column="1"
 										  EnableRowVirtualization="True" Grid.Row="1" 
 										  SelectionChanged="Logistics_SelectionChanged" 
 										  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                        </TabControl>
-                        <Grid Grid.Column="1">
-                            <StackPanel Grid.Row="0" Margin="0,10,0,0" >
-                                <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+										<DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
+										<DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" ElementStyle="{StaticResource RightAlignStyle}" Width="auto" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</TabItem>
+						</TabControl>
+						<Grid Grid.Column="1">
+							<StackPanel Grid.Row="0" Margin="0,10,0,0" >
+								<Controls:NotificationButton Text="{lex:Loc RequestResource}" 
 															 Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 															 Icon="" Click="btnRequestResource_Click" 
 															 VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                            <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,48,0,0"
+							</StackPanel>
+							<DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,48,0,0"
 										  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Auto"
 										  LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
-                                <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+								<DataGrid.Columns>
+									<DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 																ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
 																EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                                    <DataGridTextColumn Binding="{Binding parent.code}" Header="{lex:Loc Cognitivo:local:Code}" Width="16" IsReadOnly="True" />
-                                    <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="128" IsReadOnly="True" />
-                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" 
+									<DataGridTextColumn Binding="{Binding parent.code}" Header="{lex:Loc Cognitivo:local:Code}" Width="16" IsReadOnly="True" />
+									<DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="128" IsReadOnly="True" />
+									<DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" 
 															ElementStyle="{StaticResource RightAlignStyle}"
 															Width="auto" IsReadOnly="True" />
-                                </DataGrid.Columns>
-                                <DataGrid.RowDetailsTemplate>
-                                    <DataTemplate>
-                                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
+								</DataGrid.Columns>
+								<DataGrid.RowDetailsTemplate>
+									<DataTemplate>
+										<DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
 													  EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
 													  ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
 													  RowDetailsVisibilityMode="VisibleWhenSelected">
-                                            <DataGrid.Columns>
-                                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
+											<DataGrid.Columns>
+												<DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
 																			ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" 
 																			DisplayMemberPath="name" SelectedValuePath="id_dimension"
 																			SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+												<DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
 																		Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto"/>
-                                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+												<DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
 																			DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 																			ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 																			SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 																			Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </DataTemplate>
-                                </DataGrid.RowDetailsTemplate>
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </Grid>
+											</DataGrid.Columns>
+										</DataGrid>
+									</DataTemplate>
+								</DataGrid.RowDetailsTemplate>
+							</DataGrid>
+						</Grid>
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</Grid>
 	   
 		<cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar"
 					   btnNew_Click="toolBar_btnNew_Click"
@@ -407,9 +407,9 @@
 					   appName="ProductionOrder"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        
+		
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,150,0">
-            <Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
-        </StackPanel>
+			<Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
+		</StackPanel>
 	</Grid>
 </Page>

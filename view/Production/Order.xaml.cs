@@ -452,6 +452,7 @@ namespace Cognitivo.Production
                         }
 
                         filter_task();
+                        treeProject.SelectedItem_ = production_order_detail_output;
                     }
                 }
                 else
@@ -468,7 +469,7 @@ namespace Cognitivo.Production
                         production_order_detail_output.is_input = true;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
-
+                        treeProject.SelectedItem_ = production_order_detail_output;
                     }
                 }
             }

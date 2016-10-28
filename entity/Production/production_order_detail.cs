@@ -41,11 +41,13 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
 
-                    if (production_order!=null)
+                    //CALCULATES NON RECEPIE ITEMS. NORMAL PRODUCTS OR RAW MATERIALS.
+                    if (production_order != null)
                     {
                         if (parent != null && parent.item != null && production_order.type != production_order.ProductionOrderTypes.Fraction)
                         {
-                            if (!parent.item.is_autorecepie)
+                            //PROTECTS CHILD FROM UPDATING PARENTS.
+                            if (parent.item.item_recepie.Count == 0)
                             {
                                 parent.quantity = objclsproject.getsumquantityProduction(parent.id_order_detail, parent.child);
                                 parent.RaisePropertyChanged("quantity");
@@ -53,11 +55,11 @@ namespace entity
                         }
                     }
                   
+                    //CALCULATES FOR CHILD RECEPIES
                     if (this.item != null)
                     {
-                        if (this.item.is_autorecepie)
+                        if (item.item_recepie.Count > 0)
                         {
-
                             if (child.Count > 0)
                             {
                                 foreach (production_order_detail production_order_detail in child)
@@ -65,7 +67,6 @@ namespace entity
                                     production_order_detail.quantity = production_order_detail.item.item_recepie_detail.FirstOrDefault().quantity * this.quantity;
                                     production_order_detail.RaisePropertyChanged("quantity");
                                 }
-
                             }
                         }
                     }
@@ -84,7 +85,19 @@ namespace entity
 
    
 
-        public Status.Production? status { get; set; }
+        public Status.Production? status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = (Status.Production)value;
+                    RaisePropertyChanged("status");
+                }
+            }
+        }
+        private Status.Production _status = Status.Production.Pending;
         public string code
         {
             get { return _code; }
@@ -170,11 +183,6 @@ namespace entity
 
         #region Methods
 
-        public void ApproveOnlyParent_NotChild()
-        {
-
-        }
-
         /// <summary>
         /// Gets the Total Quantity based on Executed Values from Production Execution.
         /// </summary>
@@ -193,6 +201,7 @@ namespace entity
             }
             catch { }
         }
+
         public void CalcExecutedCost_TimerTaks()
         {
             try

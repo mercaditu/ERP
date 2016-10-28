@@ -54,7 +54,7 @@ namespace Cognitivo.Class
 				Logistics.Availability = !DataRow.IsNull("Availability") ? Convert.ToDecimal(DataRow["Availability"]) : 0;
 				Logistics.Requested = !DataRow.IsNull("Requested") ? Convert.ToDecimal(DataRow["Requested"]) : 0;
 
-				int ItemType = Convert.ToInt16(DataRow["Type"]);
+				int ItemType = !DataRow.IsNull("Type") ? Convert.ToInt16(DataRow["Type"]) : 0;
 
 				if (ItemType == 1)
 				{
@@ -85,7 +85,7 @@ namespace Cognitivo.Class
 					Logistics.Type = entity.item.item_type.ServiceContract;
 				}
 
-				int ProductionStatus = Convert.ToInt16(DataRow["ProductionStatus"]);
+                int ProductionStatus = !DataRow.IsNull("ProductionStatus") ? Convert.ToInt16(DataRow["ProductionStatus"]) : 0;
 
 				if (ProductionStatus == 2)
 				{

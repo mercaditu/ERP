@@ -172,51 +172,54 @@ namespace entity
                             SaveChanges();
                         }
 
-
-                        item_request item_request = new item_request();
-                        item_request.name = sales_order.contact.name;
-                        item_request.comment = sales_order.comment;
-
-                    
-                        item_request.id_sales_order = sales_order.id_sales_order;
-                        item_request.id_branch = sales_order.id_branch;
-
-
-                        item_request.request_date =(DateTime)sales_order.delivery_date;
-
-                        foreach (sales_order_detail data in sales_order.sales_order_detail.Where(x=>x.IsSelected))
+                        if (false)
                         {
-                            item_request_detail item_request_detail = new item_request_detail();
-                            item_request_detail.date_needed_by = (DateTime)sales_order.delivery_date;
-                            item_request_detail.id_sales_order_detail = data.id_sales_order_detail;
-                            item_request_detail.urgency =entity.item_request_detail.Urgencies.Medium;
-                            int idItem = data.item.id_item;
-                            item_request_detail.id_item = idItem;
-                            item item = base.items.Where(x => x.id_item == idItem).FirstOrDefault();
-                            if (item != null)
+                            item_request item_request = new item_request();
+                            item_request.name = sales_order.contact.name;
+                            item_request.comment = sales_order.comment;
+
+
+                            item_request.id_sales_order = sales_order.id_sales_order;
+                            item_request.id_branch = sales_order.id_branch;
+
+
+                            item_request.request_date = (DateTime)sales_order.delivery_date;
+
+                            foreach (sales_order_detail data in sales_order.sales_order_detail.Where(x => x.IsSelected))
                             {
-                                item_request_detail.item = item;
-                                item_request_detail.comment = item_request_detail.item.name;
+                                item_request_detail item_request_detail = new item_request_detail();
+                                item_request_detail.date_needed_by = (DateTime)sales_order.delivery_date;
+                                item_request_detail.id_sales_order_detail = data.id_sales_order_detail;
+                                item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
+                                int idItem = data.item.id_item;
+                                item_request_detail.id_item = idItem;
+                                item item = base.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                                if (item != null)
+                                {
+                                    item_request_detail.item = item;
+                                    item_request_detail.comment = item_request_detail.item.name;
+                                }
+
+
+                                item_request_detail.quantity = data.quantity;
+
+                                foreach (item_dimension item_dimension in item.item_dimension)
+                                {
+                                    item_request_dimension item_request_dimension = new item_request_dimension();
+                                    item_request_dimension.id_dimension = item_dimension.id_app_dimension;
+                                    item_request_dimension.app_dimension = item_dimension.app_dimension;
+                                    item_request_dimension.id_measurement = item_dimension.id_measurement;
+                                    item_request_dimension.app_measurement = item_dimension.app_measurement;
+                                    item_request_dimension.value = item_dimension.value;
+                                    item_request_detail.item_request_dimension.Add(item_request_dimension);
+                                }
+
+                                item_request.item_request_detail.Add(item_request_detail);
+
                             }
-
-
-                            item_request_detail.quantity = data.quantity;
-
-                            foreach (item_dimension item_dimension in item.item_dimension)
-                            {
-                                item_request_dimension item_request_dimension = new item_request_dimension();
-                                item_request_dimension.id_dimension = item_dimension.id_app_dimension;
-                                item_request_dimension.app_dimension = item_dimension.app_dimension;
-                                item_request_dimension.id_measurement = item_dimension.id_measurement;
-                                item_request_dimension.app_measurement = item_dimension.app_measurement;
-                                item_request_dimension.value = item_dimension.value;
-                                item_request_detail.item_request_dimension.Add(item_request_dimension);
-                            }
-
-                            item_request.item_request_detail.Add(item_request_detail);
-                       
+                            base.item_request.Add(item_request);
                         }
-                        base.item_request.Add(item_request);
+
                         SaveChanges();
                     }
 

@@ -67,7 +67,7 @@
                    
                     <CheckBox Content="{lex:Loc AutomaticRecipe}" Grid.Column="1" Grid.Row="7" 
                               HorizontalAlignment="Left" Margin="5"
-						      IsChecked="{Binding items.is_autorecepie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
+						      IsChecked="{Binding item.is_autorecepie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Background="{StaticResource AccentColor_Brush}">
                     <Label Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc QuickAction}"/>

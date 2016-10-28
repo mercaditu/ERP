@@ -417,7 +417,7 @@ namespace Cognitivo.Production
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 item item = OrderDB.items.Find(sbxItem.ItemID);
 
-                if (item != null && item.id_item > 0 && item.is_autorecepie && production_order != null)
+                if (item != null && item.id_item > 0 && item.item_recepie.Count > 0 && production_order != null)
                 {
                     production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
                     if (production_order_detail_output != null)

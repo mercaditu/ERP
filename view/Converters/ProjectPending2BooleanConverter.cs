@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
@@ -15,14 +12,10 @@ namespace Cognitivo.Converters
                 entity.Status.Project status = (entity.Status.Project)value;
                 if (status != entity.Status.Project.Pending)
                 {
-                    return false;
-                }
-                else
-                {
                     return true;
                 }
             }
-            else { return false; }
+            return false;
           
         }
 

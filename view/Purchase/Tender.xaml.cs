@@ -30,8 +30,6 @@ namespace Cognitivo.Purchase
         {
             PurchaseTenderDB.Approve();
              purchase_tenderViewSource.View.Refresh();
-             purchase_tenderViewSource.View.MoveCurrentToFirst();
-             purchase_tenderViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnCancel_Click(object sender)

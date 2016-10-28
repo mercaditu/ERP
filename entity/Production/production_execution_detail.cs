@@ -14,6 +14,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
+            timestamp = DateTime.Now;
             is_input = false;
             child = new List<production_execution_detail>();
             production_execution_dimension = new List<production_execution_dimension>();

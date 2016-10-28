@@ -7,7 +7,6 @@ using System.Data.Entity;
 using entity;
 using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Production
 {
@@ -22,6 +21,7 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
+
         public bool ViewAll { get; set; }
 
         public Order()
@@ -192,8 +192,8 @@ namespace Cognitivo.Production
 
         private void productionorderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
             Update_Logistics();
+            filter_task();
         }
 
         private void Update_Logistics()
@@ -204,26 +204,26 @@ namespace Cognitivo.Production
         
         private void Calculate_Logistics()
         {
-            int _id_production_order = 0;
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
 
-            _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
-
-            if (_id_production_order > 0)
+            if (production_order != null)
             {
-                Class.Production Production = new Class.Production();
-                List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
+                int _id_production_order = production_order.id_production_order;
 
-                LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
+                if (_id_production_order > 0)
+                {
+                    Class.Production Production = new Class.Production();
+                    List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
 
-                //Dispatcher.BeginInvoke((Action)(() =>
-                //{
+                    LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
+
                     item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
                     item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
                     item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
 
                     item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
                     item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
-                //}));
+                }
             }
         }
 
@@ -231,13 +231,50 @@ namespace Cognitivo.Production
         {
             int _id_production_order = 0;
             _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
-            Class.Logistics Logistics = (Class.Logistics)item_ProductDataGrid.SelectedItem;
+
+            Class.Logistics Logistics = new Class.Logistics();
+
+            if (item_ProductDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_ProductDataGrid.SelectedItem;
+            }
+            else if (item_RawDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_RawDataGrid.SelectedItem;
+            }
+            else if (item_ServiceContractDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_ServiceContractDataGrid.SelectedItem;
+            }
+            else if (item_CapitalDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_CapitalDataGrid.SelectedItem;
+            }
+            else if (item_SupplierDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_SupplierDataGrid.SelectedItem;
+            }
+
+            List<production_order_detail> list = new List<production_order_detail>();
 
             if (Logistics != null)
             {
-                int _id_item = Logistics.ItemID;
-                List<production_order_detail> list = await OrderDB.production_order_detail.Where(IT => (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToListAsync();
-                itemDataGrid.ItemsSource = list.ToList();
+                int ItemID = Logistics.ItemID;
+
+                if (ItemID > 0)
+                {
+                    list = await OrderDB.production_order_detail
+                        .Where(p =>
+                        (
+                        p.production_order.status != Status.Production.Pending || p.production_order.status != null) &&
+                        p.id_production_order == _id_production_order &&
+                        p.id_item == ItemID
+                        )
+                        .ToListAsync();
+
+                    itemDataGrid.ItemsSource = list.ToList();
+
+                }
             }
         }
 

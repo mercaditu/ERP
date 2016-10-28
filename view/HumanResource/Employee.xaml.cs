@@ -45,8 +45,8 @@ namespace Cognitivo.HumanResource
             hr_talentViewSource.Source = dbContext.hr_talent.Local;
 
             app_locationViewSource = (CollectionViewSource)FindResource("app_locationViewSource");
-            await dbContext.app_location.ToListAsync();
-            app_locationViewSource.Source = dbContext.app_location.Local;
+            //await dbContext.app_location.ToListAsync();
+            app_locationViewSource.Source = CurrentSession.Locations.ToList(); // dbContext.app_location.Local;
 
             CollectionViewSource hr_positionViewSource = FindResource("hr_positionViewSource") as CollectionViewSource;
             hr_positionViewSource.Source = dbContext.hr_position.Where(x => x.id_company == CurrentSession.Id_Company).ToList();

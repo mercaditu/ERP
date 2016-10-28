@@ -25,7 +25,7 @@ namespace Cognitivo.Class
 			string query = @"select 
 								pod.status as ProductionStatus, 
 								pod.id_item ItemID, i.id_item_type as Type, i.code as ItemCode, i.name as ItemName, pod.name as Mask,
-								pod.quantity as Quantity, 
+								sum(pod.quantity) as Quantity, 
 								(select sum(credit - debit) as Available 
 									from item_movement where id_item_product = ip.id_item_product) as Availability
 								,ird.quantity as Requested

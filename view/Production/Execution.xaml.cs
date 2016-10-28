@@ -45,10 +45,6 @@ namespace Cognitivo.Production
             await ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.type != production_order.ProductionOrderTypes.Fraction).LoadAsync();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
-            //projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
-            //ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            //projectViewSource.Source = ExecutionDB.projects.Local;
-
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
             await ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;

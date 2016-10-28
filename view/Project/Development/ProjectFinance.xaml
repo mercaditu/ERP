@@ -100,9 +100,9 @@
 			<Grid>
 				<Grid.Resources>
 
-                    <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
+					<HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
 											  ItemsSource="{Binding child, Mode=TwoWay}">
-                        <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged,
+						<Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged,
 																   Converter={StaticResource Status2ColorConverter}}" 
 
 											 IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
@@ -112,8 +112,8 @@
 											 Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											 QuantityExec="{Binding quantity_exe, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    </HierarchicalDataTemplate>
-                </Grid.Resources>
+					</HierarchicalDataTemplate>
+				</Grid.Resources>
 			 
 				<TextBlock Style="{StaticResource TextAreaH2}" Margin="40,16,36,0" 
 						   Text="{Binding project.name, FallbackValue=ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

@@ -203,14 +203,16 @@
 									  SelectionChanged="dgproduct_SelectionChanged">
 								<DataGrid.Columns>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
-														Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60"/>
+														Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
-														Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+														Binding="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
-														Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+														Binding="{Binding quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
-														Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
-									<DataGridTemplateColumn Width="Auto" Header="">
+														Binding="{Binding movement_id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                    <DataGridTemplateColumn Width="Auto" Header="">
 										<DataGridTemplateColumn.CellTemplate>
 											<DataTemplate>
 												<Button Command="customcmd:CustomCommands.Delete"
@@ -262,7 +264,9 @@
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 														Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
-									<DataGridTemplateColumn Width="32" Header="">
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                    <DataGridTemplateColumn Width="32" Header="">
 										<DataGridTemplateColumn.CellTemplate>
 											<DataTemplate>
 												<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
@@ -323,7 +327,9 @@
 													Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Hour}" IsReadOnly="True"
 													Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
-									<DataGridTemplateColumn Width="Auto">
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                    <DataGridTemplateColumn Width="Auto">
 										<DataGridTemplateColumn.CellTemplate>
 											<DataTemplate>
 												<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
@@ -360,7 +366,9 @@
 										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" 
 														Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
 														Width="100"/>
-										<DataGridTemplateColumn Width="Auto" Header="">
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                        <DataGridTemplateColumn Width="Auto" Header="">
 											<DataGridTemplateColumn.CellTemplate>
 												<DataTemplate>
 													<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" 
@@ -422,7 +430,9 @@
 													Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Width="Auto"/>
 										<DataGridTextColumn Header="Hours" IsReadOnly="True"
 													Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
-										<DataGridTemplateColumn Width="Auto">
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                        <DataGridTemplateColumn Width="Auto">
 											<DataGridTemplateColumn.CellTemplate>
 												<DataTemplate>
 													<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
@@ -447,7 +457,7 @@
 								<DataGrid.Columns>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:TransDate}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding timestamp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
 										<DataGridTemplateColumn.CellTemplate>
@@ -484,7 +494,9 @@
 														Width="100"/>
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 														Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
-									<DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding timestamp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+
+                                    <DataGridTemplateColumn Width="Auto" Header="">
 										<DataGridTemplateColumn.CellTemplate>
 											<DataTemplate>
 												<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" 

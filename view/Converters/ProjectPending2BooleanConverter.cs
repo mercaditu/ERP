@@ -10,7 +10,7 @@ namespace Cognitivo.Converters
             if (value!= null)
             {
                 entity.Status.Project status = (entity.Status.Project)value;
-                if (status != entity.Status.Project.Pending)
+                if (status == entity.Status.Project.Pending)
                 {
                     return true;
                 }

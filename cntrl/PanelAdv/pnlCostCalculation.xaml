@@ -5,23 +5,22 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:local="clr-namespace:cntrl.PanelAdv"
 			 xmlns:cntrl="clr-namespace:cntrl.Controls"
-	         xmlns:control="clr-namespace:cntrl"
-             xmlns:class="clr-namespace:cntrl.Class"
-		     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-		     lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-		     lex:ResxLocalizationProvider.DefaultDictionary="local"
-	         lex:LocalizeDictionary.DesignCulture="en-US"
+			 xmlns:control="clr-namespace:cntrl"
+			 xmlns:class="clr-namespace:cntrl.Class"
+			 xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+			 lex:ResxLocalizationProvider.DefaultDictionary="local"
+			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" Background="White"
-			 Height="256" Width="600" Loaded="UserControl_Loaded">
+			 MinHeight="256" MaxHeight="538" Width="600" Loaded="UserControl_Loaded">
 	<UserControl.Resources>
-        <CollectionViewSource x:Key="outputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
-        <CollectionViewSource x:Key="inputViewSource" Source="{Binding Costs, Source={StaticResource outputViewSource}}"/>
-        
-    </UserControl.Resources>
+		<CollectionViewSource x:Key="outputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
+		<CollectionViewSource x:Key="inputViewSource" Source="{Binding Costs, Source={StaticResource outputViewSource}}"/>
+	</UserControl.Resources>
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
-    </UserControl.Effect>
+	</UserControl.Effect>
 	<Grid>
 		<Grid Background="{StaticResource appConfig}" VerticalAlignment="Top">
 			<Label Style="{StaticResource H2}" Content="{lex:Loc Cost}" Margin="8,0"/>
@@ -34,7 +33,6 @@
 			<ListBox Background="{StaticResource AccentColor_Brush}" Width="256"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-					
 					 ItemContainerStyle="{StaticResource nav_ListSelection}" ItemsSource="{Binding Source={StaticResource outputViewSource}}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
@@ -52,14 +50,18 @@
 					<StackPanel>
 						<Label Style="{StaticResource H3}" Content="{Binding Name, FallbackValue=Name}"/>
 						<Label Style="{StaticResource generic_Label}" Content="{Binding Code, FallbackValue=Code}" Margin="0,-10,0,0"/>
-						<Label Style="{StaticResource input_label}" Content="{Binding GrandTotal, Mode=OneWay, StringFormat=N2, FallbackValue=0.00}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Style="{StaticResource input_label}" Content="{Binding GrandTotal, Mode=OneWay, StringFormat=N2, FallbackValue=0.00}"/>
+                            <Label Style="{StaticResource generic_Label}" Content="|"/>
+                            <Label Style="{StaticResource generic_Label}" Content="{Binding GrandTotal, Mode=OneWay, StringFormat=N2, FallbackValue=0.00}"/>
+                        </StackPanel>
 					</StackPanel>
 				</StackPanel>
 				<DataGrid x:Name="InputDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" Margin="0,80,0,0"
 								EnableRowVirtualization="True" Height="Auto"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible"
 								RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource inputViewSource}}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="128" MaxWidth="512" Binding="{Binding Name}"/>
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="128" MaxWidth="512" Binding="{Binding Name}"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" MaxWidth="256" Binding="{Binding Quantity}"/>
 						<DataGridTextColumn Binding="{Binding Cost, StringFormat={}{0:N2}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
 											Header="{lex:Loc Cognitivo:local:Cost}"

@@ -34,7 +34,7 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.value = payment_schedual.credit; //SchedualList.Sum(x => x.AccountPayableBalance);
                 payment_detail.IsSelected = true;
-                payment_detail.id_account = CurrentSession.Id_Account > 0 ? CurrentSession.Id_Account : PaymentDB.app_account.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_account;
+                payment_detail.id_account = CurrentSession.Id_Account > 0 ? CurrentSession.Id_Account : PaymentDBold.app_account.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_account;
                 payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
                 payment_detail.app_currencyfx = payment_schedual.app_currencyfx;
                 payment_detail.State = EntityState.Added;
@@ -75,40 +75,40 @@ namespace cntrl.Curd
         }
 
         public event RoutedEventHandler SaveChanges;
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            if (payment_schedual != null)
+            foreach (payment_schedual payment_schedual in PaymentDBold.payment_schedual.Local)
             {
-                if (payment_schedual.id_range > 0)
+                if (payment_schedual != null)
                 {
-                    app_document_range app_document_range = PaymentDBold.app_document_range.Where(x => x.id_range == payment_schedual.id_range).FirstOrDefault();
-                    if (app_document_range != null)
+                    if (payment_schedual.id_range > 0)
                     {
-                        payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                        app_document_range app_document_range = await PaymentDBold.app_document_range.FindAsync(payment_schedual.id_range);
+                        if (app_document_range != null)
+                        {
+                            entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                            entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                            payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
 
-                        entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
+                            entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
+                        }
                     }
-                }
 
-                payment_schedual.status = Status.Documents_General.Approved;
-                payment_schedual.RaisePropertyChanged("status");
-
-                try
-                {
-                    PaymentDBold.SaveChanges();
+                    payment_schedual.status = Status.Documents_General.Approved;
+                    payment_schedual.RaisePropertyChanged("status");
                 }
-                catch (Exception)
-                {
-                    
-                    throw;
-                }
-
-                SaveChanges?.Invoke(this, new RoutedEventArgs());
-                Grid parentGrid = (Grid)this.Parent;
-                parentGrid.Children.Clear();
-                parentGrid.Visibility = Visibility.Hidden;
             }
+
+            try
+            {
+                PaymentDBold.SaveChanges();
+            }
+            catch (Exception) { throw; }
+
+            SaveChanges?.Invoke(this, new RoutedEventArgs());
+            Grid parentGrid = (Grid)this.Parent;
+            parentGrid.Children.Clear();
+            parentGrid.Visibility = Visibility.Hidden;
         }
         #endregion
     }

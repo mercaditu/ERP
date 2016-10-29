@@ -60,18 +60,21 @@ namespace entity
                 {
                     _id_range = value;
 
-                    using (db db = new db())
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
-                        app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-
-                        if (_app_range != null)
+                        using (db db = new db())
                         {
-                            Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
-                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
-                            number = NumberWatermark;
-                            RaisePropertyChanged("NumberWatermark");
-                            RaisePropertyChanged("number");
+                            app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                            if (_app_range != null)
+                            {
+                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                number = NumberWatermark;
+                                RaisePropertyChanged("NumberWatermark");
+                                RaisePropertyChanged("number");
+                            }
                         }
                     }
                 }
@@ -87,7 +90,6 @@ namespace entity
         {
             get
             {
-
                 return _GrandTotal;
             }
             set

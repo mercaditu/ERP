@@ -45,8 +45,8 @@ namespace cntrl.Curd
             
             {
                 CollectionViewSource app_documentViewSource = ((CollectionViewSource)(FindResource("app_documentViewSource")));
-                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType).Load();
                 app_documentViewSource.Source = entity.db.app_document.Local;
+
                 cbxbehaviour.ItemsSource = Enum.GetValues(typeof(entity.payment_type.payment_behaviours));
                 if (!isExternalCall)
                 {
@@ -61,12 +61,14 @@ namespace cntrl.Curd
                         mydb.db.payment_type.Add(newPaymentType);
                         myViewSource.Source = mydb.db.payment_type.Local;
                         myViewSource.View.Refresh();
+                        cbxPrint.IsChecked = false;
                         myViewSource.View.MoveCurrentTo(newPaymentType);
-                        stackFields.DataContext = myViewSource;                      
+                        stackFields.DataContext = myViewSource;                     
                     }
                     else if (operationMode == Class.clsCommon.Mode.Edit)
                     {
                         objCollectionViewSource.View.MoveCurrentTo(payment_typeObject);
+                        cbxPrint.IsChecked = payment_typeObject.app_document != null ? true : false;
                         stackFields.DataContext = objCollectionViewSource;
                     }
                 }
@@ -140,17 +142,18 @@ namespace cntrl.Curd
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (!isExternalCall)
+            if ((bool)cbxPrint.IsChecked)
             {
-                MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (res == MessageBoxResult.Yes)
-                {
-                    entity.payment_type payment_type = objCollectionViewSource.View.CurrentItem as entity.payment_type;
-                    payment_type.is_active = false;
-                    btnSave_Click(sender, e);
-                }
+                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType).Load();
+            }
+            else
+            {
+                entity.payment_type payment_type = objCollectionViewSource.View.CurrentItem as entity.payment_type;
+                payment_type.id_document = null;
+                payment_type.app_document = null;
+                objCollectionViewSource.View.Refresh();
             }
         }
     }

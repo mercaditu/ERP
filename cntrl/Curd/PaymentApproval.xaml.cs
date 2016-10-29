@@ -32,9 +32,11 @@ namespace cntrl.Curd
             foreach (payment_schedual payment_schedual in SchedualList)
             {
                 payment_detail payment_detail = new payment_detail();
-                payment_detail.value = SchedualList.Sum(x => x.AccountPayableBalance);
+                payment_detail.value = payment_schedual.credit; //SchedualList.Sum(x => x.AccountPayableBalance);
                 payment_detail.IsSelected = true;
-                payment_detail.id_currencyfx = SchedualList.FirstOrDefault().id_currencyfx;
+                payment_detail.id_account = CurrentSession.Id_Account > 0 ? CurrentSession.Id_Account : PaymentDB.app_account.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_account;
+                payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                payment_detail.app_currencyfx = payment_schedual.app_currencyfx;
                 payment_detail.State = EntityState.Added;
                 PaymentDBold.payment_detail.Add(payment_detail);
 

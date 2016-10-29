@@ -191,9 +191,11 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnCancel_Click(object sender)
         {
+            sales_invoiceViewSource.View.MoveCurrentToFirst();
             SalesInvoiceDB.CancelAllChanges();
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            sales_invoice.State = EntityState.Unchanged;
+
+            if (sales_invoiceViewSource.View != null)
+                sales_invoiceViewSource.View.Refresh();
         }
 
         private void btnApprove_Click(object sender)

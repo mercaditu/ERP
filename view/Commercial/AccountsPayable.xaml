@@ -115,7 +115,7 @@
                     </StackPanel>
                   
                 </StackPanel>
-                <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Button_Click"/>
+                <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnPayment_Click"/>
                 <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>

@@ -124,11 +124,14 @@ namespace Cognitivo.Product
         private void cbxBranch_SelectionChanged(object sender, EventArgs e)
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            if (item_transfer.State == EntityState.Added || item_transfer.State == EntityState.Modified)
+            if (item_transfer != null)
             {
-                app_location app_location = ProductTransferDB.app_location.Where(x => x.is_default && x.id_branch == item_transfer.id_branch).FirstOrDefault();
-                CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
-                location_originViewSource.View.MoveCurrentTo(app_location);
+                if (item_transfer.State == EntityState.Added || item_transfer.State == EntityState.Modified)
+                {
+                    app_location app_location = ProductTransferDB.app_location.Where(x => x.is_default && x.id_branch == item_transfer.id_branch).FirstOrDefault();
+                    CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
+                    location_originViewSource.View.MoveCurrentTo(app_location);
+                }
             }
         }
 

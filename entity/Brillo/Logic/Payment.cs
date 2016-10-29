@@ -29,11 +29,19 @@ namespace entity.Brillo.Logic
                 List<app_contract_detail> app_contract_details = null;
                 bool IsPromisorry = false;
 
-                using (db db = new db())
+                if (sales_invoice.app_contract == null)
                 {
-                    app_contract app_contract = db.app_contract.Find(sales_invoice.id_contract);
-                    app_contract_details = app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
-                    IsPromisorry = app_contract.is_promissory;
+                    using (db db = new db())
+                    {
+                        app_contract app_contract = db.app_contract.Find(sales_invoice.id_contract);
+                        app_contract_details = app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
+                        IsPromisorry = app_contract.is_promissory;
+                    }
+                }
+                else
+                {
+                    app_contract_details = sales_invoice.app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
+                    IsPromisorry = sales_invoice.app_contract.is_promissory;
                 }
 
                 foreach (app_contract_detail app_contract_detail in app_contract_details)
@@ -47,7 +55,6 @@ namespace entity.Brillo.Logic
                     payment_schedual.expire_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval);
                     payment_schedual.status = Status.Documents_General.Approved;
                     payment_schedual.id_contact = sales_invoice.id_contact;
-                    payment_schedualList.Add(payment_schedual);
 
                     ///Checks if selected Contract has Promissory Note created.
                     if (IsPromisorry)
@@ -65,27 +72,16 @@ namespace entity.Brillo.Logic
                         payment_promissory_note.value = sales_invoice.GrandTotal * app_contract_detail.coefficient;
                         payment_promissory_note.id_currencyfx = sales_invoice.id_currencyfx;
                         payment_promissory_note.status = Status.Documents.Pending;
-
-                        //Create Payment to control the Promissory Note as Non-Calculated.
-                        payment_schedual payment_schedual_promise = new payment_schedual();
-                        //Debit Credit
-                        payment_schedual_promise.credit = 0;
-                        payment_schedual_promise.debit = sales_invoice.GrandTotal * app_contract_detail.coefficient;
-                        //Nav Properties
-                        payment_schedual_promise.id_contact = sales_invoice.id_contact;
-                        payment_schedual_promise.id_currencyfx = sales_invoice.id_currencyfx;
-                        payment_schedual_promise.sales_invoice = sales_invoice;
-                        //Date
-                        payment_schedual_promise.trans_date = sales_invoice.trans_date;
-                        payment_schedual_promise.expire_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval);
-                        payment_schedual_promise.can_calculate = false;
-                        //Pending so that we can Approve while Printing.
-                        payment_schedual_promise.status = entity.Status.Documents_General.Pending;
+                        payment_promissory_noteLIST.Add(payment_promissory_note);
 
                         //Adding Payment Schedual into PromissoryNote
-                        payment_promissory_note.payment_schedual.Add(payment_schedual_promise);
-                        payment_promissory_noteLIST.Add(payment_promissory_note);
+                        payment_promissory_note.payment_schedual.Add(payment_schedual);
                     }
+                    else
+                    {
+                        payment_schedualList.Add(payment_schedual);
+                    }
+
                 }
 
                 return payment_schedualList;
@@ -159,8 +155,25 @@ namespace entity.Brillo.Logic
             else if (obj_entity as purchase_invoice != null)
             {
                 purchase_invoice purchase_invoice = (purchase_invoice)obj_entity;
-                
-                foreach (app_contract_detail app_contract_detail in purchase_invoice.app_contract.app_contract_detail.Where(x => x.is_order == false))
+                List<app_contract_detail> app_contract_details = null;
+                bool IsPromisorry = false;
+
+                if (purchase_invoice.app_contract == null)
+                {
+                    using (db db = new db())
+                    {
+                        app_contract app_contract = db.app_contract.Find(purchase_invoice.id_contract);
+                        app_contract_details = app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
+                        IsPromisorry = app_contract.is_promissory;
+                    }
+                }
+                else
+                {
+                    app_contract_details = purchase_invoice.app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
+                    IsPromisorry = purchase_invoice.app_contract.is_promissory;
+                }
+
+                foreach (app_contract_detail app_contract_detail in app_contract_details)
                 {
                     payment_schedual payment_schedual = new payment_schedual();
                     payment_schedual.credit = purchase_invoice.GrandTotal * app_contract_detail.coefficient;
@@ -171,7 +184,32 @@ namespace entity.Brillo.Logic
                     payment_schedual.expire_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
                     payment_schedual.status = Status.Documents_General.Pending;
                     payment_schedual.id_contact = purchase_invoice.id_contact;
-                    payment_schedualList.Add(payment_schedual);
+                    
+                    ///Checks if selected Contract has Promissory Note created.
+                    if (IsPromisorry)
+                    {
+                        payment_promissory_note payment_promissory_note = new payment_promissory_note();
+                        //Dates. Transactional (based on Sales Trans) and Expiry (based on Exp of Payment)...
+                        payment_promissory_note.trans_date = purchase_invoice.trans_date;
+                        payment_promissory_note.expiry_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
+                        //Navigational Properties...
+                        payment_promissory_note.id_branch = purchase_invoice.id_branch;
+                        payment_promissory_note.id_terminal = purchase_invoice.id_terminal;
+                        payment_promissory_note.id_company = purchase_invoice.id_company;
+                        payment_promissory_note.id_contact = purchase_invoice.id_contact;
+                        //Values...
+                        payment_promissory_note.value = purchase_invoice.GrandTotal * app_contract_detail.coefficient;
+                        payment_promissory_note.id_currencyfx = purchase_invoice.id_currencyfx;
+                        payment_promissory_note.status = Status.Documents.Pending;
+                        payment_promissory_noteLIST.Add(payment_promissory_note);
+
+                        //Adding Payment Schedual into PromissoryNote
+                        payment_promissory_note.payment_schedual.Add(payment_schedual);
+                    }
+                    else
+                    {
+                        payment_schedualList.Add(payment_schedual);
+                    }
                 }
                 return payment_schedualList;
             }

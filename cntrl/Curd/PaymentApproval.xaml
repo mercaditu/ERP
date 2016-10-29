@@ -74,7 +74,7 @@
 									 ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
-										<cntrl:navList recordCode="{Binding id_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+										<cntrl:navList recordCode="{Binding app_currencyfx.app_currency.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
 													   recordSecondaryName="{Binding id_payment_type, FallbackValue=Payment, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
 													   recordName="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
 													   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"

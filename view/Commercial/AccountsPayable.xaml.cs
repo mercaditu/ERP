@@ -100,11 +100,13 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                                                                     .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
                                                                        && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
-                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0).OrderBy(x => x.expire_date)
+                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
+                                                                       .Include(y => y.purchase_invoice)
+                                                                       .OrderBy(x => x.expire_date)
                                                                     .ToListAsync();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
             List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
 
@@ -124,7 +126,7 @@ namespace Cognitivo.Commercial
 
             cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList);
 
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);
         }
 

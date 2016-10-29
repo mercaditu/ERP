@@ -127,6 +127,7 @@ namespace entity
                     sales_order.app_condition = app_condition.Find(sales_order.id_condition);
                     sales_order.app_contract = app_contract.Find(sales_order.id_contract);
                     sales_order.app_currencyfx = app_currencyfx.Find(sales_order.id_currencyfx);
+
                     if (sales_order.status != Status.Documents_General.Approved)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
@@ -172,7 +173,8 @@ namespace entity
                             SaveChanges();
                         }
 
-                        if (false)
+                        //This ensures that only checked items go into requests at the time of approval.
+                        if (sales_order.sales_order_detail.Where(x => x.IsSelected).Count() > 0)
                         {
                             item_request item_request = new item_request();
                             item_request.name = sales_order.contact.name;

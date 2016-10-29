@@ -220,16 +220,8 @@
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                       UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" DisplayMemberPath="name" SelectedValuePath="id_vat_group"/>
                         </AdornerDecorator>
-                        <Grid Width="256" HorizontalAlignment="Left">
-                            <Label Content="{lex:Loc PriceList}"  Style="{StaticResource input_label}"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label x:Name="AddPricelist" Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddPricelist_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                                <Label x:Name="EditPricelist" Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditPricelist_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                            </StackPanel>
-                        </Grid>
-                        <DataGrid x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" 
+                        <Label Content="{lex:Loc PriceList}"  Style="{StaticResource input_label}"/>
+                            <DataGrid x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" 
                                   AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                                     InitializingNewItem="item_priceDataGrid_InitializingNewItem"

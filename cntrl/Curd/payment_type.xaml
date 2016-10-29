@@ -15,6 +15,7 @@
             Width="360" Loaded="UserControl_Loaded"
              BorderBrush="#66ccff" BorderThickness="2">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Vis"/>
         <local:InitialsConverter x:Key="InitialsConverter"/>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
@@ -52,9 +53,11 @@
             <TextBlock Text="All transactions with Directly be inserted into Accounts" Style="{StaticResource text_Instructions}"/>
             <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc IsDirect}" 
                       IsChecked="{Binding is_direct, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Content="{lex:Loc Print}" Style="{StaticResource input_label}"/>
-            <ComboBox Style="{StaticResource input_combobox}" SelectedValuePath="id_document" DisplayMemberPath="name" ItemsSource="{Binding Source={StaticResource app_documentViewSource}}"
-                      SelectedValue="{Binding id_document, Mode=TwoWay, 
+            <CheckBox x:Name="cbxPrint" Content="{lex:Loc Print}" Style="{StaticResource input_checkbox}" Checked="CheckBox_Checked"/>
+            <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center" Visibility="{Binding ElementName=cbxPrint, Path=IsChecked, Converter={StaticResource Bool2Vis}}"
+                          SelectedValuePath="id_document" DisplayMemberPath="name" ItemsSource="{Binding Source={StaticResource app_documentViewSource}}"
+                          Width="228"
+                          SelectedValue="{Binding id_document, Mode=TwoWay, 
                                               ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                               UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
             <Rectangle Style="{StaticResource line_Bar}"/>

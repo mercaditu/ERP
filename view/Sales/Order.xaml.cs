@@ -148,7 +148,11 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnCancel_Click(object sender)
         {
+            sales_orderViewSource.View.MoveCurrentToFirst();
             SalesOrderDB.CancelAllChanges();
+
+            if (sales_orderViewSource.View != null)
+                sales_orderViewSource.View.Refresh();
         }
 
         private void btnApprove_Click(object sender)

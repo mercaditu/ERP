@@ -903,7 +903,6 @@ namespace entity.Brillo.Logic
                                 }
                             }
                         }
-
                     }
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)

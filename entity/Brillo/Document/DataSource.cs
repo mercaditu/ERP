@@ -74,10 +74,10 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-            else if (AppName == typeof(payment_schedual).ToString() || BaseName == typeof(payment_schedual).ToString())
+            else if (AppName == typeof(List<payment_schedual>).ToString() || BaseName == typeof(List<payment_schedual>).ToString())
             {
-                payment_schedual payment_schedual = (payment_schedual)Document;
-                return PaymentSchedual(payment_schedual);
+                List<payment_schedual> SchedualList = (List<payment_schedual>)Document;
+                return PaymentSchedual(SchedualList);
             }
             else if (AppName == typeof(payment).ToString() || BaseName == typeof(payment).ToString())
             {
@@ -691,40 +691,32 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource PaymentSchedual(payment_schedual payment_schedual)
+        public ReportDataSource PaymentSchedual(List<payment_schedual> SchedualList)
         {
             /// Pankeel we need to change some things here.
             /// 1) Create query based on Payment Schedual.
-            /// 
-
-            if (payment_schedual.payment_detail == null)
-            {
-                return null;
-            }
 
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
             List<payment_detail> DetailList = new List<payment_detail>();
 
-            DetailList.Add(payment_schedual.payment_detail);
+            //DetailList.Add(SchedualList.ToList());
 
-            reportDataSource.Value = DetailList
+            reportDataSource.Value = SchedualList
                             .Select(g => new
                             {
-                                //id_company = g.id_company,
-                                payment_type = g.payment_type != null ? g.payment_type.name : "",
-                                comments = string.IsNullOrEmpty(g.comment) ? "" : g.comment,
+                                payment_type = g.payment_detail != null ? g.payment_detail.payment_type != null ? g.payment_detail.payment_type.name : "" : "",
+                                comments = g.payment_detail != null ? string.IsNullOrEmpty(g.payment_detail.comment) ? "" : g.payment_detail.comment : "",
                                 company_name = g.app_company != null ? g.app_company.name : "",
-                                amount = g.value,
-                                contact_name = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.name : "Not Ref" : "Not Ref",
-                                gov_id = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().contact != null ? g.payment_schedual.FirstOrDefault().contact.gov_code : "" : "",
-                                trans_date = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().trans_date : DateTime.Now,
+                                amount = g.payment_detail != null ? g.payment_detail.value : 0,
+                                contact_name = g.contact != null ? g.contact.name : "Not Ref",
+                                gov_id = g.contact != null ? g.contact.gov_code : "",
+                                trans_date = g.trans_date,
                                 currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
                                 currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
-                                number = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().number : "Not Ref",
-                                PurchaseNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().purchase_invoice != null ? g.payment_schedual.FirstOrDefault().purchase_invoice.number : "" : "",
-                                BankAccount = g.app_account != null ? g.app_account.name : "",
-                    //            AmountWords = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                number = g.number,
+                                PurchaseNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
+                                BankAccount = g.payment_detail != null ? g.payment_detail.app_account != null ? g.payment_detail.app_account.name : "" : "",
 
                     //// Text -> Words
                     //NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))

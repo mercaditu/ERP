@@ -12,21 +12,21 @@ namespace cntrl.Curd
 {
     public partial class PaymentApproval : UserControl
     {
-        public PaymentDB PaymentDBold;
+        public PaymentDB PaymentDB_Local;
 
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource payment_schedualViewSource;
 
         public PaymentApproval(ref PaymentDB PaymentDB, List<payment_schedual> SchedualList)
         {
-            PaymentDBold = PaymentDB;
+            PaymentDB_Local = PaymentDB;
             InitializeComponent();
           
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             payment_schedualViewSource = (CollectionViewSource)this.FindResource("payment_schedualViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
-            payment_schedualViewSource.Source = PaymentDBold.payment_schedual.Local;
+            payment_schedualViewSource.Source = PaymentDB_Local.payment_schedual.Local;
             payment_schedualViewSource.View.MoveCurrentTo(SchedualList.FirstOrDefault());
 
             foreach (payment_schedual payment_schedual in SchedualList)
@@ -34,32 +34,31 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.value = payment_schedual.credit; //SchedualList.Sum(x => x.AccountPayableBalance);
                 payment_detail.IsSelected = true;
-                payment_detail.id_account = CurrentSession.Id_Account > 0 ? CurrentSession.Id_Account : PaymentDBold.app_account.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_account;
+                payment_detail.id_account = CurrentSession.Id_Account > 0 ? CurrentSession.Id_Account : PaymentDB_Local.app_account.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_account;
                 payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
                 payment_detail.app_currencyfx = payment_schedual.app_currencyfx;
                 payment_detail.State = EntityState.Added;
-                PaymentDBold.payment_detail.Add(payment_detail);
+                PaymentDB_Local.payment_detail.Add(payment_detail);
 
                 payment_detail.payment_schedual.Add(payment_schedual);
             }
 
-            paymentpayment_detailViewSource.Source = PaymentDBold.payment_detail.Local;
+            paymentpayment_detailViewSource.Source = PaymentDB_Local.payment_detail.Local;
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            await PaymentDBold.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            payment_typeViewSource.Source = PaymentDBold.payment_type.Local;
+            await PaymentDB_Local.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            payment_typeViewSource.Source = PaymentDB_Local.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            await PaymentDBold.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_accountViewSource.Source = PaymentDBold.app_account.Local;
+            await PaymentDB_Local.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_accountViewSource.Source = PaymentDB_Local.app_account.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDBold, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB_Local, App.Names.AccountsPayable, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
-            // paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
         }
 
@@ -67,7 +66,7 @@ namespace cntrl.Curd
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            PaymentDBold.CancelAllChanges();
+            PaymentDB_Local.CancelAllChanges();
 
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
@@ -77,36 +76,49 @@ namespace cntrl.Curd
         public event RoutedEventHandler SaveChanges;
         private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach (payment_schedual payment_schedual in PaymentDBold.payment_schedual.Local)
+            string OrderNumber = "";
+
+            payment_schedual payment_schedual = PaymentDB_Local.payment_schedual.Local.Where(x => x.id_range != null).FirstOrDefault();
+            app_document_range app_document_range = new app_document_range();
+
+            if (payment_schedual != null)
             {
-                if (payment_schedual != null)
+                if (payment_schedual.id_range > 0)
                 {
-                    if (payment_schedual.id_range > 0)
+                    app_document_range = await PaymentDB_Local.app_document_range.FindAsync(payment_schedual.id_range);
+
+                    if (app_document_range != null)
                     {
-                        app_document_range app_document_range = await PaymentDBold.app_document_range.FindAsync(payment_schedual.id_range);
-                        if (app_document_range != null)
-                        {
-                            entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
-                            entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
-                            payment_schedual.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-
-                            entity.Brillo.Document.Start.Manual(payment_schedual, app_document_range);
-                        }
+                        entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                        entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                        OrderNumber = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                     }
-
-                    payment_schedual.status = Status.Documents_General.Approved;
-                    payment_schedual.RaisePropertyChanged("status");
                 }
+            }
+
+            List<payment_schedual> SchedualList = new List<payment_schedual>();
+
+            foreach (payment_schedual Schedual in PaymentDB_Local.payment_schedual.Local)
+            {
+                SchedualList.Add(Schedual);
+                Schedual.number = OrderNumber;
+                Schedual.status = Status.Documents_General.Approved;
+                Schedual.RaisePropertyChanged("status");
+            }
+
+            if (app_document_range != null)
+            {
+                entity.Brillo.Document.Start.Manual(SchedualList, app_document_range);
             }
 
             try
             {
-                PaymentDBold.SaveChanges();
+                PaymentDB_Local.SaveChanges();
             }
             catch (Exception) { throw; }
 
             SaveChanges?.Invoke(this, new RoutedEventArgs());
-            Grid parentGrid = (Grid)this.Parent;
+            Grid parentGrid = (Grid)Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
         }

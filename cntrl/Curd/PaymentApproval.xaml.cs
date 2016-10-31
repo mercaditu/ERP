@@ -76,34 +76,54 @@ namespace cntrl.Curd
         public event RoutedEventHandler SaveChanges;
         private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            // payment_schedualViewSource.Source = PaymentDB_Local.payment_schedual.Local;
+
             string OrderNumber = "";
 
-            payment_schedual payment_schedual = PaymentDB_Local.payment_schedual.Local.Where(x => x.id_range != null).FirstOrDefault();
-            app_document_range app_document_range = new app_document_range();
+            List<payment_detail> DetailList = PaymentDB_Local.payment_detail.Where(x => x.payment_schedual.FirstOrDefault() != null).Include(y => y.payment_schedual).ToList();
 
-            if (payment_schedual != null)
+            int RangeID = 0;
+
+            foreach (payment_detail Detail in PaymentDB_Local.payment_detail.Local)
             {
-                if (payment_schedual.id_range > 0)
+                foreach (payment_schedual Schedual in Detail.payment_schedual)
                 {
-                    app_document_range = await PaymentDB_Local.app_document_range.FindAsync(payment_schedual.id_range);
-
-                    if (app_document_range != null)
+                    if (Schedual.id_range > 0)
                     {
-                        entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
-                        entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
-                        OrderNumber = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                        RangeID = (int)Schedual.id_range;
                     }
+                    else
+                    {
+                        Schedual.id_range = RangeID;
+                    }
+                }
+            }
+
+            app_document_range app_document_range = null;
+
+            if (RangeID > 0)
+            {
+                app_document_range = await PaymentDB_Local.app_document_range.FindAsync(RangeID);
+
+                if (app_document_range != null)
+                {
+                    entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                    OrderNumber = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                 }
             }
 
             List<payment_schedual> SchedualList = new List<payment_schedual>();
 
-            foreach (payment_schedual Schedual in PaymentDB_Local.payment_schedual.Local)
+            foreach (payment_detail Detail in PaymentDB_Local.payment_detail.Local)
             {
-                SchedualList.Add(Schedual);
-                Schedual.number = OrderNumber;
-                Schedual.status = Status.Documents_General.Approved;
-                Schedual.RaisePropertyChanged("status");
+                foreach (payment_schedual Schedual in Detail.payment_schedual)
+                {
+                    SchedualList.Add(Schedual);
+                    Schedual.number = OrderNumber;
+                    Schedual.status = Status.Documents_General.Approved;
+                    Schedual.RaisePropertyChanged("status");
+                }
             }
 
             if (app_document_range != null)

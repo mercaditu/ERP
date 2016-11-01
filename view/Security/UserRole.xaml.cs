@@ -63,12 +63,16 @@ namespace Cognitivo.Security
             try
             {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-                CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                Activation Activation = new Activation();
-                Activation.VersionEncrypt(version, security_role);
-                UserRoleDB.SaveChanges();
-                CurrentSession.Load_Security();
-                security_roleViewSource.View.Refresh();
+                if (security_role != null)
+                {
+                    CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                    Activation Activation = new Activation();
+                    Activation.VersionEncrypt(version, security_role);
+
+                    UserRoleDB.SaveChanges();
+                    CurrentSession.Load_Security();
+                    security_roleViewSource.View.Refresh();
+                }
             }
             catch (Exception ex)
             {

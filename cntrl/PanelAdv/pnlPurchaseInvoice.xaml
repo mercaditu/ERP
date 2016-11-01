@@ -20,16 +20,16 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
     </UserControl.Effect>
     <Border BorderBrush="#344C6B" BorderThickness="3">
-        <StackPanel DataContext="{StaticResource purchase_invoiceViewSource}" Background="{StaticResource appConfig}">
+        <Grid DataContext="{StaticResource purchase_invoiceViewSource}" Background="{StaticResource appConfig}">
             <Grid Background="#344C6B">
-                <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="26" Foreground="White" Margin="4,0"
-                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Content="{lex:Loc PurchaseInvoice}" FontSize="25" Margin="40,0,0,0" Foreground="White"/>
-                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="26" Foreground="White" Margin="4,5"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="{lex:Loc PurchaseInvoice}" FontSize="25" Margin="40,0,0,0" Foreground="White" VerticalAlignment="Top"/>
+                <Label Content="c" FontSize="18" Margin="5,8" VerticalAlignment="Top"
                    HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                    FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <Grid>
+            <Grid Margin="4,45,4,4" Background="WhiteSmoke" VerticalAlignment="Top">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Left">
                     <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
                     <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
@@ -38,7 +38,7 @@
                                     HorizontalAlignment="Right" VerticalAlignment="Top"
                                     IsCheckedChanged="ToggleSwitch_IsCheckedChanged"/>
             </Grid>
-            <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_invoiceDatagrid_LoadingRowDetails"
+            <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="4,80,4,4" LoadingRowDetails="sales_invoiceDatagrid_LoadingRowDetails"
                       EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="Collapsed" VerticalScrollBarVisibility="Visible"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
@@ -52,7 +52,7 @@
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Background="{StaticResource AccentColor_Introvert}"  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <Grid Background="{StaticResource AccentColor_Introvert}" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" MaxWidth="500" IsReadOnly="True" MaxHeight="128" HorizontalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
@@ -66,6 +66,6 @@
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>
 
-        </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

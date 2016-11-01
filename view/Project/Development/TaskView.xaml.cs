@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.ComponentModel;
 
 namespace Cognitivo.Project.Development
@@ -38,7 +37,7 @@ namespace Cognitivo.Project.Development
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
 
-            await ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
+            await ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Include(x => x.project_tag_detail).LoadAsync();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
 
             //Bad Code. Will bring too many items into view.
@@ -125,12 +124,15 @@ namespace Cognitivo.Project.Development
                 projectViewSource.View.Filter = i =>
                 {
                     project project = i as project;
-                    List<project_tag_detail> project_tag_detail = new List<entity.project_tag_detail>();
-                    project_tag_detail = project.project_tag_detail.ToList();
+                    
+                    string name = project.name != null ? project.name : "";
                     string code = project.code != null ? project.code : "";
-                    if (project.name.ToLower().Contains(query.ToLower()) || 
-                        project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any() ||
-                        code.ToLower().Contains(query.ToLower()))
+
+                    if (
+                        name.ToLower().Contains(query.ToLower()) || 
+                        project.project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any() ||
+                        code.ToLower().Contains(query.ToLower())
+                        )
                     {
                         return true;
                     }
@@ -379,7 +381,7 @@ namespace Cognitivo.Project.Development
                         toolBar_btnAnull_Click(sender);
                     }
                 }
-                ProjectTaskDB = new entity.ProjectTaskDB();
+                ProjectTaskDB = new ProjectTaskDB();
                 ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
                 projectViewSource.Source = ProjectTaskDB.projects.Local;
                 project_taskViewSource.View.Filter = null;

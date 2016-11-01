@@ -58,8 +58,8 @@
                             <DatePicker Style="{DynamicResource input_datepicker}"
 					    	            SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
                             <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
-                            <Controls:SmartBox_Contact x:Name="sbxContact" 
-                                                       Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Content="{Binding contact.name}" Style="{StaticResource generic_Label}"/>
+                            <!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
                         </StackPanel>
                         <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">
                             <StackPanel x:Name="stackDocument" Visibility="Collapsed">

@@ -698,7 +698,7 @@ namespace entity.Brillo.Document
 
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
-            List<payment_detail> DetailList = new List<payment_detail>();
+            //List<payment_detail> DetailList = new List<payment_detail>();
 
             //DetailList.Add(SchedualList.ToList());
 

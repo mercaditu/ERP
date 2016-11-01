@@ -667,7 +667,7 @@ namespace Cognitivo.Sales
                     sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
                 }
           
-            calculate_vat(sender, e);
+            //calculate_vat(sender, e);
         }
 
         private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)

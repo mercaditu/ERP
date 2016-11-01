@@ -115,7 +115,7 @@ namespace cntrl.Curd
 
             List<payment_schedual> SchedualList = new List<payment_schedual>();
 
-            foreach (payment_detail Detail in PaymentDB_Local.payment_detail.Local)
+            foreach (payment_detail Detail in PaymentDB_Local.payment_detail.Local.Where(x => x.IsSelected))
             {
                 foreach (payment_schedual Schedual in Detail.payment_schedual)
                 {

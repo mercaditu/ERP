@@ -81,7 +81,7 @@ namespace Cognitivo.Commercial
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
 
-            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
+            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.OrderBy(x => x.contact.name).ToList())
             {
                 if (contactLIST.Contains(payment.contact) == false)
                 {
@@ -102,6 +102,7 @@ namespace Cognitivo.Commercial
                                                                        && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
                                                                        && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
                                                                        .Include(y => y.purchase_invoice)
+                                                                       .Include(z => z.contact)
                                                                        .OrderBy(x => x.expire_date)
                                                                     .ToListAsync();
         }
@@ -203,9 +204,7 @@ namespace Cognitivo.Commercial
                 {
                     toolbar.msgWarning("Alerady Link With Vat Holding...");
                 }
-             
             }
-            
         }
 
         private void Refince_Click(object sender, RoutedEventArgs e)
@@ -228,14 +227,14 @@ namespace Cognitivo.Commercial
             {
                 PaymentDB.SaveChanges();
                 crud_modal.Children.Clear();
-                crud_modal.Visibility = System.Windows.Visibility.Collapsed;
+                crud_modal.Visibility = Visibility.Collapsed;
             }
             load_Schedual();
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            PaymentDB = new entity.PaymentDB();
+            PaymentDB = new PaymentDB();
             load_Schedual();
             ListBox_SelectionChanged(sender, null);
         }

@@ -32,8 +32,8 @@ namespace cntrl.Curd
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
 
-            paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
-            paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+            paymentViewSource = (CollectionViewSource)FindResource("paymentViewSource");
+            paymentpayment_detailViewSource = (CollectionViewSource)FindResource("paymentpayment_detailViewSource");
             payment_schedualList = _payment_schedualList;
 
             payment payment = new payment();
@@ -41,12 +41,12 @@ namespace cntrl.Curd
             if (Mode == Modes.Recievable)
             {
                 payment = PaymentDB.New(true);
-                payment.GrandTotal = payment_schedualList.Sum(x => x.AccountReceivableBalance);
+                //payment.GrandTotal = payment_schedualList.Sum(x => x.AccountReceivableBalance);
             }
             else
             {
                 payment = PaymentDB.New(false);
-                payment.GrandTotal = payment_schedualList.Sum(x => x.AccountPayableBalance);
+                //payment.GrandTotal = payment_schedualList.Sum(x => x.AccountPayableBalance);
             }
 
             PaymentDB.payments.Add(payment);
@@ -54,10 +54,11 @@ namespace cntrl.Curd
 
             int id_contact = payment_schedualList.FirstOrDefault().id_contact;
 
-            if (PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault() != null)
+            entity.contact contacts = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+            if (contacts != null)
             {
-                payment.id_contact = id_contact;
-                payment.contact = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+                payment.id_contact = contacts.id_contact;
+                payment.contact = contacts;
             }
 
             foreach (payment_schedual payment_schedual in payment_schedualList)
@@ -67,6 +68,7 @@ namespace cntrl.Curd
                     payment_detail payment_detail = PaymentDB.payment_detail.Where(x => x.id_payment_detail == payment_schedual.id_payment_detail).FirstOrDefault();
                     payment_detail.IsSelected = true;
                     payment_detail.payment = payment;
+
                     if (Mode == Modes.Recievable)
                     {
                         payment_detail.value = payment_schedual.AccountReceivableBalance;
@@ -92,6 +94,7 @@ namespace cntrl.Curd
                         payment_detail.payment.id_currencyfx = id_currencyfx;
                         payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
                     }
+
                     if (Mode == Modes.Recievable)
                     {
                         payment_detail.value = payment_schedual.AccountReceivableBalance;
@@ -106,6 +109,7 @@ namespace cntrl.Curd
                 }
             }
 
+            payment.RaisePropertyChanged("GrandTotal");
             payment.RaisePropertyChanged("GrandTotalDetail");
 
             paymentViewSource.View.MoveCurrentTo(payment);
@@ -148,7 +152,7 @@ namespace cntrl.Curd
             if (Mode == Modes.Recievable)
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
-                stackDocument.Visibility = System.Windows.Visibility.Visible;
+                stackDocument.Visibility = Visibility.Visible;
             }
 
             //paymentViewSource.View.Refresh();

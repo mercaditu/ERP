@@ -190,8 +190,16 @@ namespace entity
                 value = g.Sum(a => a.SubTotal_Vat)
             }).ToList();
 
-            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
+            payment payment = new payment();
+            payment.id_contact = sales_return.id_contact;
+            payment.status = Status.Documents_General.Approved;
+            
+
+            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.OrderBy(x => x.sales_invoice_detail.id_sales_invoice))
             {
+                //For each Sales Return.
+                decimal Return_SubTotal = sales_return.sales_return_detail.Sum(x => x.SubTotal_Vat);
+
                 if (sales_return_detail.sales_invoice_detail != null)
                 {
                     sales_invoice_detail sales_invoice_detail = sales_return_detail.sales_invoice_detail;
@@ -212,10 +220,7 @@ namespace entity
                     }
                 }
             }
-            
-            payment payment = new payment();
-            payment.id_contact = sales_return.id_contact;
-            payment.status = Status.Documents_General.Approved;
+
 
             payment_detail payment_detail = new payment_detail();
             payment_detail.id_currencyfx = sales_return.id_currencyfx;

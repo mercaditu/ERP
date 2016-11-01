@@ -54,7 +54,7 @@ namespace cntrl.Curd
 
             int id_contact = payment_schedualList.FirstOrDefault().id_contact;
 
-            entity.contact contacts = PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+            entity.contact contacts = PaymentDB.contacts.Find(id_contact);
             if (contacts != null)
             {
                 payment.id_contact = contacts.id_contact;
@@ -63,9 +63,10 @@ namespace cntrl.Curd
 
             foreach (payment_schedual payment_schedual in payment_schedualList)
             {
-                if (payment_schedual.payment_detail != null)
+                payment_detail payment_detail = PaymentDB.payment_detail.Find(payment_schedual.id_payment_detail);
+
+                if (payment_detail != null)
                 {
-                    payment_detail payment_detail = PaymentDB.payment_detail.Where(x => x.id_payment_detail == payment_schedual.id_payment_detail).FirstOrDefault();
                     payment_detail.IsSelected = true;
                     payment_detail.payment = payment;
 
@@ -82,30 +83,30 @@ namespace cntrl.Curd
                 }
                 else
                 {
-                    payment_detail payment_detail = new payment_detail();
-                    payment_detail.IsSelected = true;
-                    payment_detail.payment = payment;
+                    payment_detail _payment_detail = new payment_detail();
+                    _payment_detail.IsSelected = true;
+                    _payment_detail.payment = payment;
 
                     int id_currencyfx = payment_schedual.id_currencyfx;
 
                     if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
                     {
-                        payment_detail.id_currencyfx = id_currencyfx;
-                        payment_detail.payment.id_currencyfx = id_currencyfx;
-                        payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                        _payment_detail.id_currencyfx = id_currencyfx;
+                        _payment_detail.payment.id_currencyfx = id_currencyfx;
+                        _payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
                     }
 
                     if (Mode == Modes.Recievable)
                     {
-                        payment_detail.value = payment_schedual.AccountReceivableBalance;
+                        _payment_detail.value = payment_schedual.AccountReceivableBalance;
                     }
                     else
                     {
-                        payment_detail.value = payment_schedual.AccountPayableBalance;
+                        _payment_detail.value = payment_schedual.AccountPayableBalance;
                     }
 
-                    payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-                    payment.payment_detail.Add(payment_detail);
+                    _payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
+                    payment.payment_detail.Add(_payment_detail);
                 }
             }
 

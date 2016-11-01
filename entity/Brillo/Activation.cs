@@ -95,7 +95,7 @@ namespace entity.Brillo
             {
                 if (security_role.version != null)
                 {
-                    string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+                    string _Hash = security_role.version;
 
                     VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
                     string[] version = VersionKey.Split('.');
@@ -119,27 +119,27 @@ namespace entity.Brillo
 
 
 
-            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Lite;
             }
-            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Basic;
             }
-            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Medium;
             }
-            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.PrintingPress;
             }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.EventManagement;
             }

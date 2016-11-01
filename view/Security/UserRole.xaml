@@ -81,11 +81,8 @@
             </StackPanel>
             <StackPanel Margin="8" Grid.Column="1">
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
-                <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" 
-                    >
-                   
-                </ComboBox>
-                <Button Content="Change" Click="btnChange"/>
+                <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}"/>
+                <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
                     <Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->

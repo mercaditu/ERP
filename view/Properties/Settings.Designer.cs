@@ -173,7 +173,7 @@ namespace Cognitivo.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=192.168.0.9;user id=root;password=root;persistsecurityinfo=True;database=a" +
+        [global::System.Configuration.DefaultSettingValueAttribute("server=192.168.0.2;user id=root;password=root;persistsecurityinfo=True;database=a" +
             "stillero777")]
         public string MySQLconnString {
             get {

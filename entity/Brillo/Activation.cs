@@ -149,54 +149,46 @@ namespace entity.Brillo
             }
         }
 
-        public bool VersionEncrypt(CurrentSession.Versions Version)
+        public string VersionEncrypt(CurrentSession.Versions Version)
         {
             try
             {
-                using (db db = new db())
+                string _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
+                if (CurrentSession.Versions.Lite.ToString() == Version.ToString())
                 {
-                    string _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
-                    if (CurrentSession.Versions.Lite.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
-                    }
-                    else if (CurrentSession.Versions.Basic.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Bathua_102.ToString();
-                    }
-                    else if (CurrentSession.Versions.Medium.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Mankurad_153.ToString();
-                    }
-                    else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
-                    }
-                    else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
-                    }
-                    else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
-                    {
-                        _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
-                    }
-                    int id_role = CurrentSession.UserRole.id_role;
-                    security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
-                    _Seats = _Seats + "." + security_role.name + "." + security_role.app_company.gov_code;
-
-                    string _Passkey = "^%*@$^$";
-
-                    string hash = StringCipher.Encrypt(_Seats, _Passkey);
-
-
-                    security_role.version = hash;
-                    db.SaveChanges();
+                    _Seats = CurrentSession.VersionsKey.Himayuddin_51.ToString();
                 }
-                return true;
+                else if (CurrentSession.Versions.Basic.ToString() == Version.ToString())
+                {
+                    _Seats = CurrentSession.VersionsKey.Bathua_102.ToString();
+                }
+                else if (CurrentSession.Versions.Medium.ToString() == Version.ToString())
+                {
+                    _Seats = CurrentSession.VersionsKey.Mankurad_153.ToString();
+                }
+                else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
+                {
+                    _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
+                }
+                else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
+                {
+                    _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
+                }
+                else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
+                {
+                    _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
+                }
+                int id_role = CurrentSession.UserRole.id_role;
+                security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+                _Seats = _Seats + "." + security_role.name + "." + security_role.app_company.gov_code;
+
+                string _Passkey = "^%*@$^$";
+
+                return StringCipher.Encrypt(_Seats, _Passkey);
             }
             catch
             {
-                return false;
+                return "";
             }
         }
         public string VersionEncrypt(CurrentSession.Versions Version, security_role security_role)

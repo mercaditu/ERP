@@ -50,7 +50,6 @@ namespace Cognitivo.Security
 
             add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
-           
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -126,7 +125,7 @@ namespace Cognitivo.Security
         private void add_Privallge()
         {
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
-            List<entity.Privilage.Privilages> Privilages = Enum.GetValues(typeof(entity.Privilage.Privilages)).Cast<entity.Privilage.Privilages>().ToList();
+            List<Privilage.Privilages> Privilages = Enum.GetValues(typeof(Privilage.Privilages)).Cast<Privilage.Privilages>().ToList();
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             foreach (entity.App.Names Names in Application)
             {

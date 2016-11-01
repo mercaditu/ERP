@@ -15,10 +15,7 @@ namespace entity
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         [Key]
@@ -43,21 +40,21 @@ namespace entity
         }
         bool _can_create = false;
 
-        public bool can_read
+        [NotMapped]
+        public bool all
         {
-            get
-            {
-                return _can_read;
-            }
+            get { return _all; }
             set
             {
-                if (value != _can_read)
+                if (value != _all)
                 {
-                    _can_read = value;
-                    RaisePropertyChanged("can_read");
+                    _all = value;
 
-                    if (_can_read == false)
+                    if (_all == false)
                     {
+                        can_read = false;
+                        RaisePropertyChanged("can_read");
+
                         can_create = false;
                         RaisePropertyChanged("can_create");
 
@@ -73,6 +70,43 @@ namespace entity
                         can_annul = false;
                         RaisePropertyChanged("can_annul");
                     }
+                    else
+                    {
+                        can_read = false;
+                        RaisePropertyChanged("can_read");
+
+                        can_create = true;
+                        RaisePropertyChanged("can_create");
+
+                        can_update = true;
+                        RaisePropertyChanged("can_update");
+
+                        can_delete = true;
+                        RaisePropertyChanged("can_delete");
+
+                        can_approve = true;
+                        RaisePropertyChanged("can_approve");
+
+                        can_annul = true;
+                        RaisePropertyChanged("can_annul");
+                    }
+                }
+            }
+        }
+        private bool _all;
+
+        public bool can_read
+        {
+            get
+            {
+                return _can_read;
+            }
+            set
+            {
+                if (value != _can_read)
+                {
+                    _can_read = value;
+                    RaisePropertyChanged("can_read");
                 }
             }
         }
@@ -94,24 +128,6 @@ namespace entity
                 {
                     _can_annul = value;
                     RaisePropertyChanged("can_annul");
-
-                    if (_can_annul == true)
-                    {
-                        can_create = true;
-                        RaisePropertyChanged("can_create");
-
-                        can_update = true;
-                        RaisePropertyChanged("can_update");
-
-                        can_delete = true;
-                        RaisePropertyChanged("can_delete");
-
-                        can_approve = true;
-                        RaisePropertyChanged("can_approve");
-
-                        can_annul = true;
-                        RaisePropertyChanged("can_annul");
-                    }
                 }
             }
         }

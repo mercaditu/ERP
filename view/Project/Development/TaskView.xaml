@@ -83,14 +83,14 @@
                 <Grid.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
                                               ItemsSource="{Binding child, Mode=TwoWay}">
-                        <Panels:pnl_TreeView StatusColor="{Binding status, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                        <Panels:pnl_TreeView StatusColor="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource ProjectStatus2Color}}"  
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
-                                             Type_Name="{Binding items.id_item_type, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             Type_Name="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item_description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}"

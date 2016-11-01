@@ -69,20 +69,13 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
-                      SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180"/>
+                    <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Margin="8" Grid.Column="1">
-                <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
-                <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}"/>
-                <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
                     <Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->
@@ -104,13 +97,17 @@
                               ItemsSource="{Binding Source={StaticResource security_rolesecurity_curdViewSource}}" Grid.Row="1" CanUserDeleteRows="False" CanUserAddRows="False"
                               RowDetailsVisibilityMode="VisibleWhenSelected" FontSize="16" SelectionUnit="Cell">
                         <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding all, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="All" Width="SizeToHeader"/>
+                            <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
+                                                Header="{lex:Loc Cognitivo:local:Application}" FontWeight="Bold"
+                                                IsReadOnly="True" Width="*" SortDirection="Descending"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="View" Width="SizeToHeader"/>
-                            <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
-                                                Header="{lex:Loc Cognitivo:local:Application}" FontWeight="Bold"
-                                                IsReadOnly="True" Width="*" SortDirection="Descending"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"

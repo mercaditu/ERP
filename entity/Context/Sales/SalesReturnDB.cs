@@ -123,6 +123,7 @@ namespace entity
                     sales_return.app_condition = app_condition.Find(sales_return.id_condition);
                     sales_return.app_contract = app_contract.Find(sales_return.id_contract);
                     sales_return.app_currencyfx = app_currencyfx.Find(sales_return.id_currencyfx);
+
                     if (sales_return.status != Status.Documents_General.Approved)
                     {
                         if (sales_return.number == null && sales_return.id_range != null)
@@ -130,13 +131,13 @@ namespace entity
                             Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().code;
                             Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == sales_return.id_terminal).FirstOrDefault().code;
 
-                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == sales_return.id_range).FirstOrDefault();
+                            app_document_range app_document_range = base.app_document_range.Find(sales_return.id_range);
 
                             sales_return.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_return.RaisePropertyChanged("number");
                             sales_return.is_issued = true;
 
-                            //Save values bofore printing.
+                            //Save values before printing.
                             SaveChanges();
 
                             Brillo.Document.Start.Automatic(sales_return, app_document_range);
@@ -163,20 +164,21 @@ namespace entity
                             item_movement.AddRange(item_movementList);
                         }
 
+                        //Automatically Link Return & Sales
                         if (sales_return.sales_invoice != null)
                         {
                             payment payment = new payment();
                             payment.id_contact = sales_return.id_contact;
                             payment.status = Status.Documents_General.Approved;
 
-                            payment_detail payment_detailreturn = new payment_detail();
-                            payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
+                            payment_detail payment_detail = new payment_detail();
+                            payment_detail.id_currencyfx = sales_return.id_currencyfx;
+                            payment_detail.id_sales_return = sales_return.id_sales_return;
 
-                            //Check for Credit Note PaymentType.
+                            //Creates Payment Type if does not exist.
                             if (base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault() != null)
                             {
-                                //Gets Payment Type form Database.
-                                payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
+                                payment_detail.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
                             }
                             else
                             {
@@ -186,33 +188,75 @@ namespace entity
                                 payment_type.name = LocExtension.GetLocalizedValue<string>("Cognitivo:local:SalesReturn");
                                 base.payment_type.Add(payment_type);
 
-                                payment_detailreturn.payment_type = payment_type;
+                                payment_detail.payment_type = payment_type;
                             }
 
-                            payment_detailreturn.id_sales_return = sales_return.id_sales_return;
-                            payment_detailreturn.value = sales_return.GrandTotal;
+                            //1) Saldo de la Factura.
+                            //2) Limpiar saldo por factura.
+                            decimal SalesBalance = 0;
 
-                            payment_schedual payment_schedualReturn = new payment_schedual();
-                            payment_schedualReturn.debit = 0;
-                            payment_schedualReturn.credit = sales_return.GrandTotal;
-                            payment_schedualReturn.id_currencyfx = sales_return.id_currencyfx;
-                            payment_schedualReturn.sales_return = sales_return;
-                            payment_schedualReturn.trans_date = sales_return.trans_date;
-                            payment_schedualReturn.expire_date = sales_return.trans_date;
-                            payment_schedualReturn.status = Status.Documents_General.Approved;
-                            payment_schedualReturn.id_contact = sales_return.id_contact;
-                            payment_schedualReturn.can_calculate = true;
-                            payment_schedualReturn.parent = sales_return.sales_invoice.payment_schedual.FirstOrDefault();
+                            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
+                            {
+                                if (sales_return_detail.sales_invoice_detail != null)
+                                {
+                                    sales_invoice_detail sales_invoice_detail = sales_return_detail.sales_invoice_detail;
+                                    sales_invoice sales_invoice = sales_invoice_detail.sales_invoice;
 
-                            payment_detailreturn.payment_schedual.Add(payment_schedualReturn);
-                            payment.payment_detail.Add(payment_detailreturn);
+                                    foreach (payment_schedual payment_schedual in sales_invoice.payment_schedual)
+                                    {
+                                        SalesBalance += payment_schedual.AccountReceivableBalance;
+                                    }
+                                }
+                            }
+
+                            ///If Return > Schedual Balance
+                            if (sales_return.GrandTotal > SalesBalance && SalesBalance > 0)
+                            {
+                                /// 
+                                /// Consume Balance + Create new Schedual with remainder
+                                ///
+                                payment_detail.value = SalesBalance;
+
+                                payment_schedual Schedual = new payment_schedual();
+                                Schedual.debit = 0;
+                                //Remainder balance
+                                Schedual.credit = sales_return.GrandTotal - SalesBalance;
+                                Schedual.id_currencyfx = sales_return.id_currencyfx;
+                                Schedual.sales_return = sales_return;
+                                Schedual.trans_date = sales_return.trans_date;
+                                Schedual.expire_date = sales_return.trans_date;
+                                Schedual.status = Status.Documents_General.Approved;
+                                Schedual.id_contact = sales_return.id_contact;
+                                Schedual.can_calculate = false;
+
+                                payment_schedual.Add(Schedual);
+                            }
+                            else ///If Return < Schedual Balance
+                            {
+                                payment_schedual Schedual = new payment_schedual();
+                                Schedual.debit = 0;
+                                Schedual.credit = sales_return.GrandTotal;
+                                Schedual.id_currencyfx = sales_return.id_currencyfx;
+                                Schedual.sales_return = sales_return;
+                                Schedual.trans_date = sales_return.trans_date;
+                                Schedual.expire_date = sales_return.trans_date;
+                                Schedual.status = Status.Documents_General.Approved;
+                                Schedual.id_contact = sales_return.id_contact;
+                                Schedual.can_calculate = true;
+                                Schedual.parent = sales_return.sales_invoice.payment_schedual.FirstOrDefault();
+
+                                payment_detail.value = sales_return.GrandTotal;
+                                payment_detail.payment_schedual.Add(Schedual);
+                            }
+
+                            
+                            payment.payment_detail.Add(payment_detail);
                             base.payments.Add(payment);
                         }
 
                         sales_return.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }
-
                     else if (sales_return.Error != null)
                     {
                         sales_return.HasErrors = true;

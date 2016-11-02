@@ -185,15 +185,26 @@ namespace entity
         {
             decimal SalesBalance = 0;
 
-            var i = sales_return.sales_return_detail.GroupBy(x => x.sales_invoice_detail.id_sales_invoice).Select(g => new
-            {
-                value = g.Sum(a => a.SubTotal_Vat)
-            }).ToList();
-
             payment payment = new payment();
             payment.id_contact = sales_return.id_contact;
             payment.status = Status.Documents_General.Approved;
-            
+
+            List<sales_invoice> Affected_SalesInvoice = new List<sales_invoice>();
+            List<sales_return_detail> Affected_ReturnDetail = new List<sales_return_detail>();
+
+            //Adds Sales Invoice into List for later comparison. This list will help know how much to apply into each sales payment schedual.
+            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.GroupBy(x => x.sales_invoice_detail.id_sales_invoice))
+            {
+                sales_invoice sales_invoice = sales_return_detail.sales_invoice_detail.sales_invoice;
+                if (sales_invoice != null)
+                {
+
+                    if (Affected_SalesInvoice.Contains(sales_invoice) == false)
+                    {
+                        Affected_SalesInvoice.Add(sales_invoice);
+                    }
+                }
+            }
 
             foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.OrderBy(x => x.sales_invoice_detail.id_sales_invoice))
             {

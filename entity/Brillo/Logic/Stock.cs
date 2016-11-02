@@ -357,7 +357,9 @@ namespace entity.Brillo.Logic
 
                 production_execution_detail production_execution_detail = (production_execution_detail)obj_entity;
 
-                if (production_execution_detail.item.id_item_type == item.item_type.Product || production_execution_detail.item.id_item_type == item.item_type.RawMaterial || production_execution_detail.item.id_item_type == item.item_type.Supplies)
+                if (production_execution_detail.item.id_item_type == item.item_type.Product || 
+                    production_execution_detail.item.id_item_type == item.item_type.RawMaterial || 
+                    production_execution_detail.item.id_item_type == item.item_type.Supplies)
                 {
                     item_product item_product = FindNFix_ItemProduct(production_execution_detail.item);
 
@@ -372,7 +374,7 @@ namespace entity.Brillo.Logic
                             if (production_execution_detail.movement_id != null && production_execution_detail.movement_id > 0)
                             {
                                 Brillo.Stock stockBrillo = new Brillo.Stock();
-                                Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Where(x => x.id_movement == production_execution_detail.movement_id).FirstOrDefault());
+                                Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(production_execution_detail.movement_id));
                             }
                             else
                             {
@@ -404,7 +406,9 @@ namespace entity.Brillo.Logic
                     }
                 }
 
-                if (production_execution_detail.item.id_item_type == item.item_type.Product || production_execution_detail.item.id_item_type == item.item_type.RawMaterial || production_execution_detail.item.id_item_type == item.item_type.Supplies)
+                if (production_execution_detail.item.id_item_type == item.item_type.Product || 
+                    production_execution_detail.item.id_item_type == item.item_type.RawMaterial || 
+                    production_execution_detail.item.id_item_type == item.item_type.Supplies)
                 {
                     item_product item_product = FindNFix_ItemProduct(production_execution_detail.item);
                     decimal Cost = 0;
@@ -444,7 +448,7 @@ namespace entity.Brillo.Logic
 
                                         foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                                         {
-                                            item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
+                                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
                                             item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
                                             item_movement_dimension.value = production_execution_dimension.value;
                                             OutputMovementDimensionLIST.Add(item_movement_dimension);
@@ -493,7 +497,7 @@ namespace entity.Brillo.Logic
                             production_execution_detail.unit_cost = Cost;
 
                             item_movementOUTPUT.Add(
-                                    CreditOnly_Movement(entity.Status.Stock.InStock,
+                                    CreditOnly_Movement(Status.Stock.InStock,
                                                     App.Names.ProductionExecution,
                                                     production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,

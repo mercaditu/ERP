@@ -20,7 +20,7 @@ namespace Cognitivo.Production
             production_lineViewSource,
             production_orderproduction_order_detailViewSource;
 
-        cntrl.Curd.ItemRequest ItemRequest;
+        //cntrl.Curd.ItemRequest ItemRequest;
 
         public bool ViewAll { get; set; }
 
@@ -288,8 +288,8 @@ namespace Cognitivo.Production
 
                 if (DetailList.Count() > 0)
                 {
-                    ItemRequest = new cntrl.Curd.ItemRequest();
-                    crud_modal_request.Visibility = Visibility.Visible;
+                    cntrl.Curd.ItemRequest ItemRequest = new cntrl.Curd.ItemRequest();
+                    crud_modal.Visibility = Visibility.Visible;
                     ItemRequest.listdepartment = OrderDB.app_department.ToList();
                     ItemRequest.item_request_Click += item_request_Click;
 
@@ -298,7 +298,7 @@ namespace Cognitivo.Production
                         ItemRequest.name = production_order.project.name;
                     }
 
-                    crud_modal_request.Children.Add(ItemRequest);
+                    crud_modal.Children.Add(ItemRequest);
                 }
                 else
                 {
@@ -309,90 +309,96 @@ namespace Cognitivo.Production
 
         public void item_request_Click(object sender)
         {
+            cntrl.Curd.ItemRequest ItemRequest = crud_modal.Children.Cast<cntrl.Curd.ItemRequest>().First();
+
             production_order production_order = ((production_order)production_orderViewSource.View.CurrentItem);
             int id_production_order = production_order.id_production_order;
 
             if (itemDataGrid.ItemsSource != null)
             {
-                List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
+                List<production_order_detail> production_order_detaillist = new List<production_order_detail>();
                 production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
 
-                item_request item_request = new item_request();
-                item_request.name = ItemRequest.name;
-                item_request.comment = ItemRequest.comment;
-
-                item_request.id_department = ItemRequest.id_department;
-                item_request.id_production_order = id_production_order;
-                if (production_order.id_project != null)
+                if (production_order_detaillist.Count() > 0)
                 {
-                    item_request.id_project = production_order.id_project;
-                    item_request.id_branch = production_order.id_branch;
-                }
+                    item_request item_request = new item_request();
+                    item_request.name = ItemRequest.name;
+                    item_request.comment = ItemRequest.comment;
 
-                item_request.request_date = DateTime.Now;
+                    item_request.id_department = ItemRequest.id_department;
+                    item_request.id_production_order = id_production_order;
 
-                foreach (production_order_detail data in production_order_detaillist.Where(x => x.IsSelected == true))
-                {
-                    item_request_detail item_request_detail = new item_request_detail();
-                    item_request_detail.date_needed_by = ItemRequest.neededDate;
-                    item_request_detail.id_order_detail = data.id_order_detail;
-                    item_request_detail.urgency = ItemRequest.Urgencies;
-                    int idItem = data.item.id_item;
-                    item_request_detail.id_item = idItem;
-
-                    item item = OrderDB.items.Find(idItem);
-                    if (item != null)
+                    if (production_order.id_project != null)
                     {
-                        item_request_detail.item = item;
-                        item_request_detail.comment = item_request_detail.item.name;
+                        item_request.id_project = production_order.id_project;
+                        item_request.id_branch = production_order.id_branch;
                     }
 
-                    if (data.project_task != null)
-                    {
-                        item_request_detail.id_project_task = data.project_task.id_project_task;
+                    item_request.request_date = DateTime.Now;
 
-                        List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
-                        foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
+                    foreach (production_order_detail data in production_order_detaillist.Where(x => x.IsSelected == true))
+                    {
+                        data.IsSelected = false;
+
+                        item_request_detail item_request_detail = new item_request_detail();
+                        item_request_detail.date_needed_by = ItemRequest.neededDate;
+                        item_request_detail.id_order_detail = data.id_order_detail;
+                        item_request_detail.urgency = ItemRequest.Urgencies;
+                        int idItem = data.item.id_item;
+                        item_request_detail.id_item = idItem;
+
+                        item item = OrderDB.items.Find(idItem);
+                        if (item != null)
                         {
-                            item_request_dimension item_request_dimension = new item_request_dimension();
-                            item_request_dimension.id_dimension = project_task_dimension.id_dimension;
-                            item_request_dimension.id_measurement = project_task_dimension.id_measurement;
-                            item_request_dimension.value = project_task_dimension.value;
-                            string comment = item_request_detail.item.name;
-
-                            comment += project_task_dimension.value.ToString();
-                            comment += "X";
-
-                            item_request_detail.comment = comment.Substring(0, comment.Length - 1);
-                            item_request_detail.item_request_dimension.Add(item_request_dimension);
+                            item_request_detail.item = item;
+                            item_request_detail.comment = item_request_detail.item.name;
                         }
+
+                        if (data.project_task != null)
+                        {
+                            item_request_detail.id_project_task = data.project_task.id_project_task;
+
+                            List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
+                            foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
+                            {
+                                item_request_dimension item_request_dimension = new item_request_dimension();
+                                item_request_dimension.id_dimension = project_task_dimension.id_dimension;
+                                item_request_dimension.id_measurement = project_task_dimension.id_measurement;
+                                item_request_dimension.value = project_task_dimension.value;
+                                string comment = item_request_detail.item.name;
+
+                                comment += project_task_dimension.value.ToString();
+                                comment += "X";
+
+                                item_request_detail.comment = comment.Substring(0, comment.Length - 1);
+                                item_request_detail.item_request_dimension.Add(item_request_dimension);
+                            }
+                        }
+                        
+                        item_request_detail.quantity = data.quantity;
+                        item_request.item_request_detail.Add(item_request_detail);
                     }
 
+                    OrderDB.item_request.Add(item_request);
+                    OrderDB.SaveChanges();
 
-                    item_request_detail.quantity = data.quantity;
-
-                    item_request.item_request_detail.Add(item_request_detail);
+                    Logistics_SelectionChanged(sender, null);
                 }
-
-                OrderDB.item_request.Add(item_request);
-                OrderDB.SaveChanges();
-
-                Logistics_SelectionChanged(sender, null);
             }
 
-            crud_modal_request.Children.Clear();
-            crud_modal_request.Visibility = Visibility.Collapsed;
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Collapsed;
         }
 
         private void btnSaveTender_Click(object sender, RoutedEventArgs e)
         {
-            crud_modal_request.Visibility = Visibility.Collapsed;
+            crud_modal.Visibility = Visibility.Collapsed;
             OrderDB.SaveChanges();
         }
 
         private void lblCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            crud_modal_request.Visibility = Visibility.Collapsed;
+            crud_modal.Visibility = Visibility.Collapsed;
         }
 
         private void item_ProductDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

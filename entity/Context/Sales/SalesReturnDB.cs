@@ -196,13 +196,21 @@ namespace entity
 
             foreach (var Row in Sum_SalesReturnDetail)
             {
-
                 foreach (payment_schedual payment_schedual in Row.SalesInvoice.FirstOrDefault().payment_schedual)
                 {
 
                 }
             }
 
+            var SalesReturnDetail =
+                sales_return.sales_return_detail
+                .Where(x => x.sales_invoice_detail == null)
+                .GroupBy(x => x.sales_invoice_detail.id_sales_invoice)
+                .Select(group => new
+                {
+                    SalesInvoice = group.Select(y => y.sales_invoice_detail.sales_invoice),
+                    Sum_SRD = group.Sum(y => y.SubTotal_Vat)
+                }).ToList();
 
             //Adds Sales Invoice into List for later comparison. This list will help know how much to apply into each sales payment schedual.
             foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
@@ -219,8 +227,6 @@ namespace entity
                             Affected_SalesInvoice.Add(sales_invoice);
                         }
                     }
-
-
                 }
                 else
                 {

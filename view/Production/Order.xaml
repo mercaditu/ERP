@@ -36,13 +36,11 @@
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
-		<Grid Name="crud_modal_request" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
-			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-		<Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
 		<Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>

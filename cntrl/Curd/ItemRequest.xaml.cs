@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
+
 namespace cntrl.Curd
 {
     /// <summary>
@@ -46,10 +39,7 @@ namespace cntrl.Curd
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
 
-            if (item_request_Click != null)
-            {
-                item_request_Click(sender);
-            }
+            item_request_Click?.Invoke(sender);
 
         }
 

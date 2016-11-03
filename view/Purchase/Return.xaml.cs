@@ -16,7 +16,6 @@ namespace Cognitivo.Purchase
 
         CollectionViewSource
             purchaseReturnViewSource,
-            purchaseInvoiceViewSource,
             purchase_returnpurchase_return_detailViewSource;
 
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
@@ -403,9 +402,7 @@ namespace Cognitivo.Purchase
             //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
-
-      
-
+        
         private void btnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -436,8 +433,6 @@ namespace Cognitivo.Purchase
 
                 foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
                 {
-                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Count()==0)
-                    {
                         purchase_return_detail purchase_return_detail = new purchase_return_detail();
                         purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
                         purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
@@ -466,7 +461,7 @@ namespace Cognitivo.Purchase
                         purchase_return_detail.unit_cost = _purchase_invoice_detail.unit_cost;
                         purchase_return_detail.CurrencyFX_ID = _purchase_return.id_currencyfx;
                         _purchase_return.purchase_return_detail.Add(purchase_return_detail);
-                    }
+
                     dbContext.Entry(_purchase_return).Entity.State = EntityState.Added;
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;

@@ -16,7 +16,7 @@ namespace entity.BrilloQuery
 		public List<ReturnInvoice_Integration> Get_ReturnInvoice_Integration(int ReturnID)
 		{
 			string query = @" select 
-							 round(srd.quantity * srd.unit_price * (vatco.vat + 1),4) as SubTotalVAT,
+							  sum(srd.quantity * srd.unit_price * (vatco.vat + 1)) as SubTotalVAT,
 							 si.id_sales_invoice as SalesInvoiceID,
 							 srd.id_sales_return_detail as ReturnDetailID
 							 

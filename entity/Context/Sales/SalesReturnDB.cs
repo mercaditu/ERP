@@ -153,18 +153,18 @@ namespace entity
                             sales_return.is_issued = false;
                         }
 
-                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-                        Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                        payment_schedualList = _Payment.insert_Schedual(sales_return);
+                        //List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                        //Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        //payment_schedualList = _Payment.insert_Schedual(sales_return);
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.insert_Stock(this, sales_return);
 
-                        if (payment_schedualList != null && payment_schedualList.Count > 0)
-                        {
-                            payment_schedual.AddRange(payment_schedualList);
-                        }
+                        //if (payment_schedualList != null && payment_schedualList.Count > 0)
+                        //{
+                        //    payment_schedual.AddRange(payment_schedualList);
+                        //}
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             item_movement.AddRange(item_movementList);
@@ -233,6 +233,11 @@ namespace entity
 
                             payment.payment_detail.Add(payment_detail);
                         }
+                        else
+                        {
+                            // do same as below.
+                            //Blank Balance
+                        }
                     }
                 }
                 else
@@ -240,7 +245,7 @@ namespace entity
                     //No Invoice. Direct.
                     decimal PaymentValue = item.SubTotalVAT;
 
-                    payment_detail payment_detail = new payment_detail();
+                    //payment_detail payment_detail = new payment_detail();
 
                     payment_schedual Schedual = new payment_schedual();
                     Schedual.credit = 0;
@@ -253,16 +258,16 @@ namespace entity
                     Schedual.id_contact = sales_return.id_contact;
                     Schedual.can_calculate = false;
 
-                    payment_detail.id_currencyfx = sales_return.id_currencyfx;
-                    payment_detail.id_sales_return = sales_return.id_sales_return;
+                    //payment_detail.id_currencyfx = sales_return.id_currencyfx;
+                    //payment_detail.id_sales_return = sales_return.id_sales_return;
 
-                    payment_type payment_type = base.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.CreditNote).FirstOrDefault();
-                    payment_detail.payment_type = payment_type != null ? payment_type : Fix_PaymentType();
+                    //payment_type payment_type = base.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.CreditNote).FirstOrDefault();
+                    //payment_detail.payment_type = payment_type != null ? payment_type : Fix_PaymentType();
 
-                    payment_detail.value = PaymentValue;
-                    payment_detail.payment_schedual.Add(Schedual);
+                    //payment_detail.value = PaymentValue;
+                    base.payment_schedual.Add(Schedual);
 
-                    payment.payment_detail.Add(payment_detail);
+                    //payment.payment_detail.Add(payment_detail);
                 }
             }
 

@@ -1,19 +1,7 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -50,13 +38,13 @@ namespace Cognitivo.Reporting.Views
 
             SalesDB.BeginInit();
 
-            Data.SalesDSTableAdapters.SalesByVATTableAdapter SalesByVATTableAdapter = new Data.SalesDSTableAdapters.SalesByVATTableAdapter();
+            Data.SalesDSTableAdapters.SalesVATReportTableAdapter SalesVATReportTableAdapter = new Data.SalesDSTableAdapters.SalesVATReportTableAdapter();
 
             //fill data
-            SalesByVATTableAdapter.ClearBeforeFill = true;
+            SalesVATReportTableAdapter.ClearBeforeFill = true;
             DataTable dt = new DataTable();
 
-            dt = SalesByVATTableAdapter.GetDataByDate(StartDate, EndDate, CurrentSession.Id_Company);
+            dt = SalesVATReportTableAdapter.GetDataBy(StartDate, EndDate, CurrentSession.Id_Company);
 
             reportDataSource1.Name = "SalesByVAT"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;

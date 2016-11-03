@@ -46,8 +46,6 @@ namespace Cognitivo.Reporting.Data {
         
         private SalesVATReportDataTable tableSalesVATReport;
         
-        private SalesByVATDataTable tableSalesByVAT;
-        
         private SalesBySalesRepDataTable tableSalesBySalesRep;
         
         private ContactSubscriptionDataTable tableContactSubscription;
@@ -112,9 +110,6 @@ namespace Cognitivo.Reporting.Data {
                 }
                 if ((ds.Tables["SalesVATReport"] != null)) {
                     base.Tables.Add(new SalesVATReportDataTable(ds.Tables["SalesVATReport"]));
-                }
-                if ((ds.Tables["SalesByVAT"] != null)) {
-                    base.Tables.Add(new SalesByVATDataTable(ds.Tables["SalesByVAT"]));
                 }
                 if ((ds.Tables["SalesBySalesRep"] != null)) {
                     base.Tables.Add(new SalesBySalesRepDataTable(ds.Tables["SalesBySalesRep"]));
@@ -254,16 +249,6 @@ namespace Cognitivo.Reporting.Data {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SalesByVATDataTable SalesByVAT {
-            get {
-                return this.tableSalesByVAT;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public SalesBySalesRepDataTable SalesBySalesRep {
             get {
                 return this.tableSalesBySalesRep;
@@ -380,9 +365,6 @@ namespace Cognitivo.Reporting.Data {
                 if ((ds.Tables["SalesVATReport"] != null)) {
                     base.Tables.Add(new SalesVATReportDataTable(ds.Tables["SalesVATReport"]));
                 }
-                if ((ds.Tables["SalesByVAT"] != null)) {
-                    base.Tables.Add(new SalesByVATDataTable(ds.Tables["SalesByVAT"]));
-                }
                 if ((ds.Tables["SalesBySalesRep"] != null)) {
                     base.Tables.Add(new SalesBySalesRepDataTable(ds.Tables["SalesBySalesRep"]));
                 }
@@ -488,12 +470,6 @@ namespace Cognitivo.Reporting.Data {
                     this.tableSalesVATReport.InitVars();
                 }
             }
-            this.tableSalesByVAT = ((SalesByVATDataTable)(base.Tables["SalesByVAT"]));
-            if ((initTable == true)) {
-                if ((this.tableSalesByVAT != null)) {
-                    this.tableSalesByVAT.InitVars();
-                }
-            }
             this.tableSalesBySalesRep = ((SalesBySalesRepDataTable)(base.Tables["SalesBySalesRep"]));
             if ((initTable == true)) {
                 if ((this.tableSalesBySalesRep != null)) {
@@ -538,8 +514,6 @@ namespace Cognitivo.Reporting.Data {
             base.Tables.Add(this.tableSalesBudgetSummary);
             this.tableSalesVATReport = new SalesVATReportDataTable();
             base.Tables.Add(this.tableSalesVATReport);
-            this.tableSalesByVAT = new SalesByVATDataTable();
-            base.Tables.Add(this.tableSalesByVAT);
             this.tableSalesBySalesRep = new SalesBySalesRepDataTable();
             base.Tables.Add(this.tableSalesBySalesRep);
             this.tableContactSubscription = new ContactSubscriptionDataTable();
@@ -609,12 +583,6 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeSalesVATReport() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeSalesByVAT() {
             return false;
         }
         
@@ -717,9 +685,6 @@ namespace Cognitivo.Reporting.Data {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void SalesVATReportRowChangeEventHandler(object sender, SalesVATReportRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void SalesByVATRowChangeEventHandler(object sender, SalesByVATRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void SalesBySalesRepRowChangeEventHandler(object sender, SalesBySalesRepRowChangeEvent e);
@@ -5112,353 +5077,6 @@ namespace Cognitivo.Reporting.Data {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SalesByVATDataTable : global::System.Data.TypedTableBase<SalesByVATRow> {
-            
-            private global::System.Data.DataColumn columntrans_date;
-            
-            private global::System.Data.DataColumn columnnumber;
-            
-            private global::System.Data.DataColumn columnname;
-            
-            private global::System.Data.DataColumn columngov_code;
-            
-            private global::System.Data.DataColumn columnTotal;
-            
-            private global::System.Data.DataColumn columnVAT_Total;
-            
-            private global::System.Data.DataColumn columnTotal_VAT;
-            
-            private global::System.Data.DataColumn columnVatName;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATDataTable() {
-                this.TableName = "SalesByVAT";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SalesByVATDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected SalesByVATDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn trans_dateColumn {
-                get {
-                    return this.columntrans_date;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn numberColumn {
-                get {
-                    return this.columnnumber;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
-                get {
-                    return this.columnname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn gov_codeColumn {
-                get {
-                    return this.columngov_code;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TotalColumn {
-                get {
-                    return this.columnTotal;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VAT_TotalColumn {
-                get {
-                    return this.columnVAT_Total;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Total_VATColumn {
-                get {
-                    return this.columnTotal_VAT;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VatNameColumn {
-                get {
-                    return this.columnVatName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRow this[int index] {
-                get {
-                    return ((SalesByVATRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByVATRowChangeEventHandler SalesByVATRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByVATRowChangeEventHandler SalesByVATRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByVATRowChangeEventHandler SalesByVATRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByVATRowChangeEventHandler SalesByVATRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddSalesByVATRow(SalesByVATRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRow AddSalesByVATRow(System.DateTime trans_date, string number, string name, string gov_code, decimal Total, decimal VAT_Total, decimal Total_VAT, string VatName) {
-                SalesByVATRow rowSalesByVATRow = ((SalesByVATRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        trans_date,
-                        number,
-                        name,
-                        gov_code,
-                        Total,
-                        VAT_Total,
-                        Total_VAT,
-                        VatName};
-                rowSalesByVATRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSalesByVATRow);
-                return rowSalesByVATRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                SalesByVATDataTable cln = ((SalesByVATDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new SalesByVATDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal void InitVars() {
-                this.columntrans_date = base.Columns["trans_date"];
-                this.columnnumber = base.Columns["number"];
-                this.columnname = base.Columns["name"];
-                this.columngov_code = base.Columns["gov_code"];
-                this.columnTotal = base.Columns["Total"];
-                this.columnVAT_Total = base.Columns["VAT_Total"];
-                this.columnTotal_VAT = base.Columns["Total_VAT"];
-                this.columnVatName = base.Columns["VatName"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            private void InitClass() {
-                this.columntrans_date = new global::System.Data.DataColumn("trans_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntrans_date);
-                this.columnnumber = new global::System.Data.DataColumn("number", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnumber);
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
-                this.columngov_code = new global::System.Data.DataColumn("gov_code", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columngov_code);
-                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotal);
-                this.columnVAT_Total = new global::System.Data.DataColumn("VAT_Total", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVAT_Total);
-                this.columnTotal_VAT = new global::System.Data.DataColumn("Total_VAT", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotal_VAT);
-                this.columnVatName = new global::System.Data.DataColumn("VatName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVatName);
-                this.columntrans_date.AllowDBNull = false;
-                this.columnname.AllowDBNull = false;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRow NewSalesByVATRow() {
-                return ((SalesByVATRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SalesByVATRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(SalesByVATRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.SalesByVATRowChanged != null)) {
-                    this.SalesByVATRowChanged(this, new SalesByVATRowChangeEvent(((SalesByVATRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.SalesByVATRowChanging != null)) {
-                    this.SalesByVATRowChanging(this, new SalesByVATRowChangeEvent(((SalesByVATRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.SalesByVATRowDeleted != null)) {
-                    this.SalesByVATRowDeleted(this, new SalesByVATRowChangeEvent(((SalesByVATRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.SalesByVATRowDeleting != null)) {
-                    this.SalesByVATRowDeleting(this, new SalesByVATRowChangeEvent(((SalesByVATRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveSalesByVATRow(SalesByVATRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                SalesDS ds = new SalesDS();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SalesByVATDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class SalesBySalesRepDataTable : global::System.Data.TypedTableBase<SalesBySalesRepRow> {
             
             private global::System.Data.DataColumn columnTotal;
@@ -9119,211 +8737,6 @@ namespace Cognitivo.Reporting.Data {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class SalesByVATRow : global::System.Data.DataRow {
-            
-            private SalesByVATDataTable tableSalesByVAT;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SalesByVATRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableSalesByVAT = ((SalesByVATDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime trans_date {
-                get {
-                    return ((global::System.DateTime)(this[this.tableSalesByVAT.trans_dateColumn]));
-                }
-                set {
-                    this[this.tableSalesByVAT.trans_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string number {
-                get {
-                    try {
-                        return ((string)(this[this.tableSalesByVAT.numberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'number\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.numberColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string name {
-                get {
-                    return ((string)(this[this.tableSalesByVAT.nameColumn]));
-                }
-                set {
-                    this[this.tableSalesByVAT.nameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string gov_code {
-                get {
-                    try {
-                        return ((string)(this[this.tableSalesByVAT.gov_codeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'gov_code\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.gov_codeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Total {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByVAT.TotalColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.TotalColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal VAT_Total {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByVAT.VAT_TotalColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VAT_Total\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.VAT_TotalColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Total_VAT {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByVAT.Total_VATColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Total_VAT\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.Total_VATColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VatName {
-                get {
-                    try {
-                        return ((string)(this[this.tableSalesByVAT.VatNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VatName\' in table \'SalesByVAT\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByVAT.VatNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsnumberNull() {
-                return this.IsNull(this.tableSalesByVAT.numberColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetnumberNull() {
-                this[this.tableSalesByVAT.numberColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isgov_codeNull() {
-                return this.IsNull(this.tableSalesByVAT.gov_codeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setgov_codeNull() {
-                this[this.tableSalesByVAT.gov_codeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotalNull() {
-                return this.IsNull(this.tableSalesByVAT.TotalColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotalNull() {
-                this[this.tableSalesByVAT.TotalColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVAT_TotalNull() {
-                return this.IsNull(this.tableSalesByVAT.VAT_TotalColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVAT_TotalNull() {
-                this[this.tableSalesByVAT.VAT_TotalColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotal_VATNull() {
-                return this.IsNull(this.tableSalesByVAT.Total_VATColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotal_VATNull() {
-                this[this.tableSalesByVAT.Total_VATColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVatNameNull() {
-                return this.IsNull(this.tableSalesByVAT.VatNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVatNameNull() {
-                this[this.tableSalesByVAT.VatNameColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
         public partial class SalesBySalesRepRow : global::System.Data.DataRow {
             
             private SalesBySalesRepDataTable tableSalesBySalesRep;
@@ -10098,40 +9511,6 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SalesVATReportRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class SalesByVATRowChangeEvent : global::System.EventArgs {
-            
-            private SalesByVATRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRowChangeEvent(SalesByVATRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByVATRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -12806,7 +12185,8 @@ FROM  sales_invoice s INNER JOIN
                      app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
                      app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
             GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
- where s.status = 2 and (s.trans_date >= @StartDate) and (s.trans_date <= @EndDate) 
+ where s.status = 2 and (s.trans_date >= @StartDate) and (s.trans_date <= @EndDate) and s.id_company = @CompanyID
+
 group by s.id_sales_invoice, vatco.id_vat_group 
 order by s.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
@@ -12823,6 +12203,13 @@ order by s.trans_date";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
+            this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@CompanyID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -12880,10 +12267,11 @@ order by s.trans_date";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillBy(SalesDS.SalesVATReportDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int FillBy(SalesDS.SalesVATReportDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -12895,10 +12283,11 @@ order by s.trans_date";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesVATReportDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual SalesDS.SalesVATReportDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             SalesDS.SalesVATReportDataTable dataTable = new SalesDS.SalesVATReportDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -12930,230 +12319,6 @@ order by s.trans_date";
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate));
             SalesDS.SalesVATReportDataTable dataTable = new SalesDS.SalesVATReportDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SalesByVATTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
-        
-        private global::MySql.Data.MySqlClient.MySqlConnection _connection;
-        
-        private global::MySql.Data.MySqlClient.MySqlTransaction _transaction;
-        
-        private global::MySql.Data.MySqlClient.MySqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public SalesByVATTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected internal global::MySql.Data.MySqlClient.MySqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::MySql.Data.MySqlClient.MySqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::MySql.Data.MySqlClient.MySqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected global::MySql.Data.MySqlClient.MySqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SalesByVAT";
-            tableMapping.ColumnMappings.Add("trans_date", "trans_date");
-            tableMapping.ColumnMappings.Add("number", "number");
-            tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("gov_code", "gov_code");
-            tableMapping.ColumnMappings.Add("Total", "Total");
-            tableMapping.ColumnMappings.Add("VAT_Total", "VAT_Total");
-            tableMapping.ColumnMappings.Add("Total_VAT", "Total_VAT");
-            tableMapping.ColumnMappings.Add("VatName", "VatName");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::MySql.Data.MySqlClient.MySqlConnection();
-            this._connection.ConnectionString = global::Cognitivo.Properties.Settings.Default.MySQLconnString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
-            this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @" select 
- si.trans_date, si.number, contact.name, contact.gov_code,
- vatco.VatName as VatName,
- round(sum(sd.quantity * sd.unit_price),4) as Total, 
- round(sum(sd.quantity * sd.unit_price * vatco.vat),4) as VAT_Total,
- round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total_VAT 
-
-from sales_invoice_detail as sd 
-inner join sales_invoice as si on sd.id_sales_invoice = si.id_sales_invoice 
-inner join contacts as contact on si.id_contact = contact.id_contact 
-LEFT OUTER JOIN 
-    (SELECT   app_vat_group.id_vat_group, 
-             sum(app_vat.coefficient) as vat, 
-             sum(app_vat.coefficient) + 1 AS coef,
-             app_vat.name as VatName
-            FROM  app_vat_group 
-            LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group 
-			LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
-            GROUP BY app_vat_group.id_vat_group
-            ) 
-            vatco ON vatco.id_vat_group = sd.id_vat_group
- where si.status = 2 and si.trans_date >= @StartDate and si.trans_date <= @EndDate
- and si.id_company = @CompanyID
- group by sd.id_sales_invoice, vatco.id_vat_group";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[0].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[0].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CompanyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_company";
-            this._commandCollection[0].Parameters.Add(param);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillByDate(SalesDS.SalesByVATDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesByVATDataTable GetDataByDate(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
-            SalesDS.SalesByVATDataTable dataTable = new SalesDS.SalesByVATDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

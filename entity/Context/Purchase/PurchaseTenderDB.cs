@@ -82,10 +82,9 @@ namespace entity
 
                         purchase_order.id_contact = purchase_tender_contact.id_contact;
                         purchase_order.contact = purchase_tender_contact.contact;
-                        purchase_order.id_contract = purchase_tender_contact.id_contract;
                         purchase_order.id_condition = purchase_tender_contact.id_condition;
+                        purchase_order.id_contract = purchase_tender_contact.id_contract;
                         purchase_order.id_project = purchase_tender.id_project;
-                        purchase_order.project = purchase_tender.project;
 
                         ///Don't approve if there is nothing selected. Sometimes Users make mistakes.
                         if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count() == 0)
@@ -186,7 +185,9 @@ namespace entity
                         }
                     }
                     purchase_tender.status = Status.Documents_General.Approved;
+
                     SaveChanges();
+
                     purchase_tender.IsSelected = false;
                 }
             }

@@ -58,11 +58,7 @@ namespace Cognitivo.Production
 
             dtpenddate.Text = DateTime.Now.ToString();
             dtpstartdate.Text = DateTime.Now.ToString();
-            //if (!CurrentSession.User.security_role.see_cost)
-            //{
-            //    btncost.Visibility = Visibility.Collapsed;
-            //}
-            //This prevents bringing multiple
+
             filter_task();
             RefreshData();
         }
@@ -475,16 +471,15 @@ namespace Cognitivo.Production
         {
             try
             {
-                production_orderViewSource.View.Refresh();
-                production_order_detaillViewSource.View.Refresh();
-
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 foreach (production_order_detail production_order_detail in production_order.production_order_detail)
                 {
                     production_order_detail.CalcExecutedQty_TimerTaks();
                     production_order_detail.CalcExecutedCost_TimerTaks();
-                   
                 }
+
+                production_orderViewSource.View.Refresh();
+                production_order_detaillViewSource.View.Refresh();
             }
             catch { }
         }
@@ -493,45 +488,38 @@ namespace Cognitivo.Production
         {
             production_order_detail production_order_detail = null;
             Button btn = sender as Button;
+            string ItemType = btn.Name;
+
             decimal Quantity = 0M;
             CollectionViewSource Collection = null; 
             item.item_type type = item.item_type.Task;
             production_order_detail = treeOrder.SelectedItem_ as production_order_detail;
             Collection = production_execution_detailViewSource;
-            if (btn.Name.Contains("Prod"))
+
+            if (ItemType.Contains("Prod"))
             {
                 Quantity = Convert.ToDecimal(txtProduct.Text);
-               
                 type = item.item_type.Product;
-              
             }
-            else if (btn.Name.Contains("Raw"))
+            else if (ItemType.Contains("Raw"))
             {
                 Quantity = Convert.ToDecimal(txtraw.Text);
-              
                 type = item.item_type.RawMaterial;
-               
             }
-            else if (btn.Name.Contains("Asset"))
+            else if (ItemType.Contains("Asset"))
             {
                 Quantity = Convert.ToDecimal(txtAsset.Text);
-               
                 type = item.item_type.FixedAssets;
-               
             }
-            else if (btn.Name.Contains("Supp"))
+            else if (ItemType.Contains("Supp"))
             {
                 Quantity = Convert.ToDecimal(txtSupply.Text);
-                
                 type = item.item_type.Supplies;
-              
             }
-            else if (btn.Name.Contains("ServiceContract"))
+            else if (ItemType.Contains("ServiceContract"))
             {
                 Quantity = Convert.ToDecimal(txtServicecontract.Text);
-               
                 type = item.item_type.ServiceContract;
-               
             }
 
             try
@@ -546,15 +534,12 @@ namespace Cognitivo.Production
                     {
                         if (production_order_detail.item.item_dimension.Count() > 0)
                         {
-                            Cognitivo.Configs.itemMovementFraction DimensionPanel = new Cognitivo.Configs.itemMovementFraction();
+                            Configs.itemMovementFraction DimensionPanel = new Configs.itemMovementFraction();
                             DimensionPanel.mode = Configs.itemMovementFraction.modes.Execution;
-
-                           // production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
 
                             DimensionPanel.id_item = (int)production_order_detail.id_item;
                             DimensionPanel.ExecutionDB = ExecutionDB;
                             DimensionPanel.production_order_detail = production_order_detail;
-                            //DimensionPanel._production_execution = _production_execution;
                             DimensionPanel.Quantity = Quantity;
 
                             crud_modal.Visibility = Visibility.Visible;
@@ -579,8 +564,11 @@ namespace Cognitivo.Production
                 }
 
                 Collection.Source = ExecutionDB.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail);
-                //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
-               
+
+                if (production_order_detaillViewSource.View != null)
+                {
+                    production_order_detaillViewSource.View.MoveCurrentTo(production_order_detail);
+                }
             }
             catch (Exception ex)
             {

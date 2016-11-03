@@ -341,7 +341,7 @@
                       VerticalScrollBarVisibility="Auto" Height="Auto"
                       AutoGenerateColumns="False" CanUserAddRows="False"
                       IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                      EnableRowVirtualization="True" 
+                      EnableRowVirtualization="True"
                       RowDetailsVisibilityMode="Collapsed"
                       ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
                       RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 

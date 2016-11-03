@@ -214,8 +214,8 @@ namespace entity
                             Return_GrandTotal_ByInvoice -= PaymentValue;
 
                             payment_schedual Schedual = new payment_schedual();
-                            Schedual.debit = PaymentValue;
-                            Schedual.credit = 0;
+                            Schedual.credit = PaymentValue;
+                            Schedual.debit = 0;
                             Schedual.id_currencyfx = sales_return.id_currencyfx;
                             Schedual.sales_return = sales_return;
                             Schedual.trans_date = sales_return.trans_date;
@@ -223,7 +223,7 @@ namespace entity
                             Schedual.status = Status.Documents_General.Approved;
                             Schedual.id_contact = sales_return.id_contact;
                             Schedual.can_calculate = true;
-                            Schedual.parent = base.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).FirstOrDefault();
+                            Schedual.parent = payment_schedual; //base.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).FirstOrDefault();
 
                             payment_detail payment_detail = new payment_detail();
                             payment_detail.id_currencyfx = sales_return.id_currencyfx;

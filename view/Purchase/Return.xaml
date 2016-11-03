@@ -153,8 +153,8 @@
 												 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Row="1" VerticalAlignment="Top"/>
 				<DataGrid x:Name="purchase_return_detailDataGrid" Margin="0,55,0,0" CanUserAddRows="False"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
-											   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
-								  VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2"
+											   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                                          	   VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2"
 								  AutoGenerateColumns="False" EnableRowVirtualization="True" 
 								  ItemsSource="{Binding Source={StaticResource purchase_returnpurchase_return_detailViewSource}}" InitializingNewItem="purchase_return_detailDataGrid_InitializingNewItem"
 								  RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="purchase_return_detailDataGrid_RowEditEnding" CellEditEnding="purchase_return_detailDataGrid_CellEditEnding">

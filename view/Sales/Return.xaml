@@ -268,7 +268,8 @@
 												 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
 						
 						<DataGrid x:Name="sales_return_detailDataGrid" AutoGenerateColumns="False" Style="{StaticResource detail_Datagrid}" EnableRowVirtualization="True" 
-								IsReadOnly="{Binding ElementName=pageSalesReturn, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
+								CanUserAddRows="False"
+                                  IsReadOnly="{Binding ElementName=pageSalesReturn, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
 								ItemsSource="{Binding Source={StaticResource sales_returnsales_return_detailViewSource}}" InitializingNewItem="sales_return_detailDataGrid_InitializingNewItem"
 								RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_return_detailDataGrid_RowEditEnding" CellEditEnding="sales_return_detailDataGrid_CellEditEnding">
 							<DataGrid.Columns>

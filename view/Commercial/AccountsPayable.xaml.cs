@@ -77,6 +77,19 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             load_Schedual();
+        }
+
+        private async void load_Schedual()
+        {
+            payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
+            payment_schedualViewSource.Source = await PaymentDB.payment_schedual
+                                                                    .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
+                                                                       && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
+                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
+                                                                       .Include(y => y.purchase_invoice)
+                                                                       .Include(z => z.contact)
+                                                                       .OrderBy(x => x.expire_date)
+                                                                    .ToListAsync();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
@@ -92,19 +105,6 @@ namespace Cognitivo.Commercial
             }
 
             contactViewSource.Source = contactLIST;
-        }
-
-        private async void load_Schedual()
-        {
-            payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            payment_schedualViewSource.Source = await PaymentDB.payment_schedual
-                                                                    .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
-                                                                       && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
-                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
-                                                                       .Include(y => y.purchase_invoice)
-                                                                       .Include(z => z.contact)
-                                                                       .OrderBy(x => x.expire_date)
-                                                                    .ToListAsync();
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)

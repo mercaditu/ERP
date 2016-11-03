@@ -68,23 +68,7 @@ namespace Cognitivo.Commercial
                 lbl.Foreground = SystemColors.HighlightBrush;
                 lbl.MouseUp += lblCondition_MouseUp;
                 stckFilter.Children.Add(lbl);
-            }
-
-            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            List<contact> contactLIST = new List<contact>();
-
-            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
-            {
-                if (contactLIST.Contains(payment.contact) == false)
-                {
-                    contact contact = new contact();
-                    contact = payment.contact;
-                    contactLIST.Add(contact);
-                }
-            }
-
-            contactViewSource.Source = contactLIST;
-          
+            }          
         }
 
         private void lblCondition_MouseUp(object sender, EventArgs e)
@@ -130,7 +114,21 @@ namespace Cognitivo.Commercial
                         .OrderBy(x => x.expire_date)
                         .LoadAsync();
            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
-                
+
+            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+            List<contact> contactLIST = new List<contact>();
+
+            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
+            {
+                if (contactLIST.Contains(payment.contact) == false)
+                {
+                    contact contact = new contact();
+                    contact = payment.contact;
+                    contactLIST.Add(contact);
+                }
+            }
+
+            contactViewSource.Source = contactLIST;
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)
@@ -153,14 +151,10 @@ namespace Cognitivo.Commercial
 
             cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList);
 
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);
         }
-
-        public void Save_Click(object sender)
-        {
-
-        }
+        
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {

@@ -268,7 +268,7 @@
 									<Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
 									<ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" 
-                                              ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
+											  ItemsSource="{Binding Source={x:Static entity:CurrentSession.Conditions}}"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, 
 											  Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -282,10 +282,10 @@
 									</ComboBox>
 									<Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
 									<ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name"
-							                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
-							                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-							                  SelectedValuePath="id_contract" x:Name="cbxContract"
-							                  SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}">
+											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
+											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+											  SelectedValuePath="id_contract" x:Name="cbxContract"
+											  SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}">
 										<ComboBox.ItemsPanel>
 											<ItemsPanelTemplate>
 												<VirtualizingStackPanel/>
@@ -493,11 +493,11 @@
 											<Label Content="S" Style="{StaticResource ico_Label}"/>
 											<TextBlock Text="{lex:Loc Salesman}" Style="{StaticResource text_Label}"/>
 											<ComboBox x:Name="cbxSalesRep" Style="{StaticResource ComboToLabelStyle}"
-										            metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.SalesReps}}"
-										            metro:ControlsHelper.MouseOverBorderBrush="Silver"
-										            DisplayMemberPath="name" Width="Auto"
-										            SelectedValuePath="id_sales_rep" 
-										            SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+													metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.SalesReps}}"
+													metro:ControlsHelper.MouseOverBorderBrush="Silver"
+													DisplayMemberPath="name" Width="Auto"
+													SelectedValuePath="id_sales_rep" 
+													SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
 												<ComboBox.ItemsPanel>
 													<ItemsPanelTemplate>
 														<VirtualizingStackPanel/>
@@ -659,6 +659,7 @@
 							<DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,0,0" HorizontalAlignment="Left"
 									  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 														   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
+                                      CanUserAddRows="False"
 									  ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
 									  InitializingNewItem="sales_invoice_detailDataGrid_InitializingNewItem" 
 									  RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 

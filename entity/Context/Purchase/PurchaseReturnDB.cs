@@ -114,6 +114,7 @@ namespace entity
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         payment_schedualList = _Payment.insert_Schedual(purchase_return);
+
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
@@ -171,8 +172,8 @@ namespace entity
                             Return_GrandTotal_ByInvoice -= PaymentValue;
 
                             payment_schedual Schedual = new payment_schedual();
-                            Schedual.debit = 0;
-                            Schedual.credit = PaymentValue;
+                            Schedual.debit = PaymentValue;
+                            Schedual.credit = 0;
                             Schedual.id_currencyfx = purchase_return.id_currencyfx;
                             Schedual.purchase_return = purchase_return;
                             Schedual.trans_date = purchase_return.trans_date;
@@ -180,7 +181,7 @@ namespace entity
                             Schedual.status = Status.Documents_General.Approved;
                             Schedual.id_contact = purchase_return.id_contact;
                             Schedual.can_calculate = true;
-                            Schedual.parent = base.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).FirstOrDefault();
+                            Schedual.parent = payment_schedual; //base.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).FirstOrDefault();
 
                             payment_detail payment_detail = new payment_detail();
                             payment_detail.id_currencyfx = purchase_return.id_currencyfx;

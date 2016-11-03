@@ -22,12 +22,12 @@ namespace entity.Brillo
             string _Passkey = "^%*@$^$";
             int id_role = CurrentSession.UserRole.id_role;
 
-            security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
+            security_role = db.security_role.Find(id_role);
             if (security_role != null)
             {
                 if (security_role.version != null)
                 {
-                    string _Hash = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault().version;
+                    string _Hash = security_role.version;
 
                     VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
                     string[] version = VersionKey.Split('.');
@@ -45,12 +45,7 @@ namespace entity.Brillo
                     }
                 }
             }
-
-
-
-
-
-
+            
             if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Lite;
@@ -113,11 +108,6 @@ namespace entity.Brillo
                     }
                 }
             }
-
-
-
-
-
 
             if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
             {

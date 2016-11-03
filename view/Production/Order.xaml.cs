@@ -312,12 +312,13 @@ namespace Cognitivo.Production
             cntrl.Curd.ItemRequest ItemRequest = crud_modal.Children.Cast<cntrl.Curd.ItemRequest>().First();
 
             production_order production_order = ((production_order)production_orderViewSource.View.CurrentItem);
-            int id_production_order = production_order.id_production_order;
 
-            if (itemDataGrid.ItemsSource != null)
+            if (production_order != null)
             {
+                int id_production_order = production_order.id_production_order;
+
                 List<production_order_detail> production_order_detaillist = new List<production_order_detail>();
-                production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
+                production_order_detaillist = production_order.production_order_detail.Where(x => x.IsSelected == true).ToList();
 
                 if (production_order_detaillist.Count() > 0)
                 {

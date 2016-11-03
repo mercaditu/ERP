@@ -8,55 +8,23 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Data;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Data.Entity.Validation;
-using System.Windows.Media;
-using System.Windows.Documents;
 
 namespace Cognitivo.Product
 {
     public partial class Maintainance : Page
     {
-        dbContext db = new dbContext();
+        dbContext dbContext = new dbContext();
         CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
         cntrl.Curd.ItemRequest ItemRequest;
         public Maintainance()
         {
             InitializeComponent();
         }
-
-        private void toolBar_btnNew_Click(object sender)
-        {
-            item_asset_maintainance item_asset_maintainance = new item_asset_maintainance();
-            item_asset_maintainance.IsSelected = true;
-            item_asset_maintainance.State = EntityState.Added;
-            db.db.Entry(item_asset_maintainance).State = EntityState.Added;
-
-            item_asset_maintainanceViewSource.View.MoveCurrentToLast();
-        }
-
-        private void toolBar_btnDelete_Click(object sender)
-        {
-            try
-            {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
-                    item_asset_maintainance.is_head = false;
-                    item_asset_maintainance.State = EntityState.Deleted;
-                    item_asset_maintainance.IsSelected = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
+        
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (db.db.SaveChanges() > 0)
+            if (dbContext.db.SaveChanges() > 0)
             {
                 toolBar.msgSaved(0);
             }
@@ -66,7 +34,7 @@ namespace Cognitivo.Product
         {
             item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
           item_asset_maintainance.State = EntityState.Unchanged;
-            db.CancelChanges();
+            dbContext.CancelChanges();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -74,47 +42,36 @@ namespace Cognitivo.Product
             item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
             item_asset_maintainance.IsSelected = true;
             item_asset_maintainance.State = EntityState.Modified;
-            db.db.Entry(item_asset_maintainance).State = EntityState.Modified;
+            dbContext.db.Entry(item_asset_maintainance).State = EntityState.Modified;
 
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            sbxitem.item_types = item.item_type.FixedAssets;
             item_asset_maintainanceitem_asset_maintainance_detailViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceitem_asset_maintainance_detailViewSource")));
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
-            db.db.item_asset_maintainance.Load();
-            item_asset_maintainanceViewSource.Source = db.db.item_asset_maintainance.Local;
+            dbContext.db.item_asset_maintainance.Load();
+            item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
 
             app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            db.db.app_currencyfx.Where(x => x.is_active).Load();
-            app_currencyfxViewSource.Source = db.db.app_currencyfx.Local;
+            dbContext.db.app_currencyfx.Where(x => x.is_active).Load();
+            app_currencyfxViewSource.Source = dbContext.db.app_currencyfx.Local;
         }
-
-        private void item_Select(object sender, RoutedEventArgs e)
-        {
-            if (sbxFixedasset.ItemID > 0)
-            {
-                item item = db.db.items.Where(x => x.id_item == sbxFixedasset.ItemID).FirstOrDefault();
-                item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
-                if (item.item_asset.FirstOrDefault() != null)
-                {
-                    item_asset_maintainance.id_item_asset = item.item_asset.FirstOrDefault().id_item_asset;
-                }
-            }
-        }
+        
 
         private void sbxitem_Select(object sender, RoutedEventArgs e)
         {
             if (sbxitem.ItemID > 0)
             {
-                item item = db.db.items.Where(x => x.id_item == sbxitem.ItemID).FirstOrDefault();
+                item item = dbContext.db.items.Where(x => x.id_item == sbxitem.ItemID).FirstOrDefault();
                 item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
+
                 if (item_asset_maintainance.item_asset_maintainance_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
                 {
                     item_asset_maintainance_detail item_asset_maintainance_detail = new item_asset_maintainance_detail();
                     item_asset_maintainance_detail.item = item;
                     item_asset_maintainance_detail.id_item = item.id_item;
+
                     if (dtpstartdate.Text=="")
                     {
                         dtpstartdate.Text = DateTime.Now.ToString();
@@ -137,7 +94,7 @@ namespace Cognitivo.Product
                     }
                     if (CmbService.ContactID>0)
                     {
-                        contact contact = db.db.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
+                        contact contact = dbContext.db.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
                         item_asset_maintainance_detail.id_contact = contact.id_contact;
                         item_asset_maintainance_detail.contact = contact;
                     }
@@ -158,7 +115,7 @@ namespace Cognitivo.Product
                 {
                     ItemRequest = new cntrl.Curd.ItemRequest();
                     crud_modal_request.Visibility = Visibility.Visible;
-                    ItemRequest.listdepartment = db.db.app_department.ToList();
+                    ItemRequest.listdepartment = dbContext.db.app_department.ToList();
                     ItemRequest.item_request_Click += item_request_Click;
                     crud_modal_request.Children.Add(ItemRequest);
                 }
@@ -175,7 +132,7 @@ namespace Cognitivo.Product
           
             if (dgvMaintainceDetail.ItemsSource != null)
             {
-                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = db.db.item_asset_maintainance_detail.ToList();
+                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = dbContext.db.item_asset_maintainance_detail.ToList();
                 item_asset_maintainance_detaillist = item_asset_maintainance_detaillist.Where(x => x.IsSelected == true).ToList();
 
                 item_request item_request = new item_request();
@@ -195,7 +152,7 @@ namespace Cognitivo.Product
                     item_request_detail.urgency = ItemRequest.Urgencies;
                     int idItem = data.item.id_item;
                     item_request_detail.id_item = idItem;
-                    item item = db.db.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                    item item = dbContext.db.items.Where(x => x.id_item == idItem).FirstOrDefault();
                     if (item != null)
                     {
                         item_request_detail.item = item;
@@ -210,8 +167,8 @@ namespace Cognitivo.Product
                     item_request.item_request_detail.Add(item_request_detail);
                 }
 
-                db.db.item_request.Add(item_request);
-                db.db.SaveChanges();
+                dbContext.db.item_request.Add(item_request);
+                dbContext.db.SaveChanges();
 
                 //item_requestViewSource.View.Filter = i =>
                 //{
@@ -234,7 +191,7 @@ namespace Cognitivo.Product
                 item_asset_maintainance.status = entity.item_asset_maintainance.Status.Done;
 
             }
-            db.db.SaveChanges();
+            dbContext.db.SaveChanges();
             item_asset_maintainanceViewSource.View.Refresh();
         }
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -256,7 +213,7 @@ namespace Cognitivo.Product
                     item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
                     //DeleteDetailGridRow
                     dgvMaintainceDetail.CancelEdit();
-                    db.db.item_asset_maintainance_detail.Remove(e.Parameter as item_asset_maintainance_detail);
+                    dbContext.db.item_asset_maintainance_detail.Remove(e.Parameter as item_asset_maintainance_detail);
                     item_asset_maintainanceitem_asset_maintainance_detailViewSource.View.Refresh();
                 }
             }

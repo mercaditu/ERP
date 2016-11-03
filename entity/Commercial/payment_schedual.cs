@@ -1,6 +1,5 @@
 namespace entity
 {
-    using Brillo;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -16,7 +15,9 @@ namespace entity
             is_head = true;
             can_calculate = true;
             child = new List<payment_schedual>();
+
             expire_date = DateTime.Now;
+            timestamp = DateTime.Now;
         }
 
         [Key]

@@ -200,11 +200,11 @@ namespace entity
 
             foreach (BrilloQuery.ReturnInvoice_Integration item in ReturnList)
             {
-                if (item.SalesInvoiceID > 0)
+                if (item.InvoiceID > 0)
                 {
                     //Sales Invoice Integrated.
-                    sales_invoice sales_invoice = base.sales_invoice.Find(item.SalesInvoiceID);
-                    decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.SalesInvoiceID == item.SalesInvoiceID).Sum(x => x.SubTotalVAT);
+                    sales_invoice sales_invoice = base.sales_invoice.Find(item.InvoiceID);
+                    decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == item.InvoiceID).Sum(x => x.SubTotalVAT);
 
                     foreach (payment_schedual payment_schedual in sales_invoice.payment_schedual.Where(x => x.AccountReceivableBalance > 0))
                     {
@@ -235,42 +235,8 @@ namespace entity
 
                             payment.payment_detail.Add(payment_detail);
                         }
-                        //else
-                        //{
-                        //    // do same as below.
-                        //    //Blank Balance
-
-                        //    payment_schedual Schedual = new payment_schedual();
-                        //    Schedual.credit = Return_GrandTotal_ByInvoice;
-                        //    Schedual.debit = 0;
-                        //    Schedual.id_currencyfx = sales_return.id_currencyfx;
-                        //    Schedual.sales_return = sales_return;
-                        //    Schedual.trans_date = sales_return.trans_date;
-                        //    Schedual.expire_date = sales_return.trans_date;
-                        //    Schedual.status = Status.Documents_General.Approved;
-                        //    Schedual.id_contact = sales_return.id_contact;
-                        //    Schedual.can_calculate = true;
-                        //    base.payment_schedual.Add(Schedual);
-                        //}
                     }
                 }
-                //else
-                //{
-                //    //No Invoice. Direct.
-                //    decimal PaymentValue = item.SubTotalVAT;
-
-                //    payment_schedual Schedual = new payment_schedual();
-                //    Schedual.credit = 0;
-                //    Schedual.debit = PaymentValue;
-                //    Schedual.id_currencyfx = sales_return.id_currencyfx;
-                //    Schedual.sales_return = sales_return;
-                //    Schedual.trans_date = sales_return.trans_date;
-                //    Schedual.expire_date = sales_return.trans_date;
-                //    Schedual.status = Status.Documents_General.Approved;
-                //    Schedual.id_contact = sales_return.id_contact;
-                //    Schedual.can_calculate = false;
-                //    base.payment_schedual.Add(Schedual);
-                //}
             }
 
             base.payments.Add(payment);

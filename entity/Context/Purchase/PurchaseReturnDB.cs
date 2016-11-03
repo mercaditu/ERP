@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq; 
+using System.Linq;
 using System.Threading.Tasks;
+using WPFLocalizeExtension.Extensions;
 
 namespace entity
 {
@@ -72,86 +73,141 @@ namespace entity
 
         public void Approve()
         {
-            foreach (purchase_return purchase_return in base.purchase_return.Local.Where(x => x.IsSelected == true))
+            foreach(purchase_return purchase_return in base.purchase_return.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
-                if (purchase_return.Error == null)
+                if (purchase_return.status != Status.Documents_General.Approved &&
+                    purchase_return.IsSelected &&
+                    purchase_return.Error == null)
                 {
                     if (purchase_return.id_purchase_return == 0)
                     {
                         SaveChanges();
                     }
+
                     purchase_return.app_condition = app_condition.Find(purchase_return.id_condition);
                     purchase_return.app_contract = app_contract.Find(purchase_return.id_contract);
                     purchase_return.app_currencyfx = app_currencyfx.Find(purchase_return.id_currencyfx);
+
                     if (purchase_return.status != Status.Documents_General.Approved)
                     {
-                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                        if (purchase_return.number == null && purchase_return.id_range != null)
+                        {
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_return.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_return.id_terminal).FirstOrDefault().code;
+
+                            app_document_range app_document_range = base.app_document_range.Find(purchase_return.id_range);
+
+                            purchase_return.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                            purchase_return.RaisePropertyChanged("number");
+                            purchase_return.is_issued = true;
+
+                            //Save values before printing.
+                            SaveChanges();
+
+                            Brillo.Document.Start.Automatic(purchase_return, app_document_range);
+                        }
+                        else
+                        {
+                            purchase_return.is_issued = false;
+                        }
+
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         payment_schedualList = _Payment.insert_Schedual(purchase_return);
-
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this, purchase_return);
-
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
                         }
+
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.revert_Stock(this, App.Names.PurchaseReturn, purchase_return);
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             item_movement.AddRange(item_movementList);
                         }
 
+                        SaveChanges();
 
-                        if (purchase_return.purchase_invoice != null)
-                        {
-                            payment payment = new payment();
-                            payment.id_contact = purchase_return.id_contact;
-                            payment.status = Status.Documents_General.Approved;
+                        //Automatically Link Return & Purchase
+                        Linked2Sales(purchase_return);
 
-                            payment_detail payment_detailreturn = new payment_detail();
-
-                            payment_detailreturn.id_currencyfx = purchase_return.id_currencyfx;
-                            if (base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault() != null)
-                            {
-                                payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
-                            }
-                            else
-                            {
-                                System.Windows.Forms.MessageBox.Show("Please add crditnote payment type...");
-                                return;
-                            }
-
-
-                            payment_detailreturn.id_sales_return = purchase_return.id_purchase_return;
-
-                            payment_detailreturn.value = purchase_return.GrandTotal;
-
-                            payment_schedual payment_schedualReturn = new payment_schedual();
-                            payment_schedualReturn.debit = purchase_return.GrandTotal;
-                            payment_schedualReturn.credit = 0;
-                            payment_schedualReturn.id_currencyfx = purchase_return.id_currencyfx;
-                            payment_schedualReturn.purchase_return = purchase_return;
-                            payment_schedualReturn.trans_date = purchase_return.trans_date;
-                            payment_schedualReturn.expire_date = purchase_return.trans_date;
-                            payment_schedualReturn.status = Status.Documents_General.Approved;
-                            payment_schedualReturn.id_contact = purchase_return.id_contact;
-                            payment_schedualReturn.can_calculate = true;
-                            payment_schedualReturn.parent = purchase_return.purchase_invoice.payment_schedual.FirstOrDefault();
-
-                            payment_detailreturn.payment_schedual.Add(payment_schedualReturn);
-                            payment.payment_detail.Add(payment_detailreturn);
-                            base.payments.Add(payment);
-                        }
                         purchase_return.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }
-                }
-                else if (purchase_return.Error != null)
-                {
-                    purchase_return.HasErrors = true;
+                    else if (purchase_return.Error != null)
+                    {
+                        purchase_return.HasErrors = true;
+                    }
                 }
             }
+
+        }
+
+        private void Linked2Sales(purchase_return purchase_return)
+        {
+            payment_type payment_type = base.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.CreditNote).FirstOrDefault();
+
+            payment payment = new payment();
+            payment.id_contact = purchase_return.id_contact;
+            payment.status = Status.Documents_General.Approved;
+
+            BrilloQuery.Sales Sales = new BrilloQuery.Sales();
+            List<BrilloQuery.ReturnInvoice_Integration> ReturnList = Sales.Get_ReturnInvoice_Integration(purchase_return.id_purchase_return);
+
+            foreach (BrilloQuery.ReturnInvoice_Integration item in ReturnList)
+            {
+                if (item.InvoiceID > 0)
+                {
+                    //Sales Invoice Integrated.
+                    purchase_invoice purchase_invoice = base.purchase_invoice.Find(item.InvoiceID);
+                    decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == item.InvoiceID).Sum(x => x.SubTotalVAT);
+
+                    foreach (payment_schedual payment_schedual in purchase_invoice.payment_schedual.Where(x => x.AccountPayableBalance > 0))
+                    {
+                        if (payment_schedual.AccountPayableBalance > 0 && Return_GrandTotal_ByInvoice > 0)
+                        {
+                            decimal PaymentValue = payment_schedual.AccountPayableBalance < Return_GrandTotal_ByInvoice ? payment_schedual.AccountPayableBalance : Return_GrandTotal_ByInvoice;
+                            Return_GrandTotal_ByInvoice -= PaymentValue;
+
+                            payment_schedual Schedual = new payment_schedual();
+                            Schedual.debit = 0;
+                            Schedual.credit = PaymentValue;
+                            Schedual.id_currencyfx = purchase_return.id_currencyfx;
+                            Schedual.purchase_return = purchase_return;
+                            Schedual.trans_date = purchase_return.trans_date;
+                            Schedual.expire_date = purchase_return.trans_date;
+                            Schedual.status = Status.Documents_General.Approved;
+                            Schedual.id_contact = purchase_return.id_contact;
+                            Schedual.can_calculate = true;
+                            Schedual.parent = base.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).FirstOrDefault();
+
+                            payment_detail payment_detail = new payment_detail();
+                            payment_detail.id_currencyfx = purchase_return.id_currencyfx;
+                            payment_detail.id_sales_return = purchase_return.id_purchase_return;
+                            payment_detail.payment_type = payment_type != null ? payment_type : Fix_PaymentType();
+
+                            payment_detail.value = PaymentValue;
+                            payment_detail.payment_schedual.Add(Schedual);
+
+                            payment.payment_detail.Add(payment_detail);
+                        }
+                    }
+                }
+            }
+
+            base.payments.Add(payment);
+        }
+
+        private payment_type Fix_PaymentType()
+        {
+            //In case Payment type doesn not exist, this will create it and try to fix the error.
+            payment_type payment_type = new payment_type();
+            payment_type.payment_behavior = entity.payment_type.payment_behaviours.CreditNote;
+            payment_type.name = LocExtension.GetLocalizedValue<string>("Cognitivo:local:PurchaseReturn");
+            base.payment_type.Add(payment_type);
+
+            return payment_type;
         }
 
         public void Anull()

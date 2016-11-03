@@ -4,36 +4,19 @@ using System.Data;
 
 namespace entity.BrilloQuery
 {
-	public class Return
+	public class ReturnInvoice_Integration
 	{
 		public int ReturnDetailID { get; set; }
 		public int SalesInvoiceID { get; set; }
 		public decimal SubTotalVAT { get; set; }
 	}
 
-	class Sales
+	public class Sales
 	{
-		private List<Return> GenerateReturn(DataTable dt)
-		{
-			List<Return> ReturnList = new List<Return>();
-
-			foreach (DataRow DataRow in dt.Rows)
-			{
-				Return Return = new Return();
-				Return.ReturnDetailID = Convert.ToInt16(DataRow["ReturnDetailID"]);
-				Return.SalesInvoiceID = Convert.ToInt16(DataRow["SalesInvoiceID"]);
-				Return.SubTotalVAT = Convert.ToDecimal(DataRow["SubTotalVAT"]);
-
-				ReturnList.Add(Return);
-			}
-
-			return ReturnList;
-		}
-
-		public List<Return> ReturnInvoice_Integration(int ReturnID)
+		public List<ReturnInvoice_Integration> Get_ReturnInvoice_Integration(int ReturnID)
 		{
 			string query = @" select 
-							 round(srd.quantity * srd.unit_price * vatco.vat,4) as SubTotalVAT,
+							 round(srd.quantity * srd.unit_price * (vatco.vat + 1),4) as SubTotalVAT,
 							 si.id_sales_invoice as SalesInvoiceID,
 							 srd.id_sales_return_detail as ReturnDetailID
 							 
@@ -54,9 +37,22 @@ namespace entity.BrilloQuery
 							 where srd.id_sales_return = {0}";
 
 			query = string.Format(query, ReturnID);
-			return GenerateReturn(QueryExecutor.DT(query));
+
+			DataTable dt = QueryExecutor.DT(query);
+
+			List<ReturnInvoice_Integration> ReturnList = new List<ReturnInvoice_Integration>();
+
+			foreach (DataRow DataRow in dt.Rows)
+			{
+				ReturnInvoice_Integration Return = new ReturnInvoice_Integration();
+				Return.ReturnDetailID = Convert.ToInt16(DataRow["ReturnDetailID"]);
+				Return.SalesInvoiceID = DataRow.IsNull("SalesInvoiceID") == false ? Convert.ToInt16(DataRow["SalesInvoiceID"]) : 0;
+				Return.SubTotalVAT = Convert.ToDecimal(DataRow["SubTotalVAT"]);
+
+				ReturnList.Add(Return);
+			}
+
+			return ReturnList;
 		}
-
-
 	}
 }

@@ -77,7 +77,7 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                            app_document_range _app_range = db.app_document_range.Find(_id_range);
 
                             if (_app_range != null)
                             {
@@ -101,16 +101,12 @@ namespace entity
         {
             get
             {
-                using (db db = new db())
-                {
-                    _AccountPayableBalance = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
-                }
-
-                return _AccountPayableBalance;
+                return credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
             }
             set
             {
                 _AccountPayableBalance = value;
+                RaisePropertyChanged("AccountPayableBalance");
             }
         }
         decimal _AccountPayableBalance;
@@ -120,11 +116,7 @@ namespace entity
         {
             get
             {
-                using (db db = new db())
-                {
-                    _AccountReceivableBalance = debit - (child.Count() > 0 ? child.Sum(y => y.credit) : 0);
-                }
-                return _AccountReceivableBalance;
+                return debit - (child.Count() > 0 ? child.Sum(y => y.credit) : 0);
             }
             set
             {

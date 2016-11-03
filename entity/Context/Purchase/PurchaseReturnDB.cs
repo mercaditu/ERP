@@ -152,14 +152,14 @@ namespace entity
             payment.id_contact = purchase_return.id_contact;
             payment.status = Status.Documents_General.Approved;
 
-            BrilloQuery.Sales Sales = new BrilloQuery.Sales();
-            List<BrilloQuery.ReturnInvoice_Integration> ReturnList = Sales.Get_ReturnInvoice_Integration(purchase_return.id_purchase_return);
+            BrilloQuery.Purchase Purchase = new BrilloQuery.Purchase();
+            List<BrilloQuery.ReturnInvoice_Integration> ReturnList = Purchase.Get_ReturnInvoice_Integration(purchase_return.id_purchase_return);
 
             foreach (BrilloQuery.ReturnInvoice_Integration item in ReturnList)
             {
                 if (item.InvoiceID > 0)
                 {
-                    //Sales Invoice Integrated.
+                    //Purchase Invoice Integrated.
                     purchase_invoice purchase_invoice = base.purchase_invoice.Find(item.InvoiceID);
                     decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == item.InvoiceID).Sum(x => x.SubTotalVAT);
 

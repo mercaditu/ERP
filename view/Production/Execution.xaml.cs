@@ -8,7 +8,6 @@ using System.Data;
 using System;
 using System.Windows.Input;
 using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace Cognitivo.Production
 {
@@ -111,7 +110,7 @@ namespace Cognitivo.Production
                         _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
-                        _production_execution_detail.is_input = true;
+                        _production_execution_detail.is_input = production_order_detail.is_input;
                         _production_execution_detail.name = contact.name + ": " + production_order_detail.name;
 
                         if (production_order_detail.id_project_task > 0)
@@ -591,7 +590,7 @@ namespace Cognitivo.Production
 
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
-           // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
             //Adds Parent so that during approval, because it is needed for approval.
@@ -614,20 +613,9 @@ namespace Cognitivo.Production
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
             }
 
-          //  _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-
-            if (production_order_detail.item.is_autorecepie)
-            {
-                _production_execution_detail.is_input = false;
-            }
-            else
-            {
-                _production_execution_detail.is_input = true;
-            }
-               production_order_detail.production_execution_detail.Add(_production_execution_detail);
-
-           // ExecutionDB.SaveChanges();
+            _production_execution_detail.is_input = production_order_detail.is_input;
+            production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
 
 

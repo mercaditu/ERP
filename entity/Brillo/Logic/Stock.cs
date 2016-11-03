@@ -414,7 +414,7 @@ namespace entity.Brillo.Logic
                     decimal Cost = 0;
 
                     //OUTPUT. CREDIT Stock.
-                    if (production_execution_detail.is_input == false)
+                    if (production_execution_detail.production_order_detail.is_input == false)
                     {
                         if (production_execution_detail.quantity > 0)
                         {

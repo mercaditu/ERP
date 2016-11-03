@@ -17,7 +17,7 @@ namespace Cognitivo.Product
         ProductTransferDB ProductTransferDB = new ProductTransferDB();
         Class.StockCalculations StockCalculations = new Class.StockCalculations();
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
-        List<Class.transfercost> clsTotalGrid = null;
+        //List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
 
         // item_movement Selecteditem_movement;
@@ -33,7 +33,7 @@ namespace Cognitivo.Product
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
             item_transfer.status = Status.Transfer.Pending;
-            item_transfer.app_branch_origin = ProductTransferDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            item_transfer.app_branch_origin = ProductTransferDB.app_branch.Find(CurrentSession.Id_Branch);
             ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
 
             item_transferViewSource.View.MoveCurrentToLast();
@@ -88,8 +88,10 @@ namespace Cognitivo.Product
             item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(this.FindResource("item_transferitem_transfer_detailViewSource")));
 
             await ProductTransferDB.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0).OrderBy(a => a.name).LoadAsync();
+
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
             branch_originViewSource.Source = ProductTransferDB.app_branch.Local;
+
             CollectionViewSource branch_destViewSource = ((CollectionViewSource)(this.FindResource("branch_destViewSource")));
             branch_destViewSource.Source = ProductTransferDB.app_branch.Local;
 
@@ -97,9 +99,9 @@ namespace Cognitivo.Product
             await ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             security_userViewSource.Source = ProductTransferDB.security_user.Local;
 
-            clsTotalGrid = new List<Class.transfercost>();
-            transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
-            transfercostViewSource.Source = clsTotalGrid;
+            //clsTotalGrid = new List<Class.transfercost>();
+            //transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
+            //transfercostViewSource.Source = clsTotalGrid;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(ProductTransferDB, entity.App.Names.Transfer, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }

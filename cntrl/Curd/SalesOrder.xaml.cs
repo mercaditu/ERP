@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
@@ -337,18 +329,18 @@ namespace cntrl
             {
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
-                parentGrid.Visibility = System.Windows.Visibility.Hidden;
+                parentGrid.Visibility = Visibility.Hidden;
             }
             catch { }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SalesOrderDB.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
-            cbxContract.ItemsSource = SalesOrderDB.app_contract.Local;
+            //SalesOrderDB.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
+            cbxContract.ItemsSource = CurrentSession.Contracts.ToList(); //SalesOrderDB.app_contract.Local;
 
-            SalesOrderDB.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
-            cbxCondition.ItemsSource = SalesOrderDB.app_condition.Local;
+            //SalesOrderDB.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
+            cbxCondition.ItemsSource = CurrentSession.Conditions.ToList(); //SalesOrderDB.app_condition.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesOrderDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
@@ -361,7 +353,7 @@ namespace cntrl
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = SalesOrderDB.app_contract.Where(a => a.is_active == true
+                cbxContract.ItemsSource = CurrentSession.Contracts.Where(a => a.is_active == true
                                                                         && a.id_company == entity.Properties.Settings.Default.company_ID
                                                                         && a.id_condition == app_condition.id_condition).ToList();
                 cbxContract.SelectedIndex = 0;
@@ -373,16 +365,16 @@ namespace cntrl
             if (cbxDocument.SelectedItem != null)
             {
                 app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
-                app_document_range _app_range = SalesOrderDB.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
+                app_document_range _app_range = SalesOrderDB.app_document_range.Find(app_document_range.id_range);
 
-                if (SalesOrderDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                if (CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
                 {
-                    entity.Brillo.Logic.Range.branch_Code = SalesOrderDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
                 }
 
-                if (SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
+                if (CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
                 {
-                    entity.Brillo.Logic.Range.terminal_Code = SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
                 }
 
                 if (SalesOrderDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault() != null)

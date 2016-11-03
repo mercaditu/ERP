@@ -264,18 +264,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class\clsStatus.cs" />
     <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Class\DataTable.cs" />
     <Compile Include="Class\ErrorLog.cs" />
-    <Compile Include="Class\itemmovement.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\Production.cs" />
     <Compile Include="Class\RichTextBoxHelper.cs" />
     <Compile Include="Class\CreditLimit.cs" />
     <Compile Include="Class\Finance.cs" />
     <Compile Include="Class\Stock.cs" />
-    <Compile Include="Class\transfercost.cs" />
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>
     </Compile>
@@ -415,7 +412,6 @@
     <Compile Include="Configs\VATGroup.xaml.cs">
       <DependentUpon>VATGroup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Class\DataGrid.cs" />
     <Compile Include="Converters\ExpireDate2Visible.cs" />
     <Compile Include="Converters\NotConverter .cs" />
     <Compile Include="Converters\Projectfinance.cs" />
@@ -765,14 +761,9 @@
     <Compile Include="Converters\IsProductObjectVisibilityConverter.cs" />
     <Compile Include="Converters\Text2Collapsed.cs" />
     <Compile Include="Converters\Text2Visibility.cs" />
-    <Compile Include="Class\clsaccesories.cs" />
     <Compile Include="Class\clsAccountUtility.cs" />
-    <Compile Include="Class\clsinputdata.cs" />
-    <Compile Include="Class\Clsinputdimension.cs" />
     <Compile Include="Class\clsLogic.cs" />
-    <Compile Include="Class\clsPayment.cs" />
     <Compile Include="Class\clsProjectTemplateType.cs" />
-    <Compile Include="Class\DisplayPrinter.cs" />
     <Compile Include="Cloud\Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>

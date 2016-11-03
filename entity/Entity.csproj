@@ -158,9 +158,8 @@
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsImpex.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
-    <Compile Include="Class\EnumExtension.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
-    <Compile Include="Class\Promotion.cs" />
+    <Compile Include="BrilloQuery\Sales.cs" />
     <Compile Include="Commercial\contact_tag.cs" />
     <Compile Include="Commercial\contact_tag_detail.cs" />
     <Compile Include="Commercial\payment_withholding_detail.cs" />
@@ -553,17 +552,13 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cloud\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Entypo-license.txt" />
     <Content Include="Resources\ErrorEmail.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\WindowsIcons-license.txt" />
-    <Content Include="SQL\sp_drop_budgetstatus.sql" />
-    <Content Include="SQL\sp_create_budgetstatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Brillo\Promotion\PromotionProduct.xaml">

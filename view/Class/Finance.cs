@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using MySql.Data.MySqlClient;
 
 namespace Cognitivo.Class
 {
@@ -45,8 +44,8 @@ namespace Cognitivo.Class
 								order by schedual.expire_date";
 			
 			query = string.Format(query, entity.CurrentSession.Id_Company, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-			return exeDT(query);
-		}
+            return Generate.DataTable(query);
+        }
 
 		public DataTable PendingPayables(DateTime TransDate)
 		{
@@ -88,25 +87,7 @@ namespace Cognitivo.Class
 								order by schedual.expire_date";
 
 			query = string.Format(query, entity.CurrentSession.Id_Company, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-			return exeDT(query);
-		}
-
-
-		private DataTable exeDT(string sql)
-		{
-			DataTable dt = new DataTable();
-			try
-			{
-				MySqlConnection sqlConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
-				sqlConn.Open();
-				MySqlCommand cmd = new MySqlCommand(sql, sqlConn);
-				MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-				dt = new DataTable();
-				da.Fill(dt);
-				sqlConn.Close();
-			}
-			catch {  }
-			return dt;
-		}
+            return Generate.DataTable(query);
+        }
 	}
 }

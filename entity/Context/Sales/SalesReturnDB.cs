@@ -184,6 +184,8 @@ namespace entity
             payment.id_contact = sales_return.id_contact;
             payment.status = Status.Documents_General.Approved;
 
+
+            ///List Returns with Sales Invoice
             var Sum_SalesReturnDetail =
                 sales_return.sales_return_detail
                 .Where(x => x.sales_invoice_detail != null)
@@ -191,26 +193,21 @@ namespace entity
                 .Select(group => new
                 {
                     SalesInvoice = group.Select(y => y.sales_invoice_detail.sales_invoice),
-                    Sum_SRD = group.Sum(y => y.SubTotal_Vat)
+                    //Sum_SRD = group.Sum(y => y.SubTotal_Vat)
                 }).ToList();
 
             foreach (var Row in Sum_SalesReturnDetail)
             {
-                foreach (payment_schedual payment_schedual in Row.SalesInvoice.FirstOrDefault().payment_schedual)
+                foreach (sales_invoice Invoice in Row.SalesInvoice)
                 {
-
+                    decimal Invoice_Balance = Invoice.payment_schedual.Sum(x => x.AccountReceivableBalance);
+                    decimal Invoice_ReturnTotal =  sales_return.sales_return_detail.Where(x => x.sales_invoice_detail.id_sales_invoice == Invoice.id_sales_invoice).Sum(x => x.SubTotal_Vat);
                 }
             }
 
             var SalesReturnDetail =
                 sales_return.sales_return_detail
-                .Where(x => x.sales_invoice_detail == null)
-                .GroupBy(x => x.sales_invoice_detail.id_sales_invoice)
-                .Select(group => new
-                {
-                    SalesInvoice = group.Select(y => y.sales_invoice_detail.sales_invoice),
-                    Sum_SRD = group.Sum(y => y.SubTotal_Vat)
-                }).ToList();
+                .Where(x => x.sales_invoice_detail == null).ToList();
 
             //Adds Sales Invoice into List for later comparison. This list will help know how much to apply into each sales payment schedual.
             foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)

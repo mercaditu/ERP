@@ -13,7 +13,8 @@
 			 xmlns:Controls="clr-namespace:cntrl.Controls" 
 			 xmlns:cntrl="clr-namespace:cntrl"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
-			 mc:Ignorable="d" VerticalAlignment="Center" Width="550" Height="600" Loaded="UserControl_Loaded"
+			 mc:Ignorable="d" VerticalAlignment="Center" 
+             Width="550" Height="600" Loaded="UserControl_Loaded"
 			 BorderBrush="RoyalBlue" BorderThickness="2">
   
 	<UserControl.Resources>
@@ -25,6 +26,7 @@
 		<CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
 		<CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
 	</UserControl.Resources>
+    
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
 	</UserControl.Effect>

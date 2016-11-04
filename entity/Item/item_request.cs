@@ -66,26 +66,26 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                            app_document_range _app_range = db.app_document_range.Find(_id_range);
                             if (_app_range != null)
-                            {
-                                app_branch app_branch = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();    
+                            {   
                                 if (app_branch != null)
                                 {
-                                    Brillo.Logic.Range.branch_Code = app_branch.code;
+                                    Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
                                 }
 
-                                security_user security_user = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault();
-                                if (security_user != null)
+                                string UserCode = db.security_user.Where(x => x.id_user == id_user).Select(x => x.code).FirstOrDefault();
+                                if (!string.IsNullOrEmpty(UserCode))
                                 {
-                                    Brillo.Logic.Range.user_Code = security_user.code;
+                                    Brillo.Logic.Range.user_Code = UserCode;
                                 }
 
-                                project projects = db.projects.Where(x => x.id_project == id_project).FirstOrDefault();
-                                if (projects != null)
+                                string ProjectCode = db.projects.Where(x => x.id_project == id_project).Select(x => x.code).FirstOrDefault();
+                                if (!string.IsNullOrEmpty(ProjectCode))
                                 {
-                                    Brillo.Logic.Range.project_Code = projects.code;
+                                    Brillo.Logic.Range.project_Code = ProjectCode;
                                 }
+
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                                 RaisePropertyChanged("NumberWatermark");
                             }
@@ -133,34 +133,5 @@ namespace entity
             TotalSelected = i;
             RaisePropertyChanged("TotalSelected");
         }
-
-        //public string Error
-        //{
-        //    get
-        //    {
-        //        StringBuilder error = new StringBuilder();
-
-        //        // iterate over all of the properties
-        //        // of this object - aggregating any validation errors
-        //        PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
-        //        foreach (PropertyDescriptor prop in props)
-        //        {
-        //            String propertyError = this[prop.Name];
-        //            if (propertyError != string.Empty)
-        //            {
-        //                error.Append((error.Length != 0 ? ", " : "") + propertyError);
-        //            }
-        //        }
-
-        //        return error.Length == 0 ? null : error.ToString();
-        //    }
-        //}
-        //public string this[string columnName]
-        //{
-        //    get
-        //    {
-        //        return "";
-        //    }
-        //}
     }
 }

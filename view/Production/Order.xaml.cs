@@ -127,7 +127,9 @@ namespace Cognitivo.Production
             production_lineViewSource.Source = await OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            await OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Include(z => z.project).LoadAsync();
+            await OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type != production_order.ProductionOrderTypes.Fraction)
+                .Include(z => z.project)
+                .LoadAsync();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Data;
+using System;
 
 namespace cntrl.Curd
 {
@@ -36,17 +37,7 @@ namespace cntrl.Curd
             payment_schedualList = _payment_schedualList;
 
             payment payment = new payment();
-
-            if (Mode == Modes.Recievable)
-            {
-                payment = PaymentDB.New(true);
-                //payment.GrandTotal = payment_schedualList.Sum(x => x.AccountReceivableBalance);
-            }
-            else
-            {
-                payment = PaymentDB.New(false);
-                //payment.GrandTotal = payment_schedualList.Sum(x => x.AccountPayableBalance);
-            }
+            payment = (Mode == Modes.Recievable) ? PaymentDB.New(true) : PaymentDB.New(false);
 
             PaymentDB.payments.Add(payment);
             paymentViewSource.Source = PaymentDB.payments.Local;
@@ -88,7 +79,7 @@ namespace cntrl.Curd
 
                     int id_currencyfx = payment_schedual.id_currencyfx;
 
-                    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
                     if (app_currencyfx != null)
                     {
                         _payment_detail.id_currencyfx = id_currencyfx;
@@ -121,6 +112,7 @@ namespace cntrl.Curd
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+
             //Fix if Payment Type not inserted.
             if (PaymentDB.payment_type.Local.Count == 0)
             {
@@ -172,8 +164,6 @@ namespace cntrl.Curd
 
         #region Events
 
-
-
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
@@ -183,13 +173,11 @@ namespace cntrl.Curd
 
         #endregion
 
-        private void SaveChanges()
+        private void SaveChanges(object sender, EventArgs e)
         {
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
-
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
-
             PaymentDB.SaveChanges();
 
             foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
@@ -347,12 +335,6 @@ namespace cntrl.Curd
 
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SaveChanges();
-
-        }
-
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
@@ -360,8 +342,6 @@ namespace cntrl.Curd
             payment_detail.id_payment = payment.id_payment;
             payment_detail.payment = payment;
             payment_detail.IsSelected = true;
-
-
 
             int id_currencyfx = payment_schedualList.FirstOrDefault().id_currencyfx;
             if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)

@@ -52,7 +52,7 @@
 				<StackPanel>
 					<Label Content="{lex:Loc Header}" Style="{StaticResource H3}"/>
 					<!-- Header -->
-					<WrapPanel Height="120" DataContext="{StaticResource paymentViewSource}">
+					<WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
 						<StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
 							<Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
 							<DatePicker Style="{DynamicResource input_datepicker}"
@@ -100,7 +100,7 @@
 									 ScrollViewer.VerticalScrollBarVisibility="Auto"
 									 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 									 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-									 ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1" SelectionChanged="dgvPaymentDetail_SelectionChanged">
+									 ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1" Height="288">
 								<ListBox.ItemTemplate>
 									<DataTemplate>
 										<cntrl:navList recordCode="{Binding app_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
@@ -113,21 +113,11 @@
 							</ListBox>
 							<StackPanel Orientation="Horizontal">
 								<Label Content="{lex:Loc Total}" VerticalContentAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-								<Label Content="{Binding GrandTotalDetail, StringFormat=N2, Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" ContentStringFormat="N2" Style="{StaticResource H3}"/>
+								<Label Content="{Binding GrandTotalDetail, StringFormat=N2, Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+									   ContentStringFormat="N2" Style="{StaticResource H2}"/>
 							</StackPanel>
 						</StackPanel>
 						<StackPanel x:Name="stppaymentdetail" >
-							<!--<Label Content="{lex:Loc SalesInvoice}" Style="{DynamicResource input_label}"/>
-							<ComboBox x:Name="cbxPaymentSchedual"
-									  DisplayMemberPath="sales_invoice.number" SelectedValue="sales_invoice.number"
-									  Style="{StaticResource input_combobox}" 
-									  SelectionChanged="cbxPaymentSchedual_SelectionChanged">
-								<ComboBox.ItemsPanel>
-									<ItemsPanelTemplate>
-										<VirtualizingStackPanel/>
-									</ItemsPanelTemplate>
-								</ComboBox.ItemsPanel>
-							</ComboBox>-->
 							<Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
 							<ComboBox x:Name="cbxPamentType"
 									  DisplayMemberPath="name" SelectedValuePath="id_payment_type"
@@ -206,7 +196,7 @@
 			<Grid Background="WhiteSmoke" Height="32" VerticalAlignment="Bottom" >
 				<!--<Button Content="{lex:Loc Delete}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Foreground="Crimson" FontWeight="Medium"></Button>-->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<Button Click="Button_Click" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
+					<Button Click="SaveChanges" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
 							BorderThickness="0" FontWeight="Medium">
 						<Button.Content>
 							<TextBlock>

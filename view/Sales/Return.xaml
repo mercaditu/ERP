@@ -269,7 +269,7 @@
 						
 						<DataGrid x:Name="sales_return_detailDataGrid" AutoGenerateColumns="False" Style="{StaticResource detail_Datagrid}" EnableRowVirtualization="True" 
 								CanUserAddRows="False"
-                                  IsReadOnly="{Binding ElementName=pageSalesReturn, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
+								  IsReadOnly="{Binding ElementName=pageSalesReturn, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
 								ItemsSource="{Binding Source={StaticResource sales_returnsales_return_detailViewSource}}" InitializingNewItem="sales_return_detailDataGrid_InitializingNewItem"
 								RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_return_detailDataGrid_RowEditEnding" CellEditEnding="sales_return_detailDataGrid_CellEditEnding">
 							<DataGrid.Columns>
@@ -279,26 +279,31 @@
 								<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Invoice}" Width="SizeToHeader" IsReadOnly="True"
 													Binding="{Binding sales_invoice_detail.sales_invoice.number}"/>
 								<DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
+													Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" MinWidth="100"/>
 								<DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
+													Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="*"/>
 								<DataGridComboBoxColumn DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
 													  SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, 
 																			  ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, 
 																			  ValidatesOnDataErrors=True}" 
-													  ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
-												  />
+													  ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}" />
 
-								<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
-								<DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
-								<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto"/>
+								<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" 
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
+								<DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
+								<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto"/>
 								<DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-													Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"/>
+													Header="{lex:Loc Cognitivo:local:SubTotal}"
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True"/>
 								<DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                    Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" IsReadOnly="True"/>
-                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Total_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=OneWay, StringFormat={}{0:N2}}"
-										            Header="{lex:Loc Cognitivo:local:VAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
-                                <DataGridTemplateColumn Width="Auto">
+													Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True"/>
+								<DataGridTextColumn IsReadOnly="True" Binding="{Binding Total_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=OneWay, StringFormat={}{0:N2}}"
+													ElementStyle="{StaticResource RightAlignStyle}"
+													Header="{lex:Loc Cognitivo:local:VAT}" Width="Auto" />
+								<DataGridTemplateColumn Width="Auto">
 									<DataGridTemplateColumn.CellTemplate>
 										<DataTemplate>
 											<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>

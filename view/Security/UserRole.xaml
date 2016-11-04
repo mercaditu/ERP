@@ -56,7 +56,7 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<StackPanel Margin="8">
+			<StackPanel Margin="8" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 				<Label Style="{StaticResource input_label}" Content="{lex:Loc UserRole}"/>
 				<TextBox Style="{StaticResource input_textbox}"
 					 Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -75,7 +75,7 @@
 					<Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top"/>
 				</StackPanel>
 			</StackPanel>
-			<StackPanel Margin="8" Grid.Column="1">
+			<StackPanel Margin="8" Grid.Column="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 				<StackPanel Orientation="Horizontal">
 					<Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
 					<Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->

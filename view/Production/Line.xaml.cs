@@ -4,12 +4,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data.Entity;
 using entity;
+using System.Linq;
 
 namespace Cognitivo.Production
 {
     public partial class Line : Page
     {
-        LineDB dbContext = new LineDB();
+        LineDB LineDB = new LineDB();
         CollectionViewSource production_lineViewSource, app_locationViewSource;
 
         public Line()
@@ -23,26 +24,25 @@ namespace Cognitivo.Production
             production_line.State = EntityState.Added;
             production_line.IsSelected = true;
 
-            dbContext.Entry(production_line).State = EntityState.Added;
-            production_line.State = EntityState.Added;
-            production_lineViewSource.View.MoveCurrentToLast();
+            LineDB.production_line.Add(production_line);
+            production_lineViewSource.View.MoveCurrentTo(production_line);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            production_lineViewSource =
-            ((CollectionViewSource)(this.FindResource("production_lineViewSource")));
-            dbContext.production_line.Load();
-            production_lineViewSource.Source = dbContext.production_line.Local;
+            production_lineViewSource = ((CollectionViewSource)(this.FindResource("production_lineViewSource")));
+            await LineDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            production_lineViewSource.Source = LineDB.production_line.Local;
+
             app_locationViewSource = this.FindResource("app_locationViewSource") as CollectionViewSource;
-            dbContext.app_location.Load();
-            app_locationViewSource.Source = dbContext.app_location.Local;
+            await LineDB.app_location.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).LoadAsync();
+            app_locationViewSource.Source = LineDB.app_location.Local;
         }
 
    
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            LineDB.CancelAllChanges();
             production_lineViewSource.View.Refresh();
         }
 
@@ -53,7 +53,7 @@ namespace Cognitivo.Production
                 production_line production_line = (production_line)project_templateDataGrid.SelectedItem;
                 production_line.IsSelected = true;
                 production_line.State = EntityState.Modified;
-                dbContext.Entry(production_line).State = EntityState.Modified;
+                LineDB.Entry(production_line).State = EntityState.Modified;
             }
             else
             {
@@ -93,10 +93,10 @@ namespace Cognitivo.Production
 
         private void Save_Click(object sender)
         {
-            if (dbContext.SaveChanges() > 0)
+            if (LineDB.SaveChanges() > 0)
             {
                 production_lineViewSource.View.Refresh();
-                toolBar.msgSaved(dbContext.NumberOfRecords);   
+                toolBar.msgSaved(LineDB.NumberOfRecords);   
             }
         }
 

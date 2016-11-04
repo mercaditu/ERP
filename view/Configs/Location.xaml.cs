@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
 using entity;
 
@@ -31,14 +22,17 @@ namespace Cognitivo.Configs
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            locationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_locationViewSource")));
-            entity.db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).Include("app_branch").OrderByDescending(a => a.is_active).Load();
+            locationViewSource = ((CollectionViewSource)(this.FindResource("app_locationViewSource")));
+            entity.db.app_location.Where(x => x.id_company == CurrentSession.Id_Company)
+                .Include(x => x.app_branch)
+                .OrderByDescending(a => a.is_active)
+                .Load();
             locationViewSource.Source = entity.db.app_location.Local;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             cntrl.location objLocation = new cntrl.location();
             app_location app_location = new app_location();
             entity.db.app_location.Add(app_location);

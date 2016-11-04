@@ -237,17 +237,9 @@ namespace cntrl.Curd
                             //If Payable, then Hide->Sales and Show->Payment
                             stpcreditsales.Visibility = Visibility.Collapsed;
                             stpcreditpurchase.Visibility = Visibility.Visible;
-
-
+                            
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
                             purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.payment_schedual.Where(z => z.can_calculate).Sum(y => y.debit) < x.GrandTotal));
-                            //List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.purchase_return != null && x.can_calculate && x.credit > x.purchase_return.GrandTotal).Include(x=>x.purchase_return).ToList();
-                            //List<purchase_return> purchase_returnList = new List<purchase_return>();
-                            //foreach (payment_schedual payment_schedual in payment_schedualList)
-                            //{
-                            //    purchase_returnList.Add(payment_schedual.purchase_return);
-                            //}
-                            //purchase_returnViewSource.Source = purchase_returnList;
                         }
                         else
                         {
@@ -274,7 +266,7 @@ namespace cntrl.Curd
                         stpDetailDocument.Visibility = Visibility.Visible;
                         payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
 
-                        app_document_range app_document_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault();
+                        app_document_range app_document_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).FirstOrDefault();
                         if (app_document_range != null && payment_detail != null)
                         {
                             payment_detail.id_range = app_document_range.id_range;

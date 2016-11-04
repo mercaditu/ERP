@@ -46,7 +46,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Panels:pnl_Curd Margin="5" 
+                            <Panels:pnl_Curd Margin="5"
                                                  Status="{Binding is_active, Converter={StaticResource Converter}}" Id="{Binding id_location}"
                                                  DisplayName="{Binding name}" linkEdit_click="pnl_location_linkEdit_Click"/>
                         </Grid>

@@ -1,6 +1,5 @@
 namespace entity
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -13,6 +12,7 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
+
             security_curd = new List<security_crud>();
             security_user = new List<security_user>();
             security_role_privilage = new List<security_role_privilage>();
@@ -50,10 +50,7 @@ namespace entity
 
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         [NotMapped]

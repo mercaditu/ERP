@@ -122,6 +122,7 @@ namespace Cognitivo.Security
                 toolBar.msgWarning("Please Select a record");
             }
         }
+
         private void add_Privallge()
         {
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();

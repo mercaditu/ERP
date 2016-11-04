@@ -137,6 +137,7 @@ namespace entity
                 User = Sec_User;
                 Id_User = User.id_user;
                 UserRole = Role;
+                Version = Role.Version;
 
                 Properties.Settings.Default.user_Name = User.name_full;
                 Properties.Settings.Default.Save();
@@ -151,9 +152,6 @@ namespace entity
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                 myTimer.Interval = 60000;
                 myTimer.Start();
-
-                Brillo.Activation Activation = new Brillo.Activation();
-                Version = Activation.VersionDecrypt();
             }
         }
 

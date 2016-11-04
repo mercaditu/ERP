@@ -126,6 +126,7 @@ namespace Cognitivo.Menu
                 {
                     string _namespace = app["namespace"].ToString();
                     entity.CurrentSession.Versions Version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
+
                     if (entity.CurrentSession.Version >= Version)
                     {
                         if (arrNamespace.Contains(_namespace))

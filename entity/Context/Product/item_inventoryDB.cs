@@ -120,7 +120,7 @@ namespace entity
                 List<item_movement> item_movementLIST = new List<item_movement>();
               
                 Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                item_movementLIST = _Stock.insert_Stock(this, item_inventory);
+                item_movementLIST = _Stock.Inventory_Approve(this, item_inventory);
 
                 if (item_movementLIST.Count() > 0)
                 {

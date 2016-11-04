@@ -25,8 +25,10 @@ namespace entity.Brillo
 
             using (db db = new db())
             {
-                app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
-                app_currencyfxold = db.app_currencyfx.Where(x => x.id_currencyfx == old_app_currencyfx).FirstOrDefault();
+                db.Configuration.AutoDetectChangesEnabled = false;
+
+                app_currencyfx = db.app_currencyfx.Find(id_app_currencyfx);
+                app_currencyfxold = db.app_currencyfx.Find(old_app_currencyfx);
 
                 if (app_currencyfx != null && app_currencyfxold != null)
                 {
@@ -63,12 +65,13 @@ namespace entity.Brillo
 
                             if (app_currencyfx.app_currency.is_priority == false && is_priority == false)
                             {
-                                if (db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault() != null)
+                                app_currencyfx _app_currencyfx = db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
+                                if (_app_currencyfx != null)
                                 {
                                     //Convert Towards Defualt
-                                    decimal Value_InPriority = convert_Values(originalValue, old_app_currencyfx, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, App.Modules.Sales);
+                                    decimal Value_InPriority = convert_Values(originalValue, old_app_currencyfx, _app_currencyfx.id_currencyfx, App.Modules.Sales);
                                     //Convert Away from Default
-                                    return convert_Values(Value_InPriority, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, id_app_currencyfx, App.Modules.Sales);
+                                    return convert_Values(Value_InPriority, _app_currencyfx.id_currencyfx, id_app_currencyfx, App.Modules.Sales);
                                 }
                             }
                             else if (app_currencyfx.app_currency.is_priority == true) //Towards Default

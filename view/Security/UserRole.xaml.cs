@@ -33,7 +33,6 @@ namespace Cognitivo.Security
             security_roleViewSource = (CollectionViewSource)this.FindResource("security_roleViewSource");
 
             await UserRoleDB.security_role.Where(a =>
-                                            a.is_active == true &&
                                             a.id_company == CurrentSession.Id_Company)
                                             .OrderBy(a => a.name)
                                             .LoadAsync();

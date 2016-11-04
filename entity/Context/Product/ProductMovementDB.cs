@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace entity
                 yield return day;
         }
 
-        public void Generate_ProductMovement()
+        public async void Generate_ProductMovement()
         {
             ///Delete all Movements.
             if (base.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).Count() > 0)
@@ -76,7 +77,7 @@ namespace entity
                 .Where(x =>
                     x.id_company == CurrentSession.Id_Company &&
                     x.status == Status.Documents_General.Approved
-                    ).ToList();
+                    ).AsNoTracking().ToList();
 
             foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
             {
@@ -90,33 +91,34 @@ namespace entity
 
             using (ImpexDB ImpexDB = new ImpexDB())
             {
-                ImpexDB.impex.Load();
+                List<impex> impexLIST = ImpexDB.impex.Local.Where(x => x.status == Status.Documents_General.Approved).ToList();
 
-                foreach (impex impex in ImpexDB.impex.Local.Where(x => x.status == Status.Documents_General.Approved))
+                foreach (impex impex in impexLIST)
                 {
                     impex.IsSelected = true;
                     impex.status = Status.Documents_General.Pending;
                     ImpexDB.ApproveImport();
-                }   
+                }
             }
-          
 
-
-            DateTime StartDate = DateTime.Now.AddMonths(-6);
+            DateTime StartDate = DateTime.Now.AddMonths(-7);
             DateTime EndDate = DateTime.Now;
+
+            List<item_inventory> item_inventoryList = base.item_inventory.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents.Issued).AsNoTracking().ToList();
+            List<item_transfer> item_transferList = base.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
 
             foreach (DateTime day in EachDay(StartDate, EndDate))
             {
-                if (base.item_inventory.Any(x => x.trans_date.Day == day.Day && x.trans_date.Month == day.Month))
+                if (item_inventoryList.Any(x => x.trans_date.Date == day.Date))
                 {
                     ///Inventory
                     using (InventoryDB InventoryDB = new InventoryDB())
                     {
-                        List<item_inventory> item_inventoryLIST = InventoryDB.item_inventory.Where(x =>
-                                x.id_company == CurrentSession.Id_Company
-                                && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month &&
-                                x.status == Status.Documents.Issued).ToList();
-                        foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
+                        List<item_inventory> item_inventoryLIST = await InventoryDB.item_inventory.Where(x =>
+                                x.id_company == CurrentSession.Id_Company &&
+                                x.status == Status.Documents.Issued).OrderBy(y => y.trans_date).ToListAsync();
+
+                        foreach (item_inventory inventory in item_inventoryLIST.Where(x => x.trans_date == day.Date))
                         {
                             if (inventory.status == Status.Documents.Issued)
                             {
@@ -124,27 +126,21 @@ namespace entity
                                 inventory.IsSelected = true;
                             }
 
-                            foreach (item_inventory_detail item_inventory_detail in inventory.item_inventory_detail)
-                            {
-                                if (item_inventory_detail.value_counted > 0)
-                                {
-                                    item_inventory_detail.IsSelected = true;
-                                }
-                            }
                             InventoryDB.Approve();
                         }
                     }
                 }
 
-                if (base.item_transfer.Any(x => x.trans_date.Day == day.Day && x.trans_date.Month == day.Month))
+                if (item_transferList.Any(x => x.trans_date.Date == day.Date))
                 {
                     ///Transfers & Movement
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                     {
-                        List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company
-                            && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month
-                            && x.status == Status.Transfer.Approved).ToList();
-                        foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
+                        List<item_transfer> item_transferLIST = await ProductTransferDB.item_transfer.Where(x => 
+                            x.id_company == CurrentSession.Id_Company &&
+                            x.status == Status.Transfer.Approved).OrderBy(y => y.trans_date).ToListAsync();
+
+                        foreach (item_transfer transfer in item_transferLIST.Where(x => x.trans_date == day.Date))
                         {
                             transfer.IsSelected = true;
                             foreach (item_transfer_detail detail in transfer.item_transfer_detail)
@@ -165,15 +161,20 @@ namespace entity
 
 
             List<sales_invoice> sales_invoiceLIST = base.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
-            foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
-            {
-                ///Sales
-                using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
-                {
-                    sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Where(x => x.id_sales_invoice == sales.id_sales_invoice).FirstOrDefault();
+            int Count = sales_invoiceLIST.Count() / 100;
 
-                    SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
-                    SalesInvoiceDB.SaveChanges();
+            for (int i = 0; i < Count; i++)
+            {
+                foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
+                {
+                    ///Sales
+                    using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
+                    {
+                        sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Find(sales.id_sales_invoice);
+                        SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
+
+                        SalesInvoiceDB.SaveChanges();
+                    }
                 }
             }
         }

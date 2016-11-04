@@ -109,27 +109,29 @@ namespace entity.Brillo
                 }
             }
 
-            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            string GovCode = db.app_company.Where(x => x.id_company == security_role.id_company).Select(x => x.gov_code).FirstOrDefault();
+
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.Lite;
             }
-            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.Basic;
             }
-            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.Medium;
             }
-            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.PrintingPress;
             }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.app_company.gov_code == companycode)
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && GovCode == companycode)
             {
                 return CurrentSession.Versions.EventManagement;
             }

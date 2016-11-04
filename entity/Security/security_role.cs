@@ -8,6 +8,8 @@ namespace entity
     
     public partial class security_role : IDataErrorInfo, INotifyPropertyChanged
     {
+        Brillo.Activation Activation = new Brillo.Activation();
+
         public security_role()
         {
             is_active = true;
@@ -44,6 +46,14 @@ namespace entity
         public bool is_master { get; set; }
 
         public string version { get; set; }
+
+        [NotMapped]
+        public CurrentSession.Versions Version
+        {
+            get { return Activation.VersionDecrypt(this); }
+            set { version = Activation.VersionEncrypt(value); }
+        }
+
         public virtual app_company app_company { get; set; }
         public virtual app_department app_department { get; set; }
         public virtual ICollection<security_user> security_user { get; set; }

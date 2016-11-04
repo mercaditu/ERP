@@ -42,7 +42,7 @@ namespace Cognitivo.Security
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
 
-            //security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
+            security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
             security_privilageViewSource.Source = await UserRoleDB.security_privilage.OrderBy(a => a.name).ToListAsync();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
@@ -65,8 +65,7 @@ namespace Cognitivo.Security
                 if (security_role != null)
                 {
                     CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                    Activation Activation = new Activation();
-                    security_role.version = Activation.VersionEncrypt(version, security_role);
+                    security_role.Version = version;
 
                     UserRoleDB.SaveChanges();
 
@@ -95,24 +94,29 @@ namespace Cognitivo.Security
 
         private void New_Click(object sender)
         {
-            add_Privallge();
-            add_MissingRecords();
             security_role security_role = new security_role();
-            security_role.State = EntityState.Added;
-            security_role.IsSelected = true;
-            UserRoleDB.security_role.Add(security_role);
+            if (security_role != null)
+            {
+                add_Privallge();
+                add_MissingRecords(security_role);
+                security_role.State = EntityState.Added;
+                security_role.Version = CurrentSession.Versions.Lite;
 
-            security_roleViewSource.View.Refresh();
-            security_roleViewSource.View.MoveCurrentToLast();
+                security_role.IsSelected = true;
+                UserRoleDB.security_role.Add(security_role);
+
+                security_roleViewSource.View.Refresh();
+                security_roleViewSource.View.MoveCurrentToLast();
+            }
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            if (security_roleDataGrid.SelectedItem != null)
+            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+            if (security_role != null)
             {
                 add_Privallge();
-                add_MissingRecords();
-                security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+                add_MissingRecords(security_role);
                 security_role.IsSelected = true;
                 security_role.State = EntityState.Modified;
                 UserRoleDB.Entry(security_role).State = EntityState.Modified;
@@ -184,17 +188,18 @@ namespace Cognitivo.Security
 
         private void btnChange(object sender, RoutedEventArgs e)
         {
-            if (cbxVersion.SelectedIndex > 0)
+            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+
+            if (security_role != null)
             {
-                add_MissingRecords();
+                add_MissingRecords(security_role);
             }
         }
 
-        private void add_MissingRecords()
+        private void add_MissingRecords(security_role security_role)
         {
             AppList appList = new AppList();
 
-            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             List<security_crud> security_curd = UserRoleDB.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
 
             if (security_curd.Count() == 0)
@@ -215,12 +220,12 @@ namespace Cognitivo.Security
             }
             else
             {
-                Activation _Activation = new Activation();
-                CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                if (CurrentVersion < version)
+                CurrentSession.Versions NewVersion = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+
+                if (CurrentVersion < NewVersion)
                 {
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
-                    foreach (DataRow item in appList.dtApp.Select("Version='" + version + "'"))
+                    foreach (DataRow item in appList.dtApp.Select("Version='" + NewVersion + "'"))
                     {
                         if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
                         {
@@ -246,7 +251,7 @@ namespace Cognitivo.Security
                 else
                 {
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
-                    foreach (DataRow item in appList.dtApp.Select("Version='" + version + "'"))
+                    foreach (DataRow item in appList.dtApp.Select("Version = '" + NewVersion + "'"))
                     {
                         if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
                         {
@@ -256,6 +261,7 @@ namespace Cognitivo.Security
 
                     List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
                     List<entity.App.Names> AddList = Enumerable.Except(_security_curdApplication, dtApplication).ToList();
+
                     foreach (entity.App.Names AppName in AddList)
                     {
                         security_crud _security_curd = UserRoleDB.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
@@ -266,7 +272,7 @@ namespace Cognitivo.Security
                     }
                     
                 }
-                CurrentVersion = version;
+                CurrentVersion = NewVersion;
             }
             security_rolesecurity_curdViewSource.View.Refresh();
             security_rolesecurity_role_privilageViewSource.View.Refresh();

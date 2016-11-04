@@ -72,7 +72,7 @@ namespace entity
                     }
                     else
                     {
-                        can_read = false;
+                        can_read = true;
                         RaisePropertyChanged("can_read");
 
                         can_create = true;

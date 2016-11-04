@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Data.Entity;
 using entity;
@@ -89,11 +88,12 @@ namespace cntrl.Curd
 
                     int id_currencyfx = payment_schedual.id_currencyfx;
 
-                    if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+                    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                    if (app_currencyfx != null)
                     {
                         _payment_detail.id_currencyfx = id_currencyfx;
                         _payment_detail.payment.id_currencyfx = id_currencyfx;
-                        _payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                        _payment_detail.app_currencyfx = app_currencyfx;
                     }
 
                     if (Mode == Modes.Recievable)
@@ -155,9 +155,7 @@ namespace cntrl.Curd
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
                 stackDocument.Visibility = Visibility.Visible;
             }
-
-            //paymentViewSource.View.Refresh();
-            //paymentpayment_detailViewSource.View.Refresh();
+            
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (payment != null)
             {
@@ -170,8 +168,6 @@ namespace cntrl.Curd
                     }
                 }
             }
-            //paymentpayment_detailViewSource.View.Refresh();
-            //paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
         #region Events
@@ -292,11 +288,6 @@ namespace cntrl.Curd
 
         private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                try
-                {
-
                     if (purchasereturnComboBox.Data != null)
                     {
                         CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
@@ -318,17 +309,6 @@ namespace cntrl.Curd
                             payment_detail.RaisePropertyChanged("value");
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         private void salesreturnComboBox_KeyDown(object sender, KeyEventArgs e)
@@ -341,8 +321,6 @@ namespace cntrl.Curd
 
         private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
 
                 if (salesreturnComboBox.Data != null)
                 {
@@ -365,11 +343,6 @@ namespace cntrl.Curd
                         payment_detail.RaisePropertyChanged("value");
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         #endregion
@@ -379,8 +352,6 @@ namespace cntrl.Curd
             SaveChanges();
 
         }
-
-
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
@@ -419,21 +390,9 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
         }
 
-
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
-        private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           // payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-
-            //paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
-        }
-
-
-
-
     }
 }

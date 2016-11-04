@@ -23,14 +23,18 @@ namespace entity
         public int id_role { get; set; }
         public int id_company { get; set; }
         public int? id_department { get; set; }
+
         [Required]
         public string name
         { 
-            get {
+            get
+            {
                 return _name;
             } 
-            set { 
-                _name = value; RaisePropertyChanged("name"); 
+            set
+            { 
+                _name = value;
+                RaisePropertyChanged("name"); 
             }
         }
         string _name;

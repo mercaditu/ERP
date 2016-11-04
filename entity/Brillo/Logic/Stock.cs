@@ -123,7 +123,6 @@ namespace entity.Brillo.Logic
                 }
                 //Return List so we can save into context.
                 return item_movementList;
-
             }
 
             //PURCHASE RETURN
@@ -139,8 +138,8 @@ namespace entity.Brillo.Logic
                     purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
                     purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
 
-                    entity.Brillo.Stock stock = new Brillo.Stock();
-                    List<entity.Brillo.StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.app_branch, purchase_return_detail.app_location, item_product);
+                    Brillo.Stock stock = new Brillo.Stock();
+                    List<StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.app_branch, purchase_return_detail.app_location, item_product);
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
@@ -161,8 +160,20 @@ namespace entity.Brillo.Logic
             //PURCHASE INVOICE
             else if (obj_entity.GetType().BaseType == typeof(purchase_invoice) || obj_entity.GetType() == typeof(purchase_invoice))
             {
+                List<purchase_invoice_detail> Listpurchase_invoice_detail = new List<purchase_invoice_detail>();
+
                 purchase_invoice purchase_invoice = (purchase_invoice)obj_entity;
-                List<purchase_invoice_detail> Listpurchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList();
+
+                if (purchase_invoice != null)
+                {
+                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                    {
+                        if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
+                        {
+                            Listpurchase_invoice_detail.AddRange(purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList());
+                        }
+                    }
+                }
 
                 foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
                 {

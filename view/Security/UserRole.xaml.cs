@@ -193,6 +193,7 @@ namespace Cognitivo.Security
         private void add_MissingRecords()
         {
             AppList appList = new AppList();
+
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             List<security_crud> security_curd = UserRoleDB.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
 
@@ -225,7 +226,6 @@ namespace Cognitivo.Security
                         {
                             dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
                         }
-
                     }
 
                     List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();

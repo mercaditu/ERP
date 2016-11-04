@@ -86,8 +86,6 @@ namespace entity
                     PurchaseDB.Insert_Items_2_Movement(purchase);
                     PurchaseDB.SaveChanges();
                 }
-
-               
             }
 
             using (ImpexDB ImpexDB = new ImpexDB())

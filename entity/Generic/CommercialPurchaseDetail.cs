@@ -261,10 +261,16 @@ namespace entity
                 RaisePropertyChanged("SubTotal_Vat");
 
                 RaisePropertyChanged("GrandTotal");
+                RaisePropertyChanged("Total_Vat");
             }
         }
         private decimal _SubTotal_Vat;
 
+        [NotMapped]
+        public decimal Total_Vat
+        {
+            get { return SubTotal_Vat - SubTotal; }
+        }
 
         #region Discount Calculations
 

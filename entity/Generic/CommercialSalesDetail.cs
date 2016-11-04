@@ -227,7 +227,6 @@ namespace entity
         }
         private decimal _UnitPrice_Vat;
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -260,10 +259,17 @@ namespace entity
             {
                 _SubTotal_Vat = value;
                 RaisePropertyChanged("SubTotal_Vat");
+                RaisePropertyChanged("GrandTotal");
+                RaisePropertyChanged("Total_Vat");
             }
         }
         private decimal _SubTotal_Vat;
 
+        [NotMapped]
+        public decimal Total_Vat
+        {
+            get { return SubTotal_Vat - SubTotal; }
+        }
 
         #region "Foreign Key"
 

@@ -294,8 +294,11 @@
 								<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto"/>
 								<DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 													Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" IsReadOnly="True"/>
-								<DataGridTemplateColumn Width="Auto">
+								<DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Total_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=OneWay, StringFormat={}{0:N2}}"
+										            Header="{lex:Loc Cognitivo:local:VAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
+                                <DataGridTemplateColumn Width="Auto">
 									<DataGridTemplateColumn.CellTemplate>
 										<DataTemplate>
 											<Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>

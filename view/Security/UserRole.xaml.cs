@@ -42,7 +42,7 @@ namespace Cognitivo.Security
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
 
-            security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
+            //security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
             security_privilageViewSource.Source = await UserRoleDB.security_privilage.OrderBy(a => a.name).ToListAsync();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");

@@ -1,6 +1,5 @@
 namespace entity
 {
-    using entity.Class;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -25,11 +24,8 @@ namespace entity
     {
         public enum Privilages
         {
-            //[LocalizedDescription("CanUserDiscountByPercent")]
             CanUserDiscountByPercent=1,
-            //[LocalizedDescription("CanUserDiscountByValue")]
             CanUserDiscountByValue=2,
-            //[LocalizedDescription("CanUserUpdatePrice")]
             CanUserUpdatePrice=3,
             CanDisplayProduct=4,
             CanDisplayRawMaterial = 5,

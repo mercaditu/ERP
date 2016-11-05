@@ -16,17 +16,17 @@ namespace entity.BrilloQuery
 		public List<ReturnInvoice_Integration> Get_ReturnInvoice_Integration(int ReturnID)
 		{
 			string query = @" 
-								SET sql_mode = '';
-								select 
-							  (srd.quantity * srd.unit_price * (vatco.vat + 1)) as SubTotalVAT,
-							  si.id_sales_invoice as InvoiceID,
-							  srd.id_sales_return_detail as ReturnDetailID
+						    SET sql_mode = '';
+							select 
+							(srd.quantity * srd.unit_price * (vatco.vat + 1)) as SubTotalVAT,
+							si.id_sales_invoice as InvoiceID,
+							srd.id_sales_return_detail as ReturnDetailID
 							 
-								from sales_return_detail as srd
+							from sales_return_detail as srd
  
-							  LEFT OUTER JOIN 
-							  (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
-								FROM app_vat_group 
+							LEFT OUTER JOIN 
+							(SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
+							    FROM app_vat_group 
 									LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group 
 									LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
 								GROUP BY app_vat_group.id_vat_group) 

@@ -39,7 +39,9 @@ namespace entity.Brillo
                 //calculate location.
                 using (db db = new db())
                 {
-                    if (db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product && x.app_location.id_branch == app_branch.id_branch).Any())
+                    //Pankeel. Check Stock Level within this Branch and Return correct Location.
+                    item_movement item_movement = db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product && x.app_location.id_branch == app_branch.id_branch).FirstOrDefault();
+                    if (item_movement != null)
                     {
                         id_location = Convert.ToInt16(db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product
                                         && x.app_location.id_branch == app_branch.id_branch).Select(y => y.id_location)

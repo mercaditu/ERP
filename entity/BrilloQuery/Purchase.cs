@@ -18,7 +18,7 @@ namespace entity.BrilloQuery
 							from purchase_return_detail as prd
  
 							LEFT OUTER JOIN 
-							(SELECT sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
+							(SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
 								FROM app_vat_group 
 									LEFT OUTER JOIN 
 									app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group 

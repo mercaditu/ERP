@@ -75,22 +75,6 @@ namespace entity
             }
         }
 
-        /// <summary>
-        /// Executes code that will insert Invoiced Items into Movement.
-        /// </summary>
-        /// <param name="invoice"></param>
-        public void Insert_Items_2_Movement(purchase_invoice invoice)
-        {
-            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-            List<item_movement> item_movementList = new List<item_movement>();
-            item_movementList = _Stock.insert_Stock(this, invoice);
-
-            if (item_movementList != null && item_movementList.Count > 0)
-            {
-                item_movement.AddRange(item_movementList);
-            }
-        }
-
         public void Approve()
         {
             foreach (purchase_invoice invoice in base.purchase_invoice.Local.Where(x => x.IsSelected == true))
@@ -104,6 +88,7 @@ namespace entity
                     invoice.app_condition = app_condition.Find(invoice.id_condition);
                     invoice.app_contract = app_contract.Find(invoice.id_contract);
                     invoice.app_currencyfx = app_currencyfx.Find(invoice.id_currencyfx);
+
                     if (invoice.status != Status.Documents_General.Approved)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
@@ -129,6 +114,73 @@ namespace entity
                 }
 
                 invoice.IsSelected = false;
+            }
+        }
+
+        /// <summary>
+        /// Executes code that will insert Invoiced Items into Movement.
+        /// </summary>
+        /// <param name="Invoice"></param>
+        public void Insert_Items_2_Movement(purchase_invoice invoice)
+        {
+            if (invoice.purchase_invoice_detail.Where(x => x.item.item_product.Count() > 0).Any())
+            {
+                if (invoice.status == Status.Documents_General.Annulled)
+                {
+                    //Logica
+                    ReApprove(invoice);
+                }
+                else // Pending
+                {
+                    List<item_movement> item_movementList = new List<item_movement>();
+
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    item_movementList = _Stock.insert_Stock(this, invoice);
+
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        item_movement.AddRange(item_movementList);
+                    }
+                }
+            }
+        }
+
+        private void ReApprove(purchase_invoice invoice)
+        {
+            foreach (purchase_invoice_detail purchase_invoice_detail in invoice.purchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            {
+                if (purchase_invoice_detail.item_movement.Count > 0)
+                {
+                    item_movement item_movement = purchase_invoice_detail.item_movement.FirstOrDefault();
+                    if (item_movement != null)
+                    {
+                        item_movement.trans_date = invoice.trans_date;
+                        item_movement.timestamp = DateTime.Now;
+
+                        if (item_movement.credit != purchase_invoice_detail.quantity)
+                        {
+                            item_movement.credit = purchase_invoice_detail.quantity;
+                        }
+
+                        item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
+                        decimal UnitValue = Brillo.Currency.convert_Values(purchase_invoice_detail.unit_cost, invoice.id_currencyfx, CurrentSession.Get_Currency_Default_Rate().id_currencyfx, App.Modules.Purchase);
+                        if (item_movement_value != null)
+                        {
+                            if (item_movement_value.unit_value != UnitValue)
+                            {
+                                item_movement_value.unit_value = UnitValue;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //New
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    _Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
+                        invoice.app_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault(), purchase_invoice_detail.app_location, purchase_invoice_detail.quantity,
+                        invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Fix", null);
+                }
             }
         }
 

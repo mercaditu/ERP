@@ -65,7 +65,7 @@ namespace entity.Brillo
 
                             if (app_currencyfx.app_currency.is_priority == false && is_priority == false)
                             {
-                                app_currencyfx _app_currencyfx = db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
+                                app_currencyfx _app_currencyfx = CurrentSession.Get_Currency_Default_Rate(); //db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
                                 if (_app_currencyfx != null)
                                 {
                                     //Convert Towards Defualt

@@ -25,11 +25,12 @@ namespace Cognitivo.Project
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
+
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            await SalesOrderDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
             projectViewSource.Source = SalesOrderDB.projects.Local;
 
             filter_task();
@@ -76,7 +77,6 @@ namespace Cognitivo.Project
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             filter_task();
         }
 
@@ -89,7 +89,7 @@ namespace Cognitivo.Project
                 cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
 
                 objSalesOrder.project = project;
-                objSalesOrder.SalesOrderDB = SalesOrderDB;
+                objSalesOrder.db = SalesOrderDB;
                 objSalesOrder.Percentage = 0;
 
                 objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;

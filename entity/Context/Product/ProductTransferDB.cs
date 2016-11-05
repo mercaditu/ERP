@@ -128,37 +128,39 @@ namespace entity
                 {
                     if (item_transfer.id_branch > 0)
                     {
-                        if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                        if (CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
                         {
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
                         }
                     }
 
                     if (item_transfer.id_terminal > 0)
                     {
-                        if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                        if (CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
                         {
-                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
                         }
                     }
 
                     if (item_transfer.id_user > 0)
                     {
-                        if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                        security_user security_user = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault();
+                        if (security_user != null)
                         {
-                            Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                            Brillo.Logic.Range.user_Code = security_user.code;
                         }
                     }
 
                     if (item_transfer.id_project > 0)
                     {
-                        if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                        project projects = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault();
+                        if (projects != null)
                         {
-                            Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                            Brillo.Logic.Range.project_Code = projects.code;
                         }
                     }
                     
-                    app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
+                    app_document_range app_document_range = base.app_document_range.Find(item_transfer.id_range);
                     item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                     item_transfer.RaisePropertyChanged("number");
                 }
@@ -177,8 +179,8 @@ namespace entity
         public void Credit_Items_Destination(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool MoveByTruck)
         {
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
-            app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
-            app_location app_location_dest = base.app_location.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
+            app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
+            app_location app_location_dest = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
 
             if (MoveByTruck)
             {
@@ -195,7 +197,7 @@ namespace entity
 
                 base.item_movement.AddRange(item_movement_LIST);
 
-                app_location app_location_origin = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
+                app_location app_location_origin = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
 
                 //Credit in Origin only if it is MoveByTruck.
                 item_movement item_movement_origin;
@@ -261,10 +263,11 @@ namespace entity
 
             if (item_transfer_detail.item_product != null)
             {
+                app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
+                app_location app_location = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
+
                 if (movebytruck)
                 {
-                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                    app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
                     List<Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
@@ -284,15 +287,14 @@ namespace entity
                     base.item_movement.AddRange(item_movement_originList);
 
                     item_movement item_movement_Dest;
-                    app_currencyfx app_currencyfxdest = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                    app_location app_locationdest = base.app_location.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
+                    app_location app_locationdest = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
 
                     item_movement_Dest = stock.CreditOnly_Movement(
                         Status.Stock.InStock,
                         App.Names.Transfer,
                         item_transfer_detail.id_transfer,
                         item_transfer_detail.id_transfer_detail,
-                        app_currencyfxdest,
+                        app_currencyfx,
                         item_transfer_detail.item_product,
                         app_locationdest,
                             item_transfer_detail.quantity_origin,
@@ -305,8 +307,6 @@ namespace entity
                 }
                 else
                 {
-                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                    app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
                     List<Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {

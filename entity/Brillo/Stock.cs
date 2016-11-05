@@ -9,7 +9,7 @@ namespace entity.Brillo
     public class Stock
     {
        
-        public List<StockList> List(app_branch app_branch,app_location app_location, item_product item_product)
+        public List<StockList> List(int BranchID, int LocationID, int ProductID)
         {
             string query = @"select 
                                 parent.id_movement as MovementID, 
@@ -27,16 +27,16 @@ namespace entity.Brillo
             string WhereQuery = "";
 
             //This determins if we should bring cost of entire block of
-            if (app_location != null)
+            if (LocationID > 0)
             {
-                WhereQuery = String.Format("parent.id_location = {0}", app_location.id_location);
+                WhereQuery = string.Format("parent.id_location = {0}", LocationID);
             }
             else
             {
-                WhereQuery = String.Format("loc.id_branch = {0}", app_branch.id_branch);
+                WhereQuery = string.Format("loc.id_branch = {0}", BranchID);
             }
 
-            query = String.Format(query, WhereQuery, item_product.id_item_product);
+            query = string.Format(query, WhereQuery, ProductID);
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }

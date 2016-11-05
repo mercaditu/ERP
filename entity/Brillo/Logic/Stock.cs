@@ -25,15 +25,16 @@ namespace entity.Brillo.Logic
                     item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
 
                     sales_return_detail.id_location = FindNFix_Location(item_product, sales_return_detail.app_location, sales_return.app_branch);
-                    sales_return_detail.app_location = db.app_location.Find(sales_return_detail.id_location);
+                    //sales_return_detail.app_location = db.app_location.Find(sales_return_detail.id_location);
+
                     item_movementList.Add(
                         CreditOnly_Movement(Status.Stock.InStock,
                                              App.Names.SalesReturn,
                                              sales_return_detail.id_sales_return,
                                              sales_return_detail.id_sales_return_detail,
-                                             sales_return.app_currencyfx,
-                                             item_product,
-                                             sales_return_detail.app_location,
+                                             sales_return.id_currencyfx,
+                                             item_product.id_item_product,
+                                             (int)sales_return_detail.id_location,
                                              sales_return_detail.quantity,
                                              sales_return.trans_date,
                                              sales_return_detail.unit_cost,
@@ -56,18 +57,18 @@ namespace entity.Brillo.Logic
 
                     item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
                     purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
-                    purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
+                    //purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
 
                     Brillo.Stock stock = new Brillo.Stock();
-                    List<StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.app_branch, purchase_return_detail.app_location, item_product);
+                    List<StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
 
-                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
+                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
                                              purchase_return_detail.id_purchase_return,
                                              purchase_return_detail.id_purchase_return_detail,
-                                             purchase_return.app_currencyfx,
+                                             purchase_return.id_currencyfx,
                                              item_product,
-                                             purchase_return_detail.app_location,
+                                             (int)purchase_return_detail.id_location,
                                              purchase_return_detail.quantity,
                                              purchase_return.trans_date,
                                              comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
@@ -76,73 +77,6 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
-
-            //PURCHASE INVOICE
-            else if (obj_entity.GetType().BaseType == typeof(purchase_invoice) || obj_entity.GetType() == typeof(purchase_invoice))
-            {
-                List<purchase_invoice_detail> Listpurchase_invoice_detail = new List<purchase_invoice_detail>();
-
-                purchase_invoice purchase_invoice = (purchase_invoice)obj_entity;
-
-                if (purchase_invoice != null)
-                {
-                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
-                    {
-                        if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
-                        {
-                            Listpurchase_invoice_detail.AddRange(purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList());
-                        }
-                    }
-                }
-
-                foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
-                {
-                    item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
-
-                    purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
-                    if (purchase_invoice_detail.app_location == null)
-                    {
-                        purchase_invoice_detail.app_location = db.app_location.Find(purchase_invoice_detail.id_location);
-                    }
-
-                    if (purchase_invoice.app_currencyfx == null)
-                    {
-                        purchase_invoice.app_currencyfx = db.app_currencyfx.Find(purchase_invoice.id_currencyfx);
-                    }
-
-                    List<item_movement_dimension> item_movement_dimensionLIST = null;
-                    if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
-                    {
-                        item_movement_dimensionLIST = new List<item_movement_dimension>();
-                        foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
-                        {
-                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                            item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
-                            item_movement_dimension.value = purchase_invoice_dimension.value;
-                            item_movement_dimensionLIST.Add(item_movement_dimension);
-                        }
-                    }
-
-                    //Improve Comment. More standarized.
-                    item_movementList.Add(
-                        CreditOnly_Movement(
-                            entity.Status.Stock.InStock,
-                            App.Names.PurchaseInvoice,
-                            purchase_invoice_detail.id_purchase_invoice,
-                            purchase_invoice_detail.id_purchase_invoice_detail,
-                            purchase_invoice.app_currencyfx,
-                            item_product,
-                            purchase_invoice_detail.app_location,
-                            purchase_invoice_detail.quantity,
-                            purchase_invoice.trans_date,
-                            purchase_invoice_detail.unit_cost,
-                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST
-                            ));
-                }
-                //Return List so we can save into context.
-                return item_movementList;
-            }
-
             ///SALES PACKING
             else if (obj_entity.GetType().BaseType == typeof(sales_packing) || obj_entity.GetType() == typeof(sales_packing))
             {
@@ -152,23 +86,19 @@ namespace entity.Brillo.Logic
                     .Where(x => x.item.item_product != null))
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-                    if (packing_detail.id_location != null && packing_detail.app_location != null)
-                    {
-                        packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-                        packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
-                    }
+                    packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
 
                     Brillo.Stock stock = new Brillo.Stock();
-                    List<StockList> Items_InStockLIST = stock.List(packing_detail.app_location.app_branch, packing_detail.app_location, item_product);
+                    List<StockList> Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, (int)packing_detail.id_location, item_product.id_item_product);
 
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PackingList,
                                              packing_detail.id_sales_packing,
                                              packing_detail.id_sales_packing_detail,
-                                             null,
+                                             CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                              item_product,
-                                             packing_detail.app_location,
+                                             (int)packing_detail.id_location,
                                              packing_detail.quantity,
                                              sales_packing.trans_date,
                                              comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
@@ -208,7 +138,7 @@ namespace entity.Brillo.Logic
                             {
                                 Brillo.Stock stockBrillo = new Brillo.Stock();
                                 app_location app_location = db.app_location.Find(production_execution_detail.production_order_detail.production_order.production_line.id_location);
-                                Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_product);
+                                Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_product.id_item_product);
                             }
 
                             //MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
@@ -218,9 +148,9 @@ namespace entity.Brillo.Logic
                                                     App.Names.ProductionExecution,
                                                     production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
-                                                    CurrentSession.Get_Currency_Default_Rate(),                                                    
+                                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,                                                    
                                                     item_product,
-                                                    production_execution_detail.production_order_detail.production_order.production_line.app_location,
+                                                    production_execution_detail.production_order_detail.production_order.production_line.id_location,
                                                     production_execution_detail.quantity,
                                                     DateTime.Now,
                                                     comment_Generator
@@ -329,9 +259,9 @@ namespace entity.Brillo.Logic
                                                     App.Names.ProductionExecution,
                                                     production_execution_detail.production_order_detail.id_production_order,
                                                     production_execution_detail.id_execution_detail,
-                                                    CurrentSession.Get_Currency_Default_Rate(),
-                                                    item_product,
-                                                    production_execution_detail.production_order_detail.production_order.production_line.app_location,
+                                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                    item_product.id_item_product,
+                                                    production_execution_detail.production_order_detail.production_order.production_line.id_location,
                                                     production_execution_detail.quantity,
                                                     production_execution_detail.trans_date,
                                                     Cost,
@@ -350,6 +280,62 @@ namespace entity.Brillo.Logic
             }
 
             return null;
+        }
+
+        public List<item_movement> PurchaseInvoice_Approve(db db, purchase_invoice purchase_invoice)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+
+            List<purchase_invoice_detail> Listpurchase_invoice_detail = new List<purchase_invoice_detail>();
+
+            if (purchase_invoice != null)
+            {
+                if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                {
+                    if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
+                    {
+                        Listpurchase_invoice_detail.AddRange(purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList());
+                    }
+                }
+            }
+
+            foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            {
+                //item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
+
+                purchase_invoice_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice_detail.purchase_invoice.id_branch).FirstOrDefault().id_location; //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
+
+                List<item_movement_dimension> item_movement_dimensionLIST = null;
+                if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
+                {
+                    item_movement_dimensionLIST = new List<item_movement_dimension>();
+                    foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
+                    {
+                        item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                        item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
+                        item_movement_dimension.value = purchase_invoice_dimension.value;
+                        item_movement_dimensionLIST.Add(item_movement_dimension);
+                    }
+                }
+
+                //Improve Comment. More standarized.
+                item_movementList.Add(
+                    CreditOnly_Movement(
+                        Status.Stock.InStock,
+                        App.Names.PurchaseInvoice,
+                        purchase_invoice_detail.id_purchase_invoice,
+                        purchase_invoice_detail.id_purchase_invoice_detail,
+                        purchase_invoice.id_currencyfx,
+                        purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
+                        (int)purchase_invoice_detail.id_location,
+                        purchase_invoice_detail.quantity,
+                        purchase_invoice.trans_date,
+                        purchase_invoice_detail.unit_cost,
+                        comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST
+                        ));
+            }
+            //Return List so we can save into context.
+            return item_movementList;
         }
 
         public List<item_movement> SalesInvoice_Approve(db db, sales_invoice sales_invoice)
@@ -390,15 +376,15 @@ namespace entity.Brillo.Logic
                                 }
 
                                 Brillo.Stock stock = new Brillo.Stock();
-                                List<StockList> Items_InStockLIST = stock.List(detail.app_location.app_branch, detail.app_location, item_productSub);
+                                List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_productSub.id_item_product);
 
                                 item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                             App.Names.SalesInvoice,
                                                             detail.id_sales_invoice,
                                                             detail.id_sales_invoice_detail,
-                                                            sales_invoice.app_currencyfx,
+                                                            sales_invoice.id_currencyfx,
                                                             item_productSub,
-                                                            detail.app_location,
+                                                            (int)detail.id_location,
                                                             item_recepie_detail.quantity,
                                                             sales_invoice.trans_date,
                                                             comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
@@ -419,16 +405,16 @@ namespace entity.Brillo.Logic
                         }
 
                         Brillo.Stock stock = new Brillo.Stock();
-                        List<StockList> Items_InStockLIST = stock.List(detail.app_location.app_branch, detail.app_location, item_product);
+                        List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_product.id_item_product);
 
 
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.SalesInvoice,
                                                     detail.id_sales_invoice,
                                                     detail.id_sales_invoice_detail,
-                                                    sales_invoice.app_currencyfx,
+                                                    sales_invoice.id_currencyfx,
                                                     item_product,
-                                                    detail.app_location,
+                                                    (int)detail.id_location,
                                                     detail.quantity,
                                                     sales_invoice.trans_date,
                                                     comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact != null ? sales_invoice.contact.name : "")
@@ -448,16 +434,8 @@ namespace entity.Brillo.Logic
             foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail
                 .Where(x => x.item_product != null && Convert.ToDecimal(x.value_counted) != x.value_system))
             {
-                item_product item_product = FindNFix_ItemProduct(item_inventory_detail.item_product.item);
-
-                if (item_inventory_detail.app_location == null)
-                {
-                    item_inventory_detail.id_location = FindNFix_Location(item_product, item_inventory_detail.app_location, item_inventory.app_branch);
-                    item_inventory_detail.app_location = db.app_location.Find(item_inventory_detail.id_location);
-                }
-
-                app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
-
+                //item_inventory_detail.id_location = FindNFix_Location(item_inventory_detail.id_item_product, item_inventory_detail.app_location, item_inventory.app_branch);
+                
                 if (item_inventory_detail.item_inventory_dimension.Count() > 0)
                 {
                     List<item_movement_dimension> item_movement_dimensionLIST = null;
@@ -481,9 +459,9 @@ namespace entity.Brillo.Logic
                                 App.Names.Inventory,
                                 item_inventory_detail.id_inventory,
                                 item_inventory_detail.id_inventory_detail,
-                                app_currencyfx,
-                                item_product,
-                                item_inventory_detail.app_location,
+                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                item_inventory_detail.id_item_product,
+                                item_inventory_detail.id_location,
                                 (decimal)item_inventory_detail.value_counted,
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
@@ -511,9 +489,9 @@ namespace entity.Brillo.Logic
                                     App.Names.Inventory,
                                     item_inventory_detail.id_inventory,
                                     item_inventory_detail.id_inventory_detail,
-                                    app_currencyfx,
-                                    item_product,
-                                    item_inventory_detail.app_location,
+                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                    item_inventory_detail.id_item_product,
+                                    item_inventory_detail.id_location,
                                     delta,
                                     item_inventory_detail.item_inventory.trans_date,
                                     item_inventory_detail.unit_value,
@@ -523,16 +501,16 @@ namespace entity.Brillo.Logic
                         else if (delta < 0)
                         {
                             Brillo.Stock stock = new Brillo.Stock();
-                            List<StockList> Items_InStockLIST = stock.List(item_inventory_detail.app_location.app_branch, item_inventory_detail.app_location, item_product);
+                            List<StockList> Items_InStockLIST = stock.List(item_inventory_detail.app_location.id_branch, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
 
                             item_movementList.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                     App.Names.Inventory,
                                     item_inventory_detail.id_inventory,
                                     item_inventory_detail.id_inventory_detail,
-                                    app_currencyfx,
-                                    item_product,
-                                    item_inventory_detail.app_location,
+                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                    item_inventory_detail.item_product,
+                                    item_inventory_detail.id_location,
                                     Math.Abs(delta),
                                     item_inventory_detail.item_inventory.trans_date,
                                     comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
@@ -630,12 +608,12 @@ namespace entity.Brillo.Logic
         }
 
         public List<item_movement> DebitOnly_MovementLIST(db db, List<StockList> Items_InStockLIST, Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
-                                                       app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
+                                                       int CurrencyFXID, item_product item_product, int LocationID,
                                                        decimal Quantity, DateTime TransDate, string Comment)
         {
             List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
             
-            int id_location = app_location.id_location;
+            int id_location = LocationID;
             int id_item_product = item_product.id_item_product;
             int id_movement = 0;
             decimal Unitcost = 0;
@@ -674,7 +652,7 @@ namespace entity.Brillo.Logic
                     item_movement.debit = movement_debit_quantity;
                     item_movement.credit = 0;
                     item_movement.status = Status;
-                    item_movement.id_location = app_location.id_location;
+                    item_movement.id_location = LocationID;
                     item_movement.parent = db.item_movement.Find(parent_Movement.MovementID);
 
                     if (ApplicationID == App.Names.Transfer)
@@ -757,7 +735,7 @@ namespace entity.Brillo.Logic
                     }
 
                     //Logic for Value
-                    if (app_currencyfx != null)
+                    if (CurrencyFXID > 0)
                     {
                         item_movement_value item_movement_value = new item_movement_value();
                         if (Unitcost > 0)
@@ -769,7 +747,7 @@ namespace entity.Brillo.Logic
                             item_movement_value.unit_value = parent_Movement.Cost;
                         }
 
-                        item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                        item_movement_value.id_currencyfx = CurrencyFXID;
                         item_movement_value.comment = Localize.StringText("DirectCost");
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
@@ -799,7 +777,7 @@ namespace entity.Brillo.Logic
                 item_movement.debit = Quantity;
                 item_movement.credit = 0;
                 item_movement.status = Status;
-                item_movement.id_location = app_location.id_location;
+                item_movement.id_location = LocationID;
                 item_movement.parent = null;
 
                 if (ApplicationID == App.Names.Transfer)
@@ -850,7 +828,7 @@ namespace entity.Brillo.Logic
                 // item_movement.transaction_id = TransactionID;
                 item_movement.trans_date = TransDate;
 
-                if (app_currencyfx != null)
+                if (CurrencyFXID > 0)
                 {
                     //Logic for Value in case Parent does not Exist, we will take from 
 
@@ -868,7 +846,7 @@ namespace entity.Brillo.Logic
                         }
                     }
                     
-                    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                    item_movement_value.id_currencyfx = CurrencyFXID;
                     item_movement_value.comment = Localize.StringText("DirectCost");
                     item_movement.item_movement_value.Add(item_movement_value);
                 }
@@ -879,7 +857,7 @@ namespace entity.Brillo.Logic
         }
 
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
-                                              app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
+                                              int CurrencyFXID, int ProductID, int LocationID,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList)
         {
             int id_movement = 0;
@@ -887,11 +865,11 @@ namespace entity.Brillo.Logic
             {
                 item_movement item_movement = new item_movement();
                 item_movement.comment = Comment;
-                item_movement.id_item_product = item_product.id_item_product;
+                item_movement.id_item_product = ProductID;
                 item_movement.debit = 0;
                 item_movement.credit = Quantity;
                 item_movement.status = Status;
-                item_movement.id_location = app_location.id_location;
+                item_movement.id_location = LocationID;
 
                 if (ApplicationID == App.Names.Transfer)
                 {
@@ -959,7 +937,7 @@ namespace entity.Brillo.Logic
                 {
                     ///Bring Cost from Transaction.
                     int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
-                    decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, app_currencyfx.id_currencyfx, ID_CurrencyFX_Default, null);
+                    decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, CurrencyFXID, ID_CurrencyFX_Default, null);
 
                     item_movement_value.unit_value = DefaultCurrency_Cost;
                     item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
@@ -975,10 +953,19 @@ namespace entity.Brillo.Logic
                     ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
                     ///we can have mis-guided information.
 
-                    if (item_product.item.unit_cost != null)
+                    if (ProductID > 0)
                     {
-                        item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
-                        item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                        using (db db = new db())
+                        {
+                            int i = 0;
+                            i = db.item_product.Where(x => x.id_item_product == ProductID).Select(x => x.id_item).FirstOrDefault();
+                            if (i > 0)
+                            {
+                                item_movement_value.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
+                            }
+                        }
+
+                        item_movement_value.id_currencyfx = CurrencyFXID;
                         item_movement_value.comment = Localize.StringText("DirectCost");
 
                         //Adding Value into Movement

@@ -135,7 +135,7 @@ namespace entity
                     List<item_movement> item_movementList = new List<item_movement>();
 
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                    item_movementList = _Stock.insert_Stock(this, invoice);
+                    item_movementList = _Stock.PurchaseInvoice_Approve(this, invoice);
 
                     if (item_movementList != null && item_movementList.Count > 0)
                     {
@@ -178,7 +178,8 @@ namespace entity
                     //New
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                     _Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
-                        invoice.app_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault(), purchase_invoice_detail.app_location, purchase_invoice_detail.quantity,
+                        invoice.id_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product, 
+                        (int)purchase_invoice_detail.id_location, purchase_invoice_detail.quantity,
                         invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Fix", null);
                 }
             }

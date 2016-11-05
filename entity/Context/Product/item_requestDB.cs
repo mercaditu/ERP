@@ -309,12 +309,12 @@ namespace entity
                             app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
                             if (item_product != null && app_location != null)
                             {
-                                Items_InStockLIST = stockBrillo.List(item_request.app_branch, item_request.app_branch.app_location.Where(x=>x.is_default).FirstOrDefault(), item.item_request_detail.item.item_product.FirstOrDefault());
-                                entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
+                                Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x=>x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
+                                entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
                                 List<item_movement> item_movement_originList;
                                 item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail,
-                                CurrentSession.Get_Currency_Default_Rate(),
-                                    item_product, app_location,
+                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                    item_product, app_location.id_location,
                                         item.quantity, item_request.timestamp, stock.comment_Generator(entity.App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
 
                                 base.item_movement.AddRange(item_movement_originList);

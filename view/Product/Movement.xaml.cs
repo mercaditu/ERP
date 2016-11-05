@@ -221,12 +221,12 @@ namespace Cognitivo.Product
                 else
                 {
                     entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-                    Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
+                    Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
                 }
 
                 ///Debit Movement from Origin.
                 List<item_movement> item_movement_originList;
-                item_movement_originList = stock.DebitOnly_MovementLIST(ProductTransferDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                item_movement_originList = stock.DebitOnly_MovementLIST(ProductTransferDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,
                         item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                 ProductTransferDB.item_movement.AddRange(item_movement_originList);
@@ -255,9 +255,9 @@ namespace Cognitivo.Product
                                 entity.App.Names.Transfer,
                                 item_transfer_detail.id_transfer,
                                 item_transfer_detail.id_transfer_detail,
-                                app_currencyfx,
-                                item_transfer_detail.item_product,
-                                item_transfer_detail.item_transfer.app_location_destination,
+                                app_currencyfx.id_currencyfx,
+                                item_transfer_detail.id_item_product,
+                                item_transfer_detail.item_transfer.app_location_destination.id_location,
                                 item_transfer_detail.quantity_destination,
                                 item_transfer_detail.item_transfer.trans_date,
                                 item_movement_originList.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1))),

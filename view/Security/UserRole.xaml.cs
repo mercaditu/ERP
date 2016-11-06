@@ -131,6 +131,7 @@ namespace Cognitivo.Security
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<Privilage.Privilages> Privilages = Enum.GetValues(typeof(Privilage.Privilages)).Cast<Privilage.Privilages>().ToList();
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+
             foreach (entity.App.Names Names in Application)
             {
                 if (Names == entity.App.Names.SalesInvoice)

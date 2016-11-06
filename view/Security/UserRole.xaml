@@ -77,7 +77,7 @@
 			</StackPanel>
 			<StackPanel Margin="8" Grid.Column="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 				<StackPanel Orientation="Horizontal">
-					<Label Style="{StaticResource input_label}" Content="Seats Avialable"/>
+					<Label Style="{StaticResource input_label}" Content="{lex:Loc SeatsAvailable}"/>
 					<Label Content="3"/> <!-- Total Number of Users in all Roles with this Version -->
 					<Label Content="/"/>
 					<Label Content="5"/> <!-- Total Number of Seats Avaiable from Internet -->
@@ -100,14 +100,14 @@
 							<DataGridCheckBoxColumn Binding="{Binding all, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													Header="All" Width="SizeToHeader"/>
+													Width="SizeToHeader"/>
 							<DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
 												Header="{lex:Loc Cognitivo:local:Application}" FontWeight="Bold"
 												IsReadOnly="True" Width="*" SortDirection="Descending"/>
 							<DataGridCheckBoxColumn Binding="{Binding can_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													Header="View" Width="SizeToHeader"/>
+													Header="{lex:Loc Cognitivo:local:View}" Width="SizeToHeader"/>
 							<DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -143,11 +143,11 @@
 							<DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource security_privilageViewSource}}" 
 														SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														DisplayMemberPath="name" 
-														SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilage}" Width="*"/>
+														SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilege}" Width="*"/>
 							<DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource security_privilageViewSource}}" 
 														SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														DisplayMemberPath="id_application" IsReadOnly="True" 
-														SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilage}" Width="*"/>
+														SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilege}" Width="*"/>
 							<DataGridCheckBoxColumn Binding="{Binding has_privilage}" Header="{lex:Loc Cognitivo:local:Allow}" Width="SizeToHeader"/>
 							<DataGridTextColumn Binding="{Binding value_max}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
 						</DataGrid.Columns>

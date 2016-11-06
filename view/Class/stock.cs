@@ -147,7 +147,7 @@ namespace Cognitivo.Class
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
+            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
             decimal? i = QueriesTableAdapter.GetStock_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ItemID);
@@ -162,7 +162,7 @@ namespace Cognitivo.Class
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
+            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
             decimal? i = QueriesTableAdapter.GetStock_ByLocation(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);

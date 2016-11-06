@@ -54,10 +54,8 @@ namespace entity.Brillo.Logic
                 foreach (purchase_return_detail purchase_return_detail in Listpurchase_return_detail
                     .Where(x => x.item.item_product.Count() > 0))
                 {
-
                     item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
                     purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
-                    //purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
 
                     Brillo.Stock stock = new Brillo.Stock();
                     List<StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
@@ -286,7 +284,7 @@ namespace entity.Brillo.Logic
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
-            List<purchase_invoice_detail> Listpurchase_invoice_detail = new List<purchase_invoice_detail>();
+            List<purchase_invoice_detail> Invoice_WithProducts = new List<purchase_invoice_detail>();
 
             if (purchase_invoice != null)
             {
@@ -294,12 +292,12 @@ namespace entity.Brillo.Logic
                 {
                     if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
                     {
-                        Listpurchase_invoice_detail.AddRange(purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList());
+                        Invoice_WithProducts.AddRange(purchase_invoice.purchase_invoice_detail.Where(x => x.item.item_product != null).ToList());
                     }
                 }
             }
 
-            foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            foreach (purchase_invoice_detail purchase_invoice_detail in Invoice_WithProducts)
             {
                 //item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
 

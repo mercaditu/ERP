@@ -85,6 +85,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
+
                     invoice.app_condition = app_condition.Find(invoice.id_condition);
                     invoice.app_contract = app_contract.Find(invoice.id_contract);
                     invoice.app_currencyfx = app_currencyfx.Find(invoice.id_currencyfx);
@@ -123,7 +124,7 @@ namespace entity
         /// <param name="Invoice"></param>
         public void Insert_Items_2_Movement(purchase_invoice invoice)
         {
-            if (invoice.purchase_invoice_detail.Where(x => x.item.item_product.Count() > 0).Any())
+            if (invoice.purchase_invoice_detail.Where(x => x.item != null).Any())
             {
                 if (invoice.status == Status.Documents_General.Annulled)
                 {
@@ -180,7 +181,7 @@ namespace entity
                     _Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
                         invoice.id_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product, 
                         (int)purchase_invoice_detail.id_location, purchase_invoice_detail.quantity,
-                        invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Fix", null);
+                        invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Invoice Fix", null);
                 }
             }
         }

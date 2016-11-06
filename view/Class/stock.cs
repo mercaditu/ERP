@@ -174,10 +174,10 @@ namespace Cognitivo.Class
 
         private List<StockList> GenerateList(DataTable dt)
         {
-            List<StockList> StockList = new List<Class.StockList>();
+            List<StockList> StockList = new List<StockList>();
             foreach (DataRow DataRow in dt.Rows)
             {
-                StockList Stock = new Class.StockList();
+                StockList Stock = new StockList();
                 Stock.ItemCode = DataRow["ItemCode"].ToString();
                 Stock.ItemName = DataRow["ItemName"].ToString();
                 Stock.Location = DataRow["Location"].ToString();

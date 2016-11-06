@@ -144,7 +144,7 @@ namespace entity
 
                     if (item_transfer.id_user > 0)
                     {
-                        security_user security_user = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault();
+                        security_user security_user = base.security_user.Find(item_transfer.id_user);
                         if (security_user != null)
                         {
                             Brillo.Logic.Range.user_Code = security_user.code;
@@ -153,7 +153,7 @@ namespace entity
 
                     if (item_transfer.id_project > 0)
                     {
-                        project projects = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault();
+                        project projects = base.projects.Find(item_transfer.id_project);
                         if (projects != null)
                         {
                             Brillo.Logic.Range.project_Code = projects.code;

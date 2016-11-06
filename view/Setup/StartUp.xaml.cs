@@ -223,8 +223,8 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
 
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.Generate_ProductMovement();
+            ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            MessageBox.Show(ProductMovementDB.Generate_ProductMovement());
 
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }

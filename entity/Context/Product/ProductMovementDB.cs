@@ -63,8 +63,10 @@ namespace entity
                 yield return day;
         }
 
-        public async void Generate_ProductMovement()
+        public string Generate_ProductMovement()
         {
+            string ErrorMsg = "";
+
             ///Delete all Movements.
             if (base.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).Count() > 0)
             {
@@ -77,15 +79,24 @@ namespace entity
                 .Where(x =>
                     x.id_company == CurrentSession.Id_Company &&
                     x.status == Status.Documents_General.Approved
-                    ).ToList();
+                    )
+                    .OrderBy(y => y.trans_date)
+                    .ToList();
 
-            foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
+            foreach (purchase_invoice purchase in purchaseLIST)
             {
                 using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
                 {
-                    purchase.IsSelected = true;
-                    PurchaseDB.Insert_Items_2_Movement(purchase);
-                    PurchaseDB.SaveChanges();
+                    try
+                    {
+                        purchase.IsSelected = true;
+                        PurchaseDB.Insert_Items_2_Movement(purchase);
+                        PurchaseDB.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorMsg += string.Format("/n Purchase: {0}, {1}, Error Msg: {2}", purchase.number, purchase.trans_date, e.Message);
+                    }
                 }
             }
 
@@ -95,9 +106,16 @@ namespace entity
 
                 foreach (impex impex in impexLIST)
                 {
-                    impex.IsSelected = true;
-                    impex.status = Status.Documents_General.Pending;
-                    ImpexDB.ApproveImport();
+                    try
+                    {
+                        impex.IsSelected = true;
+                        impex.status = Status.Documents_General.Pending;
+                        ImpexDB.ApproveImport();
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorMsg += string.Format("/n Impex: {0}, {1}, Error Msg: {2}", impex.number, impex.contact.name, e.Message);
+                    }
                 }
             }
 
@@ -126,10 +144,10 @@ namespace entity
                     using (InventoryDB InventoryDB = new InventoryDB())
                     {
                         List<item_inventory> item_inventoryLIST = 
-                            await InventoryDB.item_inventory
+                            InventoryDB.item_inventory
                                 .Where (x => IntArray.Contains(x.id_inventory) )
                                 .OrderBy(y => y.trans_date)
-                                .ToListAsync();
+                                .ToList();
 
                         foreach (item_inventory inventory in item_inventoryLIST)
                         {
@@ -140,6 +158,15 @@ namespace entity
                             }
 
                             InventoryDB.Approve();
+
+                            try
+                            {
+                                InventoryDB.Approve();
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorMsg += string.Format("/n Inventory: {0}, {1}, Error Msg: {2}", inventory.app_branch.name, inventory.trans_date, e.Message);
+                            }
                         }
                     }
                 }
@@ -152,10 +179,10 @@ namespace entity
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                     {
                         List<item_transfer> item_transferLIST = 
-                            await ProductTransferDB.item_transfer
+                            ProductTransferDB.item_transfer
                             .Where (x => IntArray.Contains(x.id_transfer) )
                             .OrderBy(y => y.trans_date)
-                            .ToListAsync();
+                            .ToList();
 
                         foreach (item_transfer transfer in item_transferLIST)
                         {
@@ -166,9 +193,17 @@ namespace entity
                                 detail.IsSelected = true;
                             }
 
-                            ProductTransferDB.SaveChanges();
-                            ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
-                            ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                            try
+                            {
+                                ProductTransferDB.SaveChanges();
+                                ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                                ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorMsg += string.Format("/n Transfer: {0}, {1}, Error Msg: {2}", transfer.number, transfer.trans_date, e.Message);
+                            }
+
 
                             transfer.IsSelected = false;
                         }
@@ -187,11 +222,20 @@ namespace entity
                     sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Find(sales.id_sales_invoice);
                     if (sales_invoice != null)
                     {
-                        SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
-                        SalesInvoiceDB.SaveChanges();
+                        try
+                        {
+                            SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
+                            SalesInvoiceDB.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorMsg += string.Format("/n SalesInvoice: {0}, {1}, Error Msg: {2}", sales.number, sales.trans_date, e.Message);
+                        }
                     }
                 }
             }
+
+            return ErrorMsg;
         }
     }
 }

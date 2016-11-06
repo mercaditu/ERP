@@ -1088,6 +1088,9 @@
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\local.he.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\local.ru.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

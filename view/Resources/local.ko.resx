@@ -174,6 +174,9 @@
   <data name="Alias" xml:space="preserve">
     <value>별명</value>
   </data>
+  <data name="Allow" xml:space="preserve">
+    <value>허용하다</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>양</value>
   </data>
@@ -270,6 +273,9 @@
   <data name="ByValue" xml:space="preserve">
     <value>값으로</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>계산하다</value>
+  </data>
   <data name="Calculated" xml:space="preserve">
     <value>계획된</value>
   </data>
@@ -344,6 +350,9 @@
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>연결 문자열</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>바싹 여위다</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>다음 범위를 소비</value>
@@ -546,8 +555,8 @@
   <data name="Discount" xml:space="preserve">
     <value>할인</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
-    <value>DIVISABLE</value>
+  <data name="Divisible" xml:space="preserve">
+    <value>나눌 수 있는</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>문서</value>
@@ -882,6 +891,9 @@
   <data name="Mask" xml:space="preserve">
     <value>마스크</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>석사</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>측정</value>
   </data>
@@ -969,6 +981,15 @@
   <data name="PendingDocuments" xml:space="preserve">
     <value>문서를 보류</value>
   </data>
+  <data name="PendingPayables" xml:space="preserve">
+    <value>보류중인 채무</value>
+  </data>
+  <data name="PendingReceivables" xml:space="preserve">
+    <value>보류 채권</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>백분율</value>
+  </data>
   <data name="Person" xml:space="preserve">
     <value>사람</value>
   </data>
@@ -1010,6 +1031,12 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>인쇄기</value>
+  </data>
+  <data name="Privilege" xml:space="preserve">
+    <value>특권</value>
+  </data>
+  <data name="Produce" xml:space="preserve">
+    <value>생기게 하다</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>생성물</value>
@@ -1146,6 +1173,9 @@
   <data name="Refinance" xml:space="preserve">
     <value>재 융자</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>새롭게 하다</value>
+  </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>와 연관되다</value>
   </data>
@@ -1253,6 +1283,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>수색</value>
+  </data>
+  <data name="SeatsAvailable" xml:space="preserve">
+    <value>사용 가능한 좌석</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>보안</value>
@@ -1445,6 +1478,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>번역</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>전망</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>경고</value>

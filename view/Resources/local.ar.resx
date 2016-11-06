@@ -174,6 +174,9 @@
   <data name="Alias" xml:space="preserve">
     <value>الاسم المستعار</value>
   </data>
+  <data name="Allow" xml:space="preserve">
+    <value>السماح</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>كمية</value>
   </data>
@@ -270,6 +273,9 @@
   <data name="ByValue" xml:space="preserve">
     <value>حسب القيمة</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>حساب</value>
+  </data>
   <data name="Calculated" xml:space="preserve">
     <value>محسوب</value>
   </data>
@@ -344,6 +350,9 @@
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>سلسلة الاتصال</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>تستهلك</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>تستهلك المدى التالي</value>
@@ -546,8 +555,8 @@
   <data name="Discount" xml:space="preserve">
     <value>خصم</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
-    <value>Divisable</value>
+  <data name="Divisible" xml:space="preserve">
+    <value>قابل للقسمة</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>وثيقة</value>
@@ -882,6 +891,9 @@
   <data name="Mask" xml:space="preserve">
     <value>قناع</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>رئيسي</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>قياس</value>
   </data>
@@ -969,6 +981,15 @@
   <data name="PendingDocuments" xml:space="preserve">
     <value>في انتظار وثائق</value>
   </data>
+  <data name="PendingPayables" xml:space="preserve">
+    <value>دائنون انتظار</value>
+  </data>
+  <data name="PendingReceivables" xml:space="preserve">
+    <value>في انتظار المستحقات</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>النسبة المئوية</value>
+  </data>
   <data name="Person" xml:space="preserve">
     <value>شخص</value>
   </data>
@@ -1010,6 +1031,12 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>مطبعة</value>
+  </data>
+  <data name="Privilege" xml:space="preserve">
+    <value>امتياز</value>
+  </data>
+  <data name="Produce" xml:space="preserve">
+    <value>إنتاج</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>المنتج</value>
@@ -1146,6 +1173,9 @@
   <data name="Refinance" xml:space="preserve">
     <value>إعادة تمويل</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>اعادة تنشيط</value>
+  </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>متعلق ب</value>
   </data>
@@ -1253,6 +1283,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>بحث</value>
+  </data>
+  <data name="SeatsAvailable" xml:space="preserve">
+    <value>المقاعد المتوفرة</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>أمن</value>
@@ -1445,6 +1478,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>الإصدار</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>رأي</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>تحذير</value>

@@ -232,6 +232,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Allow.
+        /// </summary>
+        public static string Allow {
+            get {
+                return ResourceManager.GetString("Allow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Amount.
         /// </summary>
         public static string Amount {
@@ -516,6 +525,15 @@ namespace Cognitivo.Resources {
         public static string ByValue {
             get {
                 return ResourceManager.GetString("ByValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Calculate.
+        /// </summary>
+        public static string Calculate {
+            get {
+                return ResourceManager.GetString("Calculate", resourceCulture);
             }
         }
         
@@ -2365,6 +2383,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Master.
+        /// </summary>
+        public static string Master {
+            get {
+                return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Measurement.
         /// </summary>
         public static string Measurement {
@@ -2626,6 +2653,33 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @PendingPayables.
+        /// </summary>
+        public static string PendingPayables {
+            get {
+                return ResourceManager.GetString("PendingPayables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @PendingReceivables.
+        /// </summary>
+        public static string PendingReceivables {
+            get {
+                return ResourceManager.GetString("PendingReceivables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Percentage.
+        /// </summary>
+        public static string Percentage {
+            get {
+                return ResourceManager.GetString("Percentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Person.
         /// </summary>
         public static string Person {
@@ -2748,6 +2802,15 @@ namespace Cognitivo.Resources {
         public static string PrintingPress {
             get {
                 return ResourceManager.GetString("PrintingPress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Privilege.
+        /// </summary>
+        public static string Privilege {
+            get {
+                return ResourceManager.GetString("Privilege", resourceCulture);
             }
         }
         
@@ -3166,6 +3229,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Refresh.
+        /// </summary>
+        public static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @RelatedTo.
         /// </summary>
         public static string RelatedTo {
@@ -3486,6 +3558,15 @@ namespace Cognitivo.Resources {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SeatsAvailable.
+        /// </summary>
+        public static string SeatsAvailable {
+            get {
+                return ResourceManager.GetString("SeatsAvailable", resourceCulture);
             }
         }
         
@@ -4062,6 +4143,15 @@ namespace Cognitivo.Resources {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @View.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         

@@ -58,11 +58,11 @@ namespace Cognitivo.Menu
                 DateTime uptime_date = DateTime.Now.AddSeconds((int)int_update);
                 Dispatcher.BeginInvoke((Action)(() => { lbl_uptime.Content = uptime_date.ToLongDateString(); }));
 
-                _one = true;
+                //_one = true;
             }
             catch
             {
-                _one = false;
+                //_one = false;
             }
 
         }
@@ -73,11 +73,11 @@ namespace Cognitivo.Menu
             {
                 MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder(Cognitivo.Properties.Settings.Default.MySQLconnString);
                 Dispatcher.BeginInvoke((Action)(() => { SQLQuery_ReturnScalar("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + connString.Database + "';", true); }));
-                _two = false;
+                //_two = false;
             }
             catch
             {
-                _two = true;
+                //_two = true;
             }
         }
 

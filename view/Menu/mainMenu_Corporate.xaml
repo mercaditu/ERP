@@ -68,9 +68,9 @@
                                   MouseUp="get_Apps"
                                   Tag="Stock"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modImpex.png"
-                                  ModuleName="{lex:Loc Impex}"
+                                  ModuleName="{lex:Loc InternationalCommerce}"
                                   MouseUp="get_Apps"
-                                  Tag="Impex"/>
+                                  Tag="InternationalCommerce"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFinance.png"
                                   ModuleName="{lex:Loc Finance}"
                                   MouseUp="get_Apps"

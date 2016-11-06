@@ -174,6 +174,9 @@
   <data name="Alias" xml:space="preserve">
     <value>Alias</value>
   </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
@@ -269,6 +272,9 @@
   </data>
   <data name="ByValue" xml:space="preserve">
     <value>By Value</value>
+  </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>Calculate</value>
   </data>
   <data name="Calculated" xml:space="preserve">
     <value>Calculated</value>
@@ -885,6 +891,9 @@
   <data name="Mask" xml:space="preserve">
     <value>Mask</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>Measurement</value>
   </data>
@@ -972,6 +981,15 @@
   <data name="PendingDocuments" xml:space="preserve">
     <value>Pending Documents</value>
   </data>
+  <data name="PendingPayables" xml:space="preserve">
+    <value>Pending Payables</value>
+  </data>
+  <data name="PendingReceivables" xml:space="preserve">
+    <value>Pending Receivables</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Percentage</value>
+  </data>
   <data name="Person" xml:space="preserve">
     <value>Person</value>
   </data>
@@ -1013,6 +1031,9 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Printing Press</value>
+  </data>
+  <data name="Privilege" xml:space="preserve">
+    <value>Privilege</value>
   </data>
   <data name="Produce" xml:space="preserve">
     <value>Produce</value>
@@ -1152,6 +1173,9 @@
   <data name="Refinance" xml:space="preserve">
     <value>Refinance</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>Related To</value>
   </data>
@@ -1259,6 +1283,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SeatsAvailable" xml:space="preserve">
+    <value>Seats Available</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>Security</value>
@@ -1451,6 +1478,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>

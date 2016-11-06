@@ -107,10 +107,10 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.CostBreakDown", entity.App.Names.CostBreakDown, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Impex
-            dtApp.Rows.Add(entity.App.Modules.Impex, Namespaces.Exports, "Sales.Export", entity.App.Names.Export, "Export", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Impex, Namespaces.Importation, "Purchase.Import", entity.App.Names.Imports, "Import", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Impex, entity.App.Modules.Configuration, "Commercial.Incoterm", entity.App.Names.Incoterm, "IncotermContract", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Impex, entity.App.Modules.Configuration, "Configs.IncotermCondition", entity.App.Names.IncotermCondition, "", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Exports, "Sales.Export", entity.App.Names.Export, "Export", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Importation, "Purchase.Import", entity.App.Names.Imports, "Import", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, entity.App.Modules.Configuration, "Commercial.Incoterm", entity.App.Names.Incoterm, "IncotermContract", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, entity.App.Modules.Configuration, "Configs.IncotermCondition", entity.App.Names.IncotermCondition, "", entity.CurrentSession.Versions.Medium, "0");
 
             //Finance
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Basic, "0");

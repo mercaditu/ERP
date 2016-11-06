@@ -118,1389 +118,1389 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>@Account</value>
+    <value>חֶשְׁבּוֹן</value>
   </data>
   <data name="Accountant" xml:space="preserve">
-    <value>@Accountant</value>
+    <value>רואת חשבון</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>@Accounted</value>
+    <value>המטופלות</value>
   </data>
   <data name="Accounting" xml:space="preserve">
-    <value>@Accounting</value>
+    <value>חשבונאות</value>
   </data>
   <data name="AccountingJournal" xml:space="preserve">
-    <value>@AccountingJournal</value>
+    <value>חשבונאות Journal</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>@Accounts</value>
+    <value>חשבונות</value>
   </data>
   <data name="AccountsPayable" xml:space="preserve">
-    <value>@AccountsPayable</value>
+    <value>חשבונות לתשלום</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
-    <value>@AccountsReceivable</value>
+    <value>חשבונות חייבים</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
-    <value>@AccountUtility</value>
+    <value>שירות חשבון</value>
   </data>
   <data name="Activate" xml:space="preserve">
-    <value>@Activate</value>
+    <value>לְהַפְעִיל</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>@Active</value>
+    <value>פָּעִיל</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
-    <value>@ActivityPlan</value>
+    <value>תוכנית פעילות</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>@Address</value>
+    <value>כתובת</value>
   </data>
   <data name="AddsValue" xml:space="preserve">
-    <value>@AddsValue</value>
+    <value>מוסיף ערך</value>
   </data>
   <data name="Adjust" xml:space="preserve">
-    <value>@Adjust</value>
+    <value>לְהַתְאִים</value>
   </data>
   <data name="Administrative" xml:space="preserve">
-    <value>@Administrative</value>
+    <value>מנהלי</value>
   </data>
   <data name="Adult" xml:space="preserve">
-    <value>@Adult</value>
+    <value>מְבוּגָר</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>@Advanced</value>
+    <value>מִתקַדֵם</value>
   </data>
   <data name="Alias" xml:space="preserve">
-    <value>@Alias</value>
+    <value>כינוי</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>@Allow</value>
+    <value>להתיר</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>@Amount</value>
+    <value>כמות</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
-    <value>@AmountPaid</value>
+    <value>סכום ששולם</value>
   </data>
   <data name="AnalisysofAccountsReceivable" xml:space="preserve">
-    <value>@AnalisysofAccountsReceivable</value>
+    <value>Analisys של חשבונות חייבים</value>
   </data>
   <data name="Annul" xml:space="preserve">
-    <value>@Annul</value>
+    <value>לְבַטֵל</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>@Application</value>
+    <value>יישום</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
-    <value>@Applicationrestartwillberequired</value>
+    <value>הפעל מחדש את היישום יידרש</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>@Approve</value>
+    <value>לְאַשֵׁר</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>@Area</value>
+    <value>אֵזוֹר</value>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
-    <value>@ArrivalDate</value>
+    <value>תאריך הגעה</value>
   </data>
   <data name="Assets" xml:space="preserve">
-    <value>@Assets</value>
+    <value>נכסים</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>@Audit</value>
+    <value>בְּדִיקָה</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
-    <value>@AutomaticAccounting</value>
+    <value>ספירה אוטומטית</value>
   </data>
   <data name="AutomaticRecipe" xml:space="preserve">
-    <value>@AutomaticRecipe</value>
+    <value>מתכון אוטומטי</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>@Available</value>
+    <value>זמין</value>
   </data>
   <data name="AvailableCredit" xml:space="preserve">
-    <value>@AvailableCredit</value>
+    <value>אשראי זמין</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
-    <value>@BackgroundImage</value>
+    <value>תמונת רקע</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>@Bank</value>
+    <value>בַּנק</value>
   </data>
   <data name="BankReconciliation" xml:space="preserve">
-    <value>@BankReconciliation</value>
+    <value>בנק פיוס</value>
   </data>
   <data name="BaseSalary" xml:space="preserve">
-    <value>@BaseSalary</value>
+    <value>משכורת יסוד</value>
   </data>
   <data name="Basic" xml:space="preserve">
-    <value>@Basic</value>
+    <value>בסיסי</value>
   </data>
   <data name="Behavior" xml:space="preserve">
-    <value>@Behavior</value>
+    <value>הִתְנַהֲגוּת</value>
   </data>
   <data name="BelongsTo" xml:space="preserve">
-    <value>@BelongsTo</value>
+    <value>שייך ל</value>
   </data>
   <data name="BloodType" xml:space="preserve">
-    <value>@BloodType</value>
+    <value>סוג דם</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
-    <value>@BookofExpenses</value>
+    <value>ספר הוצאות</value>
   </data>
   <data name="BookofIncomes" xml:space="preserve">
-    <value>@BookofIncomes</value>
+    <value>ספר ההכנסות</value>
   </data>
   <data name="Branch" xml:space="preserve">
-    <value>@Branch</value>
+    <value>ענף</value>
   </data>
   <data name="Brand" xml:space="preserve">
-    <value>@Brand</value>
+    <value>מותג</value>
   </data>
   <data name="BudgetNumber" xml:space="preserve">
-    <value>@BudgetNumber</value>
+    <value>מספר התקציב</value>
   </data>
   <data name="Buyer" xml:space="preserve">
-    <value>@Buyer</value>
+    <value>קוֹנֶה</value>
   </data>
   <data name="BuyRate" xml:space="preserve">
-    <value>@BuyRate</value>
+    <value>לקנות דרג</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
-    <value>@ByDimension</value>
+    <value>לפי מאפיין</value>
   </data>
   <data name="ByValue" xml:space="preserve">
-    <value>@ByValue</value>
+    <value>לפי ערך</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>@Calculate</value>
+    <value>לחשב</value>
   </data>
   <data name="Calculated" xml:space="preserve">
-    <value>@Calculated</value>
+    <value>מְחוֹשָׁב</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>@Cancel</value>
+    <value>לְבַטֵל</value>
   </data>
   <data name="CanExpire" xml:space="preserve">
-    <value>@CanExpire</value>
+    <value>עלול לפקוע</value>
   </data>
   <data name="CapitalResource" xml:space="preserve">
-    <value>@CapitalResource</value>
+    <value>משאבי הון</value>
   </data>
   <data name="CaractersLeft" xml:space="preserve">
-    <value>@CaractersLeft</value>
+    <value>Caracters שמאל</value>
   </data>
   <data name="CashFlow" xml:space="preserve">
-    <value>@CashFlow</value>
+    <value>תזרים מזומנים</value>
   </data>
   <data name="Catalog" xml:space="preserve">
-    <value>@Catalog</value>
+    <value>קָטָלוֹג</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>@Category</value>
+    <value>קטגוריה</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
-    <value>@ChartofAccount</value>
+    <value>תרשים של חשבון</value>
   </data>
   <data name="Children" xml:space="preserve">
-    <value>@Children</value>
+    <value>יְלָדִים</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>@City</value>
+    <value>עִיר</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>@Code</value>
+    <value>קוד</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
-    <value>@Coeficient</value>
+    <value>מקדם</value>
   </data>
   <data name="CollectionAgent" xml:space="preserve">
-    <value>@CollectionAgent</value>
+    <value>סוכן אוסף</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>@Comment</value>
+    <value>תגובה</value>
   </data>
   <data name="Commercial" xml:space="preserve">
-    <value>@Commercial</value>
+    <value>מִסְחָרִי</value>
   </data>
   <data name="Commision" xml:space="preserve">
-    <value>@Commision</value>
+    <value>נציבות</value>
   </data>
   <data name="CommisionBase" xml:space="preserve">
-    <value>@CommisionBase</value>
+    <value>מאגר הנציבות</value>
   </data>
   <data name="CommisionTemplate" xml:space="preserve">
-    <value>@CommisionTemplate</value>
+    <value>תבנית נציבות</value>
   </data>
   <data name="Company" xml:space="preserve">
-    <value>@Company</value>
+    <value>חֶברָה</value>
   </data>
   <data name="Condition" xml:space="preserve">
-    <value>@Condition</value>
+    <value>מַצָב</value>
   </data>
   <data name="Configuration" xml:space="preserve">
-    <value>@Configuration</value>
+    <value>תְצוּרָה</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>@Connect</value>
+    <value>לְחַבֵּר</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
-    <value>@ConnectionBuilder</value>
+    <value>בונה חיבור</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>@ConnectionString</value>
+    <value>מחרוזת חיבור</value>
   </data>
   <data name="Consume" xml:space="preserve">
-    <value>@Consume</value>
+    <value>לִצְרוֹך</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>@ConsumeNextRange</value>
+    <value>לצרוך הבא טווח</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>@Contact</value>
+    <value>איש קשר</value>
   </data>
   <data name="ContactPerson" xml:space="preserve">
-    <value>@ContactPerson</value>
+    <value>איש קשר</value>
   </data>
   <data name="ContactRole" xml:space="preserve">
-    <value>@ContactRole</value>
+    <value>תפקיד לתקשר</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>@Contacts</value>
+    <value>אנשי קשר</value>
   </data>
   <data name="ContactTags" xml:space="preserve">
-    <value>@ContactTags</value>
+    <value>תגיות לתקשר</value>
   </data>
   <data name="Contract" xml:space="preserve">
-    <value>@Contract</value>
+    <value>חוֹזֶה</value>
   </data>
   <data name="Corrective" xml:space="preserve">
-    <value>@Corrective</value>
+    <value>אֶמְצָעִי מְתַקֵן</value>
   </data>
   <data name="Cost" xml:space="preserve">
-    <value>@Cost</value>
+    <value>עֲלוּת</value>
   </data>
   <data name="CostCenter" xml:space="preserve">
-    <value>@CostCenter</value>
+    <value>מרכז עלות</value>
   </data>
   <data name="CostofGoodsSold" xml:space="preserve">
-    <value>@CostofGoodsSold</value>
+    <value>עלות המכר</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>@Country</value>
+    <value>מדינה</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>@Create</value>
+    <value>לִיצוֹר</value>
   </data>
   <data name="CreateorUpdate" xml:space="preserve">
-    <value>@CreateorUpdate</value>
+    <value>יצירה או עדכון</value>
   </data>
   <data name="Credit" xml:space="preserve">
-    <value>@Credit</value>
+    <value>אַשׁרַאי</value>
   </data>
   <data name="CreditDays" xml:space="preserve">
-    <value>@CreditDays</value>
+    <value>ימי אשראי</value>
   </data>
   <data name="CreditLimit" xml:space="preserve">
-    <value>@CreditLimit</value>
+    <value>מסגרת אשראי</value>
   </data>
   <data name="CreditLine" xml:space="preserve">
-    <value>@CreditLine</value>
+    <value>קו אשראי</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>@Currency</value>
+    <value>מַטְבֵּעַ</value>
   </data>
   <data name="Current" xml:space="preserve">
-    <value>@Current</value>
+    <value>נוֹכְחִי</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
-    <value>@CurrentAccountCustomer</value>
+    <value>לקוחות החשבון השוטף במאזן התשלומים</value>
   </data>
   <data name="CurrentAccountEvent" xml:space="preserve">
-    <value>@CurrentAccountEvent</value>
+    <value>אירוע החשבון השוטף במאזן התשלומים</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
-    <value>@CurrentlyinAccount</value>
+    <value>כרגע חשבון</value>
   </data>
   <data name="CurrentValue" xml:space="preserve">
-    <value>@CurrentValue</value>
+    <value>ערך נוכחי</value>
   </data>
   <data name="Customer" xml:space="preserve">
-    <value>@Customer</value>
+    <value>צרכן</value>
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
-    <value>@CustomerCurrentAccount</value>
+    <value>החשבון השוטף במאזן התשלומים של לקוחות</value>
   </data>
   <data name="CustomerDeliveryList" xml:space="preserve">
-    <value>@CustomerDeliveryList</value>
+    <value>רשימה מסירה ללקוח</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>@Customize</value>
+    <value>התאמה אישית</value>
   </data>
   <data name="Database" xml:space="preserve">
-    <value>@Database</value>
+    <value>מאגר מידע</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>@Date</value>
+    <value>תַאֲרִיך</value>
   </data>
   <data name="DateofBirth" xml:space="preserve">
-    <value>@DateofBirth</value>
+    <value>תאריך לידה</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
-    <value>@DebeHaberIntegration</value>
+    <value>אינטגרציה DebeHaber</value>
   </data>
   <data name="Debit" xml:space="preserve">
-    <value>@Debit</value>
+    <value>חוֹבָה</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>@Default</value>
+    <value>בְּרִירַת מֶחדָל</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>@Delete</value>
+    <value>לִמְחוֹק</value>
   </data>
   <data name="DeliveryDate" xml:space="preserve">
-    <value>@DeliveryDate</value>
+    <value>תאריך משלוח</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>@Department</value>
+    <value>מַחלָקָה</value>
   </data>
   <data name="DepartureDate" xml:space="preserve">
-    <value>@DepartureDate</value>
+    <value>תאריך עזיבה</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>@Description</value>
+    <value>תיאור</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
-    <value>@desc_Account</value>
+    <value>חשבונות לעקוב אחר כל התהליכים הפיננסיים</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>@desc_AccountsPayable</value>
+    <value>כנס תשלומים ולחשב מה חדש שמאל</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
-    <value>@desc_AccountsReceivable</value>
+    <value>הכנס תשלומים קלים ולחשב מה חדש שמאל</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>@desc_AccountUtility</value>
+    <value>יצירה לנהל עם החשבונות הפיננסיים שלך</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>@desc_Bank</value>
+    <value>הבנקים יש יכולת להחזיק חשבונות מרובים</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
-    <value>@desc_Contact</value>
+    <value>פרטים ליצירת קשר עבור אנשי הקשר והספקים שלך</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>@desc_ContactRole</value>
+    <value>גדר תפקידים וזכויות עבור הקשר שלנו</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
-    <value>@desc_contactTag</value>
+    <value>תגיות לעזור לחפש &amp; למיין את אנשי הקשר במהירות</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>@desc_Currency</value>
+    <value>מאפשר העברת נתונים במטבעות ושערי שונות</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
-    <value>@desc_Item</value>
+    <value>כל הפריטים יהיה ממוסחר</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>@desc_ItemTag</value>
+    <value>תגיות לעזור לחפש &amp; למיין פריטים במהירות</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>@desc_Location</value>
+    <value>מיקומים להחזיק מלאים בתוך סניף</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>@desc_Maintainance</value>
+    <value>מלא תחזוקה ולתיאום עבור הנכסים שלך</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>@desc_Movement</value>
+    <value>זז פריטים אל ממקומות שונים</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
-    <value>@desc_PriceList</value>
+    <value>ולמסחר אותו פריט בנקודות מחיר שונות</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>@desc_Stock</value>
+    <value>רמות מלאות מקובצים לפי ענף ומיקום</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>@desc_Terminal</value>
+    <value>מסופים מאפשרים לנו לפלוט מסמכים</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
-    <value>@desc_Transfer</value>
+    <value>העבר פריטים וממנה חנויות שונות</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>@desc_VAT</value>
+    <value>מסים מיושמים במהלך מכירה או רכישה</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
-    <value>@desc_VATGroup</value>
+    <value>מע"מ שמקובצים לעסקאות פשוט</value>
   </data>
   <data name="Designer" xml:space="preserve">
-    <value>@Designer</value>
+    <value>מְעַצֵב</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>@Destination</value>
+    <value>יַעַד</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>@Details</value>
+    <value>פרטים</value>
   </data>
   <data name="DeveloperMode" xml:space="preserve">
-    <value>@DeveloperMode</value>
+    <value>מצב מפתח</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
-    <value>@DifferenceinDate</value>
+    <value>הבדל התאריך</value>
   </data>
   <data name="Dimension" xml:space="preserve">
-    <value>@Dimension</value>
+    <value>מֵמַד</value>
   </data>
   <data name="DirectCost" xml:space="preserve">
-    <value>@DirectCost</value>
+    <value>עלות ישירה</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>@Discount</value>
+    <value>הנחה</value>
   </data>
   <data name="Divisible" xml:space="preserve">
-    <value>@Divisible</value>
+    <value>מִתחַלֵק</value>
   </data>
   <data name="Document" xml:space="preserve">
-    <value>@Document</value>
+    <value>מסמך</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>@Done</value>
+    <value>בוצע</value>
   </data>
   <data name="DownTime" xml:space="preserve">
-    <value>@DownTime</value>
+    <value>לאורך זמן</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>@Duplicate</value>
+    <value>לְשַׁכְפֵּל</value>
   </data>
   <data name="DynamicFields" xml:space="preserve">
-    <value>@DynamicFields</value>
+    <value>שדות דינמיים</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>@Edit</value>
+    <value>לַעֲרוֹך</value>
   </data>
   <data name="Education" xml:space="preserve">
-    <value>@Education</value>
+    <value>הַשׂכָּלָה</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>@Email</value>
+    <value>אֶלֶקטרוֹנִי</value>
   </data>
   <data name="Employee" xml:space="preserve">
-    <value>@Employee</value>
+    <value>עוֹבֵד</value>
   </data>
   <data name="EncryptedConnection" xml:space="preserve">
-    <value>@EncryptedConnection</value>
+    <value>חיבור מוצפן</value>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>@EndDate</value>
+    <value>תאריך סיום</value>
   </data>
   <data name="Ending" xml:space="preserve">
-    <value>@Ending</value>
+    <value>סִיוּם</value>
   </data>
   <data name="EndingDate" xml:space="preserve">
-    <value>@EndingDate</value>
+    <value>שהסתיימה באותו תאריך</value>
   </data>
   <data name="Enter" xml:space="preserve">
-    <value>@Enter</value>
+    <value>להיכנס</value>
   </data>
   <data name="Equity" xml:space="preserve">
-    <value>@Equity</value>
+    <value>הון עצמי</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>@Error</value>
+    <value>שְׁגִיאָה</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
-    <value>@EventManagement</value>
+    <value>ניהול אירועים</value>
   </data>
   <data name="EventType" xml:space="preserve">
-    <value>@EventType</value>
+    <value>סוג אירוע</value>
   </data>
   <data name="Expenses" xml:space="preserve">
-    <value>@Expenses</value>
+    <value>הוצאות</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>@Export</value>
+    <value>יְצוּא</value>
   </data>
   <data name="Exports" xml:space="preserve">
-    <value>@Exports</value>
+    <value>יצוא</value>
   </data>
   <data name="Extract" xml:space="preserve">
-    <value>@Extract</value>
+    <value>לחלץ</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>@Extras</value>
+    <value>תוספות</value>
   </data>
   <data name="Factor" xml:space="preserve">
-    <value>@Factor</value>
+    <value>גורם</value>
   </data>
   <data name="Family" xml:space="preserve">
-    <value>@Family</value>
+    <value>מִשׁפָּחָה</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>@Favorite</value>
+    <value>הכי אהוב</value>
   </data>
   <data name="Female" xml:space="preserve">
-    <value>@Female</value>
+    <value>נְקֵבָה</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>@Filter</value>
+    <value>לְסַנֵן</value>
   </data>
   <data name="Finance" xml:space="preserve">
-    <value>@Finance</value>
+    <value>לְמַמֵן</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>@Financial</value>
+    <value>כַּספִּי</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>@Finished</value>
+    <value>גָמוּר</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
-    <value>@FiscalPeriod</value>
+    <value>תקופת כספים</value>
   </data>
   <data name="FixedAssetGroup" xml:space="preserve">
-    <value>@FixedAssetGroup</value>
+    <value>קבוע קבוצת Asset</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
-    <value>@FixedAssets</value>
+    <value>רכוש קבוע</value>
   </data>
   <data name="FootTraffic" xml:space="preserve">
-    <value>@FootTraffic</value>
+    <value>תנועת הולכי רגל</value>
   </data>
   <data name="Form" xml:space="preserve">
-    <value>@Form</value>
+    <value>טופס</value>
   </data>
   <data name="Fraction" xml:space="preserve">
-    <value>@Fraction</value>
+    <value>שבריר</value>
   </data>
   <data name="Freight" xml:space="preserve">
-    <value>@Freight</value>
+    <value>הוֹבָלָה</value>
   </data>
   <data name="Gender" xml:space="preserve">
-    <value>@Gender</value>
+    <value>מִין</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>@General</value>
+    <value>כללי</value>
   </data>
   <data name="Geography" xml:space="preserve">
-    <value>@Geography</value>
+    <value>גֵאוֹגרַפיָה</value>
   </data>
   <data name="GetDetails" xml:space="preserve">
-    <value>@GetDetails</value>
+    <value>קבל פרטים</value>
   </data>
   <data name="Gift" xml:space="preserve">
-    <value>@Gift</value>
+    <value>מתנה</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
-    <value>@GovernmentID</value>
+    <value>הממשלה מזהה</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>@Grid</value>
+    <value>רֶשֶׁת</value>
   </data>
   <data name="Guest" xml:space="preserve">
-    <value>@Guest</value>
+    <value>אוֹרֵחַ</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
-    <value>@HasPromotion</value>
+    <value>יש קידום</value>
   </data>
   <data name="HasWeight" xml:space="preserve">
-    <value>@HasWeight</value>
+    <value>יש משקל</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>@Header</value>
+    <value>כּוֹתֶרֶת</value>
   </data>
   <data name="Hello" xml:space="preserve">
-    <value>@Hello</value>
+    <value>שלום</value>
   </data>
   <data name="HistoricStockLevels" xml:space="preserve">
-    <value>@HistoricStockLevels</value>
+    <value>רמות המלאי היסטוריים</value>
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
-    <value>@HistoricStockValues</value>
+    <value>ערכי Stock הסטוריים</value>
   </data>
   <data name="Hour" xml:space="preserve">
-    <value>@Hour</value>
+    <value>שָׁעָה</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
-    <value>@HourCoeficient</value>
+    <value>שעה מקדמת</value>
   </data>
   <data name="HumanResources" xml:space="preserve">
-    <value>@HumanResources</value>
+    <value>משאבי אנוש</value>
   </data>
   <data name="Humidity" xml:space="preserve">
-    <value>@Humidity</value>
+    <value>לחות</value>
   </data>
   <data name="Importation" xml:space="preserve">
-    <value>@Importation</value>
+    <value>יְבוּא</value>
   </data>
   <data name="Imports" xml:space="preserve">
-    <value>@Imports</value>
+    <value>תבוא</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>@Inactivate</value>
+    <value>להשבית</value>
   </data>
   <data name="Incomes" xml:space="preserve">
-    <value>@Incomes</value>
+    <value>הכנסות</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
-    <value>@Incoterm</value>
+    <value>Incoterm</value>
   </data>
   <data name="IncotermCondition" xml:space="preserve">
-    <value>@IncotermCondition</value>
+    <value>מצב Incoterm</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>@Information</value>
+    <value>מֵידָע</value>
   </data>
   <data name="InitialAmount" xml:space="preserve">
-    <value>@InitialAmount</value>
+    <value>סכום ראשוני</value>
   </data>
   <data name="InitialSetup" xml:space="preserve">
-    <value>@InitialSetup</value>
+    <value>הגדרה ראשונית</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>@Input</value>
+    <value>קֶלֶט</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>@Insert</value>
+    <value>לְהַכנִיס</value>
   </data>
   <data name="Integration" xml:space="preserve">
-    <value>@Integration</value>
+    <value>שילוב</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
-    <value>@InternationalCommerce</value>
+    <value>המסחר הבינלאומי</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>@Inventory</value>
+    <value>מְלַאי</value>
   </data>
   <data name="InventoryFlow" xml:space="preserve">
-    <value>@InventoryFlow</value>
+    <value>תזרים מלאה</value>
   </data>
   <data name="InventoryFlowwithDimension" xml:space="preserve">
-    <value>@InventoryFlowwithDimension</value>
+    <value>תזרים מלאה עם ממד</value>
   </data>
   <data name="Invoice" xml:space="preserve">
-    <value>@Invoice</value>
+    <value>חשבונית</value>
   </data>
   <data name="InvoiceDay" xml:space="preserve">
-    <value>@InvoiceDay</value>
+    <value>יום החשבונית</value>
   </data>
   <data name="InvoiceInterval" xml:space="preserve">
-    <value>@InvoiceInterval</value>
+    <value>מרווח חשבונית</value>
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
-    <value>@InvoiceNumber</value>
+    <value>מספר חשבונית</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>@IPAddress</value>
+    <value>כתובת שרת (IP או דומיין)</value>
   </data>
   <data name="IsDirect" xml:space="preserve">
-    <value>@IsDirect</value>
+    <value>האם ישיר</value>
   </data>
   <data name="ISOCode" xml:space="preserve">
-    <value>@ISOCode</value>
+    <value>קוד ISO</value>
   </data>
   <data name="Issubstitute" xml:space="preserve">
-    <value>@Issubstitute</value>
+    <value>האם תחליף</value>
   </data>
   <data name="Issued" xml:space="preserve">
-    <value>@Issued</value>
+    <value>הפיקו</value>
   </data>
   <data name="ItemDefect" xml:space="preserve">
-    <value>@ItemDefect</value>
+    <value>פגם פריט</value>
   </data>
   <data name="ItemExpired" xml:space="preserve">
-    <value>@ItemExpired</value>
+    <value>פריט פג תוקף</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
-    <value>@ItemMovement</value>
+    <value>תנועת פריט</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>@Items</value>
+    <value>פריטים</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
-    <value>@ItemTag</value>
+    <value>תג פריט</value>
   </data>
   <data name="ItemTransfer" xml:space="preserve">
-    <value>@ItemTransfer</value>
+    <value>העברת פריט</value>
   </data>
   <data name="ItemType" xml:space="preserve">
-    <value>@ItemType</value>
+    <value>סוג פריט</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>@KeyboardShortcuts</value>
+    <value>קיצורי דרך במקלדת</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>@Language</value>
+    <value>שפה</value>
   </data>
   <data name="LastUsed" xml:space="preserve">
-    <value>@LastUsed</value>
+    <value>השימוש האחרון</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>@Latitude</value>
+    <value>קו רוחב</value>
   </data>
   <data name="LegalRepresentative" xml:space="preserve">
-    <value>@LegalRepresentative</value>
+    <value>נציג משפטי</value>
   </data>
   <data name="Length" xml:space="preserve">
-    <value>@Length</value>
+    <value>אורך</value>
   </data>
   <data name="Liabilities" xml:space="preserve">
-    <value>@Liabilities</value>
+    <value>התחייבויות</value>
   </data>
   <data name="Line" xml:space="preserve">
-    <value>@Line</value>
+    <value>קַו</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>@Link</value>
+    <value>קישור</value>
   </data>
   <data name="List" xml:space="preserve">
-    <value>@List</value>
+    <value>רשימה</value>
   </data>
   <data name="LocatetheServer" xml:space="preserve">
-    <value>@LocatetheServer</value>
+    <value>אתר את השרת</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>@Location</value>
+    <value>מקום</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>@LogIn</value>
+    <value>התחבר</value>
   </data>
   <data name="Logistics" xml:space="preserve">
-    <value>@Logistics</value>
+    <value>לוֹגִיסטִיקָה</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>@LogOut</value>
+    <value>להתנתק</value>
   </data>
   <data name="Longitud" xml:space="preserve">
-    <value>@Longitud</value>
+    <value>Longitud</value>
   </data>
   <data name="LotNumber" xml:space="preserve">
-    <value>@LotNumber</value>
+    <value>מספר פריט</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
-    <value>@Maintainance</value>
+    <value>תחזוקה</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
-    <value>@MakePayment</value>
+    <value>לשלם</value>
   </data>
   <data name="Male" xml:space="preserve">
-    <value>@Male</value>
+    <value>זָכָר</value>
   </data>
   <data name="ManufacturingDate" xml:space="preserve">
-    <value>@ManufacturingDate</value>
+    <value>תאריך יצור</value>
   </data>
   <data name="MaritalStatus" xml:space="preserve">
-    <value>@MaritalStatus</value>
+    <value>מצב אישי</value>
   </data>
   <data name="Mask" xml:space="preserve">
-    <value>@Mask</value>
+    <value>מסכה</value>
   </data>
   <data name="Master" xml:space="preserve">
-    <value>@Master</value>
+    <value>לִשְׁלוֹט</value>
   </data>
   <data name="Measurement" xml:space="preserve">
-    <value>@Measurement</value>
+    <value>מדידה</value>
   </data>
   <data name="MeasurementType" xml:space="preserve">
-    <value>@MeasurementType</value>
+    <value>סוג מדידה</value>
   </data>
   <data name="MigrationType" xml:space="preserve">
-    <value>@MigrationType</value>
+    <value>סוג העברה</value>
   </data>
   <data name="Module" xml:space="preserve">
-    <value>@Module</value>
+    <value>מודול</value>
   </data>
   <data name="Movement" xml:space="preserve">
-    <value>@Movement</value>
+    <value>תְנוּעָה</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>@Name</value>
+    <value>שֵׁם</value>
   </data>
   <data name="Nationality" xml:space="preserve">
-    <value>@Nationality</value>
+    <value>לאום</value>
   </data>
   <data name="NeededbyDate" xml:space="preserve">
-    <value>@NeededbyDate</value>
+    <value>דרוש לפי תאריך</value>
   </data>
   <data name="New" xml:space="preserve">
-    <value>@New</value>
+    <value>חָדָשׁ</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>@No</value>
+    <value>לא</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>@Number</value>
+    <value>מספר</value>
   </data>
   <data name="Order" xml:space="preserve">
-    <value>@Order</value>
+    <value>להזמין</value>
   </data>
   <data name="OrderNumber" xml:space="preserve">
-    <value>@OrderNumber</value>
+    <value>מספר הזמנה</value>
   </data>
   <data name="Origin" xml:space="preserve">
-    <value>@Origin</value>
+    <value>מָקוֹר</value>
   </data>
   <data name="Output" xml:space="preserve">
-    <value>@Output</value>
+    <value>תְפוּקָה</value>
   </data>
   <data name="PackingList" xml:space="preserve">
-    <value>@PackingList</value>
+    <value>רשימת דברים לארוז</value>
   </data>
   <data name="Parent" xml:space="preserve">
-    <value>@Parent</value>
+    <value>הוֹרֶה</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>@Password</value>
+    <value>סיסמה</value>
   </data>
   <data name="Payable" xml:space="preserve">
-    <value>@Payable</value>
+    <value>זכאי</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>@Payment</value>
+    <value>תַשְׁלוּם</value>
   </data>
   <data name="PaymentDate" xml:space="preserve">
-    <value>@PaymentDate</value>
+    <value>תאריך תשלום</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>@PaymentForm</value>
+    <value>טופס תשלום</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
-    <value>@PaymentMade</value>
+    <value>את התשלום</value>
   </data>
   <data name="PaymentReceipt" xml:space="preserve">
-    <value>@PaymentReceipt</value>
+    <value>קבלת תשלום</value>
   </data>
   <data name="PaymentRecieved" xml:space="preserve">
-    <value>@PaymentRecieved</value>
+    <value>קיבל תשלום</value>
   </data>
   <data name="PaymentsMade" xml:space="preserve">
-    <value>@PaymentsMade</value>
+    <value>תשלומים שבוצעו</value>
   </data>
   <data name="PaymentsRecieved" xml:space="preserve">
-    <value>@PaymentsRecieved</value>
+    <value>תשלומים שמתקבלים</value>
   </data>
   <data name="PaymentType" xml:space="preserve">
-    <value>@PaymentType</value>
+    <value>סוג תשלום</value>
   </data>
   <data name="PendingDocuments" xml:space="preserve">
-    <value>@PendingDocuments</value>
+    <value>ממתין מסמכים</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
-    <value>@PendingPayables</value>
+    <value>זכאי ממתין</value>
   </data>
   <data name="PendingReceivables" xml:space="preserve">
-    <value>@PendingReceivables</value>
+    <value>חייבת בהמתנה</value>
   </data>
   <data name="Percentage" xml:space="preserve">
-    <value>@Percentage</value>
+    <value>אֲחוּזִים</value>
   </data>
   <data name="Person" xml:space="preserve">
-    <value>@Person</value>
+    <value>אדם</value>
   </data>
   <data name="Personal" xml:space="preserve">
-    <value>@Personal</value>
+    <value>אישי</value>
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
-    <value>@PlaceofBirth</value>
+    <value>מקום לידה</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
-    <value>@PointofSale</value>
+    <value>נקודת המכירה</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>@Position</value>
+    <value>עמדה</value>
   </data>
   <data name="Preference" xml:space="preserve">
-    <value>@Preference</value>
+    <value>הַעֲדָפָה</value>
   </data>
   <data name="Preventive" xml:space="preserve">
-    <value>@Preventive</value>
+    <value>מוֹנֵעַ</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>@Price</value>
+    <value>מחיר</value>
   </data>
   <data name="PriceList" xml:space="preserve">
-    <value>@PriceList</value>
+    <value>רשימת מחירים</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>@PricewithVAT</value>
+    <value>מחיר כולל מע"מ</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>@Print</value>
+    <value>הדפס</value>
   </data>
   <data name="Printer" xml:space="preserve">
-    <value>@Printer</value>
+    <value>מדפסת</value>
   </data>
   <data name="PrinterValues" xml:space="preserve">
-    <value>@PrinterValues</value>
+    <value>ערכי מדפסת</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
-    <value>@PrintingPress</value>
+    <value>דפוס</value>
   </data>
   <data name="Privilege" xml:space="preserve">
-    <value>@Privilege</value>
+    <value>זְכוּת</value>
   </data>
   <data name="Produce" xml:space="preserve">
-    <value>@Produce</value>
+    <value>ליצר</value>
   </data>
   <data name="Product" xml:space="preserve">
-    <value>@Product</value>
+    <value>מוצר</value>
   </data>
   <data name="ProductDeliveryList" xml:space="preserve">
-    <value>@ProductDeliveryList</value>
+    <value>רשימת משלוח מוצרים</value>
   </data>
   <data name="Production" xml:space="preserve">
-    <value>@Production</value>
+    <value>הפקה</value>
   </data>
   <data name="ProductionbyFraction" xml:space="preserve">
-    <value>@ProductionbyFraction</value>
+    <value>ייצור על ידי שבר</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
-    <value>@ProductionExecution</value>
+    <value>ביצוע ייצור</value>
   </data>
   <data name="ProductionOrder" xml:space="preserve">
-    <value>@ProductionOrder</value>
+    <value>הזמנת ייצור</value>
   </data>
   <data name="ProductionOrderStatus" xml:space="preserve">
-    <value>@ProductionOrderStatus</value>
+    <value>מצב הפקה להזמין</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>@ProductionStatus</value>
+    <value>מצב הפקה</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>@Project</value>
+    <value>פּרוֹיֶקט</value>
   </data>
   <data name="ProjectExecution" xml:space="preserve">
-    <value>@ProjectExecution</value>
+    <value>ביצוע פרויקט</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>@ProjectFinance</value>
+    <value>מימון פרויקטים</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
-    <value>@PromissoryNote</value>
+    <value>שטר חוב</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>@Promoted</value>
+    <value>מקודם</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>@Properties</value>
+    <value>נכסים</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>@Property</value>
+    <value>נכס</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
-    <value>@ProratedCost</value>
+    <value>עלות יחסית</value>
   </data>
   <data name="Purchase" xml:space="preserve">
-    <value>@Purchase</value>
+    <value>לִרְכּוֹשׁ</value>
   </data>
   <data name="PurchasebyCostCenter" xml:space="preserve">
-    <value>@PurchasebyCostCenter</value>
+    <value>רכישה באמצעות מרכז עלות</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
-    <value>@PurchaseDate</value>
+    <value>תאריך רכישה</value>
   </data>
   <data name="PurchaseDetail" xml:space="preserve">
-    <value>@PurchaseDetail</value>
+    <value>פרטי רכישה</value>
   </data>
   <data name="PurchaseDocuments" xml:space="preserve">
-    <value>@PurchaseDocuments</value>
+    <value>מסמכי רכש</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>@PurchaseInvoice</value>
+    <value>חשבונית קנייה</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
-    <value>@PurchaseInvoiceSummary</value>
+    <value>לרכוש סיכום חשבוניות</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
-    <value>@PurchaseOrder</value>
+    <value>הזמנה</value>
   </data>
   <data name="PurchaseOrderSummary" xml:space="preserve">
-    <value>@PurchaseOrderSummary</value>
+    <value>לרכוש סיכום להזמין</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
-    <value>@PurchaseReturn</value>
+    <value>חזור רכישה</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>@PurchaseTender</value>
+    <value>מכרז רכש</value>
   </data>
   <data name="PurchaseTenderSummary" xml:space="preserve">
-    <value>@PurchaseTenderSummary</value>
+    <value>סיכום מכרז הרכש</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
-    <value>@PurchaseValue</value>
+    <value>ערך הרכישה</value>
   </data>
   <data name="Quantity" xml:space="preserve">
-    <value>@Quantity</value>
+    <value>כַּמוּת</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>@Question</value>
+    <value>שְׁאֵלָה</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>@Question_Cancel</value>
+    <value>ביטול שינויים! האם אתה בטוח?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>@Question_Delete</value>
+    <value>לִמְחוֹק! האם אתה בטוח?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>@QuickAction</value>
+    <value>פעולה מהירה</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
-    <value>@QuickActions</value>
+    <value>פעולות מהירות</value>
   </data>
   <data name="QuickLook" xml:space="preserve">
-    <value>@QuickLook</value>
+    <value>מבט מהיר</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>@Range</value>
+    <value>טווח</value>
   </data>
   <data name="RangeValues" xml:space="preserve">
-    <value>@RangeValues</value>
+    <value>הערכים נעים</value>
   </data>
   <data name="Rate" xml:space="preserve">
-    <value>@Rate</value>
+    <value>ציון</value>
   </data>
   <data name="RawMaterial" xml:space="preserve">
-    <value>@RawMaterial</value>
+    <value>חומר גולמי</value>
   </data>
   <data name="Receipt" xml:space="preserve">
-    <value>@Receipt</value>
+    <value>קַבָּלָה</value>
   </data>
   <data name="Receivable" xml:space="preserve">
-    <value>@Receivable</value>
+    <value>חייב</value>
   </data>
   <data name="RecievePayment" xml:space="preserve">
-    <value>@RecievePayment</value>
+    <value>תשלום קבלתי</value>
   </data>
   <data name="Recipe" xml:space="preserve">
-    <value>@Recipe</value>
+    <value>מַתכּוֹן</value>
   </data>
   <data name="Refinance" xml:space="preserve">
-    <value>@Refinance</value>
+    <value>refinance</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>@Refresh</value>
+    <value>לְרַעֲנֵן</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
-    <value>@RelatedTo</value>
+    <value>קשור ל</value>
   </data>
   <data name="RelatetoInvoice" xml:space="preserve">
-    <value>@RelatetoInvoice</value>
+    <value>להתייחס לחשבונית</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-    <value>@Relationship</value>
+    <value>מערכת יחסים</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>@RememberMe</value>
+    <value>זכור אותי</value>
   </data>
   <data name="Repair" xml:space="preserve">
-    <value>@Repair</value>
+    <value>לְתַקֵן</value>
   </data>
   <data name="Reports" xml:space="preserve">
-    <value>@Reports</value>
+    <value>דיווחים</value>
   </data>
   <data name="Reprint" xml:space="preserve">
-    <value>@Reprint</value>
+    <value>הֶדפֵּס</value>
   </data>
   <data name="RequestManagement" xml:space="preserve">
-    <value>@RequestManagement</value>
+    <value>לבקש מההנהלה</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
-    <value>@RequestResource</value>
+    <value>משאבי בקשה</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>@Required</value>
+    <value>נדרש</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
-    <value>@ReturnNumber</value>
+    <value>מספר השבות</value>
   </data>
   <data name="Sale" xml:space="preserve">
-    <value>@Sale</value>
+    <value>מְכִירָה</value>
   </data>
   <data name="Sales" xml:space="preserve">
-    <value>@Sales</value>
+    <value>מכירות</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
-    <value>@SalesBudget</value>
+    <value>תקציב מכירות</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
-    <value>@SalesBudgetSummary</value>
+    <value>סיכום תקציב מכירות</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
-    <value>@SalesbyBrand</value>
+    <value>מכירות לפי מותג</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
-    <value>@SalesbyDate</value>
+    <value>מכירות לפי תאריך</value>
   </data>
   <data name="SalesbyItem" xml:space="preserve">
-    <value>@SalesbyItem</value>
+    <value>מכירות לפי פריט</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
-    <value>@SalesbySalesman</value>
+    <value>מכירות לפי איש מכירות</value>
   </data>
   <data name="SalesbyTag" xml:space="preserve">
-    <value>@SalesbyTag</value>
+    <value>מכירות לפי תג</value>
   </data>
   <data name="SalesDetails" xml:space="preserve">
-    <value>@SalesDetails</value>
+    <value>פרטי מכירות</value>
   </data>
   <data name="SalesDocuments" xml:space="preserve">
-    <value>@SalesDocuments</value>
+    <value>מסמכי המכירה</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
-    <value>@SalesInvoice</value>
+    <value>חשבונית מכירות</value>
   </data>
   <data name="SalesInvoiceSummary" xml:space="preserve">
-    <value>@SalesInvoiceSummary</value>
+    <value>סיכום חשבוניות מכירות</value>
   </data>
   <data name="Salesman" xml:space="preserve">
-    <value>@Salesman</value>
+    <value>איש מכירות</value>
   </data>
   <data name="SalesmanType" xml:space="preserve">
-    <value>@SalesmanType</value>
+    <value>סוג Salesman</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
-    <value>@SalesOrder</value>
+    <value>סדר מכירות</value>
   </data>
   <data name="SalesOrderSummary" xml:space="preserve">
-    <value>@SalesOrderSummary</value>
+    <value>סיכום להזמין מכירות</value>
   </data>
   <data name="SalesPromotion" xml:space="preserve">
-    <value>@SalesPromotion</value>
+    <value>קידום מכירות</value>
   </data>
   <data name="SalesRepresentative" xml:space="preserve">
-    <value>@SalesRepresentative</value>
+    <value>נציג מכירות</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
-    <value>@SalesReturn</value>
+    <value>חזור מכירות</value>
   </data>
   <data name="Saloon" xml:space="preserve">
-    <value>@Saloon</value>
+    <value>מִסְבָּאָה</value>
   </data>
   <data name="Sample" xml:space="preserve">
-    <value>@Sample</value>
+    <value>לִטעוֹם</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>@Save</value>
+    <value>להציל</value>
   </data>
   <data name="Saved" xml:space="preserve">
-    <value>@Saved</value>
+    <value>נשמר</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>@Search</value>
+    <value>לחפש</value>
   </data>
   <data name="SeatsAvailable" xml:space="preserve">
-    <value>@SeatsAvailable</value>
+    <value>מקומות פנויים</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>@Security</value>
+    <value>בִּטָחוֹן</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>@SecurityAnswer</value>
+    <value>תשובת אבטחה</value>
   </data>
   <data name="Seller" xml:space="preserve">
-    <value>@Seller</value>
+    <value>מוֹכֵר</value>
   </data>
   <data name="SellRate" xml:space="preserve">
-    <value>@SellRate</value>
+    <value>למכור דרג</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>@Service</value>
+    <value>שֵׁרוּת</value>
   </data>
   <data name="ServiceContract" xml:space="preserve">
-    <value>@ServiceContract</value>
+    <value>חוזה שירות</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
-    <value>@ServicesperEvent</value>
+    <value>שירותים לכל אירוע</value>
   </data>
   <data name="ServicesperPerson" xml:space="preserve">
-    <value>@ServicesperPerson</value>
+    <value>שירותים לנפש</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>@Settings</value>
+    <value>הגדרות</value>
   </data>
   <data name="Sex" xml:space="preserve">
-    <value>@Sex</value>
+    <value>מִין</value>
   </data>
   <data name="Shop" xml:space="preserve">
-    <value>@Shop</value>
+    <value>לִקְנוֹת</value>
   </data>
   <data name="SingleCurrency" xml:space="preserve">
-    <value>@SingleCurrency</value>
+    <value>מטבע יחיד</value>
   </data>
   <data name="SocialID" xml:space="preserve">
-    <value>@SocialID</value>
+    <value>חברתי ID</value>
   </data>
   <data name="SoleCurrency" xml:space="preserve">
-    <value>@SoleCurrency</value>
+    <value>מטבע Sole</value>
   </data>
   <data name="Special" xml:space="preserve">
-    <value>@Special</value>
+    <value>מיוחד</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>@Speed</value>
+    <value>מְהִירוּת</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>@StartDate</value>
+    <value>תאריך התחלה</value>
   </data>
   <data name="Starting" xml:space="preserve">
-    <value>@Starting</value>
+    <value>החל</value>
   </data>
   <data name="StartingDate" xml:space="preserve">
-    <value>@StartingDate</value>
+    <value>תאריך התחלה</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>@State</value>
+    <value>מדינה</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>@Status</value>
+    <value>סטָטוּס</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>@Stock</value>
+    <value>המניה</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>@StockMaximum</value>
+    <value>מאגר מקסימאלי</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
-    <value>@StockMinimum</value>
+    <value>מלאי מינימום</value>
   </data>
   <data name="StylePrinter" xml:space="preserve">
-    <value>@StylePrinter</value>
+    <value>מדפסת סגנון</value>
   </data>
   <data name="StyleReceipt" xml:space="preserve">
-    <value>@StyleReceipt</value>
+    <value>קבלת סגנון</value>
   </data>
   <data name="Subscription" xml:space="preserve">
-    <value>@Subscription</value>
+    <value>מִנוּי</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
-    <value>@Subtotal</value>
+    <value>סיכום ביניים</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
-    <value>@SubTotalwithVAT</value>
+    <value>סיכום ביניים עם מע"מ</value>
   </data>
   <data name="Supplier" xml:space="preserve">
-    <value>@Supplier</value>
+    <value>ספק</value>
   </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
-    <value>@SupplierCurrentAccount</value>
+    <value>החשבון השוטף של הספק</value>
   </data>
   <data name="Supplies" xml:space="preserve">
-    <value>@Supplies</value>
+    <value>אספקה</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>@Tags</value>
+    <value>תגיות</value>
   </data>
   <data name="Talent" xml:space="preserve">
-    <value>@Talent</value>
+    <value>כִּשָׁרוֹן</value>
   </data>
   <data name="Task" xml:space="preserve">
-    <value>@Task</value>
+    <value>מְשִׁימָה</value>
   </data>
   <data name="TaskList" xml:space="preserve">
-    <value>@TaskList</value>
+    <value>רשימת מטלות</value>
   </data>
   <data name="Telephone" xml:space="preserve">
-    <value>@Telephone</value>
+    <value>טֵלֵפוֹן</value>
   </data>
   <data name="Temperature" xml:space="preserve">
-    <value>@Temperature</value>
+    <value>טֶמפֶּרָטוּרָה</value>
   </data>
   <data name="Template" xml:space="preserve">
-    <value>@Template</value>
+    <value>תבנית</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>@Terminal</value>
+    <value>מָסוֹף</value>
   </data>
   <data name="Terms" xml:space="preserve">
-    <value>@Terms</value>
+    <value>תנאים</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>@Total</value>
+    <value>סה"כ</value>
   </data>
   <data name="Transact" xml:space="preserve">
-    <value>@Transact</value>
+    <value>לְבַצֵעַ</value>
   </data>
   <data name="Transaction" xml:space="preserve">
-    <value>@Transaction</value>
+    <value>עִסקָה</value>
   </data>
   <data name="TransactionDate" xml:space="preserve">
-    <value>@TransactionDate</value>
+    <value>תאריך עסקה</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
-    <value>@TransactionNumber</value>
+    <value>מספר העסקה</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>@Transactions</value>
+    <value>עסקאות</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>@Transfer</value>
+    <value>לְהַעֲבִיר</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>@Type</value>
+    <value>סוּג</value>
   </data>
   <data name="Urgency" xml:space="preserve">
-    <value>@Urgency</value>
+    <value>דְחִיפוּת</value>
   </data>
   <data name="Usage" xml:space="preserve">
-    <value>@Usage</value>
+    <value>נוֹהָג</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>@User</value>
+    <value>מִשׁתַמֵשׁ</value>
   </data>
   <data name="UserRole" xml:space="preserve">
-    <value>@UserRole</value>
+    <value>תפקיד המשתמש</value>
   </data>
   <data name="ValidUntil" xml:space="preserve">
-    <value>@ValidUntil</value>
+    <value>בתוקף עד</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>@Value</value>
+    <value>ערך</value>
   </data>
   <data name="Variant" xml:space="preserve">
-    <value>@Variant</value>
+    <value>גִרְסָה אַחֶרֶת</value>
   </data>
   <data name="VAT" xml:space="preserve">
-    <value>@VAT</value>
+    <value>מס ערך מוסף</value>
   </data>
   <data name="VATExcluded" xml:space="preserve">
-    <value>@VATExcluded</value>
+    <value>לא כולל מע"מ</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
-    <value>@VATGrouping</value>
+    <value>קיבוץ מע"מ</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
-    <value>@VATIncluded</value>
+    <value>כולל מע"מ</value>
   </data>
   <data name="VATPurchase" xml:space="preserve">
-    <value>@VATPurchase</value>
+    <value>רכישת מע"מ</value>
   </data>
   <data name="VATSales" xml:space="preserve">
-    <value>@VATSales</value>
+    <value>מכירות מע"מ</value>
   </data>
   <data name="VATWithholding" xml:space="preserve">
-    <value>@VATWithholding</value>
+    <value>במקור מע"מ</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>@Version</value>
+    <value>גִרְסָה</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>@View</value>
+    <value>נוף</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>@Warning</value>
+    <value>אַזהָרָה</value>
   </data>
   <data name="Weekend" xml:space="preserve">
-    <value>@Weekend</value>
+    <value>סוף שבוע</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>@Width</value>
+    <value>רוֹחַב</value>
   </data>
   <data name="WindSpeed" xml:space="preserve">
-    <value>@WindSpeed</value>
+    <value>מהירות הרוח</value>
   </data>
   <data name="Work" xml:space="preserve">
-    <value>@Work</value>
+    <value>עֲבוֹדָה</value>
   </data>
   <data name="WorkType" xml:space="preserve">
-    <value>@WorkType</value>
+    <value>סוג העבודה</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>@Yes</value>
+    <value>כן</value>
   </data>
 </root>

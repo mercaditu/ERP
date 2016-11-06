@@ -174,6 +174,9 @@
   <data name="Alias" xml:space="preserve">
     <value>Alias</value>
   </data>
+  <data name="Allow" xml:space="preserve">
+    <value>consentire</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Quantità</value>
   </data>
@@ -270,6 +273,9 @@
   <data name="ByValue" xml:space="preserve">
     <value>Per Valore</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>Calcolare</value>
+  </data>
   <data name="Calculated" xml:space="preserve">
     <value>Calcolato</value>
   </data>
@@ -344,6 +350,9 @@
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>Stringa Di Connessione</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>Consumare</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>Consumare Avanti Gamma</value>
@@ -546,8 +555,8 @@
   <data name="Discount" xml:space="preserve">
     <value>Sconto</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
-    <value>divisable</value>
+  <data name="Divisible" xml:space="preserve">
+    <value>Divisibile</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
@@ -882,6 +891,9 @@
   <data name="Mask" xml:space="preserve">
     <value>Maschera</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>Maestro</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>Misurazione</value>
   </data>
@@ -969,6 +981,15 @@
   <data name="PendingDocuments" xml:space="preserve">
     <value>In Attesa Di Documenti</value>
   </data>
+  <data name="PendingPayables" xml:space="preserve">
+    <value>I debiti in sospeso</value>
+  </data>
+  <data name="PendingReceivables" xml:space="preserve">
+    <value>in sospeso crediti</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Percentuale</value>
+  </data>
   <data name="Person" xml:space="preserve">
     <value>Persona</value>
   </data>
@@ -1010,6 +1031,12 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Stampatrice</value>
+  </data>
+  <data name="Privilege" xml:space="preserve">
+    <value>Privilegio</value>
+  </data>
+  <data name="Produce" xml:space="preserve">
+    <value>Produrre</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
@@ -1146,6 +1173,9 @@
   <data name="Refinance" xml:space="preserve">
     <value>Rifinanziare</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>ricaricare</value>
+  </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>Legati Alla</value>
   </data>
@@ -1253,6 +1283,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Ricerca</value>
+  </data>
+  <data name="SeatsAvailable" xml:space="preserve">
+    <value>Posti disponibili</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>Sicurezza</value>
@@ -1445,6 +1478,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>Versione</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>vista</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Avvertimento</value>

@@ -1,108 +1,122 @@
 ﻿<Page x:Class="Cognitivo.Configs.Language"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      
-        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-        lex:ResxLocalizationProvider.DefaultDictionary="local"
-        lex:LocalizeDictionary.DesignCulture="en"
-      
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  
+		xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+		lex:ResxLocalizationProvider.DefaultDictionary="local"
+		lex:LocalizeDictionary.DesignCulture="en"
+	  
 	  Title="{lex:Loc Language}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Background="{StaticResource appConfig}">
-            <Image Style="{StaticResource img_Config}"
-                   Source="/Cognitivo;component/Images/Application/128/Language.png"/>
-            <Label Content="{lex:Loc Language}" HorizontalAlignment="Center" 
-                   Style="{StaticResource H1}"/>
-            <TextBlock Text="Select a Language you prefer working with." 
-                            HorizontalAlignment="Center" 
-                            Style="{StaticResource text_Instructions}"/>
-        </StackPanel>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="2*"/>
+		</Grid.ColumnDefinitions>
+		<StackPanel Background="{StaticResource appConfig}">
+			<Image Style="{StaticResource img_Config}"
+				   Source="/Cognitivo;component/Images/Application/128/Language.png"/>
+			<Label Content="{lex:Loc Language}" HorizontalAlignment="Center" 
+				   Style="{StaticResource H1}"/>
+			<TextBlock Text="Select a Language you prefer working with." 
+							HorizontalAlignment="Center" 
+							Style="{StaticResource text_Instructions}"/>
+		</StackPanel>
 
-        <WrapPanel Name="wrapLanguage" Grid.Column="1" ItemWidth="164" HorizontalAlignment="Center">
-            <RadioButton Style="{StaticResource input_togglebutton}" HorizontalContentAlignment="Center"
-                         Width="155" Click="lang_Select" x:Name="es_ES">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/ES.png" Height="42"/>
-                    <Label Content="Español" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" HorizontalContentAlignment="Center"
-                         Width="155" Click="lang_Select" x:Name="en_US">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/GB.png" Height="42"/>
-                    <Label Content="English" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
+		<WrapPanel Name="wrapLanguage" Grid.Column="1" ItemWidth="164" HorizontalAlignment="Center">
+			<RadioButton Style="{StaticResource input_togglebutton}" HorizontalContentAlignment="Center"
+						 Width="155" Click="lang_Select" x:Name="es_ES">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/ES.png" Height="42"/>
+					<Label Content="Español" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" HorizontalContentAlignment="Center"
+						 Width="155" Click="lang_Select" x:Name="en_US">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/GB.png" Height="42"/>
+					<Label Content="English" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="hi_IN">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/IN.png" Height="42"/>
+					<Label Content="Hindi" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="de">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/DE.png" Height="42"/>
+					<Label Content="Deutsch" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="pt_PT">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/PT.png" Height="42"/>
+					<Label Content="Português" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="zh_CN">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/CN.png" Height="42"/>
+					<Label Content="中国" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="ja_JP">
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/JP.png" Height="42"/>
+					<Label Content="日本の" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="ko">
+				<StackPanel  Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/KR.png" Height="42"/>
+					<Label Content="한국어" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="it_IT" >
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/IT.png" Height="42"/>
+					<Label Content="Italiano" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="fr" >
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/FR.png" Height="42"/>
+					<Label Content="Français" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="ru" >
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/RU.png" Height="42"/>
+					<Label Content="Русский" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
+			<RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
+							 Click="lang_Select" x:Name="ar" >
+				<StackPanel Margin="5">
+					<Image Source="/Cognitivo;component/Images/Flags/SA.png" Height="42"/>
+					<Label Content="العربية" Style="{StaticResource H3}"/>
+				</StackPanel>
+			</RadioButton>
             <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="hi_IN">
+							 Click="lang_Select" x:Name="he" >
                 <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/IN.png" Height="42"/>
-                    <Label Content="Hindi" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="de">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/DE.png" Height="42"/>
-                    <Label Content="Deutsch" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="pt_PT">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/PT.png" Height="42"/>
-                    <Label Content="Português" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="zh_CN">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/CN.png" Height="42"/>
-                    <Label Content="中国" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="ja_JP">
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/JP.png" Height="42"/>
-                    <Label Content="日本の" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="ko">
-                <StackPanel  Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/KR.png" Height="42"/>
-                    <Label Content="한국어" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="it_IT" >
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/IT.png" Height="42"/>
-                    <Label Content="Italiano" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="fr" >
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/FR.png" Height="42"/>
-                    <Label Content="Français" Style="{StaticResource H3}"/>
-                </StackPanel>
-            </RadioButton>
-            <RadioButton Style="{StaticResource input_togglebutton}" Width="155" HorizontalContentAlignment="Center"
-                             Click="lang_Select" x:Name="ru" >
-                <StackPanel Margin="5">
-                    <Image Source="/Cognitivo;component/Images/Flags/RU.png" Height="42"/>
-                    <Label Content="Русский" Style="{StaticResource H3}"/>
+                    <Image Source="/Cognitivo;component/Images/Flags/IL.png" Height="42"/>
+                    <Label Content="עִברִית" Style="{StaticResource H3}"/>
                 </StackPanel>
             </RadioButton>
         </WrapPanel>
-    </Grid>
+	</Grid>
 </Page>

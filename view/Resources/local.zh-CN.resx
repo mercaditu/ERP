@@ -174,6 +174,9 @@
   <data name="Alias" xml:space="preserve">
     <value>别号</value>
   </data>
+  <data name="Allow" xml:space="preserve">
+    <value>允许</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>量</value>
   </data>
@@ -270,6 +273,9 @@
   <data name="ByValue" xml:space="preserve">
     <value>按值</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>计算</value>
+  </data>
   <data name="Calculated" xml:space="preserve">
     <value>计算</value>
   </data>
@@ -344,6 +350,9 @@
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>连接字符串</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>消耗</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
     <value>消耗接下来范围</value>
@@ -546,8 +555,8 @@
   <data name="Discount" xml:space="preserve">
     <value>折扣</value>
   </data>
-  <data name="Divisable" xml:space="preserve">
-    <value>Divisable</value>
+  <data name="Divisible" xml:space="preserve">
+    <value>整除</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>文件</value>
@@ -882,6 +891,9 @@
   <data name="Mask" xml:space="preserve">
     <value>面具</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>主</value>
+  </data>
   <data name="Measurement" xml:space="preserve">
     <value>测量</value>
   </data>
@@ -969,6 +981,15 @@
   <data name="PendingDocuments" xml:space="preserve">
     <value>待文件</value>
   </data>
+  <data name="PendingPayables" xml:space="preserve">
+    <value>待应付款</value>
+  </data>
+  <data name="PendingReceivables" xml:space="preserve">
+    <value>未收的应收帐款</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>百分比</value>
+  </data>
   <data name="Person" xml:space="preserve">
     <value>人</value>
   </data>
@@ -1010,6 +1031,12 @@
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>印刷机</value>
+  </data>
+  <data name="Privilege" xml:space="preserve">
+    <value>特权</value>
+  </data>
+  <data name="Produce" xml:space="preserve">
+    <value>生产</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>产品</value>
@@ -1146,6 +1173,9 @@
   <data name="Refinance" xml:space="preserve">
     <value>再融资</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>相关</value>
   </data>
@@ -1253,6 +1283,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>搜索</value>
+  </data>
+  <data name="SeatsAvailable" xml:space="preserve">
+    <value>空位</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>安全</value>
@@ -1445,6 +1478,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>版</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>视图</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>

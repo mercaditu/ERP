@@ -13,8 +13,8 @@ namespace entity
             Purchase,
             [LocalizedDescription("Stock")]
             Stock,
-            [LocalizedDescription("Impex")]
-            Impex,
+            [LocalizedDescription("InternationalCommerce")]
+            InternationalCommerce,
             [LocalizedDescription("Finance")]
             Finance,
             [LocalizedDescription("HumanResources")]

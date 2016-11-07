@@ -278,6 +278,10 @@ namespace Cognitivo.Production
 
                 }
             }
+            else
+            {
+                itemDataGrid.ItemsSource = null;
+            }
         }
 
 

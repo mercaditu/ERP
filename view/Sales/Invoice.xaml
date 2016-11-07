@@ -45,7 +45,7 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TabControl Grid.Row="0" Margin="-3,37,-3,-3" Grid.ColumnSpan="2" Grid.RowSpan="2">
+		<TabControl Grid.Row="0" Margin="-3,28,-3,-3" Grid.ColumnSpan="2" Grid.RowSpan="2">
 			<TabItem Padding="0" IsSelected="{Binding ElementName=toolBar, Path=IsSelected_GridView, FallbackValue=False, UpdateSourceTrigger=PropertyChanged}">
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -207,7 +207,7 @@
 						</Grid>
 					</Grid>
 					<!-- Navigation ListBox -->
-					<ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
+					<ListBox x:Name="sales_invoiceDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}"

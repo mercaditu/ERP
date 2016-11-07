@@ -58,7 +58,7 @@
 					   Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
 					   VerticalAlignment="Top"/>
 		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-			<ListBox Background="{StaticResource AccentColor_Brush}" x:Name="sales_returnDataGrid"
+			<ListBox x:Name="sales_returnDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"

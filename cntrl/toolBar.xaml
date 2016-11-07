@@ -57,9 +57,9 @@
 		</StackPanel>
 
 		<Grid Background="White">
-			<Grid.Effect>
-				<DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.32" BlurRadius="4"/>
-			</Grid.Effect>
+			<!--<Grid.Effect>
+				<DropShadowEffect ShadowDepth="2" Color="#232f3c" Direction="270" Opacity="0.32" BlurRadius="4"/>
+			</Grid.Effect>-->
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="3*"/>
@@ -68,16 +68,16 @@
 			<Grid x:Name="gridSearch" Grid.Column="0" Background="{DynamicResource AccentColor_Brush}">
 				<TextBox x:Name="tbxSearch" Padding="24,0,0,0" TextChanged="tbxSearchTextChanged"
 						 BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
-						 FontSize="16" Foreground="Black" Margin="4"
+						 FontSize="16" Foreground="{StaticResource winBackground}" Margin="4"
 						 metro:TextBoxHelper.Watermark="{lex:Loc Search}"
 						 metro:TextBoxHelper.SelectAllOnFocus="True"
 						 metro:ControlsHelper.MouseOverBorderBrush="Transparent"
 						 metro:ControlsHelper.FocusBorderBrush="Transparent"
 						 metro:TextBoxHelper.ClearTextButton="True"/>
 				<TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo"
-				FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
+						   FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
 					<TextBlock.Foreground>
-						<SolidColorBrush Color="Black" Opacity="0.75"/>
+						<SolidColorBrush Color="White" Opacity="0.75"/>
 					</TextBlock.Foreground>
 				</TextBlock>
 			</Grid>

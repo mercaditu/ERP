@@ -60,13 +60,13 @@
         <TextBlock VerticalAlignment="Top" FontWeight="Thin"
                    Margin="44,4,8,4" TextTrimming="CharacterEllipsis">
             <TextBlock.Foreground>
-                <SolidColorBrush Color="Black" Opacity="0.64"/>
+                <SolidColorBrush Color="White" Opacity="0.64"/>
             </TextBlock.Foreground>
             <Run Text="{Binding recordCode, ElementName=_navList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Run>|</Run>
             <Run Text="{Binding recordSecondaryName, ElementName=_navList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </TextBlock>
-        <TextBlock Margin="44,0,4,4" Style="{StaticResource text_H3}" Foreground="Black" FontWeight="Normal"
+        <TextBlock Margin="44,0,4,4" Style="{StaticResource text_H3}" Foreground="{StaticResource winBackground}" FontWeight="Normal"
                    VerticalAlignment="Bottom" TextTrimming="CharacterEllipsis" FontSize="16">
             <Run Text="{Binding recordName, ElementName=_navList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </TextBlock>

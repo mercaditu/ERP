@@ -369,7 +369,7 @@ namespace entity.Brillo.Logic
                         if (detail.id_location == null)
                         {
                             detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
-                            detail.app_location = db.app_location.Find(detail.id_location);
+                            //detail.app_location = db.app_location.Find(detail.id_location);
                         }
 
                         Brillo.Stock stock = new Brillo.Stock();

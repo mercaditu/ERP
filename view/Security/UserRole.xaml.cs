@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
+
 namespace Cognitivo.Security
 {
     public partial class UserRole : Page
@@ -200,7 +201,7 @@ namespace Cognitivo.Security
         {
             AppList appList = new AppList();
 
-            List<security_crud> security_curd = UserRoleDB.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
+            List<security_crud> security_curd = security_rolesecurity_curdViewSource.View.OfType<security_crud>().ToList().Where(x => x.id_role == security_role.id_role).ToList();
 
             if (security_curd.Count() == 0)
             {
@@ -225,7 +226,24 @@ namespace Cognitivo.Security
                 if (CurrentVersion < NewVersion)
                 {
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
-                    foreach (DataRow item in appList.dtApp.Select("Version='" + NewVersion + "'"))
+                    string condition = "";
+                    if (NewVersion==CurrentSession.Versions.Full)
+                    {
+                        condition = "1=1";
+                    }
+                    else if (NewVersion == CurrentSession.Versions.Medium)
+                    {
+                        condition = "Version='" + NewVersion + "' and Version ='Lite' and Version='Basic'";
+                    }
+                    else if (NewVersion == CurrentSession.Versions.Basic)
+                    {
+                        condition = "Version='" + NewVersion + "' and Version ='Lite' ";
+                    }
+                    else if (NewVersion == CurrentSession.Versions.Lite)
+                    {
+                        condition = "Version='" + NewVersion + "'";
+                    }
+                    foreach (DataRow item in appList.dtApp.Select(condition))
                     {
                         if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
                         {
@@ -237,15 +255,19 @@ namespace Cognitivo.Security
                     List<entity.App.Names> AddList = Enumerable.Except(dtApplication, _security_curdApplication).ToList();
                     foreach (entity.App.Names AppName in AddList)
                     {
-                        security_crud _security_curd = new security_crud();
-                        _security_curd.id_application = AppName;
-                        _security_curd.can_update = false;
-                        _security_curd.can_read = false;
-                        _security_curd.can_delete = false;
-                        _security_curd.can_create = false;
-                        _security_curd.can_approve = false;
-                        _security_curd.can_annul = false;
-                        security_role.security_curd.Add(_security_curd);
+                        security_crud _rolesecurity_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+                        if (_rolesecurity_curd == null)
+                        {
+                            security_crud _security_curd = new security_crud();
+                            _security_curd.id_application = AppName;
+                            _security_curd.can_update = false;
+                            _security_curd.can_read = false;
+                            _security_curd.can_delete = false;
+                            _security_curd.can_create = false;
+                            _security_curd.can_approve = false;
+                            _security_curd.can_annul = false;
+                            security_role.security_curd.Add(_security_curd);
+                        }
                     }
                 }
                 else
@@ -264,9 +286,10 @@ namespace Cognitivo.Security
 
                     foreach (entity.App.Names AppName in AddList)
                     {
-                        security_crud _security_curd = UserRoleDB.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+                        security_crud _security_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
                         if (_security_curd != null)
                         {
+                          //  UserRoleDB.Entry(_security_curd).State = EntityState.Deleted;
                             security_role.security_curd.Remove(_security_curd);
                         }
                     }
@@ -274,6 +297,7 @@ namespace Cognitivo.Security
                 }
                 CurrentVersion = NewVersion;
             }
+            security_roleViewSource.View.Refresh();
             security_rolesecurity_curdViewSource.View.Refresh();
             security_rolesecurity_role_privilageViewSource.View.Refresh();
         }

@@ -14,6 +14,28 @@ namespace Cognitivo.Menu
 {
     public partial class StartUp : Page
     {
+
+        bool _one;
+        public bool one_Active
+        {
+            get { return _one; }
+            set { _one = value; }
+        }
+
+        bool _two;
+        public bool two_Active
+        {
+            get { return _two; }
+            set { _two = value; }
+        }
+
+        bool _three;
+        public bool three_Active
+        {
+            get { return _three; }
+            set { _three = value; }
+        }
+
         public StartUp()
         {
             InitializeComponent();
@@ -58,11 +80,11 @@ namespace Cognitivo.Menu
                 DateTime uptime_date = DateTime.Now.AddSeconds((int)int_update);
                 Dispatcher.BeginInvoke((Action)(() => { lbl_uptime.Content = uptime_date.ToLongDateString(); }));
 
-                //_one = true;
+                _one = true;
             }
             catch
             {
-                //_one = false;
+                _one = false;
             }
 
         }
@@ -71,13 +93,26 @@ namespace Cognitivo.Menu
         {
             try
             {
-                MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder(Cognitivo.Properties.Settings.Default.MySQLconnString);
-                Dispatcher.BeginInvoke((Action)(() => { SQLQuery_ReturnScalar("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + connString.Database + "';", true); }));
-                //_two = false;
+                //MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder(Cognitivo.Properties.Settings.Default.MySQLconnString);
+                //Dispatcher.BeginInvoke((Action)(() => { SQLQuery_ReturnScalar("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + connString.Database + "';", true); }));
+                _two = false;
             }
             catch
             {
-                //_two = true;
+                _two = true;
+            }
+        }
+
+        private void list_Companies()
+        {
+            try
+            {
+                Dispatcher.BeginInvoke((Action)(() => { SQLQuery_ReturnScalar("SELECT * FROM app_company;", false); }));
+                _three = true;
+            }
+            catch
+            {
+                _three = false;
             }
         }
 
@@ -127,7 +162,7 @@ namespace Cognitivo.Menu
                 if (generic)
                 {
                     //Generic ConnectionString without Database
-                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(Properties.Settings.Default.MySQLconnString);
+                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(Cognitivo.Properties.Settings.Default.MySQLconnString);
                     MySqlConnectionStringBuilder generic_connString = new MySqlConnectionStringBuilder();
                     generic_connString.Server = specific_connString.Server;
                     generic_connString.UserID = specific_connString.UserID;
@@ -138,7 +173,7 @@ namespace Cognitivo.Menu
                 else
                 {
                     //Specific ConnectionString with Database
-                    SQLConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+                    SQLConn = new MySqlConnection(Cognitivo.Properties.Settings.Default.MySQLconnString);
                 }
 
                 MySqlCommand SQLCmd = new MySqlCommand();
@@ -170,19 +205,26 @@ namespace Cognitivo.Menu
             Frame myFrame = myWindow.mainFrame;
             myFrame.Navigate(new mainLogIn());
         }
-        
+
+    
+
+        private void migratesql_Click(object sender, RoutedEventArgs e)
+        {
+            frameConfig.Navigate(new Setup.Migration.Cogent.MigrationGUI());
+        }
+
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            GenerateParentChildRel_Thread();
-            //Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+            //GenerateParentChildRel_Thread();
+            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
         }
 
         private void GenerateParentChildRel_Thread()
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
 
-            ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            MessageBox.Show(ProductMovementDB.Generate_ProductMovement());
+            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB.Generate_ProductMovement();
 
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
@@ -191,30 +233,35 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = true; }));
 
+
             UpdateUnitCost();
 
             Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = false; }));
          
         }
-
         public void UpdateUnitCost()
         {
             using (db db = new db())
             {
-                List<item_product> item_productList = db.item_product.ToList();
-                foreach (item_product item_product in item_productList)
+                List<item> items = db.items.ToList();
+                foreach (item item in items)
                 {
-                    /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
-                    item_movement item_movement = db.item_movement
-                        .Where(x =>
-                            x.id_item_product == item_product.id_item_product &&
-                            x.credit > 0 && 
-                            x.parent == null &&
-                            x.item_movement_value.Sum(y => y.unit_value) > 0).LastOrDefault();
-
-                    if (item_movement != null)
+                    if (item.item_product.FirstOrDefault() != null)
                     {
-                        item_product.item.unit_cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                        item_product item_product = item.item_product.FirstOrDefault();
+
+                        /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
+                        item_movement item_movement = db.item_movement
+                            .Where(x =>
+                                x.id_item_product == item_product.id_item_product &&
+                                x.credit > 0 && 
+                                x.parent == null &&
+                                x.item_movement_value.Sum(y => y.unit_value) > 0).OrderByDescending(x => x.trans_date).FirstOrDefault();
+
+                        if (item_movement != null)
+                        {
+                            item.unit_cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                        }
                     }
                 }
                 db.SaveChanges();

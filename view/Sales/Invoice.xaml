@@ -225,7 +225,7 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 
-					<cntrl:navPagination VerticalAlignment="Bottom"/>
+					<!--<cntrl:navPagination VerticalAlignment="Bottom"/>-->
 
 					<!-- Sales Invoice Form -->
 					<Grid Grid.Column="1" Grid.Row="1">

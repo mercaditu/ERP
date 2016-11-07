@@ -37,6 +37,8 @@ namespace Cognitivo.Security
                 security_role.is_master = true;
                 security_role.is_active = true;
 
+                CurrentSession.UserRole = security_role;
+
                 UserDB.security_role.Add(security_role);
                 UserDB.SaveChanges();
             }

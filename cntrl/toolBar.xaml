@@ -37,27 +37,8 @@
 			<BeginStoryboard x:Name="FormClick_BeginStoryboard" Storyboard="{StaticResource FormClick}"/>
 		</EventTrigger>
 	</UserControl.Triggers>
-	<Grid x:Name="gridButtons">
-		<StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" 
-                    Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
-					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
-            <Border x:Name="borderForm" Opacity="1" CornerRadius="4,4,0,0" 
-					Background="{StaticResource AccentColor_Brush}" Padding="2" Margin="4,0">
-				<StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
-                    <Label x:Name="lblForm" Foreground="AliceBlue" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-                    <Label Content="FORM" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
-				</StackPanel>
-			</Border>
-			<Border x:Name="borderGrid" BorderBrush="Silver" BorderThickness="0.3,0.3,0.3,0" CornerRadius="4,4,0,0" 
-					Background="{StaticResource AccentColor_Brush}" Padding="2">
-				<StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
-                    <Label x:Name="lblGrid" Foreground="AliceBlue" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-					<Label Content="GRID" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
-				</StackPanel>
-			</Border>
-		</StackPanel>
-
-		<Grid Background="White">
+    <Grid x:Name="gridButtons">
+        <Grid Background="White">
 			<!--<Grid.Effect>
 				<DropShadowEffect ShadowDepth="2" Color="#232f3c" Direction="270" Opacity="0.32" BlurRadius="4"/>
 			</Grid.Effect>-->
@@ -65,8 +46,9 @@
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="3*"/>
 			</Grid.ColumnDefinitions>
+            <Grid Background="{StaticResource AccentColor_Brush}" Margin="0,-30,0,0"/>
 
-			<Grid x:Name="gridSearch" Grid.Column="0" Background="{DynamicResource AccentColor_Brush}">
+            <Grid x:Name="gridSearch" Grid.Column="0" Background="{StaticResource AccentColor_Brush}">
 				<TextBox x:Name="tbxSearch" Padding="24,0,0,0" TextChanged="tbxSearchTextChanged"
 						 BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
 						 FontSize="16" Foreground="{StaticResource winBackground}" Margin="4"
@@ -92,5 +74,18 @@
 				<StackPanel x:Name="stackMessages" Margin="0,5" Width="{Binding ActualWidth, ElementName=gridButtons, Mode=OneWay}"/>
 			</Popup>
 		</Grid>
-	</Grid>
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" 
+					Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
+					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
+            <StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
+                <Label x:Name="lblForm" Foreground="AliceBlue" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+                <Label Content="FORM" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+            </StackPanel>
+
+            <StackPanel x:Name="borderGrid" Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
+                <Label x:Name="lblGrid" Foreground="AliceBlue" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+                <Label Content="GRID" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

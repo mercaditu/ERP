@@ -37,23 +37,15 @@ namespace cntrl
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    entity.db.SaveChanges();
-                    CurrentSession.Load_BasicData(null, null);
+            entity.db.SaveChanges();
+            CurrentSession.Load_BasicData(null, null);
 
-                    if (CurrentSession.Id_Branch == 0)
-                    {
-                        CurrentSession.Id_Branch = entity.db.app_branch.FirstOrDefault().id_branch;
-                    }
-                 
-                    btnCancel_Click(sender, e);
-                }
+            if (CurrentSession.Id_Branch == 0)
+            {
+                CurrentSession.Id_Branch = entity.db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_branch;
             }
-            catch (Exception ex) { throw ex; }
+                 
+            btnCancel_Click(sender, e);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

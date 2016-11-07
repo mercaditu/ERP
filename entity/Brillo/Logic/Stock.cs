@@ -315,7 +315,7 @@ namespace entity.Brillo.Logic
             {
                 if (sales_invoice.sales_invoice_detail.Count() > 0)
                 {
-                    if (sales_invoice.sales_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
+                    if (sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0).Count() > 0)
                     {
                         Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product != null).ToList());
                     }

@@ -178,12 +178,13 @@ namespace entity
                 {
                     //New
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                    _Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
+                    base.item_movement.Add(_Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
                         invoice.id_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product, 
                         (int)purchase_invoice_detail.id_location, purchase_invoice_detail.quantity,
-                        invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Invoice Fix", null);
+                        invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Invoice Fix", null));
                 }
             }
+            SaveChanges();
         }
 
         public void Anull()
@@ -210,7 +211,22 @@ namespace entity
 
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            //base.item_movement.RemoveRange(item_movementList);
+                            foreach (item_movement item in item_movementList)
+                            {
+                                if (item.child.Count()==0)
+                                {
+                                    base.item_movement.RemoveRange(item_movementList);
+                                }
+                                else
+                                {
+                                    if (item.credit> item.child.Sum(x=>x.debit))
+                                    {
+                                        item.credit = item.child.Sum(x => x.debit);
+                                    }
+                                }
+                             
+                            }
+                            //
                         }
 
                         purchase_invoice.status = Status.Documents_General.Annulled;

@@ -3,11 +3,10 @@ namespace entity
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using System.Text;
+    
     public partial class purchase_tender : Audit
     {
         public purchase_tender()

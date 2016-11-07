@@ -23,7 +23,7 @@
     </UserControl.Effect>
     <Grid DataContext="{StaticResource sales_budgetViewSource}" Background="{StaticResource appConfig}">
         <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Introvert}">
+            <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Brush}">
                 <Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
                 <Label Foreground="White" Content="{lex:Loc SalesBudget}" Style="{StaticResource H3}"/>
             </StackPanel>
@@ -44,7 +44,8 @@
             <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" HorizontalAlignment="Right" VerticalAlignment="Center" 
                     Click="btnSave_MouseUp"/>
         </Grid>
-        <DataGrid x:Name="sales_budgetDatagrid" AutoGenerateColumns="False" Margin="8,75,8,8" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
+        <DataGrid x:Name="sales_budgetDatagrid" AutoGenerateColumns="False" Margin="8,75,8,8" 
+                  LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails" Background="Transparent"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn x:Name="selectedColumn" ElementStyle="{DynamicResource MetroDataGridCheckBox}"

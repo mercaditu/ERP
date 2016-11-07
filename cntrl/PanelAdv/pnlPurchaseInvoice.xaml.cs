@@ -75,9 +75,9 @@ namespace cntrl.PanelAdv
         {
             if (_entity.purchase_invoice_detail.Count() > 0)
             {
-                purchase_invoice _purchase_invoice = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_invoice;
+                purchase_invoice _purchase_invoice = ((DataGrid)sender).SelectedItem as purchase_invoice;
                 int id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
-                System.Windows.Controls.Grid Grid = e.DetailsElement as System.Windows.Controls.Grid;
+                Grid Grid = e.DetailsElement as Grid;
                 var purchaseInvoice = _purchase_invoice.purchase_invoice_detail;
 
                 if (Grid != null)

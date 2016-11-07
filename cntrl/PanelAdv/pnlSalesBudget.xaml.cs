@@ -37,9 +37,6 @@ namespace cntrl.PanelAdv
 
                 if (_contact != null)
                 {
-
-
-
                     load_SalesBudget(_contact.id_contact);
                 }
                 filter_sales();

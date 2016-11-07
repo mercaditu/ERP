@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 namespace cntrl.PanelAdv
 {
-    /// <summary>
-    /// Interaction logic for pnlSalesInvoice.xaml
-    /// </summary>
     public partial class pnlSalesInvoice : UserControl
     {
         CollectionViewSource sales_invoiceViewSource;
@@ -52,9 +42,6 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                //Load your data here and assign the result to the CollectionViewSource.
-
-
                 if (_contact != null)
                 {
                     sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
@@ -81,10 +68,13 @@ namespace cntrl.PanelAdv
             if (_entity.sales_invoice_detail.Count() > 0)
             {
                 sales_invoice _sales_invoice = ((DataGrid)sender).SelectedItem as sales_invoice;
-                int id_purchase_invoice = _sales_invoice.id_sales_invoice;
-                DataGrid RowDataGrid = e.DetailsElement as DataGrid;
-                var salesInvoice = _sales_invoice.sales_invoice_detail;
-                RowDataGrid.ItemsSource = salesInvoice;
+                if (_sales_invoice != null)
+                {
+                    int id_purchase_invoice = _sales_invoice.id_sales_invoice;
+                    DataGrid RowDataGrid = e.DetailsElement as DataGrid;
+                    var salesInvoice = _sales_invoice.sales_invoice_detail;
+                    RowDataGrid.ItemsSource = salesInvoice;
+                }
             }
         }
 

@@ -408,12 +408,6 @@
     <Compile Include="navTransaction.xaml.cs">
       <DependentUpon>navTransaction.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PanelAdv\pnlAnnul.xaml.cs">
-      <DependentUpon>pnlAnnul.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PanelAdv\pnlApprove.xaml.cs">
-      <DependentUpon>pnlApprove.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PanelAdv\pnlOrder.xaml.cs">
       <DependentUpon>pnlOrder.xaml</DependentUpon>
     </Compile>
@@ -899,14 +893,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="navTransaction.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PanelAdv\pnlAnnul.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PanelAdv\pnlApprove.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

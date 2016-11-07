@@ -339,24 +339,24 @@ namespace entity.Brillo.Logic
         public List<item_movement> SalesInvoice_Approve(db db, sales_invoice sales_invoice)
         {
             List<item_movement> item_movementList = new List<item_movement>();
+            List<sales_invoice_detail> Invoice_WithProducts = new List<sales_invoice_detail>();
 
-            if (sales_invoice == null)
+            if (sales_invoice != null)
+            {
+                if (sales_invoice.sales_invoice_detail.Count() > 0)
+                {
+                    if (sales_invoice.sales_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
+                    {
+                        Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product != null).ToList());
+                    }
+                }
+            }
+            else
             {
                 return item_movementList;
             }
-
-            if (sales_invoice.sales_invoice_detail.Count == 0)
-            {
-                return item_movementList;
-            }
-
-            if (sales_invoice.app_currencyfx == null)
-            {
-                sales_invoice.app_currencyfx = db.app_currencyfx.Find(sales_invoice.id_currencyfx);
-            }
-
-            //SALES INVOICE
-            foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
+            
+            foreach (sales_invoice_detail detail in Invoice_WithProducts)
             {
                 if (detail.item.is_autorecepie)
                 {
@@ -537,8 +537,7 @@ namespace entity.Brillo.Logic
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
                 {
                     // item_movement.transaction_id = TransactionID;
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer)
-                                                                     .ToList());
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer).ToList());
                 }
 
             }
@@ -547,19 +546,29 @@ namespace entity.Brillo.Logic
                 purchase_invoice purchase_invoice = Transcation as purchase_invoice;
                 foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    // item_movement.transaction_id = TransactionID;
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail)
-                                                                     .ToList());
+                    item_movement item_movement = db.item_movement.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+                    List<item_movement> ChildMovementList = db.item_movement.Where(x => x.parent.id_movement == item_movement.id_movement).ToList();
+
+                    //If a child row has not been created. just delete the entire range.
+                    if (ChildMovementList == null || ChildMovementList.Count() == 0)
+                    {
+                        item_movementList.Add(item_movement);
+                        continue;
+                    }
+                    else //if child row has been created, but is lesser than credit.
+                    {
+                        if (item_movement.credit > ChildMovementList.Sum(x => x.debit))
+                        {
+                            item_movement.credit = ChildMovementList.Sum(x => x.debit);
+                        }
+                    }
                 }
-
-
             }
             else if (Application_ID == App.Names.PurchaseReturn)
             {
                 purchase_return purchase_return = Transcation as purchase_return;
                 foreach (purchase_return_detail purchase_return_detail in purchase_return.purchase_return_detail)
                 {
-                    // item_movement.transaction_id = TransactionID;
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_purchase_return_detail == purchase_return_detail.id_purchase_return_detail)
                                                                      .ToList());
                 }
@@ -571,7 +580,6 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = Transcation as sales_invoice;
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
                 {
-                    // item_movement.transaction_id = TransactionID;
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail)
                                                                      .ToList());
                 }
@@ -582,7 +590,6 @@ namespace entity.Brillo.Logic
                 sales_return sales_return = Transcation as sales_return;
                 foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
                 {
-                    // item_movement.transaction_id = TransactionID;
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_return_detail == sales_return_detail.id_sales_return_detail)
                                                                      .ToList());
                 }
@@ -597,7 +604,7 @@ namespace entity.Brillo.Logic
                 }
             }
 
-            if (item_movementList != null)
+            if (item_movementList.Count() > 0)
             {
                 return item_movementList;
             }

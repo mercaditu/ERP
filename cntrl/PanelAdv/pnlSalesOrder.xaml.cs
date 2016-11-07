@@ -52,17 +52,10 @@ namespace cntrl.PanelAdv
 
         private void ContactPref(object sender, RoutedEventArgs e)
         {
-            try
+            contact contact = _entity.contacts.Find(sbxContact.ContactID);
+            if (contact != null)
             {
-                if (sbxContact.ContactID > 0)
-                {
-                    contact contact = _entity.contacts.Find(sbxContact.ContactID);
-                    load_SalesOrder(contact.id_contact);
-                }
-            }
-            catch(Exception ex)
-            {
-                 MessageBox.Show(ex.ToString());
+                load_SalesOrder(contact.id_contact);
             }
         }
 
@@ -135,9 +128,11 @@ namespace cntrl.PanelAdv
         private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
             sales_order _sales_order = ((DataGrid)sender).SelectedItem as sales_order;
-            int id_salesOrder = _sales_order.id_sales_order;
-
-            Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(id_salesOrder, e));
+            if (_sales_order != null)
+            {
+                int id_salesOrder = _sales_order.id_sales_order;
+                Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(id_salesOrder, e));
+            }
         }
 
         private void LoadOrderDetail(int id, DataGridRowDetailsEventArgs e)

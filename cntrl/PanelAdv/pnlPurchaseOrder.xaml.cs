@@ -69,10 +69,7 @@ namespace cntrl.PanelAdv
                 }
 
 
-                if (PurchaseOrder_Click != null)
-                {
-                    PurchaseOrder_Click(sender);
-                }
+                PurchaseOrder_Click?.Invoke(sender);
             }
         }
 
@@ -80,7 +77,7 @@ namespace cntrl.PanelAdv
         {
             if (_entity.purchase_order_detail.Count() > 0)
             {
-                purchase_order _purchase_order = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_order;
+                purchase_order _purchase_order = ((DataGrid)sender).SelectedItem as purchase_order;
                 Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(_purchase_order, e));
             }
         }
@@ -93,7 +90,7 @@ namespace cntrl.PanelAdv
                 Dispatcher.Invoke(new Action(() =>
                 {
                     
-                    System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
+                    DataGrid RowDataGrid = e.DetailsElement as DataGrid;
                     if (RowDataGrid!=null)
                     {
                         RowDataGrid.ItemsSource = purchase_order.purchase_order_detail;
@@ -117,7 +114,7 @@ namespace cntrl.PanelAdv
         private void load_PurchaseOrder(int id_contact)
         {
             var order = (from purchase_order_detail in _entity.purchase_order_detail
-                         where purchase_order_detail.purchase_order.id_contact == id_contact
+                         where purchase_order_detail.purchase_order.id_contact == id_contact && purchase_order_detail.purchase_order.status == Status.Documents_General.Approved
                          join purchase_invoice_detail in _entity.purchase_invoice_detail
                    on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst
                          from list in lst.DefaultIfEmpty()

@@ -19,7 +19,7 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
     </UserControl.Effect>
     <StackPanel DataContext="{StaticResource purchase_orderViewSource}" Background="{StaticResource appConfig}">
-        <Grid Background="#344C6B">
+        <Grid Background="{StaticResource AccentColor_Brush}">
             <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="26" Foreground="White" Margin="4,0"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <Label Content="{lex:Loc PurchaseOrder}" FontSize="25" Margin="40,0,0,0" Foreground="White"/>

@@ -38,20 +38,21 @@
 		</EventTrigger>
 	</UserControl.Triggers>
 	<Grid x:Name="gridButtons">
-		<StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
+		<StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" 
+                    Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
-			<Border x:Name="borderForm" BorderBrush="Silver" Opacity="1" BorderThickness="0.3,0.3,0.3,0" CornerRadius="4,4,0,0" 
-					Background="WhiteSmoke" Padding="2" Margin="4,0">
+            <Border x:Name="borderForm" Opacity="1" CornerRadius="4,4,0,0" 
+					Background="{StaticResource AccentColor_Brush}" Padding="2" Margin="4,0">
 				<StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
-					<Label x:Name="lblForm" Foreground="Purple" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-					<Label Content="FORM" Style="{StaticResource input_label}" Foreground="Purple" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+                    <Label x:Name="lblForm" Foreground="AliceBlue" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+                    <Label Content="FORM" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
 				</StackPanel>
 			</Border>
 			<Border x:Name="borderGrid" BorderBrush="Silver" BorderThickness="0.3,0.3,0.3,0" CornerRadius="4,4,0,0" 
-					Background="WhiteSmoke" Padding="2">
+					Background="{StaticResource AccentColor_Brush}" Padding="2">
 				<StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
-					<Label x:Name="lblGrid" Foreground="RoyalBlue" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-					<Label Content="GRID" Style="{StaticResource input_label}" Foreground="RoyalBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+                    <Label x:Name="lblGrid" Foreground="AliceBlue" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+					<Label Content="GRID" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
 				</StackPanel>
 			</Border>
 		</StackPanel>

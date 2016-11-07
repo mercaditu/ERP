@@ -151,7 +151,7 @@ namespace entity
         public virtual sales_budget sales_budget { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }
 
-        public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
+        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<sales_invoice> sales_invoice { get; set; }
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
         public virtual IEnumerable<item_request> item_request { get; set; }

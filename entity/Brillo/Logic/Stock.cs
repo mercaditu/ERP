@@ -16,38 +16,8 @@ namespace entity.Brillo.Logic
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
-            //SALES RETURN
-            if (obj_entity.GetType().BaseType == typeof(sales_return) || obj_entity.GetType() == typeof(sales_return))
-            {
-                sales_return sales_return = (sales_return)obj_entity;
-                foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product.Count() > 0))
-                {
-                    item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
-
-                    sales_return_detail.id_location = FindNFix_Location(item_product, sales_return_detail.app_location, sales_return.app_branch);
-                    //sales_return_detail.app_location = db.app_location.Find(sales_return_detail.id_location);
-
-                    item_movementList.Add(
-                        CreditOnly_Movement(Status.Stock.InStock,
-                                             App.Names.SalesReturn,
-                                             sales_return_detail.id_sales_return,
-                                             sales_return_detail.id_sales_return_detail,
-                                             sales_return.id_currencyfx,
-                                             item_product.id_item_product,
-                                             (int)sales_return_detail.id_location,
-                                             sales_return_detail.quantity,
-                                             sales_return.trans_date,
-                                             sales_return_detail.unit_cost,
-                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
-                                             null
-                                             ));
-                }
-                //Return List so we can save into context.
-                return item_movementList;
-            }
-
             //PURCHASE RETURN
-            else if (obj_entity.GetType().BaseType == typeof(purchase_return) || obj_entity.GetType() == typeof(purchase_return))
+            if (obj_entity.GetType().BaseType == typeof(purchase_return) || obj_entity.GetType() == typeof(purchase_return))
             {
                 purchase_return purchase_return = (purchase_return)obj_entity;
                 List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0).ToList();
@@ -423,6 +393,52 @@ namespace entity.Brillo.Logic
             //Return List so we can save into context.
             return item_movementList;
             
+        }
+
+        public List<item_movement> SalesReturn_Approve(db db, sales_return sales_return)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+            List<sales_return_detail> Invoice_WithProducts = new List<sales_return_detail>();
+
+            if (sales_return != null)
+            {
+                if (sales_return.sales_return_detail.Count() > 0)
+                {
+                    if (sales_return.sales_return_detail.Where(x => x.id_item > 0).Count() > 0)
+                    {
+                        Invoice_WithProducts.AddRange(sales_return.sales_return_detail.Where(x => x.item.item_product != null).ToList());
+                    }
+                }
+            }
+            else
+            {
+                return item_movementList;
+            }
+
+            //SALES RETURN
+            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
+            {
+                item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
+
+                sales_return_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().id_location;
+
+                item_movementList.Add(
+                    CreditOnly_Movement(Status.Stock.InStock,
+                                            App.Names.SalesReturn,
+                                            sales_return_detail.id_sales_return,
+                                            sales_return_detail.id_sales_return_detail,
+                                            sales_return.id_currencyfx,
+                                            item_product.id_item_product,
+                                            (int)sales_return_detail.id_location,
+                                            sales_return_detail.quantity,
+                                            sales_return.trans_date,
+                                            sales_return_detail.unit_cost,
+                                            comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
+                                            null
+                                            ));
+            }
+            //Return List so we can save into context.
+            return item_movementList;
         }
 
         public List<item_movement> Inventory_Approve(db db, item_inventory item_inventory)

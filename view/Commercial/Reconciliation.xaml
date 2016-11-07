@@ -40,8 +40,8 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+        <ListBox x:Name="sales_invoiceDataGrid" Style="{StaticResource nav_List}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource nav_ListSelection}"
                              ItemsSource="{Binding}" Grid.Row="1" >

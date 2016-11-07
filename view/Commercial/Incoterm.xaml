@@ -1,80 +1,80 @@
 ﻿<Page
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-    lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-    lex:ResxLocalizationProvider.DefaultDictionary="local"
-    lex:LocalizeDictionary.DesignCulture="en-US" 
-    xmlns:entity="clr-namespace:entity;assembly=entity" xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" x:Class="Cognitivo.Commercial.Incoterm" 
-    mc:Ignorable="d" 
-    d:DesignHeight="400" d:DesignWidth="550"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+	xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+	lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+	lex:ResxLocalizationProvider.DefaultDictionary="local"
+	lex:LocalizeDictionary.DesignCulture="en-US" 
+	xmlns:entity="clr-namespace:entity;assembly=entity" xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" x:Class="Cognitivo.Commercial.Incoterm" 
+	mc:Ignorable="d" 
+	d:DesignHeight="400" d:DesignWidth="550"
 	Title="Incoterm" Loaded="Page_Loaded">
 
-    <Page.Resources>
-        <CollectionViewSource x:Key="impex_incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
-        <CollectionViewSource x:Key="impex_incotermimpex_incoterm_detailViewSource" Source="{Binding impex_incoterm_detail, Source={StaticResource impex_incotermViewSource}}"/>
-        <CollectionViewSource x:Key="incoterm_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm_condition}, CreateList=True}"/>
-    </Page.Resources>
+	<Page.Resources>
+		<CollectionViewSource x:Key="impex_incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
+		<CollectionViewSource x:Key="impex_incotermimpex_incoterm_detailViewSource" Source="{Binding impex_incoterm_detail, Source={StaticResource impex_incotermViewSource}}"/>
+		<CollectionViewSource x:Key="incoterm_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm_condition}, CreateList=True}"/>
+	</Page.Resources>
 
-    <Grid Background="White" DataContext="{StaticResource impex_incotermViewSource}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="impex_incotermDataGrid"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
-                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding Source={StaticResource impex_incotermViewSource}, IsAsync=True}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <cntrl:navList recordCode="{Binding code_iso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Grid x:Name="gridMain" Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
-                <RowDefinition Height="10*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Margin="20,4,20,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
-                <Label Content="{lex:Loc Incoterm}" Style="{StaticResource input_label}"/>
-                <TextBox x:Name="nameTextBox" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
-                <Label Content="{lex:Loc ISOCode}" Style="{StaticResource input_label}"/>
-                <TextBox x:Name="code_isoTextBox" Text="{Binding code_iso, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
-                <CheckBox x:Name="is_priorityCheckBox" Content="{lex:Loc Default}" IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
-            </StackPanel>
-            <DataGrid x:Name="incoterm_detailsDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1"
-                          EnableRowVirtualization="True" Height="Auto" 
-                          ItemsSource="{Binding Source={StaticResource impex_incotermimpex_incoterm_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionUnit="Cell"
-                          IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
-                <DataGrid.Columns>
-                    <DataGridComboBoxColumn Header="condition" Width="*" 
-                                                ItemsSource="{Binding Source={StaticResource incoterm_conditionViewSource}}"
-                                                DisplayMemberPath="name" SelectedValuePath="id_incoterm_condition" SelectedValueBinding="{Binding id_incoterm_condition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridCheckBoxColumn Binding="{Binding buyer, UpdateSourceTrigger=PropertyChanged}" Header="buyer" Width="SizeToHeader"/>
-                    <DataGridCheckBoxColumn Binding="{Binding seller, UpdateSourceTrigger=PropertyChanged}" Header="seller" Width="SizeToHeader"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"
-                       Grid.Row="0" VerticalAlignment="Top"
-			            btnCancel_Click="toolBar_btnCancel_Click"
-                       btnDelete_Click="toolBar_btnDelete_Click" 
-                       btnNew_Click="toolBar_btnNew_Click" 
-                       btnEdit_Click="toolBar_btnEdit_Click"
-                       btnSave_Click="toolBar_btnSave_Click"
-                       btnSearch_Click="toolBar_btnSearch_Click"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       appName="Incoterm"/>
-    </Grid>
+	<Grid Background="White" DataContext="{StaticResource impex_incotermViewSource}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="3*"/>
+		</Grid.ColumnDefinitions>
+		<ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="impex_incotermDataGrid"
+				 ScrollViewer.VerticalScrollBarVisibility="Auto"
+				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
+				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+				 ItemsSource="{Binding Source={StaticResource impex_incotermViewSource}, IsAsync=True}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<cntrl:navList recordCode="{Binding code_iso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+								   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Grid x:Name="gridMain" Grid.Column="1" Grid.Row="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="8*"/>
+				<RowDefinition Height="10*"/>
+			</Grid.RowDefinitions>
+			<StackPanel Grid.Row="0" Grid.Column="0" Margin="20,4,20,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
+				<Label Content="{lex:Loc Incoterm}" Style="{StaticResource input_label}"/>
+				<TextBox x:Name="nameTextBox" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+				<Label Content="{lex:Loc ISOCode}" Style="{StaticResource input_label}"/>
+				<TextBox x:Name="code_isoTextBox" Text="{Binding code_iso, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+				<CheckBox x:Name="is_priorityCheckBox" Content="{lex:Loc Default}" IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
+			</StackPanel>
+			<DataGrid x:Name="incoterm_detailsDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1"
+						  EnableRowVirtualization="True" Height="Auto" 
+						  ItemsSource="{Binding Source={StaticResource impex_incotermimpex_incoterm_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionUnit="Cell"
+						  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
+				<DataGrid.Columns>
+					<DataGridComboBoxColumn Header="condition" Width="*" 
+												ItemsSource="{Binding Source={StaticResource incoterm_conditionViewSource}}"
+												DisplayMemberPath="name" SelectedValuePath="id_incoterm_condition" SelectedValueBinding="{Binding id_incoterm_condition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+					<DataGridCheckBoxColumn Binding="{Binding buyer, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Buyer}" Width="*"/>
+					<DataGridCheckBoxColumn Binding="{Binding seller, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Seller}" Width="*"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+		<cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"
+					   Grid.Row="0" VerticalAlignment="Top"
+						btnCancel_Click="toolBar_btnCancel_Click"
+					   btnDelete_Click="toolBar_btnDelete_Click" 
+					   btnNew_Click="toolBar_btnNew_Click" 
+					   btnEdit_Click="toolBar_btnEdit_Click"
+					   btnSave_Click="toolBar_btnSave_Click"
+					   btnSearch_Click="toolBar_btnSearch_Click"
+					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+					   appName="Incoterm"/>
+	</Grid>
 </Page>

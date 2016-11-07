@@ -43,7 +43,7 @@
 
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
+        <ListBox x:Name="projectDataGrid" Style="{StaticResource nav_List}"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}"

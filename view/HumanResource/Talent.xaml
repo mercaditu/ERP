@@ -32,11 +32,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="hr_talentDataGrid"
+        <ListBox x:Name="hr_talentDataGrid" Style="{StaticResource nav_List}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}"
-                 ItemsSource="{Binding}" Grid.Row="1" Margin="-1,0,1,0">
+                 ItemsSource="{Binding}" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"

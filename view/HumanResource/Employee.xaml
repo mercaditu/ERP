@@ -43,7 +43,7 @@
 
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="dgemployee"
+        <ListBox x:Name="dgemployee"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -64,7 +64,7 @@
                 <TabItem.Header>
                     <Label Content="U" Foreground="{StaticResource AccentColor_Introvert}" FontSize="20" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                 </TabItem.Header>
-                <Grid Background="{StaticResource AccentColor_Brush}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="2*"/>

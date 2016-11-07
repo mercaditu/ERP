@@ -85,7 +85,7 @@
             </DataGrid>
 
         </Grid>-->
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
+        <ListBox x:Name="projectDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="projectDataGrid_SelectionChanged"

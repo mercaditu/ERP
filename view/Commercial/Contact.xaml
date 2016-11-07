@@ -53,18 +53,18 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="listContacts"
+		<ListBox x:Name="listContacts"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listContacts_SelectionChanged"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 				 ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}" >
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-								   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-								   recordSecondaryName="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+					<cntrl:navList recordCode="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+								   recordName="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+								   recordSecondaryName="{Binding gov_code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>

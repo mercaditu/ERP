@@ -39,7 +39,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid Margin="0,40,0,0">
-            <ListBox x:Name="itemDataGrid" Background="WhiteSmoke"
+            <ListBox x:Name="itemDataGrid"
                      ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"

@@ -51,7 +51,7 @@
               Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
         <Grid x:Name="crud_modalTransfer" Background="{StaticResource Modal_BackgroundColor}" 
               Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalTransfer_IsVisibleChanged"/>
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="item_requestDataGrid"
+        <ListBox x:Name="item_requestDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"

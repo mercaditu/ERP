@@ -39,8 +39,7 @@
         <Grid x:Name="crud_modal" Background="{StaticResource winBackground}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <Grid Grid.Row="1">
     
-        <ListBox Background="{StaticResource AccentColor_Brush}" 
-			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource nav_List}"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}"
 			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged">

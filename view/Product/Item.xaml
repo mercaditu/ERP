@@ -71,11 +71,11 @@
 		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Margin="0,-36,0,0"
 			  Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="10" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
 
-		<ListBox Background="{StaticResource AccentColor_Brush}" x:Name="itemDataGrid"
+		<ListBox x:Name="itemDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding}" BorderBrush="{DynamicResource AccentColor_Brush}">
+				 ItemsSource="{Binding}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"

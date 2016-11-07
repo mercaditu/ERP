@@ -50,37 +50,31 @@ namespace cntrl
             }
             set
             {
-
-
-
                 _ReportDt = value;
                 Filterdt = value;
 
                 stpFilter.Children.Clear();
                 foreach (DataColumn item in value.Columns)
                 {
-
-                    if (item.DataType == typeof(System.String))
+                    if (item.DataType == typeof(string))
                     {
-
-
                         StackPanel stackcolumn = new StackPanel();
                         stackcolumn.Name = "stp" + item.ColumnName;
                         Label desccolumn = new Label();
                         desccolumn.Name = item.ColumnName;
                         desccolumn.Content = item.ColumnName;
                         stpFilter.Children.Add(desccolumn);
-                        ComboBox combocolumndata = new ComboBox();
+                        ComboBox ComboBox = new ComboBox();
                         DataView view = new DataView(value);
-                        combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
-                        combocolumndata.SelectedValuePath = item.ColumnName;
-                        combocolumndata.DisplayMemberPath = item.ColumnName;
-                        combocolumndata.Name = "cbx" + item.ColumnName;
-                        combocolumndata.SelectionChanged += Cmb_SelectionChanged;
-                        stpFilter.Children.Add(combocolumndata);
+                        ComboBox.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
+                        ComboBox.SelectedValuePath = item.ColumnName;
+                        ComboBox.DisplayMemberPath = item.ColumnName;
+                        ComboBox.Name = "cbx" + item.ColumnName;
+                        ComboBox.SelectionChanged += Cmb_SelectionChanged;
+                        ComboBox.IsTextSearchEnabled = true;
+
+                        stpFilter.Children.Add(ComboBox);
                         stpFilter.Children.Add(stackcolumn);
-
-
                     }
                 }
 
@@ -99,10 +93,6 @@ namespace cntrl
             }
             set
             {
-
-
-
-
                 _Filterdt = value;
 
               
@@ -117,18 +107,10 @@ namespace cntrl
                             DataView view = new DataView(value);
                             combocolumndata.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
                         }
-                     
-                     
-
-
                     }
                 }
             }
         }
-
-
-
-
 
         public DataTable _Filterdt;
 

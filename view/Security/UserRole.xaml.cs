@@ -270,8 +270,9 @@ namespace Cognitivo.Security
                         }
                     }
                 }
-                else
+                else if (CurrentVersion > NewVersion)
                 {
+
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
                     foreach (DataRow item in appList.dtApp.Select("Version = '" + NewVersion + "'"))
                     {

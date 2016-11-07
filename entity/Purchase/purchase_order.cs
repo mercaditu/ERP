@@ -159,7 +159,7 @@ namespace entity
 
         public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_invoice> purchase_invoice { get; set; }
-        public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
+        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual app_department app_department { get; set; }
         public virtual purchase_tender purchase_tender { get; set; }
 

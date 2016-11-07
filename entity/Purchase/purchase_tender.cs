@@ -1,10 +1,13 @@
 namespace entity
 {
+
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Text;
     public partial class purchase_tender : Audit
     {
         public purchase_tender()
@@ -126,7 +129,7 @@ namespace entity
         public string NumberWatermark { get; set; }
 
         public virtual IEnumerable<app_weather> app_weather { get; set; }
-        public virtual IEnumerable<purchase_order> purchase_order { get; set; }
+        public virtual ICollection<purchase_order> purchase_order { get; set; }
         public virtual ICollection<purchase_tender_contact> purchase_tender_contact_detail { get; set; }
         public virtual ICollection<purchase_tender_item> purchase_tender_item_detail { get; set; }
         public virtual app_branch app_branch { get; set; }

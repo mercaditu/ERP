@@ -63,7 +63,7 @@ namespace Cognitivo.Class
 
         public DataTable Inventory_OnDate(DateTime TransDate)
         {
-            string query = @"   select branch.name as BranchName,
+            string query = @" select branch.name as BranchName,
                                 item.code as ItemCode, 
                                 item.name as ItemName,
                                 inv.credit as Credit, 

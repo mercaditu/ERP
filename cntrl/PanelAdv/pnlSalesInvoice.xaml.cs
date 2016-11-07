@@ -58,11 +58,7 @@ namespace cntrl.PanelAdv
                 if (_contact != null)
                 {
                     sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.sales_return.Count()==0).ToList();
-
-
-
-
+                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved && x.sales_return.Count()==0).ToList();
                 }
             }
         }
@@ -76,10 +72,7 @@ namespace cntrl.PanelAdv
                 List<sales_invoice> sales_invoice = sales_invocieDatagrid.ItemsSource.OfType<sales_invoice>().ToList();
                 selected_sales_invoice = sales_invoice.Where(x => x.IsSelected == true).ToList();
 
-                if (SalesInvoice_Click != null)
-                {
-                    SalesInvoice_Click(sender);
-                }   
+                SalesInvoice_Click?.Invoke(sender);
             }
         }
 
@@ -87,9 +80,9 @@ namespace cntrl.PanelAdv
         {
             if (_entity.sales_invoice_detail.Count() > 0)
             {
-                sales_invoice _sales_invoice = ((System.Windows.Controls.DataGrid)sender).SelectedItem as sales_invoice;
+                sales_invoice _sales_invoice = ((DataGrid)sender).SelectedItem as sales_invoice;
                 int id_purchase_invoice = _sales_invoice.id_sales_invoice;
-                System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
+                DataGrid RowDataGrid = e.DetailsElement as DataGrid;
                 var salesInvoice = _sales_invoice.sales_invoice_detail;
                 RowDataGrid.ItemsSource = salesInvoice;
             }
@@ -101,11 +94,11 @@ namespace cntrl.PanelAdv
             {
                 if (sbxContact.ContactID > 0)
                 {
-                    contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact contact = _entity.contacts.Find(sbxContact.ContactID);
                     if (contact != null)
                     {
                         sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                        sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == contact.id_contact && x.sales_return.Count() == 0).ToList();   
+                        sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.status == Status.Documents_General.Approved && x.id_contact == contact.id_contact && x.sales_return.Count() == 0).ToList();   
                     }
                 }
             }

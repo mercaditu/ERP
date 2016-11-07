@@ -152,6 +152,8 @@ namespace entity
             SalesPromotion = 123,
             [LocalizedDescription("CostBreakDown")]
             CostBreakDown = 132,
+            [LocalizedDescription("MerchandiseEntry")]
+            MerchandiseEntry = 134,
 
             //Production
             [LocalizedDescription("ProductionExecution")]

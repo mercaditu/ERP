@@ -28,12 +28,8 @@ namespace entity
             {
                 sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
-                app_contract _app_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault(); // app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault();
-                if (_app_contract != null)
-                {
-                    sales_invoice.id_condition = _app_contract.id_condition;
-                    sales_invoice.id_contract = _app_contract.id_contract;
-                }
+                sales_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+                sales_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
             }
 
             return sales_invoice;
@@ -269,7 +265,6 @@ namespace entity
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
             sales_invoice_detail.State = EntityState.Added;
-            //sales_invoice_detail.sales_invoice = sales_invoice;
 
             sales_invoice_detail.CurrencyFX_ID = sales_invoice.id_currencyfx;
             sales_invoice_detail.Contact = sales_invoice.contact;

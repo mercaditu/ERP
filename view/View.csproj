@@ -269,7 +269,6 @@
     <Compile Include="Class\ErrorLog.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\Production.cs" />
-    <Compile Include="Class\RichTextBoxHelper.cs" />
     <Compile Include="Class\CreditLimit.cs" />
     <Compile Include="Class\Finance.cs" />
     <Compile Include="Class\Stock.cs" />
@@ -589,6 +588,9 @@
     </Compile>
     <Compile Include="Reporting\Views\CostBreakDown.xaml.cs">
       <DependentUpon>CostBreakDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\MerchandiseEntry.xaml.cs">
+      <DependentUpon>MerchandiseEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\ProductionOrderStatus.xaml.cs">
       <DependentUpon>ProductionOrderStatus.xaml</DependentUpon>
@@ -1062,6 +1064,7 @@
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\MerchandiseEntry.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingAccounts.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
@@ -1581,6 +1584,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\CostBreakDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\MerchandiseEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

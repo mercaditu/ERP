@@ -27,7 +27,6 @@ namespace entity
             if (IsMigration == false)
             {
                 sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-
                 sales_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
                 sales_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
             }

@@ -381,17 +381,12 @@ namespace entity.Brillo.Logic
                         if (detail.id_location == null)
                         {
                             detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
-                            detail.app_location = db.app_location.Find(detail.id_location);
-                        }
-                        else
-                        {
-                            detail.app_location = db.app_location.Find(detail.id_location);
+                            //detail.app_location = db.app_location.Find(detail.id_location);
                         }
 
                         Brillo.Stock stock = new Brillo.Stock();
                         List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_product.id_item_product);
-
-
+                        
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.SalesInvoice,
                                                     detail.id_sales_invoice,
@@ -422,7 +417,7 @@ namespace entity.Brillo.Logic
                 {
                     if (sales_return.sales_return_detail.Where(x => x.id_item > 0).Count() > 0)
                     {
-                        Invoice_WithProducts.AddRange(sales_return.sales_return_detail.Where(x => x.item.item_product != null).ToList());
+                        Invoice_WithProducts.AddRange(sales_return.sales_return_detail.Where(x => x.item.item_product.Count() > 0).ToList());
                     }
                 }
             }

@@ -71,7 +71,7 @@ namespace entity
             }
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             {
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status != Status.Documents_General.Approved))
+                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Pending))
                 {
                     Discount_Items_Origin(item_transfer_detail, ID_BranchOrigin, ID_BranchDestination, movebytruck);
 
@@ -108,7 +108,7 @@ namespace entity
 
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             {
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
+                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
                 {
                     if (item_transfer_detail.item_product != null)
                     {

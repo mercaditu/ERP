@@ -13,6 +13,7 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
       MinWidth="800" MinHeight="600">
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
         <Storyboard x:Key="tbxSearchShow">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="tbxSearch">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
@@ -45,7 +46,8 @@
         </EventTrigger>
     </Page.Triggers>
     <Grid>
-        <ProgressBar IsIndeterminate="{Binding Source={x:Static entity:CurrentSession.IsDataLoading}}" Height="4" Background="Transparent" BorderThickness="0" Margin="0" VerticalAlignment="Top"/>
+        <ProgressBar IsIndeterminate="True" Height="4" Background="Transparent" 
+                     BorderThickness="0" Margin="0" VerticalAlignment="Top" Visibility="{Binding Source={x:Static entity:CurrentSession.IsDataLoading}, Converter={StaticResource Bool2Visi}}"/>
         <Grid VerticalAlignment="Top">
             <Grid.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.5"/>
@@ -79,10 +81,10 @@
                                   ModuleName="{lex:Loc HumanResources}"
                                   MouseUp="get_Apps"
                                   Tag="HumanResources"/>
-                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_Event.png"
+                <!--<cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_Event.png"
                                   ModuleName="{lex:Loc EventManagement}"
                                   MouseUp="get_Apps"
-                                  Tag="Project_Event"/>
+                                  Tag="Project_Event"/>-->
                 <!--<cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_PrintingPress.png"
                                   ModuleName="{lex:Loc PrintingPress}"
                                   MouseUp="get_Apps"

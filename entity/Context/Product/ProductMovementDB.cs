@@ -187,7 +187,7 @@ namespace entity
                         foreach (item_transfer transfer in item_transferLIST)
                         {
                             transfer.IsSelected = true;
-                            foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+                            foreach (item_transfer_detail detail in transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved))
                             {
                                 detail.status = Status.Documents_General.Pending;
                                 detail.IsSelected = true;

@@ -200,7 +200,6 @@ namespace Cognitivo.Menu
 
         private void Image_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            //frameConfig.NavigationService.GoBack();
             MainWindow myWindow = App.Current.MainWindow as MainWindow;
             Frame myFrame = myWindow.mainFrame;
             myFrame.Navigate(new mainLogIn());
@@ -215,7 +214,6 @@ namespace Cognitivo.Menu
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //GenerateParentChildRel_Thread();
             Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
         }
 
@@ -223,7 +221,7 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
 
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB ProductMovementDB = new ProductMovementDB();
             ProductMovementDB.Generate_ProductMovement();
 
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
@@ -267,6 +265,5 @@ namespace Cognitivo.Menu
                 db.SaveChanges();
             }
         }
-
     }
 }

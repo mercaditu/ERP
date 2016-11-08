@@ -10,11 +10,13 @@ namespace entity
     public static class CurrentSession
     {
         #region PropertyChanged
-        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged  = delegate { };
+        // INotifyPropertyChanged implementation
+        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
         private static void NotifyStaticPropertyChanged(string propertyName)
         {
-            StaticPropertyChanged(null, new PropertyChangedEventArgs(propertyName));
+            StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
 
         #region Properties
@@ -121,7 +123,7 @@ namespace entity
         public static bool IsDataLoading
         {
             get { return _IsDataLoading; }
-            set { _IsDataLoading = value; }
+            set { _IsDataLoading = value; NotifyStaticPropertyChanged("IsDataLoading"); }
         }
         private static bool _IsDataLoading = false;
 
@@ -148,10 +150,10 @@ namespace entity
                 //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
                 Load_BasicData(null, null);
                 //Load Basic Data into Timer.
-                Timer myTimer = new Timer();
-                myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                myTimer.Interval = 60000;
-                myTimer.Start();
+                //Timer myTimer = new Timer();
+                //myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
+                //myTimer.Interval = 60000;
+                //myTimer.Start();
             }
         }
 
@@ -182,7 +184,6 @@ namespace entity
         {
             Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
             IsDataLoading = true;
-            NotifyStaticPropertyChanged("IsDataLoading");
         }
 
         private static void Thread_Data()
@@ -194,7 +195,7 @@ namespace entity
 
                 //Default Currency
                 Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Currency_Default = Currencies.Where(x => x.is_priority).FirstOrDefault();
+                Currency_Default = Currencies.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
                 CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 
                 SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -211,8 +212,6 @@ namespace entity
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
 
                 IsDataLoading = false;
-
-                NotifyStaticPropertyChanged("IsDataLoading");
             }
         }
 

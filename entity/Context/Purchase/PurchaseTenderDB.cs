@@ -176,7 +176,7 @@ namespace entity
                     }
                     else
                     {
-                        app_document_range app_document_range= base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseTender && x.is_active).FirstOrDefault();
+                        app_document_range app_document_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseTender && x.is_active).FirstOrDefault();
                         if (app_document_range != null)
                         {
                             purchase_tender.id_range = app_document_range.id_range;
@@ -202,19 +202,30 @@ namespace entity
                     {
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.status == Status.Documents_General.Approved))
                         {
+                            purchase_tender_detail.status = Status.Documents_General.Annulled;
+                            purchase_tender.status = Status.Documents_General.Annulled;
                             if (purchase_tender_detail.purchase_order_detail != null)
                             {
-                                if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
+
+                                if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order!=null)
                                 {
-                                    base.purchase_order.RemoveRange(purchase_order);
-                                    purchase_tender_detail.status = Status.Documents_General.Annulled;
-                                    purchase_tender.status = Status.Documents_General.Annulled;
+                                    if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
+                                    {
+                                        base.purchase_order.RemoveRange(purchase_order);
+
+
+
+                                    }
+                                    else
+                                    {
+                                        purchase_tender.status = Status.Documents_General.Approved;
+                                        purchase_tender_detail.status = Status.Documents_General.Approved;
+                                    }
+
                                 }
-                                else
-                                {
-                                    purchase_tender.status = Status.Documents_General.Approved;
-                                    purchase_tender_detail.status = Status.Documents_General.Approved;
-                                }
+
+
+
                             }
                         }
                     }

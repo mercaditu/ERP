@@ -15,6 +15,7 @@ namespace entity
             is_head = true;
             status = Status.Documents_General.Pending;
             purchase_tender_detail_dimension = new List<purchase_tender_detail_dimension>();
+            purchase_order_detail = new List<purchase_order_detail>();
         }
 
         [Key]
@@ -225,7 +226,7 @@ namespace entity
         }
         purchase_tender_item _purchase_tender_item;
 
-        public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
+        public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
 
         #region Methods

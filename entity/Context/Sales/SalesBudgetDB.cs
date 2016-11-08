@@ -156,7 +156,7 @@ namespace entity
             {
                 if (budget.IsSelected && budget.Error == null)
                 {
-                    if(budget.sales_order.Count()==0)
+                    if(budget.sales_order==null || budget.sales_order.Count()==0)
                     {
                         budget.status = Status.Documents_General.Annulled;
                         SaveChanges();

@@ -163,7 +163,7 @@ namespace entity
 			}
 			set
 			{
-				if (_value != value)
+			if (_value != value)
 				{
 					_value = value;
 					RaisePropertyChanged("value");

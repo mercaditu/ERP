@@ -29,6 +29,13 @@ namespace Cognitivo.Menu
         public mainSetup()
         {
             InitializeComponent();
+           
+            if (entity.CurrentSession.ConnectionString==null)
+            {
+                Properties.Settings ViewSettings = new Properties.Settings();
+                entity.CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
+            }
+           
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

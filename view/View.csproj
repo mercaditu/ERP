@@ -75,10 +75,11 @@
     <ApplicationIcon>cognitivo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>479727E202BAE075D5E867FD566BF4D816ED2BCB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0331A02FC0CC35045FC8B95DF5B9E6677ED21CCB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>View_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

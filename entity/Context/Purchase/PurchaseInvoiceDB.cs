@@ -213,7 +213,7 @@ namespace entity
                         {
                             foreach (item_movement item in item_movementList)
                             {
-                                if (item.child.Count()==0)
+                                 if (item.child == null ||item.child.Count()==0 )
                                 {
                                     base.item_movement.RemoveRange(item_movementList);
                                 }

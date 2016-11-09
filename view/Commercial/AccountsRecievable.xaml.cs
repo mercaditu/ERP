@@ -107,28 +107,33 @@ namespace Cognitivo.Commercial
         private async void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            await PaymentDB.payment_schedual
+            if (payment_schedualViewSource != null)
+            {
+                await PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                         .OrderBy(x => x.expire_date)
                         .LoadAsync();
-           payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+                payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+            }
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
-
-            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
+            if (PaymentDB.payment_schedual.Local.Count() > 0)
             {
-                if (contactLIST.Contains(payment.contact) == false)
+                foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
                 {
-                    contact contact = new contact();
-                    contact = payment.contact;
-                    contactLIST.Add(contact);
+                    if (contactLIST.Contains(payment.contact) == false)
+                    {
+                        contact contact = new contact();
+                        contact = payment.contact;
+                        contactLIST.Add(contact);
+                    }
                 }
-            }
 
-            contactViewSource.Source = contactLIST;
+                contactViewSource.Source = contactLIST;
+            }
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)

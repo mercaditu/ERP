@@ -5,15 +5,11 @@ using System.Windows.Controls;
 
 namespace Cognitivo.Reporting.Views
 {
-    /// <summary>
-    /// Interaction logic for SalesByItem.xaml
-    /// </summary>
     public partial class SalesByItem : Page
     {
         public SalesByItem()
         {
             InitializeComponent();
-
             Fill(null, null);
         }
 
@@ -31,37 +27,10 @@ namespace Cognitivo.Reporting.Views
             //fill data
             SalesByItemTableAdapter.ClearBeforeFill = true;
             DataTable dt = new DataTable();
+            dt = SalesByItemTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
 
-            //if (ReportPanel.Branch != null)
-            //{
-            //    dt = SalesByItemTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch, CurrentSession.Id_Company);
-            //}
-            //else
-            //{
-                dt = SalesByItemTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
-            //}
-
-            //string where = string.Empty;
-
-            //if (ReportPanel.CustomerID > 0)
-            //{
-            //    where = where + "CustomerID = " + ReportPanel.CustomerID;
-            //}
-
-            //if (ReportPanel.CustomerID > 0 && ReportPanel.Branch != null)
-            //{
-            //    where = where + " and ";
-            //}
-
-            //if (ReportPanel.Branch != null)
-            //{
-            //    where = where + "BranchID = " + ReportPanel.Branch.id_branch;
-            //}
-
-           
-                ReportPanel.ReportDt = dt;
-            
-
+            ReportPanel.ReportDt = dt;
+  
             reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);

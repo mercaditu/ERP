@@ -168,39 +168,44 @@ namespace Cognitivo.Class
                                 and {0} im.trans_date >= '{1}' and im.trans_date <= '{2}' 
                                 order by im.trans_date";
 
-            string WhereQuery = String.Format("imv.id_company = {0} and ", entity.CurrentSession.Id_Company);
-            query = String.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
+            string WhereQuery = string.Format("imv.id_company = {0} and ", entity.CurrentSession.Id_Company);
+            query = string.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
             return Generate.DataTable(query);
         }
 
-        public decimal? Count_ByBranch(int BranchID, int ItemID, DateTime TransDate)
+        public DataTable MerchandiseExit(DateTime StartDate, DateTime EndDate)
         {
-            ProductDS ProductDS = new ProductDS();
-            ProductDS.BeginInit();
+            string query = @"
+                select branch.name as BranchName,
+                inv.comment as TransComment,
+                item.code as ItemCode,
+                item.name as ItemName,
+                inv.debit as Debit,
+                UnitCost,
+                (UnitCost* inv.debit) as TotalCost,
+                inv.trans_date as TransDate
 
-            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
+              from(
+              select item_movement.*, sum(val.unit_value) as UnitCost
+              from item_movement
+              left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
+              where item_movement.id_company = {0} and item_movement.trans_date between '{1}' and '{2}' 
+              and (item_movement.id_sales_invoice_detail > 0 or item_movement.id_execution_detail > 0 or item_movement.id_inventory_detail > 0)
 
-            //fill data
-            decimal? i = QueriesTableAdapter.GetStock_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ItemID);
+              group by item_movement.id_movement
+                ) as inv
 
-            ProductDS.EndInit();
-            
-            return i;
-        }
+              inner join item_product as prod on inv.id_item_product = prod.id_item_product
+              inner join items as item on prod.id_item = item.id_item
+              inner join app_location as loc on inv.id_location = loc.id_location
+              inner join app_branch as branch on loc.id_branch = branch.id_branch
+              where inv.debit > 0
 
-        public decimal? Count_ByLocation(int LocationID, int ProductID, DateTime TransDate)
-        {
-            ProductDS ProductDS = new ProductDS();
-            ProductDS.BeginInit();
+              group by inv.id_movement
+              order by inv.trans_date";
 
-            Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
-
-            //fill data
-            decimal? i = QueriesTableAdapter.GetStock_ByLocation(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
-
-            ProductDS.EndInit();
-
-            return i;
+            query = string.Format(query, entity.CurrentSession.Id_Company, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
+            return Generate.DataTable(query);
         }
 
         private List<StockList> GenerateList(DataTable dt)

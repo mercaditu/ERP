@@ -34,8 +34,7 @@ namespace entity
             [LocalizedDescription("Female")]
             Female
         }
-
-
+        
         public enum BloodTypes
         {
             [LocalizedDescription("O+")]
@@ -61,6 +60,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             id_company = CurrentSession.Id_Company;
             is_active = true;
+            timestamp = DateTime.Now;
 
             contact_tag_detail = new List<contact_tag_detail>();
             contact_subscription = new List<contact_subscription>();
@@ -71,7 +71,6 @@ namespace entity
             hr_family = new List<hr_family>();
             hr_talent_detail = new List<hr_talent_detail>();
             contact_field_value = new List<contact_field_value>();
-         
         }
 
         [Key]

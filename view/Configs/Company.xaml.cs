@@ -8,16 +8,10 @@ using entity;
 
 namespace Cognitivo.Configs
 {
-    /// <summary>
-    /// Interaction logic for Company.xaml
-    /// </summary>
     public partial class Company : Page
     {
         dbContext entity = new dbContext();
         CollectionViewSource app_companyViewSource;
-        
-        //security_curd security_curd = null;
-       // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         public Company()
         {

@@ -34,8 +34,7 @@ namespace entity
             validate_Return();
             return base.SaveChangesAsync();
         }
-
-
+        
         private void validate_Return()
         {
             foreach (purchase_return purchase_return in base.purchase_return.Local)

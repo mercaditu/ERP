@@ -34,7 +34,7 @@ namespace Cognitivo.Configs
             try
             {
                 impex_incoterm_conditionViewSource = this.FindResource("impex_incoterm_conditionViewSource") as CollectionViewSource;
-                entity.db.impex_incoterm_condition.Load();
+                entity.db.impex_incoterm_condition.Where(x => x.id_company == CurrentSession.Id_Company).Load();
                 impex_incoterm_conditionViewSource.Source = entity.db.impex_incoterm_condition.Local;
             }
             catch (Exception)

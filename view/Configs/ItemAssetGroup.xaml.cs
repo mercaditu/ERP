@@ -10,9 +10,8 @@ namespace Cognitivo.Configs
 {
     public partial class ItemAssetGroup : Page
     {
-        entity.dbContext entity = new entity.dbContext();
+        dbContext entity = new dbContext();
         CollectionViewSource item_asset_groupViewSource;        
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ItemAssetGroup()
         {
@@ -29,12 +28,6 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             Item_Asset_Group Item_Asset_Group = new Item_Asset_Group();
             Item_Asset_Group.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            //app_account app_account = new app_account();
-            //entity.db.app_account.Add(app_account);
-            //account.accountobject = app_account;
-           // app_accountViewSource.View.MoveCurrentToLast();
-            //account.objCollectionViewSource = app_accountViewSource;
-            //account.entity = entity;
             crud_modal.Children.Add(Item_Asset_Group);
         }
 
@@ -44,9 +37,6 @@ namespace Cognitivo.Configs
             Item_Asset_Group Item_Asset_Group = new Item_Asset_Group();
             Item_Asset_Group.operationMode = cntrl.Class.clsCommon.Mode.Edit;
             Item_Asset_Group.item_asset_groupobject = entity.db.item_asset_group.Where(x => x.id_item_asset_group == idAccount).FirstOrDefault();
-            //app_accountViewSource.View.MoveCurrentTo();
-            //account.objCollectionViewSource = app_accountViewSource;
-            //account.entity = entity;
             crud_modal.Children.Add(Item_Asset_Group);
         }
 

@@ -142,25 +142,7 @@ namespace Cognitivo.Commercial
             catch { }
          
         }
-
-        //private void EditCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        //{
-        //    if (e.Parameter as payment_detail != null)
-        //    {
-        //        e.CanExecute = true;
-        //    }
-        //}
-
-        //private void EditCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        //{
-        //    payment_detail payment_detail = e.Parameter as payment_detail;
-
-        //    cntrl.Curd.PaymentEdit PaymentEdit = new cntrl.Curd.PaymentEdit(cntrl.Curd.PaymentEdit.Modes.Recievable, payment_detail.payment, PaymentDB);
-
-        //    crud_modal.Visibility = System.Windows.Visibility.Visible;
-        //    crud_modal.Children.Add(PaymentEdit);
-        //}
-
+        
         private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
@@ -184,7 +166,7 @@ namespace Cognitivo.Commercial
             payment.State = EntityState.Modified;
             cntrl.Curd.PaymentEdit PaymentEdit = new cntrl.Curd.PaymentEdit(cntrl.Curd.PaymentEdit.Modes.Recievable, payment, PaymentDB);
 
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(PaymentEdit);
         }
 
@@ -204,7 +186,7 @@ namespace Cognitivo.Commercial
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modal.Visibility == System.Windows.Visibility.Hidden)
+            if (crud_modal.Visibility == Visibility.Hidden)
             {
                 payment_detailReceive.View.Refresh();
             }
@@ -267,36 +249,5 @@ namespace Cognitivo.Commercial
                 contactViewSource.View.Filter = null;
             }
         }
-
-        //private void FFMonth_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    PaymentDate = PaymentDate.AddMonths(1);
-        //}
-
-        //private void FFDay_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    PaymentDate = PaymentDate.AddDays(1);
-        //}
-
-        //private void RRDay_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    PaymentDate = PaymentDate.AddDays(-1);
-        //}
-
-        //private void RRMonth_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    PaymentDate = PaymentDate.AddMonths(-1);
-        //}
-
-        //private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    PaymentDate = PaymentDate.AddDays(slider.Value - PaymentDate.Day);
-        //}
-
-        //private void Today_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    PaymentDate = DateTime.Now;
-        //}
-
     }
 }

@@ -12,7 +12,6 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_accountViewSource;        
-      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Account()
         {
@@ -29,12 +28,6 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             account account = new account();
             account.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            //app_account app_account = new app_account();
-            //entity.db.app_account.Add(app_account);
-            //account.accountobject = app_account;
-           // app_accountViewSource.View.MoveCurrentToLast();
-            //account.objCollectionViewSource = app_accountViewSource;
-            //account.entity = entity;
             crud_modal.Children.Add(account);
         }
 
@@ -44,9 +37,6 @@ namespace Cognitivo.Configs
             account account = new account();
             account.operationMode = cntrl.Class.clsCommon.Mode.Edit;
             account.accountobject = entity.db.app_account.Where(x => x.id_account == idAccount).FirstOrDefault();
-            //app_accountViewSource.View.MoveCurrentTo();
-            //account.objCollectionViewSource = app_accountViewSource;
-            //account.entity = entity;
             crud_modal.Children.Add(account);
         }
 

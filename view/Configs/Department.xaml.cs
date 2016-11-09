@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
 using entity;
 
@@ -24,7 +14,6 @@ namespace Cognitivo.Configs
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_departmentViewSource;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Department()
         {
@@ -33,7 +22,7 @@ namespace Cognitivo.Configs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            app_departmentViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_departmentViewSource")));
+            app_departmentViewSource = ((CollectionViewSource)(this.FindResource("app_departmentViewSource")));
             entity.db.app_department.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_departmentViewSource.Source = entity.db.app_department.Local;
         }

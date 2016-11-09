@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
 using entity;
-using cntrl;
 
 namespace Cognitivo.Configs
 {
     public partial class Branch : Page
     {
-        entity.dbContext entity = new entity.dbContext();
+        dbContext entity = new dbContext();
         CollectionViewSource branchViewSource;
 
         public Branch()
@@ -29,7 +19,7 @@ namespace Cognitivo.Configs
         {
             try
             {
-                branchViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_branchViewSource")));
+                branchViewSource = ((CollectionViewSource)(this.FindResource("app_branchViewSource")));
                 entity.db.app_branch.Where(a=> a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 branchViewSource.Source = entity.db.app_branch.Local;
             }
@@ -38,7 +28,7 @@ namespace Cognitivo.Configs
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Visibility = Visibility.Visible;
             cntrl.branch objBranch = new cntrl.branch();
             app_branch app_branch = new app_branch();
             entity.db.app_branch.Add(app_branch);

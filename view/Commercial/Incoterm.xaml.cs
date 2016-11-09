@@ -69,11 +69,11 @@ namespace Cognitivo.Commercial
             try
             {
                 impex_incotermViewSource = this.FindResource("impex_incotermViewSource") as CollectionViewSource;
-                dbContext.impex_incoterm.OrderBy(a => a.name).Load();
+                dbContext.impex_incoterm.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 impex_incotermViewSource.Source = dbContext.impex_incoterm.Local;
 
                 CollectionViewSource incoterm_conditionViewSource = this.FindResource("incoterm_conditionViewSource") as CollectionViewSource;
-                incoterm_conditionViewSource.Source = dbContext.impex_incoterm_condition.OrderBy(a => a.name).ToList();
+                incoterm_conditionViewSource.Source = dbContext.impex_incoterm_condition.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             }
             catch (Exception ex)
             {
@@ -106,18 +106,6 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnNew_Click(object sender)
         {
-            //gridMain.IsEnabled = true;
-            //impex_incoterm impex_incoterm = new impex_incoterm();
-            //List<impex_incoterm_condition> impex_incoterm_condition = entity.db.impex_incoterm_condition.ToList();
-            //foreach (var item in impex_incoterm_condition)
-            //{
-            //    impex_incoterm_detail impex_incoterm_detail = new impex_incoterm_detail();
-            //    impex_incoterm_detail.id_incoterm_condition = item.id_incoterm_condition;
-            //    impex_incoterm.impex_incoterm_detail.Add(impex_incoterm_detail);
-            //}
-            //entity.db.impex_incoterm.Add(impex_incoterm);
-            //impex_incotermViewSource.View.MoveCurrentToLast();
-
             impex_incoterm impex_incoterm = new impex_incoterm();
             impex_incoterm.State = EntityState.Added;
             impex_incoterm.IsSelected = true;

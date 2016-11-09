@@ -220,7 +220,7 @@ namespace entity
                     RaisePropertyChanged("UnitCost_Vat");
                     update_UnitPrice_WithoutVAT();
                 }
-                update_SubTotalVAT();
+                //update_SubTotalVAT();
             }
         }
         private decimal _UnitCost_Vat;
@@ -455,7 +455,7 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-            _unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
+            unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
             RaisePropertyChanged("unit_cost");
         }
 

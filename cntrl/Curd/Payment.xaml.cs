@@ -54,11 +54,11 @@ namespace cntrl.Curd
             foreach (payment_schedual payment_schedual in payment_schedualList)
             {
                 payment_detail payment_detail = PaymentDB.payment_detail.Find(payment_schedual.id_payment_detail);
-
+             
                 if (payment_detail == null)
                 {
                     payment_detail = new payment_detail();
-                    
+                    payment_detail.payment = payment;
                     int id_currencyfx = payment_schedual.id_currencyfx;
 
                     app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
@@ -71,7 +71,11 @@ namespace cntrl.Curd
                 }
 
                 payment_detail.IsSelected = true;
-                payment_detail.payment = payment;
+                if (payment_detail.payment==null)
+                {
+                    payment_detail.payment = payment;
+                }
+             
 
                 if (Mode == Modes.Recievable)
                 {

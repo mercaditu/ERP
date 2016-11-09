@@ -202,27 +202,30 @@ namespace entity
                     {
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.status == Status.Documents_General.Approved))
                         {
-                            purchase_tender_detail.status = Status.Documents_General.Annulled;
-                            purchase_tender.status = Status.Documents_General.Annulled;
+
                             if (purchase_tender_detail.purchase_order_detail != null)
                             {
 
-                                if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order!=null)
+
+                                if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
                                 {
-                                    if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
+                                    //   base.purchase_order.RemoveRange(purchase_order);
+                                    if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.purchase_invoice==null)
                                     {
-                                        base.purchase_order.RemoveRange(purchase_order);
-
-
-
+                                        purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status = Status.Documents_General.Annulled;
                                     }
-                                    else
-                                    {
-                                        purchase_tender.status = Status.Documents_General.Approved;
-                                        purchase_tender_detail.status = Status.Documents_General.Approved;
-                                    }
+                                    purchase_tender_detail.status = Status.Documents_General.Annulled;
+                                    purchase_tender.status = Status.Documents_General.Annulled;
+
 
                                 }
+                                else
+                                {
+                                    purchase_tender.status = Status.Documents_General.Approved;
+                                    purchase_tender_detail.status = Status.Documents_General.Approved;
+                                }
+
+
 
 
 

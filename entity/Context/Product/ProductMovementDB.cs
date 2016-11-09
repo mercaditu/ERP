@@ -131,7 +131,7 @@ namespace entity
             using (db db = new db())
             {
                 item_inventoryList = db.item_inventory.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents.Issued).ToList();
-                item_transferList = db.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+                item_transferList = db.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).AsNoTracking().ToList();
             }
 
             foreach (DateTime day in EachDay(StartDate, EndDate))

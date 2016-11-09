@@ -404,7 +404,7 @@
 												</Border>
 											</Popup>
 										</StackPanel>
-										<!--<StackPanel Orientation="Horizontal" Margin="3,0,0,0" 
+										<StackPanel Orientation="Horizontal" Margin="3,0,0,0" 
 													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
 											<Label Content="$" Style="{StaticResource btn_Label}"/>
 											<TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -412,7 +412,7 @@
 													<Run Text="{lex:Loc Payment}"/>
 												</Hyperlink>
 											</TextBlock>
-										</StackPanel>-->
+										</StackPanel>
 										<StackPanel Orientation="Horizontal" Margin="3,0,0,0"
 													IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
 											<Label Content="$" Style="{StaticResource btn_Label}"/>

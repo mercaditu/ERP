@@ -77,7 +77,16 @@ namespace entity
         {
             get
             {
-                _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
+                if (child!=null)
+                {
+                    _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
+                }
+                else
+                {
+                    _avlquantity = credit;
+                }
+
+               
                 return _avlquantity;
             }
             set

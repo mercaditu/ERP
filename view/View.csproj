@@ -546,6 +546,11 @@
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\ProductDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
     </Compile>
@@ -1192,6 +1197,7 @@
     <None Include="Reporting\Data\ProductDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProductDS.Designer.cs</LastGenOutput>
     </None>
     <None Include="Reporting\Data\ProductDS.xss">
       <DependentUpon>ProductDS.xsd</DependentUpon>

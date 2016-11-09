@@ -7239,26 +7239,26 @@ order by i.name";
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "select branch.name as BranchName,\ninv.comment as TransComment,\n                  " +
                 "              item.code as ItemCode, \n                                item.name " +
-                "as ItemName,\n                                inv.credit as Credit,\n             " +
-                "                   UnitCost, \n                                (UnitCost * inv.cr" +
-                "edit) as TotalCost,\n                                inv.trans_date as TransDate\n" +
-                "\n                                from (\n                                select i" +
-                "tem_movement.*, sum(val.unit_value) as UnitCost\n                                " +
-                "from item_movement \n                                left outer join item_movemen" +
-                "t_value as val on item_movement.id_movement = val.id_movement\n                  " +
-                "              where item_movement.id_company = @CompanyID and item_movement.tran" +
-                "s_date between @StartDate and @EndDate                                and (item_" +
-                "movement.id_purchase_invoice_detail > 0 or item_movement.id_execution_detail > 0" +
-                " or item_movement.id_inventory_detail > 0)\n                                group" +
-                " by item_movement.id_movement\n                                ) as inv\n\n        " +
-                "                        inner join item_product as prod on inv.id_item_product =" +
-                " prod.id_item_product\n                                inner join items as item o" +
-                "n prod.id_item = item.id_item\n                                inner join app_loc" +
-                "ation as loc on inv.id_location = loc.id_location\n                              " +
-                "  inner join app_branch as branch on loc.id_branch = branch.id_branch\n          " +
-                "                      where inv.credit > 0\n                                \n    " +
-                "                            group by inv.id_movement\n                           " +
-                "     order by inv.trans_date";
+                "as ItemName,\n                                inv.debit as Debit,\n               " +
+                "                 UnitCost, \n                                (UnitCost * inv.debi" +
+                "t) as TotalCost,\n                                inv.trans_date as TransDate\n\n  " +
+                "                              from (\n                                select item" +
+                "_movement.*, sum(val.unit_value) as UnitCost\n                                fro" +
+                "m item_movement \n                                left outer join item_movement_v" +
+                "alue as val on item_movement.id_movement = val.id_movement\n                     " +
+                "           where item_movement.id_company = @CompanyID and item_movement.trans_d" +
+                "ate between @StartDate and @EndDate                                and (item_mov" +
+                "ement.id_purchase_invoice_detail > 0 or item_movement.id_execution_detail > 0 or" +
+                " item_movement.id_inventory_detail > 0)\n                                group by" +
+                " item_movement.id_movement\n                                ) as inv\n\n           " +
+                "                     inner join item_product as prod on inv.id_item_product = pr" +
+                "od.id_item_product\n                                inner join items as item on p" +
+                "rod.id_item = item.id_item\n                                inner join app_locati" +
+                "on as loc on inv.id_location = loc.id_location\n                                i" +
+                "nner join app_branch as branch on loc.id_branch = branch.id_branch\n             " +
+                "                   where inv.debit > 0\n                                \n        " +
+                "                        group by inv.id_movement\n                               " +
+                " order by inv.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";

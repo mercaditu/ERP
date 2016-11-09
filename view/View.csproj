@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\6.145\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\6.146\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>140</ApplicationRevision>
+    <ApplicationRevision>141</ApplicationRevision>
     <ApplicationVersion>2.1.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -148,8 +148,8 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\ReportViewer\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -544,11 +544,6 @@
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
-      <DependentUpon>ProductDS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Data\ProductDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ProductDS.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Data\ProductionDS.cs">
@@ -1086,6 +1081,7 @@
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlowDimension.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\TaskView.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\TransferSummary.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
@@ -1196,7 +1192,6 @@
     <None Include="Reporting\Data\ProductDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ProductDS.Designer.cs</LastGenOutput>
     </None>
     <None Include="Reporting\Data\ProductDS.xss">
       <DependentUpon>ProductDS.xsd</DependentUpon>

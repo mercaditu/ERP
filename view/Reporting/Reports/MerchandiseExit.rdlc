@@ -870,7 +870,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Credit</Value>
+                                <Value>Debit</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1039,7 +1039,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Credit</Value>
+                                <Value>Debit</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1156,8 +1156,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>MerchandiseEntry</DataSetName>
-        <Height>1.01042in</Height>
-        <Width>6.41667in</Width>
+        <Height>1.01041in</Height>
+        <Width>6.41666in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1182,7 +1182,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Merchandise Entry</Value>
+                  <Value>Merchandise Exit</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>

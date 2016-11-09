@@ -24,7 +24,7 @@ namespace Cognitivo.Reporting.Views
 
             ReportPanel.ReportDt = dt;
           
-            reportDataSource1.Name = "MerchandiseExit"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "MerchandiseEntry"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.MerchandiseExit.rdlc";
@@ -40,7 +40,7 @@ namespace Cognitivo.Reporting.Views
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
          
-            reportDataSource1.Name = "MerchandiseExit"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "MerchandiseEntry"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportPanel.Filterdt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.MerchandiseExit.rdlc";

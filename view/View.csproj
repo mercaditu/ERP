@@ -75,10 +75,11 @@
     <ApplicationIcon>cognitivo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>8A72C2F29F2D90266E93E3C584DBEE5EAFF98E28</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0331A02FC0CC35045FC8B95DF5B9E6677ED21CCB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>View_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -274,6 +275,7 @@
     <Compile Include="Class\Production.cs" />
     <Compile Include="Class\CreditLimit.cs" />
     <Compile Include="Class\Finance.cs" />
+    <Compile Include="Class\project.cs" />
     <Compile Include="Class\Stock.cs" />
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>
@@ -1089,7 +1091,8 @@
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlowDimension.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\TaskView.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\TaskViewChild.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\TaskViewParent.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\TransferSummary.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>

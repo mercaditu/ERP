@@ -11,7 +11,6 @@ namespace Cognitivo.Configs
     {
         dbContext entity = new dbContext();
         CollectionViewSource cost_centerViewSource;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public CostCenter()
         {

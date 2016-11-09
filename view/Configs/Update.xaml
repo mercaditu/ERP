@@ -23,7 +23,7 @@
         <StackPanel Background="{StaticResource appConfig}">
             <Image Style="{StaticResource img_Config}"
                     Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png"/>
-            <Label Content="{lex:Loc Update}" HorizontalAlignment="Center" Style="{StaticResource H1}"/>
+            <Label Content="{lex:Loc Version}" HorizontalAlignment="Center" Style="{StaticResource H1}"/>
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Margin="15"
                         Style="{StaticResource btn_green}"/>
         </StackPanel>

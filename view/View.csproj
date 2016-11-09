@@ -744,9 +744,6 @@
     <Compile Include="Configs\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Configs\Status.xaml.cs">
-      <DependentUpon>Status.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Configs\Terminal.xaml.cs">
       <DependentUpon>Terminal.xaml</DependentUpon>
     </Compile>
@@ -1764,10 +1761,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Configs\Status.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -82,29 +82,35 @@ namespace Cognitivo.Commercial
         private async void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            payment_schedualViewSource.Source = await PaymentDB.payment_schedual
-                                                                    .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
-                                                                       && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
-                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
-                                                                       .Include(y => y.purchase_invoice)
-                                                                       .Include(z => z.contact)
-                                                                       .OrderBy(x => x.expire_date)
-                                                                    .ToListAsync();
+            if (payment_schedualViewSource != null)
+            {
+                payment_schedualViewSource.Source = await PaymentDB.payment_schedual
+                                                        .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
+                                                           && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
+                                                           && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0)
+                                                           .Include(y => y.purchase_invoice)
+                                                           .Include(z => z.contact)
+                                                           .OrderBy(x => x.expire_date)
+                                                        .ToListAsync();
+            }
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
 
-            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.OrderBy(x => x.contact.name).ToList())
+            if (PaymentDB.payment_schedual.Local.Count() > 0)
             {
-                if (contactLIST.Contains(payment.contact) == false)
+                foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.OrderBy(x => x.contact.name).ToList())
                 {
-                    contact contact = new contact();
-                    contact = payment.contact;
-                    contactLIST.Add(contact);
+                    if (contactLIST.Contains(payment.contact) == false)
+                    {
+                        contact contact = new contact();
+                        contact = payment.contact;
+                        contactLIST.Add(contact);
+
+                        contactViewSource.Source = contactLIST;
+                    }
                 }
             }
-
-            contactViewSource.Source = contactLIST;
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)

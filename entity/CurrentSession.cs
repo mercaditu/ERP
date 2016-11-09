@@ -150,10 +150,10 @@ namespace entity
                 //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
                 Load_BasicData(null, null);
                 //Load Basic Data into Timer.
-                //Timer myTimer = new Timer();
-                //myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                //myTimer.Interval = 60000;
-                //myTimer.Start();
+                Timer myTimer = new Timer();
+                myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
+                myTimer.Interval = 60000;
+                myTimer.Start();
             }
         }
 
@@ -186,6 +186,8 @@ namespace entity
             IsDataLoading = true;
         }
 
+        static bool IsLoaded = false;
+
         private static void Thread_Data()
         {
             using (db db = new db())
@@ -203,13 +205,16 @@ namespace entity
                 Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).ToList();
 
-                VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                VAT_GroupDetails = db.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
-                VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-
                 Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+
+                if (IsLoaded == false)
+                {
+                    VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                    VAT_GroupDetails = db.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
+                    VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                }
 
                 IsDataLoading = false;
             }

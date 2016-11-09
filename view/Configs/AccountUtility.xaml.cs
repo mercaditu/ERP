@@ -98,7 +98,6 @@ namespace Cognitivo.Configs
 
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
-
             db.SaveChanges();
 
             app_accountViewSource.View.Refresh();

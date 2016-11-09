@@ -55,50 +55,35 @@ namespace cntrl.Curd
             {
                 payment_detail payment_detail = PaymentDB.payment_detail.Find(payment_schedual.id_payment_detail);
 
-                if (payment_detail != null)
+                if (payment_detail == null)
                 {
-                    payment_detail.IsSelected = true;
-                    payment_detail.payment = payment;
-
-                    if (Mode == Modes.Recievable)
-                    {
-                        payment_detail.value = payment_schedual.AccountReceivableBalance;
-                    }
-                    else
-                    {
-                        payment_detail.value = payment_schedual.AccountPayableBalance;
-                    }
-                    payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-                    payment.payment_detail.Add(payment_detail);
-                }
-                else
-                {
-                    payment_detail _payment_detail = new payment_detail();
-                    _payment_detail.IsSelected = true;
-                    _payment_detail.payment = payment;
-
+                    payment_detail = new payment_detail();
+                    
                     int id_currencyfx = payment_schedual.id_currencyfx;
 
                     app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
                     if (app_currencyfx != null)
                     {
-                        _payment_detail.id_currencyfx = id_currencyfx;
-                        _payment_detail.payment.id_currencyfx = id_currencyfx;
-                        _payment_detail.app_currencyfx = app_currencyfx;
+                        payment_detail.id_currencyfx = id_currencyfx;
+                        payment_detail.payment.id_currencyfx = id_currencyfx;
+                        payment_detail.app_currencyfx = app_currencyfx;
                     }
-
-                    if (Mode == Modes.Recievable)
-                    {
-                        _payment_detail.value = payment_schedual.AccountReceivableBalance;
-                    }
-                    else
-                    {
-                        _payment_detail.value = payment_schedual.AccountPayableBalance;
-                    }
-
-                    _payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-                    payment.payment_detail.Add(_payment_detail);
                 }
+
+                payment_detail.IsSelected = true;
+                payment_detail.payment = payment;
+
+                if (Mode == Modes.Recievable)
+                {
+                    payment_detail.value = payment_schedual.AccountReceivableBalance;
+                }
+                else
+                {
+                    payment_detail.value = payment_schedual.AccountPayableBalance;
+                }
+
+                payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
+                payment.payment_detail.Add(payment_detail);
             }
 
             payment.RaisePropertyChanged("GrandTotal");

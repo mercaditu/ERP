@@ -2093,7 +2093,7 @@ inner join projects as proj on proj.id_project = task.id_project
  
 inner join items as item on task.id_item = item.id_item
  
-where proj.id_project = @IDProject
+where proj.id_project = @IDProject 
 order by task.id_project_task";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();

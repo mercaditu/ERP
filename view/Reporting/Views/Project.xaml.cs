@@ -42,29 +42,30 @@ namespace Cognitivo.Reporting.Views
          
             if (projects != null)
             {
-                    this.reportViewer.Reset();
+                  
 
-                    Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                    Data.ProjectDS ProjectDS = new Data.ProjectDS();
+                this.reportViewer.Reset();
 
-                    ProjectDS.BeginInit();
+                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+                Class.project Project = new Class.project();
+                DataTable dt = new DataTable();
 
-                    Data.ProjectDSTableAdapters.ProjectTableAdapter ProjectTableAdapter = new Data.ProjectDSTableAdapters.ProjectTableAdapter();
+                dt = Project.Return_ParentTask(Convert.ToInt16(cbxProject.SelectedValue));
 
-                    //fill data
-                    ProjectTableAdapter.ClearBeforeFill = true;
-                    DataTable dt = ProjectTableAdapter.GetData(projects.id_project);
 
-                    reportDataSource1.Name = "Project";
-                    reportDataSource1.Value = dt;
-                    this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                    this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Project.rdlc";
 
-                    ProjectDS.EndInit();
+             
 
-                    this.reportViewer.Refresh();
-                    this.reportViewer.RefreshReport();
-                
+                reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
+                reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.TaskViewParent.rdlc";
+
+
+
+                this.reportViewer.Refresh();
+                this.reportViewer.RefreshReport();
+
             }
         }
     }

@@ -102,7 +102,7 @@ namespace entity
 
             using (ImpexDB ImpexDB = new ImpexDB())
             {
-                List<impex> impexLIST = ImpexDB.impex.Local.Where(x => x.status == Status.Documents_General.Approved).ToList();
+                List<impex> impexLIST = ImpexDB.impex.Where(x => x.status == Status.Documents_General.Approved).ToList();
 
                 foreach (impex impex in impexLIST)
                 {

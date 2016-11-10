@@ -171,10 +171,6 @@ namespace Cognitivo.Purchase
         private void toolBar_btnAnull_Click(object sender)
         {
             PurchaseInvoiceDB.Anull();
-            foreach (purchase_invoice purchase_invoice in purchase_invoiceViewSource.View.Cast<purchase_invoice>().ToList())
-            {
-                purchase_invoice.IsSelected = false;
-            }
         }
 
         #endregion

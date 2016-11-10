@@ -9,7 +9,7 @@ namespace Cognitivo.Commercial
 {
     public partial class PaymentType : Page
     {
-        entity.dbContext entity = new entity.dbContext();
+        dbContext entity = new dbContext();
         CollectionViewSource payment_type_viewsource;
 
         public PaymentType()
@@ -20,7 +20,7 @@ namespace Cognitivo.Commercial
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             payment_type_viewsource = ((CollectionViewSource)(this.FindResource("payment_typeViewSource")));
-            await entity.db.payment_type.OrderByDescending(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await entity.db.payment_type.Where(x => x.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).LoadAsync();
             payment_type_viewsource.Source = entity.db.payment_type.Local;
         }
 

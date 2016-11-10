@@ -90,7 +90,7 @@ namespace Cognitivo.Product
                     {
                         int i = item_product.id_item_product;
 
-                        if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).Any())
+                        if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).Any())
                         {
                             item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).FirstOrDefault();
                             if (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null)

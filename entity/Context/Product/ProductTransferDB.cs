@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using entity.Brillo;
 
 namespace entity
 {
@@ -176,20 +177,21 @@ namespace entity
         /// Executes code that will insert Invoiced Items into Movement.
         /// </summary>
         /// <param name="invoice"></param>
-        public void Credit_Items_Destination(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool MoveByTruck)
+        public async void Credit_Items_Destination(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool MoveByTruck)
         {
-            entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
+            Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
             app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
             app_location app_location_dest = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
 
             if (MoveByTruck)
             {
-                List<entity.Brillo.StockList> Items_InStockLIST;
-                entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                List<Brillo.StockList> Items_InStockLIST;
+                Brillo.Stock stockBrillo = new Brillo.Stock();
                 Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product);
 
-                List<item_movement> item_movement_LIST = new List<entity.item_movement>();
-                ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
+                List<item_movement> item_movement_LIST = new List<item_movement>();
+                ///Discount From Destination. 
+                ///Because merchendice is returned to Origin, so it must be discounted from Destintation.
                 item_movement_LIST =
                     stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,
                     app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location_dest.id_location, item_transfer_detail.quantity_destination,
@@ -223,10 +225,24 @@ namespace entity
             {
                 //Credit Destination.
                 item_movement item_movement_dest;
-                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
-                    x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
+
+                if (item_transfer_detail.item_product.item.name.Contains("Chunky"))
+                {
+                    var i = 1;
+                }
+
+                List<item_movement> Items_InStockLIST = await base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail && x.debit > 0).ToListAsync();
+
+                //Stock _stock = new Stock();
+                //List<StockList> Items_InStockLIST = _stock
+                //    .List(
+                //    item_transfer_detail.item_transfer.app_branch_origin.id_branch, 
+                //    item_transfer_detail.item_transfer.app_location_origin.id_location, 
+                //    item_transfer_detail.id_item_product
+                //    );
+
                 int count = 1;
-                if (Items_InStockLIST.Count()>0)
+                if (Items_InStockLIST.Count() > 0)
                 {
                     count = Items_InStockLIST.Count();
                 }

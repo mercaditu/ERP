@@ -14,7 +14,7 @@
 			 xmlns:cntrl="clr-namespace:cntrl"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" VerticalAlignment="Center" 
-             Width="550" Height="600" Loaded="UserControl_Loaded"
+			 Width="550" Height="600" Loaded="UserControl_Loaded"
 			 BorderBrush="RoyalBlue" BorderThickness="2">
   
 	<UserControl.Resources>
@@ -26,7 +26,7 @@
 		<CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
 		<CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
 	</UserControl.Resources>
-    
+	
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
 	</UserControl.Effect>
@@ -98,7 +98,7 @@
 					<!-- Detail -->
 					<StackPanel Orientation="Horizontal">
 						<StackPanel Width="256" Margin="4">
-							<ListBox Background="{StaticResource AccentColor_Brush}" x:Name="dgvPaymentDetail"
+							<ListBox Background="{StaticResource AccentColor_Introvert}" x:Name="dgvPaymentDetail"
 									 ScrollViewer.VerticalScrollBarVisibility="Auto"
 									 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 									 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -133,7 +133,7 @@
 									</ItemsPanelTemplate>
 								</ComboBox.ItemsPanel>
 							</ComboBox>
-							<StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Brush}">
+							<StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Introvert}">
 								<Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}"/>
 								<TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 										 metro:TextBoxHelper.SelectAllOnFocus="True"

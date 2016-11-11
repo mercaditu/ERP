@@ -601,13 +601,12 @@ namespace entity.Brillo.Logic
 
                 }
             }
-            else if (Application_ID == App.Names.PurchaseReturn)
+            else if (Application_ID == App.Names.PurchaseReturn)   
             {
                 purchase_return purchase_return = Transcation as purchase_return;
                 foreach (purchase_return_detail purchase_return_detail in purchase_return.purchase_return_detail)
                 {
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_purchase_return_detail == purchase_return_detail.id_purchase_return_detail)
-                                                                     .ToList());
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_purchase_return_detail == purchase_return_detail.id_purchase_return_detail).ToList());
                 }
 
 
@@ -617,8 +616,7 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = Transcation as sales_invoice;
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
                 {
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail)
-                                                                     .ToList());
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).ToList());
                 }
 
             }
@@ -627,8 +625,7 @@ namespace entity.Brillo.Logic
                 sales_return sales_return = Transcation as sales_return;
                 foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
                 {
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_return_detail == sales_return_detail.id_sales_return_detail)
-                                                                     .ToList());
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_return_detail == sales_return_detail.id_sales_return_detail).ToList());
                 }
 
             }

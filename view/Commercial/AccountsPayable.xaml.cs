@@ -53,7 +53,7 @@ namespace Cognitivo.Commercial
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
-            if (contact.id_contact > 0 && payment_schedualViewSource != null)
+            if (contact != null && payment_schedualViewSource != null)
             {
                 payment_schedualViewSource.View.Filter = i =>
                 {
@@ -106,11 +106,11 @@ namespace Cognitivo.Commercial
                         contact contact = new contact();
                         contact = payment.contact;
                         contactLIST.Add(contact);
-
-                        contactViewSource.Source = contactLIST;
                     }
                 }
             }
+
+            contactViewSource.Source = contactLIST;
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)

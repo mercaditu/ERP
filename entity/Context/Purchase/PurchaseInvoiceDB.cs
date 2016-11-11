@@ -191,9 +191,9 @@ namespace entity
         {
             foreach (purchase_invoice purchase_invoice in base.purchase_invoice.Local)
             {
-                if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
+                if (purchase_invoice.IsSelected && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.Error == null)
                 {
-                    int count=purchase_invoice.purchase_invoice_detail.Where(x => x.purchase_return_detail == null).Count();
+                    int count = purchase_invoice.purchase_invoice_detail.Where(x => x.purchase_return_detail == null).Count();
                     if (count > 0)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
@@ -211,22 +211,7 @@ namespace entity
 
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            foreach (item_movement item in item_movementList)
-                            {
-                                 if (item.child == null ||item.child.Count()==0 )
-                                {
-                                    base.item_movement.RemoveRange(item_movementList);
-                                }
-                                else
-                                {
-                                    if (item.credit> item.child.Sum(x=>x.debit))
-                                    {
-                                        item.credit = item.child.Sum(x => x.debit);
-                                    }
-                                }
-                             
-                            }
-                            //
+                            base.item_movement.RemoveRange(item_movementList);
                         }
 
                         purchase_invoice.status = Status.Documents_General.Annulled;

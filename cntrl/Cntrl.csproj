@@ -332,6 +332,9 @@
     <Compile Include="Curd\vat_group.xaml.cs">
       <DependentUpon>vat_group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DateRange.xaml.cs">
+      <DependentUpon>DateRange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DelayedExecutionService.cs" />
     <Compile Include="ExtendedTreeView.cs" />
     <Compile Include="moduleIcon.xaml.cs">
@@ -805,6 +808,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\vat_group.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DateRange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

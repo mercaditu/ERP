@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Controls="clr-namespace:cntrl.Controls"
+    xmlns:local="clr-namespace:cntrl"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -22,19 +23,14 @@
                    Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
-                <StackPanel HorizontalAlignment="Center" Visibility="{Binding ShowDates, ElementName=this, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                    <Label Content="{lex:Loc Date}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                    <Calendar SelectionMode="{Binding CalendarMode, ElementName=this}" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
-                </StackPanel>
-
-                <Rectangle Style="{StaticResource line_Bar}"/>
 
                 <Label Content="{lex:Loc Filter}" Style="{StaticResource H3}"/>
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpFilter" />
                 </ScrollViewer>
                 <Label Content="{lex:Loc View}" Style="{StaticResource H3}"/>
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpColumn" />
                 </ScrollViewer>
                 <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click" Width="128"/>

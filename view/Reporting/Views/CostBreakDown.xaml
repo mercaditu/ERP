@@ -17,7 +17,7 @@
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
 		<Cntrl:ReportPanel 
-			x:Name="ReportPanel" CalendarSelectionMode="SingleRange"
+			x:Name="ReportPanel"  
 			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
 			ReportDescription="List"
 			Update="Fill"

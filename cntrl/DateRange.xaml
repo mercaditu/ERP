@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="cntrl.DateRange" x:Name="this"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:cntrl"
+			 xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+			 lex:ResxLocalizationProvider.DefaultDictionary="local"
+			 lex:LocalizeDictionary.DesignCulture="en-US"
+			 mc:Ignorable="d"
+			 d:DesignWidth="256">
+	<StackPanel>
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+			<Label Content="Date" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+			<StackPanel Orientation="Horizontal">
+				<DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="2" Background="Transparent" BorderBrush="Transparent"/>
+				<Label Content="-"/>
+				<DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="2" Background="Transparent" BorderBrush="Transparent"/>
+			</StackPanel>
+		</StackPanel>
+		<StackPanel Background="{StaticResource AccentColor_Brush}">
+			
+			<StackPanel Margin="4" Orientation="Horizontal">
+				<StackPanel.Background>
+					<SolidColorBrush Color="White" Opacity="0.88"/>
+				</StackPanel.Background>
+				<RadioButton Content="{lex:Loc Year}" x:Name="rbtnYear" Click="btnYear_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+				<RadioButton Content="{lex:Loc Month}" x:Name="rbtnMonth" Click="btnMonth_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+				<RadioButton Content="{lex:Loc Day}" x:Name="rbtnDay" Click="btnDay_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+			</StackPanel>
+			
+			<StackPanel Margin="4" VerticalAlignment="Center">
+				<Label x:Name="lblDateHeader" Style="{StaticResource H2}" HorizontalAlignment="Center" Content="{Binding ShortDate, ElementName=this}" Foreground="Azure"/>
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+					<Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="23"
+							   HorizontalContentAlignment="Center" VerticalAlignment="Center" MouseUp="btnDateBack"/>
+					<Label Content="{Binding ElementName=this, Path=StartDate, StringFormat=d}" Foreground="Azure" VerticalAlignment="Center"/>
+					<Label Content="-" Foreground="DimGray" VerticalAlignment="Center"/>
+					<Label Content="{Binding ElementName=this, Path=EndDate, StringFormat=d}" Foreground="Azure" VerticalAlignment="Center"/>
+					<Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="23"
+							   HorizontalContentAlignment="Center" VerticalAlignment="Center" MouseUp="btnDateForward"/>
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

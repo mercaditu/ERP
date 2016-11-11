@@ -115,7 +115,7 @@ namespace Cognitivo.Product
                                                         && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
-                                                        ).OrderByDescending(x => x.trans_date).Take(25).ToListAsync();
+                                                        ).OrderByDescending(x => x.trans_date).ToListAsync();
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {

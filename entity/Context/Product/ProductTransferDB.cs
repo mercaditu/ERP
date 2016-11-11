@@ -160,7 +160,7 @@ namespace entity
                             Brillo.Logic.Range.project_Code = projects.code;
                         }
                     }
-                    
+
                     app_document_range app_document_range = base.app_document_range.Find(item_transfer.id_range);
                     item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                     item_transfer.RaisePropertyChanged("number");
@@ -241,31 +241,28 @@ namespace entity
                 //    item_transfer_detail.id_item_product
                 //    );
 
-                int count = 1;
-                if (Items_InStockLIST.Count() > 0)
+                foreach (item_movement item_movement in Items_InStockLIST)
                 {
-                    count = Items_InStockLIST.Count();
+                    item_movement_dest =
+                          stock.CreditOnly_Movement(
+                              Status.Stock.InStock,
+                              App.Names.Transfer,
+                              item_transfer_detail.id_transfer,
+                              item_transfer_detail.id_transfer_detail,
+                              app_currencyfx.id_currencyfx,
+                              item_transfer_detail.id_item_product,
+                              app_location_dest.id_location,
+                              item_movement.debit,
+                              item_transfer_detail.item_transfer.trans_date,
+                            item_movement.item_movement_value.Sum(x => x.unit_value),
+                              stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                              null
+                              );
+                    item_movement_dest.parent = item_movement.parent;
+                    base.item_movement.Add(item_movement_dest);
                 }
 
-                item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault();
 
-                item_movement_dest =
-                            stock.CreditOnly_Movement(
-                                Status.Stock.InStock,
-                                App.Names.Transfer,
-                                item_transfer_detail.id_transfer,
-                                item_transfer_detail.id_transfer_detail,
-                                app_currencyfx.id_currencyfx,
-                                item_transfer_detail.id_item_product,
-                                app_location_dest.id_location,
-                                item_transfer_detail.quantity_destination,
-                                item_transfer_detail.item_transfer.trans_date,
-                                Items_InStockLIST.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1)))/count,
-                                stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                                null
-                                );
-                item_movement_dest.parent = Items_InStockLIST.FirstOrDefault();
-                base.item_movement.Add(item_movement_dest);
             }
         }
 

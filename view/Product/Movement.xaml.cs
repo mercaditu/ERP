@@ -232,40 +232,47 @@ namespace Cognitivo.Product
                 ProductTransferDB.item_movement.AddRange(item_movement_originList);
 
                 //Credit Movement to Destination
-                item_movement item_movement_dest;
-                item_movement parent_item_movement = item_movement_originList.FirstOrDefault();
-
-                List<item_movement_dimension> DimensionList = null;
-
-                if (item_movement_originList.FirstOrDefault().item_movement_dimension.Count() > 0)
+             
+                foreach (item_movement item_movement in item_movement_originList)
                 {
-                    DimensionList = new List<item_movement_dimension>();
-                    foreach (item_movement_dimension item_movement_dimension in item_movement_originList.FirstOrDefault().item_movement_dimension)
-                    {
-                        item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                        _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                        _item_movement_dimension.value = item_movement_dimension.value;
-                        DimensionList.Add(_item_movement_dimension);
-                    }
-                }
+                    item_movement item_movement_dest;
+                   
 
-                item_movement_dest =
-                            stock.CreditOnly_Movement(
-                                Status.Stock.InStock,
-                                entity.App.Names.Transfer,
-                                item_transfer_detail.id_transfer,
-                                item_transfer_detail.id_transfer_detail,
-                                app_currencyfx.id_currencyfx,
-                                item_transfer_detail.id_item_product,
-                                item_transfer_detail.item_transfer.app_location_destination.id_location,
-                                item_transfer_detail.quantity_destination,
-                                item_transfer_detail.item_transfer.trans_date,
-                                item_movement_originList.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1))),
-                                stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                                DimensionList
-                                );
-                ProductTransferDB.item_movement.Add(item_movement_dest);
-                item_transfer.status = Status.Transfer.Approved;
+                    List<item_movement_dimension> DimensionList = null;
+
+                    if (item_movement.item_movement_dimension.Count() > 0)
+                    {
+                        DimensionList = new List<item_movement_dimension>();
+                        foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                        {
+                            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                            _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
+                            _item_movement_dimension.value = item_movement_dimension.value;
+                            DimensionList.Add(_item_movement_dimension);
+                        }
+                    }
+
+                    item_movement_dest =
+                                stock.CreditOnly_Movement(
+                                    Status.Stock.InStock,
+                                    entity.App.Names.Transfer,
+                                    item_transfer_detail.id_transfer,
+                                    item_transfer_detail.id_transfer_detail,
+                                    app_currencyfx.id_currencyfx,
+                                    item_transfer_detail.id_item_product,
+                                    item_transfer_detail.item_transfer.app_location_destination.id_location,
+                                    item_movement.debit,
+                                    item_transfer_detail.item_transfer.trans_date,
+                                   item_movement.item_movement_value.Sum(x=>x.unit_value),
+                                    stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                                    DimensionList
+                                    );
+                    item_movement_dest.parent = item_movement.parent;
+                    ProductTransferDB.item_movement.Add(item_movement_dest);
+                  
+                    item_transfer.status = Status.Transfer.Approved;
+                }
+                
             }
 
             if (item_transfer.status == Status.Transfer.Approved && item_transfer.app_document_range != null)

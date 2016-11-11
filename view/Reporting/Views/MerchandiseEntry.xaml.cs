@@ -18,15 +18,14 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.ProductDS ProductDS = new Data.ProductDS();
-
-            ProductDS.BeginInit();
+       
+      
 
             Data.ProductDSTableAdapters.MerchandiseEntryTableAdapter MerchandiseEntryTableAdapter = new Data.ProductDSTableAdapters.MerchandiseEntryTableAdapter();
                 
             DataTable dt = new DataTable();
-
-            dt = MerchandiseEntryTableAdapter.GetData(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
+            Class.StockCalculations Stock = new Class.StockCalculations();
+            dt = Stock.MerchandiseEntry(ReportPanel.StartDate, ReportPanel.EndDate);
 
             ReportPanel.ReportDt = dt;
           
@@ -35,7 +34,7 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.MerchandiseEntry.rdlc";
 
-            ProductDS.EndInit();
+    
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();

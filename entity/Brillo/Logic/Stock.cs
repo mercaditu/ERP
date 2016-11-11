@@ -898,6 +898,7 @@ namespace entity.Brillo.Logic
             return Final_ItemMovementLIST;
         }
 
+     
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               int CurrencyFXID, int ProductID, int LocationID,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList)

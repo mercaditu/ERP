@@ -1,11 +1,16 @@
-﻿<UserControl x:Class="cntrl.ReportPanel" x:Name="this"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d"
              xmlns:Controls="clr-namespace:cntrl.Controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             lex:ResxLocalizationProvider.DefaultDictionary="local"
+             lex:LocalizeDictionary.DesignCulture="en-US"
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="cntrl.ReportPanel" x:Name="this"
+             mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
@@ -14,37 +19,23 @@
         <Border CornerRadius="3" Margin="8">
             <StackPanel Background="White">
                 <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
-                   Text="{Binding ElementName=this, Path=ReportTitle, Mode=OneWay}"/>
+                   Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
-                           Text="{Binding ElementName=this, Path=ReportDescription, Mode=OneWay}"/>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowDates, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                    <StackPanel Margin="0">
-                        <Label Content="StartDate" Style="{StaticResource input_label}"/>
-                        <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
-                                    SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="EndDate" Style="{StaticResource input_label}"/>
-                        <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
-                                    SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                    </StackPanel>
+                           Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
+                <StackPanel HorizontalAlignment="Center" Visibility="{Binding ShowDates, ElementName=this, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                    <Label Content="{lex:Loc Date}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                    <Calendar SelectionMode="{Binding CalendarMode, ElementName=this}" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
                 </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
-              
-                <Label Content="Filter" Style="{StaticResource input_label}"/>
+
+                <Label Content="{lex:Loc Filter}" Style="{StaticResource H3}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
-
-
-                    <StackPanel Name="stpFilter" >
-
-                    </StackPanel>
-
+                    <StackPanel x:Name="stpFilter" />
                 </ScrollViewer>
-                <Label Content="Columns" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc View}" Style="{StaticResource H3}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <StackPanel Name="stpColumn" >
-                    </StackPanel>
+                    <StackPanel x:Name="stpColumn" />
                 </ScrollViewer>
                 <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click" Width="128"/>
             </StackPanel>

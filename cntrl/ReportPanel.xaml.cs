@@ -12,6 +12,7 @@ namespace cntrl
         public string Columname { get; set; }
         public bool IsVisibility { get; set; }
     }
+
     public partial class ReportPanel : UserControl
     {
         public static DependencyProperty ReportTitleProperty = DependencyProperty.Register("ReportTitle", typeof(string), typeof(ReportPanel));
@@ -41,6 +42,8 @@ namespace cntrl
             set { _EndDate = value; Data_Update(null, null); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
+
+        public CalendarSelectionMode CalendarSelectionMode { get; set; }
 
         public DataTable ReportDt
         {
@@ -195,6 +198,14 @@ namespace cntrl
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Data_Update(null, null);
+        }
+
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var calendar = sender as Calendar;
+
+            StartDate = calendar.SelectedDates.Min();
+            EndDate = calendar.SelectedDates.Max();
         }
     }
 

@@ -1001,7 +1001,15 @@ namespace entity.Brillo.Logic
                             i = db.item_product.Where(x => x.id_item_product == ProductID).Select(x => x.id_item).FirstOrDefault();
                             if (i > 0)
                             {
-                                item_movement_value.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
+                                if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault()!=null)
+                                {
+                                    item_movement_value.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
+                                }
+                                else
+                                {
+                                    item_movement_value.unit_value = 0;
+                                }
+                            
                             }
                         }
 

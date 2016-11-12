@@ -23,13 +23,14 @@
                    Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
-
-                <Label Content="{lex:Loc Filter}" Style="{StaticResource H3}"/>
-                <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"/>
+                <Label Content="{lex:Loc Filter}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
+                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
+                                 DateChanged="DateRange_DateChanged"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpFilter" />
                 </ScrollViewer>
-                <Label Content="{lex:Loc View}" Style="{StaticResource H3}"/>
+                <Label Content="{lex:Loc View}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpColumn" />
                 </ScrollViewer>

@@ -11,13 +11,13 @@
 			 mc:Ignorable="d"
 			 d:DesignWidth="256">
 	<StackPanel>
-		<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-			<Label Content="Date" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-			<StackPanel Orientation="Horizontal">
-				<DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="2" Background="Transparent" BorderBrush="Transparent"/>
-				<Label Content="-"/>
-				<DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="2" Background="Transparent" BorderBrush="Transparent"/>
-			</StackPanel>
+		<Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+			<DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+						Margin="2" Background="Transparent" BorderBrush="Transparent"/>
+			<Label Content="-"/>
+			<DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+						Margin="2" Background="Transparent" BorderBrush="Transparent"/>
 		</StackPanel>
 		<StackPanel Background="{StaticResource AccentColor_Brush}">
 			

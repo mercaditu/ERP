@@ -32,16 +32,17 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; Data_Update(null, null); }
+            set { _StartDate = value; }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; Data_Update(null, null); }
+            set { _EndDate = value; }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
+        
         
 
         public DataTable ReportDt
@@ -74,14 +75,11 @@ namespace cntrl
                         ComboBox.Name = "cbx" + item.ColumnName;
                         ComboBox.SelectionChanged += Cmb_SelectionChanged;
                         ComboBox.IsTextSearchEnabled = true;
-
+                        
                         stpFilter.Children.Add(ComboBox);
                         stpFilter.Children.Add(stackcolumn);
                     }
                 }
-
-
-
             }
         }
 
@@ -96,12 +94,10 @@ namespace cntrl
             set
             {
                 _Filterdt = value;
-
-              
+                
                 foreach (DataColumn item in value.Columns)
                 {
-
-                    if (item.DataType == typeof(System.String))
+                    if (item.DataType == typeof(string))
                     {
                         if (stpFilter.FindName("cbx" + item.ColumnName) !=null)
                         {
@@ -164,9 +160,7 @@ namespace cntrl
                 Filterdt = ReportDt.Select(filter).CopyToDataTable();
             }
             Data_Filter(null, null);
-
         }
-
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -199,12 +193,9 @@ namespace cntrl
             Data_Update(null, null);
         }
 
-        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        private void DateRange_DateChanged(object sender, RoutedEventArgs e)
         {
-            var calendar = sender as Calendar;
-
-            StartDate = calendar.SelectedDates.Min();
-            EndDate = calendar.SelectedDates.Max();
+            Data_Update(null,null);
         }
     }
 }

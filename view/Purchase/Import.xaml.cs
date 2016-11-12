@@ -490,10 +490,17 @@ namespace Cognitivo.Purchase
                     impeximpex_expenseViewSource.View.Filter = i =>
                     {
                         impex_expense impex_expense = (impex_expense)i;
-                        if (impex_expense.id_item == clsProductDetail.id_item)
-                            return true;
+                        if (clsProductDetail!=null)
+                        {
+                            if (impex_expense.id_item == clsProductDetail.id_item)
+                                return true;
+                            else
+                                return false;
+                        }
                         else
+                        {
                             return false;
+                        }
                     };
 
                 }

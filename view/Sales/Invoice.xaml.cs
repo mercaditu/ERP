@@ -374,7 +374,11 @@ namespace Cognitivo.Sales
                     int LineLimit = 0;
                     if (sales_invoice.app_document_range != null)
                     {
-                        LineLimit = (int)sales_invoice.app_document_range.app_document.line_limit;
+                        if (sales_invoice.app_document_range.app_document.line_limit!=null)
+                        {
+                            LineLimit = (int)sales_invoice.app_document_range.app_document.line_limit;
+                        }
+                      
                     }
                     else
                     {
@@ -384,7 +388,7 @@ namespace Cognitivo.Sales
                         }
                     }
 
-                    if (SalesSettings.SpiltInvoice == false && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
+                    if (SalesSettings.SpiltInvoice == false && LineLimit >0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
                     {
                         toolBar.msgWarning("Your Item Limit is Exceed");
                     }

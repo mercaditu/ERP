@@ -1,6 +1,7 @@
 
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -38,8 +39,10 @@ namespace entity
                 {
                     _quantity = value;
                     RaisePropertyChanged("quantity");
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, Convert.ToDecimal(value), GetDimensionValue());
+                    RaisePropertyChanged("_Quantity_Factored");
 
-                 
+
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace cntrl
         CollectionViewSource _objCollectionViewSource = null;
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
 
-        private dbContext entity = new dbContext();
+        public dbContext entity { get; set; }
       //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         private entity.hr_position _hr_positionobj = null;

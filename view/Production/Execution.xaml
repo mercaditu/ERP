@@ -293,7 +293,7 @@
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
 									<DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-									<toolkit:TimePicker x:Name="dtpstarttime" Width="85" Format="Custom" FormatString="HH:mm" CurrentDateTimePart="Hour24" />
+                                <toolkit:TimePicker x:Name="dtpstarttime" Width="85" Format="Custom" FormatString="HH:MM " CurrentDateTimePart="Hour24" />
 
 								</StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">

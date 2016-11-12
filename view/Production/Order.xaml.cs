@@ -56,6 +56,8 @@ namespace Cognitivo.Production
             }
             catch (Exception ex)
             { toolBar.msgError(ex); }
+
+            filter_task();
         }
 
         private void toolBar_btnNew_Click(object sender)

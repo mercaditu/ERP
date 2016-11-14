@@ -20,9 +20,9 @@ namespace Cognitivo.Reporting.Views
     /// <summary>
     /// Interaction logic for SalesByItem.xaml
     /// </summary>
-    public partial class Project : Page
+    public partial class ProjectFinance : Page
     {
-        public Project()
+        public ProjectFinance()
         {
             InitializeComponent();
 
@@ -45,22 +45,17 @@ namespace Cognitivo.Reporting.Views
                 this.reportViewer.Reset();
 
                 Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                Data.ProjectDS ProjectDS = new Data.ProjectDS();
 
-                ProjectDS.BeginInit();
-
-                Data.ProjectDSTableAdapters.ProjectTableAdapter ProjectTableAdapter = new Data.ProjectDSTableAdapters.ProjectTableAdapter();
 
                 //fill data
-                ProjectTableAdapter.ClearBeforeFill = true;
-                DataTable dt = ProjectTableAdapter.GetData(projects.id_project);
+                Class.project Project = new Class.project();
+                DataTable dt = Project.ProjectFinance(Convert.ToInt16(cbxProject.SelectedValue));
 
-                reportDataSource1.Name = "Project";
+                reportDataSource1.Name = "DataSet1";
                 reportDataSource1.Value = dt;
                 this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Project.rdlc";
+                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProjectFinance.rdlc";
 
-                ProjectDS.EndInit();
 
                 this.reportViewer.Refresh();
                 this.reportViewer.RefreshReport();
@@ -74,7 +69,6 @@ namespace Cognitivo.Reporting.Views
 
 
 //using entity;
-//using Microsoft.Reporting.WinForms;
 //using System;
 //using System.Collections.Generic;
 //using System.Data;
@@ -136,9 +130,6 @@ namespace Cognitivo.Reporting.Views
 //                reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 //                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
 //                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.TaskViewParent.rdlc";
-//                reportViewer.LocalReport.SubreportProcessing += new
-
-//                           SubreportProcessingEventHandler(SetSubDataSource);
 
 
 
@@ -146,28 +137,7 @@ namespace Cognitivo.Reporting.Views
 //                this.reportViewer.RefreshReport();
 
 //            }
-
 //        }
-//        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
-
-//        {
-//            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-//            Class.project Project = new Class.project();
-//            DataTable dt = new DataTable();
-
-//            dt = Project.Return_ParentTask(1);
-
-
-
-
-
-//            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
-//            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
-
-//            e.DataSources.Add(reportDataSource1);
-
-//        }
-
 //    }
 
 //}

@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 133
+            /// Last Used : 136
             /// </summary>
 
 
@@ -307,7 +307,8 @@ namespace entity
             VATPurchase = 127,
 
             [LocalizedDescription("Version")]
-            Version = 128
+            Version = 128,
+            TechnicalReport = 136
         }
     }
 }

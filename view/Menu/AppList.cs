@@ -141,6 +141,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");
+           
 
             //Projects Plain
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Form, "Project.Development.ProjectType", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Full, "0");
@@ -151,7 +152,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Full, "0");
-
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.ProjectFinance", entity.App.Names.ProjectFinance, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.TechnicalReport", entity.App.Names.TechnicalReport, "Reports", entity.CurrentSession.Versions.Medium, "0");
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Form, "Production.Line", entity.App.Names.Line, "Line", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "1");

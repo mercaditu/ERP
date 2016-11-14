@@ -13,7 +13,7 @@ namespace Cognitivo.Class
 								contact.name as Contact,
 								si.number as Number,
                                 si.comment as Comment,
-								cond.name as Condition,
+								cond.name as Conditions,
 								contract.name as Contract,
 								DATE_FORMAT(schedual.expire_date,'%d %b %y') as ExpiryDate,
 								curr.name as CurrencyName,

@@ -45,22 +45,23 @@ namespace Cognitivo.Reporting.Views
                 this.reportViewer.Reset();
 
                 Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                Data.ProjectDS ProjectDS = new Data.ProjectDS();
+                //  Data.ProjectDS ProjectDS = new Data.ProjectDS();
 
-                ProjectDS.BeginInit();
+                //ProjectDS.BeginInit();
 
-                Data.ProjectDSTableAdapters.ProjectTableAdapter ProjectTableAdapter = new Data.ProjectDSTableAdapters.ProjectTableAdapter();
+                //  Data.ProjectDSTableAdapters.ProjectTableAdapter ProjectTableAdapter = new Data.ProjectDSTableAdapters.ProjectTableAdapter();
 
                 //fill data
-                ProjectTableAdapter.ClearBeforeFill = true;
-                DataTable dt = ProjectTableAdapter.GetData(projects.id_project);
+                //  ProjectTableAdapter.ClearBeforeFill = true;
+                Class.project Project = new Class.project();
+                DataTable dt = Project.GetProject(projects.id_project);
 
                 reportDataSource1.Name = "Project";
                 reportDataSource1.Value = dt;
                 this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
                 this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Project.rdlc";
 
-                ProjectDS.EndInit();
+              //  ProjectDS.EndInit();
 
                 this.reportViewer.Refresh();
                 this.reportViewer.RefreshReport();

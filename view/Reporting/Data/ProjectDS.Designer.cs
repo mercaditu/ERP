@@ -3139,16 +3139,19 @@ from project_task as task
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select proj.name, item.name, task.code, task.item_description, task.quantity_est, task.unit_cost_est, task.start_date_est, task.end_date_est, task.parent_id_project_task ,if(task.parent_id_project_task, task.parent_id_project_task, task.id_project_task) as ID
+            this._commandCollection[0].CommandText = @"select proj.name as Project,contact.name as Contact, item.name, task.code, task.item_description, task.quantity_est, task.unit_cost_est, task.start_date_est, task.end_date_est, task.parent_id_project_task ,if(task.parent_id_project_task, task.parent_id_project_task, task.id_project_task) as ID,id_project_task as TaskID,Task.status
  
 from project_task as task
  
 inner join projects as proj on proj.id_project = task.id_project
  
 inner join items as item on task.id_item = item.id_item
+inner join contacts as contact on proj.id_contact=contact.id_contact
  
 where proj.id_project = @IDProject 
-order by task.id_project_task";
+order by task.id_project_task
+
+";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@IDProject";

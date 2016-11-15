@@ -250,6 +250,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -416,18 +417,6 @@
           </Border>
         </Style>
       </Tablix>
-      <Subreport Name="Subreport1">
-        <ReportName>TaskViewChild</ReportName>
-        <Top>1.47849cm</Top>
-        <Height>3.73708cm</Height>
-        <Width>12.5cm</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Subreport>
     </ReportItems>
     <Height>2.16796in</Height>
     <Style />

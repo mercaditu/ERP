@@ -49,6 +49,7 @@ namespace cntrl.PanelAdv
             {
                 production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
                 contact contact = project_taskLIST.FirstOrDefault().project.contact;
+         
                 if (contact != null)
                 {
                     if (contact.app_cost_center!=null)
@@ -57,7 +58,11 @@ namespace cntrl.PanelAdv
                     }
               
                 }
-            
+                if (project_taskLIST.FirstOrDefault().project.id_branch!=null)
+                {
+                    production_order.id_branch = (int)project_taskLIST.FirstOrDefault().project.id_branch;
+                }
+              
                 //Get Name.
                 production_order.name = project_taskLIST.FirstOrDefault().project.name;
                 production_order.RaisePropertyChanged("name");

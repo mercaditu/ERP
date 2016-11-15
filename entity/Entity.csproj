@@ -205,9 +205,9 @@
     <Compile Include="Migrations\201609131349079_INITIAL-MIGRATE.Designer.cs">
       <DependentUpon>201609131349079_INITIAL-MIGRATE.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611150943490_Databasechange.cs" />
-    <Compile Include="Migrations\201611150943490_Databasechange.Designer.cs">
-      <DependentUpon>201611150943490_Databasechange.cs</DependentUpon>
+    <Compile Include="Migrations\201611151128535_DatabaseChange.cs" />
+    <Compile Include="Migrations\201611151128535_DatabaseChange.Designer.cs">
+      <DependentUpon>201611151128535_DatabaseChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
@@ -592,8 +592,8 @@
       <DependentUpon>201609131349079_INITIAL-MIGRATE.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611150943490_Databasechange.resx">
-      <DependentUpon>201611150943490_Databasechange.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611151128535_DatabaseChange.resx">
+      <DependentUpon>201611151128535_DatabaseChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

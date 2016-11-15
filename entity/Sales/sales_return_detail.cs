@@ -25,7 +25,7 @@ namespace entity
         public int id_sales_return { get; set; }
 
 
-        public long? id_sales_invoice_detail { get; set; }
+      
 
         public bool has_return { get; set; }
 

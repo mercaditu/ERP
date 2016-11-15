@@ -103,7 +103,7 @@ namespace Cognitivo.Production
                         //Check for contact
                         _production_execution_detail.id_contact = contact.id_contact;
                         _production_execution_detail.contact = contact;
-                        _production_execution_detail.quantity = 1;
+                       // _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
                         _production_execution_detail.is_input = production_order_detail.is_input;

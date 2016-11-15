@@ -367,7 +367,7 @@ namespace Cognitivo.Sales
                         if (_sales_return.sales_return_detail.Where(x => x.id_item == _sales_invoice_detail.id_item).Count() == 0)
                         {
                             sales_return_detail sales_return_detail = new sales_return_detail();
-                            sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
+                            sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
 
                             if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
                             {
@@ -385,8 +385,8 @@ namespace Cognitivo.Sales
 
                             sales_return_detail.id_item = _sales_invoice_detail.id_item;
                             sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail
-                                                                .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
-                                                                .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
+                                                                .Where(x => x.sales_invoice_detail.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
+                                                                .GroupBy(x => x.sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
 
                             sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
                             sales_return_detail.unit_price = _sales_invoice_detail.unit_price;

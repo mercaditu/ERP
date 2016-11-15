@@ -353,7 +353,7 @@ namespace Cognitivo.Product
                     foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {
                         item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                        item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
+                        item_transfer_dimension.item_transfer_detail = item_transfer_detail;
                         item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
 
                         app_dimension app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();

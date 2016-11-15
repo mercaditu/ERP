@@ -700,12 +700,16 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_execution_detail = TransactionDetailID;
 
-                        int MovementID = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault();
-                        if (MovementID > 0)
+                        if ( db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault()!=null)
                         {
-                            id_movement = MovementID;
-                            item_movement.parent = db.item_movement.Find(id_movement);
+                            int MovementID = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault();
+                            if (MovementID > 0)
+                            {
+                                id_movement = MovementID;
+                                item_movement.parent = db.item_movement.Find(id_movement);
+                            }
                         }
+                    
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {

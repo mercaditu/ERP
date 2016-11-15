@@ -16,7 +16,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_transfer_property { get; set; }
-        public long id_transfer_detail { get; set; }
+ 
         public int id_dimension { get; set; }
         public decimal value { get; set; }
       

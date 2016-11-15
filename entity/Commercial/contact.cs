@@ -143,6 +143,7 @@ namespace entity
         public string code { get; set; }
        //  [Required]
         public string gov_code { get; set; }
+        public string trans_code { get; set; }
         public string telephone { get; set; }
         public string email { get; set; }
         public string address { get; set; }

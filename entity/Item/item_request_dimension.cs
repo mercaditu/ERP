@@ -15,7 +15,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_request_property { get; set; }
-        public long id_item_request_detail { get; set; }
+    
         public int id_dimension { get; set; }
         public int id_measurement { get; set; }
         public decimal value { get; set; }

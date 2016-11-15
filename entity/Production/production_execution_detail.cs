@@ -38,7 +38,8 @@ namespace entity
 
         [Required]
         public decimal quantity { get; set; }
-
+        public decimal? geo_lat { get; set; }
+        public decimal? geo_long { get; set; }
 
         public DateTime start_date
         {

@@ -48,9 +48,8 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_return { get; set; }
 
-        [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
-        public int id_purchase_invoice { get; set; }
+        
+        public int? id_purchase_invoice { get; set; }
 
         public Status.ReturnTypes return_type { get; set; }
 
@@ -211,11 +210,7 @@ namespace entity
                     if (id_contact == 0)
                         return "Contact needs to be selected";
                 }
-                if (columnName == "id_purchase_invoice")
-                {
-                    if (id_contact == 0)
-                        return "Invoice needs to be selected";
-                }
+           
                 if (columnName == "id_currencyfx")
                 {
                     if (id_currencyfx == 0)

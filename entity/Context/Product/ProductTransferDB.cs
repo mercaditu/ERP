@@ -185,8 +185,8 @@ namespace entity
 
             if (MoveByTruck)
             {
-                List<Brillo.StockList> Items_InStockLIST;
-                Brillo.Stock stockBrillo = new Brillo.Stock();
+                List<StockList> Items_InStockLIST;
+                Stock stockBrillo = new Stock();
                 Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product);
 
                 List<item_movement> item_movement_LIST = new List<item_movement>();
@@ -225,21 +225,7 @@ namespace entity
             {
                 //Credit Destination.
                 item_movement item_movement_dest;
-
-                if (item_transfer_detail.item_product.item.name.Contains("Chunky"))
-                {
-                    var i = 1;
-                }
-
                 List<item_movement> Items_InStockLIST = await base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail && x.debit > 0).ToListAsync();
-
-                //Stock _stock = new Stock();
-                //List<StockList> Items_InStockLIST = _stock
-                //    .List(
-                //    item_transfer_detail.item_transfer.app_branch_origin.id_branch, 
-                //    item_transfer_detail.item_transfer.app_location_origin.id_location, 
-                //    item_transfer_detail.id_item_product
-                //    );
 
                 foreach (item_movement item_movement in Items_InStockLIST)
                 {
@@ -281,15 +267,15 @@ namespace entity
 
                 if (movebytruck)
                 {
-                    List<Brillo.StockList> Items_InStockLIST;
+                    List<StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Stock stockBrillo = new Stock();
                         Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
                     }
                     else
                     {
-                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Stock stockBrillo = new Stock();
                         Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
                     }
 

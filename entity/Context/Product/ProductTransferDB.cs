@@ -216,7 +216,7 @@ namespace entity
                         item_transfer_detail.item_transfer.trans_date,
                         0,
                         stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                        null
+                        null, null, null
                         );
 
                 base.item_movement.Add(item_movement_origin);
@@ -240,15 +240,13 @@ namespace entity
                               app_location_dest.id_location,
                               item_movement.debit,
                               item_transfer_detail.item_transfer.trans_date,
-                            item_movement.item_movement_value.Sum(x => x.unit_value),
+                              item_movement.item_movement_value.Sum(x => x.unit_value),
                               stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                              null
+                              null, null, null
                               );
                     item_movement_dest.parent = item_movement.parent;
                     base.item_movement.Add(item_movement_dest);
                 }
-
-
             }
         }
 
@@ -300,27 +298,24 @@ namespace entity
                             item_transfer_detail.item_transfer.trans_date,
                             0,
                             stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                            null);
+                            null, null, null);
 
                     base.item_movement.Add(item_movement_Dest);
                 }
                 else
                 {
-                    List<Brillo.StockList> Items_InStockLIST;
+                    List<StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Stock stockBrillo = new Stock();
                         Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
-
                     }
                     else
                     {
-                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Stock stockBrillo = new Stock();
                         Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
                     }
-
-
-
+                    
                     ///Debit Movement from Origin.
                     List<item_movement> item_movement_originList;
                     item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,

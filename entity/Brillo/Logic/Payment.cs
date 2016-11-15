@@ -251,7 +251,7 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in sales_invoice.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
             }
@@ -263,10 +263,9 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in sales_order.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
-
             }
             //PURCHASE INVOICE
             else if (obj_entity as purchase_invoice != null)
@@ -276,10 +275,9 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in purchase_invoice.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
-                
             }
             //PURCHASE ORDER
             else if (obj_entity as purchase_order != null)
@@ -290,10 +288,9 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in purchase_order.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
-                
             }
             //PURCHASE RETURN
             else if (obj_entity as purchase_return != null)
@@ -304,10 +301,9 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in purchase_return.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
-                
             }
             //SALES RETURN
             else if (obj_entity as sales_return != null)
@@ -318,26 +314,11 @@ namespace entity.Brillo.Logic
                 {
                     foreach (payment_schedual payment in sales_return.payment_schedual)
                     {
-                        payment_schedualList.AddRange(update_Status(payment));
+                        payment_schedualList.Add(payment);
                     }
                 }
             }
 
-            return payment_schedualList;
-        }
-
-        private List<payment_schedual> update_Status(payment_schedual payment_schedual)
-        {
-            List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-
-            if (payment_schedual.payment_detail != null)
-            {
-                List<payment_detail> payment_detailList = new List<payment_detail>();
-            }
-
-            //Basic Cleanup
-            //payment_schedual.status = entity.Status.Documents_General.Annulled;
-            payment_schedualList.Add(payment_schedual);
             return payment_schedualList;
         }
     }

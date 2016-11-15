@@ -237,7 +237,7 @@ namespace entity.Brillo.Logic
                                                     (App.Names.ProductionExecution,
                                                     (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     ""),
-                                                    OutputMovementDimensionLIST)
+                                                    OutputMovementDimensionLIST, null, null)
                                                 );
                             item_movementList.AddRange(item_movementOUTPUT);
                         }
@@ -269,8 +269,6 @@ namespace entity.Brillo.Logic
                                 Invoice_WithProducts.Add(purchase_invoice_detail);
                             }
                         }
-
-
                     }
                 }
             }
@@ -299,17 +297,18 @@ namespace entity.Brillo.Logic
                 {
                     item_movementList.Add(
                    CreditOnly_Movement(
-                Status.Stock.InStock,
-                App.Names.PurchaseInvoice,
-                purchase_invoice_detail.id_purchase_invoice,
-                purchase_invoice_detail.id_purchase_invoice_detail,
-                purchase_invoice.id_currencyfx,
-                purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
-                (int)purchase_invoice_detail.id_location,
-                purchase_invoice_detail.quantity,
-                purchase_invoice.trans_date,
-                purchase_invoice_detail.unit_cost,
-                comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST
+                        Status.Stock.InStock,
+                        App.Names.PurchaseInvoice,
+                        purchase_invoice_detail.id_purchase_invoice,
+                        purchase_invoice_detail.id_purchase_invoice_detail,
+                        purchase_invoice.id_currencyfx,
+                        purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
+                        (int)purchase_invoice_detail.id_location,
+                        purchase_invoice_detail.quantity,
+                        purchase_invoice.trans_date,
+                        purchase_invoice_detail.unit_cost,
+                        comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST,
+                        purchase_invoice_detail.expiration_date, purchase_invoice_detail.lot_number
                 ));
                 }
 
@@ -451,7 +450,7 @@ namespace entity.Brillo.Logic
                                             sales_return.trans_date,
                                             sales_return_detail.unit_cost,
                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
-                                            null
+                                            null, null, null
                                             ));
             }
             //Return List so we can save into context.
@@ -497,7 +496,8 @@ namespace entity.Brillo.Logic
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
                                 comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
-                            ));
+                                , null, null
+                                ));
                     }
                 }
                 else
@@ -526,7 +526,8 @@ namespace entity.Brillo.Logic
                                     delta,
                                     item_inventory_detail.item_inventory.trans_date,
                                     item_inventory_detail.unit_value,
-                                    comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null
+                                    comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null,
+                                    null, null
                                     ));
                         }
                         else if (delta < 0)
@@ -588,7 +589,6 @@ namespace entity.Brillo.Logic
                         if (ChildMovementList == null || ChildMovementList.Count() == 0)
                         {
                             item_movementList.Add(item_movement);
-                            continue;
                         }
                         else //if child row has been created, but is lesser than credit.
                         {
@@ -598,7 +598,6 @@ namespace entity.Brillo.Logic
                             }
                         }
                     }
-
                 }
             }
             else if (Application_ID == App.Names.PurchaseReturn)   
@@ -618,7 +617,6 @@ namespace entity.Brillo.Logic
                 {
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).ToList());
                 }
-
             }
             else if (Application_ID == App.Names.SalesReturn)
             {
@@ -898,7 +896,8 @@ namespace entity.Brillo.Logic
      
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               int CurrencyFXID, int ProductID, int LocationID,
-                                              decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList)
+                                              decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList,
+                                              DateTime? ExpiryDate, string Code)
         {
             int id_movement = 0;
             if (Quantity > 0)
@@ -910,6 +909,19 @@ namespace entity.Brillo.Logic
                 item_movement.credit = Quantity;
                 item_movement.status = Status;
                 item_movement.id_location = LocationID;
+
+                //Product Expiry Date...
+                if (ExpiryDate != null)
+                {
+                    item_movement.expire_date = ExpiryDate;
+                }
+
+                //Lote Number Code...
+                if (Code != null)
+                {
+                    item_movement.code = Code;
+                }
+
 
                 if (ApplicationID == App.Names.Transfer)
                 {

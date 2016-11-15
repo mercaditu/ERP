@@ -385,35 +385,32 @@ namespace entity
         {
             SaveChanges();
 
-            foreach (sales_invoice sales_invoice in base.sales_invoice.Local)
+            foreach (sales_invoice sales_invoice in base.sales_invoice.Local.Where(x => x.IsSelected && x.Error == null))
             {
-                if (sales_invoice.IsSelected && sales_invoice.Error == null)
+                if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0
+                    &&
+                    sales_invoice.is_accounted == false)
                 {
-                    if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0
-                        &&
-                        sales_invoice.is_accounted == false)
+                    List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                    payment_schedualList = _Payment.revert_Schedual(sales_invoice);
+
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    List<item_movement> item_movementList = new List<item_movement>();
+                    item_movementList = _Stock.revert_Stock(this, App.Names.SalesInvoice, sales_invoice);
+
+                    if (payment_schedualList != null && payment_schedualList.Count > 0)
                     {
-                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-                        Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                        payment_schedualList = _Payment.revert_Schedual(sales_invoice);
-
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.revert_Stock(this, App.Names.SalesInvoice, sales_invoice);
-
-                        if (payment_schedualList != null && payment_schedualList.Count > 0)
-                        {
-                            payment_schedual.RemoveRange(payment_schedualList);
-                        }
-
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            item_movement.RemoveRange(item_movementList);
-                        }
-
-                        sales_invoice.status = Status.Documents_General.Annulled;
-                        SaveChanges();
+                        payment_schedual.RemoveRange(payment_schedualList);
                     }
+
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        item_movement.RemoveRange(item_movementList);
+                    }
+
+                    sales_invoice.status = Status.Documents_General.Annulled;
+                    SaveChanges();
                 }
             }
         }

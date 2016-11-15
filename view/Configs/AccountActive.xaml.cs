@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
-using System.Data.Entity;
 using System.ComponentModel;
-using System.Printing;
-using entity.Brillo.Logic;
 
 namespace Cognitivo.Configs
 {
@@ -37,7 +26,7 @@ namespace Cognitivo.Configs
 
         public db db { get; set; }
         public CollectionViewSource app_accountViewSource { get; set; }
-        public Boolean is_active { get; set; }
+        public bool is_active { get; set; }
 
         public AccountActive()
         {
@@ -65,7 +54,11 @@ namespace Cognitivo.Configs
                     id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                 }
 
-                var app_account_detailList = app_account.app_account_detail.Where(x => x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal && x.id_session == id_session)
+                var app_account_detailList = 
+                    app_account.app_account_detail.Where(x => 
+                    x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal && 
+                    x.id_company == CurrentSession.Id_Company &&
+                    x.id_session == id_session)
                      .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
                      .Select(s => new
                      {
@@ -141,8 +134,6 @@ namespace Cognitivo.Configs
                 }
                 else
                 {
-                   
-
                     List<app_currency> app_currencyList = new List<app_currency>();
                     app_currencyList = db.app_currency.ToList();
 

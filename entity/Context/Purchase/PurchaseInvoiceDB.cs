@@ -94,6 +94,7 @@ namespace entity
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+
                         ///Insert Payment Schedual Logic
                         payment_schedualList = _Payment.insert_Schedual(invoice);
 

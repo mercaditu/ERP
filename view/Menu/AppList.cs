@@ -53,7 +53,7 @@ namespace Cognitivo.Menu
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact", entity.CurrentSession.Versions.Full, "1");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "", entity.CurrentSession.Versions.Full, "1");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "SalesBudget", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.PointofSale", entity.App.Names.PointOfSale, "PointofSale", entity.CurrentSession.Versions.Lite, "0");
@@ -118,11 +118,11 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.Payments", entity.App.Names.Payment, "", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.Payments", entity.App.Names.Payment, "PaymentMade", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.PromissoryNote", entity.App.Names.PromissoryNote, "IOU", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.Reconciliation", entity.App.Names.Reconciliation, "", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.Reconciliation", entity.App.Names.Reconciliation, "BankReconciliation", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "", entity.CurrentSession.Versions.Basic, "0");
+            dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "PaymentType", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Bank", entity.App.Names.Bank, "BankAccount", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Reports, "Reporting.Views.CurrentAccount_Customer", entity.App.Names.CurrentAccountCustomer, "Reports", entity.CurrentSession.Versions.Basic, "0");
 

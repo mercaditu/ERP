@@ -9,10 +9,10 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.43229in</Width>
+              <Width>3.43229in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.88542in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.8125in</Width>
@@ -24,12 +24,12 @@
               <Width>1.01562in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.34375in</Width>
+              <Width>1.45833in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.20833in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -43,7 +43,7 @@
                               <Value>Code</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -79,7 +79,7 @@
                               <Value>Task</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -115,7 +115,7 @@
                               <Value>Status</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -151,7 +151,7 @@
                               <Value>StartDate</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -187,7 +187,7 @@
                               <Value>EndDate</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -223,7 +223,7 @@
                               <Value>Quantity Est</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -259,7 +259,7 @@
                               <Value>Cost Est</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -286,7 +286,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.23958in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -300,6 +300,7 @@
                               <Value>=Fields!Project.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -321,79 +322,11 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
+                    <ColSpan>3</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox10">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>#465678</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox10</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>#c6daf8</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>#9eb6e4</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox31">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>#465678</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox31</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>#c6daf8</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>#9eb6e4</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
+                <TablixCell />
+                <TablixCell />
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox38">
@@ -406,6 +339,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -441,6 +375,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -466,18 +401,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox29">
+                    <Textbox Name="Textbox2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantity_est.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -487,7 +422,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox29</rd:DefaultName>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#c6daf8</Color>
@@ -514,6 +449,7 @@
                               <Value>=Sum(Fields!unit_cost_est.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -543,7 +479,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.22917in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -557,6 +493,7 @@
                               <Value>=Fields!code.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -590,6 +527,7 @@
                               <Value>=Fields!item_description.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -623,6 +561,7 @@
                               <Value>=Fields!status.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -656,6 +595,7 @@
                               <Value>=Fields!start_date_est.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>d</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -690,6 +630,7 @@
                               <Value>=Fields!end_date_est.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>d</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -724,6 +665,7 @@
                               <Value>=Sum(Fields!quantity_est.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -760,6 +702,7 @@
                               <Value>=Sum(Fields!unit_cost_est.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -787,7 +730,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -801,6 +744,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -836,6 +780,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -871,6 +816,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -906,6 +852,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -941,6 +888,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -976,6 +924,7 @@
                               <Value>=Sum(Fields!quantity_est.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -1014,6 +963,7 @@
                               <Value>=Sum(Fields!unit_cost_est.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -1099,8 +1049,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Project</DataSetName>
-        <Height>1in</Height>
-        <Width>8.34374in</Width>
+        <Height>0.89583in</Height>
+        <Width>9.34374in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1108,15 +1058,33 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.25in</Height>
+    <Height>0.89583in</Height>
     <Style />
   </Body>
   <Width>9.34374in</Width>
   <Page>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeader>
+      <Height>0.5in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.47917in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>

@@ -31,6 +31,7 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             cntrl.branch objBranch = new cntrl.branch();
             app_branch app_branch = new app_branch();
+            app_branch.id_company = CurrentSession.Id_Company;
             entity.db.app_branch.Add(app_branch);
             branchViewSource.View.MoveCurrentToLast();
             objBranch.app_branchViewSource = branchViewSource;

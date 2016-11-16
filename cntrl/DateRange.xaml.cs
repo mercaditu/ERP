@@ -54,18 +54,18 @@ namespace cntrl
         {
             if (rbtnYear.IsChecked == true)
             {
-                StartDate = StartDate.AddYears(-1);
-                EndDate = EndDate.AddYears(-1);
+                StartDate = StartDate.AddYears(1);
+                EndDate = EndDate.AddYears(1);
             }
             else if (rbtnMonth.IsChecked == true)
             {
-                StartDate = StartDate.AddMonths(-1);
-                EndDate = EndDate.AddMonths(-1);
+                StartDate = StartDate.AddMonths(1);
+                EndDate = EndDate.AddMonths(1);
             }
             else
             {
-                StartDate = StartDate.AddDays(-1);
-                EndDate = EndDate.AddDays(-1);
+                StartDate = StartDate.AddDays(1);
+                EndDate = EndDate.AddDays(1);
             }
 
             lblDateHeader_Changed();
@@ -126,7 +126,7 @@ namespace cntrl
             }
             else
             {
-                lblDateHeader.Content = StartDate.Date.ToLongDateString() + " - " + EndDate.Date.ToLongDateString();
+                lblDateHeader.Content = StartDate.Date.ToShortDateString() + " - " + EndDate.Date.ToShortDateString();
             }
         }
     }

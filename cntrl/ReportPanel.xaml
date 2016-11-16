@@ -11,24 +11,26 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="cntrl.ReportPanel" x:Name="this"
-             mc:Ignorable="d"
+             mc:Ignorable="d" Foreground="White"
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
     </UserControl.Resources>
     <Grid>
-        <Border CornerRadius="3" Margin="8">
-            <StackPanel Background="White">
-                <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
+        <StackPanel>
+            <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
                    Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
+                <Label Content="{lex:Loc Variant}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <ListBox ItemsSource="{Binding ElementName=this, Path=ReportVariations}" DisplayMemberPath="Name" SelectedValuePath="ID"/>
+                
                 <Label Content="{lex:Loc Filter}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
                                  DateChanged="DateRange_DateChanged"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="stpFilter" />
+                    <StackPanel x:Name="stpFilter"/>
                 </ScrollViewer>
                 <Label Content="{lex:Loc View}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -36,6 +38,5 @@
                 </ScrollViewer>
                 <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click" Width="128"/>
             </StackPanel>
-        </Border>
     </Grid>
 </UserControl>

@@ -11,6 +11,9 @@
 			 mc:Ignorable="d"
 			 d:DesignWidth="256">
 	<StackPanel>
+		<StackPanel.Background>
+			<SolidColorBrush Color="White" Opacity="0.64"/>
+		</StackPanel.Background>
 		<Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 			<DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
@@ -19,7 +22,7 @@
 			<DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
 						Margin="2" Background="Transparent" BorderBrush="Transparent"/>
 		</StackPanel>
-		<StackPanel Background="{StaticResource AccentColor_Brush}">
+		<StackPanel>
 			
 			<StackPanel Margin="4" Orientation="Horizontal">
 				<StackPanel.Background>
@@ -30,18 +33,13 @@
 				<RadioButton Content="{lex:Loc Day}" x:Name="rbtnDay" Click="btnDay_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
 			</StackPanel>
 			
-			<StackPanel Margin="4" VerticalAlignment="Center">
-				<Label x:Name="lblDateHeader" Style="{StaticResource H2}" HorizontalAlignment="Center" Content="{Binding ShortDate, ElementName=this}" Foreground="Azure"/>
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="23"
+			<StackPanel Orientation="Horizontal" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="26"
 							   HorizontalContentAlignment="Center" VerticalAlignment="Center" MouseUp="btnDateBack"/>
-					<Label Content="{Binding ElementName=this, Path=StartDate, StringFormat=d}" Foreground="Azure" VerticalAlignment="Center"/>
-					<Label Content="-" Foreground="DimGray" VerticalAlignment="Center"/>
-					<Label Content="{Binding ElementName=this, Path=EndDate, StringFormat=d}" Foreground="Azure" VerticalAlignment="Center"/>
-					<Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="23"
+                <Label x:Name="lblDateHeader" Style="{StaticResource H2}" HorizontalAlignment="Center" Content="{Binding ShortDate, ElementName=this}" Foreground="Azure"/>
+                <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" Foreground="White" FontSize="26"
 							   HorizontalContentAlignment="Center" VerticalAlignment="Center" MouseUp="btnDateForward"/>
-				</StackPanel>
-			</StackPanel>
+            </StackPanel>
 		</StackPanel>
 	</StackPanel>
 </UserControl>

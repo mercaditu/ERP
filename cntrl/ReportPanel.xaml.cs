@@ -7,6 +7,12 @@ using System.Windows.Controls;
 
 namespace cntrl
 {
+    public class ReportVariation
+    {
+        public string Name { get; set; }
+        public string ID { get; set; }
+    }
+
     public class ReportColumns
     {
         public string Columname { get; set; }
@@ -15,6 +21,8 @@ namespace cntrl
 
     public partial class ReportPanel : UserControl
     {
+        public List<ReportVariation> ReportVariations { get; set; }
+
         public static DependencyProperty ReportTitleProperty = DependencyProperty.Register("ReportTitle", typeof(string), typeof(ReportPanel));
         public string ReportTitle
         {
@@ -43,8 +51,6 @@ namespace cntrl
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
         
-        
-
         public DataTable ReportDt
         {
             get
@@ -99,6 +105,17 @@ namespace cntrl
                 {
                     if (item.DataType == typeof(string))
                     {
+                        //foreach (object Item in stpFilter.Children)
+                        //{
+                        //    ComboBox Cbx = Item as ComboBox;
+                        //    if (Cbx != null)
+                        //    {
+                        //        if (Cbx.SelectedItem != null)
+                        //        {
+
+                        //        }
+                        //    }
+                        //}
                         if (stpFilter.FindName("cbx" + item.ColumnName) !=null)
                         {
                             ComboBox combocolumndata = stpFilter.FindName("cbx" + item.ColumnName) as ComboBox;
@@ -147,6 +164,7 @@ namespace cntrl
 
         public ReportPanel()
         {
+            ReportVariations = new List<ReportVariation>();
             InitializeComponent();
         }
         private void Cmb_SelectionChanged(object sender, RoutedEventArgs e)

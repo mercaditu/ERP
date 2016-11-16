@@ -56,7 +56,7 @@ namespace Cognitivo.Configs
             //account.accountobject = app_account;
             // app_accountViewSource.View.MoveCurrentToLast();
             //account.objCollectionViewSource = app_accountViewSource;
-            //account.entity = entity;
+            hr_postion.entity = entity;
             crud_modal.Children.Add(hr_postion);
         }
 

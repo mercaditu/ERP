@@ -32,7 +32,7 @@
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
         <CollectionViewSource x:Key="branch_destViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="branch_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
-        <CollectionViewSource x:Key="transfercostViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:transfercost}, CreateList=True}"/>
+        
     </Page.Resources>
 
     <Grid DataContext="{StaticResource item_transferViewSource}">
@@ -273,16 +273,16 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Cost}">
                     <StackPanel     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <DataGrid x:Name="dgbcost" Height="Auto"
+                        <!--<DataGrid x:Name="dgbcost" Height="Auto"
                                   AutoGenerateColumns="False" Grid.ColumnSpan="2" 
                                   EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource transfercostViewSource}}" 
+                                
                                   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding costname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Name}" Width="SizeToHeader"/>
                                 <DataGridTextColumn Binding="{Binding cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Cost}" Width="SizeToHeader"/>
                             </DataGrid.Columns>
-                        </DataGrid>
+                        </DataGrid>-->
                     </StackPanel>
                 </TabItem>
             </TabControl>

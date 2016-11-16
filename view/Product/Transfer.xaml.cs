@@ -16,7 +16,7 @@ namespace Cognitivo.Product
     {
         ProductTransferDB ProductTransferDB = new ProductTransferDB();
         Class.StockCalculations StockCalculations = new Class.StockCalculations();
-        CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
+        CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
         //List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
 

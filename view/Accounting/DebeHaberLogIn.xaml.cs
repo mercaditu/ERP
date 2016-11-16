@@ -37,16 +37,13 @@ namespace Cognitivo.Accounting
             using (entity.db db = new entity.db())
             {
                 entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
-                if (company != null)
+                if (company == null)
                 {
-                    Company_RUC = company.gov_code;
-                    Company_Name = company.name;
+                    company = db.app_company.FirstOrDefault();
                 }
 
-                if (company.hash_debehaber != null)
-                {
-                    tabUpLoad.IsSelected = true;
-                }
+                Company_RUC = company.gov_code;
+                Company_Name = company.name;
             }
         }
 

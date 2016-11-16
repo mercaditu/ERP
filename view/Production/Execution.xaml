@@ -59,6 +59,8 @@
 		</Grid.RowDefinitions>
 		<Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.Row="1" Grid.Column="1"
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <!--<Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5">
             <Grid.RowDefinitions>
@@ -521,9 +523,9 @@
 					   appName="ProductionExecution"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,150,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,150,0">
             <Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25"/>
 
-        </StackPanel>-->
+        </StackPanel>
     </Grid>
 </Page>

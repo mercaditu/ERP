@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using entity;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {
@@ -163,33 +164,20 @@ namespace Cognitivo.Product
         }
 
         private void btnCalculateCost_Click(object sender, RoutedEventArgs e)
-      {
-          item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
-          decimal Cost = 0;
-          int id_currency = CurrentSession.Get_Currency_Default_Rate().id_currency;
-
-          foreach (item_recepie_detail item_recepie_detail in item_recepie.item_recepie_detail)
-          {
-                if (item_recepie_detail.item.item_product!=null)
+        {
+            item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
+            if (item_recepie != null)
+            {
+                List<item_recepie_detail> item_recepie_detailList = item_recepie.item_recepie_detail.ToList();
+             
+                if (item_recepie_detailList.Count > 0)
                 {
-                    int id_item_product = item_recepie_detail.item.item_product.FirstOrDefault().id_item_product;
-                    item_movement item_movement = ProductRecipeDB.item_movement
-                      .Where(x => x.id_item_product == id_item_product && x.credit > 0)
-                      .OrderByDescending(y => y.trans_date)
-                      .FirstOrDefault();
-                    if (item_movement != null)
-                    {
-                        Cost += item_movement.item_movement_value.Sum(x => x.unit_value);
-                    }
-                    else
-                    {
-                        Cost += item_recepie_detail.item.unit_cost != null ? (decimal)item_recepie_detail.item.unit_cost : 0;
-                    }
+                    cntrl.PanelAdv.pnlCostCalculationReceipe pnlCostCalculationReceipe = new cntrl.PanelAdv.pnlCostCalculationReceipe();
+                    pnlCostCalculationReceipe.Outputitem_recepie_detailList = item_recepie_detailList;
+                    crud_modal_cost.Visibility = Visibility.Visible;
+                    crud_modal_cost.Children.Add(pnlCostCalculationReceipe);
                 }
-            
             }
-
-          tbxCalculateCost.Text = entity.Brillo.Localize.StringText("Cost") + " : " + Math.Round(Cost) + " " + CurrentSession.Currency_Default.name;
-      }
+        }
     }
 }

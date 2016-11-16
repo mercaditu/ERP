@@ -32,8 +32,9 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-
-		<ListBox x:Name="item_receipeDataGrid" Style="{StaticResource nav_List}"
+        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <ListBox x:Name="item_receipeDataGrid" Style="{StaticResource nav_List}"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}"

@@ -409,6 +409,9 @@
     <Compile Include="navTransaction.xaml.cs">
       <DependentUpon>navTransaction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanelAdv\pnlCostCalculationReceipe.xaml.cs">
+      <DependentUpon>pnlCostCalculationReceipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PanelAdv\pnlOrder.xaml.cs">
       <DependentUpon>pnlOrder.xaml</DependentUpon>
     </Compile>
@@ -900,6 +903,10 @@
     <Page Include="navTransaction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlCostCalculationReceipe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PanelAdv\pnlOrder.xaml">
       <SubType>Designer</SubType>

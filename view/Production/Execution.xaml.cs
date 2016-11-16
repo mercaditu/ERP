@@ -8,6 +8,7 @@ using System.Data;
 using System;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Cognitivo.Production
 {
@@ -682,7 +683,23 @@ namespace Cognitivo.Production
             }
         }
 
-     
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            if (production_order != null)
+            {
+                List<production_order_detail> production_order_detailList = production_order.production_order_detail.Where(x => x.is_input).ToList();
+                List<production_order_detail> production_order_detailOutputList = production_order.production_order_detail.Where(x => x.is_input == false).ToList();
+                if (production_order_detailList.Count > 0)
+                {
+                    cntrl.PanelAdv.pnlCostCalculation pnlCostCalculation = new cntrl.PanelAdv.pnlCostCalculation();
+                    pnlCostCalculation.Inputproduction_order_detailList = production_order_detailList;
+                    pnlCostCalculation.Outputproduction_order_detailList = production_order_detailOutputList;
+                    crud_modal_cost.Visibility = Visibility.Visible;
+                    crud_modal_cost.Children.Add(pnlCostCalculation);
+                }
+            }
+        }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

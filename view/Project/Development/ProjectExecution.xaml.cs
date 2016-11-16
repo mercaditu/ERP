@@ -103,8 +103,9 @@ namespace Cognitivo.Project
                 }
                 else
                 {
-                    projectViewSource.View.Filter = null;
+                   // projectViewSource.View.Filter = null;
                 }
+                filter_task();
             }
             catch (Exception ex)
             {

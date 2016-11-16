@@ -18,15 +18,12 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.ProductDS ProductionDB = new Data.ProductDS();
-
-            ProductionDB.BeginInit();
-
-            Data.ProductionDSTableAdapters.ProductionOrderTableAdapter ProductionOrderTableAdapter = new Data.ProductionDSTableAdapters.ProductionOrderTableAdapter();
+          
                 
             DataTable dt = new DataTable();
-
-            dt = ProductionOrderTableAdapter.GetData(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
+            Class.Production Production = new Class.Production();
+            
+            dt = Production.Get_Production(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
           
                 ReportPanel.ReportDt = dt;
            
@@ -35,7 +32,7 @@ namespace Cognitivo.Reporting.Views
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionOrder.rdlc";
 
-            ProductionDB.EndInit();
+     
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();

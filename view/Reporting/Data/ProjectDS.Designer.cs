@@ -3148,17 +3148,17 @@ inner join projects as proj on proj.id_project = task.id_project
 inner join items as item on task.id_item = item.id_item
 inner join contacts as contact on proj.id_contact=contact.id_contact
  
-where proj.id_project = @IDProject 
+where proj.id_company = @IDComapny
 order by task.id_project_task
 
 ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@IDProject";
+            param.ParameterName = "@IDComapny";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "id_project";
+            param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
         }
         
@@ -3166,9 +3166,9 @@ order by task.id_project_task
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(ProjectDS.ProjectDataTable dataTable, int IDProject) {
+        public virtual int Fill(ProjectDS.ProjectDataTable dataTable, int IDComapny) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(IDProject));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(IDComapny));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -3180,9 +3180,9 @@ order by task.id_project_task
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ProjectDS.ProjectDataTable GetData(int IDProject) {
+        public virtual ProjectDS.ProjectDataTable GetData(int IDComapny) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(IDProject));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(IDComapny));
             ProjectDS.ProjectDataTable dataTable = new ProjectDS.ProjectDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

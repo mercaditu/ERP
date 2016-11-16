@@ -340,7 +340,19 @@ namespace Cognitivo.Production
                     if (production_order.id_project != null)
                     {
                         item_request.id_project = production_order.id_project;
-                        item_request.id_branch = production_order.id_branch;
+                      
+                    }
+                    if (production_order.production_line!=null)
+                    {
+                        if (production_order.production_line.app_location!=null)
+                        {
+                            item_request.id_branch = production_order.production_line.app_location.id_branch;
+                        }
+                       
+                    }
+                    if (item_request.id_branch==null || item_request.id_branch<=0)
+                    {
+                        item_request.id_branch = CurrentSession.Id_Branch;
                     }
 
                     item_request.request_date = DateTime.Now;

@@ -11,7 +11,7 @@ namespace entity
         public production_execution_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
             timestamp = DateTime.Now;
@@ -72,11 +72,13 @@ namespace entity
 
                     if (id_time_coefficient > 0 && quantity == 0)
                     {
-                        using (db db = new db())
-                        {
-                            quantity = Convert.ToDecimal(time.TotalHours) * db.hr_time_coefficient.Where(x => x.id_time_coefficient == id_time_coefficient).FirstOrDefault().coefficient;
-                            RaisePropertyChanged("quantity");
-                        }
+                        quantity = Convert.ToDecimal(time.TotalHours);
+                        RaisePropertyChanged("quantity");
+                        //using (db db = new db())
+                        //{
+                        //    quantity = Convert.ToDecimal(time.TotalHours) * db.hr_time_coefficient.Where(x => x.id_time_coefficient == id_time_coefficient).FirstOrDefault().coefficient;
+                        //    RaisePropertyChanged("quantity");
+                        //}
                     }
                 }
             }

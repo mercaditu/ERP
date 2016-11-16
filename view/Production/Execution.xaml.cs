@@ -400,6 +400,7 @@ namespace Cognitivo.Production
                 {
                     production_orderViewSource.View.Filter = null;
                 }
+                filter_task();
             }
             catch (Exception ex)
             {

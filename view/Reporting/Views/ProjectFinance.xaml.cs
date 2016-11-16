@@ -26,41 +26,52 @@ namespace Cognitivo.Reporting.Views
         {
             InitializeComponent();
 
-            using (db db = new db())
-            {
-                db.projects.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(y => y.name).ToList();
-                cbxProject.ItemsSource = db.projects.Local;
 
-            }
 
             Fill(null, null);
         }
 
         public void Fill(object sender, EventArgs e)
         {
-            project projects = cbxProject.SelectedItem as project;
-
-            if (projects != null)
-            {
-                this.reportViewer.Reset();
-
-                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
 
-                //fill data
-                Class.project Project = new Class.project();
-                DataTable dt = Project.ProjectFinance(Convert.ToInt16(cbxProject.SelectedValue));
 
-                reportDataSource1.Name = "DataSet1";
-                reportDataSource1.Value = dt;
-                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProjectFinance.rdlc";
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
 
-                this.reportViewer.Refresh();
-                this.reportViewer.RefreshReport();
+            //fill data
+            Class.project Project = new Class.project();
+            DataTable dt = Project.ProjectFinance(CurrentSession.Id_Company);
+            ReportPanel.ReportDt = dt;
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = dt;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProjectFinance.rdlc";
 
-            }
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
+
+
+        }
+        public void Filter(object sender, RoutedEventArgs e)
+        {
+
+
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+
+            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportPanel.Filterdt; //SalesDB.SalesByDate;
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProjectFinance.rdlc";
+
+
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
         }
     }
 }

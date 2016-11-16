@@ -34,7 +34,7 @@
                               <Value>Invoice</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -70,7 +70,7 @@
                               <Value>Date</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -106,7 +106,7 @@
                               <Value>Debit</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -142,7 +142,7 @@
                               <Value>Credit</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -183,6 +183,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -218,6 +219,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -253,6 +255,7 @@
                               <Value>=Sum(Fields!DEBITO.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -291,6 +294,7 @@
                               <Value>=Sum(Fields!credit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -334,6 +338,7 @@
                               <Value>=Fields!number.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -367,6 +372,7 @@
                               <Value>=Fields!trans_date.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>d</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -401,6 +407,7 @@
                               <Value>=Sum(Fields!DEBITO.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -437,6 +444,7 @@
                               <Value>=Sum(Fields!credit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -478,6 +486,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -513,6 +522,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -548,6 +558,7 @@
                               <Value>=Sum(Fields!DEBITO.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -586,6 +597,7 @@
                               <Value>=Sum(Fields!credit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>White</Color>
@@ -640,7 +652,7 @@
                             <Value>Code</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
-                              <FontSize>11pt</FontSize>
+                              <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>
@@ -679,7 +691,7 @@
                                 <Value>Customer</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -734,6 +746,7 @@
                             <Value>=Fields!code.Value</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>#465678</Color>
                             </Style>
@@ -772,6 +785,7 @@
                                 <Value>=Fields!name.Value</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>#465678</Color>
                                 </Style>
@@ -824,6 +838,7 @@
                             <Value />
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
+                              <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>
@@ -862,6 +877,7 @@
                                 <Value>Total</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -928,10 +944,8 @@
         </Border>
       </Style>
     </PageFooter>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>

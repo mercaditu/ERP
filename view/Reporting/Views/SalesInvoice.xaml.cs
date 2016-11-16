@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Forms;
 using entity;
 using Microsoft.Reporting.WinForms;
-using System.Xml;
-using System.IO;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -32,6 +19,14 @@ namespace Cognitivo.Reporting.Views
 
         public void Fill(object sender, RoutedEventArgs e)
         {
+            cntrl.ReportVariation One = new cntrl.ReportVariation
+            {
+                Name = "Sales",
+                ID = "SalesInvoiceSummary"
+            };
+
+            ReportPanel.ReportVariations.Add(One);
+
             this.reportViewer.Reset();
 
             ReportDataSource reportDataSource1 = new ReportDataSource();

@@ -214,7 +214,7 @@ namespace entity
                         app_location_origin.id_location,
                         item_transfer_detail.quantity_destination,
                         item_transfer_detail.item_transfer.trans_date,
-                        0,
+                        item_movement_LIST.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
                         stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                         null, null, null
                         );
@@ -296,7 +296,7 @@ namespace entity
                         app_locationdest.id_location,
                             item_transfer_detail.quantity_origin,
                             item_transfer_detail.item_transfer.trans_date,
-                            0,
+                            item_movement_originList.FirstOrDefault().item_movement_value.Sum(x=>x.unit_value),
                             stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                             null, null, null);
 

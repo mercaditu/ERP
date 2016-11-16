@@ -263,7 +263,7 @@ namespace Cognitivo.Product
                                     item_transfer_detail.item_transfer.app_location_destination.id_location,
                                     item_movement.debit,
                                     item_transfer_detail.item_transfer.trans_date,
-                                   item_movement.item_movement_value.Sum(x=>x.unit_value),
+                                    item_movement.item_movement_value.Sum(x=>x.unit_value),
                                     stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                     DimensionList, null, null
                                     );

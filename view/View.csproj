@@ -1080,7 +1080,9 @@
     <EmbeddedResource Include="Reporting\Reports\PendingAccounts.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionOrder.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

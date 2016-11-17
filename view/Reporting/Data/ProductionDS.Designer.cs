@@ -3669,7 +3669,7 @@ order by c.name";
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,i.name as ItemName,
 po.work_number as OrderNumber,po.name as OrderName,pod.quantity as OrderQuantity,ped.quantity as ExecustionQuantity,
- ped.unit_cost as ExecustionCost 
+ ped.unit_cost as ExecustionCost,pod.id_order_detail,parent_id_order_detail as Parent_ID,po.id_production_order 
 from production_order po inner join production_order_detail pod on po.id_production_order=pod.id_production_order
  left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail
  left join project_task pt on pod.id_project_task = pt.id_project_task 

@@ -413,7 +413,7 @@
                           <Color>#e5e5e5</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
@@ -447,7 +447,7 @@
                           <Color>#e5e5e5</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
@@ -1019,7 +1019,12 @@
                           <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
-                          <Group Name="Details" />
+                          <Group Name="Details">
+                            <GroupExpressions>
+                              <GroupExpression>=Fields!id_order_detail.Value</GroupExpression>
+                            </GroupExpressions>
+                            <Parent>=Fields!Parent_production_order.Value</Parent>
+                          </Group>
                           <Visibility>
                             <Hidden>true</Hidden>
                             <ToggleItem>id_production_order</ToggleItem>
@@ -1172,7 +1177,7 @@
     <Height>0.97917in</Height>
     <Style />
   </Body>
-  <Width>9.22285in</Width>
+  <Width>10.2071in</Width>
   <Page>
     <PageHeader>
       <Height>1.34937cm</Height>
@@ -1358,6 +1363,14 @@
         </Field>
         <Field Name="id_production_order">
           <DataField>id_production_order</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="id_order_detail">
+          <DataField>id_order_detail</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Parent_production_order">
+          <DataField>Parent_ID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>

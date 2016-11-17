@@ -9,10 +9,10 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.43229in</Width>
+              <Width>3.04687in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.88542in</Width>
+              <Width>0.65625in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.8125in</Width>
@@ -21,10 +21,10 @@
               <Width>0.73958in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.01562in</Width>
+              <Width>0.54687in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.45833in</Width>
+              <Width>0.93751in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1050,7 +1050,7 @@
         </TablixRowHierarchy>
         <DataSetName>Project</DataSetName>
         <Height>0.89583in</Height>
-        <Width>9.34374in</Width>
+        <Width>7.73958in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1061,7 +1061,7 @@
     <Height>0.89583in</Height>
     <Style />
   </Body>
-  <Width>9.34374in</Width>
+  <Width>7.73958in</Width>
   <Page>
     <PageHeader>
       <Height>0.5in</Height>
@@ -1083,8 +1083,6 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>11.69in</PageHeight>
-    <PageWidth>8.27in</PageWidth>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>

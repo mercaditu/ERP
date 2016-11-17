@@ -364,6 +364,7 @@
                           <Color>#e5e5e5</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>White</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -381,7 +382,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Month")</Value>
+                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Item")</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -420,13 +421,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RunningValue(Fields!Sales.Value, Sum, "Month")</Value>
+                              <Value>=Sum(Fields!Sales.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
-                                <Color>#4c68a2</Color>
+                                <Color>DimGray</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -441,14 +442,13 @@
                           <Color>#e6eefc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#c6daf8</BackgroundColor>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -525,7 +525,7 @@
                           <Color>#9eb6e4</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#7292cc</BackgroundColor>
+                        <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -603,7 +603,7 @@
                           <Color>#9eb6e4</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#7292cc</BackgroundColor>
+                        <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -690,7 +690,20 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Month.Value</Value>
+                                <Value>=
+
+Switch(Fields!Month.Value = "1", "Jan",
+Fields!Month.Value = "2", "Feb",
+Fields!Month.Value = "3", "Mar",
+Fields!Month.Value = "4", "Apr",
+Fields!Month.Value = "5", "May",
+Fields!Month.Value = "6", "Jun",
+Fields!Month.Value = "7", "Jul",
+Fields!Month.Value = "8", "Aug",
+Fields!Month.Value = "9", "Sep",
+Fields!Month.Value = "10", "Oct",
+Fields!Month.Value = "11", "Nov",
+Fields!Month.Value = "12", "Dec")</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -846,7 +859,7 @@
                                     <Color>#7292cc</Color>
                                     <Style>Solid</Style>
                                   </Border>
-                                  <BackgroundColor>#4c68a2</BackgroundColor>
+                                  <BackgroundColor>Gray</BackgroundColor>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -893,7 +906,7 @@
                                 <Color>#e6eefc</Color>
                                 <Style>Solid</Style>
                               </Border>
-                              <BackgroundColor>#c6daf8</BackgroundColor>
+                              <BackgroundColor>LightGrey</BackgroundColor>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
@@ -914,7 +927,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>Stock</Value>
+                                        <Value>Total Stock</Value>
                                         <Style>
                                           <FontFamily>Tahoma</FontFamily>
                                           <FontSize>8pt</FontSize>
@@ -955,7 +968,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>Sales</Value>
+                                        <Value>Total Sales</Value>
                                         <Style>
                                           <FontFamily>Tahoma</FontFamily>
                                           <FontSize>8pt</FontSize>
@@ -975,7 +988,7 @@
                                     <Color>#7292cc</Color>
                                     <Style>Solid</Style>
                                   </Border>
-                                  <BackgroundColor>#4c68a2</BackgroundColor>
+                                  <BackgroundColor>Gray</BackgroundColor>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -1050,7 +1063,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>5.04cm</Size>
+                    <Size>5.72792cm</Size>
                     <CellContents>
                       <Textbox Name="Item">
                         <CanGrow>true</CanGrow>
@@ -1133,7 +1146,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>5.04cm</Size>
+                    <Size>5.72792cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox16">
                         <CanGrow>true</CanGrow>
@@ -1179,7 +1192,7 @@
         </TablixRowHierarchy>
         <DataSetName>InventoryAnalysis</DataSetName>
         <Height>3.22956cm</Height>
-        <Width>17.54cm</Width>
+        <Width>18.22792cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1190,7 +1203,7 @@
     <Height>1.27149in</Height>
     <Style />
   </Body>
-  <Width>6.90551in</Width>
+  <Width>7.17635in</Width>
   <Page>
     <PageHeader>
       <Height>1.03187cm</Height>

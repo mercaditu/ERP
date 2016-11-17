@@ -17,10 +17,10 @@
 		<Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 			<DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-						Margin="2" Background="Transparent" BorderBrush="Transparent"/>
+						Margin="2" Background="Transparent" BorderBrush="Transparent" LostFocus="DateChanged_Click"/>
 			<Label Content="-"/>
 			<DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-						Margin="2" Background="Transparent" BorderBrush="Transparent"/>
+						Margin="2" Background="Transparent" BorderBrush="Transparent" LostFocus="DateChanged_Click"/>
 		</StackPanel>
 		<StackPanel>
 			

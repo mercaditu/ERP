@@ -155,7 +155,7 @@
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                           SelectedItem="{Binding user_given, Mode=TwoWay, NotifyOnValidationError=True, 
                           ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                          SelectedValuePath="id_branch" 
+                          SelectedValuePath="id_user" 
                           ItemsSource="{Binding Source={StaticResource security_userViewSource}}"/>
                 <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"

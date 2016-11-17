@@ -186,33 +186,54 @@ namespace entity
 		{
 			get
 			{
-				//if (_ValueInDefaultCurrency == 0)
-				//{
-				if (payment != null)
-				{
-					if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
-					{
-						//decimal amount = 0;
-						//foreach (payment_detail payment_detail in payment.payment_detail)
-						//{
+                ////if (_ValueInDefaultCurrency == 0)
+                ////{
+                //if (payment != null)
+                //{
+                //	if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                //	{
 
-						return Currency.convert_Values
-							(
-							value, 
-							id_currencyfx, 
-							CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault().id_currencyfx, 
-							App.Modules.Sales
-							);
-						
-						//}
+                //                    //decimal amount = 0;
+                //                    //foreach (payment_detail payment_detail in payment.payment_detail)
+                //                    //{
 
-						//value = payment.GrandTotal - amount;
-						//return payment.GrandTotal - amount;
-					}
-				}
-				//}
+                //                    return Currency.convert_Values
+                //			(
+                //			value, 
+                //			id_currencyfx, 
+                //			CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault().id_currencyfx, 
+                //			App.Modules.Sales
+                //			);
 
-				return _ValueInDefaultCurrency;
+                //		//}
+
+                //		//value = payment.GrandTotal - amount;
+                //		//return payment.GrandTotal - amount;
+
+                //	}
+                //}
+                ////}
+                if (_ValueInDefaultCurrency == 0)
+                {
+                    if (payment != null)
+                    {
+                        if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                        {
+                            decimal amount = 0;
+                            foreach (payment_detail payment_detail in payment.payment_detail)
+                            {
+                                amount += Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
+                            }
+                            this.value = payment.GrandTotal - amount;
+
+                            return payment.GrandTotal - amount;
+                        }
+                    }
+                }
+
+                
+
+                return _ValueInDefaultCurrency;
 			}
 			set
 			{

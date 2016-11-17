@@ -52,7 +52,7 @@ namespace Cognitivo.Reporting.Data
 {
 
 
-    public partial class ProductDS
-    {
-    }
+    //public partial class ProductDS
+    //{
+    //}
 }

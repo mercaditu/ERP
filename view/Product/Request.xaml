@@ -32,6 +32,7 @@
         <CollectionViewSource x:Key="item_requestitem_request_detailDimensionViewSource" Source="{Binding item_request_dimension, Source={StaticResource item_requestitem_request_detailViewSource}}"/>
         <CollectionViewSource x:Key="item_request_detailitem_request_decisionViewSource" Source="{Binding item_request_decision, Source={StaticResource item_requestitem_request_detailViewSource}}"/>
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
@@ -148,6 +149,14 @@
                           ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                           SelectedValuePath="id_branch" 
                           ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"/>
+                <Label Content="{lex:Loc ReceiveUser}"  Style="{StaticResource input_label}"/>
+                <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name" 
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          SelectedItem="{Binding user_given, Mode=TwoWay, NotifyOnValidationError=True, 
+                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_branch" 
+                          ItemsSource="{Binding Source={StaticResource security_userViewSource}}"/>
                 <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

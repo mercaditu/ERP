@@ -43,7 +43,7 @@ namespace Cognitivo.Configs
                 sqlConn_Plain.Close();
                 //sqlConn_Plain.Dispose();
 
-                connString.AppendFormat("database={0}; Integrated Security=True;", tbxDataBase.Text);
+                connString.AppendFormat("database={0}; Integrated Security=True; convert zero datetime=True", tbxDataBase.Text);
 
                 updateConfigFile();
 

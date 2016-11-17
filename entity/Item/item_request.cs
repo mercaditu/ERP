@@ -117,6 +117,7 @@ namespace entity
         public virtual ICollection<item_request_detail> item_request_detail { get; set; }
         public virtual ICollection<item_transfer> item_transfer { get; set; }
         public virtual security_user request_user { get; set; }
+        public virtual security_user given_user { get; set; }
         public virtual app_currency app_currency { get; set; }
         public virtual app_department app_department { get; set; }
         public virtual app_branch app_branch { get; set; }

@@ -156,6 +156,8 @@ namespace entity
             MerchandiseEntry = 134,
             [LocalizedDescription("MerchandiseExit")]
             MerchandiseExit = 135,
+            [LocalizedDescription("InventoryAnalysis")]
+            InventoryAnalysis = 136,
 
             //Production
             [LocalizedDescription("ProductionExecution")]

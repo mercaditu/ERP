@@ -47,6 +47,7 @@ namespace entity
         public virtual IEnumerable<sales_order> sales_order { get; set; }
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<contact> contacts { get; set; }
+        public virtual IEnumerable<payment> payment { get; set; }
 
         public string Error
         {

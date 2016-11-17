@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\6.162\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\8\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>154</ApplicationRevision>
+    <ApplicationRevision>156</ApplicationRevision>
     <ApplicationVersion>2.1.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -592,6 +592,9 @@
     <Compile Include="Reporting\Views\CostBreakDown.xaml.cs">
       <DependentUpon>CostBreakDown.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\InventoryAnalysis.xaml.cs">
+      <DependentUpon>InventoryAnalysis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\MerchandiseExit.xaml.cs">
       <DependentUpon>MerchandiseExit.xaml</DependentUpon>
     </Compile>
@@ -1077,6 +1080,7 @@
     <EmbeddedResource Include="Reporting\Reports\DeliveryByCustomer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\DeliveryByZone.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\InventoryAnalysis.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\MerchandiseExit.rdlc" />
@@ -1221,6 +1225,7 @@
     <None Include="Reporting\Data\ProductDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProductDS1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Reporting\Data\ProductDS.xss">
       <DependentUpon>ProductDS.xsd</DependentUpon>
@@ -1607,6 +1612,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\CostBreakDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\InventoryAnalysis.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

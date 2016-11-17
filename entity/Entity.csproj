@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201611151128535_DatabaseChange.Designer.cs">
       <DependentUpon>201611151128535_DatabaseChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611171109237_receipeandpaymentdetailchanges.cs" />
+    <Compile Include="Migrations\201611171109237_receipeandpaymentdetailchanges.Designer.cs">
+      <DependentUpon>201611171109237_receipeandpaymentdetailchanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
@@ -594,6 +598,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611151128535_DatabaseChange.resx">
       <DependentUpon>201611151128535_DatabaseChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611171109237_receipeandpaymentdetailchanges.resx">
+      <DependentUpon>201611171109237_receipeandpaymentdetailchanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

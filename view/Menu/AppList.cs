@@ -107,6 +107,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.CostBreakDown", entity.App.Names.CostBreakDown, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseEntry", entity.App.Names.MerchandiseEntry, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseExit", entity.App.Names.MerchandiseEntry, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.InventoryAnalysis", entity.App.Names.InventoryAnalysis, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Impex
             dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Exports, "Sales.Export", entity.App.Names.Export, "Export", entity.CurrentSession.Versions.Medium, "0");

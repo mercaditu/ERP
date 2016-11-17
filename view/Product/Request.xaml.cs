@@ -38,6 +38,9 @@ namespace Cognitivo.Product
 
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
             app_currencyViewSource.Source = CurrentSession.Currencies;
+            CollectionViewSource security_userViewSource = ((CollectionViewSource)(FindResource("security_userViewSource")));
+            await dbContext.security_user.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            security_userViewSource.Source = dbContext.security_user.Local;
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = await dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();

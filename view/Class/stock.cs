@@ -96,6 +96,20 @@ namespace Cognitivo.Class
             query = string.Format(query, TransDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
             return Generate.DataTable(query);
         }
+        public DataTable Inventory_Analysis(DateTime StartDate, DateTime EndDate)
+        {
+            string query = @"  select extract(Year_Month from trans_date) as DateRange, i.code as Code, i.name as Item, 
+                                 l.name as Location, sum(credit - debit) as Stock, 
+                                 sum(if(item_movement.id_sales_invoice_detail > 0, item_movement.debit, 0)) as Sales
+                                 from item_movement
+                                 inner join item_product as ip on item_movement.id_item_product = ip.id_item_product
+                                 inner join items as i on ip.id_item = i.id_item
+                                 inner join app_location as l on item_movement.id_location = l.id_location
+                                 where item_movement.trans_date between '{0}' and '{1}' and item_movement.id_company = {2}
+                                 group by extract(Year_Month from trans_date), item_movement.id_location, item_movement.id_item_product";
+            query = string.Format(query, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
+            return Generate.DataTable(query);
+        }
 
         public DataTable TransferSummary(DateTime StartDate, DateTime EndDate)
         {

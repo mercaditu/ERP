@@ -5,6 +5,9 @@ using System.Windows.Media;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Reporting.WinForms;
+using System.Windows.Data;
+using entity.BrilloQuery;
 
 namespace cntrl
 {
@@ -16,7 +19,8 @@ namespace cntrl
 
     public partial class ReportPanel : UserControl
     {
-        public List<Class.Report> Reports { get; set; }
+        CollectionViewSource ReportViewSource;
+
 
         public DateTime StartDate
         {
@@ -31,7 +35,7 @@ namespace cntrl
             set { _EndDate = value; }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
-        
+
         public DataTable ReportDt
         {
             get
@@ -63,11 +67,11 @@ namespace cntrl
                         ComboBox.DisplayMemberPath = item.ColumnName;
                         ComboBox.Name = "cbx" + item.ColumnName;
                         ComboBox.SelectionChanged += Cmb_SelectionChanged;
-                        ComboBox.Background.Opacity = 16;
+                        //    ComboBox.Background.Opacity = 16;
                         ComboBox.BorderBrush = Brushes.Transparent;
                         ComboBox.Foreground = Brushes.White;
                         ComboBox.IsTextSearchEnabled = true;
-                        
+
                         stpFilter.Children.Add(ComboBox);
                         stpFilter.Children.Add(stackcolumn);
                     }
@@ -86,12 +90,12 @@ namespace cntrl
             set
             {
                 _Filterdt = value;
-                
+
                 foreach (DataColumn item in value.Columns)
                 {
                     if (item.DataType == typeof(string))
                     {
-                        if (stpFilter.FindName("cbx" + item.ColumnName) !=null)
+                        if (stpFilter.FindName("cbx" + item.ColumnName) != null)
                         {
                             ComboBox combocolumndata = stpFilter.FindName("cbx" + item.ColumnName) as ComboBox;
                             DataView view = new DataView(value);
@@ -103,6 +107,46 @@ namespace cntrl
         }
 
         public DataTable _Filterdt;
+
+        public void Fill()
+        {
+            this.reportViewer.Reset();
+            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+            ReportDataSource reportDataSource1 = new ReportDataSource();
+
+
+            DataTable dt = new DataTable();
+
+            string query = System.IO.File.ReadAllText(@Report.QueryPath);
+            dt = QueryExecutor.DT(query);
+
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVAT", true.ToString()));
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowProfit", true.ToString()));
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMarkup", true.ToString()));
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowMargin", true.ToString()));
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowCost", true.ToString()));
+
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter("ShowVATTotal", true.ToString()));
+
+
+            reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+
+            reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
+
+
+
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
+        }
 
         public List<ReportColumns> ReportColumn
         {
@@ -189,6 +233,19 @@ namespace cntrl
         private void DateRange_DateChanged(object sender, RoutedEventArgs e)
         {
             Data_Update(null, null);
+        }
+
+        private void this_Loaded(object sender, RoutedEventArgs e)
+        {
+            Class.Generate Generate = new Class.Generate();
+            Generate.GenerateReportList();
+            ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
+            ReportViewSource.Source = Generate.ReportList;
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Fill();
         }
     }
 }

@@ -19,13 +19,13 @@ namespace Cognitivo.Reporting.Views
 
         public void Fill(object sender, RoutedEventArgs e)
         {
-            cntrl.ReportVariation One = new cntrl.ReportVariation
-            {
-                Name = "Sales",
-                ID = "SalesInvoiceSummary"
-            };
+            //cntrl.ReportVariation One = new cntrl.ReportVariation
+            //{
+            //    Name = "Sales",
+            //    ID = "SalesInvoiceSummary"
+            //};
 
-            ReportPanel.Reports.Add(One);
+         //   ReportPanel.Reports.Add(One);
 
             this.reportViewer.Reset();
 

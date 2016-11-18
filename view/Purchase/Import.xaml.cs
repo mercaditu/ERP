@@ -352,7 +352,8 @@ namespace Cognitivo.Purchase
             {
                 //DeleteDetailGridRow
                 impeximpex_expenseDataGrid.CancelEdit();
-                ImpexDB.impex_expense.Remove(e.Parameter as impex_expense);
+                impex impex = impexDataGrid.SelectedItem as impex;
+                impex.impex_expense.Remove(e.Parameter as impex_expense);
                 impeximpex_expenseViewSource.View.Refresh();
             }
         }

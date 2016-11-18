@@ -17,14 +17,14 @@ using System.Collections;
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class ContactSubscription : Page
+    public partial class Subscription : Page
     {
         public List<ContactInfo> ContactInfoList { get; set; }
 
         entity.db db = new entity.db();
         public CollectionViewSource contactViewSource;
 
-        public ContactSubscription()
+        public Subscription()
         {
             InitializeComponent();
         }

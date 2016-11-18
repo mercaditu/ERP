@@ -220,6 +220,7 @@ namespace entity
             }
         }
 
+
         public static List<sales_rep> SalesReps { get; set; }
         public static List<app_contract> Contracts { get; set; }
         public static List<app_condition> Conditions { get; set; }

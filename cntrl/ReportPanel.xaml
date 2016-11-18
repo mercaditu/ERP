@@ -7,21 +7,26 @@
              xmlns:Controls="clr-namespace:cntrl.Controls"
     
              xmlns:local="clr-namespace:cntrl"
+             xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" Foreground="White"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-             d:DesignHeight="600" d:DesignWidth="800">
-    
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="this_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}"/>
+        <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}"/>
+       
+    </UserControl.Resources>
     <Grid Background="{StaticResource AccentColor_Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <rv:ReportViewer x:Name="reportViewer"/>
+            <rv:ReportViewer x:Name="reportViewer" />
         </WindowsFormsHost>
         <StackPanel>
             <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
@@ -29,9 +34,9 @@
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
                 <Label Content="{lex:Loc Variant}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <ListBox ItemsSource="{Binding ElementName=this, Path=ReportVariations}" DisplayMemberPath="Name" SelectedValuePath="ID"/>
+                <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged"/>
 
-            <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+            <Label Content="{lex:Loc Parameter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
                                  DateChanged="DateRange_DateChanged"/>
@@ -39,7 +44,7 @@
                     <StackPanel x:Name="stpFilter"/>
                 </ScrollViewer>
             <Grid>
-                <Label Content="{lex:Loc View}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <Button Content="c" Width="24.5" Height="24.5" Background="White" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="DimGray" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click"/>

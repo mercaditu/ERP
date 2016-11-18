@@ -105,8 +105,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Inventory, "Sales.PackingList", "PackingList", "ProductSend", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.StockFlow", entity.App.Names.InventoryFlow, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.CostBreakDown", entity.App.Names.CostBreakDown, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseEntry", entity.App.Names.MerchandiseEntry, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseExit", entity.App.Names.MerchandiseEntry, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseEntry", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseExit", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.InventoryAnalysis", entity.App.Names.InventoryAnalysis, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Impex

@@ -16,14 +16,16 @@
 		</StackPanel.Background>
         <StackPanel Orientation="Horizontal">
             <Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-            <StackPanel Margin="4" Orientation="Horizontal">
-                <StackPanel.Background>
-                    <SolidColorBrush Color="White" Opacity="0.88"/>
-                </StackPanel.Background>
-                <RadioButton Content="{lex:Loc Year}" x:Name="rbtnYear" Click="btnYear_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
-                <RadioButton Content="{lex:Loc Month}" x:Name="rbtnMonth" Click="btnMonth_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
-                <RadioButton Content="{lex:Loc Day}" x:Name="rbtnDay" Click="btnDay_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
-            </StackPanel>
+            <Border CornerRadius="16">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.32"/>
+                </Border.Background>
+                <StackPanel Margin="4" Orientation="Horizontal">
+                    <RadioButton Content="{lex:Loc Year}" x:Name="rbtnYear" Click="btnYear_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+                    <RadioButton Content="{lex:Loc Month}" x:Name="rbtnMonth" Click="btnMonth_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+                    <RadioButton Content="{lex:Loc Day}" x:Name="rbtnDay" Click="btnDay_Click" Style="{StaticResource input_radiobutton}" Margin="4"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
 		
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

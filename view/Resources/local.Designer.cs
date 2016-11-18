@@ -1051,6 +1051,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @DebeHaberIntegration.
         /// </summary>
         public static string DebeHaberIntegration {
@@ -2410,6 +2419,24 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @MerchandisewithCredits.
+        /// </summary>
+        public static string MerchandisewithCredits {
+            get {
+                return ResourceManager.GetString("MerchandisewithCredits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MerchandisewithDebits.
+        /// </summary>
+        public static string MerchandisewithDebits {
+            get {
+                return ResourceManager.GetString("MerchandisewithDebits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @MigrationType.
         /// </summary>
         public static string MigrationType {
@@ -2424,6 +2451,15 @@ namespace Cognitivo.Resources {
         public static string Module {
             get {
                 return ResourceManager.GetString("Module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
@@ -2532,6 +2568,15 @@ namespace Cognitivo.Resources {
         public static string PackingList {
             get {
                 return ResourceManager.GetString("PackingList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Parameters.
+        /// </summary>
+        public static string Parameters {
+            get {
+                return ResourceManager.GetString("Parameters", resourceCulture);
             }
         }
         
@@ -3301,6 +3346,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Requested.
+        /// </summary>
+        public static string Requested {
+            get {
+                return ResourceManager.GetString("Requested", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @RequestManagement.
         /// </summary>
         public static string RequestManagement {
@@ -3657,6 +3711,15 @@ namespace Cognitivo.Resources {
         public static string Sex {
             get {
                 return ResourceManager.GetString("Sex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Share.
+        /// </summary>
+        public static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
         
@@ -4206,6 +4269,15 @@ namespace Cognitivo.Resources {
         public static string WorkType {
             get {
                 return ResourceManager.GetString("WorkType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         

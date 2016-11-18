@@ -152,10 +152,10 @@ namespace entity
             SalesPromotion = 123,
             [LocalizedDescription("CostBreakDown")]
             CostBreakDown = 132,
-            [LocalizedDescription("MerchandiseEntry")]
-            MerchandiseEntry = 134,
-            [LocalizedDescription("MerchandiseExit")]
-            MerchandiseExit = 135,
+            [LocalizedDescription("MerchandisewithCredits")]
+            MerchandisewithCredits = 134,
+            [LocalizedDescription("MerchandisewithDebits")]
+            MerchandisewithDebits = 135,
             [LocalizedDescription("InventoryAnalysis")]
             InventoryAnalysis = 136,
 

@@ -255,7 +255,7 @@ namespace Cognitivo.Menu
         {
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
 
-            string name = "Cognitivo.Reporting.Views." + appName.Uid;
+            string name = "Cognitivo.Reporting.ReportViewer";
 
             try
             {

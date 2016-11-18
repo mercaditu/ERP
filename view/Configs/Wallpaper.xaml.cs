@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace Cognitivo.Configs
 {
     public partial class Wallpaper : Page
     {
-        String domain = AppDomain.CurrentDomain.BaseDirectory;
+        string domain = AppDomain.CurrentDomain.BaseDirectory;
 
         public Wallpaper()
         {
@@ -48,7 +40,7 @@ namespace Cognitivo.Configs
                     img.Height = 150;
                     img.Width = 200;
                     img.Cursor = System.Windows.Input.Cursors.Hand;
-                    System.Windows.Thickness margin = new Thickness(10);
+                    Thickness margin = new Thickness(10);
                     img.Margin = margin;
                     RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
                     wrapWallpaper.Children.Insert(i, img);
@@ -63,8 +55,8 @@ namespace Cognitivo.Configs
 
             if (MainWindow != null)
             {
-                Cognitivo.Properties.Settings.Default.wallpaper_Image = imageSelected.Source.ToString();
-                Cognitivo.Properties.Settings.Default.Save();
+                Properties.Settings.Default.wallpaper_Image = imageSelected.Source.ToString();
+                Properties.Settings.Default.Save();
             }
         }
 

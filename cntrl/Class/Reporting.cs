@@ -13,7 +13,7 @@ namespace cntrl.Class
             Report Report = new Class.Report
             {
                 Application=entity.App.Names.SalesInvoice,
-                Name="Test",
+                Name= "SalesInvoiceSummary",
                 Description="Test",
                 Path="Cognitivo.View.Reporting.SalesInvoiceSummary.rdlc",
                 QueryPath="Reports/queries/SalesInvoice.sql",

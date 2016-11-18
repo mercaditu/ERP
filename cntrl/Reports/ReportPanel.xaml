@@ -34,7 +34,7 @@
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
                 <Label Content="{lex:Loc Variant}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-            <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4"
+            <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4" 
                          DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged" Foreground="White">
                 <ListBox.Background>
                     <SolidColorBrush Color="Transparent"/>
@@ -52,7 +52,7 @@
                 <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <Button Content="c" Width="24.5" Height="24.5" Background="White" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="DimGray" FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click"/>
+                        Style="{DynamicResource MetroCircleButtonStyle}" />
             </Grid>
             <StackPanel x:Name="stpColumn" />
         </StackPanel>

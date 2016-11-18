@@ -282,16 +282,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>1.60042cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>1.48135cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>1.7724cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>1.71948cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1063,7 +1063,7 @@ Fields!Month.Value = "12", "Dec")</Value>
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>5.72792cm</Size>
+                    <Size>6.23063cm</Size>
                     <CellContents>
                       <Textbox Name="Item">
                         <CanGrow>true</CanGrow>
@@ -1146,7 +1146,7 @@ Fields!Month.Value = "12", "Dec")</Value>
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>5.72792cm</Size>
+                    <Size>6.23063cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox16">
                         <CanGrow>true</CanGrow>
@@ -1192,7 +1192,7 @@ Fields!Month.Value = "12", "Dec")</Value>
         </TablixRowHierarchy>
         <DataSetName>InventoryAnalysis</DataSetName>
         <Height>3.22956cm</Height>
-        <Width>18.22792cm</Width>
+        <Width>15.30427cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1203,7 +1203,7 @@ Fields!Month.Value = "12", "Dec")</Value>
     <Height>1.27149in</Height>
     <Style />
   </Body>
-  <Width>7.17635in</Width>
+  <Width>6.0253in</Width>
   <Page>
     <PageHeader>
       <Height>1.03187cm</Height>

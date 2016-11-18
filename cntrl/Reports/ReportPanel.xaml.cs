@@ -6,8 +6,9 @@ using System.Windows.Data;
 using entity.BrilloQuery;
 using entity;
 using System.Linq;
-using System.Drawing;
+
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace cntrl
 {

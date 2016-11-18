@@ -8,18 +8,13 @@
 	  xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
 	  d:DesignHeight="600" d:DesignWidth="900"
 	Title="Pending Receivables">
-	<Page.Resources>
-		<BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-	</Page.Resources>
-	<Grid Background="Gainsboro">
+    <Grid Background="Gainsboro">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
 		<Cntrl:ReportPanel 
 			x:Name="ReportPanel"
-			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
-			ReportDescription="List"
 			Update="Fill"
 			Filter="Filter"
 			Grid.Column="0"/>

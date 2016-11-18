@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Windows.Media;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace cntrl
 {
-    public class ReportVariation
-    {
-        public string Name { get; set; }
-        public string ID { get; set; }
-    }
-
     public class ReportColumns
     {
         public string Columname { get; set; }
@@ -21,21 +16,7 @@ namespace cntrl
 
     public partial class ReportPanel : UserControl
     {
-        public List<ReportVariation> ReportVariations { get; set; }
-
-        public static DependencyProperty ReportTitleProperty = DependencyProperty.Register("ReportTitle", typeof(string), typeof(ReportPanel));
-        public string ReportTitle
-        {
-            get { return (string)GetValue(ReportTitleProperty); }
-            set { SetValue(ReportTitleProperty, value); }
-        }
-
-        public static DependencyProperty ReportDescriptionProperty = DependencyProperty.Register("ReportDescription", typeof(string), typeof(ReportPanel));
-        public string ReportDescription
-        {
-            get { return (string)GetValue(ReportDescriptionProperty); }
-            set { SetValue(ReportDescriptionProperty, value); }
-        }
+        public List<Class.Report> Reports { get; set; }
 
         public DateTime StartDate
         {
@@ -69,10 +50,12 @@ namespace cntrl
                     {
                         StackPanel stackcolumn = new StackPanel();
                         stackcolumn.Name = "stp" + item.ColumnName;
-                        Label desccolumn = new Label();
-                        desccolumn.Name = item.ColumnName;
-                        desccolumn.Content = item.ColumnName;
-                        stpFilter.Children.Add(desccolumn);
+                        Label Label = new Label();
+                        Label.Name = item.ColumnName;
+                        Label.Content = item.ColumnName;
+                        Label.Foreground = Brushes.White;
+
+                        stpFilter.Children.Add(Label);
                         ComboBox ComboBox = new ComboBox();
                         DataView view = new DataView(value);
                         ComboBox.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
@@ -80,6 +63,9 @@ namespace cntrl
                         ComboBox.DisplayMemberPath = item.ColumnName;
                         ComboBox.Name = "cbx" + item.ColumnName;
                         ComboBox.SelectionChanged += Cmb_SelectionChanged;
+                        ComboBox.Background.Opacity = 16;
+                        ComboBox.BorderBrush = Brushes.Transparent;
+                        ComboBox.Foreground = Brushes.White;
                         ComboBox.IsTextSearchEnabled = true;
                         
                         stpFilter.Children.Add(ComboBox);
@@ -105,17 +91,6 @@ namespace cntrl
                 {
                     if (item.DataType == typeof(string))
                     {
-                        //foreach (object Item in stpFilter.Children)
-                        //{
-                        //    ComboBox Cbx = Item as ComboBox;
-                        //    if (Cbx != null)
-                        //    {
-                        //        if (Cbx.SelectedItem != null)
-                        //        {
-
-                        //        }
-                        //    }
-                        //}
                         if (stpFilter.FindName("cbx" + item.ColumnName) !=null)
                         {
                             ComboBox combocolumndata = stpFilter.FindName("cbx" + item.ColumnName) as ComboBox;
@@ -164,9 +139,9 @@ namespace cntrl
 
         public ReportPanel()
         {
-            ReportVariations = new List<ReportVariation>();
             InitializeComponent();
         }
+
         private void Cmb_SelectionChanged(object sender, RoutedEventArgs e)
         {
             ComboBox comboobox = sender as ComboBox;
@@ -213,7 +188,7 @@ namespace cntrl
 
         private void DateRange_DateChanged(object sender, RoutedEventArgs e)
         {
-            Data_Update(null,null);
+            Data_Update(null, null);
         }
     }
 }

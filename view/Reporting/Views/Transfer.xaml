@@ -14,11 +14,9 @@
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
 		<Cntrl:ReportPanel 
-			x:Name="ReportPanel"  
-			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
-			ReportDescription="TransferMovements"
+			x:Name="ReportPanel"
 			Update="Fill"
-            Filter="Filter"
+			Filter="Filter"
 			Grid.Column="0"/>
 		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" >
 			<rv:ReportViewer x:Name="reportViewer"/>

@@ -15,8 +15,6 @@
 		</Grid.ColumnDefinitions>
 		<Cntrl:ReportPanel 
 			x:Name="ReportPanel"
-			ReportTitle="{Binding ElementName=this, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
-			ReportDescription="List of Inventory."
 			Update="Fill"
             Filter="Filter"
 			Grid.Column="0"/>

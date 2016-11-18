@@ -1,42 +1,54 @@
-﻿<UserControl
+﻿<UserControl x:Class="cntrl.ReportPanel" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Controls="clr-namespace:cntrl.Controls"
-    xmlns:local="clr-namespace:cntrl"
+    
+             xmlns:local="clr-namespace:cntrl"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
-             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="cntrl.ReportPanel" x:Name="this"
              mc:Ignorable="d" Foreground="White"
-             d:DesignHeight="600" d:DesignWidth="300">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-    </UserControl.Resources>
-    <Grid>
+    	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+             d:DesignHeight="600" d:DesignWidth="800">
+    
+    <Grid Background="{StaticResource AccentColor_Brush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <rv:ReportViewer x:Name="reportViewer"/>
+        </WindowsFormsHost>
         <StackPanel>
             <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
                    Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
-                <Label Content="{lex:Loc Variant}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Label Content="{lex:Loc Variant}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <ListBox ItemsSource="{Binding ElementName=this, Path=ReportVariations}" DisplayMemberPath="Name" SelectedValuePath="ID"/>
-                
-                <Label Content="{lex:Loc Filter}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+
+            <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
                                  DateChanged="DateRange_DateChanged"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpFilter"/>
                 </ScrollViewer>
-                <Label Content="{lex:Loc View}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="stpColumn" />
-                </ScrollViewer>
-                <Button Content="Clear" VerticalAlignment="Top" Click="Button_Click" Width="128"/>
-            </StackPanel>
+            <Grid>
+                <Label Content="{lex:Loc View}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Button Content="c" Width="24.5" Height="24.5" Background="White" BorderBrush="White" HorizontalAlignment="Right"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="DimGray" FontSize="16"
+                        Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click"/>
+            </Grid>
+            <StackPanel x:Name="stpColumn" />
+        </StackPanel>
+        <Button Content="" Width="64" Height="64" Background="RoyalBlue" BorderBrush="White"
+                VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,-25,0"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="45"
+                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
     </Grid>
 </UserControl>

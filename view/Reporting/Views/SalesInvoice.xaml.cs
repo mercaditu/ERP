@@ -25,7 +25,7 @@ namespace Cognitivo.Reporting.Views
                 ID = "SalesInvoiceSummary"
             };
 
-            ReportPanel.ReportVariations.Add(One);
+            ReportPanel.Reports.Add(One);
 
             this.reportViewer.Reset();
 

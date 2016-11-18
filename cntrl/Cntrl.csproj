@@ -476,9 +476,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Reports\Queries\Project\TasksByStatus.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
+    <Content Include="Reports\Queries\Finance\PendingPayables.sql" />
+    <Content Include="Reports\Queries\Finance\PendingRecievables.sql" />
     <Content Include="Reports\Queries\Stock\InventoryValue.sql" />
     <Compile Include="SearchableTextbox.xaml.cs">
       <DependentUpon>SearchableTextbox.xaml</DependentUpon>

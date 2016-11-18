@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace Cognitivo.Class
 {
@@ -27,6 +22,7 @@ namespace Cognitivo.Class
             query = string.Format(query, ComapnyID);
             return Generate.DataTable(query);
         }
+
         public DataTable ProjectFinance(int CompanyID)
         {
             string query = @"select 
@@ -51,6 +47,7 @@ namespace Cognitivo.Class
             query = string.Format(query, CompanyID);
             return Generate.DataTable(query);
         }
+
         public DataTable TechnicalReport(int CompanyID)
         {
             string query = @" select proj.name as Project, task.id_project_task, task.parent_id_project_task as ParentTask, item.name as  Item, task.code as Code, task.item_description as ItemDesc, 
@@ -58,18 +55,17 @@ namespace Cognitivo.Class
                                 sum(TIMEDIFF( task.end_date_est, task.start_date_est )) as QuantityReal, 
                                 sum(task.quantity_est)-(if(sum(TIMEDIFF( task.end_date_est, task.start_date_est ))is null,0,sum(TIMEDIFF( task.end_date_est, task.start_date_est )))) as QuantityAdditional,
                                 task.unit_cost_est as EstimateCost, exe.unit_cost as RealCost, 
-                                 task.start_date_est as StartDate, task.end_date_est as EndDate 
+                                task.start_date_est as StartDate, task.end_date_est as EndDate 
  
                                 from project_task as task 
 
-                                 inner join projects  as proj on proj.id_project = task.id_project 
+                                inner join projects  as proj on proj.id_project = task.id_project 
 
-                                 inner join items as item on task.id_item = item.id_item
-                                 left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task 
+                                inner join items as item on task.id_item = item.id_item
+                                left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task 
 
-                                 where proj.id_company = {0} and exe.status=2
- 
-                                 group by task.id_project_task ";
+                                where proj.id_company = {0} and exe.status=2
+                                group by task.id_project_task ";
 
             query = string.Format(query, CompanyID);
             return Generate.DataTable(query);

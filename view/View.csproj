@@ -991,9 +991,6 @@
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByVAT.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesInvoiceSummary.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesOrderSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />

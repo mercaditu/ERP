@@ -238,7 +238,8 @@ namespace Cognitivo.Menu
             if (Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
-                appWindow.appName = name;
+                appWindow.PagePath = name; 
+                appWindow.ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true);
                 appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();
@@ -260,7 +261,8 @@ namespace Cognitivo.Menu
             try
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
-                appWindow.appName = name;
+                appWindow.PagePath = name;
+                appWindow.ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true);
                 appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
                 appWindow.Icon = appName.imgSource;
                 appWindow.Show();

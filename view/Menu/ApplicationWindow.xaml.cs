@@ -9,7 +9,8 @@ namespace Cognitivo.Menu
 {
     public partial class ApplicationWindow : MetroWindow
     {
-        public string appName { get; set; }
+        public entity.App.Names ApplicationName { get; set; }
+        public string PagePath { get; set; }
         public int apptag { get; set; }
 
         public ApplicationWindow()
@@ -19,13 +20,13 @@ namespace Cognitivo.Menu
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (appName != string.Empty)
-            { Task taskAuth = Task.Factory.StartNew(() => open_PageThread(appName)); }
+            if (PagePath.ToString() != string.Empty)
+            { Task taskAuth = Task.Factory.StartNew(() => open_PageThread(PagePath.ToString())); }
             else 
             { this.Close(); }
         }
 
-        private void open_PageThread(string appName)
+        private void open_PageThread(string PagePath)
         {
             Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
 
@@ -36,16 +37,11 @@ namespace Cognitivo.Menu
 
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    PageInstanceType = Type.GetType(appName, true, true);
+                    PageInstanceType = Type.GetType(PagePath, true, true);
                     objPage = (Page)Activator.CreateInstance(PageInstanceType);
                     objPage.Tag = apptag;
                     mainFrame.Navigate(objPage);
                     Cursor = Cursors.Arrow;
-
-                    if (objPage.Title != null)
-                    {
-                        //Title = objPage.Title;
-                    }
                 }));
             }
             catch { }

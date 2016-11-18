@@ -225,7 +225,7 @@ namespace Cognitivo.Menu
         public cntrl.applicationIcon get_AppIcon(DataRow app)
         {
             string _namespace = app["namespace"].ToString();
-            string _app = app["app"].ToString();
+            string _path = app["app"].ToString();
             string _name = app["name"].ToString();
             string _img = app["img"].ToString();
             string _description = "desc_" + app["name"].ToString();
@@ -237,7 +237,7 @@ namespace Cognitivo.Menu
             appIcon.HasReport = _HasReport == "1" ? true : false;
             
             ///AssemblyCheck. If reporting exists, don't add Cognitivo.
-            appIcon.Tag = "Cognitivo." + _app;
+            appIcon.Tag = "Cognitivo." + _path;
             appIcon.Uid = _name;
             ///Security Check.
             try

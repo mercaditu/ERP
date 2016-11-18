@@ -44,7 +44,7 @@
             <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
-                                 DateChanged="DateRange_DateChanged"/>
+                             />
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stpFilter"/>
                 </ScrollViewer>

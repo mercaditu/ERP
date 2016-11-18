@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       d:DesignHeight="600" d:DesignWidth="800"
-      Title="ReportViewer">
+      Title="ReportViewer" Loaded="this_Loaded">
     <Grid>
         <cntrl:ReportPanel ApplicationName="{Binding appName, ElementName=this}"/>
     </Grid>

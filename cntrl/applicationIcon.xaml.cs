@@ -6,7 +6,7 @@ using System.Windows.Media;
 namespace cntrl
 {
     public partial class applicationIcon : UserControl
-    {
+    {        
         public static readonly DependencyProperty HasReportProperty =
         DependencyProperty.Register("HasReport", typeof(bool), typeof(applicationIcon));
         public bool HasReport
@@ -44,20 +44,14 @@ namespace cntrl
         public delegate void ClickedEventHandler(object sender, RoutedEventArgs e);
         private void Tile_Click(object sender, RoutedEventArgs e)
         {
-            if (Click != null)
-            {
-                Click(this, e);
-            }
+            Click?.Invoke(this, e);
         }
 
         public event ClickedFavEventHandler ClickedFav;
         public delegate void ClickedFavEventHandler(object sender, RoutedEventArgs e);
         private void applicationIcon_ClickFavorites(object sender, RoutedEventArgs e)
         {
-            if (ClickedFav != null)
-            {
-                ClickedFav(this, e);
-            }
+            ClickedFav?.Invoke(this, e);
         }
 
         public event ReportClickEventHandler ReportClick;

@@ -15,8 +15,8 @@ namespace cntrl.Class
                 Application=entity.App.Names.SalesInvoice,
                 Name= "SalesInvoiceSummary",
                 Description="Test",
-                Path="Cognitivo.View.Reporting.SalesInvoiceSummary.rdlc",
-                QueryPath="Reports/queries/SalesInvoice.sql",
+                Path= "Cntrl.Reports.Reports.SalesInvoiceSummary.rdlc",
+                QueryPath= "Reports/Queries/Sales/SalesByDate.sql",
 
 
 

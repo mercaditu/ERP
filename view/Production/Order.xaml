@@ -223,7 +223,7 @@
 					</Grid>
 				</TabItem>
 				<TabItem Header="{lex:Loc RequestResource}" VirtualizingPanel.VirtualizationMode="Standard">
-					<Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+					<Grid >
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="2*"/>
 							<ColumnDefinition Width="1*"/>

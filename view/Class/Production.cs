@@ -14,7 +14,9 @@ namespace Cognitivo.Class
 		public string ItemName { get; set; }
 		public string ItemMask { get; set; }
 		public decimal Quantity { get; set; }
+        
 		public decimal Availability { get; set; }
+        //how much has been already requested
 		public decimal Requested { get; set; }
 	}
 
@@ -49,16 +51,17 @@ namespace Cognitivo.Class
         public List<Logistics> Return_OrderLogistics(int ProductionOrderID)
 		{
 			string query = @"select 
-								pod.status as ProductionStatus, 
-								pod.id_item ItemID, i.id_item_type as Type, i.code as ItemCode, i.name as ItemName, pod.name as Mask,
-								sum(pod.quantity) as Quantity, 
-								(select sum(credit - debit) as Available 
-									from item_movement where id_item_product = ip.id_item_product) as Availability
-								,ird.quantity as Requested
-								from production_order_detail as pod
-								left join item_request_detail as ird on pod.id_item = ird.id_item
-								inner join items as i on pod.id_item = i.id_item
-								left join item_product as ip on i.id_item = ip.id_item
+	                            pod.status as ProductionStatus, 
+                                pod.id_item,
+	                            pod.id_item ItemID, i.id_item_type as Type, i.code as ItemCode, i.name as ItemName, pod.name as Mask,
+	                            sum(pod.quantity) as Quantity, 
+	                            (select sum(credit - debit) from item_movement where id_item_product = ip.id_item_product) as Availability,
+                                (select sum(quantity) from item_request_detail where id_order_detail = pod.id_order_detail) as Requested
+	
+	                            from production_order_detail as pod
+	
+	                            left join items as i on pod.id_item = i.id_item
+	                            left join item_product as ip on i.id_item = ip.id_item
 								where pod.id_production_order = {0} and is_input = 1
 								group by pod.id_item";
 

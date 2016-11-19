@@ -18,7 +18,7 @@ sales_rep.name as SalesRep,
 sales_invoice.comment as Comment,
 items.code as Code, 
 items.name as Items,
-app_vat_group.name as VAT,
+vatco.VatName as VAT,
 
 (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = items.id_item order by item_tag_detail.is_default limit 0,1) as Tag, 
 quantity as Quantity, 
@@ -40,9 +40,8 @@ left join sales_rep on sales_invoice.id_sales_rep = sales_rep.id_sales_rep
 inner join contacts on sales_invoice.id_contact = contacts.id_contact  
 inner join items on sales_invoice_detail.id_item = items.id_item
 left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
-left join app_vat_group on sales_invoice_detail.id_vat_group = app_vat_group.id_vat_group
-		 LEFT OUTER JOIN 
-			 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef 
+	 LEFT OUTER JOIN 
+			 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as VAT
 				FROM  app_vat_group  
 					LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group  
 					LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat  

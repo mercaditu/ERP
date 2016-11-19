@@ -21,10 +21,8 @@ purchase_invoice_detail.unit_cost as UnitPrice,
 round(( purchase_invoice_detail.unit_cost * vatco.coef),4) as UnitPriceVat,  
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost),4) as SubTotal,
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost * vatco.coef),4) as SubTotalVat,
-(purchase_invoice_detail.discount) as DiscountUnitPrice,
-round((purchase_invoice_detail.discount*vatco.coef),4) as DiscountUnitPriceVat,  
-round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount)),4) as DiscountSubTotal,
-round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount*vatco.coef)),4) as DiscountSubTotalVat,purchase_invoice.comment
+(purchase_invoice_detail.discount) as Discount,
+purchase_invoice.comment as Comment
 
 from purchase_invoice_detail  
 inner join purchase_invoice 

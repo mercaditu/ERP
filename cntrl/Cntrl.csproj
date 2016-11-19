@@ -477,6 +477,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Content Include="Reports\Queries\Project\TasksByStatus.sql" />
+    <Content Include="Reports\Queries\Purchase\Purchase.sql" />
     <Content Include="Reports\Queries\Stock\MerchandiseCredits.sql" />
     <Content Include="Reports\Queries\Stock\MerchandiseDebits.sql" />
     <Compile Include="Reports\ReportPanel.xaml.cs">

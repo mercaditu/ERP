@@ -514,7 +514,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\SalesInvoiceSummary.rdlc">
+    <EmbeddedResource Include="Reports\Reports\SalesInvoice.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config">

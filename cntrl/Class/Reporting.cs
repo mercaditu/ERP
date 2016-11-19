@@ -9,52 +9,72 @@ namespace cntrl.Class
 
         public void GenerateReportList()
         {
-            ReportList = new List<Report>();
-            Report Report = new Class.Report
+            ReportList = new List<Report> { new Report
             {
-                Application=entity.App.Names.SalesInvoice,
-                Name= "SalesInvoiceSummary",
-                Description="Test",
-                Path= "cntrl.Reports.Reports.SalesInvoiceSummary.rdlc",
-                QueryPath= "Reports/Queries/Sales/SalesByDate.sql",
-
-
-
-
-            };
-            Report_Parameter Report_ParameterStartDate = new Class.Report_Parameter
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesByDate",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
             {
-                Type=Report_Parameter.Types.StartDate
-            };
-            Report_Parameter Report_ParameterEndDate = new Class.Report_Parameter
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesByCustomer",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
             {
-                Type = Report_Parameter.Types.EndDate
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesByProductsAndBranch",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesByBranch",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+              new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesBySalesRep",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name = "SalesByGeography",
+                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                QueryPath = "Reports/Queries/Sales/Sales.sql",
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            }
             };
-            Report.Parameters.Add(Report_ParameterStartDate);
-            Report.Parameters.Add(Report_ParameterEndDate);
-            ReportList.Add(Report);
+
 
         }
     }
+
+
 
     public class Report
     {
-       public Report()
-        {
-            Parameters = new List<Class.Report_Parameter>();
-        }
+        public enum Types { StartDate, EndDate }
         public entity.App.Names Application { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public string Path { get; set; }
         public string QueryPath { get; set; }
+        public string ReplaceString { get; set; }
+        public string ReplaceWithString { get; set; }
 
-       public List<Report_Parameter> Parameters { get; set; }
-    }
-
-    public class Report_Parameter
-    {
-        public enum Types { StartDate, EndDate }
-        public Types Type { get; set; }
+        public ICollection<Types> Parameters { get; set; }
     }
 }

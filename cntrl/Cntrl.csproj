@@ -1084,7 +1084,7 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\Queries\Sales\SalesByDate.sql">
+    <Content Include="Reports\Queries\Sales\Sales.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

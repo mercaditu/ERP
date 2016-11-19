@@ -15,7 +15,7 @@ namespace cntrl.Class
                 Application=entity.App.Names.SalesInvoice,
                 Name= "SalesInvoiceSummary",
                 Description="Test",
-                Path= "Cntrl.Reports.Reports.SalesInvoiceSummary.rdlc",
+                Path= "cntrl.Reports.Reports.SalesInvoiceSummary.rdlc",
                 QueryPath= "Reports/Queries/Sales/SalesByDate.sql",
 
 

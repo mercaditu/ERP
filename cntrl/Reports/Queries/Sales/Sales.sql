@@ -18,7 +18,8 @@ sales_rep.name as SalesRep,
 sales_invoice.comment as Comment,
 items.code as Code, 
 items.name as Items,
-vatco.VatName as VAT,
+vatco.Vat,
+projects.name as Project,
 
 (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = items.id_item order by item_tag_detail.is_default limit 0,1) as Tag, 
 quantity as Quantity, 
@@ -53,7 +54,7 @@ left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 				inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
 				inner join app_contract on app_contract.id_contract=sales_invoice.id_contract
 				inner join app_condition on app_condition.id_condition=sales_invoice.id_condition
-
+				left join projects on projects.id_project=sales_invoice.id_project
    where sales_invoice.trans_date between @StartDate and @EndDate and sales_invoice.id_company = @CompanyID
 
    order by sales_invoice.trans_date

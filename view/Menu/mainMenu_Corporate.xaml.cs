@@ -255,8 +255,13 @@ namespace Cognitivo.Menu
         public void open_Report(object sender, RoutedEventArgs e)
         {
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
-
             string name = "Cognitivo.Reporting.ReportViewer";
+            if ((entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true) == entity.App.Names.Subscription)
+            {
+                name = "Cognitivo.Reporting.Views.Subscription";
+
+            }
+           
 
             try
             {

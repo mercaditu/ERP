@@ -476,10 +476,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Reports\Queries\Project\TasksByStatus.sql" />
+    <Content Include="Reports\Queries\Commercial\Customer.sql" />
+    <Content Include="Reports\Queries\Production\EmployeesInProduction.sql" />
+    <Content Include="Reports\Queries\Production\ProductionOrder.sql" />
+    <Content Include="Reports\Queries\Project\Project.sql" />
     <Content Include="Reports\Queries\Purchase\Purchase.sql" />
-    <Content Include="Reports\Queries\Stock\MerchandiseCredits.sql" />
-    <Content Include="Reports\Queries\Stock\MerchandiseDebits.sql" />
+    <Content Include="Reports\Queries\Stock\CostBreakDown.sql" />
+    <Content Include="Reports\Queries\Stock\InventorySummary.sql" />
+    <Content Include="Reports\Queries\Stock\Merchandise.sql" />
+    <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql" />
+    <Content Include="Reports\Queries\Stock\PriceList.sql" />
+    <Content Include="Reports\Queries\Stock\StockFlowDimension.sql" />
+    <Content Include="Reports\Queries\Stock\Stock.sql" />
+    <Content Include="Reports\Queries\Finance\ContactBalance.sql" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
@@ -510,13 +519,54 @@
     <Compile Include="toolMessage.xaml.cs">
       <DependentUpon>toolMessage.xaml</DependentUpon>
     </Compile>
+    <Content Include="Reports\Queries\Stock\TransferSummary.sql" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\CostBreakDown.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\CostOfGoodsSold.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\CurrentAccount_Customer.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\CustomerList.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\DeliveryByCustomer.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\DeliveryByZone.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\Inventory.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\InventoryAnalysis.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\InventorySummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ItemPriceList.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\MerchandiseEntry.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\MerchandiseExit.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PendingAccounts.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProductionEmployee.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProductionOrder.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\Project.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\Project_VS_Production.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseInvoice.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseOrderSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseTenderSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesBudgetSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesByItem.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesByVAT.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesInvoice.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\SalesOrderSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesReturnDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\StockFlow.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\StockFlowDimension.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\TaskViewChild.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\TaskViewParent.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\TechnicalReport.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\TransferSummary.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>

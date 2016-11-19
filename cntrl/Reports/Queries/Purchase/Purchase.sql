@@ -16,6 +16,7 @@ app_cost_center.name as CostCenter,
 app_contract.name  as Contract,
 app_condition.name as Conditions,
 vatco.Vat,
+projects.name,
 quantity as Quantity, 
 purchase_invoice_detail.unit_cost as UnitPrice,
 round(( purchase_invoice_detail.unit_cost * vatco.coef),4) as UnitPriceVat,  
@@ -30,7 +31,7 @@ on purchase_invoice_detail.id_purchase_invoice=purchase_invoice.id_purchase_invo
 inner join contacts on purchase_invoice.id_contact = contacts.id_contact  
 left join items on purchase_invoice_detail.id_item = items.id_item 
 LEFT OUTER JOIN 
-			 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as VatName
+			 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as Vat
 				FROM  app_vat_group  
 					LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group  
 					LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat  
@@ -42,6 +43,6 @@ LEFT OUTER JOIN
 				inner join app_contract on app_contract.id_contract=purchase_invoice.id_contract
 				inner join app_condition on app_condition.id_condition=purchase_invoice.id_condition
 			 inner join app_cost_center on app_cost_center.id_cost_center=purchase_invoice_detail.id_cost_center
-
+			 	left join projects on projects.id_project=purchase_invoice.id_project
 where purchase_invoice.trans_date between @StartDate and @EndDate and purchase_invoice.id_company = @CompanyID
 order by purchase_invoice.trans_date

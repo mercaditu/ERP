@@ -55,6 +55,6 @@ left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 				inner join app_contract on app_contract.id_contract=sales_invoice.id_contract
 				inner join app_condition on app_condition.id_condition=sales_invoice.id_condition
 				left join projects on projects.id_project=sales_invoice.id_project
-   where sales_invoice.trans_date between @StartDate and @EndDate and sales_invoice.id_company = @CompanyID
+ --  where sales_invoice.trans_date between @StartDate and @EndDate and sales_invoice.id_company = @CompanyID
 
    order by sales_invoice.trans_date

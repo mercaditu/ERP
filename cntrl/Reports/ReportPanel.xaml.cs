@@ -132,7 +132,7 @@ namespace cntrl
             ReportDt = dt;
 
 
-            reportDataSource1.Name = Report.Name ; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = Report.Dataset ; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);

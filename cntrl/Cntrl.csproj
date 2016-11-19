@@ -482,6 +482,7 @@
     <Content Include="Reports\Queries\Project\Project.sql" />
     <Content Include="Reports\Queries\Purchase\Purchase.sql" />
     <Content Include="Reports\Queries\Stock\CostBreakDown.sql" />
+    <Content Include="Reports\Queries\Stock\InventoryAnalysis.sql" />
     <Content Include="Reports\Queries\Stock\InventorySummary.sql" />
     <Content Include="Reports\Queries\Stock\Merchandise.sql" />
     <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql" />

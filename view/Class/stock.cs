@@ -60,41 +60,9 @@ namespace Cognitivo.Class
             return GenerateList(Generate.DataTable(query));
         }
         
-        public DataTable Inventory_Analysis(DateTime StartDate, DateTime EndDate)
-        {
-            string query = @"  select extract(Year from trans_date) as Year, extract(Month from trans_date) as Month, i.code as Code, i.name as Item, 
-                                 b.name as Branch, sum(credit - debit) as Stock, 
-                                 sum(if(item_movement.id_sales_invoice_detail > 0, item_movement.debit, 0)) as Sales
-                                 from item_movement
-                                 inner join item_product as ip on item_movement.id_item_product = ip.id_item_product
-                                 inner join items as i on ip.id_item = i.id_item
-                                 inner join app_location as l on item_movement.id_location = l.id_location
-                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                 where item_movement.trans_date between '{0}' and '{1}' and item_movement.id_company = {2}
-                                 group by extract(Year_Month from trans_date), l.id_branch, item_movement.id_item_product";
-            query = string.Format(query, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"), entity.CurrentSession.Id_Company);
-            return Generate.DataTable(query);
-        }
+      
 
    
-
-        public DataTable CostBreakDown(DateTime StartDate, DateTime EndDate)
-        {
-            string query = @" select i.code as Code, i.name as Name, im.trans_date as TransDate, im.comment as Comment, imv.id_movement as MovID, imv.unit_value as UnitValue, 
-                                imv.comment as Concept, im.credit as Quantity,
-                                (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
-                                from item_movement_value as imv
-                                inner join item_movement as im on imv.id_movement = im.id_movement
-                                inner join item_product as p on im.id_item_product = p.id_item_product
-                                inner join items as i on p.id_item = i.id_item
-                                where (im.id_purchase_invoice_detail is not null or im.id_execution_detail is not null) 
-                                and {0} im.trans_date >= '{1}' and im.trans_date <= '{2}' 
-                                order by im.trans_date";
-
-            string WhereQuery = string.Format("imv.id_company = {0} and ", entity.CurrentSession.Id_Company);
-            query = string.Format(query, WhereQuery, StartDate.ToString("yyyy-MM-dd 00:00:00"), EndDate.ToString("yyyy-MM-dd 23:59:59"));
-            return Generate.DataTable(query);
-        }
 
         private List<StockList> GenerateList(DataTable dt)
         {

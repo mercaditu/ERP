@@ -3051,6 +3051,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3538,10 +3539,6 @@
                                 </TablixMember>
                                 <TablixMember>
                                   <Group Name="Details" />
-                                  <Visibility>
-                                    <Hidden>true</Hidden>
-                                    <ToggleItem>Items</ToggleItem>
-                                  </Visibility>
                                 </TablixMember>
                               </TablixMembers>
                               <Visibility>

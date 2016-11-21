@@ -212,7 +212,7 @@ namespace entity
                 if (IsLoaded == false)
                 {
                     VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                    VAT_GroupDetails = db.app_vat_group_details.Where(x => x.id_company == Id_Company).ToList();
+                    VAT_GroupDetails = db.app_vat_group_details.Include("app_vat").Where(x => x.id_company == Id_Company).ToList();
                     VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 }
 

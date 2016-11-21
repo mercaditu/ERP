@@ -158,20 +158,32 @@ namespace Cognitivo.Commercial
                 {
                     using (db db = new db())
                     {
+                        contact contact = db.contacts.Find(Contact.id_contact);
                         sales_invoice sales_invoice = new sales_invoice();
-                        sales_invoice.id_contact = Contact.id_contact;
+                        sales_invoice.id_contact = contact.id_contact;
 
-                        app_contract app_contract = db.app_contract.Find(Contact.id_contract);
-                        sales_invoice.id_condition = app_contract.id_condition;
-                        sales_invoice.id_contract = app_contract.id_contract;
+                        app_contract app_contract = db.app_contract.Find(contact.id_contract);
+                        if (app_contract!=null)
+                        {
+                            sales_invoice.id_condition = app_contract.id_condition;
+                            sales_invoice.id_contract = app_contract.id_contract;
+                        }
+                        else
+                        {
+                           app_contract = db.app_contract.Where(x =>x.is_default && x.is_active).FirstOrDefault();
+                            sales_invoice.id_condition = app_contract.id_condition;
+                            sales_invoice.id_contract = app_contract.id_contract;
+                        }
+                     
+                     
                         sales_invoice.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         sales_invoice.comment = "Subscription";
                         sales_invoice.trans_date = InvoiceDate;
                         sales_invoice.timestamp = DateTime.Now;
 
-                        if (Contact.contact_subscription.Count > 0)
+                        if (contact.contact_subscription.Count > 0)
                         {
-                            foreach (contact_subscription contact_subscription in Contact.contact_subscription)
+                            foreach (contact_subscription contact_subscription in contact.contact_subscription)
                             {
                                 sales_invoice_detail sales_invoice_detail = null;
 
@@ -216,15 +228,16 @@ namespace Cognitivo.Commercial
                                 db.SaveChanges();
 
 
-                                progBar.Value += 1;
-                                // Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
+                                //progBar.Value += 1;
+                               Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
                             }
                         }
                     }
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.ToString());
                     //  Dispatcher.BeginInvoke((Action)(() => { Contact.IsSelected = true; }));
                 }
             }

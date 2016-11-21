@@ -42,7 +42,7 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                foreach (app_vat_group_details app_vat_group_detail in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
+                foreach (app_vat_group_details app_vat_group_detail in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group).ToList())
                 {
                     VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.app_vat.coefficient);
                 }

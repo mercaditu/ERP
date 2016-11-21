@@ -49,8 +49,7 @@
 
             <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
             <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
-                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
-                             />
+                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" />
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="stpFilter"/>
             </ScrollViewer>
@@ -61,7 +60,11 @@
                         Style="{DynamicResource MetroCircleButtonStyle}" />
             </Grid>
             <Popup x:Name="popFilter">
-                <StackPanel x:Name="stpColumn" Background="White"/>
+                <StackPanel x:Name="stpColumn">
+                    <StackPanel.Background>
+                        <SolidColorBrush Color="White" Opacity="0.64"/>
+                    </StackPanel.Background>
+                </StackPanel>
             </Popup>
         </StackPanel>
     </Grid>

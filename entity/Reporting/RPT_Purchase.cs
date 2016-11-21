@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Reporting
 {
-    public class Purchase
+    public class RPT_Purchase
     {
         public int Status { get; set; }
         public string Number { get; set; }

@@ -298,11 +298,11 @@
     <Compile Include="Reporting\PendingReceivable.cs" />
     <Compile Include="Reporting\ProductionStatus.cs" />
     <Compile Include="Reporting\Production.cs" />
-    <Compile Include="Reporting\Project.cs" />
+    <Compile Include="Reporting\RPT_Project.cs" />
     <Compile Include="Reporting\Customer.cs" />
-    <Compile Include="Reporting\Purchase.cs" />
+    <Compile Include="Reporting\RPT_Purchase.cs" />
     <Compile Include="Reporting\PendingPayable.cs" />
-    <Compile Include="Reporting\Sales.cs" />
+    <Compile Include="Reporting\RPT_Sales.cs" />
     <Compile Include="Sales\sales_promotion.cs" />
     <Compile Include="Sales\sales_packing_relation.cs">
       <SubType>Code</SubType>

@@ -18,22 +18,22 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}"/>
         <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}"/>
-       
+
     </UserControl.Resources>
     <Grid Background="{StaticResource AccentColor_Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="266,0,0,0">
             <rv:ReportViewer x:Name="reportViewer" />
         </WindowsFormsHost>
         <StackPanel>
             <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
-                   Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
-                <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
+                       Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
+            <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
-                <Label Content="{lex:Loc Variant}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+            <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
             <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4" 
                          DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged" Foreground="White">
                 <ListBox.Background>
@@ -42,12 +42,12 @@
             </ListBox>
 
             <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
+            <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" 
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"
                              />
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="stpFilter"/>
-                </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="stpFilter"/>
+            </ScrollViewer>
             <Grid>
                 <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <Button Content="c" Width="24.5" Height="24.5" Background="White" BorderBrush="White" HorizontalAlignment="Right"
@@ -56,10 +56,10 @@
             </Grid>
             <StackPanel x:Name="stpColumn" />
         </StackPanel>
-        <Button Content="" Width="64" Height="64" Background="RoyalBlue" BorderBrush="White"
+        <Button Content="" Width="64" Height="64" Background="RoyalBlue" BorderBrush="White" Panel.ZIndex="45"
                 VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,-25,0"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="45"
-                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}">
+                FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="45"
+                Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}">
             <Button.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="16" />
             </Button.Effect>

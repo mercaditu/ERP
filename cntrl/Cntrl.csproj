@@ -525,49 +525,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\CostBreakDown.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\CostOfGoodsSold.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\CurrentAccount_Customer.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\CustomerList.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\DeliveryByCustomer.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\DeliveryByZone.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\Inventory.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\InventoryAnalysis.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\InventorySummary.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ItemPriceList.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\MerchandiseEntry.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\MerchandiseExit.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PendingAccounts.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionEmployee.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionOrder.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\Project.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\Project_VS_Production.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseInvoice.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseOrderSummary.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseTenderSummary.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesBudgetSummary.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesByItem.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesByVAT.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesInvoice.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\SalesOrderSummary.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesReturnDetail.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\StockFlow.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\StockFlowDimension.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\TaskViewChild.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\TaskViewParent.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\TechnicalReport.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\TransferSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesInvoiceDetail.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -676,6 +634,16 @@
     <None Include="Properties\DataSources\entity.purchase_tender_contact_detail.datasource" />
     <None Include="Properties\DataSources\entity.purchase_tender_item_detail.datasource" />
     <None Include="Properties\DataSources\entity.refinance.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ContactBalnace.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Customer.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.EmployeeInProduction.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PendingPayable.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PendingReceivable.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Production.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ProductionStatus.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
     <None Include="Properties\DataSources\entity.sales_invoice.datasource" />
     <None Include="Properties\DataSources\entity.sales_invoice_detail.datasource" />
     <None Include="Properties\DataSources\entity.sales_invoice_detail_tax.datasource" />

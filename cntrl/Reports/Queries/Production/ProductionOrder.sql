@@ -1,9 +1,18 @@
-﻿	SELECT p.name as Project, l.name as Line, po.name as ProjectName, po.work_number as Number, po.trans_date as TransDate, po.project_cost_center as CostCenter,
+﻿	SELECT p.name as Project,
+	 l.name as Line,
+	  po.name as ProductiontName,
+	   po.work_number as Number, 
+	   po.trans_date as TransDate,
+	    po.project_cost_center as CostCenter,
     pod.id_order_detail as OrderID,
     pod.parent_id_order_detail as ParentID,
-    
-    pod.status as ProductionStatus, pod.is_input as Input, pod.code as Code, pod.name as Item, pod.quantity as Quantity,
-    pod.start_date_est as StartDate, pod.end_date_est as EndDate
+        pod.status as ProductionStatus,
+		 pod.is_input as Input,
+		  pod.code as Code,
+		   pod.name as Item, 
+		   pod.quantity as Quantity,
+    pod.start_date_est as StartDate,
+	 pod.end_date_est as EndDate
     
 	from production_order as po
     

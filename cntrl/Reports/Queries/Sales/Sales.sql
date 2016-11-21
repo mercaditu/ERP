@@ -20,7 +20,6 @@ items.code as Code,
 items.name as Items,
 vatco.Vat,
 projects.name as Project,
-
 (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = items.id_item order by item_tag_detail.is_default limit 0,1) as Tag, 
 quantity as Quantity, 
 sales_invoice_detail.unit_cost as UnitCost,
@@ -29,8 +28,7 @@ round(( sales_invoice_detail.unit_price * vatco.coef),4) as UnitPriceVat,
 round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price),4) as SubTotal,
 round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price * vatco.coef),4) as SubTotalVat,
 round(sales_invoice_detail.discount, 4) as Discount,
-round((sales_invoice_detail.quantity * (sales_invoice_detail.discount * vatco.coef)),4) as Discount,
-
+round((sales_invoice_detail.quantity * (sales_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
 (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_price) as Margin,
 (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_cost) as MarkUp,
 (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit

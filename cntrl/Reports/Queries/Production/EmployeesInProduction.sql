@@ -1,8 +1,7 @@
 ﻿  select c.name as Employee,
     pt.item_description,
     p.name as Project,
-    
-     start_date,
+         start_date,
     end_date,
       htc.name as Coefficient,
 	sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,

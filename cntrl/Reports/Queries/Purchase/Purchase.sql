@@ -1,30 +1,33 @@
 ﻿select 
+purchase_invoice.status as Status,
 purchase_invoice.number as Number,
-Date(purchase_invoice.trans_date) as Date,
-app_branch.name as Branch,
 purchase_invoice.is_impex as Import,
+Date(purchase_invoice.trans_date) as Date,
+purchase_invoice.timestamp as TimeStamp,
+app_branch.name as Branch,
+app_terminal.name as Terminal,
+app_contract.name  as Contract,
+app_condition.name as Conditions,
 contacts.name as Supplier,
 contacts.gov_code as GovCode,
 contacts.code as ContactCode , 
 contacts.address as Address,
 app_currency.name as Currency, 
 app_currencyfx.sell_value as Rate,
+purchase_invoice.comment as Comment,
 items.code as Code, 
 purchase_invoice_detail.item_description as Items,
 app_cost_center.name as CostCenter,
 (select Name from item_tag_detail inner join item_tag on item_tag_detail.id_tag=Item_tag.id_tag where item_tag_detail.id_item=items.id_item order by item_tag_detail.is_default limit 0,1 ) as Tag, 
-app_contract.name  as Contract,
-app_condition.name as Conditions,
 vatco.Vat,
-projects.name,
+projects.name as Project,
 quantity as Quantity, 
 purchase_invoice_detail.unit_cost as UnitPrice,
 round(( purchase_invoice_detail.unit_cost * vatco.coef),4) as UnitPriceVat,  
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost),4) as SubTotal,
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost * vatco.coef),4) as SubTotalVat,
 (purchase_invoice_detail.discount) as Discount,
-purchase_invoice.comment as Comment
-
+round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount * vatco.coef)),4) as DiscountVat
 from purchase_invoice_detail  
 inner join purchase_invoice 
 on purchase_invoice_detail.id_purchase_invoice=purchase_invoice.id_purchase_invoice 

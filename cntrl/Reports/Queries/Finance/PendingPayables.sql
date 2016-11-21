@@ -13,6 +13,7 @@
 								schedual.DebitChild as Paid, 
 								(schedual.credit - schedual.DebitChild) as Balance,
 								schedual.trans_date as TransDate
+
 								from(
 								select
 									parent.*,

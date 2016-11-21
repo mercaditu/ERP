@@ -1,6 +1,11 @@
-﻿select contacts.code as Code, contacts.name as Name, contacts.gov_code as GovCode, 
-contacts.address as Address, contacts.telephone as Telephone,
-contact_tag.name as Tag,app_contract.name as Contract,credit_limit
+﻿select contacts.code as Code,
+ contacts.name as Name ,
+  contacts.gov_code as GovCode, 
+contacts.address as Address,
+ contacts.telephone as Telephone,
+contact_tag.name as Tag,
+app_contract.name as Contract,
+credit_limit
 from contacts
 inner join app_company on contacts.id_company= app_company.id_company
 left join contact_tag_detail on contacts.id_contact= contact_tag_detail.id_contact 

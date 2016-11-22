@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 136
+            /// Last Used : 138
             /// </summary>
 
 
@@ -57,7 +57,8 @@ namespace entity
             SalesBudget = 15,
             [LocalizedDescription("PointOfSale")]
             PointOfSale = 78,
-
+            [LocalizedDescription("SalesAnalysis")]
+            SalesAnalysis = 138,
             //Purchase
             [LocalizedDescription("PurchaseTender")]
             PurchaseTender = 5,
@@ -310,7 +311,7 @@ namespace entity
 
             [LocalizedDescription("Version")]
             Version = 128,
-            TechnicalReport = 136
+            TechnicalReport = 137
         }
     }
 }

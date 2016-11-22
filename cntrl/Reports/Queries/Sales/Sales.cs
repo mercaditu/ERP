@@ -63,7 +63,7 @@ namespace cntrl.Reports.Queries.Sales
 												inner join sales_invoice on sales_invoice_detail.id_sales_invoice=sales_invoice.id_sales_invoice 
 												left join sales_rep on sales_invoice.id_sales_rep = sales_rep.id_sales_rep
 												inner join contacts on sales_invoice.id_contact = contacts.id_contact  
-												inner join app_geography on app_geography.id_geography=contacts.id_geography
+												left join app_geography on app_geography.id_geography=contacts.id_geography
 												inner join items on sales_invoice_detail.id_item = items.id_item
 												left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 													 LEFT OUTER JOIN 

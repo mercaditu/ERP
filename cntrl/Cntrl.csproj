@@ -509,6 +509,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\EmployeesInProduction.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reports\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />

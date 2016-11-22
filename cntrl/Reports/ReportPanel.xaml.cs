@@ -184,8 +184,8 @@ namespace cntrl
 
             }
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
-            query = query.Replace("@StartDate", StartDate.ToString());
-            query = query.Replace("@EndDate", EndDate.ToString());
+            query = query.Replace("@StartDate", StartDate.ToString("yyyy-MM-dd"));
+            query = query.Replace("@EndDate", EndDate.ToString("yyyy-MM-dd"));
             query = query.Replace("@ProjectID", ProjectID.ToString());
             dt = QueryExecutor.DT(query);
 
@@ -199,6 +199,7 @@ namespace cntrl
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
+
             if (ShowDateRange)
             {
                 ReportParameter StartDateParameter = new ReportParameter("StartDate", _StartDate.ToString());
@@ -206,9 +207,6 @@ namespace cntrl
                 reportViewer.LocalReport.SetParameters(new ReportParameter[] { StartDateParameter, EndtDateParameter });
             }
            
-
-
-
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }

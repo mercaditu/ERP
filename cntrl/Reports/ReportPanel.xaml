@@ -42,7 +42,7 @@
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </Grid>
             <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4"
-                         DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged" Foreground="White">
+                         DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged">
                 <ListBox.Background>
                     <SolidColorBrush Color="White" Opacity="0.64"/>
                 </ListBox.Background>

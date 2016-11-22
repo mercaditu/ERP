@@ -136,6 +136,15 @@ namespace cntrl.Class
                 ReplaceWithString="sales_budget"
 
             },
+               new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name = Localize.Text<string>("SalesAnalysis"),
+                Path = "cntrl.Reports.Reports.SalesAnalysis.rdlc",
+                Query = Reports.Queries.Stock.SalesAnalysis.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            
+            },
 
 
             //purchase
@@ -193,6 +202,9 @@ namespace cntrl.Class
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_order"
             },
+
+              
+           
           
             
              //projects and Production
@@ -230,9 +242,9 @@ namespace cntrl.Class
                 {
                 Application = entity.App.Names.ProductionOrder,
                 Name =Localize.Text<string>("ProductionOrder"),
-                Path = "cntrl.Reports.Reports.Production.rdlc",
+                Path = "cntrl.Reports.Reports.ProductionOrder.rdlc",
                 Query = Reports.Queries.Production.Production.query,
-                Parameters = new List<Report.Types> { Report.Types.Project }
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
             , new Report
                 {
@@ -240,14 +252,14 @@ namespace cntrl.Class
                 Name =Localize.Text<string>("ProductionOrderStatus"),
                 Path = "cntrl.Reports.Reports.ProductionStatus.rdlc",
                 Query = Reports.Queries.Production.ProductionOrderStatus.query,
-                Parameters = new List<Report.Types> { Report.Types.Project }
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }, new Report
                 {
                 Application = entity.App.Names.EmployeesInProduction,
                 Name =Localize.Text<string>("EmployeesInProduction"),
                 Path = "cntrl.Reports.Reports.EmployeesInProduction.rdlc",
                 Query =Reports.Queries.Production.EmployeesInProduction.query,
-                Parameters = new List<Report.Types> { Report.Types.Project }
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
 
             };

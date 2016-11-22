@@ -23,7 +23,7 @@
 				inner join items as i on ip.id_item = i.id_item
 				inner join app_location as l on item_movement.id_location = l.id_location
 				inner join app_branch as b on l.id_branch = b.id_branch
-				where item_movement.trans_date between @StartDate and @EndDate and item_movement.id_company = @ComapnyID
+				where item_movement.trans_date between '@StartDate' and '@EndDate' and item_movement.id_company = @CompanyID
 				group by extract(Year_Month from trans_date), l.id_branch, item_movement.id_item_product";
 	}
 }

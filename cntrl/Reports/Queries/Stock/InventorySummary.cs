@@ -21,7 +21,7 @@ sum(iid.value_counted) as CountedQuantity, (sum(iid.value_counted) -
 sum(iid.value_system)) as Difference,
 iid.unit_value as ItemCost, 
 (sum(iid.value_counted) - sum(iid.value_system)) * iid.unit_value as TotalCost,
-
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag, 
 
 iid.comment as Comment,
 branch.name as Branch,

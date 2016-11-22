@@ -10,6 +10,7 @@ namespace entity.Reporting
     {
         public string Name { get; set; }
         public DateTime TransDate { get; set; }
+        public string Tag { get; set; }
         public string Comment { get; set; }
         public int MovID { get; set; }
         public decimal UnitValue { get; set; }

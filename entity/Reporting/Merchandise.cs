@@ -10,6 +10,7 @@ namespace entity.Reporting
     {
         public string BranchName { get; set; }
         public string TransComment { get; set; }
+        public string Tag { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public decimal Credit { get; set; }

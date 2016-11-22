@@ -17,7 +17,8 @@ namespace cntrl.Reports.Queries.Stock
 				inv.debit as Debit,
                 UnitCost,
                 (UnitCost* inv.credit) as TotalCost,
-                inv.trans_date as TransDate
+                inv.trans_date as TransDate,
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = item.id_item order by item_tag_detail.is_default limit 0,1) as Tag
 
               from(
               select item_movement.*, sum(val.unit_value) as UnitCost

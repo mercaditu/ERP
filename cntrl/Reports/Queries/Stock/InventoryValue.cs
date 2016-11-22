@@ -18,7 +18,8 @@ select branch.name as BranchName,
 											inner join app_currency as curr on price.id_currency = price.id_currency
 											inner join item_price_list as price_list on price.id_price_list = price_list.id_price_list
 											where (curr.is_priority or price_list.is_default) and price.id_item = item.id_item
-											) as RetailPrice
+											) as RetailPrice,
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = item.id_item order by item_tag_detail.is_default limit 0,1) as Tag
 
                                 from (
                                 select item_movement.*, sum(val.unit_value) as UnitCost,

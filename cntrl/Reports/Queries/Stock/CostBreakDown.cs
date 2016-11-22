@@ -17,6 +17,7 @@ namespace cntrl.Reports.Queries.Stock
 		    imv.unit_value as UnitValue, 
  imv.comment as Concept,
 				 im.credit as Quantity,
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag, 
                   (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
                                 from item_movement_value as imv
                                 inner join item_movement as im on imv.id_movement = im.id_movement

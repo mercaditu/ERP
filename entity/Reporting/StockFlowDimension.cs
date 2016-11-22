@@ -12,6 +12,7 @@ namespace entity.Reporting
         public int Branch { get; set; }
         public string Location { get; set; }
         public int id_movement { get; set; }
+        public string Tag { get; set; }
         public string ItemCode { get; set; }
         public string Item { get; set; }
         public decimal debit { get; set; }

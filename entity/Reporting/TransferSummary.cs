@@ -11,6 +11,7 @@ namespace entity.Reporting
 
         public DateTime Date { get; set; }
         public string Movement { get; set; }
+        public string Tag { get; set; }
         public string Transfer { get; set; }
         public string Comment { get; set; }
         public string UserName { get; set; }

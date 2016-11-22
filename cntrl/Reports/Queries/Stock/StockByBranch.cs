@@ -14,8 +14,9 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
                              item.name as ItemName, prod.id_item_product as ProductID, 
                              (sum(mov.credit) - sum(mov.debit)) as Quantity, 
                              measure.name as Measurement,
-                             (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
-                             brand.name as Brand        
+                             (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
+                             brand.name as Brand,
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = item.id_item order by item_tag_detail.is_default limit 0,1) as Tag        
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch

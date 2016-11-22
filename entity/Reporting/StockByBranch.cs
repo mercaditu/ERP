@@ -11,6 +11,7 @@ namespace entity.Reporting
 
         public int LocationID { get; set; }
         public string Location { get; set; }
+        public string Tag { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public int ProductID { get; set; }

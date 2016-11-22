@@ -293,6 +293,7 @@
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Reporting\InventoryAnalysis.cs" />
     <Compile Include="Reporting\PriceList.cs" />
     <Compile Include="Reporting\Merchandise.cs" />
     <Compile Include="Reporting\InventoryValue.cs" />

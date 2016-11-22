@@ -22,7 +22,8 @@ from item_price as price
  extract(Year from trans_date) as Year, extract(Month from trans_date) as Month, i.code as Code, i.name as Item, 
 																 b.name as Branch, sum(credit - debit) as Stock, 
 																 sum(if(item_movement.id_sales_invoice_detail > 0, item_movement.debit, 0)) as Sales,
-                                                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = item_movement.id_movement) AS Cost
+                                                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = item_movement.id_movement) AS Cost,
+	(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag
 																 from item_movement
 																 inner join item_product as ip on item_movement.id_item_product = ip.id_item_product
 																 inner join items as i on ip.id_item = i.id_item

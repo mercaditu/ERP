@@ -147,21 +147,22 @@ namespace Cognitivo.Menu
             //Projects Plain
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Form, "Project.Development.ProjectType", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Form, "Project.Development.Project", entity.App.Names.Project, "Project", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", entity.CurrentSession.Versions.Full, "0");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "Plan", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Full, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.ProjectFinance", entity.App.Names.ProjectFinance, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.Views.TechnicalReport", entity.App.Names.TechnicalReport, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "Plan", entity.CurrentSession.Versions.Full, "1");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Full, "1");
+
+            
+            
+            
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.TechnicalReport, "Reports", entity.CurrentSession.Versions.Medium, "0");
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Form, "Production.Line", entity.App.Names.Line, "Line", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "Fraction", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.Production_HumanResources", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.Views.ProductionOrderStatus", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Preferences, "Configs.Language", "Language", "Language", entity.CurrentSession.Versions.Lite, "0");

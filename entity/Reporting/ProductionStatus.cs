@@ -9,7 +9,9 @@ namespace entity.Reporting
     public class ProductionStatus
     {
         public string ProductionOrder { get; set; }
+        public int id_production_order { get; set; }
         public int id_order_detail { get; set; }
+        public int Parent { get; set; }
         public string TaskName { get; set; }
         public string TaskCode { get; set; }
         public decimal EstQuantity { get; set; }

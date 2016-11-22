@@ -377,7 +377,8 @@ namespace entity.Brillo.Logic
                 }
                 else
                 {
-                    item_product item_product = FindNFix_ItemProduct(detail.item);
+                   
+                    item_product item_product = detail.item.item_product.FirstOrDefault();
                     if (item_product != null)
                     {
                         if (detail.id_location == null)

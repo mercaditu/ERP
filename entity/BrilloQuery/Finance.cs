@@ -24,7 +24,7 @@ namespace entity.BrilloQuery
                         as Balance from payment_schedual as sch
                          inner join contacts as cont on sch.id_contact = cont.id_contact
                          inner join app_currencyfx as fx on sch.id_currencyfx = fx.id_currencyfx
-                         where id_sales_invoice &gt; 0 and sch.can_calculate = 1 and sch.id_contact = {1}";
+                         where id_sales_invoice > 0 and sch.can_calculate = 1 and sch.id_contact = {1}";
 
             query = string.Format(query, SpecialFXRate, CustomerID);
 

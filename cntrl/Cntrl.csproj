@@ -477,15 +477,23 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Content Include="Reports\Queries\Commercial\Customer.sql" />
-    <Content Include="Reports\Queries\Production\EmployeesInProduction.sql" />
-    <Content Include="Reports\Queries\Production\ProductionOrder.sql" />
-    <Content Include="Reports\Queries\Project\Project.sql" />
+    <Content Include="Reports\Queries\Production\EmployeesInProduction.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Queries\Production\ProductionOrder.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Queries\Project\Project.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\Queries\Purchase\Purchase.sql" />
     <Content Include="Reports\Queries\Stock\CostBreakDown.sql" />
     <Content Include="Reports\Queries\Stock\InventoryAnalysis.sql" />
     <Content Include="Reports\Queries\Stock\InventorySummary.sql" />
     <Content Include="Reports\Queries\Stock\Merchandise.sql" />
-    <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql" />
+    <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\Queries\Stock\PriceList.sql" />
     <Content Include="Reports\Queries\Stock\StockFlowDimension.sql" />
     <Content Include="Reports\Queries\Stock\Stock.sql" />
@@ -525,7 +533,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Reports\EmployeesInProduction.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\Production.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\Project.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProjectExecution.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesInvoiceDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\Technical.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>

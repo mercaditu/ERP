@@ -5,6 +5,7 @@ namespace entity.Reporting
    public class RPT_Project
     {
         public string ProjectName { get; set; }
+        public int status { get; set; }
         public int id_project_task { get; set; }
         public int ParentTask { get; set; }
         public string Item { get; set; }
@@ -16,11 +17,12 @@ namespace entity.Reporting
         public string GovermentId { get; set; }
         public decimal QuantityEst { get; set; }
         public decimal QuantityReal { get; set; }
+        public decimal QuantityAddition { get; set; }
         public decimal CostEst { get; set; }
         public decimal CostReal { get; set; }
-        public decimal StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime TotalBudgeted { get; set; }
+        public decimal TotalBudgeted { get; set; }
         public decimal TotalInvoiced { get; set; }
         public decimal TotalPaid { get; set; }
         public decimal Balance { get; set; }

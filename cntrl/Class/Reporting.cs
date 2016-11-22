@@ -14,8 +14,8 @@ namespace cntrl.Class
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name =Localize.Text<string>("SalesByDate"),
-                Dataset = "SalesInvoiceSummary",
-                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.SalesInvoiceDetail.rdlc",
                 QueryPath = "Reports/Queries/Sales/Sales.sql",
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },
@@ -62,7 +62,68 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
                 QueryPath = "Reports/Queries/Sales/Sales.sql",
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
+            {
+                Application = entity.App.Names.ActivityPlan,
+                Name =Localize.Text<string>("ActivityPlan"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.Project.rdlc",
+                QueryPath = "Reports/Queries/Project/Project.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project}
+            },
+               new Report
+            {
+                Application = entity.App.Names.ProjectExecution,
+                Name =Localize.Text<string>("ProjectExecution"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.ProjectExecution.rdlc",
+                QueryPath = "Reports/Queries/Project/Project.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
+            },  new Report
+            {
+                Application = entity.App.Names.ProjectFinance,
+                Name =Localize.Text<string>("ProjectFinance"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.ProjectFinance.rdlc",
+                QueryPath = "Reports/Queries/Project/Project.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
+            }, new Report
+                {
+                Application = entity.App.Names.TechnicalReport,
+                Name =Localize.Text<string>("TechnicalReport"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.Technical.rdlc",
+                QueryPath = "Reports/Queries/Project/Project.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
             }
+            , new Report
+                {
+                Application = entity.App.Names.ProductionOrder,
+                Name =Localize.Text<string>("ProductionOrder"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.Production.rdlc",
+                QueryPath = "Reports/Queries/Production/ProductionOrder.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
+            }
+            , new Report
+                {
+                Application = entity.App.Names.ProductionOrderStatus,
+                Name =Localize.Text<string>("ProductionOrderStatus"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.ProductionStatus.rdlc",
+                QueryPath = "Reports/Queries/Production/ProductionOrderStatus.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
+            }, new Report
+                {
+                Application = entity.App.Names.EmployeesInProduction,
+                Name =Localize.Text<string>("EmployeesInProduction"),
+                Dataset = "DataSet1",
+                Path = "cntrl.Reports.Reports.EmployeesInProduction.rdlc",
+                QueryPath = "Reports/Queries/Production/EmployeesInProduction.sql",
+                Parameters = new List<Report.Types> { Report.Types.Project }
+            }
+
             };
 
 
@@ -73,7 +134,9 @@ namespace cntrl.Class
 
     public class Report
     {
-        public enum Types { StartDate, EndDate }
+        public enum Types { StartDate, EndDate,
+            Project
+        }
         public entity.App.Names Application { get; set; }
         public string Name { get; set; }
         public string Dataset { get; set; }

@@ -65,7 +65,7 @@ namespace Cognitivo.Reporting.Views
             }
 
             //If file does not exist, create file.
-            if (!File.Exists(path + SubFolder + "\\CarnetContact.rdlc.rdlc"))
+            if (!File.Exists(path + SubFolder + "\\CarnetContact.rdlc"))
             {
                 //Add Logic
                 if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "CarnetContact.rdlc"))

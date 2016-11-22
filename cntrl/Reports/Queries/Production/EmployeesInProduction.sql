@@ -16,8 +16,8 @@ left join  project_task as pt
 left join projects as p
 on  p.id_project = pt.id_project
  where ped.id_contact is not null
- and ped.id_company = @id_company
- and ped.trans_date >= @start_date
- and ped.trans_date <= @end_date
+  and ped.id_company =@CompanyID and p.id_project=@ProjectID
+ -- and ped.trans_date >= @start_date
+ -- and ped.trans_date <= @end_date
  group by ped.id_contact
 order by c.name

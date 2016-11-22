@@ -60,9 +60,9 @@ namespace Cognitivo.Class
                 sales_invoice sales_invoice = (sales_invoice)Document;
                 if (sales_invoice != null && sales_invoice.contact != null && sales_invoice.contact.credit_limit != null)
                 {
-                    decimal Balance = (decimal)Finance.SpecialFXBalance_ByCustomer(sales_invoice.app_currencyfx.buy_value, sales_invoice.id_contact);
-                    sales_invoice.contact.credit_availability = Balance;
-                    sales_invoice.contact.RaisePropertyChanged("credit_availability");
+                    //decimal Balance = (decimal)Finance.SpecialFXBalance_ByCustomer(sales_invoice.app_currencyfx.buy_value, sales_invoice.id_contact);
+                    //sales_invoice.contact.credit_availability = Balance;
+                    //sales_invoice.contact.RaisePropertyChanged("credit_availability");
                 }
             }
             else if (AppName == typeof(sales_budget).ToString() || BaseName == typeof(sales_budget).ToString())

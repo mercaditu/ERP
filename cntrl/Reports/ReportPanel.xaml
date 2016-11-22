@@ -17,6 +17,7 @@
              d:DesignHeight="600" d:DesignWidth="800" Loaded="this_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}"/>
+        
         <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}"/>
 
     </UserControl.Resources>
@@ -48,8 +49,11 @@
             </ListBox>
 
             <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-            <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
-                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" />
+            <local:DateRange x:Name="DateRange" StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
+                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"
+                             />
+            <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID,ElementName=this,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                     Visibility="Collapsed" x:Name="ComboProject" SelectionChanged="cbxProject_SelectionChanged"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="stpFilter"/>
             </ScrollViewer>

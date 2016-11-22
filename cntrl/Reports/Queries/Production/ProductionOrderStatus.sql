@@ -1,6 +1,8 @@
 ﻿select
+po.id_production_order,
 po.name as ProductionOrder,
 pod.id_order_detail,
+pod.parent_id_order_detail as Parent,
 pod.name as TaskName,
 pod.code as TaskCode,
 pod.quantity as EstQuantity,
@@ -18,5 +20,5 @@ time_to_sec(timediff(pe.end_date, pe.start_date)) / 3600 as Hours,
  left join production_execution_detail as pe on pe.id_order_detail = pod.id_order_detail
  left join contacts as c on pe.id_contact = c.id_contact
  left join hr_time_coefficient as htc on  pe.id_time_coefficient = htc.id_time_coefficient 
- where pod.id_company = @CompanyID and pod.id_production_order = @OrderID
+ where pod.id_company =@CompanyID and p.id_project=@ProjectID -- and pod.id_production_order = @OrderID
  order by pod.id_order_detail, pod.code

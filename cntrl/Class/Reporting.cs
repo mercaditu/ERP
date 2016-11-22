@@ -123,7 +123,7 @@ namespace cntrl.Class
                 Application = entity.App.Names.ProductionOrder,
                 Name =Localize.Text<string>("ProductionOrder"),
                 Path = "cntrl.Reports.Reports.Production.rdlc",
-                Query = Reports.Queries.Production.ProductionOrder.query,
+                Query = Reports.Queries.Production.Production.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
             }
             , new Report

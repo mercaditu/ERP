@@ -508,9 +508,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\EmployeesInProduction.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\Production.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reports\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
@@ -1104,7 +1101,7 @@
     <Compile Include="Reports\Queries\Finance\PendingPayables.cs" />
     <Compile Include="Reports\Queries\Finance\PendingRecievables.cs" />
     <Compile Include="Reports\Queries\Production\EmployeesInProduction.cs" />
-    <Compile Include="Reports\Queries\Production\ProductionOrder.cs" />
+    <Compile Include="Reports\Queries\Production\Production.cs" />
     <Compile Include="Reports\Queries\Production\ProductionOrderStatus.cs" />
     <Compile Include="Reports\Queries\Project\Project.cs" />
     <Compile Include="Reports\Queries\Purchase\Purchase.cs" />

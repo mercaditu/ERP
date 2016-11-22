@@ -1,4 +1,16 @@
-﻿select 
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.StockFlowDimension
+{
+    public static class TransferSummary
+
+    {
+        public static string query = @" 
+select 
                               it.trans_date Date, 
                               CONCAT(Origin.name, ' => ', Destination.name) as Movement, it.number as Transfer, it.comment as Comment, u.name as UserName, r.name as RequestedName,
                               i.name as ItemName, i.code as ItemCode, 
@@ -14,3 +26,18 @@
                               left join security_user as r on it.user_requested_id_user = r.id_user
                               where id_comapny=@CompanyID and it.trans_date >= @StartDate and it.trans_date <= @EndDate
                               order by it.trans_date
+";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

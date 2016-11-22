@@ -174,8 +174,8 @@ namespace cntrl
             }
 
             DataTable dt = new DataTable();
-          
-                            string query = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory+Report.QueryPath);
+
+            string query = Report.Query;
 
 
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
@@ -269,7 +269,7 @@ namespace cntrl
             {
                 Filterdt = ReportDt.Select(filter).CopyToDataTable();
             }
-          
+
             Filter();
             // Data_Filter(null, null);
         }

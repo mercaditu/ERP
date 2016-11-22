@@ -1,4 +1,15 @@
-﻿select branch.name as BranchName,
+﻿  using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.Stock
+{
+    public static class Merchandise
+
+    {
+        public static string query = @" select branch.name as BranchName,
                 inv.comment as TransComment,
                 item.code as ItemCode,
                 item.name as ItemName,
@@ -28,4 +39,16 @@
               inner join app_branch as branch on loc.id_branch = branch.id_branch
               
               group by inv.id_movement
-              order by inv.trans_date
+              order by inv.trans_date";
+    }
+}
+
+
+
+ 
+
+
+ 
+
+
+

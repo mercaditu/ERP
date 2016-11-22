@@ -1,4 +1,16 @@
-﻿select branch.name as Branch
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.StockFlowDimension
+{
+    public static class Stock
+
+    {
+        public static string query = @" 
+select branch.name as Branch
 
 , loc.name as Location, imd.id_movement, item.code as  ItemCode, item.name as Item, im.debit, im.credit, sum(imv.unit_value) as Cost,
  dimension.name as Dimension,imd.value,im.trans_date,su.name_full  as UserName
@@ -14,3 +26,18 @@ left outer join item_movement_value as imv on imd.id_movement=imv.id_movement
 where im.id_company = @CompanyID and(im.trans_date >= @StartDate) AND(im.trans_date <= @EndDate)
  group by imd.id_movement_property
  order by id_movement
+";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

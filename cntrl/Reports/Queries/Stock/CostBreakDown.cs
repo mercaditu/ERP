@@ -1,4 +1,15 @@
-﻿ select i.code as Code, i.name as Name, im.trans_date as TransDate, im.comment as Comment, imv.id_movement as MovID, imv.unit_value as UnitValue, 
+﻿ using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.Stock
+{
+    public static class CostBreakDown
+
+    {
+        public static string query = @" 	 select i.code as Code, i.name as Name, im.trans_date as TransDate, im.comment as Comment, imv.id_movement as MovID, imv.unit_value as UnitValue, 
                                 imv.comment as Concept, im.credit as Quantity,
                                 (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
                                 from item_movement_value as imv
@@ -7,4 +18,15 @@
                                 inner join items as i on p.id_item = i.id_item
                                 where (im.id_purchase_invoice_detail is not null or im.id_execution_detail is not null) 
                                 and im.id_comapny=@CompanyID and im.trans_date >= @StartDate and im.trans_date <= @EndDate
-                                order by im.trans_date
+                                order by im.trans_date";
+    }
+}
+
+
+
+ 
+
+
+ 
+
+

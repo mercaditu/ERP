@@ -1,4 +1,17 @@
-﻿SELECT 
+﻿  using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.Stock
+{
+    public static class InventorySummary
+
+    {
+        public static string query = @" 	
+								 
+SELECT 
 ii.trans_date as InventoryDate, 
 u.name_full as UserName,
 i.code as ItemCode, 
@@ -25,4 +38,15 @@ left join items as i on ip.id_item = i.id_item
  
 where ii.status = 1 and (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID 
 group by iid.id_item_product
-order by i.name
+order by i.name";
+    }
+}
+
+
+
+ 
+
+
+ 
+
+

@@ -1,4 +1,17 @@
-﻿select branch.name as BranchName,
+﻿  using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace cntrl.Reports.Queries.Stock
+{
+    public static class InventoryValue
+
+    {
+        public static string query = @" 	
+
+select branch.name as BranchName,
                                 item.code as ItemCode, 
                                 item.name as ItemName,
                                 inv.credit as Credit, 
@@ -27,4 +40,15 @@
                                 inner join app_location as loc on inv.id_location = loc.id_location
                                 inner join app_branch as branch on loc.id_branch = branch.id_branch
                                 where inv.credit > 0
-                                group by inv.id_movement
+                                group by inv.id_movement";
+    }
+}
+
+
+
+ 
+
+
+ 
+
+

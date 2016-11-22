@@ -183,7 +183,7 @@ namespace Cognitivo.Commercial
 
                         if (contact.contact_subscription.Count > 0)
                         {
-                            foreach (contact_subscription contact_subscription in contact.contact_subscription)
+                            foreach (contact_subscription contact_subscription in contact.contact_subscription.Where(x => x.start_date <= InvoiceDate && x.end_date >= InvoiceDate))
                             {
                                 sales_invoice_detail sales_invoice_detail = null;
 
@@ -222,23 +222,16 @@ namespace Cognitivo.Commercial
 
                                 crm_opportunity.sales_invoice.Add(sales_invoice);
 
-
                                 db.crm_opportunity.Add(crm_opportunity);
-                                //db.sales_invoice.Add(sales_invoice);
                                 db.SaveChanges();
-
-
-                                //progBar.Value += 1;
-                               Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
+                                Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
                             }
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
-                    //  Dispatcher.BeginInvoke((Action)(() => { Contact.IsSelected = true; }));
                 }
             }
         }

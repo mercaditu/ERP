@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
-using System.Collections;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -21,7 +11,7 @@ namespace Cognitivo.Reporting.Views
     {
         public List<ContactInfo> ContactInfoList { get; set; }
 
-        entity.db db = new entity.db();
+        db db = new db();
         public CollectionViewSource contactViewSource;
 
         public Subscription()
@@ -48,9 +38,7 @@ namespace Cognitivo.Reporting.Views
                         Parent.Children += ", " + contactChild.name;
                     }
 
-
                     ContactInfoList.Add(Parent);
-
                     contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
                     contactViewSource.Source = ContactInfoList;
                     contactViewSource.View.Refresh();
@@ -58,7 +46,7 @@ namespace Cognitivo.Reporting.Views
             }
         }
 
-        private ContactInfo matchContact(entity.contact _Contact)
+        private ContactInfo matchContact(contact _Contact)
         {
             ContactInfo NewContact = new ContactInfo();
             NewContact.ID = _Contact.id_contact;
@@ -66,13 +54,13 @@ namespace Cognitivo.Reporting.Views
             NewContact.Name = _Contact.name;
             NewContact.GovCode = _Contact.gov_code;
             NewContact.SubscriptionItem = _Contact.contact_subscription.FirstOrDefault() != null ? _Contact.contact_subscription.FirstOrDefault().item != null ? _Contact.contact_subscription.FirstOrDefault().item.name : "" : "";
+
             if (_Contact.date_birth != null)
             {
                 NewContact.DateBirth = (System.DateTime)_Contact.date_birth;
             }
 
             NewContact.StartDate = _Contact.timestamp;
-
             return NewContact;
         }
 

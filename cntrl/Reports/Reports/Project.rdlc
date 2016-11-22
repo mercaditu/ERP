@@ -29,7 +29,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.48094cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -42,7 +42,7 @@
                             <TextRun>
                               <Value>Task Code</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -53,8 +53,8 @@
                       <rd:DefaultName>Textbox2</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -75,7 +75,7 @@
                             <TextRun>
                               <Value>Task</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -86,8 +86,8 @@
                       <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -106,9 +106,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>status</Value>
+                              <Value>Status</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -119,8 +119,8 @@
                       <rd:DefaultName>Textbox5</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -141,7 +141,7 @@
                             <TextRun>
                               <Value>Start Date</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -152,8 +152,8 @@
                       <rd:DefaultName>Textbox7</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -174,7 +174,7 @@
                             <TextRun>
                               <Value>End Date</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -185,8 +185,8 @@
                       <rd:DefaultName>Textbox9</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -207,8 +207,9 @@
                             <TextRun>
                               <Value>Quantity Est</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -220,8 +221,8 @@
                       <rd:DefaultName>Textbox11</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -242,8 +243,9 @@
                             <TextRun>
                               <Value>Cost Est</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -255,8 +257,8 @@
                       <rd:DefaultName>Textbox13</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#7292cc</Color>
                           <Style>Solid</Style>
+                          <Width>0.25pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -269,7 +271,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.46771cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -282,7 +284,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -316,7 +318,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -350,7 +352,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -384,7 +386,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -418,7 +420,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -452,8 +454,9 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -488,8 +491,9 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -516,7 +520,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.45448cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -529,7 +533,7 @@
                             <TextRun>
                               <Value>=Fields!TaskCode.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -563,7 +567,7 @@
                             <TextRun>
                               <Value>=Fields!Task.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -597,7 +601,7 @@
                             <TextRun>
                               <Value>=Switch(Fields!status.Value=1,"Pending",Fields!status.Value=2,"Approved",Fields!status.Value=3,"InProcess",Fields!status.Value=4,"Executed",Fields!status.Value=5,"Rejected",Fields!status.Value=6,"Management_Approved")</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -631,7 +635,7 @@
                             <TextRun>
                               <Value>=Fields!StartDate.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -665,7 +669,7 @@
                             <TextRun>
                               <Value>=Fields!EndDate.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -699,7 +703,7 @@
                             <TextRun>
                               <Value>=Fields!QuantityEst.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
@@ -736,7 +740,7 @@
                             <TextRun>
                               <Value>=Fields!CostEst.Value</Value>
                               <Style>
-                                <FontFamily>Tahoma</FontFamily>
+                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
@@ -792,7 +796,7 @@
                           <TextRun>
                             <Value>Project Name</Value>
                             <Style>
-                              <FontFamily>Tahoma</FontFamily>
+                              <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                             </Style>
                           </TextRun>
@@ -803,8 +807,8 @@
                     <rd:DefaultName>Textbox21</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>#7292cc</Color>
                         <Style>Solid</Style>
+                        <Width>0.25pt</Width>
                       </Border>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
@@ -841,7 +845,7 @@
                           <TextRun>
                             <Value>=Fields!ProjectName.Value</Value>
                             <Style>
-                              <FontFamily>Tahoma</FontFamily>
+                              <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <Color>#4d4d4d</Color>
                             </Style>
@@ -895,7 +899,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.8cm</Height>
+        <Height>1.40313cm</Height>
         <Width>23.86293cm</Width>
         <Style>
           <Border>
@@ -904,46 +908,66 @@
           <FontFamily>Courier New</FontFamily>
         </Style>
       </Tablix>
-      <Textbox Name="ExecutionTime">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Globals!ExecutionTime</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ExecutionTime</rd:DefaultName>
-        <Top>0.94488in</Top>
-        <Left>7.97818in</Left>
-        <Height>0.1875in</Height>
-        <Width>1.41667in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>1.16016in</Height>
+    <Height>0.55241in</Height>
     <Style />
   </Body>
   <Width>9.39485in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.57008cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="ReportName">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!ReportName</Value>
+                  <Style>
+                    <FontFamily>courier New</FontFamily>
+                    <FontWeight>Bold</FontWeight>
+                    <Color>White</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>ReportName</rd:DefaultName>
+          <Height>0.22444in</Height>
+          <Width>9.39485in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <BackgroundColor>Black</BackgroundColor>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.64823cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>

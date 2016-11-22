@@ -53,7 +53,7 @@
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"
                              />
             <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID,ElementName=this,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Visibility="Collapsed" x:Name="ComboProject" SelectionChanged="cbxProject_SelectionChanged"/>
+                     Visibility="Collapsed" x:Name="ComboProject" />
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="stpFilter"/>
             </ScrollViewer>

@@ -1571,6 +1571,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1873,10 +1874,6 @@
                                 </TablixMember>
                                 <TablixMember>
                                   <Group Name="Details" />
-                                  <Visibility>
-                                    <Hidden>true</Hidden>
-                                    <ToggleItem>Items</ToggleItem>
-                                  </Visibility>
                                 </TablixMember>
                               </TablixMembers>
                               <Visibility>
@@ -1908,7 +1905,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.59896in</Height>
-        <Width>8.94271in</Width>
+        <Width>8.9427in</Width>
         <Style>
           <Border>
             <Style>None</Style>

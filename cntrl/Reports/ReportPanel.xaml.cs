@@ -27,6 +27,7 @@ namespace cntrl
             get { return _ShowDateRange; }
             set
             {
+                _ShowDateRange = value;
                 if (value == true)
                 {
                     DateRange.Visibility = Visibility.Visible;
@@ -64,7 +65,7 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; }
+            set { _StartDate = value;Fill(); }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
@@ -74,6 +75,7 @@ namespace cntrl
             set
             {
                 _ProjectID = value;
+                Fill();
             }
         }
         private int _ProjectID;
@@ -81,7 +83,7 @@ namespace cntrl
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; }
+            set { _EndDate = value; Fill(); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
@@ -176,8 +178,11 @@ namespace cntrl
             DataTable dt = new DataTable();
 
             string query = Report.Query;
+            if (Report.ReplaceString != null && Report.ReplaceWithString!=null)
+            {
+                query = query.Replace(Report.ReplaceString, Report.ReplaceWithString);
 
-
+            }
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@StartDate", StartDate.ToString());
             query = query.Replace("@EndDate", EndDate.ToString());
@@ -189,12 +194,18 @@ namespace cntrl
 
 
 
-            reportDataSource1.Name = Report.Dataset; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-
             reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
+            if (ShowDateRange)
+            {
+                ReportParameter StartDateParameter = new ReportParameter("StartDate", _StartDate.ToString());
+                ReportParameter EndtDateParameter = new ReportParameter("EndDate", _EndDate.ToString());
+                reportViewer.LocalReport.SetParameters(new ReportParameter[] { StartDateParameter, EndtDateParameter });
+            }
+           
 
 
 
@@ -208,7 +219,7 @@ namespace cntrl
             ReportDataSource reportDataSource1 = new ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
-            reportDataSource1.Name = Report.Dataset; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = Filterdt; //SalesDB.SalesByDate;
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
@@ -326,13 +337,6 @@ namespace cntrl
             Fill();
         }
 
-        private void cbxProject_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ComboProject.SelectedValue != null)
-            {
-                ProjectID = (int)ComboProject.SelectedValue;
-            }
-            Fill();
-        }
+     
     }
 }

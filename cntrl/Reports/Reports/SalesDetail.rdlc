@@ -1264,7 +1264,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1765,7 +1764,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2266,7 +2264,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3627,10 +3624,6 @@
                       </Visibility>
                     </TablixMember>
                   </TablixMembers>
-                  <Visibility>
-                    <Hidden>true</Hidden>
-                    <ToggleItem>Branch</ToggleItem>
-                  </Visibility>
                 </TablixMember>
               </TablixMembers>
             </TablixMember>

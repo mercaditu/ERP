@@ -1,4 +1,5 @@
 ﻿using entity.Brillo;
+using System;
 using System.Collections.Generic;
 
 namespace cntrl.Class
@@ -25,16 +26,20 @@ namespace cntrl.Class
                 Application = entity.App.Names.SalesOrder,
                 Name = Localize.Text<string>("SalesByDate"),
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
-                QueryPath = "Reports/Queries/Sales/Sales.sql",
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+                Query =  Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="sales_invoice",
+                ReplaceWithString="sales_order"
             },
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
                 Name = Localize.Text<string>("SalesByDate"),
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
-                QueryPath = "Reports/Queries/Sales/Sales.sql",
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+                Query=  Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="sales_invoice",
+                ReplaceWithString="sales_budget"
             },
 
             /// Sales (Invoice, Order, and Budget) ByCustomer Reports
@@ -77,9 +82,13 @@ namespace cntrl.Class
                 Name = Localize.Text<string>("SalesByGeography"),
                 Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+
             },
-            new Report
+            
+             //projects and Production
+                          new Report
             {
                 Application = entity.App.Names.ActivityPlan,
                 Name =Localize.Text<string>("ActivityPlan"),
@@ -143,7 +152,9 @@ namespace cntrl.Class
 
     public class Report
     {
-        public enum Types { StartDate, EndDate,
+        public enum Types
+        {
+            StartDate, EndDate,
             Project
         }
         public entity.App.Names Application { get; set; }

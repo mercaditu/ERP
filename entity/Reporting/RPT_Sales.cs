@@ -37,6 +37,11 @@ namespace entity.Reporting
         public decimal Margin { get; set; }
         public decimal MarkUp { get; set; }
         public decimal Profit { get; set; }
-      
+        public string GeoLevel1 { get; set; }
+        public string GeoLevel2 { get; set; }
+        public string GeoLevel3 { get; set; }
+        public string GeoLevel4 { get; set; }
+        public string GeoLevel5 { get; set; }
+
     }
 }

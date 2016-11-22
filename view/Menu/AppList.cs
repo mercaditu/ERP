@@ -63,11 +63,11 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "ProductSend", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.Packing", entity.App.Names.PackingList, "", entity.CurrentSession.Versions.Medium, "0");
 
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesbySalesman", entity.App.Names.SalesbySalesman, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByVAT", entity.App.Names.VATSales, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesbySalesman", entity.App.Names.SalesbySalesman, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Reports, "Reporting.Views.SalesByVAT", entity.App.Names.VATSales, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Lite, "1");
@@ -78,7 +78,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Return", entity.App.Names.PurchaseReturn, "PurchaseReturn", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Financial, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Lite, "1");
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Reports, "Reporting.Views.PendingPayables", entity.App.Names.PendingPayables, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Reports, "Reporting.Views.PendingPayables", entity.App.Names.PendingPayables, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
 
             //Human Resources        //Module                 //Namespace      //App                 //Name                   //Img
@@ -103,11 +103,11 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.ItemTag", entity.App.Names.ItemTag, "ProductTag", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Inventory, "Sales.PackingList", "PackingList", "ProductSend", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.StockFlow", entity.App.Names.InventoryFlow, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.CostBreakDown", entity.App.Names.CostBreakDown, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseEntry", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseExit", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.InventoryAnalysis", entity.App.Names.InventoryAnalysis, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.StockFlow", entity.App.Names.InventoryFlow, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.CostBreakDown", entity.App.Names.CostBreakDown, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseEntry", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.MerchandiseExit", entity.App.Names.MerchandisewithCredits, "Reports", entity.CurrentSession.Versions.Lite, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Reporting.Views.InventoryAnalysis", entity.App.Names.InventoryAnalysis, "Reports", entity.CurrentSession.Versions.Lite, "0");
 
             //Impex
             dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Exports, "Sales.Export", entity.App.Names.Export, "Export", entity.CurrentSession.Versions.Medium, "0");
@@ -125,13 +125,13 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "PaymentType", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Bank", entity.App.Names.Bank, "BankAccount", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Reports, "Reporting.Views.CurrentAccount_Customer", entity.App.Names.CurrentAccountCustomer, "Reports", entity.CurrentSession.Versions.Basic, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Reports, "Reporting.Views.CurrentAccount_Customer", entity.App.Names.CurrentAccountCustomer, "Reports", entity.CurrentSession.Versions.Basic, "0");
 
             //Projects Printing Press
             dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Form, "Project.PrintingPress.Template", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Transaction, "Project.PrintingPress.Estimate", "Costing", "ProjectTaskWizard", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");
 
             //Projects Event
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Form, "Project.EventType", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Medium, "0");
@@ -140,8 +140,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Financial, "Project.EventFinance", entity.App.Names.EventFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespaces.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", entity.CurrentSession.Versions.Medium, "0");
            
 
             //Projects Plain
@@ -161,8 +161,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "Fraction", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Preferences, "Configs.Language", "Language", "Language", entity.CurrentSession.Versions.Lite, "0");
@@ -219,8 +219,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Configs.ItemAssetGroup", "ItemAssetGroup", "ItemAssetGroup", entity.CurrentSession.Versions.Lite, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Project_Dev, "Project.ProjectTag", "ProjectTag", "Project", entity.CurrentSession.Versions.Lite, "0");
-
-         
         }
 
         public cntrl.applicationIcon get_AppIcon(DataRow app)

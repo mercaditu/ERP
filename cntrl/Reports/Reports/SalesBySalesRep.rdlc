@@ -1571,7 +1571,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1943,7 +1942,7 @@
           </Paragraphs>
           <rd:DefaultName>ReportName</rd:DefaultName>
           <Height>0.22444in</Height>
-          <Width>5.08333in</Width>
+          <Width>8.94271in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1963,7 +1962,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.31771in</Height>
+      <Height>0.3125in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1991,6 +1990,7 @@
                   <Value>Cognitivo ERP</Value>
                   <Style>
                     <FontFamily>Courier New</FontFamily>
+                    <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -1998,6 +1998,7 @@
                   <Value> | www.cognitivo.in</Value>
                   <Style>
                     <FontFamily>Courier New</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -2005,9 +2006,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.05121in</Top>
+          <Top>0.06944in</Top>
           <Left>0.26888in</Left>
-          <Height>0.21528in</Height>
+          <Height>0.1875in</Height>
           <Width>2.81445in</Width>
           <ZIndex>1</ZIndex>
           <Style>

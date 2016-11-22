@@ -1,14 +1,8 @@
-﻿ using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cntrl.Reports.Queries.Production
+﻿namespace cntrl.Reports.Queries.Production
 {
-    public static class EmployeesInProduction
-    {
-        public static string query = @" select c.name as Employee,
+	public static class EmployeesInProduction
+	{
+		public static string query = @" select c.name as Employee,
 										pt.item_description,
 										p.name as Project,
 											 start_date,
@@ -18,20 +12,20 @@ namespace cntrl.Reports.Queries.Production
 										sum(quantity)  as ComputeHours
    
 									from production_execution_detail as ped 
-									inner join  hr_time_coefficient as htc on  ped.id_time_coefficient=htc.id_time_coefficient 
+									
+									inner join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient 
 									left join contacts as c
 									on c.id_contact  = ped.id_contact 
 									left join  project_task as pt
 									 on pt.id_project_task = ped.id_project_task 
 									left join projects as p
 									on  p.id_project = pt.id_project
-									 where ped.id_contact is not null
-									  and ped.id_company =@CompanyID
-									 and ped.trans_date >= @start_date
-									  and ped.trans_date <= @end_date
-									 group by ped.id_contact
+									where ped.id_contact is not null
+									and ped.id_company = @CompanyID
+									and ped.trans_date between @StartDate and @EndDate
+									group by ped.id_contact
 									order by c.name";
-    }
+	}
 }
 
 

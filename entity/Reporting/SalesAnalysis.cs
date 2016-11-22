@@ -10,6 +10,7 @@ namespace entity.Reporting
     {
         public decimal TotalCredits { get; set; }
         public decimal RetailPrice { get; set; }
+        public string Tag { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }
         public string Code { get; set; }

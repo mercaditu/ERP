@@ -297,7 +297,7 @@
     <Compile Include="Reporting\EmployeeInProduction.cs" />
     <Compile Include="Reporting\PendingReceivable.cs" />
     <Compile Include="Reporting\ProductionStatus.cs" />
-    <Compile Include="Reporting\Production.cs" />
+    <Compile Include="Reporting\ProductionOrder.cs" />
     <Compile Include="Reporting\RPT_Project.cs" />
     <Compile Include="Reporting\Customer.cs" />
     <Compile Include="Reporting\RPT_Purchase.cs" />

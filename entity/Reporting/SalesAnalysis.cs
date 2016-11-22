@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace entity.Reporting
+﻿namespace entity.Reporting
 {
     public class SalesAnalysis
     {
@@ -19,6 +13,5 @@ namespace entity.Reporting
         public decimal Stock { get; set; }
         public decimal Sales { get; set; }
         public decimal Cost { get; set; }
-       
     }
 }

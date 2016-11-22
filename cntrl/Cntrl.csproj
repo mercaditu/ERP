@@ -516,6 +516,7 @@
     <EmbeddedResource Include="Reports\Reports\PurchaseBySupplier.rdlc" />
     <EmbeddedResource Include="Reports\Reports\PurchaseDetail.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProductionOrder.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesByCustomer.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
@@ -633,6 +634,7 @@
     <None Include="Properties\DataSources\entity.Reporting.CostBreakDown.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Customer.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.EmployeeInProduction.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.InventoryAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.InventoryValue.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Merchandise.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PendingPayable.datasource" />

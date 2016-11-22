@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Controls="clr-namespace:cntrl.Controls"
-    55959
+    
              xmlns:local="clr-namespace:cntrl"
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 

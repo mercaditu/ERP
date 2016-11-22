@@ -22,7 +22,7 @@
 									on  p.id_project = pt.id_project
 									where ped.id_contact is not null
 									and ped.id_company = @CompanyID
-									and ped.trans_date between @StartDate and @EndDate
+									and ped.trans_date between '@StartDate' and '@EndDate'
 									group by ped.id_contact
 									order by c.name";
 	}

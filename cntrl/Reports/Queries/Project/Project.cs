@@ -43,7 +43,7 @@ namespace cntrl.Reports.Queries.Project
 																		left join sales_invoice_detail as sid on si.id_sales_invoice = sid.id_sales_invoice
 																		left join payment_schedual as ps on ps.id_sales_invoice = si.id_sales_invoice
 
-											  where proj.id_company = @CompanyID and proj.id_project=@ProjectID
+											  where proj.id_company = @CompanyID and proj.id_project = @ProjectID
  
 											 group by task.id_project_task ";
     }

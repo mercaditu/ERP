@@ -26,7 +26,7 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="266,0,0,0">
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <rv:ReportViewer x:Name="reportViewer" />
         </WindowsFormsHost>
         <StackPanel>

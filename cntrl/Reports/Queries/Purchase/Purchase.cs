@@ -73,9 +73,10 @@ namespace cntrl.Reports.Queries.Purchase
 															inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
 															inner join app_contract on app_contract.id_contract=purchase_invoice.id_contract
 															inner join app_condition on app_condition.id_condition=purchase_invoice.id_condition
+	inner join app_terminal on app_terminal.id_terminal=purchase_invoice.id_terminal
 														 inner join app_cost_center on app_cost_center.id_cost_center=purchase_invoice_detail.id_cost_center
 			 												left join projects on projects.id_project=purchase_invoice.id_project
-											where purchase_invoice.trans_date between @StartDate and @EndDate and purchase_invoice.id_company = @CompanyID
+											where purchase_invoice.trans_date between '@StartDate' and '@EndDate' and purchase_invoice.id_company = @CompanyID
 											order by purchase_invoice.trans_date";
     }
 }

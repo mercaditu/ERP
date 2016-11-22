@@ -16,7 +16,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByDate"),
+                Name = Localize.Text<string>("SalesDetail"),
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -24,7 +24,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name = Localize.Text<string>("SalesByDate"),
+                Name = Localize.Text<string>("SalesDetail"),
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query =  Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -34,7 +34,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name = Localize.Text<string>("SalesByDate"),
+                Name = Localize.Text<string>("SalesDetail"),
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query=  Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -48,44 +48,152 @@ namespace cntrl.Class
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = Localize.Text<string>("SalesByCustomer"),
-                Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },
+
             new Report
             {
-                Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByProductsAndBranch"),
-                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
-                Query =  Reports.Queries.Sales.Sales.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+                Application = entity.App.Names.SalesOrder,
+                Name = Localize.Text<string>("SalesByCustomer"),
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
+                Query = Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                 ReplaceString="sales_invoice",
+                ReplaceWithString="sales_order"
             },
+
+            new Report
+            {
+                Application = entity.App.Names.SalesBudget,
+                Name = Localize.Text<string>("SalesByCustomer"),
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
+                Query = Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                  ReplaceString="sales_invoice",
+                ReplaceWithString="sales_budget"
+            },
+
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = Localize.Text<string>("SalesByBranch"),
-                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },
               new Report
             {
-                Application = entity.App.Names.SalesInvoice,
-                Name =Localize.Text<string>( "SalesBySalesRep"),
-                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                Application = entity.App.Names.SalesOrder,
+                Name =Localize.Text<string>( "SalesByBranch"),
+                Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="sales_invoice",
+                ReplaceWithString="sales_order"
             },
             new Report
             {
-                Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByGeography"),
-                Path = "cntrl.Reports.Reports.SalesInvoice.rdlc",
+                Application = entity.App.Names.SalesBudget,
+                Name = Localize.Text<string>("SalesByBranch"),
+                Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
+                 ReplaceString="sales_invoice",
+                ReplaceWithString="sales_budget"
 
             },
+
+
+
+            new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name = Localize.Text<string>("SalesByCustomer"),
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
+                Query = Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+              new Report
+            {
+                Application = entity.App.Names.SalesOrder,
+                Name =Localize.Text<string>( "SalesByCustomer"),
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
+                Query = Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="sales_invoice",
+                ReplaceWithString="sales_order"
+            },
+            new Report
+            {
+                Application = entity.App.Names.SalesBudget,
+                Name = Localize.Text<string>("SalesByCustomer"),
+                Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
+                Query = Reports.Queries.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                 ReplaceString="sales_invoice",
+                ReplaceWithString="sales_budget"
+
+            },
+
+
+            //purchase
+              new Report
+            {
+                Application = entity.App.Names.PurchaseInvoice,
+                Name = Localize.Text<string>("PurchaseDetail"),
+                Path = "cntrl.Reports.Reports.PurchaseDetail.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+              new Report
+            {
+                Application = entity.App.Names.PurchaseOrder,
+                Name = Localize.Text<string>("PurchaseDetail"),
+                Path = "cntrl.Reports.Reports.PurchaseDetail.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_order"
+            },
+                 new Report
+            {
+                Application = entity.App.Names.PurchaseInvoice,
+                Name = Localize.Text<string>("PurchaseBySupplier"),
+                Path = "cntrl.Reports.Reports.PurchaseBySupplier.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+              new Report
+            {
+                Application = entity.App.Names.PurchaseOrder,
+                Name = Localize.Text<string>("PurchaseBySupplier"),
+                Path = "cntrl.Reports.Reports.PurchaseBySupplier.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_order"
+            },
+                 new Report
+            {
+                Application = entity.App.Names.PurchaseInvoice,
+                Name = Localize.Text<string>("PurchaseByCostCenter"),
+                Path = "cntrl.Reports.Reports.PurchaseByCostCenter.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+              new Report
+            {
+                Application = entity.App.Names.PurchaseOrder,
+                Name = Localize.Text<string>("PurchaseByCostCenter"),
+                Path = "cntrl.Reports.Reports.PurchaseByCostCenter.rdlc",
+                Query = Reports.Queries.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_order"
+            },
+          
             
              //projects and Production
                           new Report

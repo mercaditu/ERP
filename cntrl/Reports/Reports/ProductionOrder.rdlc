@@ -1031,12 +1031,13 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1064,7 +1065,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
@@ -1602,7 +1603,12 @@
                           <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
-                          <Group Name="Details" />
+                          <Group Name="Details">
+                            <GroupExpressions>
+                              <GroupExpression>=Fields!OrderID.Value</GroupExpression>
+                            </GroupExpressions>
+                            <Parent>=Fields!ParentID.Value</Parent>
+                          </Group>
                           <Visibility>
                             <Hidden>true</Hidden>
                             <ToggleItem>Production</ToggleItem>
@@ -1626,8 +1632,8 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>0.00521in</Top>
-        <Height>0.97917in</Height>
-        <Width>10.04687in</Width>
+        <Height>0.97918in</Height>
+        <Width>10.04688in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1635,10 +1641,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.98437in</Height>
+    <Height>0.98439in</Height>
     <Style />
   </Body>
-  <Width>10.04687in</Width>
+  <Width>10.04688in</Width>
   <Page>
     <PageHeader>
       <Height>0.22444in</Height>

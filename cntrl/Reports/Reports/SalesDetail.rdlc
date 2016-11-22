@@ -3733,7 +3733,7 @@
           <Sizing>FitProportional</Sizing>
           <Top>0.02778in</Top>
           <Left>0.125in</Left>
-          <Height>0.21528in</Height>
+          <Height>0.15972in</Height>
           <Width>0.16471in</Width>
           <ZIndex>1</ZIndex>
           <Style>
@@ -3752,6 +3752,7 @@
                   <Value>Cognitivo ERP</Value>
                   <Style>
                     <FontFamily>Courier New</FontFamily>
+                    <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -3759,6 +3760,7 @@
                   <Value> | www.cognitivo.in</Value>
                   <Style>
                     <FontFamily>Courier New</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>

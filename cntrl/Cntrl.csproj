@@ -513,7 +513,13 @@
     <EmbeddedResource Include="Reports\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesInvoiceDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseByCostCenter.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseBySupplier.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\PurchaseDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesByBranch.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesByCustomer.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Reports\Technical.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>

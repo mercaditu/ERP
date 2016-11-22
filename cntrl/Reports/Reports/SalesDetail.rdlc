@@ -75,6 +75,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -109,6 +112,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -143,6 +149,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -177,6 +186,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -213,6 +225,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -249,6 +264,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -285,6 +303,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -321,6 +342,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -357,6 +381,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -393,6 +420,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -429,6 +459,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -465,6 +498,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -501,6 +537,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -516,14 +555,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Branch">
+                    <Textbox Name="Status1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Branch.Value</Value>
+                              <Value>=Fields!Status.Value</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -533,12 +572,15 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Branch</rd:DefaultName>
+                      <rd:DefaultName>Status1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -575,6 +617,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -611,6 +656,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -647,6 +695,9 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -660,18 +711,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox60">
+                    <Textbox Name="Textbox4">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -680,12 +730,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox60</rd:DefaultName>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -699,18 +752,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox61">
+                    <Textbox Name="Textbox6">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -719,12 +771,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox61</rd:DefaultName>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -738,18 +793,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox62">
+                    <Textbox Name="Textbox8">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPrice.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -758,12 +812,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox62</rd:DefaultName>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -777,18 +834,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox63">
+                    <Textbox Name="Textbox10">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Discount.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -797,12 +853,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox63</rd:DefaultName>
+                      <rd:DefaultName>Textbox10</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -816,18 +875,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox64">
+                    <Textbox Name="Textbox12">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotal.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -836,12 +894,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox64</rd:DefaultName>
+                      <rd:DefaultName>Textbox12</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -855,18 +916,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox65">
+                    <Textbox Name="Textbox14">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -875,12 +935,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox65</rd:DefaultName>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -894,18 +957,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox66">
+                    <Textbox Name="Textbox16">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotalVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -914,12 +976,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox66</rd:DefaultName>
+                      <rd:DefaultName>Textbox16</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -933,18 +998,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox67">
+                    <Textbox Name="Textbox18">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Avg(Fields!Margin.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>p</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -953,12 +1017,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox67</rd:DefaultName>
+                      <rd:DefaultName>Textbox18</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -972,18 +1039,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox68">
+                    <Textbox Name="Textbox20">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Avg(Fields!MarkUp.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>p</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -992,12 +1058,15 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox68</rd:DefaultName>
+                      <rd:DefaultName>Textbox20</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                        </TopBorder>
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
@@ -1161,18 +1230,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox76">
+                    <Textbox Name="Textbox21">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1181,7 +1249,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox76</rd:DefaultName>
+                      <rd:DefaultName>Textbox21</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1196,6 +1264,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1524,7 +1593,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Status.Value</Value>
+                              <Value>=Fields!Branch.Value</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1662,18 +1731,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox91">
+                    <Textbox Name="Textbox22">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1682,7 +1750,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox91</rd:DefaultName>
+                      <rd:DefaultName>Textbox22</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1697,6 +1765,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2163,18 +2232,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox105">
+                    <Textbox Name="Textbox24">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2183,7 +2251,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox105</rd:DefaultName>
+                      <rd:DefaultName>Textbox24</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -2198,6 +2266,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3470,9 +3539,9 @@
           <TablixMembers>
             <TablixMember />
             <TablixMember>
-              <Group Name="Branch">
+              <Group Name="Status">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!Branch.Value</GroupExpression>
+                  <GroupExpression>=Fields!Status.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
@@ -3496,9 +3565,9 @@
                   <TablixMembers>
                     <TablixMember />
                     <TablixMember>
-                      <Group Name="Status">
+                      <Group Name="Branch">
                         <GroupExpressions>
-                          <GroupExpression>=Fields!Status.Value</GroupExpression>
+                          <GroupExpression>=Fields!Branch.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
                       <SortExpressions>
@@ -3685,7 +3754,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
-          <Top>0.05556in</Top>
           <Left>12.57812in</Left>
           <Height>0.1875in</Height>
           <Width>1.41667in</Width>
@@ -3741,7 +3809,7 @@
           <Top>0.02778in</Top>
           <Left>0.33138in</Left>
           <Height>0.21528in</Height>
-          <Width>4.01562in</Width>
+          <Width>2.81445in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>

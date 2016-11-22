@@ -29,7 +29,8 @@ namespace cntrl.Reports.Queries.Production
 											left join projects as p on po.id_project = p.id_project
 											inner join production_line as l on po.id_production_line = l.id_production_line
 											inner join production_order_detail as pod on po.id_production_order = pod.id_production_order
-											where po.id_company =@CompanyID and p.id_project=@ProjectID";
+											where po.id_company =@CompanyID  and pod.trans_date >= @start_date
+									  and pod.trans_date <= @end_date";
     }
 }
 

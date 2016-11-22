@@ -30,7 +30,8 @@ namespace cntrl.Reports.Queries.Production
 											 left join production_execution_detail as pe on pe.id_order_detail = pod.id_order_detail
 											 left join contacts as c on pe.id_contact = c.id_contact
 											 left join hr_time_coefficient as htc on  pe.id_time_coefficient = htc.id_time_coefficient 
-											 where pod.id_company =@CompanyID and p.id_project=@ProjectID -- and pod.id_production_order = @OrderID
+											 where pod.id_company =@CompanyID  and pod.trans_date >= @start_date
+									  and pod.trans_date <= @end_date
 											 order by pod.id_order_detail, pod.code";
     }
 }

@@ -476,6 +476,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Reports\Queries\Stock\StockByLocation.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
@@ -1114,7 +1115,7 @@
     <Compile Include="Reports\Queries\Stock\InventoryValue.cs" />
     <Compile Include="Reports\Queries\Stock\Merchandise.cs" />
     <Compile Include="Reports\Queries\Stock\PriceList.cs" />
-    <Compile Include="Reports\Queries\Stock\Stock.cs" />
+    <Compile Include="Reports\Queries\Stock\StockByBranch.cs" />
     <Compile Include="Reports\Queries\Stock\StockFlowDimension.cs" />
     <Compile Include="Reports\Queries\Stock\TransferSummary.cs" />
   </ItemGroup>

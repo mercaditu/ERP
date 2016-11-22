@@ -13,7 +13,12 @@ select branch.name as BranchName,
                                 inv.credit - inv.DebitChild as Balance,
                                 UnitCost, 
                                 (UnitCost * (inv.credit - if(inv.DebitChild is null, 0, inv.DebitChild))) as TotalCost,
-                                inv.trans_date as TransDate
+                                inv.trans_date as TransDate, (select max(value)
+										from item_price as price
+											inner join app_currency as curr on price.id_currency = price.id_currency
+											inner join item_price_list as price_list on price.id_price_list = price_list.id_price_list
+											where (curr.is_priority or price_list.is_default) and price.id_item = item.id_item
+											) as RetailPrice
 
                                 from (
                                 select item_movement.*, sum(val.unit_value) as UnitCost,

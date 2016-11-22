@@ -12,7 +12,7 @@ namespace cntrl.Reports.Queries.Stock
         public static string query = @" 
 select item.code as ItemCode,
 item.name as ItemName,
-pl.name as PriceList,
+pl.name as PriceLists,
 pi.value as Price,
 currency.name as Currency
 

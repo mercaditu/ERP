@@ -11,8 +11,7 @@ namespace cntrl.Reports.Queries.Stock
     {
         public static string query = @" select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName, 
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement, 
-                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
-(select sales_invoice_detail.unit_cost from sales_invoice_detail where sales_invoice_detail.id_sales_invoice_detail=MAX(mov.id_sales_invoice_detail)) as RetailPrice,
+                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
                                  from item_movement as mov
                                  inner join app_location as loc on mov.id_location = loc.id_location
                                  inner join app_branch as branch on loc.id_branch = branch.id_branch

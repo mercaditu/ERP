@@ -9,9 +9,15 @@ namespace cntrl.Reports.Queries.Stock
     public static class CostBreakDown
 
     {
-        public static string query = @" 	 select i.code as Code, i.name as Name, im.trans_date as TransDate, im.comment as Comment, imv.id_movement as MovID, imv.unit_value as UnitValue, 
-                                imv.comment as Concept, im.credit as Quantity,
-                                (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
+        public static string query = @" 	 select i.code as Code, 
+		i.name as Name,
+		 im.trans_date as TransDate,
+		  im.comment as Comment,
+		   imv.id_movement as MovID,
+		    imv.unit_value as UnitValue, 
+ imv.comment as Concept,
+				 im.credit as Quantity,
+                  (select sum(unit_value) from item_movement_value where item_movement_value.id_movement = imv.id_movement) as SubTotal
                                 from item_movement_value as imv
                                 inner join item_movement as im on imv.id_movement = im.id_movement
                                 inner join item_product as p on im.id_item_product = p.id_item_product

@@ -293,6 +293,11 @@
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Reporting\PriceList.cs" />
+    <Compile Include="Reporting\Merchandise.cs" />
+    <Compile Include="Reporting\InventoryValue.cs" />
+    <Compile Include="Reporting\SalesAnalysis.cs" />
+    <Compile Include="Reporting\CostBreakDown.cs" />
     <Compile Include="Reporting\ContactBalnace.cs" />
     <Compile Include="Reporting\EmployeeInProduction.cs" />
     <Compile Include="Reporting\PendingReceivable.cs" />
@@ -303,6 +308,9 @@
     <Compile Include="Reporting\RPT_Purchase.cs" />
     <Compile Include="Reporting\PendingPayable.cs" />
     <Compile Include="Reporting\RPT_Sales.cs" />
+    <Compile Include="Reporting\StockByBranch.cs" />
+    <Compile Include="Reporting\StockFlowDimension.cs" />
+    <Compile Include="Reporting\TransferSummary.cs" />
     <Compile Include="Sales\sales_promotion.cs" />
     <Compile Include="Sales\sales_packing_relation.cs">
       <SubType>Code</SubType>

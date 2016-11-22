@@ -11,7 +11,7 @@ namespace cntrl.Reports.Queries.StockFlowDimension
     {
         public static string query = @" 
 select 
-                              it.trans_date Date, 
+                              it.trans_date as  Date, 
                               CONCAT(Origin.name, ' => ', Destination.name) as Movement, it.number as Transfer, it.comment as Comment, u.name as UserName, r.name as RequestedName,
                               i.name as ItemName, i.code as ItemCode, 
                               itd.quantity_destination as Quantity_D, itd.quantity_origin as Quantity_O

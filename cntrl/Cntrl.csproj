@@ -476,34 +476,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Reports\Queries\Commercial\Customer.sql" />
-    <Content Include="Reports\Queries\Production\EmployeesInProduction.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Queries\Production\ProductionOrder.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Queries\Project\Project.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Queries\Purchase\Purchase.sql" />
-    <Content Include="Reports\Queries\Stock\CostBreakDown.sql" />
-    <Content Include="Reports\Queries\Stock\InventoryAnalysis.sql" />
-    <Content Include="Reports\Queries\Stock\InventorySummary.sql" />
-    <Content Include="Reports\Queries\Stock\Merchandise.sql" />
-    <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Queries\Stock\PriceList.sql" />
-    <Content Include="Reports\Queries\Stock\StockFlowDimension.sql" />
-    <Content Include="Reports\Queries\Stock\Stock.sql" />
-    <Content Include="Reports\Queries\Finance\ContactBalance.sql" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
-    <Content Include="Reports\Queries\Finance\PendingPayables.sql" />
-    <Content Include="Reports\Queries\Finance\PendingRecievables.sql" />
-    <Content Include="Reports\Queries\Stock\InventoryValue.sql" />
     <Compile Include="SearchableTextbox.xaml.cs">
       <DependentUpon>SearchableTextbox.xaml</DependentUpon>
     </Compile>
@@ -528,7 +503,6 @@
     <Compile Include="toolMessage.xaml.cs">
       <DependentUpon>toolMessage.xaml</DependentUpon>
     </Compile>
-    <Content Include="Reports\Queries\Stock\TransferSummary.sql" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1116,11 +1090,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\Queries\Sales\Sales.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

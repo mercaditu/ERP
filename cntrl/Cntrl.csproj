@@ -1091,7 +1091,27 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Reports\Queries\Commercial\Customer.sql" />
+    <Content Include="Reports\Queries\Finance\ContactBalance.sql" />
+    <Content Include="Reports\Queries\Finance\PendingPayables.sql" />
+    <Content Include="Reports\Queries\Finance\PendingRecievables.sql" />
+    <Content Include="Reports\Queries\Production\EmployeesInProduction.sql" />
+    <Content Include="Reports\Queries\Production\ProductionOrder.sql" />
+    <Content Include="Reports\Queries\Production\ProductionOrderStatus.sql" />
+    <Content Include="Reports\Queries\Project\Project.sql" />
+    <Content Include="Reports\Queries\Purchase\Purchase.sql" />
+    <Content Include="Reports\Queries\Sales\Sales.sql" />
+    <Content Include="Reports\Queries\Stock\CostBreakDown.sql" />
+    <Content Include="Reports\Queries\Stock\InventoryAnalysis.sql" />
+    <Content Include="Reports\Queries\Stock\InventorySummary.sql" />
+    <Content Include="Reports\Queries\Stock\InventoryValue.sql" />
+    <Content Include="Reports\Queries\Stock\Merchandise.sql" />
+    <Content Include="Reports\Queries\Stock\PriceList.sql" />
+    <Content Include="Reports\Queries\Stock\Stock.sql" />
+    <Content Include="Reports\Queries\Stock\StockFlowDimension.sql" />
+    <Content Include="Reports\Queries\Stock\TransferSummary.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

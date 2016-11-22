@@ -31,12 +31,29 @@ round(sales_invoice_detail.discount, 4) as Discount,
 round((sales_invoice_detail.quantity * (sales_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
 (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_price) as Margin,
 (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_cost) as MarkUp,
-(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit
+(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit,
+(select name from app_geography where id_geography=contacts.id_geography) as GeoLevel1,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography)) as GeoLevel2,
+
+(select name from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography))) as GeoLevel3,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography)))) as GeoLevel4,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography))))) as GeoLevel5
 
 from sales_invoice_detail
 inner join sales_invoice on sales_invoice_detail.id_sales_invoice=sales_invoice.id_sales_invoice 
 left join sales_rep on sales_invoice.id_sales_rep = sales_rep.id_sales_rep
 inner join contacts on sales_invoice.id_contact = contacts.id_contact  
+inner join app_geography on app_geography.id_geography=contacts.id_geography
 inner join items on sales_invoice_detail.id_item = items.id_item
 left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 	 LEFT OUTER JOIN 

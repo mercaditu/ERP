@@ -174,8 +174,10 @@ namespace cntrl
             }
 
             DataTable dt = new DataTable();
+          
+                            string query = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory+Report.QueryPath);
 
-            string query = System.IO.File.ReadAllText(@Report.QueryPath);
+
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@StartDate", StartDate.ToString());
             query = query.Replace("@EndDate", EndDate.ToString());

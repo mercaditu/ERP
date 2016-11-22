@@ -27,11 +27,29 @@ round(( purchase_invoice_detail.unit_cost * vatco.coef),4) as UnitPriceVat,
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost),4) as SubTotal,
 round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost * vatco.coef),4) as SubTotalVat,
 (purchase_invoice_detail.discount) as Discount,
-round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount * vatco.coef)),4) as DiscountVat
+round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
+(select name from app_geography where id_geography=contacts.id_geography) as GeoLevel1,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography)) as GeoLevel2,
+
+(select name from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography))) as GeoLevel3,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography)))) as GeoLevel4,
+(select name from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=
+ (select parent_id_geography from app_geography where id_geography=
+(select parent_id_geography from app_geography where id_geography=contacts.id_geography))))) as GeoLevel5
+
 from purchase_invoice_detail  
 inner join purchase_invoice 
 on purchase_invoice_detail.id_purchase_invoice=purchase_invoice.id_purchase_invoice 
-inner join contacts on purchase_invoice.id_contact = contacts.id_contact  
+inner join contacts on purchase_invoice.id_contact = contacts.id_contact 
+left join app_geography on app_geography.id_geography=contacts.id_geography 
 left join items on purchase_invoice_detail.id_item = items.id_item 
 LEFT OUTER JOIN 
 			 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as Vat

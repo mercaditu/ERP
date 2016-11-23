@@ -2662,6 +2662,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3170,6 +3171,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3641,9 +3643,9 @@
                           <TablixMembers>
                             <TablixMember />
                             <TablixMember>
-                              <Group Name="Customer">
+                              <Group Name="Number">
                                 <GroupExpressions>
-                                  <GroupExpression>=Fields!Customer.Value</GroupExpression>
+                                  <GroupExpression>=Fields!Number.Value</GroupExpression>
                                 </GroupExpressions>
                               </Group>
                               <SortExpressions>

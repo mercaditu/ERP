@@ -486,19 +486,18 @@
     <Compile Include="Reports\Projects\Project.cs" />
     <Compile Include="Reports\Projects\ProjectFinance.cs" />
     <Compile Include="Reports\Purchases\Purchase.cs" />
+    <Compile Include="Reports\Sales\Sales.cs" />
+    <Compile Include="Reports\Sales\SalesAnalysis.cs" />
     <Compile Include="Reports\Stocks\CostBreakDown.cs" />
     <Compile Include="Reports\Stocks\InventorySummary.cs" />
     <Compile Include="Reports\Stocks\InventoryValue.cs" />
     <Compile Include="Reports\Stocks\Merchandise.cs" />
     <Compile Include="Reports\Stocks\PriceList.cs" />
     <Compile Include="Reports\Stocks\Stock.cs" />
-    <Compile Include="Reports\Stocks\StockByBranch.cs" />
-    <Compile Include="Reports\Stocks\StockByLocation.cs" />
-    <Compile Include="Reports\Stocks\StockFlowDimension.cs" />
-    <Compile Include="Reports\Stocks\TransferSummary.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Stocks\TransferSummary.cs" />
     <Compile Include="SearchableTextbox.xaml.cs">
       <DependentUpon>SearchableTextbox.xaml</DependentUpon>
     </Compile>
@@ -537,6 +536,11 @@
     <EmbeddedResource Include="Reports\Purchases\PurchaseByCostCenter.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseBySupplier.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -1125,6 +1129,7 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

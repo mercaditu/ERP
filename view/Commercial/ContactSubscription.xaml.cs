@@ -161,6 +161,7 @@ namespace Cognitivo.Commercial
                         contact contact = db.contacts.Find(Contact.id_contact);
                         sales_invoice sales_invoice = new sales_invoice();
                         sales_invoice.id_contact = contact.id_contact;
+                        sales_invoice.contact = contact;
 
                         app_contract app_contract = db.app_contract.Find(contact.id_contract);
                         if (app_contract!=null)

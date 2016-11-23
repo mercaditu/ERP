@@ -21,7 +21,6 @@ namespace entity.BrilloQuery
             catch
             {
                 throw;
-                //MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
             }
             return dt;
         }

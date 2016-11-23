@@ -56,7 +56,7 @@ namespace entity
                     }
                   
                     //CALCULATES FOR CHILD RECEPIES
-                    if (this.item != null)
+                    if (item != null)
                     {
                         if (item.item_recepie.Count > 0)
                         {

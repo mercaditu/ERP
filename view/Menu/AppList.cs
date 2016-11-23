@@ -151,9 +151,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "Plan", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", entity.CurrentSession.Versions.Full, "1");
-
-            
-            
             
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.TechnicalReport, "Reports", entity.CurrentSession.Versions.Medium, "0");
             //Production

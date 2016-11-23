@@ -5,7 +5,7 @@ namespace Cognitivo.Class
 {
     public static class CustomCommands
     {
-        static Cognitivo.GestureSettings propGesture = new Cognitivo.GestureSettings();
+        static GestureSettings propGesture = new GestureSettings();
 
         //Used For Delete Operation in Child DataGrid.
         public static readonly RoutedUICommand Delete =

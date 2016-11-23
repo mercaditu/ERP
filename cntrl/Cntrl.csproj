@@ -336,6 +336,7 @@
     <Compile Include="Curd\vat_group.xaml.cs">
       <DependentUpon>vat_group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Commercials\Customer.cs" />
     <Compile Include="Reports\DateRange.xaml.cs">
       <DependentUpon>DateRange.xaml</DependentUpon>
     </Compile>
@@ -476,10 +477,25 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reports\Queries\Project\ProjectFinance.cs" />
-    <Compile Include="Reports\Queries\Sales\SalesAnalysis.cs" />
-    <Compile Include="Reports\Queries\Stock\Stock.cs" />
-    <Compile Include="Reports\Queries\Stock\StockByLocation.cs" />
+    <Compile Include="Reports\Finances\ContactBalance.cs" />
+    <Compile Include="Reports\Finances\PendingPayables.cs" />
+    <Compile Include="Reports\Finances\PendingRecievables.cs" />
+    <Compile Include="Reports\Productions\EmployeesInProduction.cs" />
+    <Compile Include="Reports\Productions\Production.cs" />
+    <Compile Include="Reports\Productions\ProductionOrderStatus.cs" />
+    <Compile Include="Reports\Projects\Project.cs" />
+    <Compile Include="Reports\Projects\ProjectFinance.cs" />
+    <Compile Include="Reports\Purchases\Purchase.cs" />
+    <Compile Include="Reports\Stocks\CostBreakDown.cs" />
+    <Compile Include="Reports\Stocks\InventorySummary.cs" />
+    <Compile Include="Reports\Stocks\InventoryValue.cs" />
+    <Compile Include="Reports\Stocks\Merchandise.cs" />
+    <Compile Include="Reports\Stocks\PriceList.cs" />
+    <Compile Include="Reports\Stocks\Stock.cs" />
+    <Compile Include="Reports\Stocks\StockByBranch.cs" />
+    <Compile Include="Reports\Stocks\StockByLocation.cs" />
+    <Compile Include="Reports\Stocks\StockFlowDimension.cs" />
+    <Compile Include="Reports\Stocks\TransferSummary.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
     </Compile>
@@ -511,22 +527,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Reports\EmployeesInProduction.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionStatus.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\Project.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProjectExecution.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProjectFinance.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseByCostCenter.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseBySupplier.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\PurchaseDetail.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\ProductionOrder.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesAnalysis.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesByBranch.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesByCustomer.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\SalesDetail.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\StockFlow.rdlc" />
-    <EmbeddedResource Include="Reports\Reports\Technical.rdlc" />
+    <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
+    <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
+    <EmbeddedResource Include="Reports\Productions\ProductionStatus.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\Project.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\ProjectExecution.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\ProjectFinance.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\Technical.rdlc" />
+    <EmbeddedResource Include="Reports\Purchases\PurchaseByCostCenter.rdlc" />
+    <EmbeddedResource Include="Reports\Purchases\PurchaseBySupplier.rdlc" />
+    <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -652,6 +663,7 @@
     <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.StockByBranch.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.StockFlowDimension.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.TransferSummary.datasource" />
@@ -1112,26 +1124,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Reports\Queries\Commercial\Customer.cs" />
-    <Compile Include="Reports\Queries\Finance\ContactBalance.cs" />
-    <Compile Include="Reports\Queries\Finance\PendingPayables.cs" />
-    <Compile Include="Reports\Queries\Finance\PendingRecievables.cs" />
-    <Compile Include="Reports\Queries\Production\EmployeesInProduction.cs" />
-    <Compile Include="Reports\Queries\Production\Production.cs" />
-    <Compile Include="Reports\Queries\Production\ProductionOrderStatus.cs" />
-    <Compile Include="Reports\Queries\Project\Project.cs" />
-    <Compile Include="Reports\Queries\Purchase\Purchase.cs" />
-    <Compile Include="Reports\Queries\Sales\Sales.cs" />
-    <Compile Include="Reports\Queries\Stock\CostBreakDown.cs" />
-    <Compile Include="Reports\Queries\Stock\InventorySummary.cs" />
-    <Compile Include="Reports\Queries\Stock\InventoryValue.cs" />
-    <Compile Include="Reports\Queries\Stock\Merchandise.cs" />
-    <Compile Include="Reports\Queries\Stock\PriceList.cs" />
-    <Compile Include="Reports\Queries\Stock\StockByBranch.cs" />
-    <Compile Include="Reports\Queries\Stock\StockFlowDimension.cs" />
-    <Compile Include="Reports\Queries\Stock\TransferSummary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

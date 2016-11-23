@@ -1959,7 +1959,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.21875in</Height>
+        <Height>1.21876in</Height>
         <Width>8.9427in</Width>
         <Style>
           <Border>
@@ -1968,7 +1968,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.09562cm</Height>
+    <Height>3.09565cm</Height>
     <Style />
   </Body>
   <Width>22.71448cm</Width>
@@ -2247,6 +2247,16 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="StartDate">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="Cognitivo64">
       <MIMEType>image/png</MIMEType>

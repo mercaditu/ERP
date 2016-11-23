@@ -36,7 +36,7 @@ left join items as i on ip.id_item = i.id_item
  inner join security_user as u on ii.id_user = u.id_user
 
  
-where ii.status = 1 and (ii.trans_date >= @StartDate) AND (ii.trans_date <= @EndDate) and iid.id_company = @CompanyID 
+where ii.status = 1 and ii.trans_date between '@StartDate' and '@EndDate' and iid.id_company = @CompanyID 
 group by iid.id_item_product
 order by i.name";
     }

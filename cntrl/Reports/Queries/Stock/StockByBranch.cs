@@ -24,7 +24,7 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
                              inner join items as item on prod.id_item = item.id_item
                              left join item_brand as brand on brand.id_brand = item.id_brand
                              left join app_measurement as measure on item.id_measurement = measure.id_measurement 
-                             where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
+                             where mov.id_company = @CompanyID and branch.id_branch = @BranchID and mov.trans_date between '@StartDate' and '@EndDate'
                              group by loc.id_location, prod.id_item_product
                              order by item.name";
     }

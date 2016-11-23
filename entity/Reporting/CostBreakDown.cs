@@ -8,6 +8,7 @@ namespace entity.Reporting
 {
     public class CostBreakDown
     {
+        public string Code { get; set; }
         public string Name { get; set; }
         public DateTime TransDate { get; set; }
         public string Tag { get; set; }

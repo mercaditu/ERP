@@ -19,7 +19,7 @@ namespace cntrl.Reports.Queries.Stock
                                  inner join item_product as prod on mov.id_item_product = prod.id_item_product 
                                  inner join items as item on prod.id_item = item.id_item
                                  left join app_measurement as measure on item.id_measurement = measure.id_measurement 
-                                 where mov.id_company = {0} and mov.id_location = {1} and mov.trans_date <= '{2}'
+                                 where mov.id_company = @ComapanyID and mov.id_location = @LocationID and mov.trans_date between '@StartDate' and '@EndDate'
 
                                  group by loc.id_location, prod.id_item_product 
                                  order by item.name";

@@ -24,7 +24,7 @@ inner join item_product as ip on im.id_item_product=ip.id_item_product
 inner join items as item on ip.id_item=item.id_item
 inner join security_user as su on im.id_user=su.id_user
 left outer join item_movement_value as imv on imd.id_movement=imv.id_movement
-where im.id_company = @CompanyID and(im.trans_date >= @StartDate) AND(im.trans_date <= @EndDate)
+where im.id_company = @CompanyID and im.trans_date between '@StartDate' and '@EndDate'
  group by imd.id_movement_dimension
  order by id_movement
 ";

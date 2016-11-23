@@ -24,7 +24,7 @@ namespace cntrl.Reports.Queries.Stock
               select item_movement.*, sum(val.unit_value) as UnitCost
               from item_movement
               left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
-              where item_movement.id_company = {0} and item_movement.trans_date between '{1}' and '{2}' 
+              where item_movement.id_company = @CompanyID and item_movement.trans_date between '@StartDate' and '@EndDate' 
               and (
                     item_movement.id_purchase_invoice_detail > 0 or 
                     item_movement.id_execution_detail > 0 or 

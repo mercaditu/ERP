@@ -24,7 +24,7 @@ namespace cntrl.Reports.Queries.Stock
                                 inner join item_product as p on im.id_item_product = p.id_item_product
                                 inner join items as i on p.id_item = i.id_item
                                 where (im.id_purchase_invoice_detail is not null or im.id_execution_detail is not null) 
-                                and im.id_comapny=@CompanyID and im.trans_date >= @StartDate and im.trans_date <= @EndDate
+                                and im.id_comapny=@CompanyID and im.trans_date between '@StartDate' and '@EndDate'
                                 order by im.trans_date";
     }
 }

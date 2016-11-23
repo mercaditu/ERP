@@ -26,12 +26,12 @@ select branch.name as BranchName,
                                 (select if(sum(debit) is null, 0, sum(debit)) 
                                     from item_movement as mov 
                                     where mov.parent_id_movement = item_movement.id_movement
-                                    and mov.trans_date <= '{0}'
+                                  
                                     ) as DebitChild
 
                                 from item_movement 
                                 left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
-                                where item_movement.id_company = {1} and item_movement.trans_date <= '{0}'
+                                where item_movement.id_company = @CompanyID and   item_movement.trans_date between '@StartDate' and '@EndDate' 
                                 group by item_movement.id_movement
                                 ) as inv
 

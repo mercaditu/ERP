@@ -349,15 +349,16 @@ namespace cntrl
             filter = filter.Substring(5);
             if (ReportDt.Rows.Count>0)
             {
-                if (ReportDt.Select(filter).CopyToDataTable().Rows.Count > 0)
+                if (ReportDt.Select(filter).Any())
                 {
+
                     Filterdt = ReportDt.Select(filter).CopyToDataTable();
-                    Filter();
+                 
 
                 }
             }
-           
 
+            Filter();
 
 
         }

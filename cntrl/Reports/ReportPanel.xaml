@@ -56,9 +56,7 @@
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}"/>
                 <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
-                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
+              
             </StackPanel>
             <local:DateRange x:Name="DateRange" StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"/>
@@ -78,6 +76,9 @@
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}"/>
                 <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
+                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </StackPanel>
             <ScrollViewer MaxHeight="512" Margin="8" VerticalScrollBarVisibility="Auto">
                 <Grid Margin="8">

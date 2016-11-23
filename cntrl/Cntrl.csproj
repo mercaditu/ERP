@@ -541,6 +541,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\StockFlow.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>

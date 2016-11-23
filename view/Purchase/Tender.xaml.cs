@@ -520,6 +520,35 @@ namespace Cognitivo.Purchase
           
         }
 
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(query) && purchase_tenderViewSource != null)
+                {
+                    purchase_tenderViewSource.View.Filter = i =>
+                    {
+                        purchase_tender purchase_tender = i as purchase_tender;
+                        string number = purchase_tender.number != null ? purchase_tender.number : "";
+                        if (purchase_tender.name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    purchase_tenderViewSource.View.Filter = null;
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabItem _TabItem = TabLogistics.SelectedItem as TabItem;

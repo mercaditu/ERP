@@ -203,7 +203,25 @@ namespace cntrl.Class
 
               
            
-          
+          //stock
+            new Report
+            {
+                Application = entity.App.Names.Stock,
+                Name ="StockMovement",
+                Path = "cntrl.Reports.Stocks.StockMovement.rdlc",
+                Query = Reports.Stock.Stock.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+             
+            },
+              new Report
+            {
+                Application = entity.App.Names.Stock,
+                Name ="StockFlow",
+                Path = "cntrl.Reports.Stocks.StockFlow.rdlc",
+                Query = Reports.Stock.Stock.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
             
              //projects and Production
                           new Report

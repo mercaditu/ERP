@@ -24,7 +24,7 @@
     <Grid Background="{StaticResource AccentColor_Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <rv:ReportViewer x:Name="reportViewer" />
@@ -34,9 +34,13 @@
                        Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
             <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                            Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
-
             <Grid>
-                <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
+                        Style="{DynamicResource MetroCircleButtonStyle}"/>
+                    <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                </StackPanel>
                 <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
@@ -47,29 +51,39 @@
                     <SolidColorBrush Color="White" Opacity="0.64"/>
                 </ListBox.Background>
             </ListBox>
-
-            <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
+                        Style="{DynamicResource MetroCircleButtonStyle}"/>
+                <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+            </StackPanel>
             <local:DateRange x:Name="DateRange" StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
-                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"
-                             />
-            <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID,ElementName=this,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Visibility="Collapsed" x:Name="ComboProject" />
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel x:Name="stpFilter"/>
-            </ScrollViewer>
-            <Grid>
+                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"/>
+            
+            <StackPanel x:Name="stpProject" Visibility="Collapsed" Margin="4">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="White" Opacity="0.64"/>
+                </StackPanel.Background>
+                <Label Style="{StaticResource input_label}" Content="{lex:Loc Project}"/>
+                <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          x:Name="ComboProject" Style="{StaticResource input_combobox}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
+                        Style="{DynamicResource MetroCircleButtonStyle}"/>
                 <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Button Content="c" Width="24.5" Height="24.5" Background="White" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="DimGray" FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}" />
-            </Grid>
-            <Popup x:Name="popFilter">
-                <StackPanel x:Name="stpColumn">
-                    <StackPanel.Background>
-                        <SolidColorBrush Color="White" Opacity="0.64"/>
-                    </StackPanel.Background>
-                </StackPanel>
-            </Popup>
+            </StackPanel>
+            <ScrollViewer MaxHeight="512" Margin="8" VerticalScrollBarVisibility="Auto">
+                <Grid Margin="8">
+                    <StackPanel x:Name="stpFilter">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="White" Opacity="0.64"/>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1452,13 +1452,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.18229in</Height>
+    <Height>3.00302cm</Height>
     <Style />
   </Body>
-  <Width>11.42188in</Width>
+  <Width>29.01158cm</Width>
   <Page>
     <PageHeader>
-      <Height>0.22444in</Height>
+      <Height>0.57008cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1502,7 +1502,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.20312in</Height>
+      <Height>0.51592cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1567,8 +1567,13 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>8.27in</PageHeight>
-    <PageWidth>11.69in</PageWidth>
+    <PageHeight>10.5cm</PageHeight>
+    <PageWidth>14.8cm</PageWidth>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -1662,6 +1667,6 @@ cF2VYbUNtxaD4Z37WDv1Yv9wqKtL7OebbVYqRxJVO2UKvhFoUbCrLKpmvg1Id6IKz1ry+vcfoF2vbkgf
 wUdUKgBoUFtiIfxbC4X4S60sBgwOkzg95sjBqp258Jwz2zmtcjgofiuEZ4Q/9/nXve/xPodbfCU1Mp0OAJxVDXzUP9C62OWc1mC3TmRh2HYF5UiKBAQ+wEBfAASO3SoJ6dWH4X+zjYavJ7SKEx7MfKzVH/iPN/vcT6EJ/7PEqOi0AECPyT5Z7n6+o3PbVLs9UV9S0lJqMdsZiFyO+Z61APk3DcXlDAhnCAAhNI/JgrOU7lh833aP97GNAx6e+T4uGy2dLgDcLzMw8FpP3/YdA97tTpM5UmYyVuPcvYI9NTPGxLyVQRP2QQtUcL4kAEJg0Sf65i/A+YvQaFKJueOxPXv9gWf/q6vnxyej0Q9QZ1Rqz32ppPKmPp/uL7fnf5ub/L0pjRctrXItabaXzqsymyeWm4yl/J8ef+zspn0+fMDMPafBSfnD4YfiCKKCyQhgq54vD47ujsLL7zwUCG35PBDYiVd8kDOis0MdXRorALmdsjYBCxq3orayaanTNW2Gs2xqMC437vD66kskqdJklBxGRbJhEjlN4PpqnMAqWcCC4zts4ChKOKYkfXySE04kO33x+LG+aPxQezB4uBvpLdrx3h6f0TE2Y6IzCUA+Iywgr1P5oyvkUuSoNJsdMAtHmcVoh/1aLYqBsyH+YiGJ2Y3Hk8kIMrfAYCTiRwznBIYv3unk0xzezhqzwOhDQ2cTAM1AOg96Y59xAXXG/f+iXAT+F0jGzQm1uV8JAAAAAElFTkSuQmCC</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>ab98768b-9310-4bf3-92f7-3df4d51038fd</rd:ReportID>
 </Report>

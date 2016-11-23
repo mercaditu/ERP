@@ -6,8 +6,6 @@ using System.Windows.Data;
 using entity.BrilloQuery;
 using entity;
 using System.Linq;
-
-using System.Collections.Generic;
 using System.Windows.Media;
 using System;
 
@@ -44,7 +42,7 @@ namespace cntrl
                 _ShowProject = value;
                 if (value == true)
                 {
-                    ComboProject.Visibility = Visibility.Visible;
+                    stpProject.Visibility = Visibility.Visible;
                     using (db db = new db())
                     {
                         ComboProject.ItemsSource = db.projects.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
@@ -103,28 +101,29 @@ namespace cntrl
                 {
                     if (item.DataType == typeof(string))
                     {
-                        StackPanel stackcolumn = new StackPanel();
-                        stackcolumn.Name = "stp" + item.ColumnName;
                         Label Label = new Label();
                         Label.Name = item.ColumnName;
                         Label.Content = item.ColumnName;
-                        Label.Foreground = Brushes.White;
-
+                        Label.Foreground = Brushes.Black;
+                        Style lblStyle = Application.Current.FindResource("input_label") as Style;
+                        Label.Style = lblStyle;
                         stpFilter.Children.Add(Label);
+
+
                         ComboBox ComboBox = new ComboBox();
+                        Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
+                        ComboBox.Style = cbxStyle;
                         DataView view = new DataView(value);
                         ComboBox.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
                         ComboBox.SelectedValuePath = item.ColumnName;
                         ComboBox.DisplayMemberPath = item.ColumnName;
                         ComboBox.Name = "cbx" + item.ColumnName;
                         ComboBox.SelectionChanged += Cmb_SelectionChanged;
-                        //    ComboBox.Background.Opacity = 16;
-                        ComboBox.BorderBrush = Brushes.Transparent;
-                        ComboBox.Foreground = Brushes.White;
+                        ComboBox.BorderBrush = Brushes.White;
+                        ComboBox.Foreground = Brushes.Black;
                         ComboBox.IsTextSearchEnabled = true;
-
+                        
                         stpFilter.Children.Add(ComboBox);
-                        stpFilter.Children.Add(stackcolumn);
                     }
                 }
             }
@@ -235,38 +234,27 @@ namespace cntrl
             reportViewer.RefreshReport();
         }
 
-        public List<ReportColumns> ReportColumn
-        {
-            get
-            {
-                return _ReportColumn;
-            }
-            set
-            {
-                _ReportColumn = value;
-                foreach (ReportColumns ReportColumns in _ReportColumn)
-                {
-                    CheckBox chkbox = new CheckBox();
-                    chkbox.Content = ReportColumns.Columname;
-                    chkbox.IsChecked = ReportColumns.IsVisibility;
-                    stpColumn.Children.Add(chkbox);
-                    chkbox.Checked += CheckBox_Checked;
-                    chkbox.Unchecked += CheckBox_Checked;
-                }
-            }
-        }
-        List<ReportColumns> _ReportColumn;
-        //public event RoutedEventHandler Update;
-        //private void Data_Update(object sender, RoutedEventArgs e)
+        //public List<ReportColumns> ReportColumn
         //{
-        //    Update(this, new RoutedEventArgs());
+        //    get
+        //    {
+        //        return _ReportColumn;
+        //    }
+        //    set
+        //    {
+        //        _ReportColumn = value;
+        //        foreach (ReportColumns ReportColumns in _ReportColumn)
+        //        {
+        //            CheckBox chkbox = new CheckBox();
+        //            chkbox.Content = ReportColumns.Columname;
+        //            chkbox.IsChecked = ReportColumns.IsVisibility;
+        //            stpColumn.Children.Add(chkbox);
+        //            chkbox.Checked += CheckBox_Checked;
+        //            chkbox.Unchecked += CheckBox_Checked;
+        //        }
+        //    }
         //}
-
-        //public event RoutedEventHandler Filter;
-        //private void Data_Filter(object sender, RoutedEventArgs e)
-        //{
-        //    Filter(this, new RoutedEventArgs());
-        //}
+        //List<ReportColumns> _ReportColumn;
 
         public ReportPanel()
         {
@@ -288,27 +276,27 @@ namespace cntrl
             // Data_Filter(null, null);
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckBox chk = sender as CheckBox;
+        //private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    CheckBox chk = sender as CheckBox;
 
-            if (chk != null)
-            {
-                string name = chk.Content.ToString();
-                ReportColumns ReportColumns = ReportColumn.Where(x => x.Columname.Contains(name)).FirstOrDefault();
+        //    if (chk != null)
+        //    {
+        //        string name = chk.Content.ToString();
+        //        ReportColumns ReportColumns = ReportColumn.Where(x => x.Columname.Contains(name)).FirstOrDefault();
 
-                if (chk.IsChecked == true)
-                {
-                    ReportColumns.IsVisibility = true;
-                }
-                else
-                {
-                    ReportColumns.IsVisibility = false;
-                }
-            }
-            Filter();
-            // Data_Update(null, null);
-        }
+        //        if (chk.IsChecked == true)
+        //        {
+        //            ReportColumns.IsVisibility = true;
+        //        }
+        //        else
+        //        {
+        //            ReportColumns.IsVisibility = false;
+        //        }
+        //    }
+        //    Filter();
+        //    // Data_Update(null, null);
+        //}
 
         //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{

@@ -123,7 +123,6 @@ namespace cntrl
                         ComboBox.SelectedValuePath = item.ColumnName;
                         ComboBox.DisplayMemberPath = item.ColumnName;
                         ComboBox.Name = "cbx" + item.ColumnName;
-                        ComboBox.SelectionChanged += Cmb_SelectionChanged;
                         ComboBox.BorderBrush = Brushes.White;
                         ComboBox.Foreground = Brushes.Black;
                         ComboBox.IsTextSearchEnabled = true;
@@ -267,11 +266,7 @@ namespace cntrl
             InitializeComponent();
         }
 
-        private void Cmb_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            ComboBox comboobox = sender as ComboBox;
-
-            string filter = comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
+       
 
             if (ReportDt.Select(filter).CopyToDataTable().Rows.Count > 0)
             {
@@ -279,6 +274,7 @@ namespace cntrl
             }
 
             Filter();
+            // Data_Filter(null, null);
         }
 
         //private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -336,6 +332,44 @@ namespace cntrl
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Fill();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+            string filter="";
+            foreach (object Combo in stpFilter.Children)
+            {
+                if (Combo.GetType()==typeof(ComboBox))
+                {
+                    ComboBox comboobox = Combo as ComboBox;
+
+                    if (comboobox.SelectedValue != null)
+                    {
+                        filter += " and ";
+                        filter += comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
+                    }
+                    
+                }
+               
+                
+
+                
+            }
+            filter = filter.Substring(5);
+            if (ReportDt.Rows.Count>0)
+            {
+                if (ReportDt.Select(filter).CopyToDataTable().Rows.Count > 0)
+                {
+                    Filterdt = ReportDt.Select(filter).CopyToDataTable();
+                    Filter();
+
+                }
+            }
+           
+
+
+
         }
     }
 }

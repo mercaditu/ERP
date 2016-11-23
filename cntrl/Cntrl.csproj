@@ -478,6 +478,7 @@
     </Compile>
     <Compile Include="Reports\Queries\Project\ProjectFinance.cs" />
     <Compile Include="Reports\Queries\Sales\SalesAnalysis.cs" />
+    <Compile Include="Reports\Queries\Stock\Stock.cs" />
     <Compile Include="Reports\Queries\Stock\StockByLocation.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">
       <DependentUpon>ReportPanel.xaml</DependentUpon>
@@ -524,6 +525,7 @@
     <EmbeddedResource Include="Reports\Reports\SalesByCustomer.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Reports\SalesDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Reports\Reports\Technical.rdlc" />
     <None Include="app.config">
       <SubType>Designer</SubType>

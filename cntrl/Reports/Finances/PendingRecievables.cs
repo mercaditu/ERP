@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cntrl.Reports.Queries.Finance
+﻿namespace cntrl.Reports.Finance
 {
     public static class PendingReceivables
     {

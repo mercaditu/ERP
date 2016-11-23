@@ -1,5 +1,5 @@
 ﻿
-namespace cntrl.Reports.Queries.Project
+namespace cntrl.Reports.Project
 {
     public static class Project
     {

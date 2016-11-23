@@ -1,4 +1,4 @@
-﻿namespace cntrl.Reports.Queries.Production
+﻿namespace cntrl.Reports.Production
 {
 	public static class Production
 	{

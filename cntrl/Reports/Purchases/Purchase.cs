@@ -1,10 +1,4 @@
-﻿	 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cntrl.Reports.Queries.Purchase
+﻿namespace cntrl.Reports.Purchase
 {
 	public static class Purchase
 	{

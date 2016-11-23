@@ -1,4 +1,4 @@
-﻿namespace cntrl.Reports.Queries.Stock
+﻿namespace cntrl.Reports.Sales
 {
 	public static class SalesAnalysis
 

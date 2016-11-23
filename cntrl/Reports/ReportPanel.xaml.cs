@@ -266,16 +266,6 @@ namespace cntrl
             InitializeComponent();
         }
 
-       
-
-            if (ReportDt.Select(filter).CopyToDataTable().Rows.Count > 0)
-            {
-                Filterdt = ReportDt.Select(filter).CopyToDataTable();
-            }
-
-            Filter();
-            // Data_Filter(null, null);
-        }
 
         //private void CheckBox_Checked(object sender, RoutedEventArgs e)
         //{

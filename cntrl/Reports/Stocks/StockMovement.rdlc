@@ -932,6 +932,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1147,6 +1148,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1379,9 +1381,9 @@
                           <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
-                          <Group Name="Comment">
+                          <Group Name="MovementID">
                             <GroupExpressions>
-                              <GroupExpression>=Fields!Comment.Value</GroupExpression>
+                              <GroupExpression>=Fields!MovementID.Value</GroupExpression>
                             </GroupExpressions>
                           </Group>
                           <SortExpressions>
@@ -1423,8 +1425,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>3.14167cm</Height>
-        <Width>19.83053cm</Width>
+        <Height>3.14166cm</Height>
+        <Width>19.83052cm</Width>
         <Style>
           <Border>
             <Style>None</Style>

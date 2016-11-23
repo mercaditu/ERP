@@ -1,4 +1,4 @@
-﻿ 	 using System;
+﻿	 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace cntrl.Reports.Queries.Purchase
 {
-    public static class Purchase
-    {
-        public static string query = @" 	select 
+	public static class Purchase
+	{
+		public static string query = @" 	select 
 											purchase_invoice.status as Status,
 											purchase_invoice.number as Number,
 											purchase_invoice.is_impex as Import,
@@ -75,10 +75,10 @@ namespace cntrl.Reports.Queries.Purchase
 															inner join app_condition on app_condition.id_condition=purchase_invoice.id_condition
 	inner join app_terminal on app_terminal.id_terminal=purchase_invoice.id_terminal
 														 inner join app_cost_center on app_cost_center.id_cost_center=purchase_invoice_detail.id_cost_center
-			 												left join projects on projects.id_project=purchase_invoice.id_project
+															left join projects on projects.id_project=purchase_invoice.id_project
 											where purchase_invoice.trans_date between '@StartDate' and '@EndDate' and purchase_invoice.id_company = @CompanyID
 											order by purchase_invoice.trans_date";
-    }
+	}
 }
 
 

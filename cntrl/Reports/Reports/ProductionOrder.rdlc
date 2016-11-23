@@ -1107,6 +1107,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1118,7 +1119,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Status.Value</Value>
+                              <Value>=Switch(Fields!Status.Value=1,"Pending",Fields!Status.Value=2,"Approved",Fields!Status.Value=3,"InProcess",Fields!Status.Value=4,"Executed",Fields!Status.Value=5,"QA_Check",Fields!Status.Value=6,"QA_Rejected",Fields!Status.Value=7,"Anull")</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1563,7 +1564,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>

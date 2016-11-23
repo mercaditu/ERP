@@ -42,7 +42,7 @@
                     <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 </StackPanel>
                 <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </Grid>
             <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4"

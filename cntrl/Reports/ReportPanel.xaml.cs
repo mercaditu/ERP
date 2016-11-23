@@ -113,8 +113,7 @@ namespace cntrl
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
                         Label.Style = lblStyle;
                         stpFilter.Children.Add(Label);
-
-
+                        
                         ComboBox ComboBox = new ComboBox();
                         Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
                         ComboBox.Style = cbxStyle;
@@ -185,8 +184,8 @@ namespace cntrl
             if (Report.ReplaceString != null && Report.ReplaceWithString!=null)
             {
                 query = query.Replace(Report.ReplaceString, Report.ReplaceWithString);
-
             }
+
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@StartDate", StartDate.ToString("yyyy-MM-dd"));
             query = query.Replace("@EndDate", EndDate.ToString("yyyy-MM-dd"));

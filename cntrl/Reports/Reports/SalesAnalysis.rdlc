@@ -288,7 +288,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Total Credits</Value>
+                            <Value>Total Qty</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -1196,6 +1196,7 @@
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -1282,6 +1283,7 @@
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1318,6 +1320,7 @@
                                     <Style>
                                       <FontFamily>Courier New</FontFamily>
                                       <FontSize>8pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>

@@ -15,16 +15,16 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.89062in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79688in</Width>
+              <Width>0.63021in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.02604in</Width>
+              <Width>1.05729in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97917in</Width>
+              <Width>1.11459in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.70312in</Width>
@@ -33,7 +33,7 @@
               <Width>1.08854in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.125in</Width>
+              <Width>1.23438in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.21875in</Width>
@@ -580,10 +580,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -620,10 +620,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -660,10 +660,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -700,10 +700,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -742,10 +742,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -784,10 +784,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -826,10 +826,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -868,10 +868,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -910,10 +910,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -952,10 +952,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -994,10 +994,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1036,10 +1036,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1078,10 +1078,10 @@
                           <Style>Solid</Style>
                         </Border>
                         <TopBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1124,7 +1124,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1161,7 +1161,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1198,7 +1198,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1235,7 +1235,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1274,7 +1274,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1286,19 +1286,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox77">
+                    <Textbox Name="Textbox25">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1307,14 +1306,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox77</rd:DefaultName>
+                      <rd:DefaultName>Textbox25</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1326,19 +1325,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox78">
+                    <Textbox Name="Textbox26">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPrice.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1347,14 +1345,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox78</rd:DefaultName>
+                      <rd:DefaultName>Textbox26</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1394,7 +1392,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1434,7 +1432,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1446,19 +1444,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox81">
+                    <Textbox Name="Textbox33">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1467,14 +1464,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox81</rd:DefaultName>
+                      <rd:DefaultName>Textbox33</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1514,7 +1511,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1554,7 +1551,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1594,7 +1591,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1637,7 +1634,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1674,7 +1671,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1711,7 +1708,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1748,7 +1745,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1787,7 +1784,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1799,19 +1796,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox92">
+                    <Textbox Name="Textbox27">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1820,14 +1816,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox92</rd:DefaultName>
+                      <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1839,19 +1835,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox93">
+                    <Textbox Name="Textbox28">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPrice.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1860,14 +1855,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox93</rd:DefaultName>
+                      <rd:DefaultName>Textbox28</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1907,7 +1902,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1947,7 +1942,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -1959,19 +1954,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox96">
+                    <Textbox Name="Textbox34">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1980,14 +1974,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox96</rd:DefaultName>
+                      <rd:DefaultName>Textbox34</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2027,7 +2021,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2067,7 +2061,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2107,7 +2101,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2150,7 +2144,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2187,7 +2181,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2224,7 +2218,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2261,7 +2255,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2300,7 +2294,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2312,19 +2306,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox106">
+                    <Textbox Name="Textbox29">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2333,14 +2326,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox106</rd:DefaultName>
+                      <rd:DefaultName>Textbox29</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2352,19 +2345,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox107">
+                    <Textbox Name="Textbox30">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPrice.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2373,14 +2365,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox107</rd:DefaultName>
+                      <rd:DefaultName>Textbox30</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2420,7 +2412,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2460,7 +2452,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2472,19 +2464,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox110">
+                    <Textbox Name="Textbox35">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2493,14 +2484,14 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox110</rd:DefaultName>
+                      <rd:DefaultName>Textbox35</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2540,7 +2531,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2580,7 +2571,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2620,7 +2611,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
-                          <Color>Black</Color>
+                          <Color>White</Color>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2826,19 +2817,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox119">
+                    <Textbox Name="Textbox31">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2847,7 +2837,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox119</rd:DefaultName>
+                      <rd:DefaultName>Textbox31</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -2866,19 +2856,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox120">
+                    <Textbox Name="Textbox32">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPrice.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2887,7 +2876,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox120</rd:DefaultName>
+                      <rd:DefaultName>Textbox32</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -2986,19 +2975,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox123">
+                    <Textbox Name="Textbox36">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3007,7 +2995,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox123</rd:DefaultName>
+                      <rd:DefaultName>Textbox36</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -3755,7 +3743,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.61737cm</Height>
+      <Height>0.56446cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -3834,8 +3822,8 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.02778in</Top>
-          <Left>0.20638in</Left>
-          <Height>0.21528in</Height>
+          <Left>0.19249in</Left>
+          <Height>0.15972in</Height>
           <Width>2.81445in</Width>
           <ZIndex>2</ZIndex>
           <Style>

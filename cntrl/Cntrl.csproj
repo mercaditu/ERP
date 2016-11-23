@@ -476,6 +476,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Reports\Queries\Project\ProjectFinance.cs" />
     <Compile Include="Reports\Queries\Sales\SalesAnalysis.cs" />
     <Compile Include="Reports\Queries\Stock\StockByLocation.cs" />
     <Compile Include="Reports\ReportPanel.xaml.cs">

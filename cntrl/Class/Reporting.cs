@@ -16,7 +16,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesDetail"),
+                Name ="SalesDetail",
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -24,7 +24,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name = Localize.Text<string>("SalesDetail"),
+                Name ="SalesOrderDetail",
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query =  Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -34,7 +34,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name = Localize.Text<string>("SalesDetail"),
+                Name ="SalesBudgetDetail",
                 Path = "cntrl.Reports.Reports.SalesDetail.rdlc",
                 Query=  Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -47,7 +47,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByCustomer"),
+                Name ="SalesByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -56,7 +56,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name = Localize.Text<string>("SalesByCustomer"),
+                Name ="SalesOrderByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -67,7 +67,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name = Localize.Text<string>("SalesByCustomer"),
+                Name ="SalesBudgetByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -78,7 +78,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByBranch"),
+                Name ="SalesByBranch",
                 Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -86,7 +86,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name =Localize.Text<string>( "SalesByBranch"),
+                Name ="SalesOrderByBranch",
                 Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -96,7 +96,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name = Localize.Text<string>("SalesByBranch"),
+                Name ="SalesBudgetByBranch",
                 Path = "cntrl.Reports.Reports.SalesByBranch.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -110,7 +110,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesByCustomer"),
+                Name ="SalesByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -118,7 +118,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name =Localize.Text<string>( "SalesByCustomer"),
+                Name = "SalesOrderByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -128,7 +128,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name = Localize.Text<string>("SalesByCustomer"),
+                Name ="SalesBudgetByCustomer",
                 Path = "cntrl.Reports.Reports.SalesByCustomer.rdlc",
                 Query = Reports.Queries.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -139,7 +139,7 @@ namespace cntrl.Class
                new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = Localize.Text<string>("SalesAnalysis"),
+                Name ="SalesAnalysis",
                 Path = "cntrl.Reports.Reports.SalesAnalysis.rdlc",
                 Query = Reports.Queries.Stock.SalesAnalysis.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -151,7 +151,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseInvoice,
-                Name = Localize.Text<string>("PurchaseDetail"),
+                Name ="PurchaseDetail",
                 Path = "cntrl.Reports.Reports.PurchaseDetail.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -159,7 +159,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseOrder,
-                Name = Localize.Text<string>("PurchaseDetail"),
+                Name ="PurchaseOrderDetail",
                 Path = "cntrl.Reports.Reports.PurchaseDetail.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -169,7 +169,7 @@ namespace cntrl.Class
                  new Report
             {
                 Application = entity.App.Names.PurchaseInvoice,
-                Name = Localize.Text<string>("PurchaseBySupplier"),
+                Name ="PurchaseBySupplier",
                 Path = "cntrl.Reports.Reports.PurchaseBySupplier.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -177,7 +177,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseOrder,
-                Name = Localize.Text<string>("PurchaseBySupplier"),
+                Name ="PurchaseOrderBySupplier",
                 Path = "cntrl.Reports.Reports.PurchaseBySupplier.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -187,7 +187,7 @@ namespace cntrl.Class
                  new Report
             {
                 Application = entity.App.Names.PurchaseInvoice,
-                Name = Localize.Text<string>("PurchaseByCostCenter"),
+                Name ="PurchaseByCostCenter",
                 Path = "cntrl.Reports.Reports.PurchaseByCostCenter.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -195,7 +195,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseOrder,
-                Name = Localize.Text<string>("PurchaseByCostCenter"),
+                Name ="PurchaseOrderByCostCenter",
                 Path = "cntrl.Reports.Reports.PurchaseByCostCenter.rdlc",
                 Query = Reports.Queries.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -211,7 +211,7 @@ namespace cntrl.Class
                           new Report
             {
                 Application = entity.App.Names.ActivityPlan,
-                Name =Localize.Text<string>("ActivityPlan"),
+                Name ="ActivityPlan",
                 Path = "cntrl.Reports.Reports.Project.rdlc",
                 Query =  Reports.Queries.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project}
@@ -219,21 +219,21 @@ namespace cntrl.Class
                new Report
             {
                 Application = entity.App.Names.ProjectExecution,
-                Name =Localize.Text<string>("ProjectExecution"),
+                Name ="ProjectExecution",
                 Path = "cntrl.Reports.Reports.ProjectExecution.rdlc",
                 Query = Reports.Queries.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
             },  new Report
             {
                 Application = entity.App.Names.ProjectFinance,
-                Name =Localize.Text<string>("ProjectFinance"),
+                Name ="ProjectFinance",
                 Path = "cntrl.Reports.Reports.ProjectFinance.rdlc",
                 Query =Reports.Queries.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
             }, new Report
                 {
                 Application = entity.App.Names.TechnicalReport,
-                Name =Localize.Text<string>("TechnicalReport"),
+                Name ="TechnicalReport",
                 Path = "cntrl.Reports.Reports.Technical.rdlc",
                 Query = Reports.Queries.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
@@ -241,7 +241,7 @@ namespace cntrl.Class
             , new Report
                 {
                 Application = entity.App.Names.ProductionOrder,
-                Name =Localize.Text<string>("ProductionOrder"),
+                Name ="ProductionOrder",
                 Path = "cntrl.Reports.Reports.ProductionOrder.rdlc",
                 Query = Reports.Queries.Production.Production.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
@@ -249,14 +249,14 @@ namespace cntrl.Class
             , new Report
                 {
                 Application = entity.App.Names.ProductionOrderStatus,
-                Name =Localize.Text<string>("ProductionOrderStatus"),
+                Name ="ProductionOrderStatus",
                 Path = "cntrl.Reports.Reports.ProductionStatus.rdlc",
                 Query = Reports.Queries.Production.ProductionOrderStatus.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }, new Report
                 {
                 Application = entity.App.Names.EmployeesInProduction,
-                Name =Localize.Text<string>("EmployeesInProduction"),
+                Name ="EmployeesInProduction",
                 Path = "cntrl.Reports.Reports.EmployeesInProduction.rdlc",
                 Query =Reports.Queries.Production.EmployeesInProduction.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }

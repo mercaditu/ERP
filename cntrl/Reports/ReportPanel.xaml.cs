@@ -223,7 +223,12 @@ namespace cntrl
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
 
             reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
-
+            if (ShowDateRange)
+            {
+                ReportParameter StartDateParameter = new ReportParameter("StartDate", _StartDate.ToString());
+                ReportParameter EndtDateParameter = new ReportParameter("EndDate", _EndDate.ToString());
+                reportViewer.LocalReport.SetParameters(new ReportParameter[] { StartDateParameter, EndtDateParameter });
+            }
 
 
             reportViewer.Refresh();

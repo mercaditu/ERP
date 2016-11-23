@@ -15,11 +15,12 @@ namespace cntrl.Reports.Queries.Project
 												 item.code as ItemCode,
 											 task.code as TaskCode,
 											  task.item_description as Task,
-											   task.status,contacts.name as Contact,
+											   task.status,
+                                                contacts.name as Contact,
 											   contacts.code as ContactCode,
 											   Contacts.gov_code as GovermentId,
-											sum(task.quantity_est) as QuantityEst, 
-											sum(exe.Quantity) as QuantityReal, 
+											task.quantity_est as QuantityEst, 
+											exe.Quantity as QuantityReal, 
 											task.unit_cost_est as CostEst,
 											 exe.unit_cost as CostReal, 
 											 task.start_date_est as StartDate,
@@ -29,7 +30,7 @@ namespace cntrl.Reports.Queries.Project
 																		sum(sid.quantity * sid.unit_price) as TotalInvoiced,
 																		sum(ps.debit) as TotalPaid,
 																		sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
-												 sum(task.quantity_est)-(if(sum(TIMEDIFF( task.end_date_est, task.start_date_est ))is null,0,sum(TIMEDIFF( task.end_date_est, task.start_date_est )))) as QuantityAdditional
+												 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional
 											from project_task as task 
 
 											 inner join projects  as proj on proj.id_project = task.id_project 

@@ -127,7 +127,8 @@ namespace cntrl
                         ComboBox.BorderBrush = Brushes.White;
                         ComboBox.Foreground = Brushes.Black;
                         ComboBox.IsTextSearchEnabled = true;
-                        
+                        TextSearch.SetTextPath(ComboBox, item.ColumnName);
+                        ComboBox.IsEditable = true;
                         stpFilter.Children.Add(ComboBox);
                     }
                 }

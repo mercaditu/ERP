@@ -310,7 +310,7 @@
     <Compile Include="Reporting\PendingPayable.cs" />
     <Compile Include="Reporting\RPT_Sales.cs" />
     <Compile Include="Reporting\StockByBranch.cs" />
-    <Compile Include="Reporting\StockFlowDimension.cs" />
+    <Compile Include="Reporting\Stock.cs" />
     <Compile Include="Reporting\TransferSummary.cs" />
     <Compile Include="Sales\sales_promotion.cs" />
     <Compile Include="Sales\sales_packing_relation.cs">

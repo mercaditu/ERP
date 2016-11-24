@@ -292,6 +292,15 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },
+                 new Report
+            {
+                Application = entity.App.Names.Inventory,
+                Name ="InventoryValue",
+                Path = "cntrl.Reports.Stocks.StockValue.rdlc",
+                Query = Reports.Stock.InventoryValue.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
 
               //CONTACTS
                  new Report
@@ -367,7 +376,7 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.Project }
             }, new Report
                 {
-                Application = entity.App.Names.TechnicalReport,
+                Application = entity.App.Names.ActivityPlan,
                 Name ="TechnicalReport",
                 Path = "cntrl.Reports.Projects.Technical.rdlc",
                 Query = Reports.Project.Project.query,

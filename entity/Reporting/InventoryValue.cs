@@ -1,7 +1,10 @@
-﻿namespace entity.Reporting
+﻿using System;
+
+namespace entity.Reporting
 {
     public class InventoryValue
     {
+        public DateTime Date { get; set; }
         public string Branch { get; set; }
         public string Tag { get; set; }
         public string Code { get; set; }

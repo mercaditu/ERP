@@ -336,6 +336,9 @@
     <Compile Include="Curd\vat_group.xaml.cs">
       <DependentUpon>vat_group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanelAdv\pnlAnull.xaml.cs">
+      <DependentUpon>pnlAnull.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Commercials\Customer.cs" />
     <Compile Include="Reports\DateRange.xaml.cs">
       <DependentUpon>DateRange.xaml</DependentUpon>
@@ -486,6 +489,7 @@
     <Compile Include="Reports\Projects\Project.cs" />
     <Compile Include="Reports\Projects\ProjectFinance.cs" />
     <Compile Include="Reports\Purchases\Purchase.cs" />
+    <Compile Include="Reports\Purchases\PurchaseTender.cs" />
     <Compile Include="Reports\Sales\Sales.cs" />
     <Compile Include="Reports\Sales\SalesAnalysis.cs" />
     <Compile Include="Reports\Stocks\CostBreakDown.cs" />
@@ -879,6 +883,10 @@
     <Page Include="Curd\vat_group.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlAnull.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Reports\DateRange.xaml">
       <SubType>Designer</SubType>

@@ -11,6 +11,7 @@ using System.Data;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using entity.Brillo;
 
 namespace Cognitivo.Purchase
 {
@@ -170,7 +171,15 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            PurchaseInvoiceDB.Anull();
+            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+            cntrl.PanelAdv.pnlAnull pnlAnull = new cntrl.PanelAdv.pnlAnull();
+            pnlAnull.ID = purchase_invoice.id_purchase_invoice;
+           
+            crud_modal.Visibility = Visibility.Visible;
+            crud_modal.Children.Add(pnlAnull);
+
+           
+             PurchaseInvoiceDB.Anull();
         }
 
         #endregion

@@ -1193,7 +1193,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Sum(Fields!Number.Value)</Value>
+                                <Value>=Fields!Number.Value</Value>
                                 <Style>
                                   <FontFamily>courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1217,7 +1217,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -1541,7 +1540,7 @@
         </Field>
         <Field Name="Number">
           <DataField>Number</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Paid">
           <DataField>Paid</DataField>
@@ -1567,6 +1566,12 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Parameters">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="Cognitivo64">
       <MIMEType>image/png</MIMEType>

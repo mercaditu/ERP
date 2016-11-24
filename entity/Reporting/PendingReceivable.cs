@@ -11,7 +11,7 @@ namespace entity.Reporting
         public string Code { get; set; }
         public string GovID { get; set; }
         public string Contact { get; set; }
-        public decimal Number { get; set; }
+        public string Number { get; set; }
         public string Comment { get; set; }
         public string Conditions { get; set; }
         public string Contract { get; set; }

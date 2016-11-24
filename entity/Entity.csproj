@@ -297,6 +297,7 @@
     <Compile Include="Reporting\PriceList.cs" />
     <Compile Include="Reporting\Merchandise.cs" />
     <Compile Include="Reporting\InventoryValue.cs" />
+    <Compile Include="Reporting\PurchaseTender.cs" />
     <Compile Include="Reporting\SalesAnalysis.cs" />
     <Compile Include="Reporting\CostBreakDown.cs" />
     <Compile Include="Reporting\ContactBalnace.cs" />

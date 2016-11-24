@@ -1052,7 +1052,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.90199cm</Height>
-        <Width>22.26126cm</Width>
+        <Width>22.26125cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1176,8 +1176,8 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>1cm</LeftMargin>
     <RightMargin>1cm</RightMargin>
     <TopMargin>1cm</TopMargin>
@@ -1283,10 +1283,8 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="Variables">
+    <ReportParameter Name="Parameters">
       <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

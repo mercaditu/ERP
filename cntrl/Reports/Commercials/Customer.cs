@@ -1,4 +1,4 @@
-﻿namespace cntrl.Reports.Queries.Commercial
+﻿namespace cntrl.Reports.Commercial
 {
 	public static class Customer
 	{

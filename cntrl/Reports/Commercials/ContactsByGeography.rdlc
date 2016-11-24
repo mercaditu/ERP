@@ -801,10 +801,6 @@ Fields!AccountPayable.Value))</Value>
                     </TablixMember>
                     <TablixMember>
                       <Group Name="Details" />
-                      <Visibility>
-                        <Hidden>true</Hidden>
-                        <ToggleItem>ContactID</ToggleItem>
-                      </Visibility>
                     </TablixMember>
                   </TablixMembers>
                   <Visibility>
@@ -817,7 +813,7 @@ Fields!AccountPayable.Value))</Value>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>0.73958in</Height>
+        <Height>0.73959in</Height>
         <Width>8.40787in</Width>
         <Style>
           <Border>
@@ -826,7 +822,7 @@ Fields!AccountPayable.Value))</Value>
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.87854cm</Height>
+    <Height>1.87856cm</Height>
     <Style />
   </Body>
   <Width>21.35599cm</Width>
@@ -941,8 +937,8 @@ Fields!AccountPayable.Value))</Value>
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>1cm</LeftMargin>
     <RightMargin>1cm</RightMargin>
     <TopMargin>1cm</TopMargin>

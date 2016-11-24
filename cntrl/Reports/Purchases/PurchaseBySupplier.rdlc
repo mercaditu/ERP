@@ -2155,7 +2155,7 @@
       </Style>
     </PageFooter>
     <PageHeight>21cm</PageHeight>
-    <PageWidth>14.8cm</PageWidth>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>1cm</LeftMargin>
     <RightMargin>1cm</RightMargin>
     <TopMargin>1cm</TopMargin>
@@ -2305,11 +2305,7 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="StartDate">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="EndDate">
+    <ReportParameter Name="Parameters">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

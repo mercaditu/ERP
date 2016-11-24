@@ -204,6 +204,16 @@ namespace cntrl.Class
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_order"
             },
+              new Report
+            {
+                Application = entity.App.Names.PurchaseReturn,
+                Name ="PurchaseReturnDetail",
+                Path = "cntrl.Reports.Purchases.PurchaseDetail.rdlc",
+                Query = Reports.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_return"
+            },
                  new Report
             {
                 Application = entity.App.Names.PurchaseInvoice,
@@ -222,6 +232,16 @@ namespace cntrl.Class
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_order"
             },
+               new Report
+            {
+                Application = entity.App.Names.PurchaseReturn,
+                Name ="PurchaseReturnBySupplier",
+                Path = "cntrl.Reports.Purchases.PurchaseBySupplier.rdlc",
+                Query = Reports.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_return"
+            },
                  new Report
             {
                 Application = entity.App.Names.PurchaseInvoice,
@@ -239,6 +259,16 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_order"
+            },
+                  new Report
+            {
+                Application = entity.App.Names.PurchaseReturn,
+                Name ="PurchaseReturnByCostCenter",
+                Path = "cntrl.Reports.Purchases.PurchaseByCostCenter.rdlc",
+                Query = Reports.Purchase.Purchase.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="purchase_invoice",
+                ReplaceWithString="purchase_return"
             },
 
               
@@ -259,6 +289,55 @@ namespace cntrl.Class
                 Name ="StockFlow",
                 Path = "cntrl.Reports.Stocks.StockFlow.rdlc",
                 Query = Reports.Stock.Stock.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+
+              //CONTACTS
+                 new Report
+            {
+                Application = entity.App.Names.Contact,
+                Name ="ContactsByBank",
+                Path = "cntrl.Reports.Commercials.ContactsByBank.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+            new Report
+            {
+                Application = entity.App.Names.Contact,
+                Name ="ContactsByGeography",
+                Path = "cntrl.Reports.Commercials.ContactsByGeography.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+               new Report
+            {
+                Application = entity.App.Names.Contact,
+                Name ="ContactsByTag",
+                Path = "cntrl.Reports.Commercials.ContactsByTag.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+
+             //Finance
+                new Report
+            {
+                Application = entity.App.Names.AccountsPayable,
+                Name ="AccountsPayable",
+                Path = "cntrl.Reports.Finances.AccountsBalance.rdlc",
+                Query = Reports.Finance.PendingPayables.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+                      new Report
+            {
+                Application = entity.App.Names.AccountsReceivable,
+                Name ="AccountsReceivable",
+                Path = "cntrl.Reports.Finances.AccountsBalance.rdlc",
+                Query = Reports.Finance.PendingReceivables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },

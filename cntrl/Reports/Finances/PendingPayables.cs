@@ -26,7 +26,7 @@ namespace cntrl.Reports.Finance
 									from payment_schedual as child where child.parent_id_payment_schedual = parent.id_payment_schedual
 									) as DebitChild
 								from payment_schedual as parent
-								where parent.id_company = {0} and parent.trans_date <= '{1}'
+								where parent.id_company = @CompanyID and parent.trans_date between '@startDate' and '@EndDate'
 								group by parent.id_payment_schedual
 
 								) as schedual

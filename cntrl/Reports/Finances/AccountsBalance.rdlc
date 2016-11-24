@@ -1057,14 +1057,14 @@
                   <TablixHeader>
                     <Size>1.04154in</Size>
                     <CellContents>
-                      <Textbox Name="Textbox55">
+                      <Textbox Name="GovID">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value />
+                                <Value>=Fields!GovID.Value</Value>
                                 <Style>
                                   <FontFamily>courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1075,7 +1075,7 @@
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox55</rd:DefaultName>
+                        <rd:DefaultName>GovID</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
@@ -1197,6 +1197,7 @@
                                 <Style>
                                   <FontFamily>courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
+                                  <TextDecoration>None</TextDecoration>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1204,6 +1205,7 @@
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Number</rd:DefaultName>
+                        <ToolTip>=Fields!Comment.Value</ToolTip>
                         <Style>
                           <Border>
                             <Color>White</Color>
@@ -1215,6 +1217,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>

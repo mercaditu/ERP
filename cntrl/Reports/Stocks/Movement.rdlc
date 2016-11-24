@@ -1199,7 +1199,7 @@ Fields!DestinationB.Value
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.98438in</Height>
-        <Width>8.7688in</Width>
+        <Width>8.76879in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1415,6 +1415,14 @@ Fields!DestinationB.Value
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Parameters">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="Cognitivo64">
       <MIMEType>image/png</MIMEType>

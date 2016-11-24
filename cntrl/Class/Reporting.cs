@@ -318,6 +318,14 @@ namespace cntrl.Class
                 Query = Reports.Stock.TransferSummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
+                                        new Report
+            {
+                Application = entity.App.Names.Transfer,
+                Name ="Transfer",
+                Path = "cntrl.Reports.Stocks.Movement.rdlc",
+                Query = Reports.Stock.TransferSummary.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
 
               //CONTACTS
                  new Report

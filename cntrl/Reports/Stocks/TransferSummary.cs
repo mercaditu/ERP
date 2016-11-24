@@ -25,7 +25,7 @@
                               left join projects as p on it.id_project = p.id_project
                               inner join security_user as u on it.id_user = u.id_user
                               left join security_user as r on it.user_requested_id_user = r.id_user
-                              where id_comapny=@CompanyID and it.trans_date between '@StartDate' and '@EndDate'
+                              where  it.id_company=@CompanyID and it.trans_date between '@StartDate' and '@EndDate'
                               order by it.trans_date";
     }
 }

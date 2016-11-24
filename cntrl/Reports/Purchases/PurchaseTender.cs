@@ -21,7 +21,7 @@ contract.name as Contract,
 ptd.unit_cost as Cost,
  pti.quantity as Quantity, 
 pod.quantity as Ordered
-p
+
  from purchase_tender pt
  inner join purchase_tender_contact as ptc on pt.id_purchase_tender = ptc.id_purchase_tender
 	inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_tender_contact.id_currencyfx

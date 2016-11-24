@@ -15,6 +15,7 @@ namespace entity.Reporting
         public decimal Cost { get; set; }
         public decimal Quantity { get; set; }
         public decimal Ordered { get; set; }
-      
+        public string Currency { get; set; }
+
     }
 }

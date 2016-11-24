@@ -1221,64 +1221,39 @@
                   </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
-                      <TablixHeader>
-                        <Size>0.98425in</Size>
-                        <CellContents>
-                          <Textbox Name="Contract">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Fields!Contract.Value</Value>
-                                    <Style>
-                                      <FontFamily>courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style />
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Contract</rd:DefaultName>
-                            <Style>
-                              <Border>
-                                <Color>White</Color>
-                                <Style>Solid</Style>
-                              </Border>
-                              <PaddingLeft>2pt</PaddingLeft>
-                              <PaddingRight>2pt</PaddingRight>
-                              <PaddingTop>2pt</PaddingTop>
-                              <PaddingBottom>2pt</PaddingBottom>
-                            </Style>
-                          </Textbox>
-                        </CellContents>
-                      </TablixHeader>
+                      <Group Name="Number">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!Number.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!Number.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1in</Size>
+                            <Size>0.98425in</Size>
                             <CellContents>
-                              <Textbox Name="ExpiryDate">
+                              <Textbox Name="Contract">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>=Fields!ExpiryDate.Value</Value>
+                                        <Value>=Fields!Contract.Value</Value>
                                         <Style>
                                           <FontFamily>courier New</FontFamily>
                                           <FontSize>8pt</FontSize>
-                                          <Format>d</Format>
                                         </Style>
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>ExpiryDate</rd:DefaultName>
+                                <rd:DefaultName>Contract</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Color>White</Color>
@@ -1290,13 +1265,57 @@
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
+                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                           <TablixMembers>
-                            <TablixMember />
+                            <TablixMember>
+                              <TablixHeader>
+                                <Size>1in</Size>
+                                <CellContents>
+                                  <Textbox Name="ExpiryDate">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>=Fields!ExpiryDate.Value</Value>
+                                            <Style>
+                                              <FontFamily>courier New</FontFamily>
+                                              <FontSize>8pt</FontSize>
+                                              <Format>d</Format>
+                                            </Style>
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>ExpiryDate</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Color>White</Color>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixHeader>
+                              <TablixMembers>
+                                <TablixMember />
+                              </TablixMembers>
+                            </TablixMember>
                           </TablixMembers>
                         </TablixMember>
                       </TablixMembers>
+                      <Visibility>
+                        <Hidden>true</Hidden>
+                        <ToggleItem>ExpiryDate</ToggleItem>
+                      </Visibility>
                     </TablixMember>
                   </TablixMembers>
                   <Visibility>
@@ -1364,7 +1383,7 @@
     <Height>2.52677cm</Height>
     <Style />
   </Body>
-  <Width>22.40958cm</Width>
+  <Width>24.90958cm</Width>
   <Page>
     <PageHeader>
       <Height>0.57008cm</Height>

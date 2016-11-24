@@ -260,7 +260,7 @@ namespace cntrl.Class
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_order"
             },
-                new Report
+                  new Report
             {
                 Application = entity.App.Names.PurchaseReturn,
                 Name ="PurchaseReturnByCostCenter",
@@ -274,7 +274,7 @@ namespace cntrl.Class
               
            
           //stock
-                new Report
+            new Report
             {
                 Application = entity.App.Names.Stock,
                 Name ="StockMovement",
@@ -283,7 +283,7 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
              
             },
-                new Report
+              new Report
             {
                 Application = entity.App.Names.Stock,
                 Name ="StockFlow",
@@ -292,16 +292,25 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },
-                new Report
+                 new Report
             {
-                Application = entity.App.Names.Inventory,
-                Name ="InventoryValue",
+                Application = entity.App.Names.Stock,
+                Name ="StockValue",
                 Path = "cntrl.Reports.Stocks.StockValue.rdlc",
                 Query = Reports.Stock.InventoryValue.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },
-                new Report
+                  new Report
+            {
+                Application = entity.App.Names.Inventory,
+                Name ="Inventory",
+                Path = "cntrl.Reports.Stocks.Inventory.rdlc",
+                Query = Reports.Stock.InventorySummary.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
+                    new Report
             {
                 Application = entity.App.Names.Movement,
                 Name ="Movement",
@@ -309,17 +318,6 @@ namespace cntrl.Class
                 Query = Reports.Stock.TransferSummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-
-             new Report
-            {
-                Application = entity.App.Names.Transfer,
-                Name ="Transfer",
-                Path = "cntrl.Reports.Stocks.Movement.rdlc",
-                Query = Reports.Stock.TransferSummary.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
-            },
-
 
               //CONTACTS
                  new Report

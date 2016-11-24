@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity.Reporting
 {
-    public class InventoryAnalysis
+    public class Inventory
     {
         public DateTime InventoryDate { get; set; }
         public string UserName { get; set; }

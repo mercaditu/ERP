@@ -149,7 +149,7 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
-        
+
             if (PurchaseInvoiceDB.SaveChanges() > 0)
             {
                 purchase_invoiceViewSource.View.Refresh();
@@ -171,15 +171,15 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-            cntrl.PanelAdv.pnlAnull pnlAnull = new cntrl.PanelAdv.pnlAnull();
-            pnlAnull.ID = purchase_invoice.id_purchase_invoice;
-           
-            crud_modal.Visibility = Visibility.Visible;
-            crud_modal.Children.Add(pnlAnull);
+            //    purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+            //    cntrl.PanelAdv.pnlAnull pnlAnull = new cntrl.PanelAdv.pnlAnull();
+            //    pnlAnull.ID = purchase_invoice.id_purchase_invoice;
 
-           
-             PurchaseInvoiceDB.Anull();
+            //    crud_modal.Visibility = Visibility.Visible;
+            //    crud_modal.Children.Add(pnlAnull);
+
+
+            PurchaseInvoiceDB.Anull();
         }
 
         #endregion
@@ -707,7 +707,7 @@ namespace Cognitivo.Purchase
             if (purchase_order != null)
             {
                 entity.Brillo.Document.Start.Manual(purchase_order, purchase_order.app_document_range);
-               
+
             }
         }
 

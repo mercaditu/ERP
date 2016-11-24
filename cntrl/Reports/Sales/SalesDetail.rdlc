@@ -4144,7 +4144,7 @@
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="Parameters">
-      <DataType>DateTime</DataType>
+      <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

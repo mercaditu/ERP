@@ -158,8 +158,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "Fraction", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.EmployeesInProduction, "Reports", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespaces.Reports, "Reporting.ReportViewer", entity.App.Names.ProductionOrderStatus, "Reports", entity.CurrentSession.Versions.Medium, "0");
+     
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Preferences, "Configs.Language", "Language", "Language", entity.CurrentSession.Versions.Lite, "0");

@@ -383,14 +383,14 @@ namespace cntrl.Class
             }
             , new Report
                 {
-                Application = entity.App.Names.ProductionOrderStatus,
+                Application = entity.App.Names.ProductionOrder,
                 Name ="ProductionOrderStatus",
                 Path = "cntrl.Reports.Productions.ProductionStatus.rdlc",
                 Query = Reports.Production.ProductionOrderStatus.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }, new Report
                 {
-                Application = entity.App.Names.EmployeesInProduction,
+                Application = entity.App.Names.ProductionOrder,
                 Name ="EmployeesInProduction",
                 Path = "cntrl.Reports.Productions.EmployeesInProduction.rdlc",
                 Query =Reports.Production.EmployeesInProduction.query,

@@ -526,6 +526,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Commercials\ContactsByBank.rdlc" />
+    <EmbeddedResource Include="Reports\Commercials\ContactsByGeography.rdlc" />
+    <EmbeddedResource Include="Reports\Commercials\ContactsByTag.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionStatus.rdlc" />
@@ -652,6 +655,7 @@
     <None Include="Properties\DataSources\entity.purchase_tender_item_detail.datasource" />
     <None Include="Properties\DataSources\entity.refinance.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ContactBalnace.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Contacts.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.CostBreakDown.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Customer.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.EmployeeInProduction.datasource" />

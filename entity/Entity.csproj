@@ -305,7 +305,7 @@
     <Compile Include="Reporting\ProductionStatus.cs" />
     <Compile Include="Reporting\ProductionOrder.cs" />
     <Compile Include="Reporting\RPT_Project.cs" />
-    <Compile Include="Reporting\Customer.cs" />
+    <Compile Include="Reporting\Contacts.cs" />
     <Compile Include="Reporting\RPT_Purchase.cs" />
     <Compile Include="Reporting\PendingPayable.cs" />
     <Compile Include="Reporting\RPT_Sales.cs" />

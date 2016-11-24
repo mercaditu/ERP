@@ -10,6 +10,7 @@
                 <CellContents>
                   <Textbox Name="Textbox16">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -38,6 +39,7 @@
                     </Style>
                   </Textbox>
                   <ColSpan>6</ColSpan>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell />
@@ -51,6 +53,7 @@
                 <CellContents>
                   <Textbox Name="Textbox17">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -79,6 +82,7 @@
                     </Style>
                   </Textbox>
                   <ColSpan>6</ColSpan>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell />
@@ -92,6 +96,7 @@
                 <CellContents>
                   <Textbox Name="Textbox18">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -120,6 +125,7 @@
                     </Style>
                   </Textbox>
                   <ColSpan>6</ColSpan>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell />
@@ -244,6 +250,7 @@
                 <CellContents>
                   <Textbox Name="Textbox72">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -277,12 +284,14 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
                   <Textbox Name="Textbox84">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -316,12 +325,14 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
                   <Textbox Name="Textbox90">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -355,6 +366,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
             </TablixCornerRow>
@@ -383,6 +395,7 @@
                   <CellContents>
                     <Textbox Name="Stock2">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -404,21 +417,36 @@
                       <rd:DefaultName>Stock2</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>White</Color>
+                          <Color>Silver</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Silver</Color>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Silver</Color>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Silver</Color>
+                        </RightBorder>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox27">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -440,21 +468,36 @@
                       <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>White</Color>
+                          <Color>Silver</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Silver</Color>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Silver</Color>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Silver</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Silver</Color>
+                        </RightBorder>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox28">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -476,21 +519,36 @@
                       <rd:DefaultName>Textbox28</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>White</Color>
+                          <Color>Silver</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Silver</Color>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Silver</Color>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Silver</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                        </RightBorder>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox47">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -512,15 +570,29 @@
                       <rd:DefaultName>Textbox47</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>White</Color>
+                          <Color>Silver</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Silver</Color>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Silver</Color>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Silver</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Silver</Color>
+                        </RightBorder>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -532,6 +604,7 @@
                   <CellContents>
                     <Textbox Name="Stock1">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -556,18 +629,23 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                        </LeftBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Sales">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -598,12 +676,14 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Stock">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -628,18 +708,23 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <RightBorder>
+                          <Color>Black</Color>
+                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox48">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -670,6 +755,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -694,6 +780,7 @@
                 <CellContents>
                   <Textbox Name="Year">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -723,6 +810,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -742,12 +830,26 @@
                     <CellContents>
                       <Textbox Name="Month">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Month.Value</Value>
+                                <Value>=Switch(
+Fields!Month.Value = 1, "Jan",
+Fields!Month.Value = 2, "Feb",
+Fields!Month.Value = 3, "Mar",
+Fields!Month.Value = 4, "Apr",
+Fields!Month.Value = 5, "May",
+Fields!Month.Value = 6, "Jun",
+Fields!Month.Value = 7, "Jul",
+Fields!Month.Value = 8, "Aug",
+Fields!Month.Value = 9, "Sep",
+Fields!Month.Value = 10, "Oct",
+Fields!Month.Value = 11, "Nov",
+Fields!Month.Value = 12, "Dec"
+)</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontWeight>Bold</FontWeight>
@@ -771,6 +873,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -790,6 +893,7 @@
                         <CellContents>
                           <Textbox Name="Branch">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -813,12 +917,19 @@
                                 <Color>White</Color>
                                 <Style>Solid</Style>
                               </Border>
+                              <LeftBorder>
+                                <Color>Black</Color>
+                              </LeftBorder>
+                              <RightBorder>
+                                <Color>Black</Color>
+                              </RightBorder>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
+                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
@@ -828,6 +939,7 @@
                             <CellContents>
                               <Textbox Name="Textbox109">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -855,12 +967,16 @@
                                   <BottomBorder>
                                     <Color>Black</Color>
                                   </BottomBorder>
+                                  <LeftBorder>
+                                    <Color>Black</Color>
+                                  </LeftBorder>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
+                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                         </TablixMember>
@@ -870,6 +986,7 @@
                             <CellContents>
                               <Textbox Name="Textbox5">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -903,6 +1020,7 @@
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
+                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                           <TablixMembers>
@@ -915,6 +1033,7 @@
                             <CellContents>
                               <Textbox Name="Textbox9">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -942,12 +1061,16 @@
                                   <BottomBorder>
                                     <Color>Black</Color>
                                   </BottomBorder>
+                                  <RightBorder>
+                                    <Color>Black</Color>
+                                  </RightBorder>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
+                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                         </TablixMember>
@@ -959,7 +1082,6 @@
                     </TablixMember>
                   </TablixMembers>
                   <Visibility>
-                    <Hidden>true</Hidden>
                     <ToggleItem>Year</ToggleItem>
                   </Visibility>
                 </TablixMember>
@@ -969,6 +1091,7 @@
                     <CellContents>
                       <Textbox Name="Textbox44">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1001,6 +1124,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -1010,6 +1134,7 @@
                         <CellContents>
                           <Textbox Name="Textbox46">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -1043,6 +1168,7 @@
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
+                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                     </TablixMember>
@@ -1089,9 +1215,22 @@
                     <rd:DefaultName>Tag</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>White</Color>
+                        <Color>Silver</Color>
                         <Style>Solid</Style>
                       </Border>
+                      <TopBorder>
+                        <Color>Silver</Color>
+                      </TopBorder>
+                      <BottomBorder>
+                        <Color>Silver</Color>
+                      </BottomBorder>
+                      <LeftBorder>
+                        <Color>Silver</Color>
+                      </LeftBorder>
+                      <RightBorder>
+                        <Color>Silver</Color>
+                      </RightBorder>
+                      <BackgroundColor>Silver</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -1107,6 +1246,7 @@
                     <CellContents>
                       <Textbox Name="Textbox26">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1128,15 +1268,29 @@
                         <rd:DefaultName>Textbox26</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>White</Color>
+                            <Color>Silver</Color>
                             <Style>Solid</Style>
                           </Border>
+                          <TopBorder>
+                            <Color>Silver</Color>
+                          </TopBorder>
+                          <BottomBorder>
+                            <Color>Silver</Color>
+                          </BottomBorder>
+                          <LeftBorder>
+                            <Color>Silver</Color>
+                          </LeftBorder>
+                          <RightBorder>
+                            <Color>Silver</Color>
+                          </RightBorder>
+                          <BackgroundColor>Silver</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <KeepWithGroup>After</KeepWithGroup>
@@ -1231,6 +1385,7 @@
                             <CellContents>
                               <Textbox Name="Cost">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -1261,6 +1416,7 @@
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
+                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                           <TablixMembers>
@@ -1270,6 +1426,7 @@
                                 <CellContents>
                                   <Textbox Name="TotalCredits">
                                     <CanGrow>true</CanGrow>
+                                    <CanShrink>true</CanShrink>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
@@ -1300,6 +1457,7 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
+                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixHeader>
                               <TablixMembers>
@@ -1309,6 +1467,7 @@
                                     <CellContents>
                                       <Textbox Name="RetailPrice">
                                         <CanGrow>true</CanGrow>
+                                        <CanShrink>true</CanShrink>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -1339,6 +1498,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixHeader>
                                   <TablixMembers>
@@ -1362,6 +1522,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
+        <Left>0in</Left>
         <Height>1.18228in</Height>
         <Width>9.73438in</Width>
         <Style>
@@ -1430,6 +1591,7 @@
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.01389in</Top>
+          <Left>0in</Left>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <Style>

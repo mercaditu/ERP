@@ -529,6 +529,7 @@
     <EmbeddedResource Include="Reports\Commercials\ContactsByBank.rdlc" />
     <EmbeddedResource Include="Reports\Commercials\ContactsByGeography.rdlc" />
     <EmbeddedResource Include="Reports\Commercials\ContactsByTag.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\AccountsPayable.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionStatus.rdlc" />

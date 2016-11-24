@@ -1,8 +1,8 @@
 ﻿namespace cntrl.Reports.Finance
 {
-    public static class PendingReceivables
-    {
-        public static string query = @"
+	public static class PendingReceivables
+	{
+		public static string query = @"
 select 
 								contact.code as Code,
 								contact.gov_code as GovID,
@@ -38,7 +38,7 @@ select
 								where (schedual.debit - schedual.CreditChild) > 0
 								group by schedual.id_payment_schedual
 								order by schedual.expire_date";
-    }
+	}
 }
 
 

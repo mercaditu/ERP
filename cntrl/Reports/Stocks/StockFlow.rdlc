@@ -1283,12 +1283,10 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="StartDate">
+    <ReportParameter Name="Variables">
       <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="EndDate">
-      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

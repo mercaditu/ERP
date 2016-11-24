@@ -1,7 +1,7 @@
 ﻿using System;
 namespace entity.Reporting
 {
-    public class TransferSummary
+    public class Transfers
     {
 
         public DateTime Date { get; set; }

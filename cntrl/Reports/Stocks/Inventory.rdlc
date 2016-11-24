@@ -2157,7 +2157,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.07056cm</Top>
-          <Left>0.19461in</Left>
+          <Left>0.17377in</Left>
           <Height>0.1875in</Height>
           <Width>2.81445in</Width>
           <Style>
@@ -2175,7 +2175,7 @@
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.07056cm</Top>
-          <Left>0.0299in</Left>
+          <Left>0.00906in</Left>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <ZIndex>1</ZIndex>

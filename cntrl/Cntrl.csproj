@@ -666,6 +666,7 @@
     <None Include="Properties\DataSources\entity.refinance.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ContactBalnace.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Contacts.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ContactSubscription.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.CostBreakDown.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Customer.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.EmployeeInProduction.datasource" />

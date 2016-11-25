@@ -16,7 +16,7 @@
 												contacts.gov_code as GovCode,
 												contacts.code as CustomerCode, 
 												contacts.address as Address,
-												iff(contacts.gender = 0, 'Male', 'Female') as Gender,
+												if(contacts.gender = 0, 'Male', 'Female') as Gender,
 												app_currency.name as Currency, 
 												app_currencyfx.buy_value as Rate,
 												sales_rep.name as SalesRep,

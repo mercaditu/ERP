@@ -369,8 +369,8 @@ namespace cntrl.Class
                 new Report
             {
                 Application = entity.App.Names.AccountsPayable,
-                Name ="AccountsPayable",
-                Path = "cntrl.Reports.Finances.AccountsBalance.rdlc",
+                Name ="AccountPayable",
+                Path = "cntrl.Reports.Finances.AccountBalance.rdlc",
                 Query = Reports.Finance.PendingPayables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
@@ -378,8 +378,8 @@ namespace cntrl.Class
                       new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
-                Name ="AccountsReceivable",
-                Path = "cntrl.Reports.Finances.AccountsBalance.rdlc",
+                Name ="AccountReceivable",
+                Path = "cntrl.Reports.Finances.AccountBalance.rdlc",
                 Query = Reports.Finance.PendingReceivables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 

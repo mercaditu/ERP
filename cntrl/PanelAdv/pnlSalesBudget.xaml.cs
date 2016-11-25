@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using entity;
-using System.Data.Entity;
 using System;
 
 namespace cntrl.PanelAdv
@@ -102,6 +100,8 @@ namespace cntrl.PanelAdv
                     sales_order.id_currencyfx = sales_budget.id_currencyfx;
                     //sales_order.contact = sales_budget.contact;
                     sales_order.id_contact = sales_budget.id_contact;
+                    sales_order.id_project = sales_budget.id_project;
+
                     foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                     {
 

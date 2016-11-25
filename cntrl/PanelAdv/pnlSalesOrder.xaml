@@ -20,7 +20,7 @@
 	</UserControl.Effect>
 	<StackPanel DataContext="{StaticResource sales_orderViewSource}" Background="WhiteSmoke">
 		<Grid>
-            <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Brush}">
+			<StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Brush}">
 				<Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
 				<Label Foreground="White" Content="{lex:Loc SalesOrder}" Style="{StaticResource H3}"/>
 			</StackPanel>

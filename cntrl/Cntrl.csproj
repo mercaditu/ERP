@@ -552,6 +552,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Movement.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\PriceList.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockFlow.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockValue.rdlc" />

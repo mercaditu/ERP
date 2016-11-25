@@ -271,10 +271,18 @@ namespace cntrl.Class
                 ReplaceWithString="purchase_return"
             },
 
-              
-           
-          //stock
-            new Report
+
+
+                //stock
+
+                new Report
+            {
+                Application = entity.App.Names.PriceList,
+                Name ="PriceList",
+                Path = "cntrl.Reports.Stocks.PriceList.rdlc",
+                Query = Reports.Stock.PriceList.query
+            },
+                new Report
             {
                 Application = entity.App.Names.Stock,
                 Name ="StockMovement",

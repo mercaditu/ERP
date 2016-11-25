@@ -30,7 +30,7 @@
 		</Grid>
 		<StackPanel Orientation="Horizontal" Margin="0,44,0,0">
 
-			<ListBox Background="{StaticResource AccentColor_Introvert}" Width="256"
+			<ListBox Background="{StaticResource AccentColor_Introvert}" Width="180"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 					 ItemContainerStyle="{StaticResource nav_ListSelection}" ItemsSource="{Binding Source={StaticResource outputViewSource}}">

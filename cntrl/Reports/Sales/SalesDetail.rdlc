@@ -58,7 +58,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Details</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -567,6 +567,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -576,16 +577,10 @@
                       <rd:DefaultName>Status1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -617,16 +612,10 @@
                       <rd:DefaultName>Textbox149</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -658,16 +647,10 @@
                       <rd:DefaultName>Textbox156</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -699,16 +682,10 @@
                       <rd:DefaultName>Textbox59</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -742,16 +719,10 @@
                       <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -785,16 +756,10 @@
                       <rd:DefaultName>Textbox6</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -828,16 +793,10 @@
                       <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -871,16 +830,10 @@
                       <rd:DefaultName>Textbox10</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -914,16 +867,10 @@
                       <rd:DefaultName>Textbox12</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -957,16 +904,10 @@
                       <rd:DefaultName>Textbox14</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1000,16 +941,10 @@
                       <rd:DefaultName>Textbox16</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1043,16 +978,10 @@
                       <rd:DefaultName>Textbox18</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1086,16 +1015,10 @@
                       <rd:DefaultName>Textbox20</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>DimGray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1133,13 +1056,10 @@
                       <rd:DefaultName>Currency</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1171,13 +1091,10 @@
                       <rd:DefaultName>Textbox150</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1209,13 +1126,10 @@
                       <rd:DefaultName>Textbox157</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1247,13 +1161,10 @@
                       <rd:DefaultName>Textbox75</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1287,13 +1198,10 @@
                       <rd:DefaultName>Textbox21</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1327,13 +1235,10 @@
                       <rd:DefaultName>Textbox25</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1367,13 +1272,10 @@
                       <rd:DefaultName>Textbox26</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1408,13 +1310,10 @@
                       <rd:DefaultName>Textbox79</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1449,13 +1348,10 @@
                       <rd:DefaultName>Textbox80</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1489,13 +1385,10 @@
                       <rd:DefaultName>Textbox33</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1530,13 +1423,10 @@
                       <rd:DefaultName>Textbox82</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1571,13 +1461,10 @@
                       <rd:DefaultName>Textbox83</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1612,13 +1499,10 @@
                       <rd:DefaultName>Textbox84</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1656,13 +1540,10 @@
                       <rd:DefaultName>Status</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1694,13 +1575,10 @@
                       <rd:DefaultName>Textbox151</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1732,13 +1610,10 @@
                       <rd:DefaultName>Textbox158</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1770,13 +1645,10 @@
                       <rd:DefaultName>Textbox90</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1810,13 +1682,10 @@
                       <rd:DefaultName>Textbox22</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1850,13 +1719,10 @@
                       <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1890,13 +1756,10 @@
                       <rd:DefaultName>Textbox28</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1931,13 +1794,10 @@
                       <rd:DefaultName>Textbox94</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1972,13 +1832,10 @@
                       <rd:DefaultName>Textbox95</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2012,13 +1869,10 @@
                       <rd:DefaultName>Textbox34</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2053,13 +1907,10 @@
                       <rd:DefaultName>Textbox97</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2094,13 +1945,10 @@
                       <rd:DefaultName>Textbox98</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2135,13 +1983,10 @@
                       <rd:DefaultName>Textbox99</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2179,13 +2024,10 @@
                       <rd:DefaultName>Date</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2217,13 +2059,10 @@
                       <rd:DefaultName>Textbox152</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2255,13 +2094,10 @@
                       <rd:DefaultName>Textbox159</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2293,13 +2129,10 @@
                       <rd:DefaultName>Textbox104</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2333,13 +2166,10 @@
                       <rd:DefaultName>Textbox24</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2373,13 +2203,10 @@
                       <rd:DefaultName>Textbox29</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2413,13 +2240,10 @@
                       <rd:DefaultName>Textbox30</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2454,13 +2278,10 @@
                       <rd:DefaultName>Textbox108</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2495,13 +2316,10 @@
                       <rd:DefaultName>Textbox109</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2535,13 +2353,10 @@
                       <rd:DefaultName>Textbox35</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2576,13 +2391,10 @@
                       <rd:DefaultName>Textbox111</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2617,13 +2429,10 @@
                       <rd:DefaultName>Textbox112</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2658,13 +2467,10 @@
                       <rd:DefaultName>Textbox113</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#aed6f1</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BottomBorder>
-                          <Color>White</Color>
-                        </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#aed6f1</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2702,16 +2508,17 @@
                       <rd:DefaultName>Customer</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2737,10 +2544,10 @@
                       <rd:DefaultName>GovCode</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2772,10 +2579,10 @@
                       <rd:DefaultName>Number</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2807,10 +2614,10 @@
                       <rd:DefaultName>Contract</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2845,22 +2652,10 @@
                       <rd:DefaultName>Textbox118</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2894,22 +2689,10 @@
                       <rd:DefaultName>Textbox31</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2943,22 +2726,10 @@
                       <rd:DefaultName>Textbox32</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2993,22 +2764,10 @@
                       <rd:DefaultName>Textbox121</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3043,22 +2802,10 @@
                       <rd:DefaultName>Textbox122</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3092,22 +2839,10 @@
                       <rd:DefaultName>Textbox36</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3142,22 +2877,10 @@
                       <rd:DefaultName>Textbox124</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3192,22 +2915,10 @@
                       <rd:DefaultName>Textbox125</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3242,22 +2953,10 @@
                       <rd:DefaultName>Textbox126</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>WhiteSmoke</Color>
+                          <Color>#d6eaf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>WhiteSmoke</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>WhiteSmoke</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>WhiteSmoke</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>WhiteSmoke</Color>
-                        </RightBorder>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
+                        <BackgroundColor>#d6eaf8</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3288,7 +2987,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -3304,6 +3003,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3777,7 +3477,7 @@
                             <TablixMember>
                               <Group Name="Number">
                                 <GroupExpressions>
-                                  <GroupExpression>=Fields!Number.Value</GroupExpression>
+                                  <GroupExpression>=Fields!Date.Value</GroupExpression>
                                 </GroupExpressions>
                               </Group>
                               <SortExpressions>
@@ -3791,6 +3491,10 @@
                                 </TablixMember>
                                 <TablixMember>
                                   <Group Name="Details" />
+                                  <Visibility>
+                                    <Hidden>true</Hidden>
+                                    <ToggleItem>Number</ToggleItem>
+                                  </Visibility>
                                 </TablixMember>
                               </TablixMembers>
                               <Visibility>

@@ -519,12 +519,15 @@ namespace Cognitivo.Product
 
                         if (item_request != null)
                         {
-                            //Protect the code against null values.
-                            //string number = item_request.number != null ? item_request.number : "";
                             string name = item_request.name != null ? item_request.name : "";
-
-                            if ((name.ToLower().Contains(query.ToLower()))
-                                )
+                            string number = item_request.number != null ? item_request.number : "";
+                            string project = item_request.project != null ? item_request.project.name : "";
+                            if (
+                            (
+                             name.ToLower().Contains(query.ToLower())) || 
+                             number.ToLower().Contains(query.ToLower()) ||
+                             project.ToLower().Contains(query.ToLower())
+                            )
                             {
                                 return true;
                             }

@@ -9,7 +9,7 @@
 										end_date as EndDate,
 										  htc.name as Coefficient,
 										sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
-										sum(quantity)  as ComputeHours
+										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours
    
 									from production_execution_detail as ped 
 									
@@ -22,8 +22,8 @@
 									on  p.id_project = pt.id_project
 									where ped.id_contact is not null
 									and ped.id_company = @CompanyID
-									and ped.trans_date between '@StartDate' and '@EndDate'
-									group by ped.id_contact
+								    and ped.trans_date between '@StartDate' and '@EndDate'
+									group by ped.id_execution_detail
 									order by c.name";
 	}
 }

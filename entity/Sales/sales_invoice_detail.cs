@@ -30,7 +30,10 @@ namespace entity
 
         [NotMapped]
         public bool IsPromo { get; set; }
-      
+
+        [NotMapped]
+        public int PromoID { get; set; }
+
 
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice

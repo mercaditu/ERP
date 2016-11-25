@@ -181,7 +181,7 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Sales.SalesAnalysis.rdlc",
                 Query = Reports.Sales.SalesAnalysis.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-            
+
             },
 
 
@@ -280,7 +280,8 @@ namespace cntrl.Class
                 Application = entity.App.Names.PriceList,
                 Name ="PriceList",
                 Path = "cntrl.Reports.Stocks.PriceList.rdlc",
-                Query = Reports.Stock.PriceList.query
+                Query = Reports.Stock.PriceList.query,
+                Parameters = new List<Report.Types> { }
             },
                 new Report
             {

@@ -181,7 +181,7 @@
                           </TextRun>
                         </TextRuns>
                         <Style>
-                          <TextAlign>Left</TextAlign>
+                          <TextAlign>Right</TextAlign>
                         </Style>
                       </Paragraph>
                     </Paragraphs>
@@ -454,6 +454,7 @@ Fields!Price.Value</Value>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -723,7 +724,7 @@ Fields!Price.Value</Value>
                                       </TextRun>
                                     </TextRuns>
                                     <Style>
-                                      <TextAlign>Left</TextAlign>
+                                      <TextAlign>Right</TextAlign>
                                     </Style>
                                   </Paragraph>
                                 </Paragraphs>
@@ -938,7 +939,7 @@ Fields!Price.Value</Value>
                                       </TextRun>
                                     </TextRuns>
                                     <Style>
-                                      <TextAlign>Left</TextAlign>
+                                      <TextAlign>Right</TextAlign>
                                     </Style>
                                   </Paragraph>
                                 </Paragraphs>
@@ -1059,7 +1060,7 @@ Fields!Price.Value</Value>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.81771in</Height>
-        <Width>9.75521in</Width>
+        <Width>9.7552in</Width>
         <Style>
           <Border>
             <Style>None</Style>

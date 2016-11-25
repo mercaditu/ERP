@@ -3,8 +3,8 @@
 	public static class PriceList
 	{
 		public static string query = @" 
-			select item.code as ItemCode,
-			item.name as ItemName,
+			select item.code as Code,
+			item.name as Items,
 			pl.name as PriceLists,
 			pi.value as Price,
 			currency.name as Currency,

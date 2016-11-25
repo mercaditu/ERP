@@ -829,5 +829,14 @@ namespace Cognitivo.Purchase
                 }
             }
         }
+
+        private void lblTransCode_LostFocus(object sender, RoutedEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+            if (purchase_invoice != null)
+            {
+                purchase_invoice.contact.trans_code = purchase_invoice.code;
+            }
+        }
     }
 }

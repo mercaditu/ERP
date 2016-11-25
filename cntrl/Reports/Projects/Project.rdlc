@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.02375cm</Width>
+              <Width>1.75917cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.19875cm</Width>
+              <Width>5.72006cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.75917cm</Width>
+              <Width>2.01052cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.62688cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.24327cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.71167cm</Width>
@@ -29,7 +29,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.48094cm</Height>
+              <Height>0.59147cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -44,6 +44,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -60,12 +61,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -81,6 +84,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -97,12 +101,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -118,6 +124,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -134,12 +141,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -155,6 +164,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -171,12 +181,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -192,6 +204,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -208,12 +221,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -229,6 +244,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -248,12 +264,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -269,6 +287,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -288,12 +307,14 @@
                         <BottomBorder>
                           <Color>Black</Color>
                         </BottomBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -303,76 +324,42 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox24">
+                    <Textbox Name="Contact">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!Contact.Value</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox24</rd:DefaultName>
+                      <rd:DefaultName>Contact</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox25">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontFamily>courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox25</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
+                <TablixCell />
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox26">
@@ -387,7 +374,7 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -397,10 +384,10 @@
                       <rd:DefaultName>Textbox26</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -423,7 +410,7 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -433,10 +420,10 @@
                       <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -459,7 +446,7 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -469,10 +456,10 @@
                       <rd:DefaultName>Textbox28</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -496,7 +483,7 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -508,10 +495,10 @@
                       <rd:DefaultName>Textbox29</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -535,7 +522,7 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -547,10 +534,10 @@
                       <rd:DefaultName>Textbox30</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -577,7 +564,16 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=Switch
+(
+Fields!status.Value=1,"Black",
+Fields!status.Value=2,"SeaGreen",
+Fields!status.Value=3,"Yellow",
+Fields!status.Value=4,"Purple",
+Fields!status.Value=5,"Red",
+Fields!status.Value=6,"LimeGreen"
+)</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -611,7 +607,16 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=Switch
+(
+Fields!status.Value=1,"Black",
+Fields!status.Value=2,"SeaGreen",
+Fields!status.Value=3,"Yellow",
+Fields!status.Value=4,"Purple",
+Fields!status.Value=5,"Red",
+Fields!status.Value=6,"LimeGreen"
+)</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -641,11 +646,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Switch(Fields!status.Value=1,"Pending",Fields!status.Value=2,"Approved",Fields!status.Value=3,"InProcess",Fields!status.Value=4,"Executed",Fields!status.Value=5,"Rejected",Fields!status.Value=6,"Management_Approved")</Value>
+                              <Value>=Switch
+(
+Fields!status.Value=1,"Pending",
+Fields!status.Value=2,"Approved",
+Fields!status.Value=3,"InProcess",
+Fields!status.Value=4,"Executed",
+Fields!status.Value=5,"Rejected",
+Fields!status.Value=6,"Management_Approved"
+)</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -679,7 +691,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <Format>d</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -713,7 +725,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <Format>d</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -748,7 +760,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -785,7 +796,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -829,33 +839,31 @@
               <TablixHeader>
                 <Size>5.54271cm</Size>
                 <CellContents>
-                  <Textbox Name="Textbox21">
+                  <Textbox Name="ReportName">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Project Name</Value>
+                            <Value>=Globals!ReportName</Value>
                             <Style>
                               <FontFamily>courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                              <Color>White</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox21</rd:DefaultName>
+                    <rd:DefaultName>ReportName</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>White</Color>
-                        <Style>Solid</Style>
-                        <Width>0.25pt</Width>
+                        <Style>None</Style>
                       </Border>
-                      <BottomBorder>
-                        <Color>Black</Color>
-                      </BottomBorder>
+                      <BackgroundColor>Black</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -894,7 +902,7 @@
                               <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
-                              <Color>#4d4d4d</Color>
+                              <Color>White</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -904,10 +912,10 @@
                     <rd:DefaultName>ProjectName</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>LightGrey</Color>
+                        <Color>#3498db</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <BackgroundColor>LightGrey</BackgroundColor>
+                      <BackgroundColor>#3498db</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -933,8 +941,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.40313cm</Height>
-        <Width>23.86293cm</Width>
+        <Height>1.51366cm</Height>
+        <Width>24.11428cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -943,57 +951,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.55241in</Height>
+    <Height>0.59593in</Height>
     <Style />
   </Body>
-  <Width>9.39485in</Width>
+  <Width>9.49381in</Width>
   <Page>
-    <PageHeader>
-      <Height>0.57008cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="ReportName">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!ReportName</Value>
-                  <Style>
-                    <FontFamily>courier New</FontFamily>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>White</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>ReportName</rd:DefaultName>
-          <Height>0.22444in</Height>
-          <Width>9.39485in</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <BackgroundColor>Black</BackgroundColor>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-      </ReportItems>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageFooter>
-      <Height>0.64823cm</Height>
+      <Height>0.54241cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1025,7 +989,7 @@
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.02605in</Top>
           <Left>0.24691in</Left>
-          <Height>0.22916in</Height>
+          <Height>0.1875in</Height>
           <Width>3.55751in</Width>
           <Style>
             <Border>
@@ -1072,8 +1036,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
-          <Top>0.0269in</Top>
-          <Left>6.84065in</Left>
+          <Top>0.01389in</Top>
+          <Left>6.94172in</Left>
           <Height>0.1875in</Height>
           <Width>2.45313in</Width>
           <ZIndex>2</ZIndex>

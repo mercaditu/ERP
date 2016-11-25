@@ -66,6 +66,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -103,6 +104,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -140,6 +142,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -177,6 +180,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -214,6 +218,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -251,6 +256,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -288,6 +294,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -309,7 +316,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -319,10 +325,10 @@
                       <rd:DefaultName>Project1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -345,7 +351,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -355,10 +360,10 @@
                       <rd:DefaultName>item_description1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -382,7 +387,6 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>d</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -392,10 +396,10 @@
                       <rd:DefaultName>StartDate</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -419,7 +423,6 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>d</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -429,10 +432,10 @@
                       <rd:DefaultName>EndDate</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -455,7 +458,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -465,10 +467,10 @@
                       <rd:DefaultName>Coefficient</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -492,7 +494,6 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -502,10 +503,10 @@
                       <rd:DefaultName>Hours1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -529,7 +530,6 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -539,10 +539,10 @@
                       <rd:DefaultName>ComputeHours1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -850,6 +850,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -883,7 +884,6 @@
                               <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
-                              <Color>#4d4d4d</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -893,10 +893,10 @@
                     <rd:DefaultName>Employee</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>Silver</Color>
+                        <Color>#3498db</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
+                      <BackgroundColor>#3498db</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>

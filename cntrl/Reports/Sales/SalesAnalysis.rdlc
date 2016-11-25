@@ -8,30 +8,30 @@
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox16">
+                  <Textbox Name="ReportName">
                     <CanGrow>true</CanGrow>
-                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value />
+                            <Value>=Globals!ReportName</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
+                              <FontFamily>courier New</FontFamily>
+                              <FontWeight>Bold</FontWeight>
+                              <Color>White</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox16</rd:DefaultName>
+                    <rd:DefaultName>ReportName</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>White</Color>
-                        <Style>Solid</Style>
+                        <Style>None</Style>
                       </Border>
+                      <BackgroundColor>Black</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -399,7 +399,9 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -411,22 +413,10 @@
                       <rd:DefaultName>Stock2</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Silver</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Silver</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Silver</Color>
-                        </RightBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -449,7 +439,9 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -461,22 +453,10 @@
                       <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Silver</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Silver</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Silver</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Silver</Color>
-                        </RightBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -499,7 +479,9 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -511,22 +493,10 @@
                       <rd:DefaultName>Textbox28</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Silver</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Silver</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Silver</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                        </RightBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -549,7 +519,9 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -561,22 +533,10 @@
                       <rd:DefaultName>Textbox47</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Silver</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Silver</Color>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Silver</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Silver</Color>
-                        </RightBorder>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -619,9 +579,6 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                        </LeftBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -645,6 +602,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
+                                <Color>Red</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -696,9 +654,6 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <RightBorder>
-                          <Color>Black</Color>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -721,6 +676,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -736,6 +692,7 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>#ebf5fb</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -901,12 +858,6 @@ Fields!Month.Value = 12, "Dec"
                                 <Color>White</Color>
                                 <Style>Solid</Style>
                               </Border>
-                              <LeftBorder>
-                                <Color>Black</Color>
-                              </LeftBorder>
-                              <RightBorder>
-                                <Color>Black</Color>
-                              </RightBorder>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
@@ -950,9 +901,6 @@ Fields!Month.Value = 12, "Dec"
                                   <BottomBorder>
                                     <Color>Black</Color>
                                   </BottomBorder>
-                                  <LeftBorder>
-                                    <Color>Black</Color>
-                                  </LeftBorder>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -1042,9 +990,6 @@ Fields!Month.Value = 12, "Dec"
                                   <BottomBorder>
                                     <Color>Black</Color>
                                   </BottomBorder>
-                                  <RightBorder>
-                                    <Color>Black</Color>
-                                  </RightBorder>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -1184,6 +1129,7 @@ Fields!Month.Value = 12, "Dec"
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
+                              <Color>White</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -1193,22 +1139,10 @@ Fields!Month.Value = 12, "Dec"
                     <rd:DefaultName>Tag</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>Silver</Color>
+                        <Color>#3498db</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <TopBorder>
-                        <Color>Silver</Color>
-                      </TopBorder>
-                      <BottomBorder>
-                        <Color>Silver</Color>
-                      </BottomBorder>
-                      <LeftBorder>
-                        <Color>Silver</Color>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Color>Silver</Color>
-                      </RightBorder>
-                      <BackgroundColor>Silver</BackgroundColor>
+                      <BackgroundColor>#3498db</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -1235,6 +1169,7 @@ Fields!Month.Value = 12, "Dec"
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <Format>N2</Format>
+                                  <Color>White</Color>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1246,22 +1181,10 @@ Fields!Month.Value = 12, "Dec"
                         <rd:DefaultName>Textbox26</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>Silver</Color>
+                            <Color>#3498db</Color>
                             <Style>Solid</Style>
                           </Border>
-                          <TopBorder>
-                            <Color>Silver</Color>
-                          </TopBorder>
-                          <BottomBorder>
-                            <Color>Silver</Color>
-                          </BottomBorder>
-                          <LeftBorder>
-                            <Color>Silver</Color>
-                          </LeftBorder>
-                          <RightBorder>
-                            <Color>Silver</Color>
-                          </RightBorder>
-                          <BackgroundColor>Silver</BackgroundColor>
+                          <BackgroundColor>#3498db</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -1307,9 +1230,10 @@ Fields!Month.Value = 12, "Dec"
                         <rd:DefaultName>Code</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>White</Color>
+                            <Color>#ebf5fb</Color>
                             <Style>Solid</Style>
                           </Border>
+                          <BackgroundColor>#ebf5fb</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -1344,9 +1268,10 @@ Fields!Month.Value = 12, "Dec"
                             <rd:DefaultName>Item</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>White</Color>
+                                <Color>#ebf5fb</Color>
                                 <Style>Solid</Style>
                               </Border>
+                              <BackgroundColor>#ebf5fb</BackgroundColor>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
@@ -1384,9 +1309,10 @@ Fields!Month.Value = 12, "Dec"
                                 <rd:DefaultName>Cost</rd:DefaultName>
                                 <Style>
                                   <Border>
-                                    <Color>White</Color>
+                                    <Color>#ebf5fb</Color>
                                     <Style>Solid</Style>
                                   </Border>
+                                  <BackgroundColor>#ebf5fb</BackgroundColor>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -1413,6 +1339,7 @@ Fields!Month.Value = 12, "Dec"
                                               <FontFamily>Courier New</FontFamily>
                                               <FontSize>8pt</FontSize>
                                               <Format>N2</Format>
+                                              <Color>SeaGreen</Color>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1424,9 +1351,10 @@ Fields!Month.Value = 12, "Dec"
                                     <rd:DefaultName>TotalCredits</rd:DefaultName>
                                     <Style>
                                       <Border>
-                                        <Color>White</Color>
+                                        <Color>#ebf5fb</Color>
                                         <Style>Solid</Style>
                                       </Border>
+                                      <BackgroundColor>#ebf5fb</BackgroundColor>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -1464,9 +1392,10 @@ Fields!Month.Value = 12, "Dec"
                                         <rd:DefaultName>RetailPrice</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>White</Color>
+                                            <Color>#ebf5fb</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BackgroundColor>#ebf5fb</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1511,43 +1440,9 @@ Fields!Month.Value = 12, "Dec"
   <Width>24.72533cm</Width>
   <Page>
     <PageHeader>
-      <Height>0.57008cm</Height>
+      <Height>0.02646cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="ReportName">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!ReportName</Value>
-                  <Style>
-                    <FontFamily>courier New</FontFamily>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>White</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>ReportName</rd:DefaultName>
-          <Height>0.22444in</Height>
-          <Width>9.73438in</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <BackgroundColor>Black</BackgroundColor>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-      </ReportItems>
       <Style>
         <Border>
           <Style>None</Style>

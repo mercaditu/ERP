@@ -357,7 +357,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -367,10 +366,10 @@
                       <rd:DefaultName>Textbox41</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -393,7 +392,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -403,10 +401,10 @@
                       <rd:DefaultName>Textbox42</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -429,7 +427,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -439,10 +436,10 @@
                       <rd:DefaultName>Textbox43</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -465,7 +462,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -475,10 +471,10 @@
                       <rd:DefaultName>Textbox44</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -501,7 +497,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -513,10 +508,10 @@
                       <rd:DefaultName>Textbox45</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -539,7 +534,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -551,10 +545,10 @@
                       <rd:DefaultName>Textbox46</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -577,7 +571,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -589,10 +582,10 @@
                       <rd:DefaultName>Textbox47</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -615,7 +608,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -627,10 +619,10 @@
                       <rd:DefaultName>Textbox48</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -657,7 +649,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -667,7 +659,7 @@
                       <rd:DefaultName>TaskCode</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
@@ -676,6 +668,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -691,7 +684,7 @@
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Color>#4d4d4d</Color>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -701,7 +694,7 @@
                       <rd:DefaultName>Task</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>=Level("Details") * 20 &amp; "pt"</PaddingLeft>
@@ -710,6 +703,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -726,7 +720,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>d</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -736,7 +729,7 @@
                       <rd:DefaultName>StartDate</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -745,6 +738,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -761,7 +755,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>d</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -771,7 +764,7 @@
                       <rd:DefaultName>EndDate</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -780,6 +773,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -796,7 +790,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -808,7 +801,7 @@
                       <rd:DefaultName>QuantityEst</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -817,6 +810,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -833,7 +827,7 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
+                                <Color>=iif(Fields!QuantityEst.Value &gt;= Fields!QuantityReal.Value, "Black", "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -845,7 +839,7 @@
                       <rd:DefaultName>QuantityReal</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -854,6 +848,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -870,7 +865,6 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -882,7 +876,7 @@
                       <rd:DefaultName>CostEst</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -891,6 +885,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -907,7 +902,7 @@
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
-                                <Color>#4d4d4d</Color>
+                                <Color>=iif(Fields!CostEst.Value &gt;= Fields!CostReal.Value, "Black", "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -919,7 +914,7 @@
                       <rd:DefaultName>CostReal</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>#e5e5e5</Color>
+                          <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -928,6 +923,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1017,7 +1013,6 @@
                               <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
-                              <Color>#4d4d4d</Color>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -1027,10 +1022,10 @@
                     <rd:DefaultName>ProjectName</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>Silver</Color>
+                        <Color>#3498db</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
+                      <BackgroundColor>#3498db</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -1075,7 +1070,7 @@
   <Width>8.85828in</Width>
   <Page>
     <PageHeader>
-      <Height>0.64063cm</Height>
+      <Height>0.57008cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1099,7 +1094,7 @@
           </Paragraphs>
           <rd:DefaultName>ReportName</rd:DefaultName>
           <Height>0.22444in</Height>
-          <Width>8.85828in</Width>
+          <Width>3.71078in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1164,7 +1159,7 @@
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.04167in</Top>
           <Left>0.15327in</Left>
-          <Height>0.22916in</Height>
+          <Height>0.18835in</Height>
           <Width>3.55751in</Width>
           <ZIndex>1</ZIndex>
           <Style>

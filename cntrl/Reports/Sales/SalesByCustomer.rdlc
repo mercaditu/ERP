@@ -29,43 +29,34 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.18229in</Height>
+              <Height>0.21962in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox17">
+                    <Textbox Name="ReportName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Customer</Value>
+                              <Value>=Globals!ReportName</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontFamily>courier New</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <rd:DefaultName>ReportName</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>White</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                        </BottomBorder>
-                        <RightBorder>
-                          <Color>White</Color>
-                        </RightBorder>
+                        <BackgroundColor>Black</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -109,12 +100,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -154,12 +147,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -199,12 +194,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -244,12 +241,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -289,12 +288,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -334,12 +335,14 @@
                         <RightBorder>
                           <Color>White</Color>
                         </RightBorder>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -361,6 +364,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -372,13 +376,10 @@
                       <rd:DefaultName>Status</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -401,6 +402,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -410,13 +412,10 @@
                       <rd:DefaultName>Textbox38</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -439,6 +438,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -450,13 +450,10 @@
                       <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -479,6 +476,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -490,13 +488,10 @@
                       <rd:DefaultName>Textbox6</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -519,6 +514,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -530,13 +526,10 @@
                       <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -547,19 +540,19 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox43">
+                    <Textbox Name="Textbox14">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotal.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -568,16 +561,13 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox43</rd:DefaultName>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -588,19 +578,19 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox44">
+                    <Textbox Name="Textbox15">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotalVat.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -609,16 +599,13 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox44</rd:DefaultName>
+                      <rd:DefaultName>Textbox15</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Gray</Color>
+                          <Color>#3498db</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>White</Color>
-                        </TopBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
+                        <BackgroundColor>#3498db</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -656,10 +643,10 @@
                       <rd:DefaultName>Currency</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -691,10 +678,10 @@
                       <rd:DefaultName>Textbox48</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -728,10 +715,10 @@
                       <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -765,10 +752,10 @@
                       <rd:DefaultName>Textbox10</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -802,10 +789,10 @@
                       <rd:DefaultName>Textbox12</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -840,10 +827,10 @@
                       <rd:DefaultName>Textbox53</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -878,10 +865,10 @@
                       <rd:DefaultName>Textbox54</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>Silver</Color>
+                          <Color>#5dade2</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>Silver</BackgroundColor>
+                        <BackgroundColor>#5dade2</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -919,10 +906,10 @@
                       <rd:DefaultName>Customer</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -954,10 +941,10 @@
                       <rd:DefaultName>CustomerCode</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -992,10 +979,10 @@
                       <rd:DefaultName>Textbox59</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1030,10 +1017,10 @@
                       <rd:DefaultName>Textbox60</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1068,10 +1055,10 @@
                       <rd:DefaultName>Textbox61</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1106,10 +1093,10 @@
                       <rd:DefaultName>Textbox62</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1144,10 +1131,10 @@
                       <rd:DefaultName>Textbox63</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Color>#85c1e9</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>#85c1e9</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1494,7 +1481,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>0.91145in</Height>
+        <Height>0.94878in</Height>
         <Width>8.83333in</Width>
         <Style>
           <Border>
@@ -1503,55 +1490,11 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.31508cm</Height>
+    <Height>2.40991cm</Height>
     <Style />
   </Body>
   <Width>22.43666cm</Width>
   <Page>
-    <PageHeader>
-      <Height>0.57008cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="ReportName">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!ReportName</Value>
-                  <Style>
-                    <FontFamily>courier New</FontFamily>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>White</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>ReportName</rd:DefaultName>
-          <Height>0.22444in</Height>
-          <Width>8.83333in</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <BackgroundColor>Black</BackgroundColor>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-      </ReportItems>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageFooter>
       <Height>0.48287cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
@@ -1561,6 +1504,7 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
+          <Top>0in</Top>
           <Left>0.03624in</Left>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
@@ -1596,6 +1540,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0in</Top>
           <Left>0.25651in</Left>
           <Height>0.17275in</Height>
           <Width>2.81445in</Width>
@@ -1630,6 +1575,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
+          <Top>0in</Top>
           <Left>5.83333in</Left>
           <Height>0.1875in</Height>
           <Width>3in</Width>

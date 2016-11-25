@@ -23,6 +23,7 @@
                   <CellContents>
                     <Textbox Name="Textbox2">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -62,6 +63,7 @@
                   <CellContents>
                     <Textbox Name="Textbox3">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -101,6 +103,7 @@
                   <CellContents>
                     <Textbox Name="Textbox5">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -143,6 +146,7 @@
                   <CellContents>
                     <Textbox Name="Textbox22">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -182,6 +186,7 @@
                   <CellContents>
                     <Textbox Name="Textbox23">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -221,6 +226,7 @@
                   <CellContents>
                     <Textbox Name="Textbox24">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -262,6 +268,7 @@
                   <CellContents>
                     <Textbox Name="Textbox27">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -300,6 +307,7 @@
                   <CellContents>
                     <Textbox Name="Textbox28">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -338,6 +346,7 @@
                   <CellContents>
                     <Textbox Name="Comment1">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -378,6 +387,7 @@
                   <CellContents>
                     <Textbox Name="Textbox31">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -415,6 +425,7 @@
                   <CellContents>
                     <Textbox Name="Textbox32">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -452,6 +463,7 @@
                   <CellContents>
                     <Textbox Name="RequestedName">
                       <CanGrow>true</CanGrow>
+                      <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -537,7 +549,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.27083in</Size>
+                    <Size>0.92708in</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -577,10 +589,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.29687in</Size>
+                        <Size>1.95833in</Size>
                         <CellContents>
                           <Textbox Name="Textbox7">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -617,10 +630,11 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.19271in</Size>
+                            <Size>1.53125in</Size>
                             <CellContents>
                               <Textbox Name="Textbox40">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -717,7 +731,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.27083in</Size>
+                    <Size>0.92708in</Size>
                     <CellContents>
                       <Textbox Name="Textbox20">
                         <CanGrow>true</CanGrow>
@@ -756,10 +770,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.29687in</Size>
+                        <Size>1.95833in</Size>
                         <CellContents>
                           <Textbox Name="Textbox21">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -795,10 +810,11 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.19271in</Size>
+                            <Size>1.53125in</Size>
                             <CellContents>
                               <Textbox Name="Textbox41">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -849,7 +865,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>1.27083in</Size>
+                    <Size>0.92708in</Size>
                     <CellContents>
                       <Textbox Name="Transfer">
                         <CanGrow>true</CanGrow>
@@ -887,10 +903,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.29687in</Size>
+                        <Size>1.95833in</Size>
                         <CellContents>
                           <Textbox Name="Textbox26">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -932,10 +949,11 @@ Fields!OriginB.Value
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.19271in</Size>
+                            <Size>1.53125in</Size>
                             <CellContents>
                               <Textbox Name="Textbox42">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -990,10 +1008,11 @@ Fields!DestinationB.Value
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>2.29687in</Size>
+                        <Size>1.95833in</Size>
                         <CellContents>
                           <Textbox Name="ItemName">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -1027,10 +1046,11 @@ Fields!DestinationB.Value
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.19271in</Size>
+                            <Size>1.53125in</Size>
                             <CellContents>
                               <Textbox Name="ItemCode">
                                 <CanGrow>true</CanGrow>
+                                <CanShrink>true</CanShrink>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
@@ -1083,7 +1103,7 @@ Fields!DestinationB.Value
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.78126in</Height>
-        <Width>9.34692in</Width>
+        <Width>9.00317in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1091,10 +1111,10 @@ Fields!DestinationB.Value
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.98438in</Height>
+    <Height>0.78126in</Height>
     <Style />
   </Body>
-  <Width>9.34692in</Width>
+  <Width>9.00317in</Width>
   <Page>
     <PageHeader>
       <Height>0.22444in</Height>
@@ -1122,7 +1142,7 @@ Fields!DestinationB.Value
           </Paragraphs>
           <rd:DefaultName>ReportName</rd:DefaultName>
           <Height>0.22444in</Height>
-          <Width>8.7688in</Width>
+          <Width>3.05953in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1191,6 +1211,40 @@ Fields!DestinationB.Value
           <Height>0.1875in</Height>
           <Width>2.81445in</Width>
           <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="ExecutionTime">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!ExecutionTime</Value>
+                  <Style>
+                    <FontFamily>courier New</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>ExecutionTime</rd:DefaultName>
+          <Left>5.78962in</Left>
+          <Height>0.1875in</Height>
+          <Width>3.21355in</Width>
+          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

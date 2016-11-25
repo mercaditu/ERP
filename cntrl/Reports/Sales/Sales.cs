@@ -1,8 +1,8 @@
 ﻿namespace cntrl.Reports.Sales
 {
-    public static class Sales
-    {
-        public static string query = @" 	select 
+	public static class Sales
+	{
+		public static string query = @" 	select 
 												sales_invoice.status as Status,
 												sales_invoice.number as Number,
 												sales_invoice.is_impex as Exports,
@@ -16,6 +16,7 @@
 												contacts.gov_code as GovCode,
 												contacts.code as CustomerCode, 
 												contacts.address as Address,
+												iff(contacts.gender = 0, 'Male', 'Female') as Gender,
 												app_currency.name as Currency, 
 												app_currencyfx.buy_value as Rate,
 												sales_rep.name as SalesRep,
@@ -77,7 +78,7 @@
 											  where sales_invoice.trans_date between '@StartDate' and '@EndDate' and sales_invoice.id_company = @CompanyID
 
 												   order by sales_invoice.trans_date";
-    }
+	}
 }
 
 

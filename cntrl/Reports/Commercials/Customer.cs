@@ -44,7 +44,7 @@
 						left join app_cost_center as cc on contacts.id_cost_center = cc.id_cost_center
 						left join app_currency as curr on contacts.id_currency = curr.id_currency
 						left join contact_role as role on contacts.id_contact_role = role.id_contact_role
-						where is_employee = 0 and (contacts.id_company=@CompanyID or contacts.id_company==null)
+						where is_employee = 0 and (contacts.id_company = @CompanyID or contacts.id_company is null)
 						order by contacts.name";
 	}
 }

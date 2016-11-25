@@ -296,12 +296,13 @@ namespace cntrl
                                 crm_opportunity.sales_invoice.Add(sales_invoice);
                                 SalesOrderDB.crm_opportunity.Attach(crm_opportunity);
                                 SalesOrderDB.sales_invoice.Add(sales_invoice);
+                                SalesOrderDB.SaveChanges();
                             }
                         }
                     }
                 }
 
-                //SalesOrderDB.SaveChanges();
+               
                 btnCancel_Click(null, null);
             }
         }

@@ -270,7 +270,14 @@ namespace cntrl.Class
                 ReplaceString="purchase_invoice",
                 ReplaceWithString="purchase_return"
             },
-
+                  new Report
+            {
+                Application = entity.App.Names.PurchaseTender,
+                Name ="PurchaseTender",
+                Path = "cntrl.Reports.Purchases.PurchaseTender.rdlc",
+                Query = Reports.Purchase.PurchaseTender.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
 
 
                 //stock

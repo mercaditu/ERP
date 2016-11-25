@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cntrl.Reports.Purchases
+﻿namespace cntrl.Reports.Purchase
 {
    public static class PurchaseTender
     {
-        public static string query = @" select pt.id_purchase_tender, 
+        public static string query = @" select pt.id_purchase_tender as TenderID, 
 pt.status,
-pt.name as TenderName, 
-pt.number AS TenderNumber,
-projects.name AS ProjectName,
+pt.name as Tender, 
+pt.number AS Number,
+projects.name AS Project,
 app_currency.name as Currency,
  c.name as Supplier,
-condi.name as PurchaseCondition, 
+condi.name as 'Condition', 
 contract.name as Contract,
- pti.item_description as ItemDescription,
+ pti.item_description as Items,
 ptd.unit_cost as Cost,
  pti.quantity as Quantity, 
 pod.quantity as Ordered,
 pt.trans_date as Date
  from purchase_tender pt
  inner join purchase_tender_contact as ptc on pt.id_purchase_tender = ptc.id_purchase_tender
-	inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_tender_contact.id_currencyfx
+	inner join app_currencyfx on app_currencyfx.id_currencyfx = ptc.id_currencyfx
 inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
 
  inner join contacts as c on ptc.id_contact = c.id_contact

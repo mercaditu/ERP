@@ -53,7 +53,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Number</Value>
+                            <Value>Tender</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -90,7 +90,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Tender / Items</Value>
+                            <Value>Number / Items</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -182,7 +182,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -199,6 +198,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -413,6 +413,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -429,6 +430,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -963,7 +965,7 @@
             <TablixMember>
               <Group Name="Number">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!Number.Value</GroupExpression>
+                  <GroupExpression>=Fields!TenderID.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
@@ -974,14 +976,14 @@
               <TablixHeader>
                 <Size>2.5cm</Size>
                 <CellContents>
-                  <Textbox Name="Number">
+                  <Textbox Name="Tender">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Number.Value</Value>
+                            <Value>=Fields!Tender.Value</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -991,7 +993,7 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Number</rd:DefaultName>
+                    <rd:DefaultName>Tender</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>#5dade2</Color>
@@ -1011,14 +1013,14 @@
                   <TablixHeader>
                     <Size>5.72792cm</Size>
                     <CellContents>
-                      <Textbox Name="Tender">
+                      <Textbox Name="Number1">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Tender.Value</Value>
+                                <Value>=Fields!Number.Value</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1028,7 +1030,7 @@
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Tender</rd:DefaultName>
+                        <rd:DefaultName>Number1</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>#5dade2</Color>
@@ -1095,7 +1097,7 @@
                   </TablixMembers>
                   <Visibility>
                     <Hidden>true</Hidden>
-                    <ToggleItem>Number</ToggleItem>
+                    <ToggleItem>Tender</ToggleItem>
                   </Visibility>
                 </TablixMember>
               </TablixMembers>
@@ -1104,7 +1106,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>2.4cm</Height>
-        <Width>22.67229cm</Width>
+        <Width>22.6723cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1261,6 +1263,10 @@
           <DataField>Tender</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TenderID">
+          <DataField>TenderID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>entity.Reporting</rd:DataSetName>
@@ -1269,6 +1275,14 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Parameters">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="Cognitivo64">
       <MIMEType>image/png</MIMEType>

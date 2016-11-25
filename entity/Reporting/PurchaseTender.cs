@@ -4,6 +4,7 @@ namespace entity.Reporting
 {
     public class PurchaseTender
     {
+        public int TenderID { get; set; }
         public int Status { get; set; }
         public string Tender { get; set; }
         public string Number { get; set; }

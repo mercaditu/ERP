@@ -116,7 +116,8 @@
 						<Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
 						<TextBox x:Name="txtCode" Style="{StaticResource input_textbox}"
 								 Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-						<CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
+                      
+                        <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
 								  IsChecked="{Binding is_person, FallbackValue=False}"/>
 						<StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
 							<Label Content="{lex:Loc Gender}" 
@@ -345,7 +346,10 @@
 						<ComboBox ItemsSource="{Binding Source={StaticResource bankViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_bank"
 									  SelectedValue="{Binding id_bank, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  Style="{StaticResource input_combobox}"/>
-						<Label Content="{lex:Loc Payment}" Style="{StaticResource H2}"/>
+                        <Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"/>
+                        <TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+								 Text="{Binding trans_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+                        <Label Content="{lex:Loc Payment}" Style="{StaticResource H2}"/>
 						<Label Content="{lex:Loc CollectionAgent}" Style="{StaticResource input_label}"/>
 					  
 						<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"

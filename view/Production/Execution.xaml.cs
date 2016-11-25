@@ -549,6 +549,23 @@ namespace Cognitivo.Production
                         }
                         else
                         {
+                            decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity) + Quantity;
+                            decimal avlqty = 0;
+                            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
+                            {
+                                entity.BrilloQuery.Item Item = Execute.Items.Where(x => x.ID == production_order_detail.id_item).FirstOrDefault();
+
+                                if (Item != null)
+                                {
+                                    avlqty = Item.InStock;
+                                }
+
+                            }
+                            if (avlqty < QuantityExe)
+                            {
+                                toolBar.msgWarning("Item is Not in Stock;Execustion Quantity Is "+ Math.Round(QuantityExe,2)+ " Stock Quantity Is "+ Math.Round(avlqty,2));
+                                return;
+                            }
                             Insert_IntoDetail(production_order_detail, Quantity);
                             RefreshData();
                         }
@@ -580,6 +597,7 @@ namespace Cognitivo.Production
 
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
+           
             // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
@@ -700,6 +718,7 @@ namespace Cognitivo.Production
                 }
             }
         }
+
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

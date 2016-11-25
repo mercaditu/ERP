@@ -61,8 +61,8 @@ namespace cntrl.Curd
         bool _Payable;
         public bool Recievable { get { return _Recievable; } set { _Recievable = value; } }
         bool _Recievable;
-        CollectionViewSource _payment_schedualViewSource = null;
-        public CollectionViewSource payment_schedualViewSource { get { return _payment_schedualViewSource; } set { _payment_schedualViewSource = value; } }
+        List<payment_schedual> _payment_schedualList = null;
+        public List<payment_schedual> payment_schedualList { get { return _payment_schedualList; } set { _payment_schedualList = value; } }
 
         private PaymentDB _entity = null;
         public PaymentDB objEntity { get { return _entity; } set { _entity = value; } }
@@ -91,19 +91,19 @@ namespace cntrl.Curd
 
                     lbldiff.Content = 0;
                   
-                    stackMain.DataContext = payment_schedualViewSource;
+                    stackMain.DataContext = payment_schedualList;
                     decimal amount = 0;
                  
                     if (WindowsMode == Mode.AccountPayable)
                     {
-                        amount = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
-                             total  = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                        amount = payment_schedualList.Sum(x => x.credit);
+                             total  = payment_schedualList.Sum(x => x.credit);
                     }
                     else
                     {
 
-                        amount = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
-                        total = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+                        amount = payment_schedualList.Sum(x => x.debit);
+                        total = payment_schedualList.Sum(x => x.debit);
                     }
                     lblBalance.Content = amount;
                
@@ -132,7 +132,7 @@ namespace cntrl.Curd
             try
             {
                 objEntity.CancelAllChanges();
-                  payment_schedualViewSource.View.Refresh();
+               
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Collapsed;
@@ -145,10 +145,10 @@ namespace cntrl.Curd
 
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
+            payment_schedual payment_schedual = dgFinance.SelectedItem as payment_schedual;
             if (payment_schedual.id_payment_schedual == 0)
             {
-                payment_schedual Firstpayment_schedual = payment_schedualViewSource.View.OfType<payment_schedual>().ToList().FirstOrDefault() as payment_schedual;
+                payment_schedual Firstpayment_schedual = payment_schedualList.FirstOrDefault() as payment_schedual;
                 
                 if (WindowsMode == Mode.AccountPayable)
                 {
@@ -190,11 +190,11 @@ namespace cntrl.Curd
 
             if (WindowsMode == Mode.AccountPayable)
             {
-                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualList.Sum(x => x.credit);
             }
             else
             { 
-                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit); 
+                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualList.Sum(x => x.debit); 
             }
         }
 

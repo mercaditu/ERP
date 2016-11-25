@@ -831,7 +831,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=[Max(EndDate)]</Value>
+                              <Value>=Max(Fields!EndDate.Value)</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>

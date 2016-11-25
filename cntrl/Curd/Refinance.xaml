@@ -63,7 +63,7 @@
                           Style="{StaticResource input_combobox}"/>
 
                     <Rectangle Fill="Silver" Height="1" Margin="8"/>
-                    <DataGrid  AutoGenerateColumns="False" RowEditEnding="DataGrid_RowEditEnding" ItemsSource="{Binding}"  >
+                    <DataGrid x:Name="dgFinance"  AutoGenerateColumns="False" RowEditEnding="DataGrid_RowEditEnding" ItemsSource="{Binding}"  >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn x:Name="dateColumn" Header="{lex:Loc Cognitivo:local:Date}" Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>

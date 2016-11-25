@@ -399,5 +399,14 @@ namespace Cognitivo.Product
                 item_transferViewSource.View.Filter = null;
             }
         }
+
+        private void toolBar_btnPrint_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            if (item_transfer.status == Status.Transfer.Approved && item_transfer.app_document_range != null)
+            {
+                entity.Brillo.Document.Start.Automatic(item_transfer, item_transfer.app_document_range);
+            }
+        }
     }
 }

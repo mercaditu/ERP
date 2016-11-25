@@ -240,8 +240,9 @@ namespace Cognitivo.Commercial
                     
                 }
             }
+            payment_schedualViewSource.View.MoveCurrentToLast();
             Refinance.objEntity = PaymentDB;
-            Refinance.payment_schedualViewSource = payment_schedualViewSource;
+            Refinance.payment_schedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected).ToList();
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
             Refinance.btnSave_Click += SaveRefinance_Click;

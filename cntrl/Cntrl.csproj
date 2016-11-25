@@ -340,6 +340,7 @@
       <DependentUpon>pnlAnull.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reports\Commercials\Customer.cs" />
+    <Compile Include="Reports\Commercials\CustomerSubscription.cs" />
     <Compile Include="Reports\DateRange.xaml.cs">
       <DependentUpon>DateRange.xaml</DependentUpon>
     </Compile>

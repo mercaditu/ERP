@@ -73,7 +73,7 @@
 				<RowDefinition Height="1*"/>
 			</Grid.RowDefinitions>
 			<StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="8,0,68,0" Width="264">
-				<Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
+                <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" HorizontalAlignment="Center"/>
 				<DatePicker Style="{StaticResource input_datepicker }"
 							SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -116,59 +116,75 @@
 					</StackPanel>
 				</StackPanel>
 			</StackPanel>
-			<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="2">
-				<StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-					<Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-					<Label Content="{lex:Loc Employee}" Style="{StaticResource input_label}"/>
-					<AdornerDecorator>
-						<Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" Select="set_ContactPref"
+        
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="2">
+				<StackPanel  >
+                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+                        <Label Content="{lex:Loc Employee}" Style="{StaticResource input_label}"/>
+                        <AdornerDecorator>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" Select="set_ContactPref"
 											   Text="{Binding employee.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-					</AdornerDecorator>
-					<Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-					<TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"
+                        </AdornerDecorator>
+                        <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                        <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"
 						 Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
 						 Margin="5,1,5,5"/>
-					<StackPanel Margin="2" VerticalAlignment="Center" Orientation="Horizontal"
+
+                        <StackPanel Margin="2" VerticalAlignment="Center" Orientation="Horizontal"
 									>
-						<Label Content="" Style="{StaticResource ico_Label}"/>
-						<TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
-						<ComboBox Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}"
+
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
+                            <ComboBox Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}"
 									 metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={StaticResource branchViewSource}}"
 									 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 									 DisplayMemberPath="name" SelectedValuePath="id_branch" SelectionChanged="cbxBranch_SelectionChanged"
 									 SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-							<ComboBox.ItemsPanel>
-								<ItemsPanelTemplate>
-									<VirtualizingStackPanel/>
-								</ItemsPanelTemplate>
-							</ComboBox.ItemsPanel>
-						</ComboBox>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-						<Label Content="" Style="{StaticResource ico_Label}"/>
-						<TextBlock Text="{lex:Loc Department}" Style="{StaticResource text_Label}"/>
-						<ComboBox x:Name="cbxDepartment" Style="{StaticResource ComboToLabelStyle}"
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Department}" Style="{StaticResource text_Label}"/>
+                            <ComboBox x:Name="cbxDepartment" Style="{StaticResource ComboToLabelStyle}"
 									 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 									 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 									 DisplayMemberPath="name" Width="Auto"
 									 SelectedValuePath="id_department" 
 									 SelectedValue="{Binding id_department, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-							<!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"-->
-							<ComboBox.ItemsPanel>
-								<ItemsPanelTemplate>
-									<VirtualizingStackPanel/>
-								</ItemsPanelTemplate>
-							</ComboBox.ItemsPanel>
-						</ComboBox>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-						<Label Content="Y" Style="{StaticResource ico_Label}"/>
-						<TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-						<Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
-					</StackPanel>
-				</StackPanel>
-			</ScrollViewer>
-			<Grid Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
+                                <!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"-->
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <Label Content="Y" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
+                            <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                        </StackPanel>
+                    </StackPanel>
+				    <StackPanel Orientation="Horizontal" IsEnabled="True">
+                        <Label Content="" Style="{StaticResource btn_Label}" />
+                        <TextBlock Margin="5,0" VerticalAlignment="Center">
+										<Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+											<Run Text="{lex:Loc Document}"/>
+										</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+               
+            </ScrollViewer>
+    
+            <Grid Margin="15" Grid.Row="1" Grid.ColumnSpan="3" >
 				<StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
 					<Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
 					<Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"/>

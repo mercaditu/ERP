@@ -397,7 +397,7 @@ namespace cntrl.Class
                 Application = entity.App.Names.ProjectFinance,
                 Name ="ProjectFinance",
                 Path = "cntrl.Reports.Projects.ProjectFinance.rdlc",
-                Query =Reports.Project.Project.query,
+                Query =Reports.Project.ProjectFinance.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
             }, new Report
                 {

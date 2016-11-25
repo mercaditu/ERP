@@ -148,7 +148,7 @@ namespace entity.Brillo
 
             using (db db = new db())
             {
-                app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
+                app_currencyfx = db.app_currencyfx.Include("app_currency").Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
             }
 
             if (app_currencyfx != null)

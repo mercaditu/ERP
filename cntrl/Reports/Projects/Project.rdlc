@@ -921,26 +921,12 @@
                   <KeepWithGroup>After</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="status">
+                  <Group Name="Details">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!status.Value</GroupExpression>
+                      <GroupExpression>=Fields!id_project_task.Value</GroupExpression>
                     </GroupExpressions>
+                    <Parent>=Fields!ParentTask.Value</Parent>
                   </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!status.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixMembers>
-                    <TablixMember>
-                      <Group Name="Details">
-                        <GroupExpressions>
-                          <GroupExpression>=Fields!id_project_task.Value</GroupExpression>
-                        </GroupExpressions>
-                        <Parent>=Fields!ParentTask.Value</Parent>
-                      </Group>
-                    </TablixMember>
-                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixMember>

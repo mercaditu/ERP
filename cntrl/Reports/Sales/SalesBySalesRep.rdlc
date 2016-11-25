@@ -1928,8 +1928,7 @@
                                 </TablixMember>
                               </TablixMembers>
                               <Visibility>
-                                <Hidden>true</Hidden>
-                                <ToggleItem>Number</ToggleItem>
+                                <ToggleItem>Date</ToggleItem>
                               </Visibility>
                             </TablixMember>
                           </TablixMembers>
@@ -2022,7 +2021,6 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0in</Top>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <Style>
@@ -2057,7 +2055,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0in</Top>
           <Left>0.14388in</Left>
           <Height>0.1875in</Height>
           <Width>2.81445in</Width>

@@ -22,7 +22,7 @@ namespace cntrl.Reports.Project
                             left join sales_invoice_detail as sid on si.id_sales_invoice = sid.id_sales_invoice
                             left join payment_schedual as ps on ps.id_sales_invoice = si.id_sales_invoice
 
-                            where p.id_company=@CompanyID and si.status = 2 and p.id_project=@ProjectID";
+                            where p.id_company=@CompanyID and p.id_project=@ProjectID";
     }
 }
 

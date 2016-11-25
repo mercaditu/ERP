@@ -298,8 +298,8 @@ namespace entity
             [LocalizedDescription("PurchaseVATDetail")]
             PurchaseVATDetail = 118,
 
-            [LocalizedDescription("ItemPriceList")]
-            ItemPriceList = 120,
+          
+          
             [LocalizedDescription("InventoryFlow")]
             InventoryFlow = 121,
             [LocalizedDescription("InventoryFlowDimension")]

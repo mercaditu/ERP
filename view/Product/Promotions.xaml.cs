@@ -157,6 +157,7 @@ namespace Cognitivo.Product
                 Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
                 Item_Parameter.Visibility = System.Windows.Visibility.Visible;
                 Item_Bonus.Visibility = System.Windows.Visibility.Visible;
+                Discount.Visibility = System.Windows.Visibility.Collapsed;
             }
             //Buy Tag and get Bonus Item
             else if (sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
@@ -165,6 +166,15 @@ namespace Cognitivo.Product
                 Tag_Bonus.Visibility = System.Windows.Visibility.Visible;
                 Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
                 Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
+                Discount.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onItem)
+            {
+                Tag_Parameter.Visibility = System.Windows.Visibility.Collapsed;
+                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
+                Item_Parameter.Visibility = System.Windows.Visibility.Visible;
+                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
+                Discount.Visibility = System.Windows.Visibility.Visible;
             }
         }
     }

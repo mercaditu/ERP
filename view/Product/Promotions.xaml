@@ -102,7 +102,11 @@
 							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
 							  SelectedValue="{Binding reference_bonus, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 					</StackPanel>
-				</StackPanel>
+                    <StackPanel x:Name="Discount">
+                        <Label Content="Discount" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding result_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
+                    </StackPanel>
+                </StackPanel>
 			</Grid>
 		</StackPanel>
 		

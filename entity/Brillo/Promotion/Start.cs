@@ -32,6 +32,7 @@ namespace entity.Brillo.Promotion
             foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
             {
                 Detail Detail = new Detail();
+                Detail.DetailID = _Detail.id_sales_invoice_detail;
                 Detail.Item = _Detail.item;
                 Detail.Quantity = _Detail.quantity;
                 Detail.Price = _Detail.unit_price;
@@ -46,6 +47,8 @@ namespace entity.Brillo.Promotion
             {
                 BuyThis_GetThat(Promo, Invoice, SalesInvoice);
                 BuyTag_GetThat(Promo, Invoice, SalesInvoice);
+                Discount_onItem(Promo, Invoice, SalesInvoice);
+                Discount_onTag(Promo, Invoice, SalesInvoice);
             }
         }
 
@@ -118,7 +121,7 @@ namespace entity.Brillo.Promotion
 
 
 
-             
+
                 decimal TotalQuantity = 0;
 
                 List<Detail> DetailList = new List<Detail>();
@@ -147,7 +150,7 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-                       
+
 
                         List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
@@ -170,7 +173,7 @@ namespace entity.Brillo.Promotion
                         window.ShowDialog();
 
                         List<DetailProduct> DetailProduct = window.ProductList;
-                        if (DetailProduct!=null)
+                        if (DetailProduct != null)
                         {
                             foreach (DetailProduct _DetailProduct in DetailProduct)
                             {
@@ -202,11 +205,87 @@ namespace entity.Brillo.Promotion
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
                             }
                         }
-                       
-
-                        
 
 
+
+
+
+                    }
+                }
+            }
+        }
+
+        private void Discount_onItem(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.type == sales_promotion.Types.Discount_onItem)
+            {
+                if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
+                {
+                    foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
+                    {
+                        if (Promo.quantity_step > 0)
+                        {
+                            Promo _Promo = new Promo();
+                            _Promo.Type = sales_promotion.Types.Discount_onItem;
+                            _Promo.Shared = true;
+
+                            _Detail.Promos.Add(_Promo);
+
+
+
+
+                            sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _Detail.DetailID).FirstOrDefault();
+                            if (sales_invoice_detail!=null)
+                            {
+                                sales_invoice_detail.IsPromo = true;
+                                sales_invoice_detail.DiscountVat = sales_invoice_detail.SubTotal_Vat * Promo.result_value;
+                            }
+                 
+
+
+
+
+
+
+                        }
+                    }
+                }
+            }
+        }
+        private void Discount_onTag(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.type == sales_promotion.Types.Discount_onItem)
+            {
+                if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
+                {
+                    foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
+                    {
+                        if (Promo.quantity_step > 0)
+                        {
+                            Promo _Promo = new Promo();
+                            _Promo.Type = sales_promotion.Types.Discount_onTag;
+                            _Promo.Shared = true;
+
+                            _Detail.Promos.Add(_Promo);
+
+
+
+
+                            List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo).ToList();
+                            foreach (sales_invoice_detail sales_invoice_detail in sid)
+                            {
+                                sales_invoice_detail.IsPromo = true;
+                                sales_invoice_detail.DiscountVat = sales_invoice_detail.SubTotal_Vat * Promo.result_value;
+                            }
+                         
+
+
+
+
+
+
+
+                        }
                     }
                 }
             }
@@ -299,7 +378,7 @@ namespace entity.Brillo.Promotion
             Promos = new List<Promo>();
         }
         public item Item { get; set; }
-
+        public int DetailID { get; set; }
         public decimal Quantity { get; set; }
 
         public decimal Price { get; set; }

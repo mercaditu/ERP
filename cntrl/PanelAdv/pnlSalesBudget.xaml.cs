@@ -104,15 +104,14 @@ namespace cntrl.PanelAdv
 
                     foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                     {
-
-
                         sales_order_detail sales_order_detail = new sales_order_detail();
                         sales_order_detail.sales_budget_detail = sales_budget_detail;
                         sales_order_detail.id_sales_budget_detail = sales_budget_detail.id_sales_budget_detail;
                         sales_order_detail.id_item = sales_budget_detail.id_item;
                         sales_order_detail.id_vat_group = sales_budget_detail.id_vat_group;
                         sales_order_detail.unit_price = sales_budget_detail.unit_price;
-                        
+                        sales_order_detail.id_project_task = sales_budget_detail.id_project_task;
+
                         decimal quantity = 0;
 
                         quantity = db.sales_order_detail

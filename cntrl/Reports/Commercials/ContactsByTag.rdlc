@@ -18,7 +18,7 @@
               <Width>1.26042in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.42188in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.3125in</Width>
@@ -797,6 +797,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>d</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -815,6 +816,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -945,7 +947,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.77605in</Height>
-        <Width>8.91668in</Width>
+        <Width>9.33855in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -956,10 +958,10 @@
     <Height>1.97117cm</Height>
     <Style />
   </Body>
-  <Width>22.64835cm</Width>
+  <Width>23.71992cm</Width>
   <Page>
     <PageFooter>
-      <Height>0.58208cm</Height>
+      <Height>0.47625cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -967,7 +969,7 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.10583cm</Top>
+          <Top>0cm</Top>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <Style>
@@ -1002,7 +1004,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.10583cm</Top>
+          <Top>0cm</Top>
           <Left>0.16471in</Left>
           <Height>0.1875in</Height>
           <Width>2.81445in</Width>

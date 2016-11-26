@@ -34,7 +34,7 @@ namespace cntrl
             get { return _ShowProject; }
             set
             {
-                if (_ShowProject!=value)
+                if (_ShowProject != value)
                 {
                     _ShowProject = value;
                     if (value == true)
@@ -46,7 +46,7 @@ namespace cntrl
                         }
                     }
                 }
-               
+
             }
         }
         private bool _ShowProject;
@@ -62,7 +62,7 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value;Fill(); }
+            set { _StartDate = value; Fill(); }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
@@ -106,7 +106,7 @@ namespace cntrl
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
                         Label.Style = lblStyle;
                         stpFilter.Children.Add(Label);
-                        
+
                         ComboBox ComboBox = new ComboBox();
                         Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
                         ComboBox.Style = cbxStyle;
@@ -137,7 +137,7 @@ namespace cntrl
                         CheckBox.Style = cbxStyle;
                         DataView view = new DataView(value);
                         CheckBox.Name = "cbx" + item.ColumnName;
-                        CheckBox.Tag =  item.ColumnName;
+                        CheckBox.Tag = item.ColumnName;
                         stpFilter.Children.Add(CheckBox);
                     }
                 }
@@ -166,7 +166,7 @@ namespace cntrl
             DataTable dt = new DataTable();
 
             string query = Report.Query;
-            if (Report.ReplaceString != null && Report.ReplaceWithString!=null)
+            if (Report.ReplaceString != null && Report.ReplaceWithString != null)
             {
                 query = query.Replace(Report.ReplaceString, Report.ReplaceWithString);
             }
@@ -188,12 +188,12 @@ namespace cntrl
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
 
-            
-                ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
-                
-                reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
-         
-           
+
+            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+
+
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
@@ -211,10 +211,10 @@ namespace cntrl
             reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
 
 
-                ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
 
-                reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
-          
+            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
@@ -246,18 +246,18 @@ namespace cntrl
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
-            string filter="";
+
+            string filter = "";
 
             bool IsFirst = true;
 
             foreach (object Control in stpFilter.Children)
             {
-               
 
-                if (Control.GetType()==typeof(ComboBox))
-                { 
-                  
+
+                if (Control.GetType() == typeof(ComboBox))
+                {
+
                     ComboBox comboobox = Control as ComboBox;
                     if (comboobox.SelectedValue != null)
                     {
@@ -268,12 +268,12 @@ namespace cntrl
                         filter += comboobox.DisplayMemberPath + " like '%" + comboobox.SelectedValue + "%'";
                         IsFirst = false;
                     }
-                   
+
 
                 }
-               else if (Control.GetType() == typeof(CheckBox))
+                else if (Control.GetType() == typeof(CheckBox))
                 {
-                   
+
                     CheckBox CheckBox = Control as CheckBox;
 
                     if (CheckBox.IsChecked == true)
@@ -285,11 +285,11 @@ namespace cntrl
                         filter += CheckBox.Tag + " = True";
                         IsFirst = false;
                     }
-                  
+
                 }
             }
 
-            if (ReportDt.Rows.Count>0)
+            if (ReportDt.Rows.Count > 0)
             {
                 if (ReportDt.Select(filter).Any())
                 {

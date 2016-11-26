@@ -58,6 +58,7 @@ namespace Cognitivo.Sales
         private void btnPayment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
+            btnPromotion_Click(sender, e);
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -434,6 +435,9 @@ namespace Cognitivo.Sales
 
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            sales_invoice.RaisePropertyChanged("GrandTotal");
         }
+
+     
     }
 }

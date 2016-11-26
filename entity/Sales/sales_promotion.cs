@@ -30,6 +30,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             date_start = DateTime.Now;
             date_end = DateTime.Now.AddDays(10);
+            quantity_step = 1;
         }
 
         [Key]

@@ -84,9 +84,11 @@
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
 							  SelectedValue="{Binding reference, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 					</StackPanel>
-					<Label Content="Quantity Step" Style="{StaticResource input_label}"/>
-					<TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
-				</StackPanel>
+                    <StackPanel x:Name="Qunatity_Parameter">
+                        <Label Content="Quantity Step" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
+                    </StackPanel>
+                </StackPanel>
 				
 				<StackPanel Grid.Column="1">
 					<Label Content="Output" Style="{StaticResource H2}"/>

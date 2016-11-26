@@ -103,11 +103,11 @@ namespace Cognitivo.Product
                     if (BonusID > 0)
                     {
                         item item = PromotionDB.items.Where(x => x.id_item == BonusID).FirstOrDefault();
-                        if (item!=null)
+                        if (item != null)
                         {
                             sbxBonusItem.Text = item.name;
                         }
-                      
+
 
                         int RefID = Convert.ToInt32(sales_promotion.reference);
                         item itemRef = PromotionDB.items.Where(x => x.id_item == RefID).FirstOrDefault();
@@ -149,7 +149,7 @@ namespace Cognitivo.Product
         private void cbxType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-            
+
             //
             if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat)
             {
@@ -158,6 +158,7 @@ namespace Cognitivo.Product
                 Item_Parameter.Visibility = System.Windows.Visibility.Visible;
                 Item_Bonus.Visibility = System.Windows.Visibility.Visible;
                 Discount.Visibility = System.Windows.Visibility.Collapsed;
+                Qunatity_Parameter.Visibility = System.Windows.Visibility.Visible;
             }
             //Buy Tag and get Bonus Item
             else if (sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
@@ -167,6 +168,7 @@ namespace Cognitivo.Product
                 Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
                 Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
                 Discount.Visibility = System.Windows.Visibility.Collapsed;
+                Qunatity_Parameter.Visibility = System.Windows.Visibility.Visible;
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onItem)
             {
@@ -175,6 +177,16 @@ namespace Cognitivo.Product
                 Item_Parameter.Visibility = System.Windows.Visibility.Visible;
                 Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
                 Discount.Visibility = System.Windows.Visibility.Visible;
+                Qunatity_Parameter.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onTag)
+            {
+                Tag_Parameter.Visibility = System.Windows.Visibility.Visible;
+                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
+                Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
+                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
+                Discount.Visibility = System.Windows.Visibility.Visible;
+                Qunatity_Parameter.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

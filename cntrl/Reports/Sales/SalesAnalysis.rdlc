@@ -560,7 +560,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Code")</Value>
+                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Code") + Fields!Sales.Value</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -635,7 +635,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Code") - Sum(Fields!Sales.Value)</Value>
+                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Code")</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1439,16 +1439,6 @@ Fields!Month.Value = 12, "Dec"
   </Body>
   <Width>24.72533cm</Width>
   <Page>
-    <PageHeader>
-      <Height>0.02646cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageFooter>
       <Height>0.51592cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>

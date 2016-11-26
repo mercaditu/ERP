@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity.Brillo;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -98,7 +99,208 @@ namespace entity
             sales_invoice sales_invoice = new sales_invoice();
             return sales_invoice;
         }
+        public void ReApprove(sales_invoice invoice)
+        {
+            foreach (sales_invoice_detail detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            {
+                //detail is added
+                if (Entry(sales_invoice_detail).State == EntityState.Added)
+                {
+                    //add stock
+                    Brillo.Logic.Stock _stock = new Brillo.Logic.Stock();
+                    Brillo.Stock stock = new Brillo.Stock();
+                    List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, detail.item.item_product.FirstOrDefault().id_item_product);
 
+                    base.item_movement.AddRange(_stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock,
+                                                App.Names.SalesInvoice,
+                                                detail.id_sales_invoice,
+                                                detail.id_sales_invoice_detail,
+                                                invoice.id_currencyfx,
+                                                detail.item.item_product.FirstOrDefault(),
+                                                (int)detail.id_location,
+                                                detail.quantity,
+                                                invoice.trans_date,
+                                                "Sales Invoice Fix"
+                                                ));
+                    //add payment
+                    List<payment_schedual> payment_schedualListadd = new List<payment_schedual>();
+                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                    payment_schedualListadd = _Payment.insert_Schedual(invoice);
+
+                    //Save Promisory Note first, because it is referenced in Payment Schedual
+                    if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
+                    {
+                        payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                    }
+
+                    //Payment Schedual
+                    if (payment_schedualListadd != null && payment_schedualListadd.Count > 0)
+                    {
+                        payment_schedual.AddRange(payment_schedualListadd);
+                    }
+
+                }
+                if (Entry(detail).State == EntityState.Deleted)
+                {
+
+                    //delete stock
+                    if (detail.item_movement.Count > 0)
+                    {
+                        base.item_movement.AddRange(detail.item_movement);
+
+                    }
+                    //delete payment is pending b'coz confused
+
+
+
+
+                }
+                if (Entry(detail).State == EntityState.Modified)
+                {//stock modified as per requirement 
+                    decimal quntity = detail.quantity;
+                    // qunaity is more
+                    if (detail.item_movement.Count > 0)
+                    {
+
+                        //set quantity without parent
+                        if (detail.quantity > detail.item_movement.Sum(x => x.debit))
+                        {
+                            decimal QunatityDiffmov = detail.quantity - detail.item_movement.Sum(x => x.debit);
+                            foreach (item_movement item_movement in detail.item_movement)
+                            {
+                                if (QunatityDiffmov > 0)
+                                {
+                                    if (item_movement.parent == null)
+                                    {
+                                        item_movement.debit = detail.quantity + QunatityDiffmov;
+                                        QunatityDiffmov = 0;
+                                    }
+                                }
+
+                            }
+                            //if qunatity not set then add new record
+                            if (QunatityDiffmov > 0)
+                            {
+                                Brillo.Logic.Stock _stock = new Brillo.Logic.Stock();
+                                Brillo.Stock stock = new Brillo.Stock();
+                                List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, detail.item.item_product.FirstOrDefault().id_item_product);
+
+                                base.item_movement.AddRange(_stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock,
+                                                            App.Names.SalesInvoice,
+                                                            detail.id_sales_invoice,
+                                                            detail.id_sales_invoice_detail,
+                                                            invoice.id_currencyfx,
+                                                            detail.item.item_product.FirstOrDefault(),
+                                                            (int)detail.id_location,
+                                                              QunatityDiffmov,
+                                                            invoice.trans_date,
+                                                            "Sales Invoice Fix"
+                                                            ));
+
+                            }
+                        }
+                        //less
+                        else
+                        {
+                            decimal QunatityDiff = detail.item_movement.Sum(x => x.debit) - detail.quantity;
+                            decimal QuantityUsed = detail.item_movement.Where(x => x.parent != null).Sum(x => x.debit);
+                            if (QuantityUsed < QunatityDiff)
+                            {//see with movemement without parent
+                                foreach (item_movement item_movement in detail.item_movement.Where(x => x.parent == null))
+                                {
+                                    if (QunatityDiff > 0)
+                                    {
+                                        if (item_movement.debit != (QunatityDiff - QuantityUsed))
+                                        {
+                                            item_movement.debit = (QunatityDiff - QuantityUsed);
+                                            QunatityDiff = 0;
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        //remove extra without parent movement
+                                        base.item_movement.Remove(item_movement);
+                                    }
+
+                                }
+                            }
+
+                        }
+
+
+
+
+
+                    }
+                    //paymnets
+
+                    List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.id_sales_invoice == invoice.id_sales_invoice).ToList();
+                    List<payment_schedual> payment_schedualListNotUsed;
+                    if (payment_schedualList.Count() > 0)
+                    {
+                        payment_schedualListNotUsed = payment_schedualList.Where(x => x.id_payment_detail == null || x.id_payment_detail == 0).ToList();
+                        if (payment_schedualList.FirstOrDefault() != null)
+                        {
+                            //when currency is not changed
+                            if (payment_schedualList.FirstOrDefault().id_currencyfx == invoice.id_currencyfx)
+                            {
+
+                                //more
+                                if (invoice.GrandTotal > payment_schedualList.Sum(x => x.debit))
+                                {
+                                    payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
+                                    if (payment_schedual != null)
+                                    {
+                                        payment_schedual.debit = payment_schedual.debit + (invoice.GrandTotal - payment_schedualList.Sum(x => x.debit));
+                                    }
+
+                                }
+                                //less
+                                else
+                                {
+                                    payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
+                                    if (payment_schedual != null)
+                                    {
+                                        payment_schedual.debit = payment_schedual.debit - (payment_schedualList.Sum(x => x.debit) - invoice.GrandTotal);
+                                    }
+                                }
+                            }
+                          //  when currency is  changed
+                            else
+                            {
+                                if (payment_schedualListNotUsed.Count() == payment_schedualList.Count())
+                                {
+                                    payment_schedual.RemoveRange(payment_schedualList);
+                                    List<payment_schedual> payment_schedualListNew = new List<payment_schedual>();
+                                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                                    payment_schedualListNew = _Payment.insert_Schedual(invoice);
+
+                                    //Save Promisory Note first, because it is referenced in Payment Schedual
+                                    if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
+                                    {
+                                        payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                                    }
+
+                                    //Payment Schedual
+                                    if (payment_schedualListNew != null && payment_schedualListNew.Count > 0)
+                                    {
+                                        payment_schedual.AddRange(payment_schedualListNew);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+
+            SaveChanges();
+        }
         private void add_CRM(sales_invoice invoice)
         {
             if (invoice.id_sales_order == 0 || invoice.id_sales_order == null)

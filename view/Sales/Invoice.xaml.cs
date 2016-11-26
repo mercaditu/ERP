@@ -173,20 +173,29 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender)
         {
-            app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
-            if (app_document_range != null)
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            if (sales_invoice.status==Status.Documents_General.Pending)
             {
-                if (app_document_range.range_current > app_document_range.range_end)
+                app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
+                if (app_document_range != null)
                 {
-                    toolBar.msgWarning("Document range is Over");
+                    if (app_document_range.range_current > app_document_range.range_end)
+                    {
+                        toolBar.msgWarning("Document range is Over");
+                    }
+                }
+
+                if (SalesInvoiceDB.SaveChanges() > 0)
+                {
+                    sales_invoiceViewSource.View.Refresh();
+                    toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
                 }
             }
-
-            if (SalesInvoiceDB.SaveChanges() > 0)
+            else if (sales_invoice.status == Status.Documents_General.Approved)
             {
-                sales_invoiceViewSource.View.Refresh();
-                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+                SalesInvoiceDB.ReApprove(sales_invoice);
             }
+          
         }
 
         private void toolBar_btnCancel_Click(object sender)

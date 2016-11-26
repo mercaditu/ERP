@@ -122,7 +122,21 @@ namespace entity
 
         #region Methods
 
-        //public void 
+        public bool Find_NewParent()
+        {
+            try
+            {
+                // fifo query
+                // check availability
+                // assign to new parent (break up if necesary)
+
+                return true;
+            }
+            catch
+            {
+                return false;   
+            }
+        } 
 
         #endregion
     }

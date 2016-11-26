@@ -86,12 +86,24 @@ namespace Cognitivo.Sales
 
 		private void Save_Click(object sender)
 		{
-			if (SalesBudgetDB.SaveChanges() > 0)
-			{
-				sales_budgetViewSource.View.Refresh();
-				toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);
-				sbxContact.Text = "";   
-			}
+            sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
+            if (sales_budget.status==Status.Documents_General.Pending)
+            {
+                if (SalesBudgetDB.SaveChanges() > 0)
+                {
+                    sales_budgetViewSource.View.Refresh();
+                    toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);
+                    sbxContact.Text = "";
+                }
+            }
+            else
+            {
+                SalesBudgetDB.ReApprove(sales_budget);
+                sales_budgetViewSource.View.Refresh();
+                toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);
+                sbxContact.Text = "";
+            }
+			
 		}
 
 		private void toolBar_btnDelete_Click(object sender)

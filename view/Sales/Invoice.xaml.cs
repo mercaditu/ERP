@@ -194,6 +194,8 @@ namespace Cognitivo.Sales
             else if (sales_invoice.status == Status.Documents_General.Approved)
             {
                 SalesInvoiceDB.ReApprove(sales_invoice);
+                sales_invoiceViewSource.View.Refresh();
+                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
             }
           
         }

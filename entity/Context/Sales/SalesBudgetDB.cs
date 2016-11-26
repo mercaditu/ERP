@@ -147,6 +147,15 @@ namespace entity
 
             return true;
         }
+        public void ReApprove(sales_budget sales_budget)
+        {
+            if (sales_budget.sales_budget_detail.Where(x=>x.sales_order_detail==null).Count()==0)
+            {
+                sales_budget.status = Status.Documents_General.Approved;
+                sales_budget.timestamp = DateTime.Now;
+                SaveChanges();
+            }
+        }
 
         public bool Anull()
         {

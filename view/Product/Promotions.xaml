@@ -11,108 +11,108 @@
 	  xmlns:convert="clr-namespace:Cognitivo.Converters"
 	  d:DesignHeight="600" d:DesignWidth="800"
 	  Title="Promotions" Loaded="Page_Loaded">
-	<Page.Resources>
-		<convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
-		<CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
-		<CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
-		<CollectionViewSource x:Key="item_tagBonusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
-	</Page.Resources>
+    <Page.Resources>
+        <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
+        <CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagBonusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+    </Page.Resources>
 
-	<Grid DataContext="{StaticResource sales_promotionViewSource}" Background="White">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="3*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
-		
-		<ListBox x:Name="dgvPromotion"
+    <Grid DataContext="{StaticResource sales_promotionViewSource}" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="dgvPromotion"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 SelectionChanged="dgvPromotion_SelectionChanged"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 				 ItemsSource="{Binding}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
 								   recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
 								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		
-		<StackPanel Grid.Row="1" Grid.Column="1" Background="White" Margin="16">
-			<Label Content="Promotion" Style="{StaticResource input_label}"/>
-			<TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-			<Label Content="Type" Style="{StaticResource input_label}"/>
-			<ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" SelectionChanged="cbxType_SelectionChanged"
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="White" Margin="16">
+            <Label Content="Promotion" Style="{StaticResource input_label}"/>
+            <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
+            <Label Content="Type" Style="{StaticResource input_label}"/>
+            <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" SelectionChanged="cbxType_SelectionChanged"
 					  SelectedValue="{Binding type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-			<StackPanel Orientation="Horizontal">
-				<StackPanel>
-					<Label Style="{StaticResource input_label}" Content="StartDate" Width="125"/>
-					<DatePicker SelectedDate="{Binding date_start, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <Label Style="{StaticResource input_label}" Content="StartDate" Width="125"/>
+                    <DatePicker SelectedDate="{Binding date_start, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 								Style="{StaticResource input_datepicker}" Width="125"/>
-				</StackPanel>
-				<StackPanel>
-					<Label Style="{StaticResource input_label}" Content="EndDate" Width="125"/>
-					<DatePicker SelectedDate="{Binding date_end, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                </StackPanel>
+                <StackPanel>
+                    <Label Style="{StaticResource input_label}" Content="EndDate" Width="125"/>
+                    <DatePicker SelectedDate="{Binding date_end, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 								Style="{StaticResource input_datepicker}" Width="125"/>
-				</StackPanel>
-			</StackPanel>
-			
-			<Rectangle Style="{StaticResource line_Bar}"/>
-			
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
-				</Grid.ColumnDefinitions>
-				<StackPanel Grid.Column="0">
-					<Label Content="Parameters" Style="{StaticResource H2}"/>
-					<StackPanel x:Name="Item_Parameter">
-						<Label Content="Item" Style="{StaticResource input_label}"/>
-						<controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
-					</StackPanel>
-					<StackPanel x:Name="Tag_Parameter">
-						<Label Content="Tags" Style="{StaticResource input_label}"/>
-						<ComboBox Style="{StaticResource input_combobox}"
+                </StackPanel>
+            </StackPanel>
+
+            <Rectangle Style="{StaticResource line_Bar}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label Content="Parameters" Style="{StaticResource H2}"/>
+                    <StackPanel x:Name="Item_Parameter">
+                        <Label Content="Item" Style="{StaticResource input_label}"/>
+                        <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                    </StackPanel>
+                    <StackPanel x:Name="Tag_Parameter">
+                        <Label Content="Tags" Style="{StaticResource input_label}"/>
+                        <ComboBox Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
 							  SelectedValue="{Binding reference, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-					</StackPanel>
-                    <StackPanel x:Name="Qunatity_Parameter">
-                        <Label Content="Quantity Step" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>
+
+                    <Label Content="Quantity Step" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
+
                 </StackPanel>
-				
-				<StackPanel Grid.Column="1">
-					<Label Content="Output" Style="{StaticResource H2}"/>
-					<StackPanel x:Name="Item_Bonus">
-						<Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
-					<controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
-					</StackPanel>
-								
-					<StackPanel x:Name="Tag_Bonus">
-						<Label Content="Tags" Style="{StaticResource input_label}"/>
-						<ComboBox Style="{StaticResource input_combobox}"
+
+                <StackPanel Grid.Column="1">
+                    <Label Content="Output" Style="{StaticResource H2}"/>
+                    <StackPanel x:Name="Item_Bonus">
+                        <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
+                        <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="Tag_Bonus">
+                        <Label Content="Tags" Style="{StaticResource input_label}"/>
+                        <ComboBox Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
 							  SelectedValue="{Binding reference_bonus, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-					</StackPanel>
+                    </StackPanel>
                     <StackPanel x:Name="Discount">
                         <Label Content="Discount" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding result_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>
                 </StackPanel>
-			</Grid>
-		</StackPanel>
-		
-		<local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2"
+            </Grid>
+        </StackPanel>
+
+        <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2"
 					   appName="SalesPromotion"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
@@ -120,5 +120,5 @@
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-	</Grid>
+    </Grid>
 </Page>

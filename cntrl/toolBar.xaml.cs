@@ -167,7 +167,6 @@ namespace cntrl
         {
             if (Status == "Pending")
             {
-                //IsEditable = false;
                 Edit_IsEnabled = true;
                 Delete_IsEnabled = true;
                 Approve_IsEnabled = true;
@@ -176,7 +175,7 @@ namespace cntrl
             else if (Status == "Approved" || Status == "Issued" || Status == "Done")
             {
                 IsEditable = false;
-                Edit_IsEnabled = false;
+                Edit_IsEnabled = true;
                 Delete_IsEnabled = false;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = true;
@@ -221,28 +220,6 @@ namespace cntrl
                 Edit_IsEnabled = true;
             }
         }
-        #endregion
-
-        #region "Progress Bar Properties"
-        public bool IsIndeterminate { get; set; }
-        public int Maximum { get; set; }
-        public int Value { get; set; }
-
-        public Visibility ProgressBar
-        {
-            get
-            {
-                return _ProgressBar;
-            }
-            set
-            {
-                if (value != _ProgressBar)
-                {
-                    _ProgressBar = value;
-                }
-            }
-        }
-        private Visibility _ProgressBar = Visibility.Collapsed;
         #endregion
 
         public App.Names appName { get; set; }

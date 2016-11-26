@@ -43,6 +43,14 @@ namespace entity.Brillo.Promotion
                 Invoice.Details.Add(Detail);
             }
 
+            //List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference && x.IsPromo).ToList();
+            //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+            foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
+            {
+                _Detail_.DiscountVat = 0;
+                _Detail_.IsPromo = false;
+            }
+
             foreach (var Promo in SalesPromotionLIST)
             {
                 BuyThis_GetThat(Promo, Invoice, SalesInvoice);
@@ -233,45 +241,23 @@ namespace entity.Brillo.Promotion
 
                             _Detail.Promos.Add(_Promo);
 
-
-                            //List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference && x.IsPromo).ToList();
-                            ////Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                            //foreach (sales_invoice_detail _Detail_ in sid)
-                            //{
-
-                            //    _Detail_.DiscountVat = 0;
-                            //    _Detail_.IsPromo = false;
-                            //}
                             sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference && x.IsPromo==false).FirstOrDefault();
 
                             if (sales_invoice_detail!=null)
                             {
                                 sales_invoice_detail.IsPromo = true;
-
                                 sales_invoice_detail.DiscountVat = sales_invoice_detail.UnitPrice_Vat * Promo.result_value;
                             }
-                        
-
-
-
-
-
-
-
-
                         }
                     }
                 }
             }
         }
+
         private void Discount_onTag(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.Types.Discount_onTag)
             {
-
-
-
-
                 decimal TotalQuantity = 0;
 
                 List<Detail> DetailList = new List<Detail>();
@@ -288,7 +274,6 @@ namespace entity.Brillo.Promotion
                         DetailTagList.Add(DetailTag);
                     }
                     TotalQuantity = DetailList.Sum(x => x.Quantity);
-
                 }
 
 
@@ -300,33 +285,13 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-
-
-                        //List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo).ToList();
-                        ////Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                        //foreach (sales_invoice_detail _Detail_ in sid)
-                        //{
-                        //    _Detail_.DiscountVat = 0;
-                        //    _Detail_.IsPromo = false;
-
-                        //}
-                         
                         List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference && x.IsPromo==false)).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
                         foreach (sales_invoice_detail _Detail_ in sidpromo)
                         {
                             _Detail_.IsPromo = true;
-
                             _Detail_.DiscountVat = _Detail_.UnitPrice_Vat * Promo.result_value;
-
                         }
-
-
-
-
-
-
-
                     }
                 }
             }

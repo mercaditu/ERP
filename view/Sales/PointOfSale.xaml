@@ -19,6 +19,15 @@
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Title="{lex:Loc PointOfSale}" Loaded="Page_Loaded" KeyDown="Page_KeyDown">
     <Page.Resources>
+
+        <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}" >
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <converter:Bool2Color x:Key="Bool2Color"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
@@ -212,6 +221,7 @@
 					<DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
 						Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
 						ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"  
+                              Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}"
 						RowEditEnding="dgvSalesDetail_RowEditEnding">
 						<DataGrid.RowStyle>
 							<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
@@ -234,7 +244,7 @@
 							<DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"
 								Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="True" Width="*" Visibility="Hidden"/>
 							<DataGridTextColumn Binding="{Binding quantity, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-								Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
+								Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"/>
 							<!-- UnitPrice -->
 							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
 								Binding="{Binding unit_price, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

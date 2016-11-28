@@ -104,55 +104,27 @@ namespace entity
             foreach (sales_invoice_detail detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
             {
                 //detail is added
-                if (Entry(sales_invoice_detail).State == EntityState.Added)
+                if (Entry(detail).State == EntityState.Added)
                 {
                     //add stock
-                    Brillo.Logic.Stock _stock = new Brillo.Logic.Stock();
-                    Brillo.Stock stock = new Brillo.Stock();
-                    List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, detail.item.item_product.FirstOrDefault().id_item_product);
-
-                    base.item_movement.AddRange(_stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock,
-                                                App.Names.SalesInvoice,
-                                                detail.id_sales_invoice,
-                                                detail.id_sales_invoice_detail,
-                                                invoice.id_currencyfx,
-                                                detail.item.item_product.FirstOrDefault(),
-                                                (int)detail.id_location,
-                                                detail.quantity,
-                                                invoice.trans_date,
-                                                "Sales Invoice Fix"
-                                                ));
+                    MovementReApprove(invoice, detail);
                     //add payment
-                    List<payment_schedual> payment_schedualListadd = new List<payment_schedual>();
-                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                    payment_schedualListadd = _Payment.insert_Schedual(invoice);
-
-                    //Save Promisory Note first, because it is referenced in Payment Schedual
-                    if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
-                    {
-                        payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
-                    }
-
-                    //Payment Schedual
-                    if (payment_schedualListadd != null && payment_schedualListadd.Count > 0)
-                    {
-                        payment_schedual.AddRange(payment_schedualListadd);
-                    }
+                    PaymentReapprove(invoice, detail, EntityState.Added);
 
                 }
-                if (Entry(detail).State == EntityState.Deleted)
+                if (detail.State == EntityState.Deleted)
                 {
 
                     //delete stock
-                    if (detail.item_movement.Count > 0)
+                    List<item_movement> ItemMovementList = detail.item_movement.Where(x => x.parent == null).ToList();
+                    if (detail.item_movement.Count == ItemMovementList.Count)
                     {
-                        base.item_movement.AddRange(detail.item_movement);
+                        base.item_movement.RemoveRange(detail.item_movement);
 
                     }
                     //delete payment is pending b'coz confused
-
-
-
+                    PaymentReapprove(invoice, detail, EntityState.Added);
+                   
 
                 }
                 if (Entry(detail).State == EntityState.Modified)
@@ -172,7 +144,7 @@ namespace entity
                                 {
                                     if (item_movement.parent == null)
                                     {
-                                        item_movement.debit = detail.quantity + QunatityDiffmov;
+                                        item_movement.debit = item_movement.debit + QunatityDiffmov;
                                         QunatityDiffmov = 0;
                                     }
                                 }
@@ -181,21 +153,7 @@ namespace entity
                             //if qunatity not set then add new record
                             if (QunatityDiffmov > 0)
                             {
-                                Brillo.Logic.Stock _stock = new Brillo.Logic.Stock();
-                                Brillo.Stock stock = new Brillo.Stock();
-                                List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, detail.item.item_product.FirstOrDefault().id_item_product);
-
-                                base.item_movement.AddRange(_stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock,
-                                                            App.Names.SalesInvoice,
-                                                            detail.id_sales_invoice,
-                                                            detail.id_sales_invoice_detail,
-                                                            invoice.id_currencyfx,
-                                                            detail.item.item_product.FirstOrDefault(),
-                                                            (int)detail.id_location,
-                                                              QunatityDiffmov,
-                                                            invoice.trans_date,
-                                                            "Sales Invoice Fix"
-                                                            ));
+                                MovementReApprove(invoice, detail);
 
                             }
                         }
@@ -234,63 +192,9 @@ namespace entity
 
                     }
                     //paymnets
+                    PaymentReapprove(invoice, detail, EntityState.Added);
 
-                    List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.id_sales_invoice == invoice.id_sales_invoice).ToList();
-                    List<payment_schedual> payment_schedualListNotUsed;
-                    if (payment_schedualList.Count() > 0)
-                    {
-                        payment_schedualListNotUsed = payment_schedualList.Where(x => x.id_payment_detail == null || x.id_payment_detail == 0).ToList();
-                        if (payment_schedualList.FirstOrDefault() != null)
-                        {
-                            //when currency is not changed
-                            if (payment_schedualList.FirstOrDefault().id_currencyfx == invoice.id_currencyfx)
-                            {
 
-                                //more
-                                if (invoice.GrandTotal > payment_schedualList.Sum(x => x.debit))
-                                {
-                                    payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
-                                    if (payment_schedual != null)
-                                    {
-                                        payment_schedual.debit = payment_schedual.debit + (invoice.GrandTotal - payment_schedualList.Sum(x => x.debit));
-                                    }
-
-                                }
-                                //less
-                                else
-                                {
-                                    payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
-                                    if (payment_schedual != null)
-                                    {
-                                        payment_schedual.debit = payment_schedual.debit - (payment_schedualList.Sum(x => x.debit) - invoice.GrandTotal);
-                                    }
-                                }
-                            }
-                          //  when currency is  changed
-                            else
-                            {
-                                if (payment_schedualListNotUsed.Count() == payment_schedualList.Count())
-                                {
-                                    payment_schedual.RemoveRange(payment_schedualList);
-                                    List<payment_schedual> payment_schedualListNew = new List<payment_schedual>();
-                                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                                    payment_schedualListNew = _Payment.insert_Schedual(invoice);
-
-                                    //Save Promisory Note first, because it is referenced in Payment Schedual
-                                    if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
-                                    {
-                                        payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
-                                    }
-
-                                    //Payment Schedual
-                                    if (payment_schedualListNew != null && payment_schedualListNew.Count > 0)
-                                    {
-                                        payment_schedual.AddRange(payment_schedualListNew);
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
 
 
@@ -301,6 +205,112 @@ namespace entity
 
             SaveChanges();
         }
+        public void PaymentReapprove(sales_invoice invoice, sales_invoice_detail detail, EntityState status)
+        {
+            if (status == EntityState.Deleted)
+            {
+                List<payment_schedual> payment_schedualList = invoice.payment_schedual.Where(x => x.id_payment_detail == null || x.id_payment_detail == 0).ToList();
+                if (invoice.payment_schedual.Count == payment_schedualList.Count)
+                {
+                    payment_schedual payment_schedual = payment_schedualList.FirstOrDefault();
+                    if (payment_schedual != null)
+                    {
+                        payment_schedual.debit = payment_schedual.debit - detail.SubTotal_Vat;
+                    }
+                }
+            }
+            else
+            {
+                List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.id_sales_invoice == invoice.id_sales_invoice).ToList();
+                List<payment_schedual> payment_schedualListNotUsed;
+                if (payment_schedualList.Count() > 0)
+                {
+                    payment_schedualListNotUsed = payment_schedualList.Where(x => x.id_payment_detail == null || x.id_payment_detail == 0).ToList();
+                    if (payment_schedualList.FirstOrDefault() != null)
+                    {
+                        //when currency is not changed
+                        if (payment_schedualList.FirstOrDefault().id_currencyfx == invoice.id_currencyfx)
+                        {
+
+                            //more
+                            if (invoice.GrandTotal > payment_schedualList.Sum(x => x.debit))
+                            {
+                                payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
+                                if (payment_schedual != null)
+                                {
+                                    payment_schedual.debit = payment_schedual.debit + (invoice.GrandTotal - payment_schedualList.Sum(x => x.debit));
+                                }
+
+                            }
+                            //less
+                            else
+                            {
+                                payment_schedual payment_schedual = payment_schedualListNotUsed.LastOrDefault();
+                                if (payment_schedual != null)
+                                {
+                                    payment_schedual.debit = payment_schedual.debit - (payment_schedualList.Sum(x => x.debit) - invoice.GrandTotal);
+                                }
+                            }
+                        }
+                        //  when currency is  changed
+                        else
+                        {
+                            if (payment_schedualListNotUsed.Count() == payment_schedualList.Count())
+                            {
+                                payment_schedual.RemoveRange(payment_schedualList);
+                                List<payment_schedual> payment_schedualListNew = new List<payment_schedual>();
+                                Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                                payment_schedualListNew = _Payment.insert_Schedual(invoice);
+
+                                //Save Promisory Note first, because it is referenced in Payment Schedual
+                                if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
+                                {
+                                    payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                                }
+
+                                //Payment Schedual
+                                if (payment_schedualListNew != null && payment_schedualListNew.Count > 0)
+                                {
+                                    payment_schedual.AddRange(payment_schedualListNew);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public void MovementReApprove(sales_invoice invoice,sales_invoice_detail detail)
+        {
+            if (detail.id_location == null)
+            {
+                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                detail.id_location = _Stock.FindNFix_Location(detail.item.item_product.FirstOrDefault(), detail.app_location, invoice.app_branch);
+                detail.app_location = base.app_location.Find(detail.id_location);
+            }
+            else
+            {
+                detail.app_location = base.app_location.Find(detail.id_location);
+            }
+
+            Brillo.Logic.Stock _stock = new Brillo.Logic.Stock();
+            Brillo.Stock stock = new Brillo.Stock();
+            List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, detail.item.item_product.FirstOrDefault().id_item_product);
+
+            base.item_movement.AddRange(_stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock,
+                                        App.Names.SalesInvoice,
+                                        detail.id_sales_invoice,
+                                        detail.id_sales_invoice_detail,
+                                        invoice.id_currencyfx,
+                                        detail.item.item_product.FirstOrDefault(),
+                                        (int)detail.id_location,
+                                        detail.quantity,
+                                        invoice.trans_date,
+                                        "Sales Invoice Fix"
+                                        ));
+        }
+
         private void add_CRM(sales_invoice invoice)
         {
             if (invoice.id_sales_order == 0 || invoice.id_sales_order == null)

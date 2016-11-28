@@ -223,6 +223,7 @@ namespace entity
             {
                 List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.id_sales_invoice == invoice.id_sales_invoice).ToList();
                 List<payment_schedual> payment_schedualListNotUsed;
+
                 if (payment_schedualList.Count() > 0)
                 {
                     payment_schedualListNotUsed = payment_schedualList.Where(x => x.id_payment_detail == null || x.id_payment_detail == 0).ToList();
@@ -278,7 +279,6 @@ namespace entity
                     }
                 }
             }
-
         }
 
         public void MovementReApprove(sales_invoice invoice,sales_invoice_detail detail)

@@ -358,7 +358,6 @@ namespace entity
                                 {
                                     payment_schedual.debit = payment_schedual.debit + (order.GrandTotal - payment_schedualList.Sum(x => x.debit));
                                 }
-
                             }
                             //less
                             else

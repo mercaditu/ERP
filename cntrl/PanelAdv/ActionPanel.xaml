@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="cntrl.PanelAdv.ActionPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:cntrl.PanelAdv"
+               xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+	 xmlns:entity="clr-namespace:entity;assembly=entity"
+	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+	  lex:ResxLocalizationProvider.DefaultDictionary="local"
+	  lex:LocalizeDictionary.DesignCulture="en-US" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="512" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+    
+        <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
+       
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource payment_schedualViewSource}">
+        <Grid Background="{StaticResource AccentColor_Brush}" VerticalAlignment="Top">
+            <Label Style="{StaticResource H2}" Content="{lex:Loc InventoryFlow}" Foreground="White" Margin="8,0"/>
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Foreground="White" Margin="5"
+				   HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+				   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+        </Grid>
+        <TabControl Margin="0,44,0,0">
+            <TabItem Header="Financial">
+                <DataGrid ItemsSource="{Binding}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+										Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="{lex:Loc Cognitivo:local:oldValue}" Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="{lex:Loc Cognitivo:local:Paid}" Width="auto" IsReadOnly="True" 
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="{lex:Loc Cognitivo:local:Balance}" Width="auto" IsReadOnly="True" 
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding ShouldValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="{lex:Loc Cognitivo:local:ShouldValue}" Width="auto" IsReadOnly="True" 
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Diffrence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="{lex:Loc Cognitivo:local:Diffrence}" Width="auto" IsReadOnly="True" 
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                      <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+										Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
+                        <DataGridHyperlinkColumn Header="Delete"/>
+                      
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Stock">
+                <DataGrid>
+                    
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <Grid Background="WhiteSmoke" VerticalAlignment="Bottom">
+            <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
+                                FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="BtnSave_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

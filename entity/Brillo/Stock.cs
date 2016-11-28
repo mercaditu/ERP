@@ -125,6 +125,9 @@ namespace entity.Brillo
         }
     }
 
+
+    
+
     public class StockList
     {
         public int MovementID { get; set; }

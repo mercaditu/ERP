@@ -336,6 +336,9 @@
     <Compile Include="Curd\vat_group.xaml.cs">
       <DependentUpon>vat_group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanelAdv\ActionPanel.xaml.cs">
+      <DependentUpon>ActionPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PanelAdv\pnlAnull.xaml.cs">
       <DependentUpon>pnlAnull.xaml</DependentUpon>
     </Compile>
@@ -891,6 +894,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\vat_group.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\ActionPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

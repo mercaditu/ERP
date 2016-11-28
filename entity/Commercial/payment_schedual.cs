@@ -126,6 +126,78 @@ namespace entity
             }
         }
         decimal _AccountReceivableBalance;
+        
+        [NotMapped]
+        public decimal Balance
+        {
+            get
+            {
+                if (id_sales_invoice>0)
+                {
+                    _Balance= debit-AccountReceivableBalance;
+                }
+                else
+                {
+                    _Balance= credit - AccountPayableBalance;
+                }
+                return _Balance;
+            }
+            set
+            {
+                _Balance = value;
+                RaisePropertyChanged("Paid");
+            }
+
+        }
+        decimal _Balance;
+        [NotMapped]
+        public decimal ShouldValue
+        {
+            get
+            {
+                
+                return _ShouldValue;
+            }
+            set
+            {
+                _ShouldValue = value;
+                RaisePropertyChanged("ShouldValue");
+            }
+
+        }
+        decimal _ShouldValue;
+        [NotMapped]
+        public DateTime ShouldExpDATE
+        {
+            get
+            {
+
+                return _ShouldExpDATE;
+            }
+            set
+            {
+                _ShouldExpDATE = value;
+                RaisePropertyChanged("ShouldValue");
+            }
+
+        }
+        DateTime _ShouldExpDATE;
+        [NotMapped]
+        public decimal Diffrence
+        {
+            get
+            {
+
+                return ShouldValue-Balance;
+            }
+            set
+            {
+                _Diffrence = value;
+                RaisePropertyChanged("Diffrence");
+            }
+
+        }
+        decimal _Diffrence;
 
         #endregion
 

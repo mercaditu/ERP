@@ -5,7 +5,7 @@ namespace entity.Brillo.Logic
 {
     public class Payment
     {
-        public List<payment_promissory_note> payment_promissory_noteLIST 
+        public List<payment_promissory_note> payment_promissory_noteLIST
         {
             get { return _payment_promissory_noteLIST; }
             set
@@ -21,7 +21,7 @@ namespace entity.Brillo.Logic
         public List<payment_schedual> insert_Schedual(object obj_entity)
         {
             List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-            
+
             //SALES INVOICE
             if (obj_entity as sales_invoice != null)
             {
@@ -86,7 +86,7 @@ namespace entity.Brillo.Logic
 
                 return payment_schedualList;
             }
-            
+
             //SALES RETURN
             else if (obj_entity as sales_return != null)
             {
@@ -123,7 +123,7 @@ namespace entity.Brillo.Logic
                 payment_schedual.id_contact = purchase_return.id_contact;
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
-               
+
                 return payment_schedualList;
             }
 
@@ -132,7 +132,7 @@ namespace entity.Brillo.Logic
             else if (obj_entity as sales_order != null)
             {
                 sales_order sales_order = (sales_order)obj_entity;
-                
+
                 foreach (app_contract_detail app_contract_detail in sales_order.app_contract.app_contract_detail.Where(x => x.is_order))
                 {
                     payment_schedual payment_schedual = new payment_schedual();
@@ -177,14 +177,14 @@ namespace entity.Brillo.Logic
                 {
                     payment_schedual payment_schedual = new payment_schedual();
                     payment_schedual.credit = purchase_invoice.GrandTotal * app_contract_detail.coefficient;
-                    payment_schedual.debit = 0 ;
+                    payment_schedual.debit = 0;
                     payment_schedual.id_currencyfx = purchase_invoice.id_currencyfx;
                     payment_schedual.purchase_invoice = purchase_invoice;
                     payment_schedual.trans_date = purchase_invoice.trans_date;
                     payment_schedual.expire_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
                     payment_schedual.status = Status.Documents_General.Pending;
                     payment_schedual.id_contact = purchase_invoice.id_contact;
-                    
+
                     ///Checks if selected Contract has Promissory Note created.
                     if (IsPromisorry)
                     {
@@ -219,7 +219,7 @@ namespace entity.Brillo.Logic
             else if (obj_entity as purchase_order != null)
             {
                 purchase_order purchase_order = (purchase_order)obj_entity;
-                
+
                 foreach (app_contract_detail app_contract_detail in purchase_order.app_contract.app_contract_detail.Where(x => x.is_order))
                 {
                     payment_schedual payment_schedual = new payment_schedual();
@@ -259,7 +259,7 @@ namespace entity.Brillo.Logic
             else if (obj_entity as sales_order != null)
             {
                 sales_order sales_order = (sales_order)obj_entity;
-                if(sales_order.payment_schedual!=null)
+                if (sales_order.payment_schedual != null)
                 {
                     foreach (payment_schedual payment in sales_order.payment_schedual)
                     {
@@ -284,7 +284,7 @@ namespace entity.Brillo.Logic
             {
                 //If function to liberate paid amount
                 purchase_order purchase_order = (purchase_order)obj_entity;
-                if(purchase_order.payment_schedual!=null)
+                if (purchase_order.payment_schedual != null)
                 {
                     foreach (payment_schedual payment in purchase_order.payment_schedual)
                     {
@@ -297,7 +297,7 @@ namespace entity.Brillo.Logic
             {
                 //If function to liberate paid amount
                 purchase_return purchase_return = (purchase_return)obj_entity;
-                if(purchase_return.payment_schedual!=null)
+                if (purchase_return.payment_schedual != null)
                 {
                     foreach (payment_schedual payment in purchase_return.payment_schedual)
                     {
@@ -310,7 +310,7 @@ namespace entity.Brillo.Logic
             {
                 //If function to liberate paid amount
                 sales_return sales_return = (sales_return)obj_entity;
-                if(sales_return.payment_schedual != null)
+                if (sales_return.payment_schedual != null)
                 {
                     foreach (payment_schedual payment in sales_return.payment_schedual)
                     {
@@ -321,5 +321,39 @@ namespace entity.Brillo.Logic
 
             return payment_schedualList;
         }
+
+        public void DeletePaymentSchedual(db db, int SchedualID)
+        {
+            payment_schedual payment_schedual = db.payment_schedual.Find(SchedualID);
+            db.payment_schedual.Remove(payment_schedual);
+        }
+
+        public void InsertPaymentSchedal()
+        {
+           
+        }
+
+        public void ModifyPaymentSchedual(db db, int SchedualID)
+        {
+            payment_schedual payment_schedual = db.payment_schedual.Find(SchedualID);
+
+            if (payment_schedual.debit < payment_schedual.child.Sum(x => x.credit))
+            {
+
+
+                payment_schedual parent_paymnet_schedual = payment_schedual.child.FirstOrDefault();
+                if (parent_paymnet_schedual != null)
+                {
+                    parent_paymnet_schedual.credit = payment_schedual.debit;
+                    parent_paymnet_schedual.payment_detail.value = payment_schedual.debit;
+                    parent_paymnet_schedual.payment_detail.app_account_detail.FirstOrDefault().debit = payment_schedual.debit;
+                }
+
+
+
+                db.SaveChanges();
+            }
+        }
+
     }
 }

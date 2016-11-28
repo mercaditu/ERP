@@ -233,11 +233,24 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            SalesInvoiceDB.Anull();
-            foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            if (sales_invoice != null)
             {
-                sales_invoice.IsSelected = false;
+
+                crud_modal.Visibility = Visibility.Visible;
+                cntrl.PanelAdv.ActionPanel ActionPanel = new cntrl.PanelAdv.ActionPanel();
+                ActionPanel.ID = sales_invoice.id_sales_invoice;
+                ActionPanel.Application = entity.App.Names.SalesInvoice;
+                ActionPanel.db = SalesInvoiceDB;
+                crud_modal.Children.Add(ActionPanel);
+
             }
+
+            //  SalesInvoiceDB.Anull();
+            //foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            //{
+            //    sales_invoice.IsSelected = false;
+            //}
         }
         #endregion
 

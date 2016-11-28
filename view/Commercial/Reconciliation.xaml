@@ -60,8 +60,7 @@
             <Grid Grid.Column="2">
                 <Label Content="System" Style="{StaticResource H2}"/>
                 <DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}" Margin="0,50,0,0" 
-                                     ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}" 
-                                     >
+                                     ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}" >
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
                             <Setter Property="Background" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
@@ -70,8 +69,13 @@
                     <DataGrid.Columns>
                         
                         <DataGridTextColumn Binding="{Binding trans_date,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Binding="{Binding debit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Binding="{Binding credit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!-- Balance -->
+                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!-- Match -->
+                        <DataGridTextColumn Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTextColumn Binding="{Binding payment_type.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         

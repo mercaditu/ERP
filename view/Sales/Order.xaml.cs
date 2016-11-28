@@ -133,11 +133,23 @@ namespace Cognitivo.Sales
         {
             try
             {
-                if (SalesOrderDB.SaveChanges() > 0)
+
+                sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
+                if (sales_order.status == Status.Documents_General.Pending)
                 {
-                    toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
+                 
+                    if (SalesOrderDB.SaveChanges() > 0)
+                    {
+                        toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
+                        sales_orderViewSource.View.Refresh();
+                        sbxContact.Text = "";
+                    }
+                }
+                else if (sales_order.status == Status.Documents_General.Approved)
+                {
+                    SalesOrderDB.ReApprove(sales_order);
                     sales_orderViewSource.View.Refresh();
-                    sbxContact.Text = "";
+                    toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
                 }
             }
             catch (DbEntityValidationException ex)

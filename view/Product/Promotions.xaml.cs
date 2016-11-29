@@ -71,10 +71,13 @@ namespace Cognitivo.Product
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
             if (sales_promotion != null)
             {
+                sbxRefItem.Text = "";
+                sbxBonusItem.Text = "";
                 sales_promotion.State = System.Data.Entity.EntityState.Unchanged;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
             }
+
         }
 
         private void toolBar_btnCancel_Click(object sender)

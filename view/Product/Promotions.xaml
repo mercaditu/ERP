@@ -45,7 +45,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Background="White" Margin="16">
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="White" Margin="16" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
             <Label Content="Promotion" Style="{StaticResource input_label}"/>
             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
             <Label Content="Type" Style="{StaticResource input_label}"/>
@@ -75,7 +75,7 @@
                     <Label Content="Parameters" Style="{StaticResource H2}"/>
                     <StackPanel x:Name="Item_Parameter">
                         <Label Content="Item" Style="{StaticResource input_label}"/>
-                        <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                        <controls:SmartBox_Item Text="{Binding itemRef,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
                     </StackPanel>
                     <StackPanel x:Name="Tag_Parameter">
                         <Label Content="Tags" Style="{StaticResource input_label}"/>
@@ -94,7 +94,7 @@
                     <Label Content="Output" Style="{StaticResource H2}"/>
                     <StackPanel x:Name="Item_Bonus">
                         <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
-                        <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
+                        <controls:SmartBox_Item Text="{Binding itemRefBonus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
                     </StackPanel>
 
                     <StackPanel x:Name="Tag_Bonus">

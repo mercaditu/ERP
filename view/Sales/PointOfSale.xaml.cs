@@ -302,7 +302,7 @@ namespace Cognitivo.Sales
                     CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
 
-                    btnPromotion_Click(sender, e);
+                   // btnPromotion_Click(sender, e);
 
                 }
                 else if (e.Parameter as payment_detail != null)
@@ -410,19 +410,7 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-            List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
-            if (promoList.Count() > 0)
-            {
-                foreach (sales_invoice_detail sales_invoice_detail in promoList)
-                {
-                    if (sales_invoice_detail.id_sales_invoice_detail!= sales_invoice_detail.PromoID)
-                    {
-                        SalesInvoiceDB.sales_invoice_detail.Remove(sales_invoice_detail);
-                    }
-                  
-                }
-             
-            }
+           
 
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
             foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)

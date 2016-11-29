@@ -1084,6 +1084,7 @@ namespace entity.Brillo.Logic
 
             return app_location.id_location;
         }
+      
 
         #endregion
     }

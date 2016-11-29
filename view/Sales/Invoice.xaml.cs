@@ -174,7 +174,26 @@ namespace Cognitivo.Sales
         private void btnSave_Click(object sender)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            if (sales_invoice.status == Status.Documents_General.Pending)
+           
+           if (sales_invoice.status == Status.Documents_General.Approved)
+            {
+                
+                if (sales_invoice != null)
+                {
+                    crud_modalAnull.Children.Clear();
+                    crud_modalAnull.Visibility = Visibility.Visible;
+                    cntrl.PanelAdv.ActionPanel ActionPanel = new cntrl.PanelAdv.ActionPanel();
+                    ActionPanel.ID = sales_invoice.id_sales_invoice;
+                    ActionPanel.Application = entity.App.Names.SalesInvoice;
+                    ActionPanel.db = SalesInvoiceDB;
+                    crud_modalAnull.Children.Add(ActionPanel);
+                 
+                }
+                //SalesInvoiceDB.ReApprove(sales_invoice);
+                sales_invoiceViewSource.View.Refresh();
+                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+            }
+            else
             {
                 app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
                 if (app_document_range != null)
@@ -190,12 +209,6 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.View.Refresh();
                     toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
                 }
-            }
-            else if (sales_invoice.status == Status.Documents_General.Approved)
-            {
-                SalesInvoiceDB.ReApprove(sales_invoice);
-                sales_invoiceViewSource.View.Refresh();
-                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
             }
 
         }
@@ -236,14 +249,14 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
             if (sales_invoice != null)
             {
-
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.PanelAdv.ActionPanel ActionPanel = new cntrl.PanelAdv.ActionPanel();
-                ActionPanel.ID = sales_invoice.id_sales_invoice;
-                ActionPanel.Application = entity.App.Names.SalesInvoice;
-                ActionPanel.db = SalesInvoiceDB;
-                crud_modal.Children.Add(ActionPanel);
-
+                sales_invoice.status = Status.Documents_General.Annulled;
+                crud_modalAnull.Visibility = Visibility.Visible;
+                cntrl.PanelAdv.ActionPanelAnull ActionPanelAnull = new cntrl.PanelAdv.ActionPanelAnull();
+                ActionPanelAnull.ID = sales_invoice.id_sales_invoice;
+                ActionPanelAnull.Application = entity.App.Names.SalesInvoice;
+                ActionPanelAnull.db = SalesInvoiceDB;
+                crud_modalAnull.Children.Add(ActionPanelAnull);
+               
             }
 
             //  SalesInvoiceDB.Anull();

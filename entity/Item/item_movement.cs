@@ -8,6 +8,17 @@ namespace entity
 
     public partial class item_movement : Audit
     {
+        public enum Actions
+        {
+            ReApprove,
+            Delete,
+            None
+        }
+        public enum ActionsStatus
+        {
+            Green,
+            Red
+        }
         public item_movement()
         {
             id_company = CurrentSession.Id_Company;
@@ -36,7 +47,7 @@ namespace entity
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
-     
+
         public decimal debit
         {
             get
@@ -75,7 +86,7 @@ namespace entity
         {
             get
             {
-                if (child!=null)
+                if (child != null)
                 {
                     _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
                 }
@@ -84,7 +95,7 @@ namespace entity
                     _avlquantity = credit;
                 }
 
-               
+
                 return _avlquantity;
             }
             set
@@ -93,6 +104,62 @@ namespace entity
             }
         }
         private decimal _avlquantity;
+
+        [NotMapped]
+        public Actions Action { get; set; }
+        [NotMapped]
+        public ActionsStatus ActionStatus { get; set; }
+        [NotMapped]
+        public decimal Balance
+        {
+            get
+            {
+
+                _Balance = (child.Count() > 0 ? child.Sum(y => y.credit) : 0);
+
+                return _Balance;
+            }
+            set
+            {
+                _Balance = value;
+                RaisePropertyChanged("Balance");
+            }
+
+        }
+        decimal _Balance;
+        [NotMapped]
+        public decimal ShouldValue
+        {
+            get
+            {
+
+                return _ShouldValue;
+            }
+            set
+            {
+                _ShouldValue = value;
+                RaisePropertyChanged("ShouldValue");
+            }
+
+        }
+        decimal _ShouldValue;
+
+        [NotMapped]
+        public decimal Diffrence
+        {
+            get
+            {
+
+                return ShouldValue - Balance;
+            }
+            set
+            {
+                _Diffrence = value;
+                RaisePropertyChanged("Diffrence");
+            }
+
+        }
+        decimal _Diffrence;
 
         //Heirarchy For Movement
         public virtual ICollection<item_movement> child { get; set; }
@@ -117,7 +184,7 @@ namespace entity
                 _item_product = value;
             }
         }
-        
+
         item_product _item_product;
 
         #region Methods
@@ -134,9 +201,9 @@ namespace entity
             }
             catch
             {
-                return false;   
+                return false;
             }
-        } 
+        }
 
         #endregion
     }

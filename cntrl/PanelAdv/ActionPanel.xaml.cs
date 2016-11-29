@@ -25,8 +25,9 @@ namespace cntrl.PanelAdv
         public App.Names Application { get; set; }
         public db db { get; set; }
         List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
-        CollectionViewSource payment_schedualViewSource;
-        sales_invoice sales_invoice;
+        List<item_movement> item_movementList = new List<item_movement>();
+        CollectionViewSource payment_schedualViewSource, item_movementViewSource;
+  
         public ActionPanel()
         {
             InitializeComponent();
@@ -34,24 +35,37 @@ namespace cntrl.PanelAdv
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-             sales_invoice = db.sales_invoice.Find(ID);
+
+            CollectionViewSource item_movementViewSource = (CollectionViewSource)FindResource("item_movementViewSource");
             CollectionViewSource payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-          
+
             if (Application == App.Names.SalesInvoice)
             {
-               
-              
-              PaymentSchedualList = sales_invoice.payment_schedual.ToList();
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+
+
+                PaymentSchedualList = sales_invoice.payment_schedual.Where(x=>x.debit>0).ToList();
                 payment_schedualViewSource.Source = PaymentSchedualList;
-                List<app_contract_detail> app_contract_detailList = sales_invoice.app_contract.app_contract_detail.Where(x => x.is_order==false).ToList();
-                
+                List<app_contract_detail> app_contract_detailList = sales_invoice.app_contract.app_contract_detail.Where(x => x.is_order == false).ToList();
+
 
                 for (int i = 1; i <= app_contract_detailList.Count; i++)
+
                 {
                     payment_schedual payment_schedual = PaymentSchedualList.Skip(i - 1).Take(1).FirstOrDefault();
-                    app_contract_detail app_contract_detail= app_contract_detailList.Skip(i - 1).Take(1).FirstOrDefault();
-                    if (payment_schedual!=null)
+                    app_contract_detail app_contract_detail = app_contract_detailList.Skip(i - 1).Take(1).FirstOrDefault();
+                    if (payment_schedual != null)
                     {
+                        if (payment_schedual.child!=null)
+                        {
+                            payment_schedual.ActionStatus = payment_schedual.ActionsStatus.Red;
+                            payment_schedual.Action=payment_schedual.Actions.ReApprove;
+                        }
+                        else
+                        {
+                            payment_schedual.ActionStatus = payment_schedual.ActionsStatus.Green;
+                            payment_schedual.Action = payment_schedual.Actions.Delete;
+                        }
                         payment_schedual.ShouldValue = sales_invoice.GrandTotal * app_contract_detail.coefficient;
                         payment_schedual.ShouldExpDATE = sales_invoice.trans_date.AddDays(app_contract_detail.interval);
                     }
@@ -67,7 +81,27 @@ namespace cntrl.PanelAdv
                         payment_schedualNew.status = Status.Documents_General.Pending;
                         payment_schedualNew.id_contact = sales_invoice.id_contact;
                         PaymentSchedualList.Add(payment_schedualNew);
-                    } 
+                    }
+                }
+
+                item_movementList = db.item_movement.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                item_movementViewSource.Source = item_movementList;
+                foreach (item_movement item_movement in item_movementList)
+                {
+
+                    if (item_movement.child != null)
+                    {
+                        item_movement.ActionStatus = item_movement.ActionsStatus.Red;
+                        item_movement.Action = item_movement.Actions.ReApprove;
+                    }
+                    else
+                    {
+                        item_movement.ActionStatus = item_movement.ActionsStatus.Green;
+                        item_movement.Action = item_movement.Actions.Delete;
+                    }
+                   
+
+
                 }
             }
             payment_schedualViewSource.View.Refresh();
@@ -82,16 +116,36 @@ namespace cntrl.PanelAdv
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (PaymentSchedualList.Sum(x=>x.debit)==sales_invoice.GrandTotal)
+            if (Application == App.Names.SalesInvoice)
             {
-                foreach (payment_schedual payment_schedual in PaymentSchedualList)
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                if (PaymentSchedualList.Sum(x => x.debit) == sales_invoice.GrandTotal)
                 {
-                    entity.Brillo.Logic.Payment _Payment = new entity.Brillo.Logic.Payment();
-                    _Payment.ModifyPaymentSchedual(db, payment_schedual.id_payment_schedual);
+                    foreach (payment_schedual payment_schedual in PaymentSchedualList)
+                    {
+                        entity.Brillo.Logic.Payment _Payment = new entity.Brillo.Logic.Payment();
+                        _Payment.ModifyPaymentSchedual(db, payment_schedual.id_payment_schedual);
+                    }
+
+                }
+                foreach (item_movement item_movement in item_movementList)
+                {
+                    if (item_movement.Action == item_movement.Actions.Delete)
+
+                    {
+                        db.item_movement.Remove(item_movement);
+                    }
+                    else
+                    {
+                       
+                    }
+                  
                 }
                
             }
-          
+
         }
+
+     
     }
 }

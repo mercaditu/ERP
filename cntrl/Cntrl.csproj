@@ -231,6 +231,7 @@
       <DependentUpon>Totals.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Bool2InputProduction.cs" />
+    <Compile Include="Converters\Action2ColorConverter.cs" />
     <Compile Include="Converters\sbxItem_CheckType.cs" />
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
     <Compile Include="Converters\sbxContact_CheckType.cs" />
@@ -338,6 +339,9 @@
     </Compile>
     <Compile Include="PanelAdv\ActionPanel.xaml.cs">
       <DependentUpon>ActionPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\ActionPanelAnull.xaml.cs">
+      <DependentUpon>ActionPanelAnull.xaml</DependentUpon>
     </Compile>
     <Compile Include="PanelAdv\pnlAnull.xaml.cs">
       <DependentUpon>pnlAnull.xaml</DependentUpon>
@@ -898,8 +902,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PanelAdv\ActionPanel.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PanelAdv\ActionPanelAnull.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PanelAdv\pnlAnull.xaml">
       <Generator>MSBuild:Compile</Generator>

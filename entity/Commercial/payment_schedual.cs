@@ -8,10 +8,21 @@ namespace entity
 
     public partial class payment_schedual : Audit
     {
+        public enum Actions
+        {
+            ReApprove,
+            Delete,
+            None
+        }
+        public enum ActionsStatus
+        {
+            Green,
+            Red
+        }
         public payment_schedual()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             can_calculate = true;
             child = new List<payment_schedual>();
@@ -37,20 +48,21 @@ namespace entity
 
         public string number { get; set; }
 
-        public decimal debit { 
-            get 
-            { 
-                return _debit; 
-            } 
-            set 
+        public decimal debit
+        {
+            get
+            {
+                return _debit;
+            }
+            set
             {
                 if (_debit != value)
                 {
                     _debit = value;
                     RaisePropertyChanged("debit");
-                    RaisePropertyChanged("AccountReceivableBalance"); 
+                    RaisePropertyChanged("AccountReceivableBalance");
                 }
-            } 
+            }
         }
         Decimal _debit;
 
@@ -60,7 +72,10 @@ namespace entity
 
         //   Not Mapped Properties
         #region NotMapped
-
+        [NotMapped]
+        public Actions Action { get; set; }
+        [NotMapped]
+        public ActionsStatus ActionStatus { get; set; }
         [NotMapped]
         public int? id_range
         {
@@ -126,19 +141,19 @@ namespace entity
             }
         }
         decimal _AccountReceivableBalance;
-        
+
         [NotMapped]
         public decimal Balance
         {
             get
             {
-                if (id_sales_invoice>0)
+                if (id_sales_invoice > 0)
                 {
-                    _Balance= debit-AccountReceivableBalance;
+                    _Balance = debit - AccountReceivableBalance;
                 }
                 else
                 {
-                    _Balance= credit - AccountPayableBalance;
+                    _Balance = credit - AccountPayableBalance;
                 }
                 return _Balance;
             }
@@ -155,7 +170,7 @@ namespace entity
         {
             get
             {
-                
+
                 return _ShouldValue;
             }
             set
@@ -188,7 +203,7 @@ namespace entity
             get
             {
 
-                return ShouldValue-Balance;
+                return ShouldValue - Balance;
             }
             set
             {

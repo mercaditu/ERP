@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using entity;
+using entity.Brillo;
 
 namespace cntrl.PanelAdv
 {
@@ -89,18 +90,29 @@ namespace cntrl.PanelAdv
                 foreach (item_movement item_movement in item_movementList)
                 {
 
-                    if (item_movement.child != null)
+                    if (item_movement.parent.avlquantity> item_movement.sales_invoice_detail.quantity)
                     {
-                        item_movement.ActionStatus = item_movement.ActionsStatus.Red;
-                        item_movement.Action = item_movement.Actions.ReApprove;
+                        item_movement.debit = item_movement.sales_invoice_detail.quantity;
                     }
                     else
                     {
-                        item_movement.ActionStatus = item_movement.ActionsStatus.Green;
-                        item_movement.Action = item_movement.Actions.Delete;
-                    }
-                   
+                        entity.Brillo.Logic.Stock _stock = new entity.Brillo.Logic.Stock();
+                        entity.Brillo.Stock stock = new entity.Brillo.Stock();
+                        List<StockList> Items_InStockLIST = stock.List(item_movement.sales_invoice_detail.app_location.id_branch, (int)item_movement.sales_invoice_detail.id_location, item_movement.sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
 
+                        db.item_movement.AddRange(_stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                    App.Names.SalesInvoice,
+                                                    item_movement.sales_invoice_detail.id_sales_invoice,
+                                                    item_movement.sales_invoice_detail.id_sales_invoice_detail,
+                                                    sales_invoice.id_currencyfx,
+                                                    item_movement.sales_invoice_detail.item.item_product.FirstOrDefault(),
+                                                    (int)item_movement.sales_invoice_detail.id_location,
+                                                    item_movement.sales_invoice_detail.quantity,
+                                                    sales_invoice.trans_date,
+                                                    "Sales Invoice Fix"
+                                                    ));
+                    }
+                    
 
                 }
             }

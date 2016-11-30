@@ -17,17 +17,6 @@ namespace cntrl.Panels
            
         }
 
-        private void pnlCurd_MouseEnter(object sender, MouseEventArgs e)
-        {
-            chbxSelected.Visibility = Visibility.Visible;
-        }
-
-        private void pnlCurd_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (chbxSelected.IsChecked != true)
-            { chbxSelected.Visibility = Visibility.Collapsed; }
-        }
-
         //Edit link click.
         public delegate void linkedit_ClickEventHandlar(object sender, int intId);
         public event linkedit_ClickEventHandlar linkEdit_click;
@@ -61,6 +50,16 @@ namespace cntrl.Panels
             set { SetValue(DisplayNameProperty, value); }
         }
 
+        //FavoriteProperty
+        public static readonly DependencyProperty IsFavoriteProperty =
+            DependencyProperty.Register("IsFavorite", typeof(bool), typeof(pnl_Curd),
+            new FrameworkPropertyMetadata(false));
+        public bool IsFavorite
+        {
+            get { return Convert.ToBoolean(GetValue(IsFavoriteProperty)); }
+            set { SetValue(IsFavoriteProperty, value); }
+        }
+
         //IdProperty
         public static readonly DependencyProperty IdProperty =
             DependencyProperty.Register("Id", typeof(int), typeof(pnl_Curd),
@@ -70,21 +69,5 @@ namespace cntrl.Panels
             get { return Convert.ToInt32(GetValue(IdProperty)); }
             set { SetValue(IdProperty, value); }
         }
-        //public static readonly DependencyProperty IsChangedProperty =
-        //  DependencyProperty.Register("IsChanged", typeof(bool), typeof(pnl_Curd),
-        //  new FrameworkPropertyMetadata(false));
-        //public bool IsChanged
-        //{
-        //    get { return Convert.ToBoolean(GetValue(IsChangedProperty)); }
-        //    set { SetValue(IsChangedProperty, value); }
-        //}
-
-        //private void chbxSelected_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if (chbxSelected.IsChecked==true && IsChanged)
-        //    {
-        //        entity.CurrentSession.Id_Company = Id;
-        //    }
-        //}
     }
 }

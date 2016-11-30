@@ -1272,7 +1272,7 @@
                 <TablixMember>
                   <Group Name="Location">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Location.Value</GroupExpression>
+                      <GroupExpression>=Fields!Branch.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -1314,6 +1314,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>

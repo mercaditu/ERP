@@ -4,13 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converter="clr-namespace:Cognitivo.Converters"
-             MouseEnter="pnlCurd_MouseEnter"
-             MouseLeave="pnlCurd_MouseLeave"
              mc:Ignorable="d" 
              Height="64" Width="256" Margin="15">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converter:InitialsConverter x:Key="InitialsConverter"/>
+        <converter:FavoriteConverter x:Key="FavoriteConverter"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" />
@@ -18,16 +16,13 @@
     <Grid Background="White">
         <Border Background="RoyalBlue"
                 Width="45" HorizontalAlignment="Left">
-            <TextBlock Text="{Binding ElementName=txtName, Path=Text, Converter={StaticResource InitialsConverter}}" 
-                       FontWeight="Medium" Foreground="White" Opacity="0.75" FontSize="28" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center"
+                       FontSize="28" FontFamily="/cntrl;component/Resources/#cognitivo"
+                       Content="{Binding ElementName=pnlCurd, Path=IsFavorite, Mode=OneWay, Converter={StaticResource FavoriteConverter}, FallbackValue=f}"
+                       Foreground="Azure" Margin="5"/>
+            </Grid>
         </Border>
-        <CheckBox Name="chbxSelected" HorizontalAlignment="Left" VerticalAlignment="Center"
-                  Visibility="Collapsed"
-                  Margin="8" Width="18" >
-            <CheckBox.LayoutTransform>
-                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-            </CheckBox.LayoutTransform>
-        </CheckBox>
         <TextBlock x:Name="txtName" Text="{Binding ElementName=pnlCurd, Path=DisplayName}" PreviewMouseUp="txtName_PreviewMouseUp"
                    VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Cursor="Hand"
                    FontSize="20" Margin="55,0,6,0"/>

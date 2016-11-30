@@ -186,7 +186,7 @@ namespace cntrl
                 IsEditable = false;
                 Edit_IsEnabled = true;
                 Delete_IsEnabled = false;
-                Approve_IsEnabled = true;
+                Approve_IsEnabled = false;
                 Annul_IsEnabled = false;
             }
         }

@@ -73,6 +73,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             sales_invoiceViewSource.Source = await db.sales_invoice.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
+                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
                 (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
         }
@@ -82,6 +83,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             payment_detailViewSource.Source = await db.payment_detail.Where(x =>
                 x.payment.id_company == CurrentSession.Id_Company &&
+                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.payment.is_accounted == false &&
                 x.payment.status == Status.Documents_General.Approved).ToListAsync();
         }
@@ -91,6 +93,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             sales_returnViewSource.Source = await db.sales_return.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
+                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
                 (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
         }
@@ -100,6 +103,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             purchase_returnViewSource.Source = await db.purchase_return.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
+                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
                 x.status == Status.Documents_General.Approved).ToListAsync();
         }
@@ -109,6 +113,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             purchase_invoiceViewSource.Source = await db.purchase_invoice.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
+                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
                 x.status == Status.Documents_General.Approved).ToListAsync();
         }

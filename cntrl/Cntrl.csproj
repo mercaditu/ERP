@@ -187,6 +187,8 @@
     <Compile Include="Class\clsCommon.cs" />
     <Compile Include="Class\CostCalculation.cs" />
     <Compile Include="Class\CustomCommands.cs" />
+    <Compile Include="Class\MovementReApprove.cs" />
+    <Compile Include="Class\PaymentReApprove.cs" />
     <Compile Include="Class\Reporting.cs" />
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>

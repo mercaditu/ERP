@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="cntrl.PanelAdv.ActionPanel" Background="White"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:cntrl.PanelAdv"
+               xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+	 xmlns:entity="clr-namespace:entity;assembly=entity"
+                 xmlns:converters="clr-namespace:Cognitivo.Converters"
+	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+	  lex:ResxLocalizationProvider.DefaultDictionary="local"
+	  lex:LocalizeDictionary.DesignCulture="en-US" 
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="512" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+
+        <CollectionViewSource x:Key="item_movementOldViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_movementViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Background="{StaticResource AccentColor_Brush}" VerticalAlignment="Top">
+
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Foreground="White" Margin="5"
+				   HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+				   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+        </Grid>
+        <TabControl Margin="0,44,0,0">
+            <!--<TabItem Header="Financial">
+                <DataGrid ItemsSource="{Binding}" x:Name="PaymentSchedule" CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+										IsReadOnly="True">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding ActionStatus, Converter={StaticResource Action2Color}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Setter Property="Content" Value=""/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+
+                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="oldValue" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Paid"  IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Balance" IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding ShouldValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="ShouldValue" IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Diffrence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Diffrence" IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+										Header="Currency" Width="auto" IsReadOnly="True"/>
+                        <DataGridComboBoxColumn x:Name="cbxStatusPayment" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															/>
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>-->
+            <TabItem Header="Stock">
+                <StackPanel>
+                <StackPanel VerticalAlignment="Top" Height="100">
+                        <DataGrid ItemsSource="{Binding Source={StaticResource item_movementOldViewSource}}" x:Name="Movement" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+
+
+                            <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Date" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Name"  IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Value" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+
+
+
+
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                  
+                </StackPanel>
+                <StackPanel>
+                    <DataGrid ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" x:Name="MovementNew" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+
+
+                            <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Date" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Name"  IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Value" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+
+
+
+
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <Grid Background="WhiteSmoke" VerticalAlignment="Bottom">
+            <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
+                                FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="BtnSave_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

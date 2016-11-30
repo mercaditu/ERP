@@ -8,6 +8,17 @@ namespace entity
 
     public partial class item_movement : Audit
     {
+        public enum Actions
+        {
+            ReApprove,
+            Delete,
+            NotProcess
+        }
+        public enum ActionsStatus
+        {
+            Green,
+            Red
+        }
         public item_movement()
         {
             id_company = CurrentSession.Id_Company;
@@ -71,6 +82,11 @@ namespace entity
         public DateTime trans_date { get; set; }
 
         [NotMapped]
+        public Actions Action { get; set; }
+        [NotMapped]
+        public ActionsStatus ActionStatus { get; set; }
+        [NotMapped]
+
         public decimal avlquantity
         {
             get

@@ -232,6 +232,7 @@
     <Compile Include="Controls\Totals.xaml.cs">
       <DependentUpon>Totals.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Action2ColorConverter.cs" />
     <Compile Include="Converters\Bool2InputProduction.cs" />
     <Compile Include="Converters\FavoriteConverter.cs" />
     <Compile Include="Converters\sbxItem_CheckType.cs" />
@@ -338,6 +339,12 @@
     </Compile>
     <Compile Include="Curd\vat_group.xaml.cs">
       <DependentUpon>vat_group.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\ActionPanel.xaml.cs">
+      <DependentUpon>ActionPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\ActionPanelAnull.xaml.cs">
+      <DependentUpon>ActionPanelAnull.xaml</DependentUpon>
     </Compile>
     <Compile Include="PanelAdv\pnlAnull.xaml.cs">
       <DependentUpon>pnlAnull.xaml</DependentUpon>
@@ -896,6 +903,14 @@
     <Page Include="Curd\vat_group.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\ActionPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PanelAdv\ActionPanelAnull.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PanelAdv\pnlAnull.xaml">
       <Generator>MSBuild:Compile</Generator>

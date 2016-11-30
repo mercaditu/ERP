@@ -8,6 +8,17 @@ namespace entity
 
     public partial class payment_schedual : Audit
     {
+        public enum Actions
+        {
+            ReApprove,
+            Delete,
+            NotProcess
+        }
+        public enum ActionsStatus
+        {
+            Green,
+            Red
+        }
         public payment_schedual()
         {
             id_company = CurrentSession.Id_Company;
@@ -60,7 +71,10 @@ namespace entity
 
         //   Not Mapped Properties
         #region NotMapped
-
+        [NotMapped]
+        public Actions? Action { get; set; }
+        [NotMapped]
+        public ActionsStatus ActionStatus { get; set; }
         [NotMapped]
         public int? id_range
         {

@@ -40,6 +40,37 @@ namespace entity.Brillo
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
+        public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
+        {
+            string query = @"select 
+                                parent.id_movement as MovementID, 
+                                parent.trans_date as TransDate, 
+                                parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance, 
+                                (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
+
+                                from item_movement as parent
+                                inner join app_location as loc on parent.id_location = loc.id_location
+                                left join item_movement as child on child.parent_id_movement = parent.id_movement
+
+                                where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.credit = 0
+                                group by parent.id_movement
+                                order by parent.trans_date";
+            string WhereQuery = "";
+
+            //This determins if we should bring cost of entire block of
+            if (LocationID > 0)
+            {
+                WhereQuery = string.Format("parent.id_location = {0}", LocationID);
+            }
+            else
+            {
+                WhereQuery = string.Format("loc.id_branch = {0}", BranchID);
+            }
+
+            query = string.Format(query, WhereQuery, ProductID);
+            DataTable dt = exeDT(query);
+            return GenerateList(dt);
+        }
         public List<StockList> ScalarMovement(item_movement item_movement)
         {
             string query = @"select 

@@ -74,41 +74,39 @@ namespace entity.Brillo.Promotion
 
                             List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
                             //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                            foreach (sales_invoice_detail _Detail_ in sid)
+                            if (sid.Count == 0)
                             {
 
-                                SalesInvoice.sales_invoice_detail.Remove(_Detail_);
-                            }
 
-                            sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
-                            //Needed to calculate the discounts and unit prices further on.
-                            sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
+                                //Needed to calculate the discounts and unit prices further on.
+                                sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
 
-                            using (db db = new db())
-                            {
-                                item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
-                                if (item != null)
+                                using (db db = new db())
                                 {
-                                    sales_invoice_detail.id_vat_group = item.id_vat_group;
-                                    sales_invoice_detail.id_item = item.id_item;
-                                    sales_invoice_detail.item_description = item.name;
-                                    //sales_invoice_detail.item = item;
+                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                    if (item != null)
+                                    {
+                                        sales_invoice_detail.id_vat_group = item.id_vat_group;
+                                        sales_invoice_detail.id_item = item.id_item;
+                                        sales_invoice_detail.item_description = item.name;
+                                        //sales_invoice_detail.item = item;
+                                    }
+
+                                    item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
+                                    if (item_price != null)
+                                    {
+                                        sales_invoice_detail.unit_price = item_price.value;
+                                        sales_invoice_detail.discount = item_price.value;
+                                    }
                                 }
 
-                                item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
-                                if (item_price != null)
-                                {
-                                    sales_invoice_detail.unit_price = item_price.value;
-                                    sales_invoice_detail.discount = item_price.value;
-                                }
+                                sales_invoice_detail.IsPromo = true;
+
+                                sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
+                                SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
                             }
-
-                            sales_invoice_detail.IsPromo = true;
-
-                            sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                            SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
-
 
                         }
                     }

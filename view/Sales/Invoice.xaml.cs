@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using cntrl.Controls;
 using System.Linq.Expressions;
+using cntrl.Class;
 
 namespace Cognitivo.Sales
 {
@@ -173,19 +174,37 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender)
         {
-            app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
-            if (app_document_range != null)
-            {
-                if (app_document_range.range_current > app_document_range.range_end)
-                {
-                    toolBar.msgWarning("Document range is Over");
-                }
-            }
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
 
-            if (SalesInvoiceDB.SaveChanges() > 0)
+            if (sales_invoice.status == Status.Documents_General.Approved)
             {
+
+                if (sales_invoice != null)
+                {
+                    MovementReApprove MovementReApprove = new MovementReApprove();
+                    MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+
+                }
+                //SalesInvoiceDB.ReApprove(sales_invoice);
                 sales_invoiceViewSource.View.Refresh();
-                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+
+            }
+            else
+            {
+                app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
+                if (app_document_range != null)
+                {
+                    if (app_document_range.range_current > app_document_range.range_end)
+                    {
+                        toolBar.msgWarning("Document range is Over");
+                    }
+                }
+
+                if (SalesInvoiceDB.SaveChanges() > 0)
+                {
+                    sales_invoiceViewSource.View.Refresh();
+                    toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+                }
             }
         }
 
@@ -222,10 +241,17 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            SalesInvoiceDB.Anull();
-            foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            if (sales_invoice != null)
             {
-                sales_invoice.IsSelected = false;
+                sales_invoice.status = Status.Documents_General.Annulled;
+                crud_modalAnull.Visibility = Visibility.Visible;
+                cntrl.PanelAdv.ActionPanelAnull ActionPanelAnull = new cntrl.PanelAdv.ActionPanelAnull();
+                ActionPanelAnull.ID = sales_invoice.id_sales_invoice;
+                ActionPanelAnull.Application = entity.App.Names.SalesInvoice;
+                ActionPanelAnull.db = SalesInvoiceDB;
+                crud_modalAnull.Children.Add(ActionPanelAnull);
+
             }
         }
         #endregion

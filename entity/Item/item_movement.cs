@@ -12,7 +12,7 @@ namespace entity
         {
             ReApprove,
             Delete,
-            None
+            NotProcess
         }
         public enum ActionsStatus
         {

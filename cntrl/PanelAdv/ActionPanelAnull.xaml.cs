@@ -38,7 +38,8 @@ namespace cntrl.PanelAdv
 
             CollectionViewSource item_movementViewSource = (CollectionViewSource)FindResource("item_movementViewSource");
             CollectionViewSource payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-
+            cbxStatus.ItemsSource = Enum.GetValues(typeof(item_movement.Actions)).OfType<item_movement.Actions>().Where(x=>x==item_movement.Actions.Delete);
+            cbxStatusPayment.ItemsSource = Enum.GetValues(typeof(payment_schedual.Actions)).OfType<item_movement.Actions>().Where(x => x == item_movement.Actions.Delete); ;
             if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice sales_invoice = db.sales_invoice.Find(ID);

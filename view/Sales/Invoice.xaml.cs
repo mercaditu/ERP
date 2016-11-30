@@ -191,7 +191,7 @@ namespace Cognitivo.Sales
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);
                 sales_invoiceViewSource.View.Refresh();
-                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+              
             }
             else
             {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="cntrl.PanelAdv.ActionPanel"
+﻿<UserControl x:Class="cntrl.PanelAdv.ActionPanel" Background="White"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <converters:Action2ColorConverter x:Key="Action2Color"/>
         <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
-
+        <CollectionViewSource x:Key="item_movementViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid DataContext="{StaticResource payment_schedualViewSource}">
         <Grid Background="{StaticResource AccentColor_Brush}" VerticalAlignment="Top">
@@ -27,14 +27,14 @@
         </Grid>
         <TabControl Margin="0,44,0,0">
             <TabItem Header="Financial">
-                <DataGrid ItemsSource="{Binding}" x:Name="PaymentSchedule" CanUserAddRows="False" AutoGenerateColumns="False">
+                <DataGrid ItemsSource="{Binding}" x:Name="PaymentSchedule" CanUserAddRows="False" AutoGenerateColumns="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn 
 										IsReadOnly="True">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" 
-                                Value="{Binding ActionStatus, Converter={StaticResource Action2Color}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Setter Property="Foreground" Value="{Binding ActionStatus, Converter={StaticResource Action2Color}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Setter Property="Content" Value=""/>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -49,12 +49,17 @@
                         <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
 										Header="Balance" IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
-
+                        <DataGridTextColumn Binding="{Binding ShouldValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="ShouldValue" IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Diffrence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="Diffrence" IsReadOnly="True"  Width="auto"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 										Header="Currency" Width="auto" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="ApproveStatus" IsReadOnly="True"  Width="auto"
-										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridComboBoxColumn x:Name="cbxStatusPayment" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															/>
+
 
                     </DataGrid.Columns>
                 </DataGrid>
@@ -80,9 +85,9 @@
 										Header="Paid"  IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
 
-                        <DataGridTextColumn Binding="{Binding Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="ApproveStatus" IsReadOnly="True"  Width="auto"
-										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        
+                        <DataGridComboBoxColumn x:Name="cbxStatus" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															/>
 
                     </DataGrid.Columns>
                 </DataGrid>

@@ -52,10 +52,8 @@
 
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 										Header="Currency" Width="auto" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="ApproveStatus" IsReadOnly="True"  Width="auto"
-										ElementStyle="{StaticResource RightAlignStyle}"/>
-
+                        <DataGridComboBoxColumn x:Name="cbxStatusPayment" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
@@ -80,12 +78,12 @@
                             <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
 										Header="Paid"  IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
-                          
-                            <DataGridTextColumn Binding="{Binding Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="ApproveStatus" IsReadOnly="True"  Width="auto"
-										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridComboBoxColumn x:Name="cbxStatus" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															/>
 
-                        </DataGrid.Columns>
+                     
+
+                    </DataGrid.Columns>
                     </DataGrid>
                 
             </TabItem>

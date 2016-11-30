@@ -12,7 +12,7 @@ namespace entity
         {
             ReApprove,
             Delete,
-            None
+            NotProcess
         }
         public enum ActionsStatus
         {
@@ -73,7 +73,7 @@ namespace entity
         //   Not Mapped Properties
         #region NotMapped
         [NotMapped]
-        public Actions Action { get; set; }
+        public Actions? Action { get; set; }
         [NotMapped]
         public ActionsStatus ActionStatus { get; set; }
         [NotMapped]

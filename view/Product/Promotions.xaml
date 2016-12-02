@@ -75,7 +75,7 @@
                     <Label Content="Parameters" Style="{StaticResource H2}"/>
                     <StackPanel x:Name="Item_Parameter">
                         <Label Content="Item" Style="{StaticResource input_label}"/>
-                        <controls:SmartBox_Item Text="{Binding itemRef,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                        <controls:SmartBox_Item Text="{Binding itemRef, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
                     </StackPanel>
                     <StackPanel x:Name="Tag_Parameter">
                         <Label Content="Tags" Style="{StaticResource input_label}"/>

@@ -183,12 +183,14 @@
     <Compile Include="Chart\StackedArea.xaml.cs">
       <DependentUpon>StackedArea.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Class\CheckMovementReApprove.cs" />
+    <Compile Include="Class\UpdatePaymentReApprove.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsCommon.cs" />
     <Compile Include="Class\CostCalculation.cs" />
     <Compile Include="Class\CustomCommands.cs" />
-    <Compile Include="Class\MovementReApprove.cs" />
-    <Compile Include="Class\PaymentReApprove.cs" />
+    <Compile Include="Class\UpdateMovementReApprove.cs" />
+    <Compile Include="Class\CheckPaymentReApprove.cs" />
     <Compile Include="Class\Reporting.cs" />
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>

@@ -52,6 +52,7 @@ namespace entity
                         if (_item != null)
                         {
                             itemRef = _item.name;
+                            RaisePropertyChanged("itemref");
                         }
                     }
                 }
@@ -84,6 +85,7 @@ namespace entity
                         if (_item != null)
                         {
                             itemRefbonus = _item.name;
+                            RaisePropertyChanged("itemRefbonus");
                         }
                     }
                 }

@@ -987,9 +987,6 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Item.Value</GroupExpression>
                     </GroupExpressions>
-                    <PageBreak>
-                      <BreakLocation>Between</BreakLocation>
-                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>

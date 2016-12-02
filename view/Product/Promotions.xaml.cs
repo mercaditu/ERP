@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
@@ -71,8 +62,7 @@ namespace Cognitivo.Product
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
             if (sales_promotion != null)
             {
-                sbxRefItem.Text = "";
-                sbxBonusItem.Text = "";
+              
                 sales_promotion.State = System.Data.Entity.EntityState.Unchanged;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
@@ -98,30 +88,9 @@ namespace Cognitivo.Product
 
             if (sales_promotion != null)
             {
-                //Buy Item and get Bonus Item
-                if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat ||
-                    sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
-                {
-                    int BonusID = Convert.ToInt32(sales_promotion.reference_bonus);
-                    if (BonusID > 0)
-                    {
-                        item item = PromotionDB.items.Where(x => x.id_item == BonusID).FirstOrDefault();
-                        if (item != null)
-                        {
-                            sbxBonusItem.Text = item.name;
-                        }
-
-
-                        int RefID = Convert.ToInt32(sales_promotion.reference);
-                        item itemRef = PromotionDB.items.Where(x => x.id_item == RefID).FirstOrDefault();
-                        if (itemRef != null)
-                        {
-                            sbxRefItem.Text = itemRef.name;
-                        }
-                    }
 
                     cbxType_SelectionChanged(null, null);
-                }
+                
             }
         }
 

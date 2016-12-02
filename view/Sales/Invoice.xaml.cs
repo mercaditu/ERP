@@ -181,8 +181,8 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                    MovementReApprove MovementReApprove = new MovementReApprove();
-                    MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+                    UpdateMovementReApprove MovementReApprove = new UpdateMovementReApprove();
+                  //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
 
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);

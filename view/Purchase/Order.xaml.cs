@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
-    public partial class Order : Page, INotifyPropertyChanged, IDisposable
+    public partial class Order : Page, INotifyPropertyChanged
     {
         CollectionViewSource purchase_orderViewSource;
         CollectionViewSource purchase_orderpurchase_order_detailViewSource;
@@ -29,24 +29,24 @@ namespace Cognitivo.Purchase
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        //public void Dispose()
+        //{
+        //    Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (PurchaseOrderDB != null)
-            {
-                if (disposing)
-                {
-                    PurchaseOrderDB.Dispose();
-                    // Dispose other managed resources.
-                }
-                //release unmanaged resources.
-            }
-        }
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (PurchaseOrderDB != null)
+        //    {
+        //        if (disposing)
+        //        {
+        //            PurchaseOrderDB.Dispose();
+        //            // Dispose other managed resources.
+        //        }
+        //        //release unmanaged resources.
+        //    }
+        //}
         private void load_PrimaryData()
         {
             load_PrimaryDataThread();
@@ -117,10 +117,12 @@ namespace Cognitivo.Purchase
         {
             OrderSetting _pref_PurchaseOrder = new OrderSetting();
             purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
+           
 
-            purchase_orderViewSource.View.Refresh();
-            purchase_orderViewSource.View.MoveCurrentToLast();
             sbxContact.Text = "";
+            sbxItem.Text = "";
+            purchase_orderViewSource.View.MoveCurrentTo(purchase_order);
+      
         }
 
         private void toolBar_btnEdit_Click(object sender)

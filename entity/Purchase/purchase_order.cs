@@ -19,6 +19,7 @@ namespace entity
             purchase_order_detail = new List<purchase_order_detail>();
             purchase_invoice = new List<purchase_invoice>();
             trans_date = DateTime.Now;
+            timestamp = DateTime.Now;
 
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }

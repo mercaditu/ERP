@@ -13,7 +13,7 @@ namespace cntrl.Class
     public class CheckMovementReApprove
     {
 
-        public bool ValueChange(db db, int ID, entity.App.Names Application)
+        public bool CheckValueChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -36,10 +36,11 @@ namespace cntrl.Class
                 }
             }
             return false;
+         
         }
 
 
-        public bool QuantityUP(db db, int ID, entity.App.Names Application)
+        public bool CheckQuantityUP(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -68,7 +69,7 @@ namespace cntrl.Class
             }
             return false;
         }
-        public bool QuantityDown(db db, int ID, entity.App.Names Application)
+        public bool CheckQuantityDown(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -97,7 +98,7 @@ namespace cntrl.Class
 
         }
 
-        public bool DateChange(db db, int ID, entity.App.Names Application)
+        public bool CheckDateChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -115,7 +116,7 @@ namespace cntrl.Class
             return false;
 
         }
-        public bool NewMovement(db db, int ID, entity.App.Names Application)
+        public bool CheckNewMovement(db db, int ID, entity.App.Names Application)
         {
             sales_invoice Oldsales_invoice = db.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
             sales_invoice sales_invoice = db.sales_invoice.Find(ID);

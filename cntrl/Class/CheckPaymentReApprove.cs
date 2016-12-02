@@ -14,22 +14,42 @@ namespace cntrl.Class
             return true;
         }
 
-        public bool Check_ContractChanges(db db, int ID, entity.App.Names Application)
+        public string Check_ContractChanges(db db, int ID, entity.App.Names Application)
         {
+   
             sales_invoice OriginalSalesInvoice;
 
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            }
 
-            sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
-            if (OriginalSalesInvoice.id_contract != Local_SalesInvoice.id_contract)
-            {
-                return true;
+                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+
+                if (Local_SalesInvoice.id_contact != OriginalSalesInvoice.id_contact)
+                {
+                    String Message = "This Payment schedule deleted:";
+                    List<payment> oldpayment = new List<payment>();
+                    List<payment_schedual> oldSchedual = OriginalSalesInvoice.payment_schedual.ToList();
+                    foreach (payment_schedual payment_schedual in oldSchedual)
+                    {
+                        Message += "\n " + payment_schedual.AccountPayableBalance;
+                        oldpayment.Add(payment_schedual.payment_detail.payment);
+                    }
+                    Message += "\n Deleted Payment:";
+
+                    foreach (payment payment in oldpayment)
+                    {
+                        Message += "\n " + payment.GrandTotalDetailValue;
+
+                    }
+                    Message += "Of Person " + Local_SalesInvoice.contact.name;
+                    return Message;
+
+
+                }
             }
-            return false;
+            return "";
         }
 
         public bool Check_ValueUP(db db, int ID, entity.App.Names Application)

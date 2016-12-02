@@ -94,7 +94,7 @@
                     <Label Content="Output" Style="{StaticResource H2}"/>
                     <StackPanel x:Name="Item_Bonus">
                         <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
-                        <controls:SmartBox_Item Text="{Binding itemRefBonus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
+                        <controls:SmartBox_Item Text="{Binding itemRefBonus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
                     </StackPanel>
 
                     <StackPanel x:Name="Tag_Bonus">

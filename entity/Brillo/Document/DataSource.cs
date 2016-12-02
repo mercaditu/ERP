@@ -598,6 +598,7 @@ namespace entity.Brillo.Document
                     location_destination_name = g.item_transfer.app_location_destination.name,
                     item_code = g.item_product.item.code,
                     quantity_origin = g.quantity_origin,
+                    quantity_destination= g.quantity_destination,
                     QuantityInStock = g.Quantity_InStock,
                     Measurement = g.item_product != null ? g.item_product.item != null ? g.item_product.item.app_measurement != null ? g.item_product.item.app_measurement.name : "" : "" : "" ,
                     item_name = g.item_product != null ? g.item_product.item.name : "",

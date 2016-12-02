@@ -14,7 +14,7 @@ namespace cntrl.Class
             return true;
         }
 
-        public void Check_ContractChanges(db db, int ID, entity.App.Names Application)
+        public void Update_ContractChanges(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -40,7 +40,7 @@ namespace cntrl.Class
 
 
             db.payment_schedual.RemoveRange(oldSchedual);
-            db.payments.RemoveRange(oldpayment);
+        
             foreach (payment payment in oldpayment)
             {
                 foreach (payment_detail payment_detail in payment.payment_detail)
@@ -49,11 +49,12 @@ namespace cntrl.Class
                     db.payment_detail.Remove(payment_detail);
                 }
             }
+            db.payments.RemoveRange(oldpayment);
             db.payment_schedual.AddRange(payment_schedualList);
 
         }
 
-        public void ValueUP(db db, int ID, entity.App.Names Application)
+        public void Update_ValueUP(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -76,7 +77,7 @@ namespace cntrl.Class
             }
 
         }
-        public void ValueDown(db db, int ID, entity.App.Names Application)
+        public void Update_ValueDown(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -120,7 +121,7 @@ namespace cntrl.Class
 
 
         }
-        public void CurrencyChange(db db, int ID, entity.App.Names Application)
+        public void Update_CurrencyChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 
@@ -151,7 +152,7 @@ namespace cntrl.Class
 
         }
 
-        public void DateChange(db db, int ID, entity.App.Names Application)
+        public void Update_DateChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
 

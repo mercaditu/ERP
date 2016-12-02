@@ -181,8 +181,18 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                    UpdateMovementReApprove MovementReApprove = new UpdateMovementReApprove();
-                  //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+                       UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
+                    CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
+                    UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
+                    CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
+                    //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+                    if (CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice)!="")
+                    {
+                        if (MessageBox.Show("Are You Sure To Change The Data..", "", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                        {
+                            UpdatePaymentReApprove.Update_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                        }
+                    }
 
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);

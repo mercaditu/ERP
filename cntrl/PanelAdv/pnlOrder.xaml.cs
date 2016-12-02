@@ -27,7 +27,24 @@ namespace cntrl.PanelAdv
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            production_order production_order = new production_order();
+            if (project_taskLIST.FirstOrDefault() == null)
+            {
+                return;
+            }
+
+            project project = project_taskLIST.FirstOrDefault().project;
+
+            if (project == null)
+            {
+                return;
+            }
+
+            production_order production_order = shared_dbContext.db.production_order.Where(x => x.id_project == project.id_project).FirstOrDefault();
+
+            if (production_order == null)
+            {
+                production_order = new production_order();
+            }
 
             // Do not load your data at design time.
             if (!DesignerProperties.GetIsInDesignMode(this))
@@ -47,8 +64,8 @@ namespace cntrl.PanelAdv
 
             if (project_taskLIST.Count() > 0)
             {
-                production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
-                contact contact = project_taskLIST.FirstOrDefault().project.contact;
+                production_order.id_project = project.id_project;
+                contact contact = project.contact;
          
                 if (contact != null)
                 {
@@ -58,13 +75,13 @@ namespace cntrl.PanelAdv
                     }
               
                 }
-                if (project_taskLIST.FirstOrDefault().project.id_branch!=null)
+                if (project.id_branch!=null)
                 {
-                    production_order.id_branch = (int)project_taskLIST.FirstOrDefault().project.id_branch;
+                    production_order.id_branch = (int)project.id_branch;
                 }
               
                 //Get Name.
-                production_order.name = project_taskLIST.FirstOrDefault().project.name;
+                production_order.name = project.name;
                 production_order.RaisePropertyChanged("name");
 
                 //Date check. Get the range from task first, if blank get from Project.
@@ -121,7 +138,11 @@ namespace cntrl.PanelAdv
                     production_order.production_order_detail.Add(production_order_detail);
                 }
 
-                shared_dbContext.db.production_order.Add(production_order);
+                if (production_order==null)
+                {
+                    shared_dbContext.db.production_order.Add(production_order);
+                }
+                
                 production_orderViewSource.View.MoveCurrentToLast();
             }
         }

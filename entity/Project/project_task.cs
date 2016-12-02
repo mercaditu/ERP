@@ -180,10 +180,19 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-                    foreach (var task in child)
+                    if (child.Where(x=>x.IsSelected==value).Count()==0)
                     {
-                        if (task.status != Status.Project.Rejected)
-                            task.IsSelected = value;
+                        foreach (var task in child)
+                        {
+                            if (task.status != Status.Project.Rejected)
+                                task.IsSelected = value;
+                        }
+                    }
+            
+                  
+                    if (parent!=null)
+                    {
+                        parent.IsSelected = value;
                     }
                     if (project != null)
                     {
@@ -370,6 +379,7 @@ namespace entity
                     RaisePropertyChanged("parent");
                     if (parent != null && parent.items != null)
                     {
+                     
                         if (!parent.items.is_autorecepie)
                         {
                             parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
@@ -431,6 +441,7 @@ namespace entity
 
             }
         }
+       
         public void CalcRange_TimerTaks()
         {
             if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)

@@ -121,14 +121,25 @@ namespace entity
                     {
                         if (child.Count() > 0)
                         {
-                            foreach (production_order_detail _child in child)
+                            if (child.Where(x => x.IsSelected == value).Count() == 0)
                             {
-                                _child.IsSelected = value;
-                                _child.RaisePropertyChanged("IsSelected");
-                                
+                                foreach (production_order_detail _child in child)
+                                {
+                                    _child.IsSelected = value;
+                                    _child.RaisePropertyChanged("IsSelected");
+
+                                }
                             }
                         }
-                    } 
+                    }
+
+                 
+
+
+                    if (parent != null)
+                    {
+                        parent.IsSelected = value;
+                    }
 
                     if (production_order != null)
                     {

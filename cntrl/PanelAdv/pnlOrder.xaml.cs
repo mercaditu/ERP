@@ -39,12 +39,7 @@ namespace cntrl.PanelAdv
                 return;
             }
 
-            production_order production_order = shared_dbContext.db.production_order.Where(x => x.id_project == project.id_project).FirstOrDefault();
-
-            if (production_order == null)
-            {
-                production_order = new production_order();
-            }
+            production_order production_order = new production_order();
 
             // Do not load your data at design time.
             if (!DesignerProperties.GetIsInDesignMode(this))

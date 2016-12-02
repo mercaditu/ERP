@@ -13,7 +13,7 @@ namespace cntrl.Reports.Project
 											   task.status,
                                                 contacts.name as Contact,
 											   contacts.code as ContactCode,
-											   Contacts.gov_code as GovermentId,
+											   contacts.gov_code as GovermentId,
 											task.quantity_est as QuantityEst, 
 											exe.Quantity as QuantityReal, 
 											task.unit_cost_est as CostEst,

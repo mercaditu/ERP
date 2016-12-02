@@ -39,6 +39,7 @@ namespace Cognitivo.Project
             {
                 project_taskViewSource.View.Filter = null;
                 project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+
                 project_task = project_task.Where(x => x.IsSelected == true && 
                     x.status == Status.Project.Approved).ToList();
 

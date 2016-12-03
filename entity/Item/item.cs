@@ -108,7 +108,14 @@ namespace entity
         public string variation { get; set; }
         public string description { get; set; }
         public decimal? unit_cost { get; set; }
-        public bool is_autorecepie { get; set; }
+
+        public bool is_autorecepie
+        {
+            get { return _is_autorecepie; }
+            set { _is_autorecepie = value; RaisePropertyChanged("is_autorecepie"); }
+        }
+        private bool _is_autorecepie;
+
         public bool is_active { get; set; }
 
         [NotMapped]

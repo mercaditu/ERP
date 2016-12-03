@@ -446,39 +446,47 @@ namespace Cognitivo.Sales
         {
             if (!string.IsNullOrEmpty(query) && sales_invoiceViewSource != null)
             {
-                try
+                sales_invoiceViewSource.View.Filter = i =>
                 {
-                    sales_invoiceViewSource.View.Filter = i =>
+                    sales_invoice sales_invoice = i as sales_invoice;
+                    contact contact = sales_invoice.contact != null ? sales_invoice.contact : null;
+
+                    if (sales_invoice != null)
                     {
-                        sales_invoice sales_invoice = i as sales_invoice;
+                        //Protect the code against null values.
+                        string number = sales_invoice.number != null ? sales_invoice.number : "";
+                        string customer = "";
+                        string cust_code = "";
+                        string cust_gov_code = "";
 
-                        if (sales_invoice != null)
+                        if (contact != null)
                         {
-                            //Protect the code against null values.
-                            string number = sales_invoice.number != null ? sales_invoice.number : "";
-                            string customer = sales_invoice.contact != null ? sales_invoice.contact.name : "";
+                            customer = contact.name;
+                            cust_code = contact.code;
+                            cust_gov_code = contact.gov_code;
+                        }
 
-                            if ((customer.ToLower().Contains(query.ToLower()))
-                                || number.Contains(query))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-
+                        if (customer.ToLower().Contains(query.ToLower())
+                            || 
+                            cust_code.ToLower().Contains(query.ToLower())
+                            ||
+                            cust_gov_code.ToLower().Contains(query.ToLower()) 
+                            ||
+                            number.Contains(query))
+                        {
+                            return true;
                         }
                         else
                         {
                             return false;
                         }
-                    };
-                }
-                catch //(Exception ex)
-                {
-                    //throw ex;
-                }
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
             else
             {

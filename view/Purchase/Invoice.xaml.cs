@@ -11,7 +11,6 @@ using System.Data;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-using entity.Brillo;
 
 namespace Cognitivo.Purchase
 {
@@ -195,6 +194,8 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
                 purchase_invoice.id_contact = contact.id_contact;
                 purchase_invoice.contact = contact;
+                purchase_invoice.code = contact.trans_code;
+                purchase_invoice.RaisePropertyChanged("code");
 
                 ///Start Thread to get Data.
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
@@ -832,7 +833,10 @@ namespace Cognitivo.Purchase
             purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
             if (purchase_invoice != null)
             {
-                purchase_invoice.contact.trans_code = purchase_invoice.code;
+                if (purchase_invoice.contact != null)
+                {
+                    purchase_invoice.contact.trans_code = purchase_invoice.code;
+                }
             }
         }
     }

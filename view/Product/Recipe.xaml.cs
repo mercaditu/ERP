@@ -28,9 +28,8 @@ namespace Cognitivo.Product
             if (sbxItem.ItemID > 0)
             {
                 item item = ProductRecipeDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                item.is_autorecepie = true;
 
-                if (ProductRecipeDB.item_recepie.Where(x=>x.id_item==item.id_item).Count()==0)
+                if (ProductRecipeDB.item_recepie.Where(x => x.id_item == item.id_item).Count() == 0)
                 {
                     item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
                     item_recepie.id_item = item.id_item;

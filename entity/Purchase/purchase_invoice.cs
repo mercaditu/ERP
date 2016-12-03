@@ -76,29 +76,27 @@ namespace entity
         {
             get
             {
-                _GrandTotal = 0;
-                foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
-                {
-                    _GrandTotal += _purchase_invoice_detail.SubTotal_Vat;
-                }
-                return Math.Round(_GrandTotal, 2);
+                _GrandTotal = purchase_invoice_detail.Sum(x => x.SubTotal_Vat);
+                return _GrandTotal;
             }
             set
             {
-                decimal OriginalValue = value - _GrandTotal;
-                if (OriginalValue != 0)
-                {
-                    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
-                    foreach (var item in purchase_invoice_detail)
-                    {
+                //decimal OriginalValue = value - _GrandTotal;
+                //if (OriginalValue != 0)
+                //{
+                //    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
+                //    foreach (var item in purchase_invoice_detail)
+                //    {
 
-                        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
-                        item.RaisePropertyChanged("UnitCost_Vat");
-                    }
+                //        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
+                //        item.RaisePropertyChanged("UnitCost_Vat");
+                //    }
 
-                    _GrandTotal = value;
-                    RaisePropertyChanged("GrandTotal");
-                }
+
+                //}
+
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
             }
         }
         private decimal _GrandTotal;

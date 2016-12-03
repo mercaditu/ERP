@@ -110,8 +110,6 @@ namespace entity
             get
             {
                 _GrandTotal = sales_invoice_detail.Sum(x => x.SubTotal_Vat);
-
-                //calc_credit(_GrandTotal);
                 return _GrandTotal;
             }
             set

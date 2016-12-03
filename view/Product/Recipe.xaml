@@ -32,9 +32,9 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-        <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+		<Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-        <ListBox x:Name="item_receipeDataGrid" Style="{StaticResource nav_List}"
+		<ListBox x:Name="item_receipeDataGrid" Style="{StaticResource nav_List}"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}"
@@ -56,7 +56,7 @@
 				<RowDefinition Height="23*"/>
 			</Grid.RowDefinitions>
 
-			<Grid Margin="0,0,-0.5,0">
+			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
 					<ColumnDefinition Width="1*"/>
@@ -128,6 +128,6 @@
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 					appName="Recipe"
-					   VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2"/>
+					   VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 	</Grid>
 </Page>

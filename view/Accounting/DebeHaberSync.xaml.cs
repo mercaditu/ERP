@@ -140,7 +140,6 @@ namespace Cognitivo.Accounting
             SalesReturn_Sync(Transaction);
             PurchaseReturn_Sync(Transaction);
             PaymentSync(Transaction);
-            //FixedAsset(Transaction);
 
             Integration.Transactions.Add(Transaction);
 

@@ -23,14 +23,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_return_detail { get; set; }
         public int id_sales_return { get; set; }
-
-
-      
-
         public bool has_return { get; set; }
-
-
-    
 
         #region "Foreign Key"
         public virtual sales_return sales_return
@@ -96,6 +89,14 @@ namespace entity
                 {
                     if (quantity == 0)
                         return "Quantity cannot be zero";
+
+                    if (sales_invoice_detail != null)
+                    {
+                        if (sales_invoice_detail.quantity < quantity)
+                        {
+                            return "Sales Quantity = " + sales_invoice_detail.quantity + ". You cannot Return a greater amount";
+                        }
+                    }
                 }
                 if (columnName == "unit_price")
                 {

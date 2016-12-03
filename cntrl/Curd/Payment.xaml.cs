@@ -97,10 +97,10 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+            await PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.payment_type.Local.Count == 0)
@@ -115,12 +115,12 @@ namespace cntrl.Curd
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.app_account.Local.Count == 0)
             {
-                entity.app_account app_account = new entity.app_account();
+                app_account app_account = new app_account();
                 app_account.name = "CashBox";
                 app_account.code = "Generic";
                 app_account.id_account_type = entity.app_account.app_account_type.Terminal;
@@ -130,6 +130,9 @@ namespace cntrl.Curd
                 PaymentDB.app_account.Add(app_account);
             }
             app_accountViewSource.Source = PaymentDB.app_account.Local;
+
+            CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)this.FindResource("salesRepViewSourceCollector");
+            salesRepViewSourceCollector.Source = await PaymentDB.sales_rep.Where(a => a.enum_type == sales_rep.SalesRepType.Collector && a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             if (Mode == Modes.Recievable)
             {
@@ -152,7 +155,6 @@ namespace cntrl.Curd
         }
 
         #region Events
-
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
@@ -265,27 +267,27 @@ namespace cntrl.Curd
 
         private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-                    if (purchasereturnComboBox.Data != null)
-                    {
-                        CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                        purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
-                        purchasereturnComboBox.Text = purchase_return.number;
-                        decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).Sum(x => x.debit));
-                        payment_detail.id_purchase_return = purchase_return.id_purchase_return;
+            if (purchasereturnComboBox.Data != null)
+            {
+                CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+                purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
+                purchasereturnComboBox.Text = purchase_return.number;
+                decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).Sum(x => x.debit));
+                payment_detail.id_purchase_return = purchase_return.id_purchase_return;
 
-                        if (payment_detail.value > return_value)
-                        {
+                if (payment_detail.value > return_value)
+                {
 
-                            payment_detail.value = return_value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-                        else
-                        {
-                            payment_detail.value = payment_detail.value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-                    }
+                    payment_detail.value = return_value;
+                    payment_detail.RaisePropertyChanged("value");
+                }
+                else
+                {
+                    payment_detail.value = payment_detail.value;
+                    payment_detail.RaisePropertyChanged("value");
+                }
+            }
         }
 
         private void salesreturnComboBox_KeyDown(object sender, KeyEventArgs e)

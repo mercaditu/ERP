@@ -26,6 +26,7 @@ namespace Cognitivo.Product
 
             item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
             item_tagBonusViewSource = FindResource("item_tagBonusViewSource") as CollectionViewSource;
+
             await PromotionDB.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             item_tagViewSource.Source = PromotionDB.item_tag.Local;
             item_tagBonusViewSource.Source = PromotionDB.item_tag.Local;
@@ -49,7 +50,7 @@ namespace Cognitivo.Product
             if (sales_promotion != null)
             {
                 sales_promotion.IsSelected = true;
-                sales_promotion.State = System.Data.Entity.EntityState.Modified;
+                sales_promotion.State = EntityState.Modified;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
             }
@@ -63,7 +64,7 @@ namespace Cognitivo.Product
             if (sales_promotion != null)
             {
               
-                sales_promotion.State = System.Data.Entity.EntityState.Unchanged;
+                sales_promotion.State = EntityState.Unchanged;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
             }
@@ -75,7 +76,7 @@ namespace Cognitivo.Product
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
             if (sales_promotion != null)
             {
-                sales_promotion.State = System.Data.Entity.EntityState.Unchanged;
+                sales_promotion.State = EntityState.Unchanged;
                 sales_promotionViewSource.View.Refresh();
                 sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
             }
@@ -84,14 +85,7 @@ namespace Cognitivo.Product
 
         private void dgvPromotion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-
-            if (sales_promotion != null)
-            {
-
-                    cbxType_SelectionChanged(null, null);
-                
-            }
+            cbxType_SelectionChanged(null, null);
         }
 
         private void sbxRefItem_Select(object sender, RoutedEventArgs e)
@@ -122,43 +116,68 @@ namespace Cognitivo.Product
         {
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
 
-            //
             if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat)
             {
-                Tag_Parameter.Visibility = System.Windows.Visibility.Collapsed;
-                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Item_Parameter.Visibility = System.Windows.Visibility.Visible;
-                Item_Bonus.Visibility = System.Windows.Visibility.Visible;
-                Discount.Visibility = System.Windows.Visibility.Collapsed;
-            
+                Tag_Parameter.Visibility = Visibility.Collapsed;
+                Tag_Bonus.Visibility = Visibility.Collapsed;
+                Item_Parameter.Visibility = Visibility.Visible;
+                Item_Bonus.Visibility = Visibility.Visible;
+                Discount.Visibility = Visibility.Collapsed;
+
+                item input = PromotionDB.items.Find(sales_promotion.reference);
+                if (input != null)
+                {
+                    sales_promotion.InputName = input.name;
+                    sales_promotion.RaisePropertyChanged("InputName");
+                }
+
+                item output = PromotionDB.items.Find(sales_promotion.reference_bonus);
+
+                if (output != null)
+                {
+                    sales_promotion.OutputName = output.name;
+                    sales_promotion.RaisePropertyChanged("OutputName");
+                }
             }
-            //Buy Tag and get Bonus Item
             else if (sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
             {
-                Tag_Parameter.Visibility = System.Windows.Visibility.Visible;
-                Tag_Bonus.Visibility = System.Windows.Visibility.Visible;
-                Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
-                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Discount.Visibility = System.Windows.Visibility.Collapsed;
-              
+                Tag_Parameter.Visibility = Visibility.Visible;
+                Tag_Bonus.Visibility = Visibility.Visible;
+                Item_Parameter.Visibility = Visibility.Collapsed;
+                Item_Bonus.Visibility = Visibility.Collapsed;
+                Discount.Visibility = Visibility.Collapsed;
+
+
+                item output = PromotionDB.items.Find(sales_promotion.reference_bonus);
+
+                if (output != null)
+                {
+                    sales_promotion.OutputName = output.name;
+                    sales_promotion.RaisePropertyChanged("OutputName");
+                }
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onItem)
             {
-                Tag_Parameter.Visibility = System.Windows.Visibility.Collapsed;
-                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Item_Parameter.Visibility = System.Windows.Visibility.Visible;
-                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Discount.Visibility = System.Windows.Visibility.Visible;
-                
+                Tag_Parameter.Visibility = Visibility.Collapsed;
+                Tag_Bonus.Visibility = Visibility.Collapsed;
+                Item_Parameter.Visibility = Visibility.Visible;
+                Item_Bonus.Visibility = Visibility.Collapsed;
+                Discount.Visibility = Visibility.Visible;
+
+                item input = PromotionDB.items.Find(sales_promotion.reference);
+                if (input != null)
+                {
+                    sales_promotion.InputName = input.name;
+                    sales_promotion.RaisePropertyChanged("InputName");
+                }
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onTag)
             {
-                Tag_Parameter.Visibility = System.Windows.Visibility.Visible;
-                Tag_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Item_Parameter.Visibility = System.Windows.Visibility.Collapsed;
-                Item_Bonus.Visibility = System.Windows.Visibility.Collapsed;
-                Discount.Visibility = System.Windows.Visibility.Visible;
-            
+                Tag_Parameter.Visibility = Visibility.Visible;
+                Tag_Bonus.Visibility = Visibility.Collapsed;
+                Item_Parameter.Visibility = Visibility.Collapsed;
+                Item_Bonus.Visibility = Visibility.Collapsed;
+                Discount.Visibility = Visibility.Visible;
             }
         }
     }

@@ -34,7 +34,7 @@ namespace entity
 
             foreach (sales_promotion sales_promotion in base.sales_promotion.Local)
             {
-                if (sales_promotion.IsSelected && sales_promotion.Error == null)
+                if (sales_promotion.IsSelected)
                 {
                     if (sales_promotion.State == EntityState.Added)
                     {

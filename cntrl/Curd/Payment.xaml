@@ -25,6 +25,7 @@
 		<CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
 		<CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
 		<CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+		<CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
 	</UserControl.Resources>
 	
 	<UserControl.Effect>
@@ -52,15 +53,17 @@
 		<Grid Grid.Column="1" Grid.Row="1"  Background="White" >
 			<ScrollViewer Margin="0,0,0,30">
 				<StackPanel>
-					<Label Content="{lex:Loc Header}" Style="{StaticResource H3}"/>
+					<Label Content="{Binding contact.name}" Style="{StaticResource H3}"/>
 					<!-- Header -->
 					<WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
 						<StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
 							<Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
 							<DatePicker Style="{DynamicResource input_datepicker}"
 										SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
-							<Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
-							<Label Content="{Binding contact.name}" Style="{StaticResource generic_Label}"/>
+							<Label Content="{lex:Loc CollectionAgent}" Style="{DynamicResource input_label}"/>
+							<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
+									  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+									  Style="{StaticResource input_combobox}"/>
 							<!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
 						</StackPanel>
 						<StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">

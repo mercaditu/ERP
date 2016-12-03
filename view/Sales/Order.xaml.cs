@@ -133,13 +133,14 @@ namespace Cognitivo.Sales
         {
             try
             {
-                if (SalesOrderDB.SaveChanges() > 0)
-                {
-                    toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
-                    sales_orderViewSource.View.Refresh();
-                    sbxContact.Text = "";
-                }
-            }
+                
+                    if (SalesOrderDB.SaveChanges() > 0)
+                    {
+                        toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
+                        sales_orderViewSource.View.Refresh();
+                        sbxContact.Text = "";
+                    }
+                           }
             catch (DbEntityValidationException ex)
             {
                 toolBar.msgError(ex);

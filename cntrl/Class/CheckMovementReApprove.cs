@@ -26,8 +26,7 @@ namespace cntrl.Class
                
                 foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                 {
-                    sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
-                    if (Oldsales_invoice_detail != null)
+                    sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                     {
                   
                         foreach (item_movement item_movement in sales_invoice_detail.item_movement)
@@ -61,16 +60,16 @@ namespace cntrl.Class
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            }
+          
 
             sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
          
             foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
             {
-                sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
-                if (Oldsales_invoice_detail != null)
+                sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                    if (Oldsales_invoice_detail != null)
                 {
-                    if (sales_invoice_detail.quantity != Oldsales_invoice_detail.quantity)
+                    if (sales_invoice_detail.quantity > Oldsales_invoice_detail.quantity)
                     {
                         decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
                         if (Diff > 0)
@@ -91,8 +90,8 @@ namespace cntrl.Class
                 return Message;
             }
             return "";
-           
-           
+            }
+
         }
         public string CheckQuantityDown(db db, int ID, entity.App.Names Application)
         {
@@ -101,16 +100,16 @@ namespace cntrl.Class
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            }
+       
 
             sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
             foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
             {
-                sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
+                sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
 
                 if (Oldsales_invoice_detail != null)
                 {
-                    if (sales_invoice_detail.quantity != Oldsales_invoice_detail.quantity)
+                    if (sales_invoice_detail.quantity< Oldsales_invoice_detail.quantity)
                     {
                         decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
                         if (Diff < 0)
@@ -131,7 +130,7 @@ namespace cntrl.Class
                 return Message;
             }
             return "";
-
+            }
         }
 
         public string CheckDateChange(db db, int ID, entity.App.Names Application)
@@ -141,7 +140,7 @@ namespace cntrl.Class
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            }
+          
 
             sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
             if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
@@ -157,7 +156,7 @@ namespace cntrl.Class
                 return Message;
             }
             return "";
-
+            }
         }
         public string CheckNewMovement(db db, int ID, entity.App.Names Application)
         {

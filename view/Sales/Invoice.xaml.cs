@@ -181,23 +181,80 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                       UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
+                    UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
                     CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
                     UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
                     CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
                     //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
-                    if (CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice)!="")
+                    string Message = CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                    if (Message != "")
                     {
-                        if (MessageBox.Show("Are You Sure To Change The Data..", "", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdatePaymentReApprove.Update_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                         }
                     }
+                    Message = CheckPaymentReApprove.Check_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    if (Message != "")
+                    {
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            UpdatePaymentReApprove.Update_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+
+                        }
+                    }
+                    Message = CheckPaymentReApprove.Check_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    if (Message != "")
+                    {
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            UpdatePaymentReApprove.Update_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+
+                        }
+                    }
+                    Message += CheckPaymentReApprove.Check_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    if (Message != "")
+                    {
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            UpdatePaymentReApprove.Update_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+
+                        }
+                    }
+                    Message = CheckPaymentReApprove.Check_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    if (Message != "")
+                    {
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            UpdatePaymentReApprove.Update_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
 
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);
                 sales_invoiceViewSource.View.Refresh();
-
+                SalesInvoiceDB.SaveChanges();
             }
             else
             {
@@ -397,7 +454,7 @@ namespace Cognitivo.Sales
             sales_invoice_detail.sales_invoice = sales_invoice;
         }
 
-        private  void item_Select(object sender, EventArgs e)
+        private void item_Select(object sender, EventArgs e)
         {
 
             if (sbxItem.ItemID > 0)
@@ -410,11 +467,11 @@ namespace Cognitivo.Sales
                     int LineLimit = 0;
                     if (sales_invoice.app_document_range != null)
                     {
-                        if (sales_invoice.app_document_range.app_document.line_limit!=null)
+                        if (sales_invoice.app_document_range.app_document.line_limit != null)
                         {
                             LineLimit = (int)sales_invoice.app_document_range.app_document.line_limit;
                         }
-                      
+
                     }
                     else
                     {
@@ -424,7 +481,7 @@ namespace Cognitivo.Sales
                         }
                     }
 
-                    if (SalesSettings.SpiltInvoice == false && LineLimit >0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
+                    if (SalesSettings.SpiltInvoice == false && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
                     {
                         toolBar.msgWarning("Your Item Limit is Exceed");
                     }
@@ -434,7 +491,7 @@ namespace Cognitivo.Sales
 
                         item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
                         sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem);
-                        
+
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
@@ -715,21 +772,21 @@ namespace Cognitivo.Sales
 
         private async void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-          
-                CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
-                if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
-                {
+            CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
-                    sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
+            if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
+            {
 
-                }
-                else
-                {
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
-                }
-          
+                sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
+
+            }
+            else
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
+            }
+
             //calculate_vat(sender, e);
         }
 

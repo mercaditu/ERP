@@ -13,43 +13,58 @@ namespace cntrl.Class
     public class CheckMovementReApprove
     {
 
-        public bool CheckValueChange(db db, int ID, entity.App.Names Application)
+        public string CheckValueChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
-
+            string movmessage = "";
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            }
 
-            sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
-            foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
-            {
-                sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
-                if (Oldsales_invoice_detail != null)
+                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+               
+                foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                 {
-                    if (sales_invoice_detail.unit_price != Oldsales_invoice_detail.unit_price)
+                    sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
+                    if (Oldsales_invoice_detail != null)
                     {
-                        return true;
+                  
+                        foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                        {
+                            item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
+                            if (item_movement_value != null)
+                            {
+                                movmessage += item_movement_value.unit_value + "-->" + sales_invoice_detail.unit_price;
+                            
+                            }
+                        }
+                       
                     }
                 }
             }
-            return false;
-         
+            if (movmessage != "")
+            {
+                String Message = "You Have Changed The Date So Following Changes Required..\n";
+                Message += "This Movement Will be Changed..\n" + movmessage;
+                return movmessage;
+            }
+            return "";
+
         }
 
 
-        public bool CheckQuantityUP(db db, int ID, entity.App.Names Application)
+        public string CheckQuantityUP(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
-
+            string movmessage = "";
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
             }
 
             sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+         
             foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
             {
                 sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
@@ -60,19 +75,29 @@ namespace cntrl.Class
                         decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
                         if (Diff > 0)
                         {
-
-                            return true;
-
+                            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                            {
+                                movmessage += item_movement.debit + "-->" + sales_invoice_detail.quantity;
+                            }
                         }
+
                     }
                 }
             }
-            return false;
+            if (movmessage != "")
+            {
+                String Message = "You Have Changed The Date So Following Changes Required..\n";
+                Message += "This Movement Will be Changed..\n" + movmessage;
+                return Message;
+            }
+            return "";
+           
+           
         }
-        public bool CheckQuantityDown(db db, int ID, entity.App.Names Application)
+        public string CheckQuantityDown(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
-
+            string movmessage = "";
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
@@ -82,6 +107,7 @@ namespace cntrl.Class
             foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
             {
                 sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
+
                 if (Oldsales_invoice_detail != null)
                 {
                     if (sales_invoice_detail.quantity != Oldsales_invoice_detail.quantity)
@@ -89,19 +115,29 @@ namespace cntrl.Class
                         decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
                         if (Diff < 0)
                         {
-                            return true;
+
+                            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                            {
+                                movmessage += item_movement.debit + "-->" + sales_invoice_detail.quantity;
+                            }
                         }
                     }
                 }
             }
-            return false;
+            if (movmessage != "")
+            {
+                String Message = "You Have Changed The Date So Following Changes Required..\n";
+                Message += "This Movement Will be Changed..\n" + movmessage;
+                return Message;
+            }
+            return "";
 
         }
 
-        public bool CheckDateChange(db db, int ID, entity.App.Names Application)
+        public string CheckDateChange(db db, int ID, entity.App.Names Application)
         {
             sales_invoice OriginalSalesInvoice;
-
+            string movmessage = "";
             using (db temp = new db())
             {
                 OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
@@ -110,25 +146,39 @@ namespace cntrl.Class
             sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
             if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
             {
-                return true;
+                movmessage += OriginalSalesInvoice.trans_date + "-->" + Local_SalesInvoice.trans_date;
+              
             }
 
-            return false;
+            if (movmessage != "")
+            {
+                String Message = "You Have Changed The Date So Following Changes Required..\n";
+                Message += "This Movement Will be Changed..\n" + movmessage;
+                return Message;
+            }
+            return "";
 
         }
-        public bool CheckNewMovement(db db, int ID, entity.App.Names Application)
+        public string CheckNewMovement(db db, int ID, entity.App.Names Application)
         {
             sales_invoice Oldsales_invoice = db.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+            string movmessage = "";
             sales_invoice sales_invoice = db.sales_invoice.Find(ID);
             foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
             {
                 sales_invoice_detail Oldsales_invoice_detail = Oldsales_invoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
                 if (Oldsales_invoice_detail == null)
                 {
-                    return true;
+                    movmessage += "New Movement will Be created";
                 }
             }
-            return false;
+            if (movmessage != "")
+            {
+                String Message = "You Have Changed The Date So Following Changes Required..\n";
+                Message += "This Movement Will be Changed..\n" + movmessage;
+                return Message;
+            }
+            return "";
         }
 
     }

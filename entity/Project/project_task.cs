@@ -180,7 +180,7 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-                    if (child.Where(x=>x.IsSelected==value).Count()==0)
+                    if (child.Where(x=>x.IsSelected == value).Count()==0)
                     {
                         foreach (var task in child)
                         {
@@ -190,10 +190,11 @@ namespace entity
                     }
             
                   
-                    if (parent!=null)
+                    if (parent != null && value == true)
                     {
                         parent.IsSelected = value;
                     }
+
                     if (project != null)
                     {
                         project.Update_SelectedCount();

@@ -214,7 +214,12 @@ namespace Cognitivo.Menu
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+            string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");
+            if (PASsWORD == "DOCOMO")
+            {
+                Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+            }
+        
         }
 
         private void GenerateParentChildRel_Thread()

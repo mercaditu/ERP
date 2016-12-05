@@ -551,8 +551,12 @@ namespace entity
         /// <param name="unit_cost"></param>
         public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
         {
-            this.unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
-            RaisePropertyChanged("unit_price");
+            if (this.unit_price>0)
+            {
+                this.unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+                RaisePropertyChanged("unit_price");
+            }
+      
         }
 
         /// <summary>

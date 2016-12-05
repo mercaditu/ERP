@@ -11,7 +11,7 @@ namespace Cognitivo.Product
     public partial class Promotions : Page
     {
         PromotionDB PromotionDB = new PromotionDB();
-        CollectionViewSource sales_promotionViewSource, item_tagViewSource, item_tagBonusViewSource;
+        CollectionViewSource sales_promotionViewSource, item_tagViewSource, item_tagBonusViewSource, app_currencyViewSource;
 
         public Promotions()
         {
@@ -30,6 +30,11 @@ namespace Cognitivo.Product
             await PromotionDB.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             item_tagViewSource.Source = PromotionDB.item_tag.Local;
             item_tagBonusViewSource.Source = PromotionDB.item_tag.Local;
+
+            app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
+            await PromotionDB.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_currencyViewSource.Source = PromotionDB.app_currency.Local;
+            
 
             cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.Types)).OfType<sales_promotion.Types>().ToList();
         }
@@ -118,11 +123,13 @@ namespace Cognitivo.Product
 
             if (sales_promotion.type == entity.sales_promotion.Types.BuyThis_GetThat)
             {
+                Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Visible;
                 Item_Bonus.Visibility = Visibility.Visible;
                 Discount.Visibility = Visibility.Collapsed;
+                QuntityStep.Visibility = Visibility.Visible;
 
                 item input = PromotionDB.items.Find(sales_promotion.reference);
                 if (input != null)
@@ -141,12 +148,13 @@ namespace Cognitivo.Product
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.BuyTag_GetThat)
             {
+                Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
                 Tag_Bonus.Visibility = Visibility.Visible;
                 Item_Parameter.Visibility = Visibility.Collapsed;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Collapsed;
-
+                QuntityStep.Visibility = Visibility.Visible;
 
                 item output = PromotionDB.items.Find(sales_promotion.reference_bonus);
 
@@ -155,9 +163,11 @@ namespace Cognitivo.Product
                     sales_promotion.OutputName = output.name;
                     sales_promotion.RaisePropertyChanged("OutputName");
                 }
+                 QuntityStep.Visibility = Visibility.Visible;
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onItem)
             {
+                Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Visible;
@@ -170,14 +180,27 @@ namespace Cognitivo.Product
                     sales_promotion.InputName = input.name;
                     sales_promotion.RaisePropertyChanged("InputName");
                 }
+                QuntityStep.Visibility = Visibility.Visible;
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onTag)
             {
+                Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
                 Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Collapsed;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
+                QuntityStep.Visibility = Visibility.Visible;
+            }
+            else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onGrandTotal)
+            {
+                Total_Parameter.Visibility = Visibility.Visible;
+                Tag_Parameter.Visibility = Visibility.Collapsed;
+                Tag_Bonus.Visibility = Visibility.Collapsed;
+                Item_Parameter.Visibility = Visibility.Collapsed;
+                Item_Bonus.Visibility = Visibility.Collapsed;
+                Discount.Visibility = Visibility.Visible;
+                QuntityStep.Visibility = Visibility.Collapsed;
             }
         }
     }

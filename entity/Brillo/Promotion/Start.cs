@@ -43,15 +43,16 @@ namespace entity.Brillo.Promotion
                 Invoice.Details.Add(Detail);
             }
 
-           
+
 
             foreach (var Promo in SalesPromotionLIST)
             {
-               
+
                 BuyThis_GetThat(Promo, Invoice, SalesInvoice);
                 BuyTag_GetThat(Promo, Invoice, SalesInvoice);
                 Discount_onItem(Promo, Invoice, SalesInvoice);
                 Discount_onTag(Promo, Invoice, SalesInvoice);
+                Discount_onGrandTotal(Promo, Invoice, SalesInvoice);
             }
         }
 
@@ -59,7 +60,7 @@ namespace entity.Brillo.Promotion
         {
             if (Promo.type == sales_promotion.Types.BuyThis_GetThat)
             {
-                if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo==false ).Count() > 0)
+                if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
@@ -233,15 +234,15 @@ namespace entity.Brillo.Promotion
                             _Promo.Shared = true;
 
                             _Detail.Promos.Add(_Promo);
-                            foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail.Where(x=>x.id_item==Promo.reference_bonus && x.IsPromo))
+                            foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo))
                             {
                                 _Detail_.DiscountVat = 0;
                                 _Detail_.IsPromo = false;
                             }
 
-                            sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference && x.IsPromo==false).FirstOrDefault();
+                            sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference && x.IsPromo == false).FirstOrDefault();
 
-                            if (sales_invoice_detail!=null)
+                            if (sales_invoice_detail != null)
                             {
                                 sales_invoice_detail.IsPromo = true;
                                 sales_invoice_detail.DiscountVat = sales_invoice_detail.UnitPrice_Vat * Promo.result_value;
@@ -287,7 +288,7 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-                        List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference && x.IsPromo==false)).ToList();
+                        List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference && x.IsPromo == false)).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
                         foreach (sales_invoice_detail _Detail_ in sidpromo)
                         {
@@ -298,6 +299,30 @@ namespace entity.Brillo.Promotion
                 }
             }
         }
+        private void Discount_onGrandTotal(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.type == sales_promotion.Types.Discount_onGrandTotal)
+            {
+                if (Promo.reference == SalesInvoice.app_currencyfx.id_currency)
+                {
+
+                    if (Promo.quantity_step <= Invoice.GrandTotal)
+                    {
+
+
+                        SalesInvoice.DiscountPercentage = Promo.result_value;
+
+
+                    }
+                }
+
+
+
+
+
+            }
+        }
+
 
         private void Calculate(ref Invoice Invoice)
         {

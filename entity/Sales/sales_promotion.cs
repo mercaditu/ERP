@@ -8,7 +8,7 @@ namespace entity
     {
         public enum Types
         {
-            //Discount_onGrandTotal = 1,
+            Discount_onGrandTotal = 1,
             //Discount_onQuantityTotal = 2,
             //Discount_onQuantityRow = 3,
             Discount_onTag = 4,

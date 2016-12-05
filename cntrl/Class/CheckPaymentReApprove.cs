@@ -16,43 +16,86 @@ namespace cntrl.Class
 
         public string Check_ContractChanges(db db, int ID, entity.App.Names Application)
         {
-   
-            sales_invoice OriginalSalesInvoice;
-
-            using (db temp = new db())
+            if (Application==App.Names.SalesInvoice)
             {
-                OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                sales_invoice OriginalSalesInvoice;
 
-
-                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-
-                if (Local_SalesInvoice.id_contract != OriginalSalesInvoice.id_contract)
+                using (db temp = new db())
                 {
-                    String Message = "You Have Changed The Contract So Following Changes Required..\nThis Payment schedule deleted:";
-                    List<payment> oldpayment = new List<payment>();
-                    List<payment_schedual> oldSchedual = OriginalSalesInvoice.payment_schedual.ToList();
-                    foreach (payment_schedual payment_schedual in oldSchedual)
+                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+
+
+                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+
+                    if (Local_SalesInvoice.id_contract != OriginalSalesInvoice.id_contract)
                     {
-                        Message += "\n " + payment_schedual.AccountPayableBalance;
-                        if (payment_schedual.payment_detail != null)
+                        String Message = "You Have Changed The Contract So Following Changes Required..\nThis Payment schedule deleted:";
+                        List<payment> oldpayment = new List<payment>();
+                        List<payment_schedual> oldSchedual = OriginalSalesInvoice.payment_schedual.ToList();
+                        foreach (payment_schedual payment_schedual in oldSchedual)
                         {
-                            oldpayment.Add(payment_schedual.payment_detail.payment);
+                            Message += "\n " + payment_schedual.AccountPayableBalance;
+                            if (payment_schedual.payment_detail != null)
+                            {
+                                oldpayment.Add(payment_schedual.payment_detail.payment);
+                            }
+
                         }
-                     
+                        Message += "\n Deleted Payment:";
+
+                        foreach (payment payment in oldpayment)
+                        {
+                            Message += "\n " + payment.GrandTotalDetailValue;
+
+                        }
+                        Message += "Of Person " + Local_SalesInvoice.contact.name;
+                        return Message;
+
+
                     }
-                    Message += "\n Deleted Payment:";
-
-                    foreach (payment payment in oldpayment)
-                    {
-                        Message += "\n " + payment.GrandTotalDetailValue;
-
-                    }
-                    Message += "Of Person " + Local_SalesInvoice.contact.name;
-                    return Message;
-
-
                 }
             }
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+                purchase_invoice OriginalPurchaseInvoice;
+
+                using (db temp = new db())
+                {
+                    OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
+
+
+                    purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
+
+                    if (Local_purchase_invoice.id_contract != OriginalPurchaseInvoice.id_contract)
+                    {
+                        String Message = "You Have Changed The Contract So Following Changes Required..\nThis Payment schedule deleted:";
+                        List<payment> oldpayment = new List<payment>();
+                        List<payment_schedual> oldSchedual = OriginalPurchaseInvoice.payment_schedual.ToList();
+                        foreach (payment_schedual payment_schedual in oldSchedual)
+                        {
+                            Message += "\n " + payment_schedual.AccountPayableBalance;
+                            if (payment_schedual.payment_detail != null)
+                            {
+                                oldpayment.Add(payment_schedual.payment_detail.payment);
+                            }
+
+                        }
+                        Message += "\n Deleted Payment:";
+
+                        foreach (payment payment in oldpayment)
+                        {
+                            Message += "\n " + payment.GrandTotalDetailValue;
+
+                        }
+                        Message += "Of Person " + Local_purchase_invoice.contact.name;
+                        return Message;
+
+
+                    }
+                }
+
+            }
+           
             return "";
         }
 

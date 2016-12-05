@@ -297,15 +297,18 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            //    purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-            //    cntrl.PanelAdv.pnlAnull pnlAnull = new cntrl.PanelAdv.pnlAnull();
-            //    pnlAnull.ID = purchase_invoice.id_purchase_invoice;
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+            if (purchase_invoice != null)
+            {
+                purchase_invoice.status = Status.Documents_General.Annulled;
+                crud_modalAnull.Visibility = Visibility.Visible;
+                cntrl.PanelAdv.ActionPanelAnull ActionPanelAnull = new cntrl.PanelAdv.ActionPanelAnull();
+                ActionPanelAnull.ID = purchase_invoice.id_purchase_invoice;
+                ActionPanelAnull.Application = entity.App.Names.PurchaseInvoice;
+                ActionPanelAnull.db = PurchaseInvoiceDB;
+                crud_modalAnull.Children.Add(ActionPanelAnull);
 
-            //    crud_modal.Visibility = Visibility.Visible;
-            //    crud_modal.Children.Add(pnlAnull);
-
-
-            PurchaseInvoiceDB.Anull();
+            }
         }
 
         #endregion

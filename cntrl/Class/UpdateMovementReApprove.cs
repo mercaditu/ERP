@@ -327,25 +327,50 @@ namespace cntrl.Class
 
         public void DateChange(db db, int ID, entity.App.Names Application)
         {
-
-            sales_invoice OriginalSalesInvoice;
-
-            using (db temp = new db())
+            if (Application==App.Names.SalesInvoice)
             {
-                OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                sales_invoice OriginalSalesInvoice;
 
-
-                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
+                using (db temp = new db())
                 {
-                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
-                    {
-                        foreach (item_movement item_movement in sales_invoice_detail.item_movement)
-                        {
-                            item_movement.trans_date = Local_SalesInvoice.trans_date;
-                        }
-                    }
+                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
+
+                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+                    if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
+                    {
+                        foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                        {
+                            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                            {
+                                item_movement.trans_date = Local_SalesInvoice.trans_date;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+                purchase_invoice Originalpurchase_invoice;
+
+                using (db temp = new db())
+                {
+                    Originalpurchase_invoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
+
+
+                    purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
+                    if (Originalpurchase_invoice.trans_date != Local_purchase_invoice.trans_date)
+                    {
+                        foreach (purchase_invoice_detail purchase_invoice_detail in Local_purchase_invoice.purchase_invoice_detail)
+                        {
+                            foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+                            {
+                                item_movement.trans_date = Local_purchase_invoice.trans_date;
+                            }
+                        }
+
+                    }
                 }
             }
         }

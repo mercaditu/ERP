@@ -67,6 +67,31 @@ namespace cntrl.PanelAdv
 
                
             }
+            else if (Application==App.Names.PurchaseInvoice)
+            {
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
+
+                PaymentSchedualList = purchase_invoice.payment_schedual.Where(x => x.debit > 0).ToList();
+                payment_schedualViewSource.Source = PaymentSchedualList;
+                foreach (payment_schedual payment_schedual in PaymentSchedualList)
+                {
+
+                    payment_schedual.ActionStatus = payment_schedual.ActionsStatus.Green;
+                    payment_schedual.Action = payment_schedual.Actions.Delete;
+
+                }
+
+                item_movementList = db.item_movement.Where(x => x.purchase_invoice_detail.id_purchase_invoice == purchase_invoice.id_purchase_invoice && x.debit > 0).ToList();
+                item_movementViewSource.Source = item_movementList;
+                foreach (item_movement item_movement in item_movementList)
+                {
+
+                    item_movement.ActionStatus = item_movement.ActionsStatus.Green;
+                    item_movement.Action = item_movement.Actions.Delete;
+
+
+                }
+            }
             payment_schedualViewSource.View.Refresh();
             item_movementViewSource.View.Refresh();
         }

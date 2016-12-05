@@ -48,8 +48,9 @@
 			<RowDefinition Height="330"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-
-		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+        <Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"  
+						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="600"/>
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
 			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
 		<ListBox x:Name="purchase_invoiceDataGrid"

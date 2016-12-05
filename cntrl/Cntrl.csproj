@@ -561,6 +561,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />

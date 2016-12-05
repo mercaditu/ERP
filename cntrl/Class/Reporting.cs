@@ -50,6 +50,46 @@ namespace cntrl.Class
                 ReplaceWithString="sales_return"
             },
 
+
+            new Report
+            {
+                Application = entity.App.Names.SalesBudget,
+                Name ="SalesBudgetByItem",
+                Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
+                Query = Reports.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                 ReplaceString="sales_invoice",
+                ReplaceWithString="sales_budget"
+            },
+                new Report
+            {
+                Application = entity.App.Names.SalesOrder,
+                Name ="SalesOrderByItem",
+                Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
+                Query = Reports.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                 ReplaceString="sales_invoice",
+                ReplaceWithString="sales_order"
+            },
+            new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name ="SalesInvoiceByItem",
+                Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
+                Query = Reports.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+                        new Report
+            {
+                Application = entity.App.Names.SalesReturn,
+                Name ="SalesReturnByItem",
+                Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
+                Query = Reports.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+                ReplaceString="sales_invoice",
+                ReplaceWithString="sales_return"
+            },
+
             /// Sales (Invoice, Order, and Budget) ByCustomer Reports
 
             new Report

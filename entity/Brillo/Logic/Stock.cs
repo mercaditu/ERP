@@ -126,9 +126,13 @@ namespace entity.Brillo.Logic
                                                     (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     "")));
 
-                            item_movementList.AddRange(item_movementINPUT);
-                            production_execution_detail.unit_cost = item_movementINPUT.Max(x => x.item_movement_value.Sum(y => y.unit_value));
-                           // production_execution_detail.unit_cost = item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
+                            if (item_movementINPUT.Count()>0)
+                            {
+                                item_movementList.AddRange(item_movementINPUT);
+
+                                production_execution_detail.unit_cost = item_movementINPUT.FirstOrDefault().item_movement_value.Sum(y => y.unit_value);
+                            }
+                          
                         }
                     }
                 }

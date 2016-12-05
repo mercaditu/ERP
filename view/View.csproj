@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\8.22\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\8.23\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,8 +37,8 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>182</ApplicationRevision>
-    <ApplicationVersion>2.1.6.%2a</ApplicationVersion>
+    <ApplicationRevision>24</ApplicationRevision>
+    <ApplicationVersion>2.1.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -75,11 +75,10 @@
     <ApplicationIcon>cognitivo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>0331A02FC0CC35045FC8B95DF5B9E6677ED21CCB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>342DEE351EE5456056447408D88783B44008F952</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>View_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -832,6 +831,7 @@
     <Resource Include="Images\Application\128\PaymentMade.png" />
     <Resource Include="Images\Application\128\SalesBudget.png" />
     <None Include="View_1_TemporaryKey.pfx" />
+    <None Include="View_2_TemporaryKey.pfx" />
     <None Include="View_TemporaryKey.pfx" />
     <Resource Include="Images\Application\128\Accounts.png" />
     <Resource Include="Images\Application\128\Fraction.png" />

@@ -1468,7 +1468,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2423,6 +2422,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
+          <Top>0in</Top>
           <Left>9.45139in</Left>
           <Height>0.1875in</Height>
           <Width>1.41667in</Width>

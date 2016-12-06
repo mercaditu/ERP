@@ -30,10 +30,6 @@
             <rv:ReportViewer x:Name="reportViewer" />
         </WindowsFormsHost>
         <StackPanel>
-            <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
-                       Text="{Binding ReportTitle, ElementName=this, Mode=OneWay}"/>
-            <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
-                           Text="{Binding ReportDescription, ElementName=this, Mode=OneWay}"/>
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
@@ -83,15 +79,16 @@
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </StackPanel>
-            <ScrollViewer MaxHeight="500" Margin="8" VerticalScrollBarVisibility="Auto">
-                <Grid Margin="8">
-                    <StackPanel x:Name="stpFilter">
-                        <StackPanel.Background>
-                            <SolidColorBrush Color="White" Opacity="0.64"/>
-                        </StackPanel.Background>
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
+       
         </StackPanel>
+        <ScrollViewer MaxHeight="256"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Bottom">
+            <Grid Margin="8">
+                <StackPanel x:Name="stpFilter">
+                    <StackPanel.Background>
+                        <SolidColorBrush Color="White" Opacity="0.64"/>
+                    </StackPanel.Background>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

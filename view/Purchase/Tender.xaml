@@ -27,7 +27,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
-        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+      <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}"/>

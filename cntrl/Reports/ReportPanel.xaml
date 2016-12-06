@@ -83,7 +83,7 @@
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </StackPanel>
-            <ScrollViewer MaxHeight="512" Margin="8" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer MaxHeight="500" Margin="8" VerticalScrollBarVisibility="Auto">
                 <Grid Margin="8">
                     <StackPanel x:Name="stpFilter">
                         <StackPanel.Background>

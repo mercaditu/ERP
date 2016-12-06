@@ -71,7 +71,7 @@ namespace entity
 
                 if (purchase_tender.status != Status.Documents_General.Approved)
                 {
-                    foreach (purchase_tender_contact purchase_tender_contact in purchase_tender.purchase_tender_contact_detail.Where(x=>x.IsSelected))
+                    foreach (purchase_tender_contact purchase_tender_contact in purchase_tender.purchase_tender_contact_detail)
                     {
                         purchase_order purchase_order = new purchase_order();
 

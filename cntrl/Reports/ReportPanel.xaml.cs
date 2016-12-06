@@ -13,7 +13,7 @@ namespace cntrl
 {
     public partial class ReportPanel : UserControl
     {
-
+        bool RefreshPanel = true;
         public bool ShowDateRange
         {
             get { return _ShowDateRange; }
@@ -62,7 +62,7 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; Fill(); }
+            set { _StartDate = value; Fill(); Button_Click_1(null, null); }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
@@ -80,7 +80,7 @@ namespace cntrl
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; Fill(); }
+            set { _EndDate = value; Fill(); Button_Click_1(null, null); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
@@ -94,8 +94,18 @@ namespace cntrl
             {
                 _ReportDt = value;
 
+                ClearFilter();
+            }
+        }
+
+        public DataTable _ReportDt;
+
+        public void ClearFilter()
+        {
+            if (RefreshPanel)
+            {
                 stpFilter.Children.Clear();
-                foreach (DataColumn item in value.Columns)
+                foreach (DataColumn item in ReportDt.Columns)
                 {
                     if (item.DataType == typeof(string))
                     {
@@ -110,7 +120,7 @@ namespace cntrl
                         ComboBox ComboBox = new ComboBox();
                         Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
                         ComboBox.Style = cbxStyle;
-                        DataView view = new DataView(value);
+                        DataView view = new DataView(ReportDt);
                         ComboBox.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
                         ComboBox.SelectedValuePath = item.ColumnName;
                         ComboBox.DisplayMemberPath = item.ColumnName;
@@ -135,18 +145,15 @@ namespace cntrl
                         CheckBox CheckBox = new CheckBox();
                         Style cbxStyle = Application.Current.FindResource("input_checkbox") as Style;
                         CheckBox.Style = cbxStyle;
-                        DataView view = new DataView(value);
+                        DataView view = new DataView(ReportDt);
                         CheckBox.Name = "cbx" + item.ColumnName;
                         CheckBox.Tag = item.ColumnName;
                         stpFilter.Children.Add(CheckBox);
                     }
                 }
             }
+
         }
-
-        public DataTable _ReportDt;
-
-
         public void Fill()
         {
             this.reportViewer.Reset();
@@ -247,6 +254,7 @@ namespace cntrl
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
+            RefreshPanel = false;
             string filter = "";
 
             bool IsFirst = true;
@@ -298,6 +306,12 @@ namespace cntrl
             }
 
             Filter();
+        }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshPanel = true;
+            ClearFilter();
         }
     }
 }

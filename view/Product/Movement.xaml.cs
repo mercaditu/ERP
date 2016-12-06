@@ -350,21 +350,25 @@ namespace Cognitivo.Product
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
 
-                    foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
+                    if (itemMovement.item_movement!=null)
                     {
-                        item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                        item_transfer_dimension.item_transfer_detail = item_transfer_detail;
-                        item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
-
-                        app_dimension app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
-                        if (app_dimension != null)
+                        foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                         {
-                            item_transfer_dimension.app_dimension = app_dimension;
-                        }
+                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                            item_transfer_dimension.item_transfer_detail = item_transfer_detail;
+                            item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
 
-                        item_transfer_dimension.value = item_movement_dimension.value;
-                        item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            app_dimension app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                            if (app_dimension != null)
+                            {
+                                item_transfer_dimension.app_dimension = app_dimension;
+                            }
+
+                            item_transfer_dimension.value = item_movement_dimension.value;
+                            item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                        }
                     }
+                 
 
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
                 }

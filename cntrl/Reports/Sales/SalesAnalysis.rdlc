@@ -1334,7 +1334,7 @@ Fields!Month.Value = 12, "Dec"
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!TotalCredits.Value)</Value>
+                                            <Value>=Fields!TotalCredits.Value</Value>
                                             <Style>
                                               <FontFamily>Courier New</FontFamily>
                                               <FontSize>8pt</FontSize>

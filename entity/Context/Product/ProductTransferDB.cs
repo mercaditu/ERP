@@ -85,10 +85,10 @@ namespace entity
                     //item_transfer.RaisePropertyChanged("status");
                 }
 
-                if (item_transfer != null)
-                {
-                    ///entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
-                }
+                //if (item_transfer != null)
+                //{
+                //        entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
+                //}
             }
 
             try
@@ -116,7 +116,7 @@ namespace entity
                         Credit_Items_Destination(item_transfer_detail, ID_BranchOrigin, ID_BranchDestination, MoveByTruck);
 
                         NumberOfRecords += 1;
-
+                        item_transfer_detail.timestamp = DateTime.Now;
                         item_transfer_detail.status = Status.Documents_General.Approved;
                         item_transfer_detail.RaisePropertyChanged("status");
                         item_transfer.status = Status.Transfer.Approved;

@@ -603,7 +603,8 @@ namespace entity.Brillo.Document
                     Measurement = g.item_product != null ? g.item_product.item != null ? g.item_product.item.app_measurement != null ? g.item_product.item.app_measurement.name : "" : "" : "" ,
                     item_name = g.item_product != null ? g.item_product.item.name : "",
                     trans_date = g.item_transfer.trans_date,
-
+                    timestamp=g.timestamp,
+                    status=g.status,
                     comment = g.item_transfer.comment
                 }).ToList();
 

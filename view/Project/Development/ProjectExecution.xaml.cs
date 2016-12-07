@@ -38,8 +38,12 @@ namespace Cognitivo.Project
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
+                foreach (project_task project_task in treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && x.status == Status.Project.Approved))
+                {
+                    project_task.parent.Parent_Selection();
+                }
                 project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && x.status == Status.Project.Approved).ToList();
-
+              
                 if (project_task.Count() > 0)
                 {
                     crud_modal.Visibility = Visibility.Visible;

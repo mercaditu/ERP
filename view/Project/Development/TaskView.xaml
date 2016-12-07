@@ -88,7 +88,7 @@
                                              Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item_description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Quantity="{Binding quantity_est, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>

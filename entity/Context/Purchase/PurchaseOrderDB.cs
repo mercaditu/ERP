@@ -40,10 +40,28 @@ namespace entity
         {
             NumberOfRecords = 0;
 
+
             foreach (purchase_order purchase_order in base.purchase_order.Local)
             {
                 if (purchase_order.IsSelected && purchase_order.Error == null)
                 {
+
+                    if (purchase_order.contact.id_contract == 0)
+                    {
+                        purchase_order.contact.id_contract = purchase_order.id_contract;
+                    }
+
+                    if (purchase_order.contact.id_currency == 0)
+                    {
+                        purchase_order.contact.id_currency = purchase_order.app_currencyfx.id_currency;
+                    }
+
+                    if (purchase_order.contact.id_cost_center == 0 && purchase_order.purchase_order_detail.FirstOrDefault() != null)
+                    {
+                        purchase_order.contact.id_cost_center = purchase_order.purchase_order_detail.FirstOrDefault().id_cost_center;
+                    }
+
+
                     if (purchase_order.State == EntityState.Added)
                     {
                         purchase_order.timestamp = DateTime.Now;

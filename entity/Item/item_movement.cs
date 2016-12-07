@@ -30,6 +30,7 @@ namespace entity
             trans_date = DateTime.Now;
             debit = 0;
             credit = 0;
+            child = new List<item_movement>();
         }
 
         [Key]
@@ -138,7 +139,16 @@ namespace entity
 
         #region Methods
 
-        //public void 
+        public void Update_ChildVales(decimal BaseValue)
+        {
+            this.item_movement_value.FirstOrDefault().unit_value = BaseValue;
+
+            foreach (item_movement this_child in child)
+            {
+                this_child.Update_ChildVales(item_movement_value.Sum(x => x.unit_value));
+            }
+        }
+       
 
         #endregion
     }

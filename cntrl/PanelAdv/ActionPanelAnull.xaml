@@ -41,8 +41,12 @@
                      
 
                         <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-										Header="oldValue" IsReadOnly="True"
+										Header="SalesoldValue" IsReadOnly="True"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="PurchaseoldValue" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        
                         <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
 										Header="Paid"  IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
@@ -73,9 +77,12 @@
 
 
                             <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-										Header="oldValue" IsReadOnly="True"
+										Header="SalesoldValue" IsReadOnly="True"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
-                            <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+										Header="PurcahseoldValue" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
 										Header="Paid"  IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridComboBoxColumn x:Name="cbxStatus" Header="ApproveStatus" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

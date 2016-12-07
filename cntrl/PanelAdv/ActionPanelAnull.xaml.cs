@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
+using cntrl.Class;
 
 namespace cntrl.PanelAdv
 {
@@ -38,8 +32,8 @@ namespace cntrl.PanelAdv
 
             CollectionViewSource item_movementViewSource = (CollectionViewSource)FindResource("item_movementViewSource");
             CollectionViewSource payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            cbxStatus.ItemsSource = Enum.GetValues(typeof(item_movement.Actions)).OfType<item_movement.Actions>().Where(x=>x==item_movement.Actions.Delete);
-            cbxStatusPayment.ItemsSource = Enum.GetValues(typeof(payment_schedual.Actions)).OfType<item_movement.Actions>().Where(x => x == item_movement.Actions.Delete); ;
+            cbxStatus.ItemsSource = Enum.GetValues(typeof(item_movement.Actions)).OfType<item_movement.Actions>();
+            cbxStatusPayment.ItemsSource = Enum.GetValues(typeof(payment_schedual.Actions)).OfType<item_movement.Actions>();
             if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice sales_invoice = db.sales_invoice.Find(ID);
@@ -65,13 +59,13 @@ namespace cntrl.PanelAdv
 
                 }
 
-               
+
             }
-            else if (Application==App.Names.PurchaseInvoice)
+            else if (Application == App.Names.PurchaseInvoice)
             {
                 purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
 
-                PaymentSchedualList = purchase_invoice.payment_schedual.Where(x => x.debit > 0).ToList();
+                PaymentSchedualList = purchase_invoice.payment_schedual.Where(x => x.credit > 0).ToList();
                 payment_schedualViewSource.Source = PaymentSchedualList;
                 foreach (payment_schedual payment_schedual in PaymentSchedualList)
                 {
@@ -81,13 +75,21 @@ namespace cntrl.PanelAdv
 
                 }
 
-                item_movementList = db.item_movement.Where(x => x.purchase_invoice_detail.id_purchase_invoice == purchase_invoice.id_purchase_invoice && x.debit > 0).ToList();
+                item_movementList = db.item_movement.Where(x => x.purchase_invoice_detail.id_purchase_invoice == purchase_invoice.id_purchase_invoice && x.credit > 0).ToList();
                 item_movementViewSource.Source = item_movementList;
                 foreach (item_movement item_movement in item_movementList)
                 {
 
-                    item_movement.ActionStatus = item_movement.ActionsStatus.Green;
-                    item_movement.Action = item_movement.Actions.Delete;
+                    if (item_movement.child.Count() > 0)
+                    {
+                        item_movement.ActionStatus = item_movement.ActionsStatus.Red;
+                        item_movement.Action = item_movement.Actions.ReApprove;
+                    }
+                    else
+                    {
+                        item_movement.ActionStatus = item_movement.ActionsStatus.Green;
+                        item_movement.Action = item_movement.Actions.Delete;
+                    }
 
 
                 }
@@ -98,6 +100,18 @@ namespace cntrl.PanelAdv
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
+            if (Application == App.Names.SalesInvoice)
+            {
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                sales_invoice.status = Status.Documents_General.Approved;
+            }
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
+                purchase_invoice.status = Status.Documents_General.Approved;
+            }
+
+         
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
@@ -122,11 +136,37 @@ namespace cntrl.PanelAdv
                     entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
                     db.item_movement.Remove(item_movement);
                 }
+                else if (item_movement.Action == item_movement.Actions.ReApprove)
+                {
+                    foreach (var item in item_movement.child)
+                    {
+                      
+                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement).ToList();
+                        foreach (item_movement _item_movement in item_movementList)
+                        {
+                            if (item_movement.avlquantity > item.credit)
+                            {
+                                item.parent = _item_movement;
+                            }
+                            else
+                            {
+                                item.parent = null;
+                            }
+                        }
+
+                    }
+                    db.item_movement.Remove(item_movement);
+
+
+                }
 
             }
-           
+
 
             db.SaveChanges();
+            Grid parentGrid = (Grid)this.Parent;
+            parentGrid.Children.Clear();
+            parentGrid.Visibility = Visibility.Hidden;
         }
 
     }

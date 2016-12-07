@@ -543,58 +543,58 @@ namespace Cognitivo.Sales
             {
                 sales_invoiceViewSource.View.Filter = i =>
                 {
-                   
-                        sales_invoice sales_invoice = i as sales_invoice;
-                        contact contact = sales_invoice.contact != null ? sales_invoice.contact : null;
 
-                        if (sales_invoice != null)
+                    sales_invoice sales_invoice = i as sales_invoice;
+                    contact contact = sales_invoice.contact != null ? sales_invoice.contact : null;
+
+                    if (sales_invoice != null)
+                    {
+                        //Protect the code against null values.
+                        string number = sales_invoice.number != null ? sales_invoice.number : "";
+                        string customer = "";
+                        string cust_code = "";
+                        string cust_gov_code = "";
+
+                        if (contact != null)
                         {
-                            //Protect the code against null values.
-                            string number = sales_invoice.number != null ? sales_invoice.number : "";
-                            string customer = "";
-                            string cust_code = "";
-                            string cust_gov_code = "";
-
-                            if (contact != null)
+                            if (contact.name != null)
                             {
-                                if (contact.name != null)
-                                {
-                                    customer = contact.name.ToLower();
-                                }
-                                if (contact.code != null)
-                                {
-                                    cust_code = contact.code.ToLower();
-                                }
-                                if (contact.gov_code != null)
-                                {
-                                    cust_gov_code = contact.gov_code.ToLower();
-                                }
-
-
+                                customer = contact.name.ToLower();
+                            }
+                            if (contact.code != null)
+                            {
+                                cust_code = contact.code.ToLower();
+                            }
+                            if (contact.gov_code != null)
+                            {
+                                cust_gov_code = contact.gov_code.ToLower();
                             }
 
-                            if (customer.Contains(query.ToLower())
-                                ||
-                                cust_code.Contains(query.ToLower())
-                                ||
-                                cust_gov_code.Contains(query.ToLower())
-                                ||
-                                number.Contains(query))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
 
+                        }
+
+                        if (customer.Contains(query.ToLower())
+                            ||
+                            cust_code.Contains(query.ToLower())
+                            ||
+                            cust_gov_code.Contains(query.ToLower())
+                            ||
+                            number.Contains(query))
+                        {
+                            return true;
                         }
                         else
                         {
                             return false;
                         }
+
                     }
-              
+                    else
+                    {
+                        return false;
+                    }
+
+
                 };
             }
             else

@@ -38,6 +38,9 @@ namespace entity
             {
                 if (purchase_packing.IsSelected && purchase_packing.Error == null)
                 {
+
+                  
+
                     if (purchase_packing.State == EntityState.Added)
                     {
                         purchase_packing.timestamp = DateTime.Now;

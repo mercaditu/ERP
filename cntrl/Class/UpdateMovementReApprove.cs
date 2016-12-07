@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using entity;
 using entity.Brillo;
-using cntrl.PanelAdv;
-using System.Windows;
 
 namespace cntrl.Class
 {
     public class UpdateMovementReApprove
     {
-        
-        public void ValueChange(db db, int ID, entity.App.Names Application)
+
+        /// <summary>
+        /// Changes in Value of Item Movement Value.
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="ID"></param>
+        /// <param name="Application"></param>
+        public void ValueChange(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.PurchaseInvoice)
             {
@@ -23,79 +25,72 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
                     foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurchaseInvoice.purchase_invoice_detail)
                     {
-                        purchase_invoice_detail Oldsales_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
-                        if (Oldsales_invoice_detail != null)
+                        foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
                         {
-                            if (purchase_invoice_detail.unit_cost != Oldsales_invoice_detail.unit_cost)
-                            {
-                                foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
-                                {
-                                    item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
-                                    if (item_movement_value != null)
-                                    {
-                                        item_movement_value.unit_value = purchase_invoice_detail.unit_cost;
-                                    }
-                                }
-                            }
+                            //Fix child Unit Values.
+                            item_movement.Update_ChildVales(purchase_invoice_detail.unit_cost);
                         }
                     }
                 }
             }
-
-
         }
-        public void QuantityUP(db db, int ID, entity.App.Names Application)
+
+        public void QuantityUP(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
             {
-                sales_invoice OriginalSalesInvoice;
+                sales_invoice RemoteCopy;
 
                 using (db temp = new db())
                 {
-                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                    RemoteCopy = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                    sales_invoice LocalCopy = db.sales_invoice.Find(ID);
 
-
-                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                    foreach (sales_invoice_detail LocalDetail in LocalCopy.sales_invoice_detail)
                     {
-                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        if (Oldsales_invoice_detail != null)
+                        sales_invoice_detail RemoteDetail = RemoteCopy.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == LocalDetail.id_sales_invoice_detail).FirstOrDefault();
+                        if (RemoteDetail != null)
                         {
-                            if (sales_invoice_detail.quantity > Oldsales_invoice_detail.quantity)
+                            //find the diffrence between actual detail and old detail. If Positive, then Qty is Up. If Negative then Qty is Down.
+                            decimal Diff = LocalDetail.quantity - RemoteDetail.quantity;
+                            foreach (item_movement item_movement in LocalDetail.item_movement)
                             {
-                                decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
-                                foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                                //if parent is null then change the quantity
+                                if (item_movement.parent == null)
                                 {
-
-                                    if (item_movement.parent == null)
+                                    item_movement.debit = LocalDetail.quantity;
+                                }
+                                else
+                                {
+                                    //if   parent balance qunatity is greater then the diffrence then change the quantity     
+                                    if ((item_movement.parent.credit - item_movement.parent.child.Sum(x => x.debit)) > Diff)
                                     {
-                                        item_movement.debit = sales_invoice_detail.quantity;
+                                        item_movement.debit = LocalDetail.quantity;
                                     }
                                     else
                                     {
-                                        if ((item_movement.parent.credit - item_movement.parent.child.Sum(x => x.debit)) > Diff)
+                                        //where is new item movement to hold the difference??
+                                        //if diffrance is greater then the find the new parent
+                                        item_movement.debit = LocalDetail.quantity;
+                                        Stock stock = new Stock();
+                                        List<StockList> Items_InStockLIST = stock.List(LocalDetail.app_location.id_branch, (int)LocalDetail.id_location, LocalDetail.item.item_product.FirstOrDefault().id_item_product);
+                                        foreach (StockList StockList in Items_InStockLIST)
                                         {
-                                            item_movement.debit = sales_invoice_detail.quantity;
-                                        }
-                                        else
-                                        {
-                                            item_movement.debit = sales_invoice_detail.quantity;
-                                            Stock stock = new Stock();
-                                            List<StockList> Items_InStockLIST = stock.List(sales_invoice_detail.app_location.id_branch, (int)sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
-                                            foreach (StockList StockList in Items_InStockLIST)
+                                            item_movement new_movement = new item_movement();
+                                            new_movement.debit = StockList.QtyBalance - Diff;
+                                            new_movement.id_sales_invoice_detail = LocalDetail.id_sales_invoice_detail;
+
+                                            if (StockList.QtyBalance > item_movement.debit)
                                             {
-                                                if (StockList.QtyBalance > item_movement.debit)
-                                                {
-                                                    item_movement.parent = db.item_movement.Where(x => x.id_movement == StockList.MovementID).FirstOrDefault();
-                                                }
+                                                item_movement.parent = db.item_movement.Where(x => x.id_movement == StockList.MovementID).FirstOrDefault();
                                             }
                                         }
-
                                     }
+
+
                                 }
                             }
                         }
@@ -117,26 +112,21 @@ namespace cntrl.Class
                         purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
                         if (Oldpurchase_invoice_detail != null)
                         {
-                            if (purchase_invoice_detail.quantity > Oldpurchase_invoice_detail.quantity)
+                            //change the quantity from the detail quantity
+                            decimal Diff = purchase_invoice_detail.quantity - Oldpurchase_invoice_detail.quantity;
+                            foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
                             {
-                                decimal Diff = purchase_invoice_detail.quantity - Oldpurchase_invoice_detail.quantity;
-                                foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
-                                {
-
-                                   
-                                        item_movement.credit = purchase_invoice_detail.quantity;
-                                   
-                                }
+                                item_movement.credit = purchase_invoice_detail.quantity;
                             }
                         }
                     }
                 }
             }
-
         }
-        public void QuantityDown(db db, int ID, entity.App.Names Application)
-        {
 
+
+        public void QuantityDown(db db, int ID, App.Names Application)
+        {
             if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
@@ -152,59 +142,21 @@ namespace cntrl.Class
                         sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                         if (Oldsales_invoice_detail != null)
                         {
-                            if (sales_invoice_detail.quantity < Oldsales_invoice_detail.quantity)
+                            //find the diffrence between actual detail and old detail
+                            decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
+
+                            List<item_movement> MovementList = sales_invoice_detail.item_movement.ToList();
+
+                            foreach (item_movement item_movement in MovementList)
                             {
-                                decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
-                                foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                                if (item_movement.debit >= sales_invoice_detail.quantity)
                                 {
-
-                                    if (item_movement.child.Count() == 0)
-                                    {
-                                        item_movement.debit = sales_invoice_detail.quantity;
-                                    }
-                                    else
-                                    {
-                                        if ((item_movement.child.Sum(x => x.credit)) < sales_invoice_detail.quantity)
-                                        {
-                                            item_movement.credit = sales_invoice_detail.quantity;
-
-                                        }
-                                        else
-                                        {
-                                            Decimal qunatity = sales_invoice_detail.quantity;
-                                            item_movement.debit = qunatity;
-
-                                            foreach (item_movement item in item_movement.child)
-                                            {
-
-                                                if (item.credit < qunatity)
-                                                {
-                                                    qunatity = qunatity - item.credit;
-                                                    item.parent = item_movement;
-                                                }
-                                                else
-                                                {
-                                                    int id_item_product = sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
-                                                    List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == id_item_product && x.id_movement != item_movement.id_movement).ToList();
-                                                    foreach (item_movement _item_movement in item_movementList)
-                                                    {
-                                                        if (item_movement.avlquantity > item.credit)
-                                                        {
-                                                            item.parent = _item_movement;
-                                                        }
-                                                        else
-                                                        {
-                                                            item.parent = null;
-                                                        }
-                                                    }
-
-                                                }
-
-
-                                            }
-
-                                        }
-                                    }
+                                    item_movement.debit = sales_invoice_detail.quantity;
+                                }
+                                else
+                                {
+                                    Diff = item_movement.debit - Diff;
+                                    db.item_movement.Remove(item_movement);
                                 }
                             }
                         }
@@ -226,61 +178,41 @@ namespace cntrl.Class
                         purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
                         if (Oldpurchase_invoice_detail != null)
                         {
-                            if (purchase_invoice_detail.quantity < Oldpurchase_invoice_detail.quantity)
+
+                            decimal Diff = Oldpurchase_invoice_detail.quantity - purchase_invoice_detail.quantity;
+
+                            List<item_movement> MovementList = purchase_invoice_detail.item_movement.ToList();
+
+                            foreach (item_movement item_movement in MovementList)
                             {
-                                decimal Diff = purchase_invoice_detail.quantity - Oldpurchase_invoice_detail.quantity;
-                                foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+                                if ((item_movement.credit - item_movement.child.Sum(x => x.debit)) > Diff)
                                 {
+                                    item_movement.credit = purchase_invoice_detail.quantity;
 
-                                    if (item_movement.child.Count() == 0)
+                                }
+                                else
+                                {
+                                    foreach (item_movement Child in item_movement.child)
                                     {
-                                        item_movement.credit = purchase_invoice_detail.quantity;
-                                    }
-                                    else
-                                    {
-                                        if ((item_movement.child.Sum(x => x.debit)) < purchase_invoice_detail.quantity)
+                                        int id_item_product = purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
+                                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == id_item_product && x.id_movement != item_movement.id_movement).ToList();
+                                        foreach (item_movement _item_movement in item_movementList)
                                         {
-                                            item_movement.credit = purchase_invoice_detail.quantity;
-
-                                        }
-                                        else
-                                        {
-                                            Decimal qunatity = purchase_invoice_detail.quantity;
-                                            item_movement.credit = qunatity;
-
-                                            foreach (item_movement item in item_movement.child)
+                                            if (item_movement.avlquantity > Child.credit)
                                             {
-
-                                                if (item.debit < qunatity)
-                                                {
-                                                    qunatity = qunatity - item.debit;
-                                                    item.parent = item_movement;
-                                                }
-                                                else
-                                                {
-                                                    int id_item_product = purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
-                                                    List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == id_item_product && x.id_movement != item_movement.id_movement).ToList();
-                                                    foreach (item_movement _item_movement in item_movementList)
-                                                    {
-                                                        if (item_movement.avlquantity > item.debit)
-                                                        {
-                                                            item.parent = _item_movement;
-                                                        }
-                                                        else
-                                                        {
-                                                            item.parent = null;
-                                                        }
-                                                    }
-
-                                                }
-
-
+                                                Child.parent = _item_movement;
                                             }
-
+                                            else
+                                            {
+                                                Child.parent = null;
+                                            }
                                         }
                                     }
                                 }
+
+
                             }
+
                         }
                     }
                 }
@@ -289,9 +221,39 @@ namespace cntrl.Class
 
 
 
-        public void DateChange(db db, int ID, entity.App.Names Application)
+        public void DateChange(db db, int ID, App.Names Application)
         {
-            if (Application==App.Names.SalesInvoice)
+            if (Application == App.Names.SalesInvoice)
+            {
+                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+
+                foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                {
+                    foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+                    {
+                        item_movement.trans_date = Local_SalesInvoice.trans_date;
+                    }
+                }
+            }
+
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+                purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
+
+                foreach (purchase_invoice_detail purchase_invoice_detail in Local_purchase_invoice.purchase_invoice_detail)
+                {
+                    foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+                    {
+                        item_movement.trans_date = Local_purchase_invoice.trans_date;
+                    }
+                }
+            }
+        }
+
+        //add new item movemt for the new detail inserted
+        public void NewMovement(db db, int ID, App.Names Application)
+        {
+            if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
 
@@ -299,79 +261,81 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                    if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
+                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                     {
-                        foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                        if (Oldsales_invoice_detail == null)
                         {
-                            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
-                            {
-                                item_movement.trans_date = Local_SalesInvoice.trans_date;
-                            }
-                        }
+                            Stock stock = new Stock();
+                            entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
+                            List<StockList> Items_InStockLIST = stock.List(sales_invoice_detail.app_location.id_branch, (int)sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
 
+                            db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                     App.Names.SalesInvoice,
+                                                                    sales_invoice_detail.id_sales_invoice,
+                                                                    sales_invoice_detail.id_sales_invoice_detail,
+                                                                    Local_SalesInvoice.id_currencyfx,
+                                                                    sales_invoice_detail.item.item_product.FirstOrDefault(),
+                                                                    (int)sales_invoice_detail.id_location,
+                                                                    sales_invoice_detail.quantity,
+                                                                    Local_SalesInvoice.trans_date,
+                                                                 "Sales Invoice Fix"
+                                                                    ));
+                        }
                     }
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-                purchase_invoice Originalpurchase_invoice;
+                purchase_invoice OriginalPurchaseInvoice;
 
                 using (db temp = new db())
                 {
-                    Originalpurchase_invoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
+                    OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
-                    purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
-                    if (Originalpurchase_invoice.trans_date != Local_purchase_invoice.trans_date)
+                    purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
+                    foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurchaseInvoice.purchase_invoice_detail)
                     {
-                        foreach (purchase_invoice_detail purchase_invoice_detail in Local_purchase_invoice.purchase_invoice_detail)
+                        purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+                        if (Oldpurchase_invoice_detail == null)
                         {
-                            foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+                            purchase_invoice_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice_detail.purchase_invoice.id_branch).FirstOrDefault().id_location; //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
+
+                            List<item_movement_dimension> item_movement_dimensionLIST = null;
+                            if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
                             {
-                                item_movement.trans_date = Local_purchase_invoice.trans_date;
+                                item_movement_dimensionLIST = new List<item_movement_dimension>();
+                                foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
+                                {
+                                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                                    item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
+                                    item_movement_dimension.value = purchase_invoice_dimension.value;
+                                    item_movement_dimensionLIST.Add(item_movement_dimension);
+                                }
                             }
+                            entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
+                            db.item_movement.Add(
+                  Stock.CreditOnly_Movement(
+                       Status.Stock.InStock,
+                       App.Names.PurchaseInvoice,
+                       purchase_invoice_detail.id_purchase_invoice,
+                       purchase_invoice_detail.id_purchase_invoice_detail,
+                       Local_PurchaseInvoice.id_currencyfx,
+                       purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
+                       (int)purchase_invoice_detail.id_location,
+                       purchase_invoice_detail.quantity,
+                       Local_PurchaseInvoice.trans_date,
+                       purchase_invoice_detail.unit_cost,
+                        "Purcahse Invoice Fix", item_movement_dimensionLIST,
+                       purchase_invoice_detail.expiration_date, purchase_invoice_detail.lot_number));
+
+
                         }
-
                     }
                 }
             }
-        }
 
-
-        public void NewMovement(db db, int ID, entity.App.Names Application)
-        {
-            sales_invoice OriginalSalesInvoice;
-
-            using (db temp = new db())
-            {
-                OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
-                sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
-                {
-                    sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
-                    if (Oldsales_invoice_detail == null)
-                    {
-                        Stock stock = new Stock();
-                        entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
-                        List<StockList> Items_InStockLIST = stock.List(sales_invoice_detail.app_location.id_branch, (int)sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
-
-                        db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
-                                                 App.Names.SalesInvoice,
-                                                                sales_invoice_detail.id_sales_invoice,
-                                                                sales_invoice_detail.id_sales_invoice_detail,
-                                                                Local_SalesInvoice.id_currencyfx,
-                                                                sales_invoice_detail.item.item_product.FirstOrDefault(),
-                                                                (int)sales_invoice_detail.id_location,
-                                                                sales_invoice_detail.quantity,
-                                                                Local_SalesInvoice.trans_date,
-                                                             "Sales Invoice Fix"
-                                                                ));
-                    }
-                }
-            }
         }
     }
 }

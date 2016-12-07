@@ -45,6 +45,22 @@ namespace entity
             {
                 if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
                 {
+                    //Data Loading Code. If data is not set, then Cognitivo ERP should try to fill up.
+                    if (purchase_invoice.contact.id_contract == 0)
+                    {
+                        purchase_invoice.contact.id_contract = purchase_invoice.id_contract;
+                    }
+
+                    if (purchase_invoice.contact.id_currency == 0)
+                    {
+                        purchase_invoice.contact.id_currency = purchase_invoice.app_currencyfx.id_currency;
+                    }
+
+                    if (purchase_invoice.contact.id_cost_center == 0 && purchase_invoice.purchase_invoice_detail.FirstOrDefault() != null)
+                    {
+                        purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
+                    }
+                    
                     if (purchase_invoice.State == EntityState.Added)
                     {
                         purchase_invoice.timestamp = DateTime.Now;

@@ -179,23 +179,28 @@ namespace entity
                 {
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
-
-                    foreach (var task in child)
+                    if (Parent_selected==false)
                     {
-                        if (task.status != Status.Project.Rejected)
-                            task.IsSelected = value;
-                    }
+                        foreach (var task in child)
+                        {
+                            if (task.status != Status.Project.Rejected)
+                                task.IsSelected = value;
+                        }
 
-                    if (project != null)
-                    {
-                        project.Update_SelectedCount();
+                        if (project != null)
+                        {
+                            project.Update_SelectedCount();
+                        }
                     }
+                  
 
                 }
             }
         }
         private bool _is_selected;
 
+        [NotMapped]
+        private bool Parent_selected;
         public virtual project project { get; set; }
 
         public virtual item items
@@ -467,6 +472,17 @@ namespace entity
             }
         }
 
+        public void Parent_Selection()
+        {
+            foreach (project_task child_task in child)
+            {
+                if (child_task.IsSelected)
+                {
+                    this.Parent_selected = true;
+                    this.IsSelected = true;
+                }
+            }
+        }
         #endregion
     }
 }

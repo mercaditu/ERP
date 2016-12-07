@@ -22,7 +22,7 @@
 											items.code as Code, 
 											purchase_invoice_detail.item_description as Items,
 											app_cost_center.name as CostCenter,
-											(select Name from item_tag_detail inner join item_tag on item_tag_detail.id_tag=Item_tag.id_tag where item_tag_detail.id_item=items.id_item order by item_tag_detail.is_default limit 0,1 ) as Tag, 
+											(select Name from item_tag_detail inner join item_tag on item_tag_detail.id_tag=item_tag.id_tag where item_tag_detail.id_item=items.id_item order by item_tag_detail.is_default limit 0,1 ) as Tag, 
 											vatco.Vat,
 											projects.name as Project,
 											quantity as Quantity, 

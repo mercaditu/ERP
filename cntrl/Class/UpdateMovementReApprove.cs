@@ -12,43 +12,7 @@ namespace cntrl.Class
 {
     public class UpdateMovementReApprove
     {
-        //public void Start(db db, int ID, entity.App.Names Application)
-        //{
-
-
-        //    //sales_invoice Oldsales_invoice = db.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-        //    //sales_invoice sales_invoice = db.sales_invoice.Find(ID);
-        //    //ValueChange(db, ID, Application);
-        //    //QuantityUP(db, ID, Application);
-        //    //QuantityDown(db, ID, Application);
-        //    //DateChange(db, ID, Application);
-        //    //NewMovement(db, ID, Application);
-
-        //    //List<item_movement> item_movementList = new List<item_movement>();
-        //    //foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
-        //    //{
-        //    //    item_movementList.AddRange(sales_invoice_detail.item_movement);
-        //    //}
-        //    //List<item_movement> item_movementListOld = new List<item_movement>();
-        //    //foreach (sales_invoice_detail sales_invoice_detail in Oldsales_invoice.sales_invoice_detail)
-        //    //{
-        //    //    item_movementListOld.AddRange(sales_invoice_detail.item_movement);
-        //    //}
-        //    //ActionPanel _ActionPanel = new ActionPanel();
-        //    //_ActionPanel.item_movementList = item_movementList;
-        //    //_ActionPanel.item_movementOldList = item_movementListOld;
-
-
-
-        //    //Window window = new Window
-        //    //{
-        //    //    Title = "ReApprove",
-        //    //    Content = _ActionPanel
-        //    //};
-
-        //    //window.ShowDialog();
-
-        //}
+        
         public void ValueChange(db db, int ID, entity.App.Names Application)
         {
             if (Application == App.Names.PurchaseInvoice)

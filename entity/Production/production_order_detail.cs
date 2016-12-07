@@ -116,30 +116,20 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-
                     if (child != null)
                     {
                         if (child.Count() > 0)
                         {
-                            if (child.Where(x => x.IsSelected == value).Count() == 0)
+                            foreach (production_order_detail _child in child)
                             {
-                                foreach (production_order_detail _child in child)
-                                {
-                                    _child.IsSelected = value;
-                                    _child.RaisePropertyChanged("IsSelected");
+                                _child.IsSelected = value;
+                                _child.RaisePropertyChanged("IsSelected");
 
-                                }
                             }
                         }
                     }
+                  
 
-                 
-
-
-                    if (parent != null)
-                    {
-                        parent.IsSelected = value;
-                    }
 
                     if (production_order != null)
                     {

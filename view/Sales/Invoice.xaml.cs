@@ -831,7 +831,14 @@ namespace Cognitivo.Sales
             {
 
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
+                if (sales_invoice!=null)
+                {
+                    int id_sales_invoice = sales_invoice.id_sales_invoice;
+                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == id_sales_invoice).ToList();
+                }
+             
+
+
 
             }
             else

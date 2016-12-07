@@ -1293,7 +1293,7 @@ Fields!Month.Value = 12, "Dec"
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>=Sum(Fields!Cost.Value)</Value>
+                                        <Value>=Fields!Cost.Value</Value>
                                         <Style>
                                           <FontFamily>Courier New</FontFamily>
                                           <FontSize>8pt</FontSize>
@@ -1376,7 +1376,7 @@ Fields!Month.Value = 12, "Dec"
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Sum(Fields!RetailPrice.Value)</Value>
+                                                <Value>=Fields!RetailPrice.Value</Value>
                                                 <Style>
                                                   <FontFamily>Courier New</FontFamily>
                                                   <FontSize>8pt</FontSize>

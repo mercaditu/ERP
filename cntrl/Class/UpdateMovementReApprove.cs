@@ -350,6 +350,81 @@ namespace cntrl.Class
             }
 
         }
+        public void DeleteMovement(db db, int ID, App.Names Application)
+        {
+            if (Application == App.Names.SalesInvoice)
+            {
+                sales_invoice OriginalSalesInvoice;
+
+                using (db temp = new db())
+                {
+                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+
+                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                    {
+                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                        Oldsales_invoice_detail.IsSelected = true;
+                    }
+                    foreach (sales_invoice_detail sales_invoice_detail in OriginalSalesInvoice.sales_invoice_detail.Where(x=>x.IsSelected==false))
+                    {
+                        db.item_movement.RemoveRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail));
+                    }
+                }
+            }
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+
+                sales_invoice OriginalSalesInvoice;
+
+                using (db temp = new db())
+                {
+                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+
+                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                    {
+                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                        Oldsales_invoice_detail.IsSelected = true;
+                    }
+                    foreach (sales_invoice_detail sales_invoice_detail in OriginalSalesInvoice.sales_invoice_detail.Where(x => x.IsSelected == false))
+                    {
+                        List<item_movement> ListItemMovement = db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).ToList();
+                        foreach (item_movement item_movement in ListItemMovement)
+                        {
+                            if (item_movement.child.Count()==0)
+                            {
+
+                                db.item_movement.Remove(item_movement);
+                            }
+                            else
+                            {
+                                foreach (var item in item_movement.child)
+                                {
+
+                                    List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit > 0).ToList();
+                                    foreach (item_movement _item_movement in item_movementList)
+                                    {
+                                        if (_item_movement.avlquantity > item.credit)
+                                        {
+                                            item.parent = _item_movement;
+                                        }
+                                        else
+                                        {
+                                            item.parent = null;
+                                        }
+                                    }
+
+                                }
+                                db.item_movement.Remove(item_movement);
+                            }
+                        }
+                       
+                    }
+                }
+            }
+
+        }
     }
 }
 

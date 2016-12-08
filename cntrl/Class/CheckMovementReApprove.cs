@@ -330,6 +330,25 @@ namespace cntrl.Class
             }
             return "";
         }
-
+        public string CheckDeleteMovement(db db, int ID, entity.App.Names Application)
+        {
+            using (db temp = new db())
+            {
+                sales_invoice Oldsales_invoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                string movmessage = "";
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                if (sales_invoice.sales_invoice_detail.Count() < Oldsales_invoice.sales_invoice_detail.Count)
+                {
+                    movmessage += "Some Movement will Be Deleted";
+                }
+                if (movmessage != "")
+                {
+                    String Message = "You Have Changed The Date So Following Changes Required..\n";
+                    Message += "This Movement Will be Changed..\n" + movmessage;
+                    return Message;
+                }
+            }
+            return "";
+        }
     }
 }

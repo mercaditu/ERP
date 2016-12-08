@@ -272,7 +272,16 @@ namespace Cognitivo.Purchase
                             }
                         }
 
+                        Message = CheckMovementReApprove.CheckDeleteMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
 
+                        if (Message != "")
+                        {
+                            Message += "\n" + "Are You Sure Want To Change The Data..";
+                            if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                UpdateMovementReApprove.DeleteMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
+                            }
+                        }
 
 
                     }

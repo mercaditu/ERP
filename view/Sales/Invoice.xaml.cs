@@ -113,6 +113,8 @@ namespace Cognitivo.Sales
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+           
         }
 
         private async void load_SecondaryDataThread()
@@ -283,6 +285,16 @@ namespace Cognitivo.Sales
                         if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdateMovementReApprove.NewMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                        }
+                    }
+                    Message = CheckMovementReApprove.CheckDeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                    if (Message != "")
+                    {
+                        Message += "\n" + "Are You Sure Want To Change The Data..";
+                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            UpdateMovementReApprove.DeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                         }
                     }
 
@@ -822,15 +834,16 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private  void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            sales_invoice.RaisePropertyChanged("GrandTotal");
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
             {
 
-                sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+           
                 if (sales_invoice!=null)
                 {
                     int id_sales_invoice = sales_invoice.id_sales_invoice;

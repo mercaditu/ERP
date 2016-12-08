@@ -50,43 +50,38 @@ namespace cntrl.Curd
                 payment.id_contact = contacts.id_contact;
                 payment.contact = contacts;
             }
-
-            foreach (payment_schedual payment_schedual in payment_schedualList)
+           
+            foreach (var id in payment_schedualList.GroupBy(x=>x.app_currencyfx).Select(x=> new {x.Key.id_currencyfx}))
             {
-                payment_detail payment_detail = PaymentDB.payment_detail.Find(payment_schedual.id_payment_detail);
-             
-                if (payment_detail == null)
-                {
-                    payment_detail = new payment_detail();
-                    payment_detail.payment = payment;
-                    int id_currencyfx = payment_schedual.id_currencyfx;
 
-                    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
-                    if (app_currencyfx != null)
-                    {
-                        payment_detail.id_currencyfx = id_currencyfx;
-                        payment_detail.payment.id_currencyfx = id_currencyfx;
-                        payment_detail.app_currencyfx = app_currencyfx;
-                    }
+                int id_currencyfx = (int)id.id_currencyfx;
+                payment_detail payment_detail = new payment_detail();
+                    payment_detail.payment = payment;
+                
+
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
+                if (app_currencyfx != null)
+                {
+                    payment_detail.id_currencyfx = id_currencyfx;
+                    payment_detail.payment.id_currencyfx = id_currencyfx;
+                    payment_detail.app_currencyfx = app_currencyfx;
                 }
+
 
                 payment_detail.IsSelected = true;
-                if (payment_detail.payment==null)
-                {
-                    payment_detail.payment = payment;
-                }
-             
+
+
 
                 if (Mode == Modes.Recievable)
                 {
-                    payment_detail.value = payment_schedual.AccountReceivableBalance;
+                    payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountReceivableBalance);
                 }
                 else
                 {
-                    payment_detail.value = payment_schedual.AccountPayableBalance;
+                    payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountPayableBalance);
                 }
 
-                payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
+                
                 payment.payment_detail.Add(payment_detail);
             }
 
@@ -170,17 +165,75 @@ namespace cntrl.Curd
             payment payment = paymentViewSource.View.CurrentItem as payment;
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
             PaymentDB.SaveChanges();
-
-            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
+            List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected).ToList();
+            foreach (payment_detail _payment_detail in payment_detailList)
             {
-                if (Mode == Modes.Recievable)
+                decimal amount = _payment_detail.value;
+
+              
+             
+   
+                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x=>x.id_currencyfx== _payment_detail.id_currencyfx))
                 {
-                    PaymentDB.Approve(payment_detail.id_payment_schedual, true);
+                    if (amount > 0)
+                    {
+
+
+                        int id_currencyfx = payment_schedual.id_currencyfx;
+                        payment_detail payment_detail = new payment_detail();
+                        payment_detail.payment = payment;
+
+
+                        app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
+                        if (app_currencyfx != null)
+                        {
+                            payment_detail.id_currencyfx = id_currencyfx;
+                            payment_detail.payment.id_currencyfx = id_currencyfx;
+                            payment_detail.app_currencyfx = app_currencyfx;
+                        }
+
+
+                        payment_detail.IsSelected = true;
+
+
+
+
+                        if (Mode == Modes.Recievable)
+                        {
+                            if (amount > payment_schedual.AccountReceivableBalance)
+                            {
+                                payment_detail.value = payment_schedual.AccountReceivableBalance;
+                                amount = amount - payment_schedual.AccountReceivableBalance;
+                            }
+                            else
+                            {
+                                payment_detail.value = amount;
+                                amount = 0;
+                            }
+
+                        }
+                        else
+                        {
+                            if (amount > payment_schedual.AccountPayableBalance)
+                            {
+                                payment_detail.value = payment_schedual.AccountPayableBalance;
+                                amount = amount - payment_schedual.AccountPayableBalance;
+                            }
+                            else
+                            {
+                                payment_detail.value = amount;
+                                amount = 0;
+                            }
+                        }
+                        payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
+
+                        payment.payment_detail.Add(payment_detail);
+                        PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                    }
                 }
-                else
-                {
-                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
-                }
+                payment.payment_detail.Remove(_payment_detail);
+
+
             }
             lblCancel_MouseDown(null, null);
         }

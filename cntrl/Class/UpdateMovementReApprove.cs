@@ -56,7 +56,8 @@ namespace cntrl.Class
                         {
                             //find the diffrence between actual detail and old detail. If Positive, then Qty is Up. If Negative then Qty is Down.
                             decimal Diff = LocalDetail.quantity - RemoteDetail.quantity;
-                            foreach (item_movement item_movement in LocalDetail.item_movement)
+                            List<item_movement> item_movementlist = LocalDetail.item_movement.ToList();
+                            foreach (item_movement item_movement in item_movementlist)
                             {
                                 //if parent is null then change the quantity
                                 if (item_movement.parent == null)
@@ -65,30 +66,36 @@ namespace cntrl.Class
                                 }
                                 else
                                 {
-                                    //if   parent balance qunatity is greater then the diffrence then change the quantity     
-                                    if ((item_movement.parent.credit - item_movement.parent.child.Sum(x => x.debit)) > Diff)
+                                    if (Diff>0)
                                     {
-                                        item_movement.debit = LocalDetail.quantity;
-                                    }
-                                    else
-                                    {
-                                        //where is new item movement to hold the difference??
-                                        //if diffrance is greater then the find the new parent
-                                        item_movement.debit = LocalDetail.quantity;
-                                        Stock stock = new Stock();
-                                        List<StockList> Items_InStockLIST = stock.List(LocalDetail.app_location.id_branch, (int)LocalDetail.id_location, LocalDetail.item.item_product.FirstOrDefault().id_item_product);
-                                        foreach (StockList StockList in Items_InStockLIST)
+                                        //if   parent balance qunatity is greater then the diffrence then change the quantity     
+                                        if ((item_movement.parent.credit - item_movement.parent.child.Sum(x => x.debit)) > Diff)
                                         {
-                                            item_movement new_movement = new item_movement();
-                                            new_movement.debit = StockList.QtyBalance - Diff;
-                                            new_movement.id_sales_invoice_detail = LocalDetail.id_sales_invoice_detail;
+                                            item_movement.debit = LocalDetail.quantity;
+                                        }
+                                        else
+                                        {
+                                            //where is new item movement to hold the difference??
+                                            //if diffrance is greater then the find the new parent
+                                            Stock stock = new Stock();
+                                            entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
+                                            List<StockList> Items_InStockLIST = stock.List(LocalDetail.app_location.id_branch, (int)LocalDetail.id_location, LocalDetail.item.item_product.FirstOrDefault().id_item_product);
 
-                                            if (StockList.QtyBalance > item_movement.debit)
-                                            {
-                                                item_movement.parent = db.item_movement.Where(x => x.id_movement == StockList.MovementID).FirstOrDefault();
-                                            }
+                                            db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                                     App.Names.SalesInvoice,
+                                                                                    LocalDetail.id_sales_invoice,
+                                                                                    LocalDetail.id_sales_invoice_detail,
+                                                                                    LocalCopy.id_currencyfx,
+                                                                                    LocalDetail.item.item_product.FirstOrDefault(),
+                                                                                    (int)LocalDetail.id_location,
+                                                                                    Diff,
+                                                                                    LocalCopy.trans_date,
+                                                                                 "Sales Invoice Fix"
+                                                                                    ));
+                                            Diff = 0;
                                         }
                                     }
+                                   
 
 
                                 }

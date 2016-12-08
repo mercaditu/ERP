@@ -162,7 +162,7 @@ namespace cntrl.Class
 
                     Value = OriginalSalesInvoice.payment_schedual.Sum(x => x.debit) - Local_SalesInvoice.GrandTotal;
 
-                    Decimal Balance = OriginalSalesInvoice.payment_schedual.Where(x => x.credit > 0).Sum(x => x.credit);
+                    Decimal Balance = OriginalSalesInvoice.payment_schedual.Sum(x => x.AccountReceivableBalance);
                     if (Balance >= Value)
                     {
 
@@ -176,14 +176,19 @@ namespace cntrl.Class
                     }
                     else
                     {
+                        payment_schedual payment_schedual = Local_SalesInvoice.payment_schedual.Where(x => x.debit > 0).LastOrDefault();
+                        if (payment_schedual != null)
+                        {
+                            payment_schedual.credit = payment_schedual.credit - Value;
 
+                        }
                         List<payment_schedual> oldSchedual = Local_SalesInvoice.payment_schedual.ToList();
                         List<payment> oldpayment = new List<payment>();
-                        foreach (payment_schedual payment_schedual in oldSchedual)
+                        foreach (payment_schedual _payment_schedual in oldSchedual)
                         {
-                            if (payment_schedual.payment_detail != null)
+                            if (_payment_schedual.payment_detail != null)
                             {
-                                oldpayment.Add(payment_schedual.payment_detail.payment);
+                                oldpayment.Add(_payment_schedual.payment_detail.payment);
 
                             }
 
@@ -209,7 +214,7 @@ namespace cntrl.Class
 
                     Value = OriginalPurcahseInvoice.payment_schedual.Sum(x => x.credit) - Local_purchase_invoice.GrandTotal;
 
-                    Decimal Balance = OriginalPurcahseInvoice.payment_schedual.Where(x => x.debit > 0).Sum(x => x.debit);
+                    Decimal Balance = OriginalPurcahseInvoice.payment_schedual.Sum(x=>x.AccountPayableBalance);
                     if (Balance >= Value)
                     {
 
@@ -223,14 +228,19 @@ namespace cntrl.Class
                     }
                     else
                     {
+                        payment_schedual payment_schedual = Local_purchase_invoice.payment_schedual.Where(x => x.credit > 0).LastOrDefault();
+                        if (payment_schedual != null)
+                        {
+                            payment_schedual.credit = payment_schedual.credit - Value;
 
+                        }
                         List<payment_schedual> oldSchedual = Local_purchase_invoice.payment_schedual.ToList();
                         List<payment> oldpayment = new List<payment>();
-                        foreach (payment_schedual payment_schedual in oldSchedual)
+                        foreach (payment_schedual _payment_schedual in oldSchedual)
                         {
-                            if (payment_schedual.payment_detail != null)
+                            if (_payment_schedual.payment_detail != null)
                             {
-                                oldpayment.Add(payment_schedual.payment_detail.payment);
+                                oldpayment.Add(_payment_schedual.payment_detail.payment);
 
                             }
 

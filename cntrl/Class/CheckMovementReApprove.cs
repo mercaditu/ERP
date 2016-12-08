@@ -29,7 +29,7 @@ namespace cntrl.Class
                     foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                     {
                         sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        if(sales_invoice_detail.unit_price!= Oldsales_invoice_detail.unit_price)
+                        if (sales_invoice_detail.unit_price != Oldsales_invoice_detail.unit_price)
                         {
 
                             foreach (item_movement item_movement in sales_invoice_detail.item_movement)
@@ -202,10 +202,9 @@ namespace cntrl.Class
                                 if (Diff < 0)
                                 {
 
-                                    foreach (item_movement item_movement in sales_invoice_detail.item_movement)
-                                    {
-                                        movmessage += item_movement.credit + "-->" + sales_invoice_detail.quantity;
-                                    }
+
+                                    movmessage += sales_invoice_detail.item_movement.Sum(x => x.credit) + "-->" + sales_invoice_detail.quantity;
+
                                 }
                             }
                         }

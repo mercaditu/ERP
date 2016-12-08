@@ -719,6 +719,7 @@ namespace Cognitivo.Production
             }
         }
 
+     
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

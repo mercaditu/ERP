@@ -14,7 +14,7 @@ namespace Cognitivo.Converters
 
                 entity.Status.Project status = (entity.Status.Project)value;
 
-                if (status == entity.Status.Project.Management_Approved)
+                if (status == entity.Status.Project.Management_Approved )
                 {
                     return true;
                 }

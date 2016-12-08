@@ -42,8 +42,8 @@ namespace Cognitivo.Project
                 {
                     project_task.parent.Parent_Selection();
                 }
-                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && x.status == Status.Project.Approved).ToList();
-              
+                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved || x.status==null)).ToList();
+                
                 if (project_task.Count() > 0)
                 {
                     crud_modal.Visibility = Visibility.Visible;

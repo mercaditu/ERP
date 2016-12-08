@@ -655,12 +655,13 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
             {
-                if (production_order_detail.parent != null)
+                if (production_order_detail.item.id_item_type!=item.item_type.Task)
                 {
-                    production_order_detail.parent.status = Status.Production.Approved;
+                    production_order_detail.status = Status.Production.Approved;
                 }
+               
 
-                production_order_detail.status = Status.Production.Approved;
+               
             }
 
             if (OrderDB.SaveChanges() > 0)
@@ -677,7 +678,10 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
-                production_order_detail.status = entity.Status.Production.QA_Rejected;
+                if (production_order_detail.item.id_item_type != item.item_type.Task)
+                {
+                    production_order_detail.status = entity.Status.Production.QA_Rejected;
+                }
             }
             OrderDB.SaveChanges();
         }

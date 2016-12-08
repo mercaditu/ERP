@@ -146,7 +146,7 @@
 					<HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
 											  ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
+											   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 											   HorizontalAlignment="Stretch"
 											   IsInput="{Binding is_input, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											   Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

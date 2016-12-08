@@ -106,7 +106,7 @@
 												  Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
 								</Grid>
 
-								<cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="0,44,0,0"  
+								<cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="10,58,-10,-14"  
 														VirtualizingPanel.VirtualizationMode="Recycling" 
 														VirtualizingPanel.IsVirtualizing="True" 
 														ScrollViewer.CanContentScroll="True" >

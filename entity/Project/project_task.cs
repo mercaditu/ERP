@@ -183,7 +183,7 @@ namespace entity
                     {
                         foreach (var task in child)
                         {
-                            if (task.status != Status.Project.Rejected)
+                            if (task.status != Status.Project.Rejected || task.status==null)
                                 task.IsSelected = value;
                         }
 

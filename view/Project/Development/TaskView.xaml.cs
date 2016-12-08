@@ -175,13 +175,17 @@ namespace Cognitivo.Project.Development
 
                     }
                     // project_task.number = number;
-                    if (project_task.status == Status.Project.Management_Approved)
+                    if (project_task.items.id_item_type!=item.item_type.Task)
                     {
-                        if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
+                        if (project_task.status == Status.Project.Management_Approved)
                         {
-                            project_task.status = Status.Project.Approved;
+                            if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
+                            {
+                                project_task.status = Status.Project.Approved;
+                            }
                         }
                     }
+                   
 
                     project_task.IsSelected = false;
                 }
@@ -202,7 +206,10 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in project_taskLIST)
                 {
-                    project_task.status = Status.Project.Rejected;
+                    if (project_task.items.id_item_type != item.item_type.Task)
+                    {
+                        project_task.status = Status.Project.Rejected;
+                    }
                     project_task.IsSelected = false;
                 }
 
@@ -404,10 +411,13 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    if (project_task.status == Status.Project.Pending || project_task.status == null)
+                    if (project_task.items.id_item_type != item.item_type.Task)
                     {
-                        project_task.status = Status.Project.Management_Approved;
-                        ProjectTaskDB.NumberOfRecords += 1;
+                        if (project_task.status == Status.Project.Pending || project_task.status == null)
+                        {
+                            project_task.status = Status.Project.Management_Approved;
+                            ProjectTaskDB.NumberOfRecords += 1;
+                        }
                     }
 
                     project_task.IsSelected = false;
@@ -434,13 +444,19 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in project_taskLIST)
                 {
-                    project_task.status = Status.Project.Rejected;
+                    if (project_task.items.id_item_type != item.item_type.Task)
+                    {
+                        project_task.status = Status.Project.Rejected;
+                    }
                     ProjectTaskDB.NumberOfRecords += 1;
                     project_task.IsSelected = false;
 
                     foreach (production_order_detail production_order_detail in project_task.production_order_detail)
                     {
-                        production_order_detail.status = Status.Production.Anull;
+                        if (production_order_detail.item.id_item_type != item.item_type.Task)
+                        {
+                            production_order_detail.status = Status.Production.Anull;
+                        }
                     }
                 }
 

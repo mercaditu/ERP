@@ -87,7 +87,7 @@
 						<Label Style="{StaticResource input_label}" Content="{lex:Loc StartDate}" />
 						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 							<DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-							<toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="hh:mm" />
+							<toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="hh:mmtt" />
 						</StackPanel>
 
 						<Label Style="{StaticResource input_label}" Content="{lex:Loc EndDate}" />

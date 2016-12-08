@@ -311,22 +311,26 @@ namespace cntrl.Class
         }
         public string CheckNewMovement(db db, int ID, entity.App.Names Application)
         {
-            sales_invoice Oldsales_invoice = db.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-            string movmessage = "";
-            sales_invoice sales_invoice = db.sales_invoice.Find(ID);
-            foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
+            using (db temp = new db())
             {
-                sales_invoice_detail Oldsales_invoice_detail = Oldsales_invoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
-                if (Oldsales_invoice_detail == null)
+                sales_invoice Oldsales_invoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
+                string movmessage = "";
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
                 {
-                    movmessage += "New Movement will Be created";
+                    sales_invoice_detail Oldsales_invoice_detail = Oldsales_invoice.sales_invoice_detail.Where(x => x == sales_invoice_detail).FirstOrDefault();
+                    if (Oldsales_invoice_detail == null)
+                    {
+                        movmessage += "New Movement will Be created";
+                    }
+                   
                 }
-            }
-            if (movmessage != "")
-            {
-                String Message = "You Have Changed The Date So Following Changes Required..\n";
-                Message += "This Movement Will be Changed..\n" + movmessage;
-                return Message;
+                if (movmessage != "")
+                {
+                    String Message = "You Have Changed The Date So Following Changes Required..\n";
+                    Message += "This Movement Will be Changed..\n" + movmessage;
+                    return Message;
+                }
             }
             return "";
         }

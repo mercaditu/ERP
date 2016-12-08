@@ -282,6 +282,16 @@ namespace cntrl.Class
                         {
                             Stock stock = new Stock();
                             entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
+                            if (sales_invoice_detail.id_location == null)
+                            {
+                                sales_invoice_detail.id_location = Stock.FindNFix_Location(sales_invoice_detail.item.item_product.FirstOrDefault(), sales_invoice_detail.app_location, Local_SalesInvoice.app_branch);
+                                sales_invoice_detail.app_location = db.app_location.Find(sales_invoice_detail.id_location);
+                            }
+                            else
+                            {
+                                sales_invoice_detail.app_location = db.app_location.Find(sales_invoice_detail.id_location);
+                            }
+                        
                             List<StockList> Items_InStockLIST = stock.List(sales_invoice_detail.app_location.id_branch, (int)sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
 
                             db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,

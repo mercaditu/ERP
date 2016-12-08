@@ -95,10 +95,12 @@ namespace entity
                 if (child!=null)
                 {
                     _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
+                    RaisePropertyChanged("avlquantity");
                 }
                 else
                 {
                     _avlquantity = credit;
+                    RaisePropertyChanged("avlquantity");
                 }
 
                

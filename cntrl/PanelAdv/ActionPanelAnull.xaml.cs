@@ -141,10 +141,10 @@ namespace cntrl.PanelAdv
                     foreach (var item in item_movement.child)
                     {
                       
-                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement).ToList();
+                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit>0).ToList();
                         foreach (item_movement _item_movement in item_movementList)
                         {
-                            if (item_movement.avlquantity > item.credit)
+                            if (_item_movement.avlquantity > item.credit)
                             {
                                 item.parent = _item_movement;
                             }

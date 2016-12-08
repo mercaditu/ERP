@@ -15,7 +15,7 @@ namespace cntrl.Class
 
         public string CheckValueChange(db db, int ID, entity.App.Names Application)
         {
-            if (Application==App.Names.SalesInvoice)
+            if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
                 string movmessage = "";
@@ -29,6 +29,7 @@ namespace cntrl.Class
                     foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                     {
                         sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                        if(sales_invoice_detail.unit_price!= Oldsales_invoice_detail.unit_price)
                         {
 
                             foreach (item_movement item_movement in sales_invoice_detail.item_movement)
@@ -65,6 +66,7 @@ namespace cntrl.Class
                     foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurcahseInvoice.purchase_invoice_detail)
                     {
                         purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+                        if (purchase_invoice_detail.unit_cost != Oldpurchase_invoice_detail.unit_cost)
                         {
 
                             foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
@@ -87,7 +89,7 @@ namespace cntrl.Class
                     return movmessage;
                 }
             }
-           
+
             return "";
 
         }
@@ -234,7 +236,7 @@ namespace cntrl.Class
 
                                     foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
                                     {
-                                        movmessage += item_movement.debit + "-->" + purchase_invoice_detail.quantity;
+                                        movmessage += item_movement.credit + "-->" + purchase_invoice_detail.quantity;
                                     }
                                 }
                             }

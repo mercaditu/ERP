@@ -181,36 +181,42 @@ namespace cntrl.Class
 
                             decimal Diff = Oldpurchase_invoice_detail.quantity - purchase_invoice_detail.quantity;
 
-                            List<item_movement> MovementList = purchase_invoice_detail.item_movement.ToList();
-
-                            foreach (item_movement item_movement in MovementList)
+                            if (Diff > 0)
                             {
-                                if ((item_movement.credit - item_movement.child.Sum(x => x.debit)) > Diff)
-                                {
-                                    item_movement.credit = purchase_invoice_detail.quantity;
 
-                                }
-                                else
+
+                                List<item_movement> MovementList = purchase_invoice_detail.item_movement.ToList();
+
+                                foreach (item_movement item_movement in MovementList)
                                 {
-                                    foreach (item_movement Child in item_movement.child)
+                                    if ((item_movement.credit - item_movement.child.Sum(x => x.debit)) > Diff)
                                     {
-                                        int id_item_product = purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
-                                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == id_item_product && x.id_movement != item_movement.id_movement).ToList();
-                                        foreach (item_movement _item_movement in item_movementList)
+                                        item_movement.credit = purchase_invoice_detail.quantity;
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in item_movement.child)
                                         {
-                                            if (item_movement.avlquantity > Child.credit)
+
+                                            List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit > 0).ToList();
+                                            foreach (item_movement _item_movement in item_movementList)
                                             {
-                                                Child.parent = _item_movement;
+                                                if (_item_movement.avlquantity > item.credit)
+                                                {
+                                                    item.parent = _item_movement;
+                                                }
+                                                else
+                                                {
+                                                    item.parent = null;
+                                                }
                                             }
-                                            else
-                                            {
-                                                Child.parent = null;
-                                            }
+
                                         }
                                     }
+
+
                                 }
-
-
                             }
 
                         }

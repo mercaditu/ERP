@@ -50,14 +50,14 @@ namespace cntrl.Curd
                 payment.id_contact = contacts.id_contact;
                 payment.contact = contacts;
             }
-           
-            foreach (var id in payment_schedualList.GroupBy(x=>x.app_currencyfx).Select(x=> new {x.Key.id_currencyfx}))
+
+            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currencyfx }))
             {
 
                 int id_currencyfx = (int)id.id_currencyfx;
                 payment_detail payment_detail = new payment_detail();
-                    payment_detail.payment = payment;
-                
+                payment_detail.payment = payment;
+
 
                 app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
                 if (app_currencyfx != null)
@@ -81,7 +81,7 @@ namespace cntrl.Curd
                     payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountPayableBalance);
                 }
 
-                
+
                 payment.payment_detail.Add(payment_detail);
             }
 
@@ -134,7 +134,7 @@ namespace cntrl.Curd
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
                 stackDocument.Visibility = Visibility.Visible;
             }
-            
+
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (payment != null)
             {
@@ -170,10 +170,10 @@ namespace cntrl.Curd
             {
                 decimal amount = _payment_detail.value;
 
-              
-             
-   
-                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x=>x.id_currencyfx== _payment_detail.id_currencyfx))
+
+
+
+                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.id_currencyfx == _payment_detail.id_currencyfx))
                 {
                     if (amount > 0)
                     {
@@ -198,42 +198,29 @@ namespace cntrl.Curd
 
 
 
-                        if (Mode == Modes.Recievable)
-                        {
-                            if (amount > payment_schedual.AccountReceivableBalance)
-                            {
-                                payment_detail.value = payment_schedual.AccountReceivableBalance;
-                                amount = amount - payment_schedual.AccountReceivableBalance;
-                            }
-                            else
-                            {
-                                payment_detail.value = amount;
-                                amount = 0;
-                            }
 
-                        }
-                        else
-                        {
-                            if (amount > payment_schedual.AccountPayableBalance)
-                            {
-                                payment_detail.value = payment_schedual.AccountPayableBalance;
-                                amount = amount - payment_schedual.AccountPayableBalance;
-                            }
-                            else
-                            {
-                                payment_detail.value = amount;
-                                amount = 0;
-                            }
-                        }
+                        payment_detail.value = amount;
+
                         payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-
+                        payment_detail.IsSelected = true;
                         payment.payment_detail.Add(payment_detail);
-                        PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+
                     }
                 }
                 payment.payment_detail.Remove(_payment_detail);
 
 
+            }
+            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
+            {
+                if (Mode == Modes.Recievable)
+                {
+                    PaymentDB.Approve(payment_detail.id_payment_schedual, true);
+                }
+                else
+                {
+                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                }
             }
             lblCancel_MouseDown(null, null);
         }
@@ -265,7 +252,7 @@ namespace cntrl.Curd
                             //If Payable, then Hide->Sales and Show->Payment
                             stpcreditsales.Visibility = Visibility.Collapsed;
                             stpcreditpurchase.Visibility = Visibility.Visible;
-                            
+
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
                             purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.payment_schedual.Sum(y => y.debit) < x.payment_schedual.Sum(y => y.credit)));
                         }
@@ -354,27 +341,27 @@ namespace cntrl.Curd
         private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-                if (salesreturnComboBox.Data != null)
+            if (salesreturnComboBox.Data != null)
+            {
+                CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+                sales_return sales_return = (sales_return)salesreturnComboBox.Data;
+                salesreturnComboBox.Text = sales_return.number;
+                decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
+                payment_detail.id_sales_return = sales_return.id_sales_return;
+
+                if (payment_detail.value > return_value)
                 {
-                    CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-                    payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                    sales_return sales_return = (sales_return)salesreturnComboBox.Data;
-                    salesreturnComboBox.Text = sales_return.number;
-                    decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
-                    payment_detail.id_sales_return = sales_return.id_sales_return;
 
-                    if (payment_detail.value > return_value)
-                    {
-
-                        payment_detail.value = return_value;
-                        payment_detail.RaisePropertyChanged("value");
-                    }
-                    else
-                    {
-                        payment_detail.value = payment_detail.value;
-                        payment_detail.RaisePropertyChanged("value");
-                    }
+                    payment_detail.value = return_value;
+                    payment_detail.RaisePropertyChanged("value");
                 }
+                else
+                {
+                    payment_detail.value = payment_detail.value;
+                    payment_detail.RaisePropertyChanged("value");
+                }
+            }
         }
 
         #endregion

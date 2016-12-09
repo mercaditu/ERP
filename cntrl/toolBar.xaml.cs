@@ -184,7 +184,7 @@ namespace cntrl
             else //annul
             {
                 IsEditable = false;
-                Edit_IsEnabled = true;
+                Edit_IsEnabled = false;
                 Delete_IsEnabled = false;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = false;

@@ -80,8 +80,16 @@ namespace Cognitivo.Menu
                     await Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
                     return;
                 }
-
+             
                 if (CurrentSession.Id_Company == 0)
+                {
+                    await Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        myFrame.Navigate(new Configs.Settings());
+                        return;
+                    }));
+                }
+                if (CurrentSession.Id_Branch== 0)
                 {
                     await Dispatcher.BeginInvoke((Action)(() =>
                     {

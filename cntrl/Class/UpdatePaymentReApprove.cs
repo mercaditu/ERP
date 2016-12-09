@@ -44,7 +44,10 @@ namespace cntrl.Class
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
-                        db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        if (payment_detail.app_account != null)
+                        {
+                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        }
 
                     }
                     db.payment_detail.RemoveRange(payment.payment_detail);
@@ -81,7 +84,11 @@ namespace cntrl.Class
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
-                        db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        if (payment_detail.app_account!=null)
+                        {
+                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        }
+                
 
                     }
                     db.payment_detail.RemoveRange(payment.payment_detail);
@@ -284,7 +291,11 @@ namespace cntrl.Class
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
-                        db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        if (payment_detail.app_account!=null)
+                        {
+                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+
+                        }
 
                     }
                     db.payment_detail.RemoveRange(payment.payment_detail);
@@ -321,7 +332,10 @@ namespace cntrl.Class
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
-                        db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        if (payment_detail.app_account != null)
+                        {
+                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        }
 
                     }
                     db.payment_detail.RemoveRange(payment.payment_detail);

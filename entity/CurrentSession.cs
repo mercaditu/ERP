@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
+
 namespace entity
 {
     public static class CurrentSession
@@ -66,7 +67,9 @@ namespace entity
             {
                 if (_Id_Branch == 0)
                 {
+
                     _Id_Branch = Properties.Settings.Default.branch_ID;
+                   
                 }
                 return _Id_Branch;
             }
@@ -141,6 +144,18 @@ namespace entity
                 UserRole = Role;
                 Version = Role.Version;
 
+                if (_Id_Branch == 0)
+                {
+                    using (db db = new db())
+                    {
+                        _Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).FirstOrDefault().id_branch;
+                    }
+
+                    Properties.Settings.Default.branch_ID = _Id_Branch;
+                    Properties.Settings.Default.Save();
+
+                }
+
                 Properties.Settings.Default.user_Name = User.name_full;
                 Properties.Settings.Default.Save();
 
@@ -199,7 +214,7 @@ namespace entity
                 Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Currency_Default = Currencies.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
                 CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                
+
                 SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();

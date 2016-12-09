@@ -13,6 +13,7 @@ namespace entity.BrilloQuery
     {
         public int ID { get; set; }
         public string code { get; set; }
+        public string Name { get; set; }
         public string number { get; set; }
         public string comment { get; set; }
         public string Balance { get; set; }
@@ -20,16 +21,17 @@ namespace entity.BrilloQuery
     public class SalesRetrunQuery : IDisposable
     {
         public ICollection<Return> List { get; set; }
-        public SalesRetrunQuery()
+        public SalesRetrunQuery(int ContactID)
         {
             List = new List<Return>();
 
             string query = @" SELECT 
     sr.id_sales_return AS ID,
-    code AS Code,
+    sr.code AS Code,
     sr.comment AS Comment,
     sr.number AS Number
-   ,sum((srd.quantity * srd.unit_price * (vatco.vat + 1)))-sum(payment_schedual.credit) as Balance
+   ,Round(sum((srd.quantity * srd.unit_price * (vatco.vat + 1)))-sum(payment_schedual.credit),2) as Balance,
+    contacts.name as Name
 FROM
     sales_return_detail as srd
  
@@ -45,11 +47,12 @@ FROM
 							  inner join sales_return as sr on srd.id_sales_return = sr.id_sales_return
         left outer join
     payment_schedual ON sr.id_sales_return = payment_schedual.id_sales_return
-   where (sr.id_company = {0} ) 
+inner join contacts on sr.id_contact=contacts.id_contact
+   where (sr.id_company = {0} and sr.status=2 and sr.id_contact={1} ) 
     group by sr.id_sales_return";     
                                
 
-            query = String.Format(query, entity.CurrentSession.Id_Company);
+            query = String.Format(query, entity.CurrentSession.Id_Company,ContactID);
 
             using (DataTable dt = QueryExecutor.DT(query))
             {
@@ -59,6 +62,7 @@ FROM
 
                     Return.ID = Convert.ToInt16(DataRow["ID"]);
                     Return.code = Convert.ToString(DataRow["Code"]);
+                    Return.Name = Convert.ToString(DataRow["Name"]);
                     Return.comment = Convert.ToString(DataRow["Comment"]);
                     Return.number = Convert.ToString(DataRow["Number"]);
                     Return.Balance = Convert.ToString(DataRow["Balance"]);
@@ -89,16 +93,16 @@ FROM
     public class PurchaseReturnQuery : IDisposable
     {
         public ICollection<Return> List { get; set; }
-        public PurchaseReturnQuery()
+        public PurchaseReturnQuery(int ContactID)
         {
             List = new List<Return>();
 
             string query = @" SELECT 
     pr.id_purchase_return AS ID,
-    code AS Code,
+    pr.code AS Code,
     pr.comment AS Comment,
     pr.number AS Number
-   ,sum((prd.quantity * prd.unit_cost * (vatco.vat + 1)))-sum(payment_schedual.debit) as Balance
+   ,Round(sum((prd.quantity * prd.unit_cost * (vatco.vat + 1)))-sum(payment_schedual.debit),2) as Balance,  contacts.name as Name
 FROM
     purchase_return_detail as prd
  
@@ -114,12 +118,14 @@ FROM
 							  inner join purchase_return as pr on prd.id_purchase_return = pr.id_purchase_return
         left outer join
     payment_schedual ON pr.id_purchase_return = payment_schedual.id_purchase_return
-   where (pr.id_company = {0} ) 
+inner join contacts on pr.id_contact=contacts.id_contact
+
+   where (pr.id_company = {0} and pr.status=2 and pr.id_contact={1} ) 
+
     group by pr.id_purchase_return";
 
 
-            query = String.Format(query, entity.CurrentSession.Id_Company);
-
+            query = String.Format(query, entity.CurrentSession.Id_Company, ContactID);
             using (DataTable dt = QueryExecutor.DT(query))
             {
                 foreach (DataRow DataRow in dt.Rows)
@@ -128,6 +134,7 @@ FROM
 
                     Return.ID = Convert.ToInt16(DataRow["ID"]);
                     Return.code = Convert.ToString(DataRow["Code"]);
+                    Return.Name = Convert.ToString(DataRow["Name"]);
                     Return.comment = Convert.ToString(DataRow["Comment"]);
                     Return.number = Convert.ToString(DataRow["Number"]);
                     Return.Balance = Convert.ToString(DataRow["Balance"]);

@@ -56,10 +56,11 @@
                               HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource returnViewSource}}" 
                               IsReadOnly="True" MouseDoubleClick="ReturnGrid_MouseDoubleClick">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number}" FontWeight="Bold" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Comment}" Binding="{Binding comment}" FontWeight="Bold" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Balance}" FontWeight="Bold" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Balance}" Binding="{Binding Balance}" FontWeight="Bold" Width="auto"/>
                     
                         </DataGrid.Columns>
                     </DataGrid>

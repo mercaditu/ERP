@@ -38,10 +38,9 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>6</ColSpan>
+                  <ColSpan>5</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
@@ -80,10 +79,9 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>6</ColSpan>
+                  <ColSpan>5</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
@@ -122,10 +120,9 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>6</ColSpan>
+                  <ColSpan>5</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
               <TablixCornerCell />
@@ -323,46 +320,6 @@
                   </Textbox>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox90">
-                    <CanGrow>true</CanGrow>
-                    <CanShrink>true</CanShrink>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Retail Price</Value>
-                            <Style>
-                              <FontFamily>Courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Right</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox90</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>White</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BottomBorder>
-                        <Color>Black</Color>
-                      </BottomBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
             </TablixCornerRow>
           </TablixCornerRows>
         </TablixCorner>
@@ -376,6 +333,9 @@
             </TablixColumn>
             <TablixColumn>
               <Width>0.69271in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.88542in</Width>
@@ -507,6 +467,44 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox6">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>#3498db</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#3498db</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox47">
                       <CanGrow>true</CanGrow>
                       <CanShrink>true</CanShrink>
@@ -560,7 +558,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RunningValue(Fields!Stock.Value, Sum, "Code") + Fields!Sales.Value</Value>
+                              <Value>=RunningValue(iif(Fields!Stock.Value is nothing,0,Fields!Stock.Value), Sum, "Code") + Fields!Sales.Value</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -660,6 +658,42 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="RetailPrice">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!RetailPrice.Value)</Value>
+                              <Style>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>RetailPrice</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>White</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -999,6 +1033,48 @@ Fields!Month.Value = 12, "Dec"
                             </CellContents>
                           </TablixHeader>
                         </TablixMember>
+                        <TablixMember>
+                          <TablixHeader>
+                            <Size>0.19271in</Size>
+                            <CellContents>
+                              <Textbox Name="Textbox4">
+                                <CanGrow>true</CanGrow>
+                                <KeepTogether>true</KeepTogether>
+                                <Paragraphs>
+                                  <Paragraph>
+                                    <TextRuns>
+                                      <TextRun>
+                                        <Value>Retail Price</Value>
+                                        <Style>
+                                          <FontFamily>Courier New</FontFamily>
+                                          <FontSize>8pt</FontSize>
+                                          <FontWeight>Bold</FontWeight>
+                                        </Style>
+                                      </TextRun>
+                                    </TextRuns>
+                                    <Style>
+                                      <TextAlign>Right</TextAlign>
+                                    </Style>
+                                  </Paragraph>
+                                </Paragraphs>
+                                <rd:DefaultName>Textbox4</rd:DefaultName>
+                                <Style>
+                                  <Border>
+                                    <Color>White</Color>
+                                    <Style>Solid</Style>
+                                  </Border>
+                                  <BottomBorder>
+                                    <Color>Black</Color>
+                                  </BottomBorder>
+                                  <PaddingLeft>2pt</PaddingLeft>
+                                  <PaddingRight>2pt</PaddingRight>
+                                  <PaddingTop>2pt</PaddingTop>
+                                  <PaddingBottom>2pt</PaddingBottom>
+                                </Style>
+                              </Textbox>
+                            </CellContents>
+                          </TablixHeader>
+                        </TablixMember>
                       </TablixMembers>
                       <Visibility>
                         <Hidden>true</Hidden>
@@ -1154,7 +1230,7 @@ Fields!Month.Value = 12, "Dec"
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>5.22917in</Size>
+                    <Size>4.22917in</Size>
                     <CellContents>
                       <Textbox Name="Textbox26">
                         <CanGrow>true</CanGrow>
@@ -1364,50 +1440,7 @@ Fields!Month.Value = 12, "Dec"
                                 </CellContents>
                               </TablixHeader>
                               <TablixMembers>
-                                <TablixMember>
-                                  <TablixHeader>
-                                    <Size>1in</Size>
-                                    <CellContents>
-                                      <Textbox Name="RetailPrice">
-                                        <CanGrow>true</CanGrow>
-                                        <CanShrink>true</CanShrink>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>=Fields!RetailPrice.Value</Value>
-                                                <Style>
-                                                  <FontFamily>Courier New</FontFamily>
-                                                  <FontSize>8pt</FontSize>
-                                                  <Format>N2</Format>
-                                                </Style>
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Right</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>RetailPrice</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>#ebf5fb</Color>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <BackgroundColor>#ebf5fb</BackgroundColor>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixHeader>
-                                  <TablixMembers>
-                                    <TablixMember />
-                                  </TablixMembers>
-                                </TablixMember>
+                                <TablixMember />
                               </TablixMembers>
                             </TablixMember>
                           </TablixMembers>
@@ -1426,7 +1459,7 @@ Fields!Month.Value = 12, "Dec"
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.18228in</Height>
-        <Width>9.73438in</Width>
+        <Width>9.71863in</Width>
         <Style>
           <Border>
             <Style>None</Style>

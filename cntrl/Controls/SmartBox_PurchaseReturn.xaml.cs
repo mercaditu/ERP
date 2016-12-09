@@ -21,6 +21,13 @@ namespace cntrl.Controls
             set { SetValue(TextProperty, value); }
         }
 
+        public static readonly DependencyProperty ContactIDProperty = DependencyProperty.Register("ContactID", typeof(int), typeof(SmartBox_PurchaseReturn));
+        public int ContactID
+        {
+            get { return Convert.ToInt32(GetValue(ContactIDProperty)); }
+            set { SetValue(ContactIDProperty, value); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
@@ -71,7 +78,7 @@ namespace cntrl.Controls
             LoadData();
 
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
-
+            Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
 
             Controls.smartBoxContactSetting.Default.SearchFilter.Add("code");
 
@@ -89,12 +96,16 @@ namespace cntrl.Controls
         private void LoadData_Thread()
         {
             ReturnList = null;
-            using (entity.BrilloQuery.PurchaseReturnQuery Execute = new entity.BrilloQuery.PurchaseReturnQuery())
-            {
-                ReturnList = Execute.List.AsQueryable();
-            }
-
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
+            Dispatcher.BeginInvoke(
+                  DispatcherPriority.ContextIdle,
+                  new Action(delegate ()
+                  {
+                      using (entity.BrilloQuery.PurchaseReturnQuery Execute = new entity.BrilloQuery.PurchaseReturnQuery(ContactID))
+                      {
+                          ReturnList = Execute.List.AsQueryable();
+                      }
+                      progBar.Visibility = Visibility.Collapsed;
+                  }));
         }
 
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -169,8 +180,11 @@ namespace cntrl.Controls
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Return>();
             var param = smartBoxContactSetting.Default.SearchFilter;
 
-           
 
+            if (param.Contains("Name"))
+            {
+                predicateOR = predicateOR.Or(x => x.Name.ToUpper().Contains(SearchText));
+            }
             if (param.Contains("code"))
             {
                 predicateOR = predicateOR.Or(x => x.code.ToUpper().Contains(SearchText));

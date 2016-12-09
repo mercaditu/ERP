@@ -223,7 +223,7 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },
-
+               
 
             //purchase
               new Report

@@ -113,7 +113,11 @@ namespace Cognitivo.Sales
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            if (SalesInvoiceDB.sales_invoice.Local.Count()>0)
+            {
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            }
+        
            
         }
 
@@ -515,20 +519,11 @@ namespace Cognitivo.Sales
                 if (sales_invoice != null)
                 {
                     int LineLimit = 0;
-                    if (sales_invoice.app_document_range != null)
-                    {
-                        if (sales_invoice.app_document_range.app_document.line_limit != null)
-                        {
-                            LineLimit = (int)sales_invoice.app_document_range.app_document.line_limit;
-                        }
 
-                    }
-                    else
+                    if (sales_invoice.id_range > 0)
                     {
-                        if (sales_invoice.id_range > 0)
-                        {
-                            LineLimit = (int)SalesInvoiceDB.app_document_range.Where(x => x.id_range == sales_invoice.id_range).Select(x => x.app_document.line_limit).FirstOrDefault();
-                        }
+                        app_document_range app_document_range = SalesInvoiceDB.app_document_range.Find(sales_invoice.id_range);
+                        LineLimit = (int)app_document_range.app_document.line_limit;
                     }
 
                     if (SalesSettings.SpiltInvoice == false && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)

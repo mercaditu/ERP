@@ -1646,8 +1646,6 @@
     <Resource Include="Images\Application\128\SalesOrder.png" />
     <Resource Include="Images\Application\128\SalesRep.png" />
     <Resource Include="Images\Application\128\SalesReturn.png" />
-    <Resource Include="Images\Application\128\Server.png" />
-    <Resource Include="Images\Application\128\Status.png" />
     <Resource Include="Images\Application\128\Terminal.png" />
     <Resource Include="Images\Application\128\User.png" />
     <Resource Include="Images\Application\128\UserSecurity.png" />
@@ -1670,7 +1668,6 @@
     <Resource Include="Images\Menu\modProject_Event.png" />
     <Resource Include="Images\Menu\modProject_PrintingPress.png" />
     <Resource Include="Images\Application\128\Promotion.png" />
-    <Resource Include="Images\Application\128\Product.png" />
     <Resource Include="Images\Menu\modImpex.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1685,12 +1682,6 @@
     <Resource Include="Images\CognitivoLogo.png" />
     <Resource Include="Images\cognitivo.ico" />
     <Resource Include="Images\Cognitivo-32.png" />
-    <Resource Include="Images\Application\128\ExpenseBook.png" />
-    <Resource Include="Images\Application\128\IncomeBook.png" />
-    <Resource Include="Images\Application\128\AccountingTransaction.png" />
-    <Resource Include="Images\Application\128\AccountingPeriod.png" />
-    <Resource Include="Images\Application\128\AccountingPurchase.png" />
-    <Resource Include="Images\Application\128\AccountingSales.png" />
     <Resource Include="Images\Application\128\ProductRecepie.png" />
     <Resource Include="Images\Application\128\UserRole.png" />
     <Resource Include="Images\Application\128\Help.png" />

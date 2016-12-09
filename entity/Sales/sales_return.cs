@@ -89,6 +89,25 @@ namespace entity
         }
         private decimal _GrandTotal;
 
+        [NotMapped]
+        public decimal Balance
+        {
+            get
+            {
+                _Balance = 0;
+                _Balance=(this.GrandTotal - this.payment_schedual.Where(x => x.id_sales_return == this.id_sales_return).Sum(x => x.credit));
+                return Math.Round(_Balance, 2);
+            }
+            set
+            {
+                _Balance = value;
+                RaisePropertyChanged("Balance");
+            }
+        }
+        private decimal _Balance;
+
+      
+
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>

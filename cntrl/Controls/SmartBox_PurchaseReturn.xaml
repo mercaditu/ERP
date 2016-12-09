@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="cntrl.Controls.SmartBox_PurchaseReturn" x:Name="_SmartBox_PurchaseReturn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:crud="clr-namespace:cntrl.Curd"
+             xmlns:pref="clr-namespace:cntrl.Controls"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Converter="clr-namespace:cntrl.Converters"
+             xmlns:ent="clr-namespace:entity;assembly=entity"
+                xmlns:entity="clr-namespace:entity.BrilloQuery;assembly=entity"
+                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+                lex:ResxLocalizationProvider.DefaultDictionary="local"
+                lex:LocalizeDictionary.DesignCulture="en-US" 
+             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType"/>
+        <CollectionViewSource x:Key="returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Return}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid Width="256">
+        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible" >
+            <StackPanel x:Name="stackCRUD">
+                
+            </StackPanel>
+            <!--<crud:contact x:Name="crudContact"/>-->
+        </Popup>
+        
+        <!-- TextBox for Searching -->
+        <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
+                 Text="{Binding Path=Text, Delay=2000, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                 metro:TextBoxHelper.SelectAllOnFocus="True"
+                 metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
+                 KeyUp="StartSearch" />
+
+     
+        
+        <!-- Progress Ring -->
+        <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26" Opacity=".32"
+                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939"/>
+
+
+        <!-- Search Icon -->
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
+               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
+
+        <Popup x:Name="popContact" IsOpen="False">
+            <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
+                <Grid MaxHeight="256">
+                    <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}" 
+                               Style="{StaticResource text_Instructions}" Margin="4,0" />
+                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" Margin="0,16,0,0" AutoGenerateColumns="False" 
+                              HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource returnViewSource}}" 
+                              IsReadOnly="True" MouseDoubleClick="ReturnGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number}" FontWeight="Bold" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Comment}" Binding="{Binding comment}" FontWeight="Bold" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Balance}" FontWeight="Bold" Width="auto"/>
+                    
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

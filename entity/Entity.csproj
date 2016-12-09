@@ -136,6 +136,7 @@
     <Compile Include="BrilloQuery\GetItem.cs" />
     <Compile Include="BrilloQuery\QueryExecutor.cs" />
     <Compile Include="BrilloQuery\Purchase.cs" />
+    <Compile Include="BrilloQuery\SalesReturn.cs" />
     <Compile Include="Brillo\Activation.cs" />
     <Compile Include="Brillo\ConversionFactor.cs" />
     <Compile Include="Brillo\Currency.cs" />

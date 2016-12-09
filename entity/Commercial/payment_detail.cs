@@ -104,6 +104,8 @@ namespace entity
 		}
 		int _id_currencyfx;
 
+        [NotMapped]
+        public decimal Max_Value { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -165,7 +167,8 @@ namespace entity
 			{
 			if (_value != value)
 				{
-					_value = value;
+                  
+                    _value = value;
 					RaisePropertyChanged("value");
 
 					if (payment != null)
@@ -345,9 +348,17 @@ namespace entity
 					if (value == 0)
 						return "Amount needs to be filled";
 				}
+                if (columnName == "value")
+                {
+                    if (Max_Value>0)
+                    {
+                        if (value > Max_Value)
+                            return "Amount is not Higher than Credit Note Balace";
+                    }
+                 
+                }
 
-
-				if (columnName == "id_payment_type")
+                if (columnName == "id_payment_type")
 				{
 					if (id_payment_type == 0)
 						return "Payment type needs to be selected";

@@ -219,6 +219,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>smartBoxItemSetting.settings</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SmartBox_PurchaseReturn.xaml.cs">
+      <DependentUpon>SmartBox_PurchaseReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SmartBox_SalesReturn.xaml.cs">
+      <DependentUpon>SmartBox_SalesReturn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SmartBox_Geography.xaml.cs">
       <DependentUpon>SmartBox_Geography.xaml</DependentUpon>
     </Compile>
@@ -762,6 +768,14 @@
     <Page Include="Controls\NotificationIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SmartBox_PurchaseReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SmartBox_SalesReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SmartBox_Geography.xaml">
       <SubType>Designer</SubType>

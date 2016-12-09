@@ -161,22 +161,24 @@
 									<Run Text="{lex:Loc ReturnNumber}"/> | 
 									<Run Text="{lex:Loc Purchase}"/>
 								</TextBlock>
-								<cntrl:SearchableTextbox x:Name="purchasereturnComboBox" KeyDown="purchasereturnComboBox_KeyDown" MouseDoubleClick="purchasereturnComboBox_MouseDoubleClick"
+								<!--<cntrl:SearchableTextbox x:Name="purchasereturnComboBox" KeyDown="purchasereturnComboBox_KeyDown" MouseDoubleClick="purchasereturnComboBox_MouseDoubleClick"
 														 CollectionViewSource="{StaticResource purchase_returnViewSource}"
 														 Width="256" HorizontalAlignment="Left">
 									<cntrl:SearchableTextbox.Columns>
-										<cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-										<cntrl:SmartBoxColumn Header="Number" ForProperty="number" Binding="{Binding number, Mode=Default}" EnableSearch="True"/>
-										<cntrl:SmartBoxColumn Header="Comment" ForProperty="comment" Binding="{Binding comment, Mode=Default}" EnableSearch="True"/>
-									</cntrl:SearchableTextbox.Columns>
-								</cntrl:SearchableTextbox>
-							</StackPanel>
+										<cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                                        <cntrl:SmartBoxColumn Header="Number" ForProperty="number" Binding="{Binding number, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                                        <cntrl:SmartBoxColumn Header="Comment" ForProperty="comment" Binding="{Binding comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                                        <cntrl:SmartBoxColumn Header="Balance" ForProperty="comment" Binding="{Binding Balance, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="False"/>
+                                    </cntrl:SearchableTextbox.Columns>
+								</cntrl:SearchableTextbox>-->
+                                <Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="sbxPurchaseReturn_Select"/>
+                            </StackPanel>
 
 							<StackPanel x:Name="stpcreditsales" Visibility="Collapsed">
 								<TextBlock  Style="{StaticResource text_Label}" FontWeight="Medium">
 							<Run Text="{lex:Loc ReturnNumber}"/> | <Run Text="{lex:Loc Sales}"/>
 								</TextBlock>
-								<cntrl:SearchableTextbox x:Name="salesreturnComboBox" KeyDown="salesreturnComboBox_KeyDown" MouseDoubleClick="salesreturnComboBox_MouseDoubleClick"
+								<!--<cntrl:SearchableTextbox x:Name="salesreturnComboBox" KeyDown="salesreturnComboBox_KeyDown" MouseDoubleClick="salesreturnComboBox_MouseDoubleClick"
 												 CollectionViewSource="{StaticResource sales_returnViewSource}" 
 												 Width="256" HorizontalAlignment="Left">
 									<cntrl:SearchableTextbox.Columns>
@@ -184,8 +186,9 @@
 										<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Number}" ForProperty="number" Binding="{Binding number, Mode=Default}" EnableSearch="True"/>
 										<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Comment}" ForProperty="comment" Binding="{Binding comment, Mode=Default}" EnableSearch="True"/>
 									</cntrl:SearchableTextbox.Columns>
-								</cntrl:SearchableTextbox>
-							</StackPanel>
+								</cntrl:SearchableTextbox>-->
+                                <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="sbxReturn_Select"/>
+                            </StackPanel>
 							
 							<Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
 							<TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"

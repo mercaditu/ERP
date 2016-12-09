@@ -227,5 +227,7 @@ namespace cntrl
             IsDisplayed = true;
             displaydata();
         }
+
+      
     }
 }

@@ -75,10 +75,13 @@ namespace cntrl.Curd
                 if (Mode == Modes.Recievable)
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountReceivableBalance);
+                   
+                   
                 }
                 else
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountPayableBalance);
+                
                 }
 
 
@@ -161,6 +164,7 @@ namespace cntrl.Curd
 
         private void SaveChanges(object sender, EventArgs e)
         {
+            
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
@@ -168,6 +172,7 @@ namespace cntrl.Curd
             List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected).ToList();
             foreach (payment_detail _payment_detail in payment_detailList)
             {
+
                 decimal amount = _payment_detail.value;
 
 
@@ -296,72 +301,31 @@ namespace cntrl.Curd
         }
 
         #region Purchase and Sales Returns
-
-        private void purchasereturnComboBox_KeyDown(object sender, KeyEventArgs e)
+        private void sbxPurchaseReturn_Select(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                purchasereturnComboBox_MouseDoubleClick(null, null);
-            }
-        }
-
-        private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (purchasereturnComboBox.Data != null)
+            if (sbxPurchaseReturn.ReturnID > 0)
             {
                 CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
-                purchasereturnComboBox.Text = purchase_return.number;
-                decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).Sum(x => x.debit));
+                purchase_return purchase_return = PaymentDB.purchase_return.Find(sbxPurchaseReturn.ReturnID);
+                decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_sales_return == purchase_return.id_purchase_return).Sum(x => x.debit));
                 payment_detail.id_purchase_return = purchase_return.id_purchase_return;
-
-                if (payment_detail.value > return_value)
-                {
-
-                    payment_detail.value = return_value;
-                    payment_detail.RaisePropertyChanged("value");
-                }
-                else
-                {
-                    payment_detail.value = payment_detail.value;
-                    payment_detail.RaisePropertyChanged("value");
-                }
+                payment_detail.Max_Value = return_value;
             }
+
         }
-
-        private void salesreturnComboBox_KeyDown(object sender, KeyEventArgs e)
+        private void sbxReturn_Select(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                salesreturnComboBox_MouseDoubleClick(null, null);
-            }
-        }
-
-        private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-            if (salesreturnComboBox.Data != null)
+            if (sbxReturn.ReturnID > 0)
             {
                 CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                sales_return sales_return = (sales_return)salesreturnComboBox.Data;
-                salesreturnComboBox.Text = sales_return.number;
+                sales_return sales_return = PaymentDB.sales_return.Find(sbxReturn.ReturnID);
                 decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
                 payment_detail.id_sales_return = sales_return.id_sales_return;
-
-                if (payment_detail.value > return_value)
-                {
-
-                    payment_detail.value = return_value;
-                    payment_detail.RaisePropertyChanged("value");
-                }
-                else
-                {
-                    payment_detail.value = payment_detail.value;
-                    payment_detail.RaisePropertyChanged("value");
-                }
+                payment_detail.Max_Value = return_value;
             }
+
         }
 
         #endregion
@@ -405,5 +369,7 @@ namespace cntrl.Curd
         {
 
         }
+
+    
     }
 }

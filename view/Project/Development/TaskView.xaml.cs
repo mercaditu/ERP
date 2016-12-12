@@ -479,7 +479,7 @@ namespace Cognitivo.Project.Development
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxItemType = (ComboBox)sender;
-
+            project_task project_task = (project_task)treeProject.SelectedItem_;
             if (cbxItemType.SelectedItem != null)
             {
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
@@ -487,6 +487,7 @@ namespace Cognitivo.Project.Development
 
                 if (Item_Type == item.item_type.Task)
                 {
+                    project_task.status = null;
                     stpdate.Visibility = Visibility.Visible;
                     stpdate.IsEnabled = true;
                     stpitem.Visibility = Visibility.Collapsed;

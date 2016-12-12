@@ -115,7 +115,11 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             if (SalesInvoiceDB.sales_invoice.Local.Count()>0)
             {
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                if (sales_invoicesales_invoice_detailViewSource.View!=null)
+                {
+                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                }
+             
             }
         
            
@@ -832,7 +836,7 @@ namespace Cognitivo.Sales
         private  void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-            sales_invoice.RaisePropertyChanged("GrandTotal");
+           
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
@@ -841,6 +845,7 @@ namespace Cognitivo.Sales
            
                 if (sales_invoice!=null)
                 {
+                    sales_invoice.RaisePropertyChanged("GrandTotal");
                     int id_sales_invoice = sales_invoice.id_sales_invoice;
                     sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == id_sales_invoice).ToList();
                 }

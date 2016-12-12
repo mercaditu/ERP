@@ -83,7 +83,7 @@
                         <ComboBox Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
-							  SelectedValue="{Binding reference, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+							  SelectedValue="{Binding reference, Mode=Default, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel x:Name="Total_Parameter">
                         <Label Content="Total" Style="{StaticResource input_label}"/>
@@ -113,7 +113,7 @@
                         <ComboBox Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
-							  SelectedValue="{Binding reference_bonus, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+							  SelectedValue="{Binding reference_bonus, Mode=Default, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel x:Name="Discount">
                         <Label Content="Discount" Style="{StaticResource input_label}"/>

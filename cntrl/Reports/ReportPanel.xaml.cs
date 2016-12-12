@@ -273,7 +273,7 @@ namespace cntrl
                         {
                             filter += " or ";
                         }
-                        filter += comboobox.DisplayMemberPath + " like '%" + comboobox.SelectedValue + "%'";
+                        filter += comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
                         IsFirst = false;
                     }
 

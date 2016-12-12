@@ -3,7 +3,13 @@
 	public static class Sales
 	{
 		public static string query = @" 	select 
-												sales_invoice.status as Status,
+												   CASE 
+      WHEN sales_invoice.status=1 THEN 'Pending'
+      WHEN sales_invoice.status=2 THEN  'Approved'
+      WHEN sales_invoice.status=3 THEN  'Anulled'
+ WHEN sales_invoice.status=4 THEN  'Rejected'
+    END 
+ as Status,
 												sales_invoice.number as Number,
 												sales_invoice.is_impex as Exports,
 												Date(sales_invoice.trans_date) as Date,

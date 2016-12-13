@@ -620,13 +620,14 @@
 
             string TransNumber = payment.number;
             DateTime TransDate = payment.trans_date;
+           
 
             Header =
                 CompanyName + "\n"
                 + "R.U.C.   :" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
-                + "Timbrado : " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
+                + "Timbrado : " + TransNumber + " Vto: " + payment.app_document_range.expire_date + "\n"
                 + "Fecha    : " + payment.trans_date
                 + "\n"
                 + "-------------------------------- \n"
@@ -636,7 +637,7 @@
 
             string InvoiceNumber = string.Empty;
             string CustomerName = string.Empty;
-
+            string gov_code = string.Empty;
             foreach (payment_detail d in payment.payment_detail)
             {
                 string AccountName = string.Empty;
@@ -649,6 +650,10 @@
                         AccountName = app_account.name;
                     }
                 }
+                else
+                {
+                    AccountName = d.app_account.name;
+                }
 
                 string currency = string.Empty;
                 if (d.app_currencyfx == null)
@@ -657,6 +662,10 @@
                     {
                         currency = db.app_currencyfx.Where(x => x.id_currencyfx == d.id_currencyfx).FirstOrDefault().app_currency.name;
                     }
+                }
+                else
+                {
+                    currency = d.app_currencyfx.app_currency.name;
                 }
 
                 decimal? value = d.value;
@@ -669,10 +678,12 @@
                 {
                     InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
                     CustomerName = d.payment_schedual.FirstOrDefault().contact.name;
+                    gov_code = d.payment_schedual.FirstOrDefault().contact.name;
                 }
             }
 
             Footer += "Factura  : " + InvoiceNumber + "\n";
+            Footer += "Client  : " + CustomerName + "-" + gov_code + "\n";
             Footer += "--------------------------------" + "\n";
 
             string Text = Header + Detail + Footer;

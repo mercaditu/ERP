@@ -80,19 +80,19 @@
                     </StackPanel>
                     <StackPanel x:Name="Tag_Parameter">
                         <Label Content="Tags" Style="{StaticResource input_label}"/>
-                        <ComboBox Style="{StaticResource input_combobox}"
+                        <ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
-							  SelectedValue="{Binding reference, Mode=Default, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+						/>
                     </StackPanel>
                     <StackPanel x:Name="Total_Parameter">
                         <Label Content="Total" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                         <Label Content="Currency" Style="{StaticResource input_label}"/>
-                        <ComboBox 
+                        <ComboBox x:Name="cbxcurrency"
 									ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"  
 									DisplayMemberPath="name" SelectedValuePath="id_currency" 
-									SelectedValue="{Binding reference, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
+									/>
                     </StackPanel>
 
                     <StackPanel x:Name="QuntityStep">
@@ -110,10 +110,10 @@
 
                     <StackPanel x:Name="Tag_Bonus">
                         <Label Content="Tags" Style="{StaticResource input_label}"/>
-                        <ComboBox Style="{StaticResource input_combobox}"
+                        <ComboBox x:Name="cbxbonustag" Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
-							  SelectedValue="{Binding reference_bonus, Mode=Default, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+							 />
                     </StackPanel>
                     <StackPanel x:Name="Discount">
                         <Label Content="Discount" Style="{StaticResource input_label}"/>

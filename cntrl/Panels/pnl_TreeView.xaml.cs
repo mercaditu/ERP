@@ -43,7 +43,7 @@ namespace cntrl.Panels
         //Status for the Task
         public static readonly DependencyProperty StatusProperty =
             DependencyProperty.Register("Status", typeof(Status.Project), typeof(pnl_TreeView),
-            new FrameworkPropertyMetadata(entity.Status.Project.Pending));
+            new FrameworkPropertyMetadata(null));
         public Status.Project Status
         {
             get { return (Status.Project)GetValue(StatusProperty); }

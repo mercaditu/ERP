@@ -242,6 +242,7 @@
 									<ColumnDefinition Width="1*"/>
 								</Grid.ColumnDefinitions>
 								<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
+                                  
 									<Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
 									<DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"
 												metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -304,7 +305,9 @@
 								<!--sidepanel-->
 								<StackPanel Grid.Column="1">
 									<Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-									<StackPanel Orientation="Horizontal" Margin="4,0" 
+                                    <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}"/>
+                                    <Label Content="{Binding contact.alias,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_invoiceViewSource}}" Style="{StaticResource input_label}"/>
+                                    <StackPanel Orientation="Horizontal" Margin="4,0" 
 												Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
 										<TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
 										<TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}"/>

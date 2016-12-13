@@ -219,7 +219,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Destination}">
-                    <Grid     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <Grid   >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -229,7 +229,7 @@
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
                             <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click"/>
                         </StackPanel>
-                        <DataGrid AutoGenerateColumns="False" Grid.Column="0"
+                        <DataGrid AutoGenerateColumns="False" Grid.Column="0"   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                                   EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
                                   ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                                   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">

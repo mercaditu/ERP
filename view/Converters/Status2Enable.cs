@@ -23,7 +23,7 @@ namespace Cognitivo.Converters
                     return false;
                 }
             }
-            else { return false; }
+            else { return true; }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

@@ -14,7 +14,7 @@ namespace Cognitivo.Converters
 
                 entity.Status.Project status = (entity.Status.Project)value;
 
-                if (status == entity.Status.Project.Management_Approved )
+                if (status == entity.Status.Project.Management_Approved)
                 {
                     return true;
                 }
@@ -23,7 +23,7 @@ namespace Cognitivo.Converters
                     return false;
                 }
             }
-            else { return false; }
+            else { return true; }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

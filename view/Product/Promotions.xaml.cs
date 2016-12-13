@@ -155,7 +155,8 @@ namespace Cognitivo.Product
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Collapsed;
                 QuntityStep.Visibility = Visibility.Visible;
-
+                sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                sales_promotion.reference_bonus = Convert.ToInt32(cbxbonustag.SelectedValue);
                 item output = PromotionDB.items.Find(sales_promotion.reference_bonus);
 
                 if (output != null)
@@ -191,6 +192,8 @@ namespace Cognitivo.Product
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Visible;
+                sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                
             }
             else if (sales_promotion.type == entity.sales_promotion.Types.Discount_onGrandTotal)
             {
@@ -201,6 +204,7 @@ namespace Cognitivo.Product
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Collapsed;
+                sales_promotion.reference = Convert.ToInt32(cbxcurrency.SelectedValue);
             }
         }
     }

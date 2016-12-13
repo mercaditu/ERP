@@ -312,6 +312,7 @@ namespace cntrl.Curd
                 decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_sales_return == purchase_return.id_purchase_return).Sum(x => x.debit));
                 payment_detail.id_purchase_return = purchase_return.id_purchase_return;
                 payment_detail.Max_Value = return_value;
+                sbxPurchaseReturn.Text = purchase_return.contact.name;
             }
 
         }
@@ -325,6 +326,7 @@ namespace cntrl.Curd
                 decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
                 payment_detail.id_sales_return = sales_return.id_sales_return;
                 payment_detail.Max_Value = return_value;
+                sbxReturn.Text = sales_return.contact.name;
             }
 
         }

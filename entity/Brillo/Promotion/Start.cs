@@ -49,7 +49,6 @@ namespace entity.Brillo.Promotion
             {
 
                 BuyThis_GetThat(Promo, Invoice, SalesInvoice);
-                BuyTag_GetThat(Promo, Invoice, SalesInvoice);
                 Discount_onItem(Promo, Invoice, SalesInvoice);
                 Discount_onTag(Promo, Invoice, SalesInvoice);
                 Discount_onGrandTotal(Promo, Invoice, SalesInvoice);

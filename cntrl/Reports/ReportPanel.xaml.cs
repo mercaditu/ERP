@@ -311,7 +311,10 @@ namespace cntrl
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             RefreshPanel = true;
-            ClearFilter();
+
+            Fill();
+          
+           
         }
     }
 }

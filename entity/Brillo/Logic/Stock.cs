@@ -454,7 +454,7 @@ namespace entity.Brillo.Logic
                                             (int)sales_return_detail.id_location,
                                             sales_return_detail.quantity,
                                             sales_return.trans_date,
-                                            sales_return_detail.unit_cost,
+                                            sales_return_detail.unit_price,
                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
                                             null, null, null
                                             ));

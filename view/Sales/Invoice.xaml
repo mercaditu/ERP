@@ -57,7 +57,7 @@
 							<Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
 							<Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
-							<Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True"/>
+							<Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True"/>
 
 							<Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
 							<Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
@@ -319,7 +319,7 @@
 									</StackPanel>
 									<StackPanel Orientation="Horizontal">
 										<Label Content="U" Style="{StaticResource ico_Label}" Foreground="Green" FontSize="11" HorizontalContentAlignment="Center"/>
-										<TextBlock Text="{Binding security_user.name, FallbackValue=User, IsAsync=True, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}"/>
+										<TextBlock Text="{Binding security_user.name, FallbackValue=User,  Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}"/>
 									</StackPanel>
 									<Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
 									<StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
@@ -469,14 +469,14 @@
 											<Label Content="X" Style="{StaticResource ico_Label}"/>
 											<TextBlock Text="{lex:Loc AvailableCredit}" Style="{StaticResource text_Label}"/>
 											<TextBlock><Hyperlink Click="lblCheckCredit">Check</Hyperlink></TextBlock>
-											<TextBlock Text="{Binding contact.credit_availability, IsAsync=True, Mode=TwoWay, 
+											<TextBlock Text="{Binding contact.credit_availability, Mode=TwoWay, 
 													   UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}"/>
 										</StackPanel>
 										<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<Label Content="P" Style="{StaticResource ico_Label}"/>
 											<TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}"/>
-											<TextBlock Text="{Binding contact.telephone, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
+											<TextBlock Text="{Binding contact.telephone,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
 										</StackPanel>
 										<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
 											<Label Content="R" Style="{StaticResource ico_Label}"/>
@@ -524,7 +524,7 @@
 									   Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<Label Content="" Style="{StaticResource ico_Label}"/>
 											<TextBlock Margin="5,0" Text="{lex:Loc Exports}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
-											<CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+											<CheckBox IsChecked="{Binding is_impex,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 										</StackPanel>
 
 
@@ -563,7 +563,7 @@
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<Label Content="" Style="{StaticResource ico_Label}"/>
 											<TextBlock Text="{lex:Loc Code}" Style="{StaticResource text_Label}"/>
-											<TextBox Text="{Binding code, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+											<TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 													 Style="{StaticResource TextToLabelStyle}"/>
 										</StackPanel>
 										<StackPanel Margin="2" VerticalAlignment="Center" Orientation="Horizontal"

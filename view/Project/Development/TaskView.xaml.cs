@@ -62,7 +62,7 @@ namespace Cognitivo.Project.Development
             filter_task();
 
             entity.Brillo.Security security = new entity.Brillo.Security(entity.App.Names.ActivityPlan);
-            
+
             if (security.approve)
             {
                 btnapprove.IsEnabled = true;
@@ -124,12 +124,12 @@ namespace Cognitivo.Project.Development
                 projectViewSource.View.Filter = i =>
                 {
                     project project = i as project;
-                    
+
                     string name = project.name != null ? project.name : "";
                     string code = project.code != null ? project.code : "";
 
                     if (
-                        name.ToLower().Contains(query.ToLower()) || 
+                        name.ToLower().Contains(query.ToLower()) ||
                         project.project_tag_detail.Where(x => x.project_tag.name.ToLower().Contains(query.ToLower())).Any() ||
                         code.ToLower().Contains(query.ToLower())
                         )
@@ -165,7 +165,7 @@ namespace Cognitivo.Project.Development
                     if (Project_TaskApprove.id_range != null)
                     {
                         project_task.id_range = Project_TaskApprove.id_range;
-                       // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                        // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
                         if (app_document_range != null)
                         {
                             project_task.app_document_range = app_document_range;
@@ -175,17 +175,14 @@ namespace Cognitivo.Project.Development
 
                     }
                     // project_task.number = number;
-                    if (project_task.items.id_item_type!=item.item_type.Task)
+
+                    if (project_task.status == Status.Project.Management_Approved)
                     {
-                        if (project_task.status == Status.Project.Management_Approved)
-                        {
-                            if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
-                            {
-                                project_task.status = Status.Project.Approved;
-                            }
-                        }
+
+                        project_task.status = Status.Project.Approved;
                     }
-                   
+
+
 
                     project_task.IsSelected = false;
                 }
@@ -311,7 +308,7 @@ namespace Cognitivo.Project.Development
         {
             stpcode.IsEnabled = true;
             project project = projectViewSource.View.CurrentItem as project;
-            
+
             if (project != null)
             {
                 project_task n_project_task = new project_task();
@@ -411,14 +408,13 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    if (project_task.items.id_item_type != item.item_type.Task)
+
+                    if (project_task.status == Status.Project.Pending)
                     {
-                        if (project_task.status == Status.Project.Pending || project_task.status == null)
-                        {
-                            project_task.status = Status.Project.Management_Approved;
-                            ProjectTaskDB.NumberOfRecords += 1;
-                        }
+                        project_task.status = Status.Project.Management_Approved;
+                        ProjectTaskDB.NumberOfRecords += 1;
                     }
+
 
                     project_task.IsSelected = false;
                 }
@@ -487,7 +483,7 @@ namespace Cognitivo.Project.Development
 
                 if (Item_Type == item.item_type.Task)
                 {
-                    project_task.status = null;
+                   
                     stpdate.Visibility = Visibility.Visible;
                     stpdate.IsEnabled = true;
                     stpitem.Visibility = Visibility.Collapsed;

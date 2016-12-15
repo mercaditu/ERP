@@ -107,7 +107,7 @@ namespace entity
                                 item_recepie recepie = items.item_recepie.FirstOrDefault();
                                 if (child.Count > 0)
                                 {
-                                    foreach (project_task _child in child.Where(x => x.status == null || x.status == Status.Project.Pending || x.status == Status.Project.Approved))
+                                    foreach (project_task _child in child.Where(x => x.status == Status.Project.Pending || x.status == Status.Project.Approved))
                                     {
                                         item_recepie_detail item_recepie_detail = _child.items.item_recepie_detail.Where(x => x.item_recepie.id_recepie == recepie.id_recepie).FirstOrDefault();
                                         if (item_recepie_detail != null)
@@ -183,7 +183,7 @@ namespace entity
                     {
                         foreach (var task in child)
                         {
-                            if (task.status != Status.Project.Rejected || task.status==null)
+                            if (task.status != Status.Project.Rejected)
                                 task.IsSelected = value;
                         }
 
@@ -479,7 +479,13 @@ namespace entity
                 if (child_task.IsSelected)
                 {
                     this.Parent_selected = true;
+
                     this.IsSelected = true;
+                    if (this.parent!=null)
+                    {
+                        this.parent.Parent_Selection();
+                    }
+                  
                 }
             }
         }

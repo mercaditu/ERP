@@ -3548,14 +3548,14 @@
                       <TablixHeader>
                         <Size>1in</Size>
                         <CellContents>
-                          <Textbox Name="Textbox272">
+                          <Textbox Name="Item1">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value />
+                                    <Value>=Fields!Item.Value</Value>
                                     <Style>
                                       <FontFamily>courier New</FontFamily>
                                       <FontSize>8pt</FontSize>
@@ -3565,7 +3565,7 @@
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox272</rd:DefaultName>
+                            <rd:DefaultName>Item1</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Color>LightGrey</Color>
@@ -3595,14 +3595,14 @@
                       <TablixHeader>
                         <Size>1in</Size>
                         <CellContents>
-                          <Textbox Name="Item">
+                          <Textbox Name="RetailPrice">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!Item.Value</Value>
+                                    <Value>=Fields!RetailPrice.Value</Value>
                                     <Style>
                                       <FontFamily>courier New</FontFamily>
                                       <FontSize>8pt</FontSize>
@@ -3612,7 +3612,7 @@
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Item</rd:DefaultName>
+                            <rd:DefaultName>RetailPrice</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Color>LightGrey</Color>

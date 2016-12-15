@@ -44,6 +44,12 @@ namespace cntrl.Curd
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             _entity.SaveChanges();
+            Grid parentGrid = Parent as Grid;
+            if (parentGrid != null)
+            {
+                parentGrid.Children.Clear();
+                parentGrid.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

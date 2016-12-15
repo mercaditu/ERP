@@ -169,7 +169,7 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
-            PaymentDB.SaveChanges();
+      
             List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected).ToList();
             foreach (payment_detail _payment_detail in payment_detailList)
             {
@@ -189,8 +189,10 @@ namespace cntrl.Curd
                         payment_detail payment_detail = new payment_detail();
                         payment_detail.payment = payment;
 
-
-                        app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
+                        payment_detail.id_account = _payment_detail.id_account;
+                        payment_detail.id_payment_type = _payment_detail.id_payment_type;
+                        payment_detail.comment = _payment_detail.comment;
+                               app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
                         if (app_currencyfx != null)
                         {
                             payment_detail.id_currencyfx = id_currencyfx;
@@ -201,14 +203,22 @@ namespace cntrl.Curd
 
                         payment_detail.IsSelected = true;
 
+                        if (Mode == Modes.Recievable)
+                        {
 
+                            payment_detail.id_sales_return = _payment_detail.id_sales_return;
+                        }
+                        else
+                        {
+                            payment_detail.id_purchase_return = _payment_detail.id_purchase_return;
+                        }
 
 
 
                         payment_detail.value = amount;
 
                         payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-                        payment_detail.IsSelected = true;
+                     
                         payment.payment_detail.Add(payment_detail);
 
                     }
@@ -221,6 +231,7 @@ namespace cntrl.Curd
             {
                 if (Mode == Modes.Recievable)
                 {
+
                     PaymentDB.Approve(payment_detail.id_payment_schedual, true);
                 }
                 else

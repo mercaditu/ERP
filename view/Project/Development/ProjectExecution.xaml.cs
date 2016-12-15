@@ -38,7 +38,7 @@ namespace Cognitivo.Project
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
-                foreach (project_task project_task in treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved)))
+                foreach (project_task project_task in treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved || x.status == Status.Project.InProcess) ))
                 {
                     if (project_task.parent!=null)
                     {
@@ -46,7 +46,7 @@ namespace Cognitivo.Project
                     }
                 
                 }
-                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved)).ToList();
+                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true ).ToList();
                 
                 if (project_task.Count() > 0)
                 {

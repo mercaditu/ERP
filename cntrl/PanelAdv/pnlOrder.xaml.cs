@@ -61,20 +61,20 @@ namespace cntrl.PanelAdv
             {
                 production_order.id_project = project.id_project;
                 contact contact = project.contact;
-         
+
                 if (contact != null)
                 {
-                    if (contact.app_cost_center!=null)
+                    if (contact.app_cost_center != null)
                     {
                         production_order.project_cost_center = contact.app_cost_center.name;
                     }
-              
+
                 }
-                if (project.id_branch!=null)
+                if (project.id_branch != null)
                 {
                     production_order.id_branch = (int)project.id_branch;
                 }
-              
+
                 //Get Name.
                 production_order.name = project.name;
                 production_order.RaisePropertyChanged("name");
@@ -82,7 +82,7 @@ namespace cntrl.PanelAdv
                 //Date check. Get the range from task first, if blank get from Project.
                 production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().start_date_est;
                 production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().end_date_est;
-                
+
                 if (production_order.start_date_est == null || production_order.end_date_est == null)
                 {
                     production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().project.est_start_date;
@@ -92,7 +92,7 @@ namespace cntrl.PanelAdv
                 production_order.RaisePropertyChanged("start_date_est");
                 production_order.RaisePropertyChanged("end_date_est");
 
-                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status==null))
+                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status==Status.Project.InProcess))
                 {
                     project_task _project_task = (project_task)item;
                     production_order_detail production_order_detail = new production_order_detail();

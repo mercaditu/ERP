@@ -126,13 +126,13 @@ namespace entity.Brillo.Logic
                                                     (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     "")));
 
-                            if (item_movementINPUT.Count()>0)
+                            if (item_movementINPUT.Count() > 0)
                             {
                                 item_movementList.AddRange(item_movementINPUT);
 
                                 production_execution_detail.unit_cost = item_movementINPUT.FirstOrDefault().item_movement_value.Sum(y => y.unit_value);
                             }
-                          
+
                         }
                     }
                 }
@@ -382,7 +382,7 @@ namespace entity.Brillo.Logic
                 }
                 else
                 {
-                   
+
                     item_product item_product = detail.item.item_product.FirstOrDefault();
                     if (item_product != null)
                     {
@@ -397,7 +397,7 @@ namespace entity.Brillo.Logic
                         }
                         Brillo.Stock stock = new Brillo.Stock();
                         List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_product.id_item_product);
-                        
+
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.SalesInvoice,
                                                     detail.id_sales_invoice,
@@ -440,10 +440,18 @@ namespace entity.Brillo.Logic
             //SALES RETURN
             foreach (sales_return_detail sales_return_detail in Invoice_WithProducts)
             {
-           
+
                 item_product item_product = sales_return_detail.item.item_product.FirstOrDefault();
 
                 sales_return_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().id_location;
+
+                decimal unit_cost = 0;
+                if (sales_return_detail.sales_invoice_detail != null)
+                {
+
+                    unit_cost = sales_return_detail.sales_invoice_detail.unit_cost;
+
+                }
 
                 item_movementList.Add(
                     CreditOnly_Movement(Status.Stock.InStock,
@@ -455,7 +463,7 @@ namespace entity.Brillo.Logic
                                             (int)sales_return_detail.id_location,
                                             sales_return_detail.quantity,
                                             sales_return.trans_date,
-                                            sales_return_detail.unit_price,
+                                             unit_cost,
                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
                                             null, null, null
                                             ));
@@ -607,7 +615,7 @@ namespace entity.Brillo.Logic
                     }
                 }
             }
-            else if (Application_ID == App.Names.PurchaseReturn)   
+            else if (Application_ID == App.Names.PurchaseReturn)
             {
                 purchase_return purchase_return = Transcation as purchase_return;
                 foreach (purchase_return_detail purchase_return_detail in purchase_return.purchase_return_detail)
@@ -707,7 +715,7 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_execution_detail = TransactionDetailID;
 
-                        if ( db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault()!=null)
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault() != null)
                         {
                             int MovementID = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).Select(y => y.movement_id).FirstOrDefault();
                             if (MovementID > 0)
@@ -716,7 +724,7 @@ namespace entity.Brillo.Logic
                                 item_movement.parent = db.item_movement.Find(id_movement);
                             }
                         }
-                    
+
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
@@ -904,7 +912,7 @@ namespace entity.Brillo.Logic
             return Final_ItemMovementLIST;
         }
 
-     
+
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               int CurrencyFXID, int ProductID, int LocationID,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList,
@@ -1024,7 +1032,7 @@ namespace entity.Brillo.Logic
                             i = db.item_product.Where(x => x.id_item_product == ProductID).Select(x => x.id_item).FirstOrDefault();
                             if (i > 0)
                             {
-                                if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault()!=null)
+                                if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault() != null)
                                 {
                                     item_movement_value.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
                                 }
@@ -1032,7 +1040,7 @@ namespace entity.Brillo.Logic
                                 {
                                     item_movement_value.unit_value = 0;
                                 }
-                            
+
                             }
                         }
 

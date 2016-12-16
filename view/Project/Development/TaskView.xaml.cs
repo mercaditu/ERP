@@ -409,7 +409,7 @@ namespace Cognitivo.Project.Development
                 foreach (project_task project_task in _project_task)
                 {
 
-                    if (project_task.status == Status.Project.Pending)
+                    if (project_task.status == Status.Project.Pending || project_task.status==null)
                     {
                         project_task.status = Status.Project.Management_Approved;
                         ProjectTaskDB.NumberOfRecords += 1;

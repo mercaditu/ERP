@@ -50,11 +50,24 @@ namespace cntrl.Class
                         }
 
                     }
-                    db.payment_detail.RemoveRange(payment.payment_detail);
+                    if (payment.payment_detail!=null)
+                    {
+                        db.payment_detail.RemoveRange(payment.payment_detail);
+                    }
+                 
                 }
-                db.payments.RemoveRange(oldpayment);
-                db.payment_schedual.RemoveRange(oldSchedual);
-                db.payment_schedual.AddRange(payment_schedualList);
+                if (oldpayment != null)
+                {
+                    db.payments.RemoveRange(oldpayment);
+                }
+                if (oldSchedual != null)
+                {
+                    db.payment_schedual.RemoveRange(oldSchedual);
+                }
+                if (payment_schedualList != null)
+                {
+                    db.payment_schedual.AddRange(payment_schedualList);
+                }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
@@ -91,11 +104,23 @@ namespace cntrl.Class
                 
 
                     }
-                    db.payment_detail.RemoveRange(payment.payment_detail);
+                    if (payment.payment_detail != null)
+                    {
+                        db.payment_detail.RemoveRange(payment.payment_detail);
+                    }
                 }
-                db.payments.RemoveRange(oldpayment);
-                db.payment_schedual.RemoveRange(oldSchedual);
-                db.payment_schedual.AddRange(payment_schedualList);
+                if (oldpayment != null)
+                {
+                    db.payments.RemoveRange(oldpayment);
+                }
+                if (oldSchedual != null)
+                {
+                    db.payment_schedual.RemoveRange(oldSchedual);
+                }
+                if (payment_schedualList != null)
+                {
+                    db.payment_schedual.AddRange(payment_schedualList);
+                }
             }
 
 
@@ -200,7 +225,11 @@ namespace cntrl.Class
                             }
 
                         }
-                        db.payments.RemoveRange(oldpayment);
+                        if (oldpayment != null)
+                        {
+                            db.payments.RemoveRange(oldpayment);
+                        }
+                     
 
 
                     }
@@ -252,7 +281,10 @@ namespace cntrl.Class
                             }
 
                         }
-                        db.payments.RemoveRange(oldpayment);
+                        if (oldpayment != null)
+                        {
+                            db.payments.RemoveRange(oldpayment);
+                        }
 
 
                     }
@@ -298,11 +330,23 @@ namespace cntrl.Class
                         }
 
                     }
-                    db.payment_detail.RemoveRange(payment.payment_detail);
+                    if (payment.payment_detail != null)
+                    {
+                        db.payment_detail.RemoveRange(payment.payment_detail);
+                    }
                 }
-                db.payments.RemoveRange(oldpayment);
-                db.payment_schedual.RemoveRange(oldSchedual);
-                db.payment_schedual.AddRange(payment_schedualList);
+                if (oldpayment != null)
+                {
+                    db.payments.RemoveRange(oldpayment);
+                }
+                if (oldSchedual != null)
+                {
+                    db.payment_schedual.RemoveRange(oldSchedual);
+                }
+                if (payment_schedualList != null)
+                {
+                    db.payment_schedual.AddRange(payment_schedualList);
+                }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
@@ -338,11 +382,23 @@ namespace cntrl.Class
                         }
 
                     }
-                    db.payment_detail.RemoveRange(payment.payment_detail);
+                    if (payment.payment_detail != null)
+                    {
+                        db.payment_detail.RemoveRange(payment.payment_detail);
+                    }
                 }
-                db.payments.RemoveRange(oldpayment);
-                db.payment_schedual.RemoveRange(oldSchedual);
-                db.payment_schedual.AddRange(payment_schedualList);
+                if (oldpayment!=null)
+                {
+                    db.payments.RemoveRange(oldpayment);
+                }
+                if (oldSchedual != null)
+                {
+                    db.payment_schedual.RemoveRange(oldSchedual);
+                }
+                if (payment_schedualList != null)
+                {
+                    db.payment_schedual.AddRange(payment_schedualList);
+                }
             }
         }
 

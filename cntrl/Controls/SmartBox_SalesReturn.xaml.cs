@@ -43,7 +43,7 @@ namespace cntrl.Controls
                 if (sales_return != null)
                 {
                     ReturnID = sales_return.ID;
-                    Text = sales_return.number;
+                    //Text = sales_return.number;
 
                     popContact.IsOpen = false;
 

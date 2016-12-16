@@ -44,7 +44,7 @@ namespace cntrl.Controls
                 if (Purchase_return != null)
                 {
                     ReturnID = Purchase_return.ID;
-                    Text = Purchase_return.code;
+                    //Text = Purchase_return.code;
 
                     popContact.IsOpen = false;
 

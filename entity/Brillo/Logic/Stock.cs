@@ -438,9 +438,10 @@ namespace entity.Brillo.Logic
             }
 
             //SALES RETURN
-            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
+            foreach (sales_return_detail sales_return_detail in Invoice_WithProducts)
             {
-                item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
+           
+                item_product item_product = sales_return_detail.item.item_product.FirstOrDefault();
 
                 sales_return_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().id_location;
 

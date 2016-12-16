@@ -27,7 +27,7 @@
 		<converter:TreeViewchildFilter x:Key="tree"/>
 		<converter:Type2Enable x:Key="Type2Enable"/>
 		<converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
-		<converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
+		<converter:Status_Production_2ColorConverter x:Key="ProductionStatus2Color"/>
 		<sys:Int32 x:Key="IntOne">1</sys:Int32>
 		<sys:Int32 x:Key="IntTwo">2</sys:Int32>
 		<sys:Int32 x:Key="IntThree">3</sys:Int32>
@@ -145,7 +145,7 @@
 				<Grid.Resources>
 					<HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
 											  ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProductionStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 											   HorizontalAlignment="Stretch"
 											   IsInput="{Binding is_input, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

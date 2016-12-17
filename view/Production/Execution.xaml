@@ -295,13 +295,13 @@
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
 									<DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-                                    <toolkit:TimePicker x:Name="dtpstarttime" Width="85"  Format="Custom" FormatString="hh:mmtt"/>
+                                    <toolkit:TimePicker x:Name="dtpstarttime" Width="85"  Format="Custom" FormatString="HH:mm"/>
 
 								</StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
 									<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                                    <toolkit:TimePicker x:Name="dtpendtime" Width="85" Format="Custom" FormatString="hh:mmtt" />
+                                    <toolkit:TimePicker x:Name="dtpendtime" Width="85" Format="Custom" FormatString="HH:mm" />
 								</StackPanel>
 
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">

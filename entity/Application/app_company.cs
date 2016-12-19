@@ -47,7 +47,7 @@ namespace entity
         public string version { get; set; }
         public string seats { get; set; }
 
-        //public virtual geo_country geo_country { get; set; }
+        public virtual app_company_interest app_company_interest { get; set; }
         public virtual ICollection<app_branch> app_branch { get; set; }
 
         public virtual IEnumerable<item_inventory_dimension> item_inventory_dimension { get; set; }

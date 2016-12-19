@@ -125,6 +125,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Application\app_company_interest.cs" />
     <Compile Include="Apps.cs" />
     <Compile Include="Application\app_account_session.cs" />
     <Compile Include="Application\app_branch_walkin.cs" />

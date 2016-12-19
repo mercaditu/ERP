@@ -20,8 +20,9 @@
         public int id_vat_group_detail { get; set; }
         public int id_vat_group { get; set; }
         [Required]
-        [CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_vat { get; set; }
+        public decimal percentage { get; set; }
 
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_vat app_vat { get; set; }

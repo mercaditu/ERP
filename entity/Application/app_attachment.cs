@@ -7,15 +7,9 @@ namespace entity
   
 
     
-    public partial class app_attachment : Audit
+    public partial class app_attachment
     {
-        public app_attachment()
-        {
-            is_active = true;
-            id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
-            is_head = true;
-        }
+        public app_attachment() {  }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,8 +18,8 @@ namespace entity
         public string mime { get; set; }
         public int reference_id { get; set; }
         public bool is_default { get; set; }
+        public entity.App.Names application { get; set; }
 
-        public bool is_active { get; set; }
         public virtual ICollection<item_attachment> item_attachment { get; set; }
     }
 }

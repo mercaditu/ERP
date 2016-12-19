@@ -33,7 +33,7 @@ namespace entity
         public bool is_default { get; set; }
         [Required]
         public bool is_promissory { get; set; }
-        public decimal surcharge { get; set; }
+        public decimal? surcharge { get; set; }
 
         public app_contract()
         {

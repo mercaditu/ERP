@@ -144,6 +144,8 @@ namespace cntrl.Curd
             }
         }
 
+      
+
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try

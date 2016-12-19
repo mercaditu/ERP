@@ -11,7 +11,7 @@ namespace Cognitivo.Configs
     public partial class Company : Page
     {
         dbContext entity = new dbContext();
-        CollectionViewSource app_companyViewSource;
+        CollectionViewSource app_companyViewSource, app_companyapp_company_interestViewSource;
 
         public Company()
         {
@@ -23,8 +23,10 @@ namespace Cognitivo.Configs
             try
             {
                 app_companyViewSource = ((CollectionViewSource)(this.FindResource("app_companyViewSource")));
+                app_companyapp_company_interestViewSource = ((CollectionViewSource)(this.FindResource("app_companyapp_company_interestViewSource")));
                 entity.db.app_company.OrderByDescending(a => a.is_active).Load();
                 app_companyViewSource.Source = entity.db.app_company.Local;
+                app_companyapp_company_interestViewSource.View.Refresh();
             }
             catch
             {
@@ -43,6 +45,7 @@ namespace Cognitivo.Configs
             entity.db.app_company.Add(app_company);
             app_companyViewSource.View.MoveCurrentToLast();
             objCompany.app_companyViewSource = app_companyViewSource;
+
             objCompany.objEntity = entity;
 
             crud_modal.Children.Add(objCompany);
@@ -57,13 +60,17 @@ namespace Cognitivo.Configs
 
             app_companyViewSource.View.MoveCurrentTo(entity.db.app_company.Where(x => x.id_company == intCompanyId).FirstOrDefault());
             objCompany.app_companyViewSource = app_companyViewSource;
+
             objCompany.objEntity = entity;
-            
+
             crud_modal.Children.Add(objCompany);
         }
 
         private void UserCurdConditions(ref cntrl.company objCompany)
         {
+            objCompany.canedit = true;
+            objCompany.candelete = true;
+
             //if (module > 0)
             //{
             //    if (security_curd != null)
@@ -84,6 +91,6 @@ namespace Cognitivo.Configs
             //}
         }
 
-      
+
     }
 }

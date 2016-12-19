@@ -13,7 +13,7 @@ namespace cntrl
     {
         CollectionViewSource _app_companyViewSource = null;
         public CollectionViewSource app_companyViewSource { get { return _app_companyViewSource; } set { _app_companyViewSource = value; } }
-
+     
         private dbContext _entity = null;
         public dbContext objEntity { get { return _entity; } set { _entity = value; } }
 
@@ -53,7 +53,7 @@ namespace cntrl
                 try
                 {
                     stackMain.DataContext = app_companyViewSource;
-
+                  
                     //CollectionViewSource geo_countryViewSource = this.FindResource("geo_countryViewSource") as CollectionViewSource;
                     //geo_countryViewSource.Source = objEntity.db.geo_country.ToList();
                 }
@@ -123,6 +123,19 @@ namespace cntrl
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private void cbxInterest_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cbxInterest.IsChecked==true)
+            {
+                app_company _app_company = app_companyViewSource.View.CurrentItem as entity.app_company;
+                app_company_interest app_company_interest = new app_company_interest();
+                app_company_interest.app_company = _app_company;
+                _app_company.app_company_interest = app_company_interest;
+                app_companyViewSource.View.Refresh();
+             
             }
         }
     }

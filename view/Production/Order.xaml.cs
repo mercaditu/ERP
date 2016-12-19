@@ -446,7 +446,7 @@ namespace Cognitivo.Production
 
                 if (item != null && item.id_item > 0 && item.item_recepie.Count > 0 && production_order != null)
                 {
-                    production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
+                    production_order_detail production_order_detail_output = treeProject.SelectedItem_ as production_order_detail;
                     if (production_order_detail_output != null)
                     {
                         production_order_detail_output.id_item = item.id_item;
@@ -479,12 +479,12 @@ namespace Cognitivo.Production
                         }
 
                         filter_task();
-                        treeProject.SelectedItem_ = production_order_detail_output;
+                        //treeProject.SelectedItem_ = production_order_detail_output;
                     }
                 }
                 else
                 {
-                    production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
+                    production_order_detail production_order_detail_output = treeProject.SelectedItem_ as production_order_detail;
 
                     if (production_order_detail_output != null)
                     {
@@ -496,7 +496,7 @@ namespace Cognitivo.Production
                         production_order_detail_output.is_input = true;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
-                        treeProject.SelectedItem_ = production_order_detail_output;
+                       // treeProject.SelectedItem_ = production_order_detail_output;
                     }
                 }
             }
@@ -744,6 +744,8 @@ namespace Cognitivo.Production
         {
             Update_Logistics();
         }
+
+     
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

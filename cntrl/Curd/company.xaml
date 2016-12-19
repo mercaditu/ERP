@@ -69,20 +69,20 @@
                 </StackPanel>
 
                 <Rectangle Fill="Silver" Height="1" Margin="8"/>
-                <CheckBox Margin="5" x:Name="cbxInterest" Content="{lex:Loc Interest}" Style="{StaticResource input_checkbox}"/>
+                <CheckBox Margin="5" x:Name="cbxInterest" Content="{lex:Loc Interest}" Style="{StaticResource input_checkbox}" Checked="cbxInterest_Checked"/>
                 <StackPanel Orientation="Horizontal">
                     <Grid Width="4px" Background="Gainsboro">
                         
                     </Grid>
-                    <StackPanel DataContext="">
+                    <StackPanel x:Name="StpInterest">
                         <Label Content="{lex:Loc GracePeriod}" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding grace_period, StringFormat=N0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                        <TextBox Text="{Binding app_company_interest.grace_period, StringFormat=N0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                          Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Interest}" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding interest, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                        <TextBox Text="{Binding app_company_interest.interest, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                          Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc IsForced}" Style="{StaticResource input_label}"/>
-                        <CheckBox IsChecked="{Binding is_forced, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                        <CheckBox IsChecked="{Binding app_company_interest.is_forced, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                          Style="{StaticResource input_checkbox}"/>
                     </StackPanel>
                 </StackPanel>

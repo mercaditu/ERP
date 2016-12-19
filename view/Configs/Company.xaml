@@ -16,6 +16,7 @@
 	  Loaded="Page_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="app_companyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_company}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_companyapp_company_interestViewSource" Source="{Binding app_company_interest, Source={StaticResource app_companyViewSource}}"/>
         <converter:IsActive2ColorConverter x:Key="IsActive2ColorConverter"/>
     </Page.Resources>
     <Grid x:Name="gridMain" DataContext="{StaticResource app_companyViewSource}">

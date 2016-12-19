@@ -58,6 +58,7 @@ namespace Cognitivo.Configs
             app_vat_groupViewSource.View.MoveCurrentTo(_entity.db.app_vat_group.Where(x => x.id_vat_group == intId).FirstOrDefault());
             vat_group.app_vat_groupViewSource = app_vat_groupViewSource;
             vat_group._entity = _entity;
+            
             crud_modal.Children.Add(vat_group);
         }
     }

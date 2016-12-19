@@ -75,7 +75,7 @@
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding}">
+				 ItemsSource="{Binding}" SelectionChanged="itemDataGrid_SelectionChanged">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"

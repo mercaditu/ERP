@@ -269,6 +269,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Class\Byte2FileConverter.cs" />
     <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Class\DataTable.cs" />
     <Compile Include="Class\ErrorLog.cs" />

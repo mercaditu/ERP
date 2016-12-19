@@ -487,7 +487,6 @@ namespace Cognitivo.Product
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    //DeleteDetailGridRow
                     if (e.Parameter as item_price != null)
                     {
                         item_priceDataGrid.CancelEdit();
@@ -526,6 +525,11 @@ namespace Cognitivo.Product
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
+        }
+
+        private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         private void popupCustomize_Closed(object sender, EventArgs e)

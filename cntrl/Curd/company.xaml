@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -69,7 +69,25 @@
                 </StackPanel>
 
                 <Rectangle Fill="Silver" Height="1" Margin="8"/>
-                <CheckBox Margin="5" x:Name="cbxLegal" Content="{lex:Loc LegalRepresentative}" Style="{StaticResource input_checkbox}"/>
+                <CheckBox Margin="5" x:Name="cbxInterest" Content="{lex:Loc Interest}" Style="{StaticResource input_checkbox}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="4px" Background="Gainsboro">
+                        
+                    </Grid>
+                    <StackPanel DataContext="">
+                        <Label Content="{lex:Loc GracePeriod}" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding grace_period, StringFormat=N0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                         Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Interest}" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding interest, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                         Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc IsForced}" Style="{StaticResource input_label}"/>
+                        <CheckBox IsChecked="{Binding is_forced, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                         Style="{StaticResource input_checkbox}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--<CheckBox Margin="5" x:Name="cbxLegal" Content="{lex:Loc LegalRepresentative}" Style="{StaticResource input_checkbox}"/>
                 <StackPanel Visibility="{Binding ElementName=cbxLegal, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                     <TextBox Text="{Binding representative_name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
@@ -83,7 +101,7 @@
                     <TextBox Text="{Binding accountant_name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
                     <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
                     <TextBox Text="{Binding accountant_gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
 
             <Grid Background="WhiteSmoke">

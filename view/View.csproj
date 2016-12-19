@@ -119,7 +119,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>View_5_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DSoft.RDLC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -830,7 +831,6 @@
     <Resource Include="Images\Application\128\BankReconciliation.png" />
     <Resource Include="Images\Application\128\PaymentMade.png" />
     <Resource Include="Images\Application\128\SalesBudget.png" />
-    <None Include="View_5_TemporaryKey.pfx" />
     <Resource Include="Images\Application\128\Accounts.png" />
     <Resource Include="Images\Application\128\Fraction.png" />
     <Resource Include="Images\Application\128\IncotermContract.png" />

@@ -61,10 +61,10 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<cntrl:navList recordCode="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-					    recordName="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-					    recordSecondaryName="{Binding gov_code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-					    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-					    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+						recordName="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+						recordSecondaryName="{Binding gov_code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+						State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+						IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
@@ -244,9 +244,9 @@
 							  SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
 							  SelectionChanged="cbxContactRole_SelectionChanged"/>
 					<Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}"/>
-                    <cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
+					<cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
 											 Text="{Binding parent.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}"/>
+					<Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}"/>
 					<DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True" 
 							  ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">
 						<DataGrid.Columns>

@@ -423,16 +423,29 @@ namespace Cognitivo.Product
 
         private void StackPanel_Drop(object sender, DragEventArgs e)
         {
-            var data = e.Data as DataObject;
-            if (data.ContainsFileDropList())
+            item item = itemViewSource.View.CurrentItem as item;
+            if (item != null && item.id_item > 0)
             {
-                var files = data.GetFileDropList();
-                string extension = Path.GetExtension(files[0]);
-                if (!string.IsNullOrEmpty(extension) &&
-                    (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp"))
-                    imageViewer.Source = LoadImageFromFile(files[0]);
-                else
-                    MessageBox.Show("Images with .jpg, .jpeg, .png, .gif, .bmp extensions are only allowed.");
+                var data = e.Data as DataObject;
+                if (data.ContainsFileDropList())
+                {
+                    var files = data.GetFileDropList();
+                    string extension = Path.GetExtension(files[0]);
+                    if (!string.IsNullOrEmpty(extension) &&
+                        (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                    {
+                        app_attachment item_image = new app_attachment();
+                        
+                        Class.Byte2FileConverter ByteConverter = new Class.Byte2FileConverter();
+                        item_image.file = ByteConverter.JpegToByteArray(data);
+                        item_image.reference_id = item.id_item;
+                        item_image.mime = "jpeg";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Images with .jpg, .jpeg, .png extensions are only allowed.");
+                    }
+                }
             }
         }
 
@@ -528,6 +541,11 @@ namespace Cognitivo.Product
         }
 
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void imageViewer_Drop(object sender, DragEventArgs e)
         {
 
         }

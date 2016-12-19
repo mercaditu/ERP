@@ -52,6 +52,8 @@
                     <DataGridComboBoxColumn Header="VAT" Width="*" ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
                                             DisplayMemberPath="name" SelectedValuePath="id_vat"
                                             SelectedValueBinding="{Binding id_vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="Percentage" Width="*"
+                                        Binding="{Binding percentage, StringFormat=P, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <CheckBox Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>

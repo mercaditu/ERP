@@ -31,7 +31,7 @@
 		<convert:ImageConverter x:Key="ConvertImage"/>
 		<convert:NumberFormat x:Key="Numberformatting"/>
 		<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
+		<CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourceconvert" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -371,15 +371,15 @@
 				<Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
 					<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
-                    <metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
-                        <metro:FlipView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}"/>
-                        </DataTemplate>
-                        </metro:FlipView.ItemTemplate>
-                    </metro:FlipView>
+					<metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+						<metro:FlipView.ItemTemplate>
+						<DataTemplate>
+							<Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}"/>
+						</DataTemplate>
+						</metro:FlipView.ItemTemplate>
+					</metro:FlipView>
 
-                </Grid>
+				</Grid>
 				<TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
 				<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 					<Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>

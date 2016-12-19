@@ -275,10 +275,18 @@ namespace entity
             sales_invoice_detail.id_item = item.id_item;
             sales_invoice_detail.Quantity_InStock = QuantityInStock;
 
+            if (sales_invoice.app_contract == null && sales_invoice.id_contract > 0)
+            {
+                sales_invoice.app_contract = base.app_contract.Find(sales_invoice.id_contract);
+            }
+
             if (sales_invoice.app_contract != null)
             {
-                decimal surcharge = (decimal)sales_invoice.app_contract.surcharge;
-                sales_invoice_detail.unit_price = sales_invoice_detail.unit_price * (1 + surcharge);
+                if (sales_invoice.app_contract.surcharge != null)
+                {
+                    decimal surcharge = (decimal)sales_invoice.app_contract.surcharge;
+                    sales_invoice_detail.unit_price = sales_invoice_detail.unit_price * (1 + surcharge);
+                }
             }
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;

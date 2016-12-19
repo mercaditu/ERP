@@ -61,6 +61,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             is_active = true;
             timestamp = DateTime.Now;
+            trans_code_exp = DateTime.Now;
 
             contact_tag_detail = new List<contact_tag_detail>();
             contact_subscription = new List<contact_subscription>();
@@ -141,10 +142,9 @@ namespace entity
 
         public string alias { get; set; }
         public string code { get; set; }
-       //  [Required]
         public string gov_code { get; set; }
         public string trans_code { get; set; }
-        public DateTime trans_code_exp { get; set; }
+        public DateTime? trans_code_exp { get; set; }
         public string telephone { get; set; }
         public string email { get; set; }
         public string address { get; set; }

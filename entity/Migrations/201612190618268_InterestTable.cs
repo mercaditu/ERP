@@ -1,5 +1,6 @@
 namespace entity.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
     public partial class InterestTable : DbMigration
@@ -23,7 +24,7 @@ namespace entity.Migrations
                 .ForeignKey("app_company", t => t.id_interest)
                 .Index(t => t.id_interest);
             
-            AddColumn("contacts", "trans_code_exp", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("contacts", "trans_code_exp", c => c.DateTime(precision: 0));
             AddColumn("app_contract", "surcharge", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("app_vat_group_details", "percentage", c => c.Decimal(nullable: false, precision: 20, scale: 9));
             AddColumn("app_attachment", "reference_id", c => c.Int(nullable: false));

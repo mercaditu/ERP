@@ -23,6 +23,7 @@ namespace entity.Migrations
                 .ForeignKey("app_company", t => t.id_interest)
                 .Index(t => t.id_interest);
             
+            AddColumn("contacts", "trans_code_exp", c => c.DateTime(nullable: false, precision: 0));
             AddColumn("app_contract", "surcharge", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("app_vat_group_details", "percentage", c => c.Decimal(nullable: false, precision: 20, scale: 9));
             AddColumn("app_attachment", "reference_id", c => c.Int(nullable: false));
@@ -51,6 +52,7 @@ namespace entity.Migrations
             DropColumn("app_attachment", "reference_id");
             DropColumn("app_vat_group_details", "percentage");
             DropColumn("app_contract", "surcharge");
+            DropColumn("contacts", "trans_code_exp");
             DropTable("app_company_interest");
             CreateIndex("app_attachment", "id_user");
             CreateIndex("app_attachment", "id_company");

@@ -437,7 +437,7 @@ namespace Cognitivo.Product
                         app_attachment item_image = new app_attachment();
                         
                         Class.Byte2FileConverter ByteConverter = new Class.Byte2FileConverter();
-                        item_image.file = ByteConverter.JpegToByteArray(data);
+                       // item_image.file = ByteConverter.JpegToByteArray(data);
                         item_image.reference_id = item.id_item;
                         item_image.mime = "jpeg";
                     }

@@ -144,6 +144,7 @@ namespace entity
        //  [Required]
         public string gov_code { get; set; }
         public string trans_code { get; set; }
+        public DateTime trans_code_exp { get; set; }
         public string telephone { get; set; }
         public string email { get; set; }
         public string address { get; set; }

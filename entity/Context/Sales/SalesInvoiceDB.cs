@@ -275,6 +275,12 @@ namespace entity
             sales_invoice_detail.id_item = item.id_item;
             sales_invoice_detail.Quantity_InStock = QuantityInStock;
 
+            if (sales_invoice.app_contract != null)
+            {
+                decimal surcharge = (decimal)sales_invoice.app_contract.surcharge;
+                sales_invoice_detail.unit_price = sales_invoice_detail.unit_price * (1 + surcharge);
+            }
+
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);
 

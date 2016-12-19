@@ -344,8 +344,12 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
                 purchase_invoice.id_contact = contact.id_contact;
                 purchase_invoice.contact = contact;
-                purchase_invoice.code = contact.trans_code;
-                purchase_invoice.RaisePropertyChanged("code");
+
+                if (contact.trans_code_exp > DateTime.Today)
+                {
+                    purchase_invoice.code = contact.trans_code;
+                    purchase_invoice.RaisePropertyChanged("code");
+                }
 
                 ///Start Thread to get Data.
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));

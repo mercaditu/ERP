@@ -75,7 +75,29 @@
 					<DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 										Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
 				</DataGrid.Columns>
-			</DataGrid>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DataGrid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
+														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+														Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128"/>
+                                <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
+														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <!-- UnitPrice_Vat -->
+                                <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 
+                                <DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
+                                <!-- SubTotal_VAT -->
+                                <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, Mode=OneWay, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
+														Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
 		</Grid>
 
 		<StackPanel Grid.Column="2" Background="WhiteSmoke" Grid.Row="1">

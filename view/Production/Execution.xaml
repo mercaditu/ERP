@@ -294,14 +294,11 @@
 								</StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-									<DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-                                    <toolkit:TimePicker x:Name="dtpstarttime" Width="85"  Format="Custom" FormatString="HH:mm"/>
-
-								</StackPanel>
+                                    <toolkit:DateTimeUpDown x:Name="dtpstartdate"  Width="150" Height="27"/>
+                                </StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-									<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                                    <toolkit:TimePicker x:Name="dtpendtime" Width="85" Format="Custom" FormatString="HH:mm" />
+                                    <toolkit:DateTimeUpDown x:Name="dtpenddate"  Width="150" Height="27" />
 								</StackPanel>
 
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -395,14 +392,11 @@
 									</StackPanel>
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 										<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-										<DatePicker x:Name="dtpscstartdate"  Width="150" Height="27"/>
-										<toolkit:TimePicker x:Name="dtpscstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
-
-									</StackPanel>
+                                        <toolkit:DateTimeUpDown x:Name="dtpscstartdate"  Width="150" Height="27"/>
+                                    </StackPanel>
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 										<Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-										<DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />
-										<toolkit:TimePicker x:Name="dtpscendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                                        <toolkit:DateTimeUpDown x:Name="dtpscenddate"  Width="150" Height="27" />
 									</StackPanel>
 
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">

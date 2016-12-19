@@ -77,7 +77,7 @@
 				</DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <DataGrid>
+                        <DataGrid ItemsSource="{Binding sales_invoice.sales_invoice_detail}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
 														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
@@ -87,10 +87,10 @@
 														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <!-- UnitPrice_Vat -->
                                 <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 
+														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
-                                <!-- SubTotal_VAT -->
+														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"/>
+                             
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, Mode=OneWay, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
 														Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                             </DataGrid.Columns>

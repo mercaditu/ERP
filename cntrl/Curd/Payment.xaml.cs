@@ -324,7 +324,7 @@ namespace cntrl.Curd
                 payment_detail.value = return_value;
                 payment_detail.id_purchase_return = purchase_return.id_purchase_return;
                 payment_detail.Max_Value = return_value;
-                sbxPurchaseReturn.Text = purchase_return.contact.name;
+                sbxPurchaseReturn.Text = purchase_return.number + "-" + purchase_return.trans_date; ;
             }
 
         }
@@ -339,7 +339,7 @@ namespace cntrl.Curd
                 payment_detail.id_sales_return = sales_return.id_sales_return;
                 payment_detail.value = return_value;
                 payment_detail.Max_Value = return_value; 
-                sbxReturn.Text = sales_return.code + "-" + sales_return.trans_date ;
+                sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date ;
                 sbxReturn.RaisePropertyChanged("Text");
             }
 

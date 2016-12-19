@@ -205,7 +205,7 @@ namespace Cognitivo.Product
             //Loads Primary and Secondary Data
             load_PrimaryData();
 
-            cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x=>x!=item.item_type.FixedAssets).ToList();
+            cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x => x != item.item_type.FixedAssets).ToList();
         }
 
         #region Implementing Interface For CanClose
@@ -388,7 +388,7 @@ namespace Cognitivo.Product
                         // Save Changes
                         itemViewSource.View.Refresh();
                         toolBar.msgSaved(ItemDB.NumberOfRecords);
-                    }   
+                    }
                 }
             }
         }
@@ -431,15 +431,24 @@ namespace Cognitivo.Product
                 {
                     var files = data.GetFileDropList();
                     string extension = Path.GetExtension(files[0]);
+
                     if (!string.IsNullOrEmpty(extension) &&
-                        (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                        (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png"))
                     {
                         app_attachment item_image = new app_attachment();
-                        
+
                         Class.Byte2FileConverter ByteConverter = new Class.Byte2FileConverter();
-                       // item_image.file = ByteConverter.JpegToByteArray(data);
+                        item_image.file = File.ReadAllBytes(files[0].ToString());
                         item_image.reference_id = item.id_item;
-                        item_image.mime = "jpeg";
+                        item_image.mime = "image/" + extension.ToLower();
+                        item_image.application = entity.App.Names.Items;
+
+                        using (db db = new db())
+                        {
+                            db.app_attachment.Add(item_image);
+                            db.SaveChangesAsync();
+                        }
+                        itemDataGrid_SelectionChanged(sender, null);
                     }
                     else
                     {
@@ -447,21 +456,24 @@ namespace Cognitivo.Product
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
-        private BitmapImage LoadImageFromFile(string filename)
+        private BitmapImage LoadImageFromFile(byte[] array)
         {
-            using (var fs = File.OpenRead(filename))
+            using (var ms = new System.IO.MemoryStream(array))
             {
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.CacheOption = BitmapCacheOption.OnLoad;
-                //Downscaling to keep the memory footprint low
-                img.DecodePixelWidth = (int)SystemParameters.PrimaryScreenWidth;
-                img.StreamSource = fs;
-                img.EndInit();
-                return img;
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
             }
+
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -542,7 +554,17 @@ namespace Cognitivo.Product
 
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            item item = itemViewSource.View.CurrentItem as item;
+            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+            if (item != null)
+            {
+                using (db db = new db())
+                {
+                    app_attachmentViewSource.Source = db.app_attachment.Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item).ToList();
 
+                }
+
+            }
         }
 
         private void imageViewer_Drop(object sender, DragEventArgs e)
@@ -653,7 +675,7 @@ namespace Cognitivo.Product
                 item_service.id_talent = (int)cmbtalent.SelectedValue;
                 item.item_service.Add(item_service);
                 itemitem_serviceViewSource.View.Refresh();
-                itemitem_serviceViewSource.View.MoveCurrentToLast();   
+                itemitem_serviceViewSource.View.MoveCurrentToLast();
             }
         }
 
@@ -676,7 +698,7 @@ namespace Cognitivo.Product
         private void popupName_Closed(object sender, EventArgs e)
         {
             item_template item_template = item_templateViewSource.View.CurrentItem as item_template;
-            
+
             if (item_template != null)
             {
                 item item = itemViewSource.View.CurrentItem as item;
@@ -718,7 +740,7 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-                    toolBar.msgWarning("Only Products, RawMaterial, and Supplies can have Automatic Costs. Else enter manually.");   
+                    toolBar.msgWarning("Only Products, RawMaterial, and Supplies can have Automatic Costs. Else enter manually.");
                 }
             }
         }

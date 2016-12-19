@@ -31,6 +31,7 @@
 		<convert:ImageConverter x:Key="ConvertImage"/>
 		<convert:NumberFormat x:Key="Numberformatting"/>
 		<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourceconvert" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -349,13 +350,7 @@
 				</TabItem>
 				<TabItem Header="{lex:Loc Service}" Visibility="{Binding SelectedIndex, ConverterParameter=2, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
 					<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<StackPanel Orientation="Horizontal" Margin="15,0,0,5">
-							<Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
-							<TextBox x:Name="unit_costTextBox"
-							Text="{Binding unit_cost, Mode=TwoWay,
-											NotifyOnValidationError=true, ValidatesOnExceptions=true, 
-											UpdateSourceTrigger=LostFocus, StringFormat={}{0:N}}" />
-						</StackPanel>
+						
 						<StackPanel Orientation="Horizontal">
 							<ComboBox x:Name="cmbtalent" ItemsSource="{Binding Source={StaticResource hr_talentViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_talent"
 								  SelectedValue="{Binding id_talent, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -376,8 +371,15 @@
 				<Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
 					<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
-					<Image x:Name="imageViewer" Margin="4"/>
-				</Grid>
+                    <metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+                        <metro:FlipView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}"/>
+                        </DataTemplate>
+                        </metro:FlipView.ItemTemplate>
+                    </metro:FlipView>
+
+                </Grid>
 				<TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
 				<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 					<Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>

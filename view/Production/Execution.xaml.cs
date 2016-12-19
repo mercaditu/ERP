@@ -57,8 +57,8 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            dtpenddate.Text = DateTime.Now.ToString();
-            dtpstartdate.Text = DateTime.Now.ToString();
+            dtpstarttime.Text = DateTime.Now.ToString();
+           dtpendtime.Text = DateTime.Now.ToString();
 
             filter_task();
             RefreshData();
@@ -129,9 +129,9 @@ namespace Cognitivo.Production
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
-                                string start_date = dtpstartdate.CurrentDateTimePart.ToString();
+                                string start_date = dtpstarttime.CurrentDateTimePart.ToString();
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = dtpenddate.CurrentDateTimePart.ToString();
+                                string end_date = dtpendtime.CurrentDateTimePart.ToString();
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)

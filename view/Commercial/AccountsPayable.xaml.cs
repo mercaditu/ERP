@@ -131,7 +131,7 @@ namespace Cognitivo.Commercial
                 return;
             }
 
-            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList);
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList,ref PaymentDB);
 
             crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);

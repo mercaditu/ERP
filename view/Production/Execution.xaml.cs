@@ -130,16 +130,16 @@ namespace Cognitivo.Production
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
-                                string start_date = dtpstarttime.CurrentDateTimePart.ToString();
+                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, dtpstarttime.Text);
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = dtpendtime.CurrentDateTimePart.ToString();
+                                string end_date = string.Format("{0} {1}", dtpenddate.Text, dtpendtime.Text);
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
-                                string start_date = dtpscstartdate.CurrentDateTimePart.ToString();
+                                string start_date = string.Format("{0} {1}", dtpscstartdate.Text, dtpscstarttime.Text);
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = dtpscenddate.CurrentDateTimePart.ToString();
+                                string end_date = string.Format("{0} {1}", dtpscenddate.Text, dtpscendtime.Text);
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
                             }
 

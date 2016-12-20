@@ -12,8 +12,8 @@ namespace cntrl.Curd
 {
     public partial class Payment : UserControl
     {
-        PaymentDB PaymentDB = new PaymentDB();
-
+     
+        public PaymentDB PaymentDB { get; set; }
         public enum Modes
         {
             Recievable,
@@ -25,13 +25,13 @@ namespace cntrl.Curd
         CollectionViewSource paymentViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
 
-        public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList)
+        public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList,ref PaymentDB PaymentDB)
         {
             InitializeComponent();
 
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
-
+            this.PaymentDB = PaymentDB;
             paymentViewSource = (CollectionViewSource)FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)FindResource("paymentpayment_detailViewSource");
             payment_schedualList = _payment_schedualList;
@@ -215,7 +215,24 @@ namespace cntrl.Curd
 
 
 
-                        payment_detail.value = amount;
+                        if (payment_schedual.debit > amount)
+                        {
+                            payment_detail.value = amount;
+                            amount = 0;
+                        }
+                        else
+                        {
+                            if (Mode == Modes.Recievable)
+                            {
+                                payment_detail.value = payment_schedual.debit;
+                                amount = amount - payment_schedual.debit;
+                            }
+                            else if (Mode == Modes.Payable)
+                            {
+                                payment_detail.value = payment_schedual.credit;
+                                amount = amount - payment_schedual.credit;
+                            }
+                        }
 
                         payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
 
@@ -338,8 +355,8 @@ namespace cntrl.Curd
                 decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
                 payment_detail.id_sales_return = sales_return.id_sales_return;
                 payment_detail.value = return_value;
-                payment_detail.Max_Value = return_value; 
-                sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date ;
+                payment_detail.Max_Value = return_value;
+                sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date;
                 sbxReturn.RaisePropertyChanged("Text");
             }
 

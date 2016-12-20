@@ -26,7 +26,7 @@ namespace Cognitivo.Commercial
 
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new PaymentDB();
-        
+
         public AccountsRecievable()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace Cognitivo.Commercial
                 payment_schedualViewSource.View.Filter = i =>
                 {
                     payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance>0)
+                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance > 0)
                     {
                         return true;
                     }
@@ -58,6 +58,18 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            app_company app_company = PaymentDB.app_company.Find(CurrentSession.Id_Company);
+            if (app_company.app_company_interest!=null)
+            {
+                if (app_company.app_company_interest.is_forced==false)
+                {
+                    BtnInterest.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    BtnInterest.Visibility = Visibility.Collapsed;
+                }
+            }
             load_Schedual();
 
             foreach (app_condition app_condition in CurrentSession.Conditions)
@@ -68,7 +80,7 @@ namespace Cognitivo.Commercial
                 lbl.Foreground = SystemColors.HighlightBrush;
                 lbl.MouseUp += lblCondition_MouseUp;
                 stckFilter.Children.Add(lbl);
-            }          
+            }
         }
 
         private void lblCondition_MouseUp(object sender, EventArgs e)
@@ -85,8 +97,8 @@ namespace Cognitivo.Commercial
                     payment_schedualViewSource.View.Filter = i =>
                     {
                         payment_schedual payment_schedual = i as payment_schedual;
-                        if (payment_schedual.id_contact == contact.id_contact && 
-                            payment_schedual.AccountReceivableBalance > 0 && 
+                        if (payment_schedual.id_contact == contact.id_contact &&
+                            payment_schedual.AccountReceivableBalance > 0 &&
                             payment_schedual.sales_invoice.id_condition == ConditionID)
                         {
                             return true;
@@ -153,13 +165,70 @@ namespace Cognitivo.Commercial
                 //If nothing found, then exit.
                 return;
             }
+            app_company app_company = PaymentDB.app_company.Find(CurrentSession.Id_Company);
+            if (app_company.app_company_interest != null)
+            {
+                if (app_company.app_company_interest.is_forced)
+                {
+                    IntCalculation(app_company, PaymentSchedualList);
+                }
+               
+            }
 
-            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList);
+            if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+            }
+            else if (payment_schedualViewSource.View.OfType<payment_schedual>().ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().ToList();
+            }
+            else
+            {
+                //If nothing found, then exit.
+                return;
+            }
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList,ref PaymentDB);
 
             crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);
         }
-        
+        public void IntCalculation(app_company app_company, List<payment_schedual> PaymentSchedualList)
+        {
+
+
+            foreach (payment_schedual payment_schedual in PaymentSchedualList)
+            {
+
+
+                decimal delta = Convert.ToDecimal((DateTime.Now - payment_schedual.expire_date).TotalDays);
+                if (delta > app_company.app_company_interest.grace_period)
+                {
+                    decimal dailyinterstrate = app_company.app_company_interest.InterestDaily;
+                    decimal amount = payment_schedual.debit;
+                    decimal Totaldailyinterest = amount * dailyinterstrate;
+
+                    decimal totalint = (Totaldailyinterest * delta);
+                    payment_schedual Intpayment_schedual = new payment_schedual();
+                    Intpayment_schedual.credit = 0;
+                    Intpayment_schedual.debit = totalint;
+                    Intpayment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                    Intpayment_schedual.sales_invoice = payment_schedual.sales_invoice;
+                    Intpayment_schedual.trans_date = payment_schedual.trans_date;
+                    Intpayment_schedual.expire_date = payment_schedual.expire_date;
+                    Intpayment_schedual.status = Status.Documents_General.Approved;
+                    Intpayment_schedual.id_contact = payment_schedual.id_contact;
+                    Intpayment_schedual.IsSelected = true;
+                    PaymentDB.payment_schedual.Add(Intpayment_schedual);
+                }
+
+            }
+
+
+
+
+
+        }
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -237,7 +306,7 @@ namespace Cognitivo.Commercial
                             else
                                 return false;
                         };
-                    
+
                 }
             }
             payment_schedualViewSource.View.MoveCurrentToLast();
@@ -297,10 +366,37 @@ namespace Cognitivo.Commercial
             ListBox_SelectionChanged(sender, null);
         }
 
+        private void Interest_Click(object sender, RoutedEventArgs e)
+        {
+            List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
+
+            if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+            }
+            else if (payment_schedualViewSource.View.OfType<payment_schedual>().ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().ToList();
+            }
+            else
+            {
+                //If nothing found, then exit.
+                return;
+            }
+            app_company app_company = PaymentDB.app_company.Find(CurrentSession.Id_Company);
+            if (app_company.app_company_interest != null)
+            {
+
+                IntCalculation(app_company, PaymentSchedualList);
+
+            }
+            PaymentDB.SaveChanges();
+        }
+
         private void Rearrange_Click(object sender, RoutedEventArgs e)
         {
             PaymentDB.Rearrange_Payment();
-        } 
+        }
     }
 }
 

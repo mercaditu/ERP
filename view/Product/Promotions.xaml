@@ -82,7 +82,7 @@
                         <Label Content="Tags" Style="{StaticResource input_label}"/>
                         <ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
-							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" 
+							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" SelectionChanged="cbxparatag_SelectionChanged"
 						/>
                     </StackPanel>
                     <StackPanel x:Name="Total_Parameter">

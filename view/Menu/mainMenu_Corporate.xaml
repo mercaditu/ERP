@@ -135,7 +135,7 @@
                     <DropShadowEffect ShadowDepth="0" BlurRadius="2" />
                 </Label.Effect>
             </Label>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="0,0,0,30">
                 <StackPanel x:Name="wrapApps" Orientation="Horizontal" 
                         HorizontalAlignment="Center" Focusable="False"
                         Margin="0,64,0,0"/>

@@ -371,7 +371,7 @@
 				<Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
 					<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
-					<metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+					<metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}" IsBannerEnabled="False">
 						<metro:FlipView.ItemTemplate>
 						<DataTemplate>
 							<Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}"/>

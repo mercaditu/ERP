@@ -427,34 +427,9 @@ namespace Cognitivo.Product
             if (item != null && item.id_item > 0)
             {
                 var data = e.Data as DataObject;
-                if (data.ContainsFileDropList())
-                {
-                    var files = data.GetFileDropList();
-                    string extension = Path.GetExtension(files[0]);
-
-                    if (!string.IsNullOrEmpty(extension) &&
-                        (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png"))
-                    {
-                        app_attachment item_image = new app_attachment();
-
-                        Class.Byte2FileConverter ByteConverter = new Class.Byte2FileConverter();
-                        item_image.file = File.ReadAllBytes(files[0].ToString());
-                        item_image.reference_id = item.id_item;
-                        item_image.mime = "image/" + extension.ToLower();
-                        item_image.application = entity.App.Names.Items;
-
-                        using (db db = new db())
-                        {
-                            db.app_attachment.Add(item_image);
-                            db.SaveChangesAsync();
-                        }
-                        itemDataGrid_SelectionChanged(sender, null);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Images with .jpg, .jpeg, .png extensions are only allowed.");
-                    }
-                }
+                entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
+                Attachment.SaveFile(data, item.id_item,null);
+                itemDataGrid_SelectionChanged(sender, null);
             }
             else
             {
@@ -462,19 +437,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private BitmapImage LoadImageFromFile(byte[] array)
-        {
-            using (var ms = new System.IO.MemoryStream(array))
-            {
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad; // here
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
-
-        }
+      
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -560,16 +523,12 @@ namespace Cognitivo.Product
             {
                 using (db db = new db())
                 {
-                    app_attachmentViewSource.Source = db.app_attachment.Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item).ToList();
+                    app_attachmentViewSource.Source = db.app_attachment
+                        .Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item && x.mime.Contains("image")).ToList();
 
                 }
 
             }
-        }
-
-        private void imageViewer_Drop(object sender, DragEventArgs e)
-        {
-
         }
 
         private void popupCustomize_Closed(object sender, EventArgs e)

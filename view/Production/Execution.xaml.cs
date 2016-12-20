@@ -119,6 +119,7 @@ namespace Cognitivo.Production
                         hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
                         if (contract != null)
                         {
+
                             _production_execution_detail.unit_cost = contract.Hourly;
                         }
 

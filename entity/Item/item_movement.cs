@@ -35,7 +35,29 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_movement { get; set; }
+        public long id_movement
+        {
+            get
+            {
+                return _id_movement;
+            }
+            set
+            {
+                _id_movement = value;
+                if (parent == null)
+                {
+                    code = _id_movement.ToString();
+                   
+                }
+                else
+                {
+                    code = parent.code;
+                  
+                }
+                
+            }
+        }
+        long _id_movement;
         public int id_item_product { get; set; }
         public int? id_transfer_detail { get; set; }
         public int? id_execution_detail { get; set; }
@@ -48,7 +70,7 @@ namespace entity
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
-     
+
         public decimal debit
         {
             get
@@ -92,7 +114,7 @@ namespace entity
         {
             get
             {
-                if (child!=null)
+                if (child != null)
                 {
                     _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
                     RaisePropertyChanged("avlquantity");
@@ -103,7 +125,7 @@ namespace entity
                     RaisePropertyChanged("avlquantity");
                 }
 
-               
+
                 return _avlquantity;
             }
             set
@@ -136,7 +158,7 @@ namespace entity
                 _item_product = value;
             }
         }
-        
+
         item_product _item_product;
 
         #region Methods
@@ -150,7 +172,7 @@ namespace entity
                 this_child.Update_ChildVales(item_movement_value.Sum(x => x.unit_value));
             }
         }
-       
+
 
         #endregion
     }

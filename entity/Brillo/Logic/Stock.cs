@@ -738,7 +738,7 @@ namespace entity.Brillo.Logic
                     item_movement.status = Status;
                     item_movement.id_location = LocationID;
                     item_movement.parent = db.item_movement.Find(parent_Movement.MovementID);
-
+                    
                     if (ApplicationID == App.Names.Transfer)
                     {
                         item_movement.id_transfer_detail = TransactionDetailID;

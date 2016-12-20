@@ -49,6 +49,11 @@ namespace entity
                 if (value != _start_date)
                 {
                     _start_date = value;
+
+                    if (_start_date > _end_date)
+                    {
+                        _end_date = _start_date;
+                    }
                 }
             }
         }
@@ -74,11 +79,11 @@ namespace entity
                     {
                         quantity = Convert.ToDecimal(time.TotalHours);
                         RaisePropertyChanged("quantity");
-                        //using (db db = new db())
-                        //{
-                        //    quantity = Convert.ToDecimal(time.TotalHours) * db.hr_time_coefficient.Where(x => x.id_time_coefficient == id_time_coefficient).FirstOrDefault().coefficient;
-                        //    RaisePropertyChanged("quantity");
-                        //}
+                    }
+
+                    if (_start_date > _end_date)
+                    {
+                        _end_date = _start_date;
                     }
                 }
             }

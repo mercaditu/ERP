@@ -21,13 +21,12 @@ namespace cntrl.Chart
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            Load_BasicData(sender, null);
+
             Timer myTimer = new Timer();
             myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
             myTimer.Interval = 120000;
             myTimer.Start();
-
-
-
         }
         public void Load_BasicData(object sender, ElapsedEventArgs e)
         {

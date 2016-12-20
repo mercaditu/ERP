@@ -177,6 +177,9 @@
     <Compile Include="applicationIcon.xaml.cs">
       <DependentUpon>applicationIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Chart\DataGridControl.xaml.cs">
+      <DependentUpon>DataGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Chart\Gauge180.xaml.cs">
       <DependentUpon>Gauge180.xaml</DependentUpon>
     </Compile>
@@ -740,6 +743,10 @@
     <Page Include="applicationIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Chart\DataGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Chart\Gauge180.xaml">
       <SubType>Designer</SubType>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:my="clr-namespace:entity.Properties;assembly=entity"
       xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:chart="clr-namespace:cntrl.Chart;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
           xmlns:lex="http://wpflocalizeextension.codeplex.com" 
           lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -144,8 +145,8 @@
                     <Grid.Background>
                         <SolidColorBrush Color="White" Opacity="0.64"/>
                     </Grid.Background>
-                    <StackPanel Orientation="Horizontal">
-                        
+                    <StackPanel x:Name="stpkpi" Orientation="Horizontal">
+                        <chart:AccountReceivableControl Width="250"/>
                     </StackPanel>
                 </Grid>
             </Expander>

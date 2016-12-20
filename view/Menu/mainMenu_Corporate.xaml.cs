@@ -197,6 +197,8 @@ namespace Cognitivo.Menu
                             appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
                         }
                         stck.Children.Add(appIcon);
+                       
+                      
                     }
                     else
                     {

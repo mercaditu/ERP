@@ -428,7 +428,7 @@ namespace Cognitivo.Product
             {
                 var data = e.Data as DataObject;
                 entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
-                Attachment.SaveFile(data, item.id_item,null);
+                Attachment.SaveFile(data, entity.App.Names.Items, item.id_item, null);
                 itemDataGrid_SelectionChanged(sender, null);
             }
             else
@@ -436,9 +436,7 @@ namespace Cognitivo.Product
                 MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-      
-
+        
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
 

@@ -26,22 +26,40 @@ namespace entity.Brillo
         }
         public byte[] ResizeImage(string path)
         {
-            var jpegQuality = 50;
             Image image;
             using (var inputStream = new MemoryStream(File.ReadAllBytes(path)))
             {
+                string extension = Path.GetExtension(path);
                 image = Image.FromStream(inputStream);
-                var jpegEncoder = ImageCodecInfo.GetImageDecoders()
-                  .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
                 var encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, jpegQuality);
-                using (var outputStream = new MemoryStream())
+
+                if (extension.Contains("jpeg") || extension.Contains("jpg"))
                 {
-                    image.Save(outputStream, jpegEncoder, encoderParameters);
-                    return outputStream.ToArray();
+                    var jpegEncoder = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == ImageFormat.Jpeg.Guid);
+                    var jpegQuality = 50;
+                    encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, jpegQuality);
+                    using (var outputStream = new MemoryStream())
+                    {
+                        image.Save(outputStream, jpegEncoder, encoderParameters);
+                        return outputStream.ToArray();
+                    }
 
                 }
+                else if (extension.Contains("png"))
+                {
+                    var pngEncoder = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == ImageFormat.Png.Guid);
+                    var pngQuality = 50;
+                    encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, pngQuality);
+
+                    using (var outputStream = new MemoryStream())
+                    {
+                        image.Save(outputStream, pngEncoder, encoderParameters);
+                        return outputStream.ToArray();
+                    }
+                }
             }
+
+            return null;
         }
 
     }

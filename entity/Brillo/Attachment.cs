@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 
 namespace entity.Brillo
 {
    public class Attachment
     {
-        public void SaveFile(DataObject data,int reference_id,app_attachment Document)
+        public void SaveFile(DataObject data, App.Names Application, int reference_id, app_attachment File)
         {
             if (data.ContainsFileDropList())
             {
@@ -21,37 +14,37 @@ namespace entity.Brillo
 
                 if (!string.IsNullOrEmpty(extension))
                 {
-                    app_attachment item_image;
-                    if (Document!=null)
+                    app_attachment app_attachment;
+
+                    if (File != null)
                     {
-                        item_image = Document;
+                        app_attachment = File;
                     }
                     else
                     {
-                        item_image = new app_attachment();
+                        app_attachment = new app_attachment();
                     }
                 
                     if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
                     {
-                        item_image.mime = "image/" + extension.Substring(1);
+                        app_attachment.mime = "image/" + extension.Substring(1);
+
+                        Byte2FileConverter ByteConverter = new Byte2FileConverter();
+                        app_attachment.file = ByteConverter.ResizeImage(files[0].ToString());
                     }
                     else if (extension.ToLower() == ".pdf")
                     {
-                        item_image.mime = "application/" + extension.Substring(1);
+                        app_attachment.mime = "application/" + extension.Substring(1);
                     }
-                    Brillo.Byte2FileConverter ByteConverter = new Brillo.Byte2FileConverter();
                   
-                    item_image.file = ByteConverter.ResizeImage(files[0].ToString());
-                    item_image.reference_id = reference_id;
-                
-                    item_image.application = entity.App.Names.Items;
+                    app_attachment.reference_id = reference_id;
+                    app_attachment.application = Application;
 
                     using (db db = new db())
                     {
-                        db.app_attachment.Add(item_image);
+                        db.app_attachment.Add(app_attachment);
                         db.SaveChangesAsync();
                     }
-                    
                 }
                 else
                 {

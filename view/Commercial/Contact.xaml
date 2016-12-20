@@ -23,6 +23,10 @@
 		<converter:InitialsConverter x:Key="InitialsConverter"/>
 		<converter:LowerCaseConverter x:Key="LowerCaseConverter"/>
 		<BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+		<converter:ImageConverter x:Key="ConvertImage"/>
+
+		<CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
+
 		<CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
 		<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
 		<CollectionViewSource x:Key="contactParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
@@ -69,18 +73,18 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 
-		<StackPanel Grid.Column="1" Grid.Row="1" 
-					Background="White" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-
-			<Border CornerRadius="64" Background="WhiteSmoke"
-					Width="100" Height="100" Margin="24"
-					HorizontalAlignment="Center" VerticalAlignment="Top">
-				<Border.Effect>
-					<DropShadowEffect ShadowDepth="0" Opacity="1"/>
-				</Border.Effect>
-				<TextBlock Text="{Binding name, Converter={StaticResource InitialsConverter}, ElementName=tbxContact}" 
-						   FontSize="75" FontWeight="Light" HorizontalAlignment="Center"/>
-			</Border>
+		<StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+					Background="White" Orientation="Horizontal" 
+                    IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+			<Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding Source={StaticResource app_attachmentViewSource}}"
+							 Height="128" Width="128" Drop="Border_Drop" AllowDrop="True" Margin="8">
+                <Ellipse.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </Ellipse.Effect>
+				<Ellipse.Fill>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ConvertImage}}"/>
+				</Ellipse.Fill>
+			</Ellipse>
 			<StackPanel VerticalAlignment="Top" Margin="0,32">
 				<Label Content="{Binding name}" Style="{StaticResource H1}"/>
 				<Label Content="{Binding alias}" Style="{StaticResource H2}"/>
@@ -272,27 +276,27 @@
 							</StackPanel>
 						</StackPanel>
 						<Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
+						<StackPanel Orientation="Horizontal">
+							<Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
 								   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"/>
-                            <Label x:Name="lblCancelPrice" Content="c" FontSize="12" VerticalAlignment="Center" 
-							        HorizontalAlignment="Right" MouseUp="lblCancel_MouseUp"   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
-							        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-                        </StackPanel>
-                        <ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}" 
+							<Label x:Name="lblCancelPrice" Content="c" FontSize="12" VerticalAlignment="Center" 
+									HorizontalAlignment="Right" MouseUp="lblCancel_MouseUp"   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+						</StackPanel>
+						<ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}" 
 									  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
 									  ItemsSource="{Binding Source={StaticResource itemPriceListViewSource}}" 
 									  DisplayMemberPath="name" SelectedValuePath="id_price_list" 
 									  SelectedValue="{Binding id_price_list, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Cost Center" 
+						<StackPanel Orientation="Horizontal">
+							<Label Content="Cost Center" 
 								   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
 								   Style="{StaticResource input_label}"/>
-                            <Label x:Name="lblCancelCost" Content="c" FontSize="12" VerticalAlignment="Center" 
-							        HorizontalAlignment="Right" MouseUp="lblCancelCost_MouseUp" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
-							        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-                        </StackPanel>
-                        <ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+							<Label x:Name="lblCancelCost" Content="c" FontSize="12" VerticalAlignment="Center" 
+									HorizontalAlignment="Right" MouseUp="lblCancelCost_MouseUp" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+						</StackPanel>
+						<ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
 									  Style="{StaticResource input_combobox}" 
 									  ItemsSource="{Binding Source={StaticResource appCostCenterViewSource}}" 
 									  DisplayMemberPath="name" SelectedValuePath="id_cost_center" 
@@ -341,16 +345,16 @@
 						<ComboBox ItemsSource="{Binding Source={StaticResource bankViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_bank"
 									  SelectedValue="{Binding id_bank, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  Style="{StaticResource input_combobox}"/>
-                        <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}">
-                            <Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
-								     Text="{Binding trans_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                            <Label Content="{lex:Loc TransCodeExpiry}" Style="{StaticResource input_label}"/>
-                            <DatePicker Style="{StaticResource input_datepicker}" 
-                                        Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
+						<StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}">
+							<Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}"/>
+							<TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+									 Text="{Binding trans_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+							<Label Content="{lex:Loc TransCodeExpiry}" Style="{StaticResource input_label}"/>
+							<DatePicker Style="{StaticResource input_datepicker}" 
+										Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						</StackPanel>
 
-                        <Label Content="{lex:Loc Payment}" Style="{StaticResource H2}"/>
+						<Label Content="{lex:Loc Payment}" Style="{StaticResource H2}"/>
 						<Label Content="{lex:Loc CollectionAgent}" Style="{StaticResource input_label}"/>
 					  
 						<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"

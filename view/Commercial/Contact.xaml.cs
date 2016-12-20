@@ -333,12 +333,20 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
+            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+
             if (contact != null)
             {
                 LoadRelatedContactOnThread(contact);
+
+                using (db db = new db())
+                {
+                    app_attachmentViewSource.Source = await db.app_attachment
+                        .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
+                }
             }
         }
 
@@ -480,8 +488,20 @@ namespace Cognitivo.Commercial
             }
         }
 
-        
-
-    
+        private void Border_Drop(object sender, DragEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null && contact.id_contact > 0)
+            {
+                var data = e.Data as DataObject;
+                entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
+                Attachment.SaveFile(data, entity.App.Names.Contact, contact.id_contact, null);
+                listContacts_SelectionChanged(sender, null);
+            }
+            else
+            {
+                MessageBox.Show("Please save Contact before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

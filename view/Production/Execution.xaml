@@ -294,11 +294,11 @@
 								</StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                    <toolkit:TimePicker x:Name="dtpstarttime" Width="85"  Format="Custom" FormatString="HH:mm"/>
+                                    <toolkit:DateTimePicker x:Name="dtpstarttime" Width="200"/>
                                 </StackPanel>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 									<Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                    <toolkit:TimePicker x:Name="dtpendtime" Width="85"  Format="Custom" FormatString="HH:mm"/>
+                                    <toolkit:DateTimePicker x:Name="dtpendtime" Width="200"/>
                                 </StackPanel>
 
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -346,7 +346,8 @@
 							<Label Content="{lex:Loc ServiceContract}" Style="{StaticResource H2}"/>
 
 							<StackPanel Orientation="Horizontal">
-								<RadioButton Content="{lex:Loc Hours}" IsChecked="True" x:Name="rbtnHours"/>
+								<RadioButton Content="{lex:Loc Hour}" IsChecked="True" 
+                                             x:Name="rbtnHours" Margin="8"/>
 								<RadioButton Content="{lex:Loc Quantity}" x:Name="rbtnQuantity"/>
 							</StackPanel>
 							<StackPanel x:Name="stpquantity" 
@@ -392,12 +393,12 @@
 									</StackPanel>
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 										<Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                        <toolkit:TimePicker x:Name="dtpscstartdate" Width="85"  Format="Custom" FormatString="HH:mm"/>
+                                        <toolkit:DateTimePicker x:Name="dtpscstartdate" Width="200"/>
                                         
                                     </StackPanel>
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 										<Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                        <toolkit:TimePicker x:Name="dtpscenddate" Width="85"  Format="Custom" FormatString="HH:mm"/>
+                                        <toolkit:DateTimePicker x:Name="dtpscenddate" Width="200"/>
 									</StackPanel>
 
 									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">

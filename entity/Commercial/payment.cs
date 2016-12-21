@@ -140,7 +140,8 @@ namespace entity
             }
         }
         private decimal _GrandTotalDetailValue;
-    
+        [NotMapped]
+        public decimal Balance { get; set; }
 
         [NotMapped]
         public int id_currencyfx

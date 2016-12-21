@@ -49,10 +49,12 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <DataGrid AutoGenerateColumns="False" Margin="16">
+                    <DataGrid AutoGenerateColumns="False" Margin="16" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding item.code}" Header="{lex:Loc Cognitivo:local:Code}" Width="128" />
+                            <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:name}" Width="128"/>
+                            <DataGridTextColumn Binding="{Binding Balance, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="64"/>
+                            <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="128"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>

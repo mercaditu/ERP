@@ -27,6 +27,8 @@ namespace cntrl.Controls
             set { SetValue(ContactIDProperty, value); }
         }
 
+        public decimal Balance { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
@@ -43,12 +45,10 @@ namespace cntrl.Controls
                 if (sales_return != null)
                 {
                     ReturnID = sales_return.ID;
-                    //Text = sales_return.number;
-
+                    Balance = sales_return.Balance;
                     popContact.IsOpen = false;
 
-                    if (Select != null)
-                    { Select(this, new RoutedEventArgs()); }
+                    Select?.Invoke(this, new RoutedEventArgs());
                 }
             }
         }
@@ -188,17 +188,17 @@ namespace cntrl.Controls
             }
             if (param.Contains("code"))
             {
-                predicateOR = predicateOR.Or(x => x.code.ToUpper().Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Code.ToUpper().Contains(SearchText));
             }
 
             if (param.Contains("number"))
             {
-                predicateOR = predicateOR.Or(x => x.number.ToUpper().Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Number.ToUpper().Contains(SearchText));
             }
 
             if (param.Contains("comment"))
             {
-                predicateOR = predicateOR.Or(x => x.comment.ToUpper().Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Comment.ToUpper().Contains(SearchText));
             }
 
             predicate = predicate.And

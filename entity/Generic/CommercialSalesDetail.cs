@@ -330,7 +330,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        private void update_UnitPriceVAT()
+        public void update_UnitPriceVAT()
         {
             UnitPrice_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
             RaisePropertyChanged("UnitPrice_Vat");
@@ -339,7 +339,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        private void update_SubTotal()
+        public void update_SubTotal()
         {
             SubTotal = _unit_price * _quantity;
         }

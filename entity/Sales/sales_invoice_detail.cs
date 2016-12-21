@@ -6,13 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel;
     using System.Text;
-
+    using System.Linq;
     public partial class sales_invoice_detail : CommercialSalesDetail, IDataErrorInfo
     {
         public sales_invoice_detail()
         {
             sales_packing_relation = new List<sales_packing_relation>();
-
+            sales_return_detail = new List<sales_return_detail>();
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
@@ -33,7 +33,14 @@ namespace entity
 
         [NotMapped]
         public int PromoID { get; set; }
+        [NotMapped]
+        public decimal Balance
+        {
+            get { return quantity - sales_return_detail.Where(x=>x.id_sales_return_detail>0).Sum(x => x.quantity); }
+            set { _Balance = value;  }
 
+        }
+        decimal _Balance;
 
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice
@@ -61,7 +68,7 @@ namespace entity
         // public virtual sales_invoice sales_invoice { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
-        public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }
+        public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         #endregion
 

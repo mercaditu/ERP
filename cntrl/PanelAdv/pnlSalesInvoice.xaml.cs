@@ -23,7 +23,7 @@ namespace cntrl.PanelAdv
         }
 
         public contact _contact { get; set; }
-        public ImpexDB _entity { get; set; }
+        public ImpexDB ImpexDB { get; set; }
 
         public pnlSalesInvoice()
         {
@@ -44,8 +44,7 @@ namespace cntrl.PanelAdv
             {
                 if (_contact != null)
                 {
-                    sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved && x.sales_return.Count()==0).ToList();
+                    LoadInvoice();
                 }
             }
         }
@@ -62,17 +61,28 @@ namespace cntrl.PanelAdv
                 SalesInvoice_Click?.Invoke(sender);
             }
         }
+      private void LoadInvoice()
+        {
+            sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
+            List<sales_invoice_detail> sales_invoice_detail = ImpexDB.sales_invoice_detail
+                .Where(x =>
+                x.sales_invoice.id_contact == _contact.id_contact &&
+                x.sales_invoice.status == Status.Documents_General.Approved &&
+                x.sales_return_detail.Sum(y => y.quantity) < x.quantity
+                ).ToList();
+            sales_invoiceViewSource.Source = sales_invoice_detail.Select(x => x.sales_invoice);
+        }
 
         private void sales_invocieDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
-            if (_entity.sales_invoice_detail.Count() > 0)
+            if (ImpexDB.sales_invoice_detail.Count() > 0)
             {
                 sales_invoice _sales_invoice = ((DataGrid)sender).SelectedItem as sales_invoice;
                 if (_sales_invoice != null)
                 {
-                    int id_purchase_invoice = _sales_invoice.id_sales_invoice;
+
                     DataGrid RowDataGrid = e.DetailsElement as DataGrid;
-                    var salesInvoice = _sales_invoice.sales_invoice_detail;
+                    var salesInvoice = _sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0);
                     RowDataGrid.ItemsSource = salesInvoice;
                 }
             }
@@ -80,22 +90,11 @@ namespace cntrl.PanelAdv
 
         private void ContactPref(object sender, RoutedEventArgs e)
         {
-            try
+            if (sbxContact.ContactID > 0)
             {
-                if (sbxContact.ContactID > 0)
-                {
-                    contact contact = _entity.contacts.Find(sbxContact.ContactID);
-                    if (contact != null)
-                    {
-                        sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                        sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.status == Status.Documents_General.Approved && x.id_contact == contact.id_contact && x.sales_return.Count() == 0).ToList();   
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
+                _contact = ImpexDB.contacts.Find(sbxContact.ContactID);
             }
         }
+
     }
 }

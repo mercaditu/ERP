@@ -76,13 +76,13 @@ namespace cntrl.Curd
                 if (Mode == Modes.Recievable)
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountReceivableBalance);
-
+                    payment_detail.payment.Balance = payment_detail.value;
 
                 }
                 else
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountPayableBalance);
-
+                    payment_detail.payment.Balance = payment_detail.value;
                 }
 
 
@@ -207,6 +207,7 @@ namespace cntrl.Curd
                         {
 
                             payment_detail.id_sales_return = _payment_detail.id_sales_return;
+                            
                         }
                         else
                         {
@@ -337,7 +338,7 @@ namespace cntrl.Curd
                 CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                 purchase_return purchase_return = PaymentDB.purchase_return.Find(sbxPurchaseReturn.ReturnID);
-                decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_sales_return == purchase_return.id_purchase_return).Sum(x => x.debit));
+                decimal return_value = sbxPurchaseReturn.Balance;
                 payment_detail.value = return_value;
                 payment_detail.id_purchase_return = purchase_return.id_purchase_return;
                 payment_detail.Max_Value = return_value;
@@ -351,13 +352,16 @@ namespace cntrl.Curd
             {
                 CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                sales_return sales_return = PaymentDB.sales_return.Find(sbxReturn.ReturnID);
-                decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
-                payment_detail.id_sales_return = sales_return.id_sales_return;
-                payment_detail.value = return_value;
-                payment_detail.Max_Value = return_value;
-                sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date;
-                sbxReturn.RaisePropertyChanged("Text");
+                if (payment_detail != null)
+                {
+                    sales_return sales_return = PaymentDB.sales_return.Find(sbxReturn.ReturnID);
+                    decimal return_value = sbxReturn.Balance;
+                    payment_detail.id_sales_return = sales_return.id_sales_return;
+                    payment_detail.value = return_value;
+                    payment_detail.Max_Value = return_value;
+                    sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date;
+                    sbxReturn.RaisePropertyChanged("Text");
+                }
             }
 
         }
@@ -386,7 +390,7 @@ namespace cntrl.Curd
                 payment_detail.payment_schedual.Add(_payment_schedual);
 
             }
-            payment_detail.value = payment_detail.ValueInDefaultCurrency;
+            payment_detail.value = payment_detail.payment.Balance - payment_detail.payment.GrandTotalDetail;
             payment.payment_detail.Add(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
         }

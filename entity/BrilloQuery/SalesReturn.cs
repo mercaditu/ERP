@@ -12,11 +12,11 @@ namespace entity.BrilloQuery
     public class Return
     {
         public int ID { get; set; }
-        public string code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
-        public string number { get; set; }
-        public string comment { get; set; }
-        public string Balance { get; set; }
+        public string Number { get; set; }
+        public string Comment { get; set; }
+        public decimal Balance { get; set; }
     }
     public class SalesRetrunQuery : IDisposable
     {
@@ -30,7 +30,7 @@ namespace entity.BrilloQuery
     sr.code AS Code,
     sr.comment AS Comment,
     sr.number AS Number
-   ,Round(sum((srd.quantity * srd.unit_price * (vatco.vat + 1)))-sum(payment_schedual.credit),2) as Balance,
+   ,(select sum(debit) - sum(Credit) from payment_schedual where id_sales_return=srd.id_sales_return) as Balance,
     contacts.name as Name
 FROM
     sales_return_detail as srd
@@ -61,11 +61,11 @@ inner join contacts on sr.id_contact=contacts.id_contact
                     Return Return = new Return();
 
                     Return.ID = Convert.ToInt16(DataRow["ID"]);
-                    Return.code = Convert.ToString(DataRow["Code"]);
+                    Return.Code = Convert.ToString(DataRow["Code"]);
                     Return.Name = Convert.ToString(DataRow["Name"]);
-                    Return.comment = Convert.ToString(DataRow["Comment"]);
-                    Return.number = Convert.ToString(DataRow["Number"]);
-                    Return.Balance = Convert.ToString(DataRow["Balance"]);
+                    Return.Comment = Convert.ToString(DataRow["Comment"]);
+                    Return.Number = Convert.ToString(DataRow["Number"]);
+                    Return.Balance = Convert.ToDecimal(DataRow["Balance"]);
                     List.Add(Return);
                 }
             }
@@ -133,11 +133,11 @@ inner join contacts on pr.id_contact=contacts.id_contact
                     Return Return = new Return();
 
                     Return.ID = Convert.ToInt16(DataRow["ID"]);
-                    Return.code = Convert.ToString(DataRow["Code"]);
+                    Return.Code = Convert.ToString(DataRow["Code"]);
                     Return.Name = Convert.ToString(DataRow["Name"]);
-                    Return.comment = Convert.ToString(DataRow["Comment"]);
-                    Return.number = Convert.ToString(DataRow["Number"]);
-                    Return.Balance = Convert.ToString(DataRow["Balance"]);
+                    Return.Comment = Convert.ToString(DataRow["Comment"]);
+                    Return.Number = Convert.ToString(DataRow["Number"]);
+                    Return.Balance = Convert.ToDecimal(DataRow["Balance"]);
                     List.Add(Return);
                 }
             }

@@ -33,7 +33,7 @@ namespace entity.Brillo
                 image = Image.FromStream(inputStream);
                 var encoderParameters = new EncoderParameters(1);
 
-                if (extension.Contains("jpeg") || extension.Contains("jpg"))
+                if (extension.ToLower().Contains("jpeg") || extension.Contains("jpg"))
                 {
                     var jpegEncoder = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == ImageFormat.Jpeg.Guid);
                     var jpegQuality = 50;
@@ -45,7 +45,7 @@ namespace entity.Brillo
                     }
 
                 }
-                else if (extension.Contains("png"))
+                else if (extension.ToLower().Contains("png"))
                 {
                     var pngEncoder = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == ImageFormat.Png.Guid);
                     var pngQuality = 50;

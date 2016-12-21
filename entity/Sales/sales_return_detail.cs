@@ -13,7 +13,7 @@ namespace entity
         public sales_return_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
             item_movement = new List<item_movement>();
@@ -31,7 +31,7 @@ namespace entity
             get { return _sales_return; }
             set
             {
-                if (value!=null)
+                if (value != null)
                 {
                     if (_sales_return != value)
                     {
@@ -44,10 +44,10 @@ namespace entity
                     _sales_return = null;
                     RaisePropertyChanged("sales_return ");
                 }
-               
+
 
             }
-        }   
+        }
         private sales_return _sales_return;
 
         public virtual sales_invoice_detail sales_invoice_detail { get; set; }
@@ -60,7 +60,7 @@ namespace entity
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {

@@ -20,7 +20,7 @@ namespace Cognitivo.Sales
 
         CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
-     
+
         public Return()
         {
             InitializeComponent();
@@ -136,7 +136,7 @@ namespace Cognitivo.Sales
             if (sales_return != null)
             {
                 calculate_vat(sender, e);
-              
+
             }
         }
 
@@ -188,7 +188,7 @@ namespace Cognitivo.Sales
                     sales_return_detailDataGrid.CancelEdit();
                     SalesReturnDB.sales_return_detail.Remove(e.Parameter as sales_return_detail);
                     sales_returnsales_return_detailViewSource.View.Refresh();
-                    calculate_vat(null,null);
+                    calculate_vat(null, null);
                 }
             }
             catch (Exception ex)
@@ -207,7 +207,7 @@ namespace Cognitivo.Sales
                     sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                     sales_return.id_contact = contact.id_contact;
                     sales_return.contact = contact;
-                  
+
                     ///Start Thread to get Data.
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
                 }
@@ -255,7 +255,7 @@ namespace Cognitivo.Sales
                 _sales_return_detail.item_description = item.description;
                 _sales_return_detail.item = item;
                 _sales_return_detail.id_item = item.id_item;
-             
+
                 sales_return.sales_return_detail.Add(_sales_return_detail);
             }
             else
@@ -266,7 +266,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                
+
                 sales_returnsales_return_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
             }));
@@ -320,7 +320,7 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-  
+
 
         private void btnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -330,7 +330,7 @@ namespace Cognitivo.Sales
             {
                 crud_modal.Visibility = Visibility.Visible;
                 pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
-                pnlSalesInvoice._entity = new ImpexDB();
+                pnlSalesInvoice.ImpexDB = new ImpexDB();
 
                 if (sbxContact.ContactID > 0)
                 {
@@ -362,37 +362,39 @@ namespace Cognitivo.Sales
                     _sales_return.contact = contact;
                     sbxContact.Text = contact.name;
 
-                    foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail)
+                    foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0))
                     {
-                        if (_sales_return.sales_return_detail.Where(x => x.id_item == _sales_invoice_detail.id_item).Count() == 0)
+
+                        sales_return_detail sales_return_detail = new sales_return_detail();
+
+                        if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
                         {
-                            sales_return_detail sales_return_detail = new sales_return_detail();
-                            sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
-
-                            if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
-                            {
-                                sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                            }
-
-                            sales_return_detail.sales_return = _sales_return;
-
-                            if (SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
-                            {
-                                sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
-                                sales_return_detail.item_description =_sales_invoice_detail.item_description;
-                               
-                            }
-
-                            sales_return_detail.id_item = _sales_invoice_detail.id_item;
-                            sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail
-                                                                .Where(x => x.sales_invoice_detail.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
-                                                                .GroupBy(x => x.sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
-
-                            sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
-                            sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
-                            sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
-                            _sales_return.sales_return_detail.Add(sales_return_detail);
+                            sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                         }
+
+                        sales_return_detail.sales_return = _sales_return;
+
+                        if (SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
+                        {
+                            sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                            sales_return_detail.item_description = _sales_invoice_detail.item_description;
+
+                            //Automatically Checks Products to go back in Stock. This is most likely scenario.
+                            if (sales_return_detail.item.item_product.Count() > 0)
+                            {
+                                sales_return_detail.IsSelected = true;
+                            }
+                        }
+
+                        sales_return_detail.id_item = _sales_invoice_detail.id_item;
+                        sales_return_detail.quantity = _sales_invoice_detail.Balance;
+
+                        sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
+                        sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
+                        sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
+                        _sales_return.sales_return_detail.Add(sales_return_detail);
+
+
 
                         SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
@@ -435,6 +437,6 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = true;
         }
 
-      
+
     }
 }

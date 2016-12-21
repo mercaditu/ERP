@@ -192,7 +192,7 @@ namespace entity
                 balance_payment_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
                 balance_payment_schedual.trans_date = payment_detail.trans_date;
                 balance_payment_schedual.expire_date = Parent_Schedual.expire_date;
-
+                
                 string ModuleName = string.Empty;
 
                 ///
@@ -234,8 +234,13 @@ namespace entity
                 ///
                 if (payment_detail.id_sales_return != null)
                 {
-                    balance_payment_schedual.id_sales_return = Parent_Schedual.id_sales_return;
-                    ModuleName = "SalesReturn";
+                    balance_payment_schedual.id_sales_return = payment_detail.id_sales_return;
+                  //  ModuleName = "SalesReturn";
+                }
+                if (payment_detail.id_purchase_return != null)
+                {
+                    balance_payment_schedual.id_purchase_return = payment_detail.id_purchase_return;
+                    //  ModuleName = "SalesReturn";
                 }
 
                 //Add Balance Payment Schedual into Context. 
@@ -324,8 +329,12 @@ namespace entity
 
             payment.status = Status.Documents_General.Approved;
             app_document_range app_document_range = await base.app_document_range.FindAsync(payment.id_range);
-            payment.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-            payment.RaisePropertyChanged("number");
+            if (app_document_range!=null)
+            {
+                payment.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                payment.RaisePropertyChanged("number");
+            }
+   
             base.SaveChanges();
 
 

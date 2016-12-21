@@ -120,6 +120,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.Payments", entity.App.Names.Payment, "PaymentMade", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Reporting.PaymentPrint", entity.App.Names.Payment, "", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.PromissoryNote", entity.App.Names.PromissoryNote, "IOU", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.Reconciliation", entity.App.Names.Reconciliation, "BankReconciliation", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency", entity.CurrentSession.Versions.Basic, "0");

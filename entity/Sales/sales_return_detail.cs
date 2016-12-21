@@ -25,6 +25,22 @@ namespace entity
         public int id_sales_return { get; set; }
         public bool has_return { get; set; }
 
+        [NotMapped]
+        public decimal Balance
+        {
+            get
+            {
+                if (sales_invoice_detail != null)
+                {
+                    return sales_invoice_detail.Balance;
+                }
+
+                return _Balance;
+            }
+            set { _Balance = value; }
+        }
+        private decimal _Balance;
+
         #region "Foreign Key"
         public virtual sales_return sales_return
         {
@@ -92,9 +108,9 @@ namespace entity
 
                     if (sales_invoice_detail != null)
                     {
-                        if (sales_invoice_detail.quantity < quantity)
+                        if (Balance < quantity)
                         {
-                            return "Sales Quantity = " + sales_invoice_detail.quantity + ". You cannot Return a greater amount";
+                            return "Sales Balance = " + Balance + ". You cannot Return a greater amount";
                         }
                     }
                 }

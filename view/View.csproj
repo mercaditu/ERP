@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\9.3\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\9.4\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>51</ApplicationRevision>
+    <ApplicationRevision>52</ApplicationRevision>
     <ApplicationVersion>2.1.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -538,6 +538,9 @@
     </Compile>
     <Compile Include="Purchase\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\PaymentPrint.xaml.cs">
+      <DependentUpon>PaymentPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
@@ -1336,6 +1339,10 @@
     <Page Include="Purchase\PackingList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\PaymentPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\ReportViewer.xaml">
       <SubType>Designer</SubType>

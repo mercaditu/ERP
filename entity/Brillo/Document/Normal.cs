@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Linq;
 
+
 namespace entity.Brillo.Document
 {
     public class Normal
@@ -15,7 +16,8 @@ namespace entity.Brillo.Document
             Automatic,
             Manual
         }
-
+        public Normal()
+        { }
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
             if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application == App.Names.PointOfSale:false)
@@ -40,6 +42,7 @@ namespace entity.Brillo.Document
 
                 if (Directory.Exists(PathFull) == false)
                 {
+              
                     CreateFile(app_range);
                 }
 
@@ -102,7 +105,35 @@ namespace entity.Brillo.Document
                 }
             }
         }
+        public void CreateFile(app_document app_document)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
+            //If path (CognitivoERP) does not exist, create path.
+            if (Directory.Exists(path) == false)
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string SubFolder = "\\TemplateFiles";
+
+            //If path (TemplateFiles) does not exist, create path
+            if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+            }
+
+            //If file does not exist, create file.
+            if (!File.Exists(path + SubFolder + "\\" + app_document.name + ".rdlc"))
+            {
+                //Add Logic
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc",
+                           path + SubFolder + "\\" + app_document.name + ".rdlc");
+                }
+            }
+        }
         public void loadCarnetcontactReport(contact contact)
         {
             try

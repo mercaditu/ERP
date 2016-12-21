@@ -288,7 +288,7 @@
 																			  ValidatesOnDataErrors=True}" 
 													  ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}" />
 
-								<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" 
+								<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True,ValidatesOnNotifyDataErrors=True}" Header="{lex:Loc Cognitivo:local:Quantity}" 
 													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
 								<DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>

@@ -67,10 +67,9 @@ namespace cntrl.PanelAdv
             List<sales_invoice_detail> sales_invoice_detail = ImpexDB.sales_invoice_detail
                 .Where(x =>
                 x.sales_invoice.id_contact == _contact.id_contact &&
-                x.sales_invoice.status == Status.Documents_General.Approved &&
-                x.sales_return_detail.Sum(y => y.quantity) < x.quantity
+                x.sales_invoice.status == Status.Documents_General.Approved 
                 ).ToList();
-            sales_invoiceViewSource.Source = sales_invoice_detail.Select(x => x.sales_invoice);
+            sales_invoiceViewSource.Source = sales_invoice_detail.Where(x=>x.Balance>0).Select(x => x.sales_invoice);
         }
 
         private void sales_invocieDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

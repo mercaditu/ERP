@@ -33,11 +33,14 @@ namespace Cognitivo.Reporting
             payment_typeViewSource.Source = db.payment_type.Local;
         }
 
-        private void dgvPaymnetDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+        private void dgvPaymnet_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            payment_detail payment_detail = dgvPaymnetDetail.SelectedItem as payment_detail;
+            payment_detail payment_detail = PaymnetDetailDataGrid.SelectedItem as payment_detail;
             if (payment_detail != null)
             {
+
                 if (payment_detail.payment_type != null && payment_detail.payment_type.app_document != null)
                 {
                     app_document app_document = payment_detail.payment_type.app_document;
@@ -63,10 +66,6 @@ namespace Cognitivo.Reporting
 
                 }
             }
-
-
-
-
         }
 
         private void Print_Click(object sender, RoutedEventArgs e)

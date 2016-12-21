@@ -12,8 +12,8 @@
       Title="PaymentPrint" Loaded="Page_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
-        <CollectionViewSource x:Key="payment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
+        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
+        <CollectionViewSource x:Key="paymentviewsource" Source="{Binding payment, Source={StaticResource payment_detailViewSource}}"/>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,40 +40,43 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <DataGrid x:Name="dgvPaymnetDetail" Style="{StaticResource detail_Datagrid}" HorizontalAlignment="Left"
+        <DataGrid x:Name="dgvPaymnet" Style="{StaticResource detail_Datagrid}" HorizontalAlignment="Left"
 									Grid.Row="0" Grid.Column="1"
-									  CanUserAddRows="False" SelectionChanged="dgvPaymnetDetail_SelectionChanged"
-									  ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" 
+									  CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource paymentviewsource}}"
+									 SelectionChanged="dgvPaymnet_SelectionChanged"
 									>
           
             <DataGrid.Columns>
 
 
-                
 
+
+                <DataGridTextColumn Header="Name" Width="100" 
+														ElementStyle="{StaticResource RightAlignStyle}" 
+														Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}"/>
                 <DataGridTextColumn Header="Date" Width="100" 
 														ElementStyle="{StaticResource RightAlignStyle}" 
-														Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}"/>
+														Binding="{Binding trans_date,StringFormat=d, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}"/>
 
-                <DataGridTextColumn Header="Value" Width="100" 
+                <DataGridTextColumn Header="Number" Width="40" 
 														ElementStyle="{StaticResource RightAlignStyle}" 
-														Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"/>
+														Binding="{Binding number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
 
             </DataGrid.Columns>
         </DataGrid>
         <Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
-        <ListBox x:Name="PaymnetDataGrid" Style="{StaticResource nav_List}"
+        <ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-							 ItemContainerStyle="{StaticResource nav_ListSelection}" 
-							 ItemsSource="{Binding Source={StaticResource paymentViewSource}}" Grid.Row="1"  >
+							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnetDetail_SelectionChanged"
+							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1"  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-											   recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											   recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+											
 											 
 											/>
                 </DataTemplate>

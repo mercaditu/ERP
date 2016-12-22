@@ -16,7 +16,6 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  xmlns:local="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:convert="clr-namespace:Cognitivo.Converters"
-	  
 	  Loaded="Item_Loaded"
 	  mc:Ignorable="d" MinHeight="400" MinWidth="800">
 	<Page.CommandBindings>
@@ -28,10 +27,8 @@
 		<convert:TrueToFalseConverter x:Key="TrueToFalse"/>
 		<convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
 		<convert:ItemProduct2VisibilityConverter x:Key="ItemProduct2VisibilityConverter"/>
-		<convert:ImageConverter x:Key="ConvertImage"/>
 		<convert:NumberFormat x:Key="Numberformatting"/>
 		<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
-		<CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_measurementViewSourceconvert" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -41,7 +38,6 @@
 		<CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_price_listViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}"/>
 		<CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}"/>
-
 		<CollectionViewSource x:Key="itemitem_productViewSource" Source="{Binding item_product, Source={StaticResource itemViewSource}}"/>
 		<CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}"/>
 		<CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>

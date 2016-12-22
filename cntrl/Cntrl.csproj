@@ -201,6 +201,9 @@
     <Compile Include="Controls\ComboBoxKit.xaml.cs">
       <DependentUpon>ComboBoxKit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImpexCurrencyBox.xaml.cs">
       <DependentUpon>ImpexCurrencyBox.xaml</DependentUpon>
     </Compile>
@@ -246,6 +249,7 @@
     <Compile Include="Converters\Action2ColorConverter.cs" />
     <Compile Include="Converters\Bool2InputProduction.cs" />
     <Compile Include="Converters\FavoriteConverter.cs" />
+    <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Converters\sbxItem_CheckType.cs" />
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
     <Compile Include="Converters\sbxContact_CheckType.cs" />
@@ -761,6 +765,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ComboBoxKit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -27,10 +27,6 @@ namespace entity
         public string address { get; set; }
         public string domain { get; set; }
         public string hash_debehaber { get; set; }
-        public string representative_name { get; set; }
-        public string representative_gov_code { get; set; }
-        public string accountant_name { get; set; }
-        public string accountant_gov_code { get; set; }
         public bool is_active
         {
             get { return _is_active; }
@@ -46,6 +42,7 @@ namespace entity
         private bool _is_active;
         public string version { get; set; }
         public string seats { get; set; }
+        public bool has_interest { get; set; }
 
         public virtual app_company_interest app_company_interest { get; set; }
         public virtual ICollection<app_branch> app_branch { get; set; }

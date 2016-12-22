@@ -65,8 +65,7 @@
 
                 <Label Content="Account" Style="{StaticResource input_label}"/>
                 <Label Content="{Binding app_account.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
-
-                <Label Content="Value" Style="{StaticResource input_label}"/>
+                <Label Content="Value" Style="{StaticResource input_label}" Margin="0,0,0.5,0"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                     <Label Content="{Binding app_currencyfx.app_currency.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>

@@ -8,12 +8,13 @@
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 	  mc:Ignorable="d" 
 		   xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  d:DesignHeight="500" d:DesignWidth="700"
 	  Title="PaymentPrint" Loaded="Page_Loaded">
 	<Page.Resources>
 		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
-		<CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
-		<CollectionViewSource x:Key="paymentviewsource" Source="{Binding payment, Source={StaticResource payment_detailViewSource}}"/>
+        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/> 
+		
 	</Page.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -30,12 +31,18 @@
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="PaymentTypeDataGrid_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" Grid.Row="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnetDetail_SelectionChanged"
+							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnet_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1"  >
+                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
@@ -49,22 +56,34 @@
             </ListBox>
         </StackPanel>
 
-        <Grid Grid.Column="1" Background="White">
+        <Grid Grid.Column="1" Background="White" DataContext="{Binding Source={StaticResource payment_detailViewSource}}">
+            <metro:ToggleSwitch x:Name="Print" Width="150" Content="Printed" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" Height="50" VerticalAlignment="Top" Checked="Print_Checked" Unchecked="Print_Checked"/>
             <StackPanel>
+              
                 <Label Content="PaymentType" Style="{StaticResource input_label}"/>
-                <Label Content="Check" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding payment_type.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
 
                 <Label Content="Account" Style="{StaticResource input_label}"/>
-                <Label Content="ICICI INR Checking" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding app_account.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
 
                 <Label Content="Value" Style="{StaticResource input_label}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="1,000" Style="{StaticResource generic_Label}"/>
-                    <Label Content="Indian Rupee" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding app_currencyfx.app_currency.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                 </StackPanel>
+                <Label Content="Document" Style="{StaticResource input_label}"/>
+                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
+											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+											  Style="{StaticResource input_combobox}"  SelectedItem="{Binding app_document_range,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+											  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                <Label Content="Number" Style="{StaticResource input_label}"/>
+                <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+											 metro:TextBoxHelper.SelectAllOnFocus="True"
+											 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+											 metro:ControlsHelper.MouseOverBorderBrush="Silver"
+											 Text="{Binding payment_type_number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Comment" Style="{StaticResource input_label}"/>
-                <TextBox Text="123291" Style="{StaticResource input_textbox}"/>
             </StackPanel>
 		</Grid>
 

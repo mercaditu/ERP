@@ -73,8 +73,8 @@
                 </StackPanel>
                 <Label Content="Document" Style="{StaticResource input_label}"/>
                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
-											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
-											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" 
+											  metro:ControlsHelper.MouseOverBorderBrush="Silver" SelectionChanged="cbxDocument_SelectionChanged"
 											  Style="{StaticResource input_combobox}"  SelectedItem="{Binding app_document_range,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 											  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="Number" Style="{StaticResource input_label}"/>

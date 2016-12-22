@@ -648,7 +648,8 @@ namespace entity.Brillo.Document
             reportDataSource.Value = payment_detailList.Select(g => new
                 {
                     Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
-                    TransDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
+                    ChequeDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
+                    PaymentDate=g.trans_date,
                     Memo = g.comment,
                     AmountNumber = g.value,
                     AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?

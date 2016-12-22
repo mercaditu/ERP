@@ -883,6 +883,9 @@
     <EmbeddedResource Include="bin\Debug\AccountsPayable.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="bin\Debug\PaymentType.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="bin\Debug\PurchaseInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc">
       <SubType>Designer</SubType>

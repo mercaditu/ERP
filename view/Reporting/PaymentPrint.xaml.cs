@@ -61,8 +61,9 @@ namespace Cognitivo.Reporting
 
 
                     reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
-                    reportViewer.LocalReport.DataSources.Add(DataSource.Create(payment_detail));
-                
+                    reportViewer.LocalReport.DataSources.Clear();
+                 reportViewer.LocalReport.DataSources.Add(DataSource.Create(payment_detail));
+                    reportViewer.LocalReport.Refresh();
 
 
                 }
@@ -91,6 +92,15 @@ namespace Cognitivo.Reporting
             {
                 payment_detailViewSource.Source = db.payment_detail.Where(x => x.id_payment_type == payment_type.id_payment_type && x.is_read==Print.IsChecked).ToList();
                               
+            }
+        }
+
+        private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
+            if (app_document_range!=null)
+            {
+                dgvPaymnet_SelectionChanged(sender, null);
             }
         }
 

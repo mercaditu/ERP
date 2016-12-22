@@ -481,6 +481,11 @@ namespace Cognitivo.Product
             }
         }
 
+        private void hrefCost_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -641,23 +646,6 @@ namespace Cognitivo.Product
                     // Dispose other managed resources.
                 }
                 //release unmanaged resources.
-            }
-        }
-
-        private void hrefCost_Click(object sender, RoutedEventArgs e)
-        {
-            item item = itemViewSource.View.CurrentItem as item;
-            if (item != null)
-            {
-                if (item.item_product.FirstOrDefault() != null)
-                {
-                    entity.Brillo.ProductCost ProductCost = new entity.Brillo.ProductCost();
-                    ProductCost.calc_SingleCost(item.item_product.FirstOrDefault());
-                }
-                else
-                {
-                    toolBar.msgWarning("Only Products, RawMaterial, and Supplies can have Automatic Costs. Else enter manually.");
-                }
             }
         }
     }

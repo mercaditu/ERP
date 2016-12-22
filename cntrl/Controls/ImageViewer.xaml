@@ -7,24 +7,23 @@
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=Entity"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" AllowDrop="True" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <convert:ImageConverter x:Key="ConvertImage"/>
         <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
     </UserControl.Resources>
-    <Grid DataContext="{Binding Source={StaticResource app_attachmentViewSource}}">
-        <metro:FlipView IsBannerEnabled="False">
+    <Grid Drop="Grid_Drop">
+        <metro:FlipView IsBannerEnabled="False" ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+            <metro:FlipView.ContextMenu>
+                <ContextMenu x:Name="imgContext" IsOpen="False">
+                    <MenuItem Command="New" Click="MenuItem_New"></MenuItem>
+                    <MenuItem Command="Delete" Click="MenuItem_Delete"></MenuItem>
+                </ContextMenu>
+            </metro:FlipView.ContextMenu>
             <metro:FlipView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}">
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="New" Click="MenuItem_New"></MenuItem>
-                                <MenuItem Command="Delete" Click="MenuItem_Delete"></MenuItem>
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
+                    <Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" MouseRightButtonUp="Image_MouseRightButtonUp"/>
                 </DataTemplate>
             </metro:FlipView.ItemTemplate>
         </metro:FlipView>

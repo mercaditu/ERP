@@ -15,11 +15,20 @@ namespace cntrl.Controls
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer));
+        public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer),new PropertyMetadata(GetImageCallBack));
         public int ReferenceID
         {
             get { return (int)GetValue(ReferenceIDProperty); }
-            set { SetValue(ReferenceIDProperty, value); GetImage(); }
+            set { SetValue(ReferenceIDProperty, value); }
+        }
+
+        private static void GetImageCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            ImageViewer c = sender as ImageViewer;
+            if (c != null)
+            {
+                c.GetImage();
+            }
         }
 
         public entity.App.Names ApplicationName { get; set; }
@@ -27,6 +36,7 @@ namespace cntrl.Controls
         private void GetImage()
         {
             CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+            app_attachmentViewSource.Source = null;
 
             if (ReferenceID > 0)
             {
@@ -36,6 +46,7 @@ namespace cntrl.Controls
                     {
                         app_attachmentViewSource.Source = db.app_attachment
                             .Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).ToList();
+                        app_attachmentViewSource.View.Refresh();
                     }
                 }
             }
@@ -62,25 +73,33 @@ namespace cntrl.Controls
                     }
                 }
             }
+
+            imgContext.IsOpen = false;
         }
 
         private void MenuItem_New(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
-        private void InsertImage(object sender, DragEventArgs e)
+        private void Grid_Drop(object sender, DragEventArgs e)
         {
             if (ReferenceID > 0)
             {
-                var data = e.Data as DataObject;
+                var Data = e.Data as DataObject;
                 entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
-                Attachment.SaveFile(data, ApplicationName, ReferenceID);
+                Attachment.SaveFile(Data, ApplicationName, ReferenceID);
+                GetImage();
             }
             else
             {
                 MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void Image_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            imgContext.IsOpen = true;
         }
     }
 }

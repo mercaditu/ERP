@@ -9,6 +9,7 @@
 	  xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 	  xmlns:prop="clr-namespace:Cognitivo.Product"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com" 
 		lex:LocalizeDictionary.DesignCulture="es-PY" 
@@ -72,7 +73,7 @@
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding}" SelectionChanged="itemDataGrid_SelectionChanged">
+				 ItemsSource="{Binding}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
@@ -364,11 +365,9 @@
 			<StackPanel Grid.Column="1" Grid.RowSpan="3">
 				<Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
 
-				<Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
-                    <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
-							   FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
-                </Grid>
-				<TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
+                <Controls:ImageViewer ReferenceID="{Binding id_item, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Items" AllowDrop="True" />
+                
+                <TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
 				<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 					<Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
 					<metro:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>

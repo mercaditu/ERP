@@ -421,22 +421,6 @@ namespace Cognitivo.Product
         }
         #endregion
 
-        private void StackPanel_Drop(object sender, DragEventArgs e)
-        {
-            item item = itemViewSource.View.CurrentItem as item;
-            if (item != null && item.id_item > 0)
-            {
-                var data = e.Data as DataObject;
-                entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
-                Attachment.SaveFile(data, entity.App.Names.Items, item.id_item, null);
-                itemDataGrid_SelectionChanged(sender, null);
-            }
-            else
-            {
-                MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-        
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as item_price != null)

@@ -78,5 +78,19 @@ namespace cntrl.Controls
         {
 
         }
+
+        private void InsertImage(object sender, DataObject e)
+        {
+            if (ReferenceID > 0)
+            {
+                var data = e.Data as DataObject;
+                entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
+                Attachment.SaveFile(data, ApplicationName, ReferenceID);
+            }
+            else
+            {
+                MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

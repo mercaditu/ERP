@@ -5,7 +5,7 @@ namespace entity.Brillo
 {
    public class Attachment
     {
-        public void SaveFile(DataObject data, App.Names Application, int reference_id, app_attachment File)
+        public void SaveFile(DataObject data, App.Names Application, int reference_id)
         {
             if (data.ContainsFileDropList())
             {
@@ -14,16 +14,7 @@ namespace entity.Brillo
 
                 if (!string.IsNullOrEmpty(extension))
                 {
-                    app_attachment app_attachment;
-
-                    if (File != null)
-                    {
-                        app_attachment = File;
-                    }
-                    else
-                    {
-                        app_attachment = new app_attachment();
-                    }
+                    app_attachment app_attachment = new app_attachment();
                 
                     if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
                     {

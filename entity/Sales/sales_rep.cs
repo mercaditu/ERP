@@ -42,6 +42,7 @@ namespace entity
         public decimal? commision_base { get; set; }
         public string commision_calculation { get; set; }
         public bool is_active { get; set; }
+        public bool is_collection_agent { get; set; }
 
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }
         public virtual IEnumerable<sales_order> sales_order { get; set; }

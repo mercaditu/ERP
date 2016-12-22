@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201612190618268_InterestTable.Designer.cs">
       <DependentUpon>201612190618268_InterestTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612221308116_PaymentSchedualUpdate.cs" />
+    <Compile Include="Migrations\201612221308116_PaymentSchedualUpdate.Designer.cs">
+      <DependentUpon>201612221308116_PaymentSchedualUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
@@ -635,6 +639,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612190618268_InterestTable.resx">
       <DependentUpon>201612190618268_InterestTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221308116_PaymentSchedualUpdate.resx">
+      <DependentUpon>201612221308116_PaymentSchedualUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

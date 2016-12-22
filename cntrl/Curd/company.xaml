@@ -69,7 +69,7 @@
                 </StackPanel>
 
                 <Rectangle Fill="Silver" Height="1" Margin="8"/>
-                <CheckBox Margin="5" x:Name="cbxInterest" Content="{lex:Loc Interest}" Style="{StaticResource input_checkbox}" Checked="cbxInterest_Checked"/>
+                <CheckBox Margin="5" x:Name="cbxInterest" IsChecked="{Binding has_interest,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Content="{lex:Loc Interest}" Style="{StaticResource input_checkbox}" Checked="cbxInterest_Checked"/>
                 <StackPanel Orientation="Horizontal">
                     <Grid Width="4px" Background="Gainsboro">
                         

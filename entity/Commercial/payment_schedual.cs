@@ -48,6 +48,21 @@ namespace entity
 
         public string number { get; set; }
 
+        public new bool IsSelected
+        {
+            get { return _IsSelected; }
+            set
+            {
+                _IsSelected = value;
+                RaisePropertyChanged("IsSelected");
+                foreach (payment_schedual payment_schedual in child.Where(x=>x.is_interest))
+                {
+                    payment_schedual.IsSelected = value;
+                    payment_schedual.RaisePropertyChanged("IsSelected");
+                }
+            }
+        }
+        bool _IsSelected;
         public decimal debit { 
             get 
             { 

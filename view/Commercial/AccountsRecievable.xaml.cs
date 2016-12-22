@@ -59,9 +59,9 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_company app_company = PaymentDB.app_company.Find(CurrentSession.Id_Company);
-            if (app_company.app_company_interest!=null)
+            if (app_company.app_company_interest != null)
             {
-                if (app_company.app_company_interest.is_forced==false)
+                if (app_company.app_company_interest.is_forced == false)
                 {
                     BtnInterest.Visibility = Visibility.Visible;
                 }
@@ -172,7 +172,7 @@ namespace Cognitivo.Commercial
                 {
                     IntCalculation(app_company, PaymentSchedualList);
                 }
-               
+
             }
 
             if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
@@ -188,24 +188,48 @@ namespace Cognitivo.Commercial
                 //If nothing found, then exit.
                 return;
             }
-            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList,ref PaymentDB);
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList, ref PaymentDB);
 
             crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);
         }
+
         public void IntCalculation(app_company app_company, List<payment_schedual> PaymentSchedualList)
         {
 
 
-            foreach (payment_schedual payment_schedual in PaymentSchedualList)
+            foreach (payment_schedual payment_schedual in PaymentSchedualList.Where(x => x.is_interest == false))
             {
+                decimal delta = 0;
+                decimal amount = 0;
 
+                //If there is Interest calculated for that day, then skip.
+                if (payment_schedual.child.Where(x => x.is_interest && x.trans_date.Date == DateTime.Now.Date).Count() > 0)
+                {
+                    continue;
+                }
 
-                decimal delta = Convert.ToDecimal((DateTime.Now - payment_schedual.expire_date).TotalDays);
+                //If Child Exist = Date Diff of Date. If Child does not Exist, take Expiry.
+                if (payment_schedual.child.Where(x => x.is_interest).Count() == 0)
+                {
+                    delta = Convert.ToDecimal((DateTime.Now - payment_schedual.expire_date).TotalDays);
+                    amount = payment_schedual.AccountReceivableBalance;
+                }
+                else
+                {
+                    payment_schedual _payment_schedual = payment_schedual.child.Where(x => x.is_interest).LastOrDefault();
+                    amount = payment_schedual.AccountReceivableBalance + payment_schedual.child.Where(x => x.is_interest).Sum(x=>x.AccountReceivableBalance);
+
+                    if (_payment_schedual != null)
+                    {
+                        delta = Convert.ToDecimal((DateTime.Now - _payment_schedual.trans_date).TotalDays);
+                    }
+                }
+
                 if (delta > app_company.app_company_interest.grace_period)
                 {
                     decimal dailyinterstrate = app_company.app_company_interest.InterestDaily;
-                    decimal amount = payment_schedual.debit;
+                 
                     decimal Totaldailyinterest = amount * dailyinterstrate;
 
                     decimal totalint = (Totaldailyinterest * delta);
@@ -214,20 +238,15 @@ namespace Cognitivo.Commercial
                     Intpayment_schedual.debit = totalint;
                     Intpayment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
                     Intpayment_schedual.sales_invoice = payment_schedual.sales_invoice;
-                    Intpayment_schedual.trans_date = payment_schedual.trans_date;
+                    Intpayment_schedual.trans_date = DateTime.Now;
                     Intpayment_schedual.expire_date = payment_schedual.expire_date;
                     Intpayment_schedual.status = Status.Documents_General.Approved;
                     Intpayment_schedual.id_contact = payment_schedual.id_contact;
-                    Intpayment_schedual.IsSelected = true;
-                    PaymentDB.payment_schedual.Add(Intpayment_schedual);
+                    Intpayment_schedual.is_interest = true;
+                    payment_schedual.child.Add(Intpayment_schedual);
                 }
 
             }
-
-
-
-
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

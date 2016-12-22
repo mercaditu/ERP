@@ -116,17 +116,17 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private async void load_Schedual()
+        private void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
             if (payment_schedualViewSource != null)
             {
-                await PaymentDB.payment_schedual
+                PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                         .OrderBy(x => x.expire_date)
-                        .LoadAsync();
+                        .Load();
                 payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
             }
 

@@ -12,7 +12,7 @@ namespace cntrl.Curd
 {
     public partial class Payment : UserControl
     {
-     
+
         public PaymentDB PaymentDB { get; set; }
         public enum Modes
         {
@@ -25,7 +25,7 @@ namespace cntrl.Curd
         CollectionViewSource paymentViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
 
-        public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList,ref PaymentDB PaymentDB)
+        public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList, ref PaymentDB PaymentDB)
         {
             InitializeComponent();
 
@@ -63,6 +63,7 @@ namespace cntrl.Curd
                 app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
                 if (app_currencyfx != null)
                 {
+                    payment_detail.Default_id_currencyfx = id_currencyfx;
                     payment_detail.id_currencyfx = id_currencyfx;
                     payment_detail.payment.id_currencyfx = id_currencyfx;
                     payment_detail.app_currencyfx = app_currencyfx;
@@ -179,13 +180,13 @@ namespace cntrl.Curd
 
 
 
-                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.id_currencyfx == _payment_detail.id_currencyfx))
+                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x=>x.id_currencyfx== _payment_detail.Default_id_currencyfx))
                 {
                     if (amount > 0)
                     {
 
 
-                        int id_currencyfx = payment_schedual.id_currencyfx;
+                        int id_currencyfx = _payment_detail.id_currencyfx;
                         payment_detail payment_detail = new payment_detail();
                         payment_detail.payment = payment;
 
@@ -207,33 +208,36 @@ namespace cntrl.Curd
                         {
 
                             payment_detail.id_sales_return = _payment_detail.id_sales_return;
-                            
+
                         }
                         else
                         {
                             payment_detail.id_purchase_return = _payment_detail.id_purchase_return;
                         }
 
-
-
-                        if (payment_schedual.debit > amount)
+                        Decimal TotalAmount = 0;
+                        if (Mode == Modes.Recievable)
                         {
-                            payment_detail.value = amount;
-                            amount = 0;
+                            TotalAmount = payment_schedual.debit;
+
                         }
-                        else
+                        else if (Mode == Modes.Payable)
                         {
-                            if (Mode == Modes.Recievable)
+                            TotalAmount = payment_schedual.credit;
+                        }
+                        TotalAmount = entity.Brillo.Currency.convert_Values(TotalAmount, payment_schedual.id_currencyfx, _payment_detail.id_currencyfx, App.Modules.Sales);
+                        if (TotalAmount > amount)
+                            if (TotalAmount > amount)
                             {
-                                payment_detail.value = payment_schedual.debit;
+                                payment_detail.value = amount;
+                                amount = 0;
+                            }
+                            else
+                            {
+
+                                payment_detail.value = TotalAmount;
                                 amount = amount - payment_schedual.debit;
                             }
-                            else if (Mode == Modes.Payable)
-                            {
-                                payment_detail.value = payment_schedual.credit;
-                                amount = amount - payment_schedual.credit;
-                            }
-                        }
 
                         payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
 
@@ -241,7 +245,7 @@ namespace cntrl.Curd
 
                     }
                 }
-                payment.payment_detail.Remove(_payment_detail);
+                PaymentDB.payment_detail.Remove(_payment_detail);
 
 
             }

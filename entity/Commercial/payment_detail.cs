@@ -62,7 +62,8 @@ namespace entity
             }
         }
         int _id_currency;
-
+        [NotMapped]
+        public int Default_id_currencyfx { get; set; }
         public int id_currencyfx
         {
             get

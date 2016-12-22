@@ -8,7 +8,7 @@
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 	  mc:Ignorable="d" 
 		   xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-	  d:DesignHeight="300" d:DesignWidth="500"
+	  d:DesignHeight="500" d:DesignWidth="700"
 	  Title="PaymentPrint" Loaded="Page_Loaded">
 	<Page.Resources>
 		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
@@ -24,40 +24,52 @@
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition  Width="2*"/>
 		</Grid.ColumnDefinitions>
-		<ListBox x:Name="PaymentTypeDataGrid" Style="{StaticResource nav_List}"
-							 ScrollViewer.VerticalScrollBarVisibility="Auto"
+        <StackPanel Grid.RowSpan="2" Background="{StaticResource AccentColor_Brush}">
+            <ListBox x:Name="PaymentTypeDataGrid" Style="{StaticResource nav_List}"
+							 ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="White"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="PaymentTypeDataGrid_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" Grid.Row="0">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
-											   recordCode="{Binding name, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-											   recordSecondaryName="{Binding app_document.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		
-		
-		
-		<Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
-		<ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
+            </ListBox>
+            <ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnetDetail_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1"  >
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											
 											 
 											/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <Grid Grid.Column="1" Background="White">
+            <StackPanel>
+                <Label Content="PaymentType" Style="{StaticResource input_label}"/>
+                <Label Content="Check" Style="{StaticResource generic_Label}"/>
+
+                <Label Content="Account" Style="{StaticResource input_label}"/>
+                <Label Content="ICICI INR Checking" Style="{StaticResource generic_Label}"/>
+
+                <Label Content="Value" Style="{StaticResource input_label}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="1,000" Style="{StaticResource generic_Label}"/>
+                    <Label Content="Indian Rupee" Style="{StaticResource generic_Label}"/>
+                </StackPanel>
+
+                <Label Content="Comment" Style="{StaticResource input_label}"/>
+                <TextBox Text="123291" Style="{StaticResource input_textbox}"/>
+            </StackPanel>
+		</Grid>
+
+        <Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
 			<rv:ReportViewer x:Name="reportViewer" />
 		</WindowsFormsHost>
 	</Grid>

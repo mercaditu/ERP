@@ -1,18 +1,7 @@
-﻿using cntrl.Curd;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace cntrl.Controls
 {
@@ -38,6 +27,7 @@ namespace cntrl.Controls
         private void GetImage()
         {
             CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+
             if (ReferenceID > 0)
             {
                 using (entity.db db = new entity.db())
@@ -79,7 +69,7 @@ namespace cntrl.Controls
 
         }
 
-        private void InsertImage(object sender, DataObject e)
+        private void InsertImage(object sender, DragEventArgs e)
         {
             if (ReferenceID > 0)
             {

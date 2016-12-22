@@ -365,17 +365,9 @@
 				<Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
 
 				<Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
-					<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
+                    <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
-					<metro:FlipView ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}" IsBannerEnabled="False">
-						<metro:FlipView.ItemTemplate>
-						<DataTemplate>
-							<Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}"/>
-						</DataTemplate>
-						</metro:FlipView.ItemTemplate>
-					</metro:FlipView>
-
-				</Grid>
+                </Grid>
 				<TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
 				<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 					<Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>

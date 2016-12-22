@@ -439,22 +439,13 @@ namespace Cognitivo.Product
         
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-
             if (e.Parameter as item_price != null)
             {
-                //item_price item_price = e.Parameter as item_price;
-                //if (string.IsNullOrEmpty(item_price.Error))
-                //{
                 e.CanExecute = true;
-                //}
             }
             if (e.Parameter as item_dimension != null)
             {
-                //item_dimension item_dimension = e.Parameter as item_dimension;
-                //if (string.IsNullOrEmpty(item_dimension.Error))
-                //{
                 e.CanExecute = true;
-                //}
             }
             if (e.Parameter as item_tag_detail != null)
             {
@@ -511,22 +502,6 @@ namespace Cognitivo.Product
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
-        }
-
-        private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            item item = itemViewSource.View.CurrentItem as item;
-            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-            if (item != null)
-            {
-                using (db db = new db())
-                {
-                    app_attachmentViewSource.Source = db.app_attachment
-                        .Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item && x.mime.Contains("image")).ToList();
-
-                }
-
-            }
         }
 
         private void popupCustomize_Closed(object sender, EventArgs e)

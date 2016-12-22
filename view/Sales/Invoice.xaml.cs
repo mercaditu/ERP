@@ -362,6 +362,7 @@ namespace Cognitivo.Sales
             {
                 toolBar.msgWarning("Please check Customer's Credit");
             }
+            load_PrimaryDataThread();
         }
 
         private void toolBar_btnAnull_Click(object sender)

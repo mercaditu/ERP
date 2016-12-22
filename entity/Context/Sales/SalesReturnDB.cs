@@ -52,10 +52,10 @@ namespace entity
 
         private void validate_Return()
         {
-            foreach (sales_return sales_return in base.sales_return.Local)
+            foreach (sales_return sales_return in base.sales_return.Local.Where(x=>x.IsSelected))
             {
 
-                if (sales_return.IsSelected && sales_return.Error == null)
+                if (sales_return.Error == null)
                 {
                     if (sales_return.State == EntityState.Added)
                     {
@@ -90,10 +90,7 @@ namespace entity
 
         private void add_CRM(sales_return sales_return)
         {
-            if (true)
-            {
-
-            }
+          
             sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault() != null? sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail:null;
             if (sales_invoice_detail == null)
             {
@@ -136,8 +133,9 @@ namespace entity
                         sales_return _return = new sales_return();
                         _return.code = sales_return.code;
                         _return.comment = sales_return.comment;
-                        // _invoice.CreditLimit = invoice.CreditLimit;
-                        _return.app_branch = sales_return.app_branch;
+                        _return.return_type = sales_return.return_type;
+                    // _invoice.CreditLimit = invoice.CreditLimit;
+                    _return.app_branch = sales_return.app_branch;
                         _return.id_branch = sales_return.id_branch;
                         _return.app_company = sales_return.app_company;
                         _return.id_company = sales_return.id_company;
@@ -194,6 +192,7 @@ namespace entity
                             sales_return_detail.unit_cost = detail.unit_cost;
                             sales_return_detail.unit_price = detail.unit_price;
                             sales_return_detail.UnitPrice_Vat = detail.UnitPrice_Vat;
+                            //sales_return_detail.sales_return = _return;
                             _return.sales_return_detail.Add(sales_return_detail);
                             position += 1;
                         }
@@ -212,7 +211,7 @@ namespace entity
           
           
             List<sales_return> SalesReturnList = base.sales_return.Local.Where(x =>
-                                                x.status != Status.Documents_General.Approved
+                                                x.status != Status.Documents_General.Approved 
                                                         && x.IsSelected && x.Error == null).ToList();
             foreach (sales_return sales_return in SalesReturnList)
             {

@@ -495,7 +495,7 @@ namespace Cognitivo.Commercial
             {
                 var data = e.Data as DataObject;
                 entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
-                Attachment.SaveFile(data, entity.App.Names.Contact, contact.id_contact, null);
+                Attachment.SaveFile(data, entity.App.Names.Contact, contact.id_contact);
                 listContacts_SelectionChanged(sender, null);
             }
             else

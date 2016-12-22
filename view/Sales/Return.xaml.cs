@@ -26,30 +26,32 @@ namespace Cognitivo.Sales
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void load_PrimaryDataThread()
+        {
+            salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
+            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+            salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
+        }
+
+        private  void load_SecondaryDataThread()
+        {
+            sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
+
+            CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
+
+            cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+
+            CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
+            app_branchViewSource.Source = CurrentSession.Branches;
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-                await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
-                salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
-                sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
-
-                //sales_invoiceViewSource = (CollectionViewSource)FindResource("sales_invoiceViewSource");
-                //sales_invoiceViewSource.Source = SalesReturnDB.sales_invoice.Where(a => a.status == Status.Documents_General.Approved && a.id_company == CurrentSession.Id_Company).ToList();
-
-                //CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("app_currencyfxViewSource");
-                //currencyfxViewSource.Source = CurrentSession.Currencies;
-
-                CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //SalesReturnDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-
-                cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
-
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
-
-                CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-                app_branchViewSource.Source = CurrentSession.Branches; //SalesReturnDB.app_branch.Local;
+                load_PrimaryDataThread();
+                load_SecondaryDataThread();
             }
 
             catch (Exception ex)
@@ -83,7 +85,6 @@ namespace Cognitivo.Sales
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
-                //throw ex;
             }
         }
 
@@ -136,7 +137,6 @@ namespace Cognitivo.Sales
             if (sales_return != null)
             {
                 calculate_vat(sender, e);
-
             }
         }
 
@@ -304,6 +304,7 @@ namespace Cognitivo.Sales
             {
                 sales_return.IsSelected = false;
             }
+            load_PrimaryDataThread();
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -349,6 +350,7 @@ namespace Cognitivo.Sales
             if (_sales_return != null)
             {
                 sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
+
                 foreach (sales_invoice sales_invoice in pnlSalesInvoice.selected_sales_invoice)
                 {
                     _sales_return.State = EntityState.Modified;
@@ -364,9 +366,7 @@ namespace Cognitivo.Sales
 
                     foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0))
                     {
-
                         sales_return_detail sales_return_detail = new sales_return_detail();
-
                         if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
                         {
                             sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
@@ -393,8 +393,6 @@ namespace Cognitivo.Sales
                         sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
                         sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
                         _sales_return.sales_return_detail.Add(sales_return_detail);
-
-
 
                         SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
@@ -423,7 +421,6 @@ namespace Cognitivo.Sales
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             ReturnSetting _pref_SalesReturn = new ReturnSetting();
-
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             ReturnSetting.Default.Save();
             _pref_SalesReturn = ReturnSetting.Default;
@@ -436,7 +433,5 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
-
-
     }
 }

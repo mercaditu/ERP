@@ -113,12 +113,115 @@ namespace entity
             }
         }
 
+        public void SpiltInvoice(sales_return sales_return)
+        {
+            if ((sales_return.number == null || sales_return.number == string.Empty) && sales_return.app_document_range != null)
+            {
+                int document_line_limit = 0;
+
+                if (sales_return.app_document_range.app_document.line_limit != null)
+                {
+                    document_line_limit = (int)sales_return.app_document_range.app_document.line_limit;
+                }
+
+                if (document_line_limit > 0 && sales_return.sales_return_detail.Count > document_line_limit)
+                {
+                    int NoOfInvoice = (int)Math.Ceiling(sales_return.sales_return_detail.Count / (decimal)document_line_limit);
+
+                    //Counter Variable for not loosing place in Detail
+                    int position = 0;
+
+                    for (int i = 1; i <= NoOfInvoice; i++)
+                    {
+                        sales_return _return = new sales_return();
+                        _return.code = sales_return.code;
+                        _return.comment = sales_return.comment;
+                        // _invoice.CreditLimit = invoice.CreditLimit;
+                        _return.app_branch = sales_return.app_branch;
+                        _return.id_branch = sales_return.id_branch;
+                        _return.app_company = sales_return.app_company;
+                        _return.id_company = sales_return.id_company;
+                        _return.app_condition = sales_return.app_condition;
+                        _return.id_condition = sales_return.id_condition;
+                        _return.contact = sales_return.contact;
+                        _return.id_contact = sales_return.id_contact;
+                        _return.app_contract = sales_return.app_contract;
+                        _return.id_contract = sales_return.id_contract;
+                        _return.app_currencyfx = sales_return.app_currencyfx;
+                        _return.id_currencyfx = sales_return.id_currencyfx;
+                        _return.id_opportunity = sales_return.id_opportunity;
+                        _return.project = sales_return.project;
+                        _return.id_project = sales_return.id_project;
+                        _return.app_document_range = sales_return.app_document_range;
+                        _return.id_range = sales_return.id_range;
+                        _return.sales_invoice = sales_return.sales_invoice;
+                        _return.id_sales_invoice = sales_return.id_sales_invoice;
+                        _return.sales_rep = sales_return.sales_rep;
+                        _return.id_sales_rep = sales_return.id_sales_rep;
+                        _return.app_terminal = sales_return.app_terminal;
+                        _return.id_terminal = sales_return.id_terminal;
+                        _return.security_user = sales_return.security_user;
+                        _return.id_user = sales_return.id_user;
+                        _return.id_weather = sales_return.id_weather;
+                        _return.number = sales_return.number;
+                        _return.GrandTotal = sales_return.GrandTotal;
+                        //  _invoice.accounting_journal = invoice.accounting_journal;
+                        _return.is_head = sales_return.is_head;
+                        _return.is_issued = sales_return.is_issued;
+                        _return.IsSelected = sales_return.IsSelected;
+                        _return.State = EntityState.Added;
+                        _return.status = Status.Documents_General.Pending;
+                        _return.trans_date = sales_return.trans_date;
+
+                        foreach (sales_return_detail detail in sales_return.sales_return_detail.Skip(position).Take(document_line_limit))
+                        {
+                            sales_return_detail sales_return_detail = new sales_return_detail();
+                            sales_return_detail.item_description = detail.item_description;
+                            sales_return_detail.discount = detail.discount;
+                            sales_return_detail.id_company = detail.id_company;
+                            sales_return_detail.item = detail.item;
+                            sales_return_detail.id_item = detail.id_item;
+                            sales_return_detail.id_location = detail.id_location;
+                            sales_return_detail.id_project_task = detail.id_project_task;
+                            sales_return_detail.sales_invoice_detail = detail.sales_invoice_detail;
+                            sales_return_detail.id_vat_group = detail.id_vat_group;
+                            sales_return_detail.is_head = detail.is_head;
+                            sales_return_detail.IsSelected = detail.IsSelected;
+                            sales_return_detail.quantity = detail.quantity;
+                            sales_return_detail.State = EntityState.Added;
+                            sales_return_detail.SubTotal = detail.SubTotal;
+                            sales_return_detail.SubTotal_Vat = detail.SubTotal_Vat;
+                            sales_return_detail.unit_cost = detail.unit_cost;
+                            sales_return_detail.unit_price = detail.unit_price;
+                            sales_return_detail.UnitPrice_Vat = detail.UnitPrice_Vat;
+                            _return.sales_return_detail.Add(sales_return_detail);
+                            position += 1;
+                        }
+                        base.sales_return.Add(_return);
+                    }
+
+                    sales_return.is_head = false;
+                    sales_return.status = Status.Documents_General.Approved;
+
+                    SaveChanges();
+                }
+            }
+        }
         public void Approve()
         {
+          
+          
+            List<sales_return> SalesReturnList = base.sales_return.Local.Where(x =>
+                                                x.status != Status.Documents_General.Approved
+                                                        && x.IsSelected && x.Error == null).ToList();
+            foreach (sales_return sales_return in SalesReturnList)
+            {
+                SpiltInvoice(sales_return);
+            }
             foreach (sales_return sales_return in base.sales_return.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
                 if (sales_return.status != Status.Documents_General.Approved &&
-                    sales_return.IsSelected &&
+                    sales_return.IsSelected && sales_return.is_head &&
                     sales_return.Error == null)
                 {
 

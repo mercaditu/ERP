@@ -68,8 +68,8 @@ namespace entity
         public decimal credit { get; set; }
 
         public bool can_calculate { get; set; }
+        public bool is_interest { get; set; }
 
-        //   Not Mapped Properties
         #region NotMapped
         [NotMapped]
         public Actions? Action { get; set; }

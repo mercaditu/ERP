@@ -25,6 +25,23 @@
           <DataField>Memo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+           <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        
+           <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+           <Field Name="Email">
+          <DataField>Email</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+           <Field Name="Bank">
+          <DataField>Bank</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="AmountWords">
           <DataField>AmountWords</DataField>
           <rd:TypeName>System.String</rd:TypeName>

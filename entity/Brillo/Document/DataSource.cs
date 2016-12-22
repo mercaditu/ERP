@@ -444,7 +444,7 @@ namespace entity.Brillo.Document
                     gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.gov_code : "" : "",
                     Number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "" : "" : "",
                     DimensionString = g.DimensionString,
-                    Measurement = g.purchase_tender_item!=null? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.app_measurement != null ? g.purchase_tender_item.item.app_measurement.name : "" : "":"",
+                    Measurement = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.app_measurement != null ? g.purchase_tender_item.item.app_measurement.name : "" : "" : "",
                     AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
                  // Text -> Words
@@ -549,7 +549,7 @@ namespace entity.Brillo.Document
                     PurchaseNumber = g.purchase_invoice.number,
                     PurchaseCode = g.purchase_invoice.code,
                     PurchaseDate = g.purchase_invoice.trans_date,
-                 
+
 
                     AmountWords = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding ?
 
@@ -598,13 +598,13 @@ namespace entity.Brillo.Document
                     location_destination_name = g.item_transfer.app_location_destination.name,
                     item_code = g.item_product.item.code,
                     quantity_origin = g.quantity_origin,
-                    quantity_destination= g.quantity_destination,
+                    quantity_destination = g.quantity_destination,
                     QuantityInStock = g.Quantity_InStock,
-                    Measurement = g.item_product != null ? g.item_product.item != null ? g.item_product.item.app_measurement != null ? g.item_product.item.app_measurement.name : "" : "" : "" ,
+                    Measurement = g.item_product != null ? g.item_product.item != null ? g.item_product.item.app_measurement != null ? g.item_product.item.app_measurement.name : "" : "" : "",
                     item_name = g.item_product != null ? g.item_product.item.name : "",
                     trans_date = g.item_transfer.trans_date,
-                    timestamp=g.timestamp,
-                    status=g.status,
+                    timestamp = g.timestamp,
+                    status = g.status,
                     comment = g.item_transfer.comment
                 }).ToList();
 
@@ -628,7 +628,7 @@ namespace entity.Brillo.Document
                     RequstedUserCode = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.code : "" : "",
 
 
-                    item_code = g.item != null ?g.item.code:"",
+                    item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
                     quantity = g.quantity,
                     request_date = g.item_request.request_date,
@@ -646,19 +646,23 @@ namespace entity.Brillo.Document
             payment_detailList.Add(payment_detail);
 
             reportDataSource.Value = payment_detailList.Select(g => new
-                {
-                    Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
-                    ChequeDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
-                    PaymentDate=g.trans_date,
-                    Memo = g.comment,
-                    AmountNumber = g.value,
-                    AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
-                        //Text -> Words
+            {
+                Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
+                Address = g.payment != null ? g.payment.contact != null ? g.payment.contact.address : "" : "",
+                Phone = g.payment != null ? g.payment.contact != null ? g.payment.contact.telephone : "" : "",
+                Email = g.payment != null ? g.payment.contact != null ? g.payment.contact.email : "" : "",
+                Bank = g.payment != null ? g.payment.contact != null ? g.payment.contact.app_bank != null ? g.payment.contact.app_bank.name : "" : "" : "",
+                ChequeDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
+                PaymentDate = g.trans_date,
+                Memo = g.comment,
+                AmountNumber = g.value,
+                AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                    //Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
                     :
                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
 
-                }
+            }
                 );
             return reportDataSource;
         }
@@ -721,12 +725,12 @@ namespace entity.Brillo.Document
                                 PurchaseNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
                                 BankAccount = g.payment_detail != null ? g.payment_detail.app_account != null ? g.payment_detail.app_account.name : "" : "",
 
-                    //// Text -> Words
-                    //NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
-                    //:
-                    //NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "",
+                                //// Text -> Words
+                                //NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
+                                //:
+                                //NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "",
 
-                    //            HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false
+                                //            HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false
 
 
                             }).ToList();
@@ -756,7 +760,7 @@ namespace entity.Brillo.Document
                                 SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
                                 AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
-                             
+
                     // Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
                     :
@@ -773,24 +777,24 @@ namespace entity.Brillo.Document
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<project_task> project_task = project.project_task.ToList();
             reportDataSource.Value = project_task.Select(g => new
-                            {
-                                project_code = g.project.code,
-                                project_est_end_date = g.project.est_end_date,
-                                project_est_start_date = g.project.est_start_date,
-                                task_trans_date = g.trans_date,
-                                task_start_date_est = g.start_date_est,
-                                task_end_date_est = g.end_date_est,
-                                number = g.number,
-                                id_company = g.id_company,
-                                company_name = g.app_company != null ? g.app_company.name : "",
-                                contact_name = g.project.contact != null ? g.project.contact.name : "",
-                                contact_address = g.project.contact != null ? g.project.contact.address != null ? g.project.contact.address : "" : "",
-                                contact_email = g.project.contact != null ? g.project.contact.email != null ? g.project.contact.email : "" : "",
-                                contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
-                                gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
-                                TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
+            {
+                project_code = g.project.code,
+                project_est_end_date = g.project.est_end_date,
+                project_est_start_date = g.project.est_start_date,
+                task_trans_date = g.trans_date,
+                task_start_date_est = g.start_date_est,
+                task_end_date_est = g.end_date_est,
+                number = g.number,
+                id_company = g.id_company,
+                company_name = g.app_company != null ? g.app_company.name : "",
+                contact_name = g.project.contact != null ? g.project.contact.name : "",
+                contact_address = g.project.contact != null ? g.project.contact.address != null ? g.project.contact.address : "" : "",
+                contact_email = g.project.contact != null ? g.project.contact.email != null ? g.project.contact.email : "" : "",
+                contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
+                gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
+                TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
 
-                            }).ToList();
+            }).ToList();
 
             return reportDataSource;
         }

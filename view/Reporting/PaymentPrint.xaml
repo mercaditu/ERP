@@ -1,89 +1,64 @@
 ﻿<Page x:Class="Cognitivo.Reporting.PaymentPrint"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Cognitivo.Reporting"
-        xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-        xmlns:entity="clr-namespace:entity;assembly=entity"
-      mc:Ignorable="d" 
-           xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-      d:DesignHeight="300" d:DesignWidth="500"
-      Title="PaymentPrint" Loaded="Page_Loaded">
-    <Page.Resources>
-        <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
-        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentviewsource" Source="{Binding payment, Source={StaticResource payment_detailViewSource}}"/>
-    </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition  Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <ListBox x:Name="PaymentTypeDataGrid" Style="{StaticResource nav_List}"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:local="clr-namespace:Cognitivo.Reporting"
+		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+		xmlns:entity="clr-namespace:entity;assembly=entity"
+	  mc:Ignorable="d" 
+		   xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+	  d:DesignHeight="300" d:DesignWidth="500"
+	  Title="PaymentPrint" Loaded="Page_Loaded">
+	<Page.Resources>
+		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
+		<CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
+		<CollectionViewSource x:Key="paymentviewsource" Source="{Binding payment, Source={StaticResource payment_detailViewSource}}"/>
+	</Page.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition  Width="2*"/>
+		</Grid.ColumnDefinitions>
+		<ListBox x:Name="PaymentTypeDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="PaymentTypeDataGrid_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" Grid.Row="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
 											   recordCode="{Binding name, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-											   recordSecondaryName="{Binding app_document.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											
-											 
-											/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <DataGrid x:Name="dgvPaymnet" Style="{StaticResource detail_Datagrid}" HorizontalAlignment="Left"
-									Grid.Row="0" Grid.Column="1"
-									  CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource paymentviewsource}}"
-									 SelectionChanged="dgvPaymnet_SelectionChanged"
-									>
-          
-            <DataGrid.Columns>
-
-
-
-
-                <DataGridTextColumn Header="Name" Width="100" 
-														ElementStyle="{StaticResource RightAlignStyle}" 
-														Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}"/>
-                <DataGridTextColumn Header="Date" Width="100" 
-														ElementStyle="{StaticResource RightAlignStyle}" 
-														Binding="{Binding trans_date,StringFormat=d, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}"/>
-
-                <DataGridTextColumn Header="Number" Width="40" 
-														ElementStyle="{StaticResource RightAlignStyle}" 
-														Binding="{Binding number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
-
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
-        <ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
+											   recordSecondaryName="{Binding app_document.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		
+		
+		
+		<Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
+		<ListBox x:Name="PaymnetDetailDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnetDetail_SelectionChanged"
 							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1"  >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											
 											 
 											/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
-            <rv:ReportViewer x:Name="reportViewer" />
-        </WindowsFormsHost>
-    </Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+			<rv:ReportViewer x:Name="reportViewer" />
+		</WindowsFormsHost>
+	</Grid>
 </Page>

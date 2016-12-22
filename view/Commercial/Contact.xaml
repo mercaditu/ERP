@@ -7,6 +7,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -23,10 +24,8 @@
 		<converter:InitialsConverter x:Key="InitialsConverter"/>
 		<converter:LowerCaseConverter x:Key="LowerCaseConverter"/>
 		<BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-		<converter:ImageConverter x:Key="ConvertImage"/>
 
 		<CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
-
 		<CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
 		<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
 		<CollectionViewSource x:Key="contactParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
@@ -75,16 +74,9 @@
 
 		<StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
 					Background="White" Orientation="Horizontal" 
-                    IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-			<Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding Source={StaticResource app_attachmentViewSource}}"
-							 Height="128" Width="128" Drop="Border_Drop" AllowDrop="True" Margin="8">
-                <Ellipse.Effect>
-                    <DropShadowEffect ShadowDepth="0"/>
-                </Ellipse.Effect>
-				<Ellipse.Fill>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ConvertImage}}"/>
-				</Ellipse.Fill>
-			</Ellipse>
+					IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+			<cntrls:ImageViewer ReferenceID="{Binding id_contact, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Contact"  AllowDrop="True" />
+
 			<StackPanel VerticalAlignment="Top" Margin="0,32">
 				<Label Content="{Binding name}" Style="{StaticResource H1}"/>
 				<Label Content="{Binding alias}" Style="{StaticResource H2}"/>

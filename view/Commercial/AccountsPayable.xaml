@@ -54,7 +54,7 @@
 
         <Grid Background="White" Grid.Column="1" Grid.Row="1">
             <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False">
+                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="" Width="32" 

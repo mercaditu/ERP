@@ -60,6 +60,8 @@ namespace entity
         public virtual ICollection<app_location> app_location { get; set; }
         public virtual ICollection<app_terminal> app_terminal { get; set; }
         public virtual IEnumerable<app_branch_walkins> app_branch_walkins { get; set; }
+        public virtual IEnumerable<item_branch_safety> item_branch_safety { get; set; }
+
         public virtual IEnumerable<payment_promissory_note> payment_promissory_note { get; set; }
         //Stock
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }

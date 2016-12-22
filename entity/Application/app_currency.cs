@@ -45,37 +45,7 @@ namespace entity
         private bool _is_active; public bool has_rounding { get; set; }
         public bool is_reverse { get; set; }
 
-        [NotMapped]
-        public string code
-        {
-            get
-            {
-                if (name.ToLower().Contains("guara"))
-                {
-                    return "PYG";
-                }
-                else if (name.ToLower().Contains("dol"))
-                {
-                    return "USD";
-                }
-                else if (name.ToLower().Contains("real"))
-                {
-                    return "BRL";
-                }
-                else if (name.ToLower().Contains("eru"))
-                {
-                    return "EUR";
-                }
-                else if (name.ToLower().Contains("peso"))
-                {
-                    return "ARS";
-                }
-                else
-                {
-                    return "PYG";
-                }
-            }
-        }
+        public string code { get; set; }
 
         public virtual ICollection<app_currency_denomination> app_currency_denomination { get; set; }
         public virtual ICollection<app_currencyfx> app_currencyfx { get; set; }

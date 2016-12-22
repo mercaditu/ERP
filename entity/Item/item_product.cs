@@ -49,5 +49,6 @@ namespace entity
         public virtual IEnumerable<item_inventory_detail> item_inventory_detail { get; set; }
         public virtual IEnumerable<item_transfer_detail> item_transfer_detail { get; set; }
         public virtual ICollection<item_conversion_factor> item_conversion_factor { get; set; }
+        public virtual ICollection<item_branch_safety> item_branch_safety { get; set; }
     }
 }

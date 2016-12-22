@@ -67,6 +67,7 @@
         public virtual DbSet<impex_import> impex_import { get; set; }
         public virtual DbSet<impex_export> impex_export { get; set; }
         public virtual DbSet<item> items { get; set; }
+        public virtual DbSet<item_branch_safety> item_branch_safety { get; set; }
         public virtual DbSet<item_request> item_request { get; set; }
         public virtual DbSet<item_request_detail> item_request_detail { get; set; }
         public virtual DbSet<item_request_decision> item_request_decision { get; set; }

@@ -63,10 +63,16 @@ namespace cntrl.Controls
 
                     if (app_attachment != null)
                     {
+
                         using (entity.db db = new entity.db())
                         {
-                            db.app_attachment.Remove(app_attachment);
-                            db.SaveChanges();
+                            entity.app_attachment _app_attachment = db.app_attachment.Where(x => x.id_attachment == app_attachment.id_attachment).FirstOrDefault();
+                            if (_app_attachment!=null)
+                            {
+                                db.app_attachment.Remove(_app_attachment);
+                                db.SaveChanges();
+                            }
+                       
 
                             GetImage();
                         }

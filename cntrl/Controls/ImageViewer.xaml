@@ -7,18 +7,20 @@
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=Entity"
+               xmlns:customcmd="clr-namespace:Cognitivo.Class"
              mc:Ignorable="d" AllowDrop="True" 
              d:DesignHeight="300" d:DesignWidth="300">
+  
     <UserControl.Resources>
         <convert:ImageConverter x:Key="ConvertImage"/>
         <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
     </UserControl.Resources>
-    <Grid Drop="Grid_Drop">
-        <metro:FlipView IsBannerEnabled="False" ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+    <Grid Drop="Grid_Drop" Background="Gainsboro">
+        <metro:FlipView  IsBannerEnabled="False" ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
             <metro:FlipView.ContextMenu>
                 <ContextMenu x:Name="imgContext" IsOpen="False">
-                    <MenuItem Command="New" Click="MenuItem_New"></MenuItem>
-                    <MenuItem Command="Delete" Click="MenuItem_Delete"></MenuItem>
+                    <MenuItem Header="New" Click="MenuItem_New"></MenuItem>
+                    <MenuItem Header="Delete" Click="MenuItem_Delete"></MenuItem>
                 </ContextMenu>
             </metro:FlipView.ContextMenu>
             <metro:FlipView.ItemTemplate>

@@ -180,7 +180,7 @@ namespace cntrl.Curd
 
 
 
-                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x=>x.id_currencyfx== _payment_detail.Default_id_currencyfx))
+                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.id_currencyfx == _payment_detail.Default_id_currencyfx))
                 {
                     if (amount > 0)
                     {
@@ -226,18 +226,17 @@ namespace cntrl.Curd
                             TotalAmount = payment_schedual.credit;
                         }
                         TotalAmount = entity.Brillo.Currency.convert_Values(TotalAmount, payment_schedual.id_currencyfx, _payment_detail.id_currencyfx, App.Modules.Sales);
-                        if (TotalAmount > amount)
-                            if (TotalAmount > amount)
-                            {
-                                payment_detail.value = amount;
-                                amount = 0;
-                            }
-                            else
-                            {
 
-                                payment_detail.value = TotalAmount;
-                                amount = amount - payment_schedual.debit;
-                            }
+                        if (TotalAmount > amount)
+                        {
+                            payment_detail.value = amount;
+                            amount = 0;
+                        }
+                        else
+                        {
+                            payment_detail.value = TotalAmount;
+                            amount = amount - payment_schedual.debit;
+                        }
 
                         payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
 

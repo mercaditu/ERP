@@ -514,7 +514,7 @@
 					</TabItem>
 				</TabControl>
                 <StackPanel Background="Gainsboro" VerticalAlignment="Bottom" Height="75" DataContext="{Binding Source={StaticResource production_execution_detailViewSource}}" 
-                            Visibility="{Binding ElementName=treeOrder, Path=SelectedItem_, Converter={StaticResource ordertovisibily}}">
+                            Visibility="{Binding SelectedItem,ElementName=treeOrder, Converter={StaticResource ordertovisibily}}">
                     <StackPanel Orientation="Horizontal">
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Code}"/>
                         <TextBox Style="{StaticResource input_textbox}" Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

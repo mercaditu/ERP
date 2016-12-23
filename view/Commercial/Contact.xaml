@@ -264,7 +264,7 @@
 								<CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" Margin="3" 
 								  IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 								<CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" Margin="3" 
-								  IsChecked="true"/>
+							IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 							</StackPanel>
 						</StackPanel>
 						<Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>

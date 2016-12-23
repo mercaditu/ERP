@@ -8,6 +8,10 @@ using entity;
 using System.Linq;
 using System.Windows.Media;
 using System;
+using System.IO;
+using System.Xml.Linq;
+using cntrl.Properties;
+using System.Reflection;
 
 namespace cntrl
 {
@@ -193,7 +197,12 @@ namespace cntrl
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            // translate the report
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
+
+            reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
 
             ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
@@ -204,6 +213,7 @@ namespace cntrl
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
+       
 
         public void Filter()
         {
@@ -215,7 +225,12 @@ namespace cntrl
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            reportViewer.LocalReport.ReportEmbeddedResource = Report.Path;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            // translate the report
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
+
+            reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
 
             ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
@@ -315,6 +330,31 @@ namespace cntrl
             Fill();
           
            
+        }
+    }
+
+    public static class RdlcReportHelper
+    {
+        public static Stream TranslateReport(Stream reportStream)
+        {
+            XDocument reportXml = XDocument.Load(reportStream);
+
+            foreach (var element in reportXml.Descendants(XName.Get("Value", @"http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition")))
+            {
+                XAttribute attribute = element.Attribute(XName.Get("LocID", @"http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"));
+
+                if (attribute != null)
+                {
+                    string translatedValue = entity.Brillo.Localize.StringText(attribute.Value);
+                    element.Value = string.IsNullOrEmpty(translatedValue) ? element.Value : translatedValue;
+                }
+            }
+
+            Stream ms = new MemoryStream();
+            reportXml.Save(ms, SaveOptions.OmitDuplicateNamespaces);
+            ms.Position = 0;
+
+            return ms;
         }
     }
 }

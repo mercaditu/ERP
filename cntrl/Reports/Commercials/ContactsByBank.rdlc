@@ -72,7 +72,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Name</Value>
+                              <Value rd:LocID="Name">Name</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -99,6 +99,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -971,7 +972,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.94469cm</Height>
+    <Height>1.9447cm</Height>
     <Style />
   </Body>
   <Width>21.37834cm</Width>

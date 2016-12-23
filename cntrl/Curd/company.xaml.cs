@@ -131,10 +131,19 @@ namespace cntrl
             if (cbxInterest.IsChecked==true)
             {
                 app_company _app_company = app_companyViewSource.View.CurrentItem as entity.app_company;
-                app_company_interest app_company_interest = new app_company_interest();
-                app_company_interest.app_company = _app_company;
-                _app_company.app_company_interest = app_company_interest;
-                app_companyViewSource.View.Refresh();
+                if (_app_company!=null)
+                {
+                    if (_app_company.app_company_interest==null)
+                    {
+                        app_company_interest app_company_interest = new app_company_interest();
+                        app_company_interest.app_company = _app_company;
+                        _app_company.app_company_interest = app_company_interest;
+                        app_companyViewSource.View.Refresh();
+                    }
+                 
+                }
+             
+              
              
             }
         }

@@ -74,7 +74,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Code</Value>
+                              <Value rd:LocID="Cost">Code</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -107,7 +107,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -119,7 +118,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Quantity</Value>
+                              <Value rd:LocID="Quantity">Quantity</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -154,7 +153,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -166,7 +164,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price</Value>
+                              <Value rd:LocID="UnitPrice">Unit Price</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -201,7 +199,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -213,7 +210,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price Vat</Value>
+                              <Value rd:LocID="UnitPrice_VAT">Unit Price Vat</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -248,7 +245,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -260,7 +256,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total</Value>
+                              <Value rd:LocID="SubTotal">Sub Total</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -295,7 +291,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -307,7 +302,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Vat</Value>
+                              <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -342,7 +337,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1161,6 +1155,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1504,7 +1499,6 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0in</Top>
           <Left>0.03624in</Left>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
@@ -1540,7 +1534,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0in</Top>
           <Left>0.25651in</Left>
           <Height>0.17275in</Height>
           <Width>2.81445in</Width>
@@ -1575,7 +1568,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
-          <Top>0in</Top>
           <Left>5.83333in</Left>
           <Height>0.1875in</Height>
           <Width>3in</Width>

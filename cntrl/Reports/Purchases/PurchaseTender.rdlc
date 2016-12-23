@@ -53,7 +53,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Tender</Value>
+                            <Value rd:LocID="PurchaseTender">Tender</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -90,7 +90,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Number / Items</Value>
+                            <Value rd:LocID="Items">Items</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -413,7 +413,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -661,7 +660,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox42">
                         <CanGrow>true</CanGrow>
@@ -671,7 +670,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Contract</Value>
+                                <Value rd:LocID="Contract">Contract</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -704,7 +703,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox3">
                         <CanGrow>true</CanGrow>
@@ -714,7 +713,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Cost</Value>
+                                <Value rd:LocID="Cost">Cost</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -750,7 +749,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox5">
                         <CanGrow>true</CanGrow>
@@ -760,7 +759,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Quantity</Value>
+                                <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -793,7 +792,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox8">
                         <CanGrow>true</CanGrow>
@@ -848,7 +847,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Total</Value>
+                            <Value rd:LocID="Total">Total</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontWeight>Bold</FontWeight>
@@ -878,7 +877,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox27">
                         <CanGrow>true</CanGrow>
@@ -888,7 +887,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Cost</Value>
+                                <Value rd:LocID="Cost">Cost</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontWeight>Bold</FontWeight>
@@ -918,7 +917,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.6cm</Size>
+                    <Size>0.43684cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox37">
                         <CanGrow>true</CanGrow>
@@ -928,7 +927,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Quantity</Value>
+                                <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontWeight>Bold</FontWeight>
@@ -953,6 +952,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -1105,7 +1105,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>2.4cm</Height>
+        <Height>2.23684cm</Height>
         <Width>22.6723cm</Width>
         <Style>
           <Border>
@@ -1114,7 +1114,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.94488in</Height>
+    <Height>0.88064in</Height>
     <Style />
   </Body>
   <Width>8.9261in</Width>

@@ -76,7 +76,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Quantity</Value>
+                              <Value rd:LocID="Quantity">Quantity</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -116,7 +116,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price</Value>
+                              <Value rd:LocID="UnitPrice">Unit Price</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -156,7 +156,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price Vat</Value>
+                              <Value rd:LocID="UnitPrice_VAT">Unit Price Vat</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -196,7 +196,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total</Value>
+                              <Value rd:LocID="SubTotal">Sub Total</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -236,7 +236,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Vat</Value>
+                              <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -265,6 +265,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -306,7 +307,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1974,7 +1974,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.38665cm</Height>
+    <Height>3.38666cm</Height>
     <Style />
   </Body>
   <Width>23.57435cm</Width>

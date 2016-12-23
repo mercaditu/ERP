@@ -74,7 +74,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Conditions</Value>
+                              <Value rd:LocID="Condition">Conditions</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -112,7 +112,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Quantity</Value>
+                              <Value rd:LocID="Quantity">Quantity</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -152,7 +152,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Cost</Value>
+                              <Value rd:LocID="UnitCost">Unit Cost</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -192,7 +192,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price Vat</Value>
+                              <Value rd:LocID="UnitPrice_VAT">Unit Price Vat</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -232,7 +232,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total</Value>
+                              <Value rd:LocID="SubTotal">Sub Total</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -272,7 +272,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Vat</Value>
+                              <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -301,6 +301,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1978,7 +1979,6 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0in</Top>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <Style>
@@ -2013,7 +2013,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0in</Top>
           <Left>0.14388in</Left>
           <Height>0.1875in</Height>
           <Width>2.81445in</Width>

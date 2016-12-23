@@ -40,7 +40,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Task Code</Value>
+                              <Value rd:LocID="Code">Task Code</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -68,7 +68,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -80,7 +79,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Task</Value>
+                              <Value rd:LocID="Task">Task</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -108,7 +107,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -120,7 +118,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Status</Value>
+                              <Value rd:LocID="Status">Status</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -148,7 +146,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -160,7 +157,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Start Date</Value>
+                              <Value rd:LocID="StartDate">Start Date</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -188,7 +185,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -200,7 +196,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>End Date</Value>
+                              <Value rd:LocID="EndDate">End Date</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -228,7 +224,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -240,7 +235,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Quantity Est</Value>
+                              <Value rd:LocID="Quantity">Quantity Est</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -271,7 +266,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -283,7 +277,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cost Est</Value>
+                              <Value rd:LocID="Cost">Cost Est</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -957,7 +951,7 @@ Fields!status.Value=6,"Management_Approved"
   <Width>9.49381in</Width>
   <Page>
     <PageFooter>
-      <Height>0.54241cm</Height>
+      <Height>0.54242cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

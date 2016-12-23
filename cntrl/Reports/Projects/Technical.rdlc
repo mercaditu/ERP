@@ -34,7 +34,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Task Code</Value>
+                              <Value rd:LocID="Code">Task Code</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -71,7 +71,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Task</Value>
+                              <Value rd:LocID="Task">Task</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -97,6 +97,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -576,7 +577,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Project Name</Value>
+                            <Value rd:LocID="Project">Project Name</Value>
                             <Style>
                               <FontFamily>courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -673,7 +674,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.35461cm</Height>
+        <Height>1.3546cm</Height>
         <Width>18.89124cm</Width>
         <Style>
           <Border>

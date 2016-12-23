@@ -58,7 +58,6 @@
                           <TextRun>
                             <Value rd:LocID="Contacts">Contact</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -95,7 +94,6 @@
                           <TextRun>
                             <Value rd:LocID="ExpiryDate">Expiry Date</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -132,7 +130,6 @@
                           <TextRun>
                             <Value rd:LocID="Number">Number</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -169,7 +166,6 @@
                           <TextRun>
                             <Value rd:LocID="contract">Contract</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -1063,7 +1059,6 @@
                               <TextRun>
                                 <Value rd:LocID="Rate">Rate</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Format>N2</Format>
@@ -1109,7 +1104,6 @@
                               <TextRun>
                                 <Value rd:LocID="Invoice">Invoice</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Format>N2</Format>
@@ -1152,7 +1146,6 @@
                               <TextRun>
                                 <Value rd:LocID="Paid">Paid</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Format>N2</Format>
@@ -1195,7 +1188,6 @@
                               <TextRun>
                                 <Value rd:LocID="Balance">Balance</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Format>N2</Format>
@@ -1280,7 +1272,6 @@
                               <TextRun>
                                 <Value rd:LocID="BalanceAs%">Balance as %</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Format>N2</Format>
@@ -1305,7 +1296,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>

@@ -1778,7 +1778,6 @@
                               <TextRun>
                                 <Value />
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1815,7 +1814,6 @@
                               <TextRun>
                                 <Value rd:LocID="Number">Number</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1902,7 +1900,6 @@
                               <TextRun>
                                 <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1945,9 +1942,8 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value rd:LocID="UnitPrice_VAT">Unit Price Vat</Value>
+                                <Value rd:LocID="PricewithVAT">Unit Price Vat</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1989,7 +1985,6 @@
                               <TextRun>
                                 <Value rd:LocID="SubTotal">Sub Total</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2029,9 +2024,8 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
+                                <Value rd:LocID="SubTotalwithVAT">Sub Total Vat</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2115,7 +2109,6 @@
                               <TextRun>
                                 <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2155,9 +2148,8 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value rd:LocID="UnitCost">Unit Cost</Value>
+                                <Value rd:LocID="Cost">Unit Cost</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2197,9 +2189,8 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
+                                <Value rd:LocID="SubTotalwithVAT">Sub Total Vat</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2225,7 +2216,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>

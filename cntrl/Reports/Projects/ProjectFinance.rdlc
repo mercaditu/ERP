@@ -39,7 +39,6 @@
                             <TextRun>
                               <Value rd:LocID="Code">Contact Code</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -76,7 +75,6 @@
                             <TextRun>
                               <Value rd:LocID="Contact">Contact</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -113,7 +111,6 @@
                             <TextRun>
                               <Value rd:LocID="Project">Project Name</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -150,7 +147,6 @@
                             <TextRun>
                               <Value rd:LocID="SalesBudget">Total Budgeted</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -189,7 +185,6 @@
                             <TextRun>
                               <Value rd:LocID="SalesInvoice">Total Invoiced</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -228,7 +223,6 @@
                             <TextRun>
                               <Value rd:LocID="Payment">Total Paid</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -254,7 +248,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

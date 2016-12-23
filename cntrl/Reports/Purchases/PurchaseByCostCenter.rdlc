@@ -39,7 +39,6 @@
                             <TextRun>
                               <Value>=Globals!ReportName</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -74,7 +73,6 @@
                             <TextRun>
                               <Value rd:LocID="Quantity">Quantity</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -114,7 +112,6 @@
                             <TextRun>
                               <Value rd:LocID="UnitPrice_VAT">Unit Price Vat</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -154,7 +151,6 @@
                             <TextRun>
                               <Value rd:LocID="Discount">Discount Vat</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -194,7 +190,6 @@
                             <TextRun>
                               <Value rd:LocID="SubTotal">Sub Total</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -232,9 +227,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value rd:LocID="SubTotal_VAT">Sub Total Vat</Value>
+                              <Value rd:LocID="SubTotalwithVAT">Sub Total Vat</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -261,7 +255,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

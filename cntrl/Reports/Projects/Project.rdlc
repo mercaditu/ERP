@@ -42,7 +42,6 @@
                             <TextRun>
                               <Value rd:LocID="Code">Task Code</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -81,7 +80,6 @@
                             <TextRun>
                               <Value rd:LocID="Task">Task</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -120,7 +118,6 @@
                             <TextRun>
                               <Value rd:LocID="Status">Status</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -159,7 +156,6 @@
                             <TextRun>
                               <Value rd:LocID="StartDate">Start Date</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -198,7 +194,6 @@
                             <TextRun>
                               <Value rd:LocID="EndDate">End Date</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -237,7 +232,6 @@
                             <TextRun>
                               <Value rd:LocID="Quantity">Quantity Est</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
@@ -279,7 +273,6 @@
                             <TextRun>
                               <Value rd:LocID="Cost">Cost Est</Value>
                               <Style>
-                                <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
@@ -308,7 +301,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -842,7 +834,6 @@ Fields!status.Value=6,"Management_Approved"
                           <TextRun>
                             <Value>=Globals!ReportName</Value>
                             <Style>
-                              <FontFamily>courier New</FontFamily>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
                             </Style>

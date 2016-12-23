@@ -55,7 +55,6 @@
                           <TextRun>
                             <Value rd:LocID="PurchaseTender">Tender</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -92,7 +91,6 @@
                           <TextRun>
                             <Value rd:LocID="Items">Items</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -672,7 +670,6 @@
                               <TextRun>
                                 <Value rd:LocID="Contract">Contract</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -715,7 +712,6 @@
                               <TextRun>
                                 <Value rd:LocID="Cost">Cost</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -761,7 +757,6 @@
                               <TextRun>
                                 <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -804,7 +799,6 @@
                               <TextRun>
                                 <Value>Order</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -889,7 +883,7 @@
                               <TextRun>
                                 <Value rd:LocID="Cost">Cost</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -912,6 +906,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -929,7 +924,7 @@
                               <TextRun>
                                 <Value rd:LocID="Quantity">Quantity</Value>
                                 <Style>
-                                  <FontFamily>Courier New</FontFamily>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
                                 </Style>
@@ -1114,7 +1109,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.88064in</Height>
+    <Height>0.88065in</Height>
     <Style />
   </Body>
   <Width>8.9261in</Width>
@@ -1128,7 +1123,7 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.01389in</Top>
+          <Top>0.01388in</Top>
           <Height>0.1875in</Height>
           <Width>0.16471in</Width>
           <Style>
@@ -1163,7 +1158,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.01389in</Top>
+          <Top>0.01388in</Top>
           <Left>0.19249in</Left>
           <Height>0.1875in</Height>
           <Width>2.44466in</Width>

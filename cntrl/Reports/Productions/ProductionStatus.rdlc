@@ -39,7 +39,6 @@
                             <TextRun>
                               <Value rd:LocID="Code">Code</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -76,7 +75,6 @@
                             <TextRun>
                               <Value rd:LocID="Task">Task</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -113,7 +111,6 @@
                             <TextRun>
                               <Value rd:LocID="EstimateQuantity">Est Quantity</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -152,7 +149,6 @@
                             <TextRun>
                               <Value rd:LocID="Quantity">Quantity</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -191,7 +187,6 @@
                             <TextRun>
                               <Value rd:LocID="UnitCost">Unit Cost</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -230,7 +225,6 @@
                             <TextRun>
                               <Value rd:LocID="TotalCost">Total Cost</Value>
                               <Style>
-                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -737,7 +731,6 @@
                           <TextRun>
                             <Value rd:LocID="ProductionOrder">Production Order</Value>
                             <Style>
-                              <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>

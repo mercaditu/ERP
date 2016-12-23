@@ -697,18 +697,10 @@
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
 
 									</DataGridTextColumn>
-									<DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                    <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" 
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
-										<!--<DataGridTextColumn.IsReadOnly>
-											<Binding Path="appName" ElementName="toolBar" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-										 Converter="{StaticResource SecurityConverter}">
-												<Binding.ConverterParameter>
-													<sys:Int32>1</sys:Int32>
-												</Binding.ConverterParameter>
-											</Binding>
-										</DataGridTextColumn.IsReadOnly>-->
-									</DataGridTextColumn>
+                                    </DataGridTextColumn>
 									<!-- UnitPrice_Vat -->
 									<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 

@@ -518,6 +518,8 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Code}"/>
                         <TextBox Style="{StaticResource input_textbox}" Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc ExpireDate}"/>
+                        <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding expiry_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </StackPanel>
 			</Grid>

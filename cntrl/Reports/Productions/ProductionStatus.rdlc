@@ -37,7 +37,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Code</Value>
+                              <Value rd:LocID="Code">Code</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -74,7 +74,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Task</Value>
+                              <Value rd:LocID="Task">Task</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -111,7 +111,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Est Quantity</Value>
+                              <Value rd:LocID="EstimateQuantity">Est Quantity</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -228,7 +228,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Cost</Value>
+                              <Value rd:LocID="TotalCost">Total Cost</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -256,6 +256,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -735,7 +736,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Production Order</Value>
+                            <Value rd:LocID="ProductionOrder">Production Order</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>

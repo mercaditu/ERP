@@ -56,7 +56,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Contact</Value>
+                            <Value rd:LocID="Contacts">Contact</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -93,7 +93,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Expiry Date</Value>
+                            <Value rd:LocID="ExpiryDate">Expiry Date</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -130,7 +130,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Number</Value>
+                            <Value rd:LocID="Number">Number</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -167,7 +167,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Contract</Value>
+                            <Value rd:LocID="contract">Contract</Value>
                             <Style>
                               <FontFamily>Courier New</FontFamily>
                               <FontSize>8pt</FontSize>
@@ -1061,7 +1061,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Rate</Value>
+                                <Value rd:LocID="Rate">Rate</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1107,7 +1107,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Invoice</Value>
+                                <Value rd:LocID="Invoice">Invoice</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1150,7 +1150,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Paid</Value>
+                                <Value rd:LocID="Paid">Paid</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1193,7 +1193,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Balance</Value>
+                                <Value rd:LocID="Balance">Balance</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1278,7 +1278,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Balance as %</Value>
+                                <Value rd:LocID="BalanceAs%">Balance as %</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1305,6 +1305,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>

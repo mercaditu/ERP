@@ -69,7 +69,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Name</Value>
+                              <Value rd:LocID="Name">Name</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -107,7 +107,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>GovCode</Value>
+                              <Value rd:LocID="GovernmentID">GovCode</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -145,7 +145,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sales Rep</Value>
+                              <Value rd:LocID="SalesRepresentative">Sales Rep</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -185,7 +185,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Account Balance</Value>
+                              <Value rd:LocID="AccountBalance">Account Balance</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -832,7 +832,7 @@ Fields!AccountPayable.Value))</Value>
     <Height>2.01085cm</Height>
     <Style />
   </Body>
-  <Width>22.09682cm</Width>
+  <Width>22.09683cm</Width>
   <Page>
     <PageFooter>
       <Height>0.54681cm</Height>

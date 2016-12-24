@@ -11,8 +11,6 @@ namespace Cognitivo.Menu
             Configs_Company,
             Security_User,
             Commercial_ContactRole,
-            Configs_VAT,
-            Configs_VATGroup,
             Configs_Branch,
             Configs_Currency,
             Configs_Terminal,

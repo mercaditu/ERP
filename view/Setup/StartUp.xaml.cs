@@ -151,7 +151,14 @@ namespace Cognitivo.Menu
 
         private void createCompany_Click(object sender, RoutedEventArgs e)
         {
-            frameConfig.Navigate(new mainSetup());
+            cntrl.company company = new cntrl.company();
+            company.candelete = false;
+            company.candelete = false;
+            company.EnterMode = cntrl.company.Mode.Add;
+            dbContext db = new dbContext();
+                company.objEntity = db;
+           
+            frameConfig.Navigate(new cntrl.company());
         }
 
         private object SQLQuery_ReturnScalar(string strSQL, bool generic)

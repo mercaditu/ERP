@@ -25,7 +25,7 @@
 	</Page.CommandBindings>
 	<Page.Resources>
 		<converter:TreeViewchildFilter x:Key="tree"/>
-        <converter:OrderTovisibility x:Key="ordertovisibily"/>
+        <converter:OrderTovisibility x:Key="OrderTovisibility"/>
         <converter:Type2Enable x:Key="Type2Enable"/>
 		<converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
 		<converter:Status_Production_2ColorConverter x:Key="ProductionStatus2Color"/>
@@ -513,9 +513,9 @@
 						</StackPanel>
 					</TabItem>
 				</TabControl>
-                <StackPanel Background="Gainsboro" VerticalAlignment="Bottom" Height="75" DataContext="{Binding Source={StaticResource production_execution_detailViewSource}}" 
-                            Visibility="{Binding SelectedItem,ElementName=treeOrder, Converter={StaticResource ordertovisibily}}">
-                    <StackPanel Orientation="Horizontal">
+                <StackPanel Background="Gainsboro" VerticalAlignment="Bottom" Height="75" 
+                            Visibility="{Binding SelectedItem, ElementName=treeOrder, Converter={StaticResource OrderTovisibility}}">
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding Source={StaticResource production_execution_detailViewSource}}" >
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Code}"/>
                         <TextBox Style="{StaticResource input_textbox}" Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc ExpireDate}"/>

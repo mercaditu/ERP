@@ -571,11 +571,8 @@
 			</Grid>
 		</StackPanel>
 
-		<Grid x:Name="gridStart" Background="White" Visibility="Collapsed">
-			<Grid.Effect>
-				<ee:RippleEffect/>
-			</Grid.Effect>
-			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid x:Name="gridStart" Background="White" Visibility="Collapsed">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 				<Label Content="Ready.. Steady.." Style="{StaticResource H1}"/>
                 
 				<Button x:Name="button" Content="&#xE822;" FontSize="64" Margin="16" Foreground="WhiteSmoke" FontFamily="/Cognitivo;component/Resources/#cognitivo"

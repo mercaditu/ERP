@@ -136,9 +136,9 @@ namespace Cognitivo.Menu
                 {
                     try
                     {
-                       db.SaveChanges();
-                       db.Database.CreateIfNotExists();
-                       // db.contacts.Count();
+                        db.SaveChanges();
+                        db.Database.CreateIfNotExists();
+                        // db.contacts.Count();
                     }
                     catch (Exception ex)
                     {
@@ -151,14 +151,16 @@ namespace Cognitivo.Menu
 
         private void createCompany_Click(object sender, RoutedEventArgs e)
         {
-            cntrl.company company = new cntrl.company();
-            company.candelete = false;
-            company.candelete = false;
-            company.EnterMode = cntrl.company.Mode.Add;
-            dbContext db = new dbContext();
-                company.objEntity = db;
-           
-            frameConfig.Navigate(new cntrl.company());
+
+
+
+            Window window = new Window
+            {
+                Title = "Report",
+                Content = new cntrl.Curd.StartCompany()
+            };
+
+            window.ShowDialog();
         }
 
         private object SQLQuery_ReturnScalar(string strSQL, bool generic)
@@ -212,7 +214,7 @@ namespace Cognitivo.Menu
             myFrame.Navigate(new mainLogIn());
         }
 
-    
+
 
         private void migratesql_Click(object sender, RoutedEventArgs e)
         {
@@ -226,7 +228,7 @@ namespace Cognitivo.Menu
             {
                 Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
             }
-        
+
         }
 
         private void GenerateParentChildRel_Thread()
@@ -247,7 +249,7 @@ namespace Cognitivo.Menu
             UpdateUnitCost();
 
             Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = false; }));
-         
+
         }
         public void UpdateUnitCost()
         {
@@ -264,7 +266,7 @@ namespace Cognitivo.Menu
                         item_movement item_movement = db.item_movement
                             .Where(x =>
                                 x.id_item_product == item_product.id_item_product &&
-                                x.credit > 0 && 
+                                x.credit > 0 &&
                                 x.parent == null &&
                                 x.item_movement_value.Sum(y => y.unit_value) > 0).OrderByDescending(x => x.trans_date).FirstOrDefault();
 

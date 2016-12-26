@@ -20,17 +20,23 @@ namespace cntrl
         {
             using (UserDB UserDB = new UserDB())
             {
-                security_user user = new security_user();
-                user.name_full = txtFullName.Text;
-                user.name =txtName.Text;
-                user.password = txtPass.Password;
+
 
                 security_role security_role = new security_role();
                 security_role.name = "Master Admin";
                 security_role.is_master = true;
                 security_role.is_active = true;
 
-                security_role.security_user.Add(user);
+
+
+                UserDB.security_role.Add(security_role);
+                UserDB.SaveChanges();
+                security_user user = new security_user();
+                user.name_full = txtFullName.Text;
+                user.name = txtName.Text;
+                user.password = txtPass.Password;
+                user.id_role = security_role.id_role;
+                UserDB.security_user.Add(user);
 
                 CurrentSession.UserRole = security_role;
                 CurrentSession.User = user;
@@ -41,7 +47,7 @@ namespace cntrl
                 Application.Current.Shutdown();
             }
 
-           
+
         }
     }
 }

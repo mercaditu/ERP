@@ -82,9 +82,7 @@ namespace cntrl
                     entity.Properties.Settings.Default.company_ID = objEntity.db.app_company.FirstOrDefault().id_company;
                     entity.Properties.Settings.Default.company_Name = objEntity.db.app_company.FirstOrDefault().alias;
                     entity.Properties.Settings.Default.Save();
-                    Frame frameConfig = new Frame();
-                    frameConfig.Navigate(new cntrl.user());
-                    btnCancel_Click(sender, e);
+                   
 
                 }
             }

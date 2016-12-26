@@ -267,6 +267,9 @@
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\Decimal2Visibility.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
+    <Compile Include="Curd\StartCompany.xaml.cs">
+      <DependentUpon>StartCompany.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\user.xaml.cs">
       <DependentUpon>user.xaml</DependentUpon>
     </Compile>
@@ -817,6 +820,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Totals.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\StartCompany.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

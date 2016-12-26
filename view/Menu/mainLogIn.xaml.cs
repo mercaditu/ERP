@@ -81,22 +81,22 @@ namespace Cognitivo.Menu
                     return;
                 }
              
-                if (CurrentSession.Id_Company == 0)
-                {
-                    await Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        myFrame.Navigate(new Configs.Settings());
-                        return;
-                    }));
-                }
-                if (CurrentSession.Id_Branch== 0)
-                {
-                    await Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        myFrame.Navigate(new Configs.Settings());
-                        return;
-                    }));
-                }
+                //if (CurrentSession.Id_Company == 0)
+                //{
+                //    await Dispatcher.BeginInvoke((Action)(() =>
+                //    {
+                //        myFrame.Navigate(new Configs.Settings());
+                //        return;
+                //    }));
+                //}
+                //if (CurrentSession.Id_Branch== 0)
+                //{
+                //    await Dispatcher.BeginInvoke((Action)(() =>
+                //    {
+                //        myFrame.Navigate(new Configs.Settings());
+                //        return;
+                //    }));
+                //}
 
                 app_company = await db.app_company.FindAsync(CurrentSession.Id_Company);
             }
@@ -193,6 +193,11 @@ namespace Cognitivo.Menu
         private void Settings_MouseUp(object sender, EventArgs e)
         {
             myFrame.Navigate(new Configs.Settings());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("sdf");
         }
     }
 }

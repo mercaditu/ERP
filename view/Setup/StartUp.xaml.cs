@@ -152,15 +152,7 @@ namespace Cognitivo.Menu
         private void createCompany_Click(object sender, RoutedEventArgs e)
         {
 
-
-
-            Window window = new Window
-            {
-                Title = "Report",
-                Content = new cntrl.Curd.StartCompany()
-            };
-
-            window.ShowDialog();
+            frameConfig.Navigate(new MainSetup());
         }
 
         private object SQLQuery_ReturnScalar(string strSQL, bool generic)

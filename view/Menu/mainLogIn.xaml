@@ -144,7 +144,7 @@
 								Width="256" FontSize="26" TabIndex="1"/>
 						</Grid>
 						<CheckBox x:Name="chbxRemember" Content="{lex:Loc RememberMe}" Width="255" FontSize="14" Margin="42,0,72,10" Foreground="Black"/>
-                        <Button Content="a" Click="Button_Click"/>
+                        
                         <Button IsDefault="True" Width="256" Click="btnLogIn_Click" Background="Transparent" BorderBrush="Transparent" TabIndex="2">
 							<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
 								<ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>

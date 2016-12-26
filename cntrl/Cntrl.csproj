@@ -267,12 +267,6 @@
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\Decimal2Visibility.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
-    <Compile Include="Curd\StartCompany.xaml.cs">
-      <DependentUpon>StartCompany.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Curd\user.xaml.cs">
-      <DependentUpon>user.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
@@ -822,14 +816,6 @@
     <Page Include="Controls\Totals.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\StartCompany.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\user.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\ContactTag.xaml">
       <SubType>Designer</SubType>

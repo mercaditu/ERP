@@ -705,9 +705,6 @@
     <Compile Include="Menu\mainMenu_Corporate.xaml.cs">
       <DependentUpon>mainMenu_Corporate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menu\mainSetup.xaml.cs">
-      <DependentUpon>mainSetup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Menu\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -816,6 +813,9 @@
     <Compile Include="Setup\Migration\Ria\Supplier.cs" />
     <Compile Include="Setup\StartUp.xaml.cs">
       <DependentUpon>StartUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\MainSetup.xaml.cs">
+      <DependentUpon>MainSetup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Setup\Utilities.xaml.cs">
       <DependentUpon>Utilities.xaml</DependentUpon>
@@ -1460,10 +1460,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Menu\mainSetup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Menu\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1571,6 +1567,10 @@
     <Page Include="Setup\StartUp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Menu\MainSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Setup\Utilities.xaml">
       <SubType>Designer</SubType>

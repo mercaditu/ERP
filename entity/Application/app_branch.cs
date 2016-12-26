@@ -45,7 +45,7 @@ namespace entity
         private bool _is_active;
         public app_branch()
         {
-            id_company = CurrentSession.Id_Branch;
+            id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;

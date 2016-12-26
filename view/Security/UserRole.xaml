@@ -71,8 +71,8 @@
 				</ComboBox>
 				<Label Style="{StaticResource input_label}" Content="{lex:Loc Version}"/>
 				<StackPanel Orientation="Horizontal">
-					<ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180"/>
-					<Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtversion" Text="{Binding version,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                    <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top"/>
 				</StackPanel>
 			</StackPanel>
 			<StackPanel Margin="8" Grid.Column="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">

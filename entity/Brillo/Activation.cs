@@ -92,7 +92,77 @@ namespace entity.Brillo
                 {
                     string _Hash = security_role.version;
 
+                    if (Enum.IsDefined(typeof(CurrentSession.Versions), _Hash))
+                    {
+                        return (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(_Hash));
+                    }
                     VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+                    string[] version = VersionKey.Split('.');
+                    if (version.Count() >= 1)
+                    {
+                        VersionKey = version[0];
+                    }
+                    if (version.Count() >= 2)
+                    {
+                        versionname = version[1];
+                    }
+                    if (version.Count() >= 3)
+                    {
+                        companycode = version[2];
+                    }
+                }
+            }
+
+            string GovCode = db.app_company.Where(x => x.id_company == security_role.id_company).Select(x => x.gov_code).FirstOrDefault();
+
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.Lite;
+            }
+            else if (CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.Basic;
+            }
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.Medium;
+            }
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.Full;
+            }
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.PrintingPress;
+            }
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && GovCode == companycode)
+            {
+                return CurrentSession.Versions.EventManagement;
+            }
+            else
+            {
+                return CurrentSession.Versions.Lite;
+            }
+        }
+        public CurrentSession.Versions VersionDecrypt(string key, security_role security_role)
+        {
+            string VersionKey = "Himayuddin_51";
+            string versionname = "";
+            string companycode = "";
+
+            string _Passkey = "^%*@$^$";
+
+            int id_role = CurrentSession.UserRole.id_role;
+
+
+            if (security_role != null)
+            {
+                if (security_role.version != null)
+                {
+                   
+
+                    string _Hash = key ;
+                    VersionKey = VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
                     string[] version = VersionKey.Split('.');
                     if (version.Count() >= 1)
                     {

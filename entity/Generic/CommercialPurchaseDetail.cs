@@ -152,6 +152,7 @@ namespace entity
                         RaisePropertyChanged("id_vat_group");
 
                         update_UnitPriceVAT();
+                        update_SubTotal();
                     }
                 }
 
@@ -474,6 +475,7 @@ namespace entity
         public void update_SubTotal()
         {
             SubTotal = _unit_cost * _quantity;
+            RaisePropertyChanged("SubTotal");
         }
 
         /// <summary>
@@ -482,6 +484,7 @@ namespace entity
         private void update_SubTotalVAT()
         {
             SubTotal_Vat = _UnitCost_Vat * _quantity;
+            RaisePropertyChanged("SubTotal_Vat");
         }
 
         #endregion

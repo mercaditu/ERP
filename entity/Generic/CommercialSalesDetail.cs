@@ -221,6 +221,7 @@ namespace entity
                         _UnitPrice_Vat = value;
                         RaisePropertyChanged("UnitPrice_Vat");
                         update_UnitPrice_WithoutVAT();
+                        update_SubTotal();
                     }
                 }
             }
@@ -342,6 +343,7 @@ namespace entity
         public void update_SubTotal()
         {
             SubTotal = _unit_price * _quantity;
+            RaisePropertyChanged("SubTotal");
         }
 
         /// <summary>
@@ -350,6 +352,7 @@ namespace entity
         private void update_SubTotalVAT()
         {
             SubTotal_Vat = _UnitPrice_Vat * _quantity;
+            RaisePropertyChanged("SubTotal_Vat");
         }
 
         /// <summary>

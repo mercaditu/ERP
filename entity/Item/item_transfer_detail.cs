@@ -43,10 +43,25 @@ namespace entity
         decimal _quantity_origin;
 
         [NotMapped]
-        public decimal Quantity_InStock { get; set; }
+        public decimal Quantity_InStock
+        {
+            get { return _Quantity_InStock; }
+            set
+            {
+                if (_Quantity_InStock != value)
+                {
+                    _Quantity_InStock = value;
+                    RaisePropertyChanged("Quantity_InStock");
+
+                    InStock = quantity_origin <= _Quantity_InStock ? true : false;
+                    RaisePropertyChanged("InStock");
+                }
+            }
+        }
+        private decimal _Quantity_InStock;
 
         [NotMapped]
-        public Status.Documents_General StockLevel { get; set; }
+        public bool InStock { get; set; }
 
         public decimal quantity_destination 
         {

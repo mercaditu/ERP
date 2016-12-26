@@ -144,15 +144,6 @@ namespace Cognitivo.Product
                             decimal? stock = sbxItem.QuantityInStock; //StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
                             item_transfer_detail.Quantity_InStock = Convert.ToDecimal(stock != null ? stock : 0);
 
-                            if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
-                            {
-                                item_transfer_detail.StockLevel = Status.Documents_General.Pending;
-                            }
-                            else
-                            {
-                                item_transfer_detail.StockLevel = Status.Documents_General.Annulled;
-                            }
-
                             item_transfer_detail.timestamp = DateTime.Now;
                             item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                             item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;

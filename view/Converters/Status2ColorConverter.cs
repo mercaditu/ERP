@@ -25,7 +25,7 @@ namespace Cognitivo.Converters
             else 
             {
 
-                return new SolidColorBrush(Colors.Gainsboro);
+                return new SolidColorBrush(Colors.DimGray);
             }
 
 

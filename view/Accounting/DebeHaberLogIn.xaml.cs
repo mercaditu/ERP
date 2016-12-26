@@ -44,6 +44,12 @@ namespace Cognitivo.Accounting
 
                 Company_RUC = company.gov_code;
                 Company_Name = company.name;
+
+                if (string.IsNullOrEmpty(company.hash_debehaber) == false)
+                {
+                    tabUpLoad.IsSelected = true;
+                    frameDebeHaberIntg.Refresh();
+                }
             }
         }
 

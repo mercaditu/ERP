@@ -24,6 +24,7 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:Bool2Color x:Key="Bool2Color"/>
         <converter:TrueToFalseConverter x:Key="True2False"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
@@ -175,6 +176,11 @@
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                                     RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                                    <Setter Property="Foreground" Value="{Binding InStock, Converter={StaticResource Bool2Color}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Style>
+                            </DataGrid.RowStyle>
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -195,11 +201,7 @@
                                                     Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="64">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Foreground" Value="{Binding StockLevel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
+                                    
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Quantity_InStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
                                                     Header="{lex:Loc Cognitivo:local:Stock}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>

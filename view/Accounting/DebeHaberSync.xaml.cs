@@ -30,6 +30,9 @@ namespace Cognitivo.Accounting
         {
             InitializeComponent();
 
+            DatePanel.StartDate = DateTime.Now.AddMonths(-1);
+            DatePanel.EndDate = DateTime.Now;
+
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_returnViewSource = ((CollectionViewSource)(FindResource("sales_returnViewSource")));
             purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));

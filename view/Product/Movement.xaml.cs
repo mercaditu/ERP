@@ -291,7 +291,7 @@ namespace Cognitivo.Product
             if (sbxItem.ItemID > 0)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-                item item = await ProductTransferDB.items.FindAsync(sbxItem.ItemID);
+                item item =  ProductTransferDB.items.Where(x=>x.id_item==sbxItem.ItemID).FirstOrDefault();
                 item_product item_product = item.item_product.FirstOrDefault();
                 if (item != null)
                 {
@@ -309,16 +309,20 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                        if (item_transfer != null)
+                        if (item_product!=null)
                         {
-                            item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                            item_transfer_detail.id_item_product = item_product.id_item_product;
-                            item_transfer_detail.item_product = item_product;
-                            item_transfer_detail.quantity_destination = 1;
-                            item_transfer_detail.quantity_origin = 1;
+                            if (item_transfer != null)
+                            {
+                                item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                                item_transfer_detail.id_item_product = item_product.id_item_product;
+                                item_transfer_detail.item_product = item_product;
+                                item_transfer_detail.quantity_destination = 1;
+                                item_transfer_detail.quantity_origin = 1;
 
-                            item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                                item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                            }
                         }
+                      
 
                         CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
                         item_transferitem_transfer_detailViewSource.View.Refresh();

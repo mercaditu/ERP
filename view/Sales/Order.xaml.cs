@@ -481,10 +481,10 @@ namespace Cognitivo.Sales
             }
         }
 
-        cntrl.PanelAdv.pnlSalesBudget pnlSalesBudget = new cntrl.PanelAdv.pnlSalesBudget();
-
         private void btnSalesBudget_Click(object sender, RoutedEventArgs e)
         {
+            cntrl.PanelAdv.pnlSalesBudget pnlSalesBudget = new cntrl.PanelAdv.pnlSalesBudget();
+
             crud_modal.Visibility = Visibility.Visible;
             if (sbxContact.ContactID > 0)
             {
@@ -502,14 +502,14 @@ namespace Cognitivo.Sales
         public async void SalesBudget_Click(object sender)
         {
             sales_order sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
-            sales_order.contact= await SalesOrderDB.contacts.Where(x => x.id_contact== sales_order.id_contact).FirstOrDefaultAsync();
+            sales_order.contact= await SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefaultAsync();
             sales_order.app_contract = await SalesOrderDB.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
+
             foreach (sales_order_detail detail in sales_order.sales_order_detail)
             {
                 detail.CurrencyFX_ID = sales_order.id_currencyfx;
                 detail.item = await SalesOrderDB.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
                 detail.app_vat_group = await SalesOrderDB.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
-                
             }
 
             cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();

@@ -770,6 +770,7 @@ namespace Cognitivo.Sales
                 _sales_invoice.app_currencyfx = sales_order.app_currencyfx;
                 _sales_invoice.id_sales_order = sales_order.id_sales_order;
                 _sales_invoice.id_project = sales_order.id_project;
+                _sales_invoice.id_sales_rep = sales_order.id_sales_rep;
 
                 foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
                 {
@@ -792,7 +793,10 @@ namespace Cognitivo.Sales
                                                                                  .FirstOrDefault();
                     sales_invoice_detail.id_vat_group = _sales_order_detail.id_vat_group;
                     sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
-                    _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    if (sales_invoice_detail.quantity > 0)
+                    {
+                        _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    }
                 }
 
                 SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;

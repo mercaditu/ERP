@@ -98,9 +98,9 @@ namespace cntrl.PanelAdv
                     sales_order.id_condition = sales_budget.id_condition;
                     sales_order.id_contract = sales_budget.id_contract;
                     sales_order.id_currencyfx = sales_budget.id_currencyfx;
-                    //sales_order.contact = sales_budget.contact;
                     sales_order.id_contact = sales_budget.id_contact;
                     sales_order.id_project = sales_budget.id_project;
+                    sales_order.id_sales_rep = sales_budget.id_sales_rep;
 
                     foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                     {

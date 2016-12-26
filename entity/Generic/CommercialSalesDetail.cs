@@ -93,7 +93,7 @@ namespace entity
 
                     if (Quantity_InStock!=null)
                     {
-                        if (quantity>Quantity_InStock)
+                        if (quantity > Quantity_InStock)
                         {
                             InStock = false;
                             RaisePropertyChanged("InStock");

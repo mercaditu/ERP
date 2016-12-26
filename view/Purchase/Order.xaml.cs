@@ -260,7 +260,7 @@ namespace Cognitivo.Purchase
                 List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
                 dgvVAT.ItemsSource = purchase_order_detail
                        .Join(PurchaseOrderDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                           , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+                           , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
                            .GroupBy(a => new { a.name, a.id_vat, a.ad })
                    .Select(g => new
                    {

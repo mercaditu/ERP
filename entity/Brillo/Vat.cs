@@ -11,12 +11,12 @@ namespace entity.Brillo
         /// <param name="unit_value">Unit Value of Item</param>
         /// <param name="rate">Rate at which to Calculate</param>
         /// <returns>Returns Unit Value (decimal) for the VAT of that Item.</returns>
-        public static decimal calculate_Vat(decimal unit_value, decimal rate)
+        public static decimal calculate_Vat(decimal unit_value, decimal participation, decimal rate)
         {
             decimal UnitValue_WithVAT = 0;
             if (rate > 0)
             {
-                UnitValue_WithVAT = (rate * unit_value);
+                UnitValue_WithVAT = (rate * (unit_value * participation));
             }
             return UnitValue_WithVAT;
         }
@@ -27,9 +27,9 @@ namespace entity.Brillo
 
             if (id_vat_group != 0)
             {
-                foreach (app_vat_group_details app_vat_group in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
+                foreach (app_vat_group_details app_vat_group_details in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
                 {
-                    coefficient = coefficient + CurrentSession.VATs.Where(x => x.id_vat == app_vat_group.id_vat).FirstOrDefault().coefficient;
+                    coefficient = coefficient + (CurrentSession.VATs.Where(x => x.id_vat == app_vat_group_details.id_vat).FirstOrDefault().coefficient * app_vat_group_details.percentage );
                 }
             }
 
@@ -44,7 +44,7 @@ namespace entity.Brillo
             {
                 foreach (app_vat_group_details app_vat_group_detail in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group).ToList())
                 {
-                    VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.app_vat.coefficient);
+                    VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.percentage, app_vat_group_detail.app_vat.coefficient);
                 }
             }
 

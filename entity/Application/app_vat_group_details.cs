@@ -11,7 +11,7 @@
         public app_vat_group_details()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
@@ -22,7 +22,19 @@
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_vat { get; set; }
-        public decimal percentage { get; set; }
+        public decimal percentage
+        {
+            get
+            {
+                if (_percentage == 0)
+                {
+                    _percentage = 1;
+                }
+                return _percentage;
+            }
+            set { _percentage = value; }
+        }
+        decimal _percentage;
 
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_vat app_vat { get; set; }

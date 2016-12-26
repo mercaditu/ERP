@@ -21,8 +21,9 @@ namespace Cognitivo.Menu
         {
             if (txtname.Text == string.Empty || txtalias.Text == string.Empty 
                 || txtGovID.Text == string.Empty || txtAddress.Text == string.Empty ||
-             txtFullName.Text == string.Empty || txtName.Text == string.Empty || txtPassS.Text == string.Empty )
+             txtFullName.Text == string.Empty || txtName.Text == string.Empty || txtPass.Password == string.Empty )
             {
+                MessageBox.Show("Fill all Fields");
                 return;
             }
 

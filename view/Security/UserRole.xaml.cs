@@ -49,15 +49,7 @@ namespace Cognitivo.Security
             app_departmentViewSource.Source = await UserRoleDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
 
             add_Privallge();
-            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-            if (security_role != null)
-            {
-                Activation Activation = new Activation();
-                CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-                txtversion.Text = version.ToString();
-                CurrentVersion = version;
-            }
-            // cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
+            cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -72,21 +64,13 @@ namespace Cognitivo.Security
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 if (security_role != null)
                 {
-                    //CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                    //security_role.Version = version;
+                    CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                    security_role.Version = version;
 
                     UserRoleDB.SaveChanges();
 
                     CurrentSession.Load_Security();
                     security_roleViewSource.View.Refresh();
-                 
-                    if (security_role != null)
-                    {
-                        Activation Activation = new Activation();
-                        CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-                        txtversion.Text = version.ToString();
-                        CurrentVersion = version;
-                    }
                 }
             }
             catch (Exception ex)
@@ -237,14 +221,13 @@ namespace Cognitivo.Security
             }
             else
             {
-                CurrentSession.Versions NewVersion = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), 
-                    Convert.ToString(txtversion.Text));
+                CurrentSession.Versions NewVersion = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
 
                 if (CurrentVersion < NewVersion)
                 {
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
                     string condition = "";
-                    if (NewVersion==CurrentSession.Versions.Full)
+                    if (NewVersion == CurrentSession.Versions.Full)
                     {
                         condition = "1=1";
                     }
@@ -307,11 +290,11 @@ namespace Cognitivo.Security
                         security_crud _security_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
                         if (_security_curd != null)
                         {
-                          //  UserRoleDB.Entry(_security_curd).State = EntityState.Deleted;
+                            //  UserRoleDB.Entry(_security_curd).State = EntityState.Deleted;
                             security_role.security_curd.Remove(_security_curd);
                         }
                     }
-                    
+
                 }
                 CurrentVersion = NewVersion;
             }
@@ -350,10 +333,9 @@ namespace Cognitivo.Security
             security_role security_role = security_roleViewSource.View.CurrentItem as security_role;
             if (security_role != null)
             {
-              
                 Activation Activation = new Activation();
                 CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-                txtversion.Text = version.ToString();
+                cbxVersion.SelectedItem = version;
                 CurrentVersion = version;
             }
         }

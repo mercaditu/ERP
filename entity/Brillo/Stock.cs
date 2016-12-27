@@ -8,12 +8,12 @@ namespace entity.Brillo
 {
     public class Stock
     {
-       
+
         public List<StockList> List(int BranchID, int LocationID, int ProductID)
         {
             string query = @"select 
                                 parent.id_movement as MovementID, 
-                                parent.trans_date as TransDate, 
+                                parent.trans_date as TransDate, parent.expire_date,parent.code,
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance, 
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
@@ -40,11 +40,12 @@ namespace entity.Brillo
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
+
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
             string query = @"select 
                                 parent.id_movement as MovementID, 
-                                parent.trans_date as TransDate, 
+                                parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance, 
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
@@ -75,7 +76,7 @@ namespace entity.Brillo
         {
             string query = @"select 
                                 parent.id_movement as MovementID, 
-                                parent.trans_date as TransDate, 
+                                parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.credit  as QtyBalance, 
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
@@ -98,7 +99,7 @@ namespace entity.Brillo
         public List<StockList> MovementForTransfer(int id_transfer_detail, int id_item_product)
         {
             List<StockList> StockList = new List<StockList>();
-            using (db db= new db())
+            using (db db = new db())
             {
                 List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_transfer_detail == id_transfer_detail && x.id_item_product == id_item_product && x.debit > 0).ToList();
                 foreach (item_movement item_movement in Items_InStockLIST)
@@ -106,8 +107,10 @@ namespace entity.Brillo
                     StockList Stock = new StockList();
                     Stock.MovementID = (int)item_movement.id_movement;
                     Stock.TranDate = item_movement.trans_date;
+                    Stock.ExpirationDate = item_movement.expire_date;
+                    Stock.code = item_movement.code;
                     Stock.QtyBalance = item_movement.debit;
-                    Stock.Cost = item_movement.item_movement_value.Sum(x=>x.unit_value);
+                    Stock.Cost = item_movement.item_movement_value.Sum(x => x.unit_value);
 
                     StockList.Add(Stock);
                 }
@@ -138,28 +141,34 @@ namespace entity.Brillo
         private List<StockList> GenerateList(DataTable dt)
         {
             List<StockList> StockList = new List<StockList>();
-            if (dt.Rows.Count>0)
+            if (dt.Rows.Count > 0)
             {
                 foreach (DataRow DataRow in dt.Select("QtyBalance > 0"))
                 {
                     StockList Stock = new StockList();
                     Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
                     Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
+                    Stock.ExpirationDate = Convert.ToDateTime(DataRow["expire_date"]);
+                    Stock.code = Convert.ToString(DataRow["code"]);
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
 
                     StockList.Add(Stock);
                 }
             }
-           
+
             return StockList;
         }
     }
 
     public class StockList
     {
+
+
         public int MovementID { get; set; }
         public DateTime TranDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
+        public string code { get; set; }
         public decimal QtyBalance { get; set; }
         public decimal Cost { get; set; }
     }

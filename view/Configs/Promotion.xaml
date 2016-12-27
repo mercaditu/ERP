@@ -44,7 +44,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Panels:pnl_Curd HorizontalAlignment="Left" VerticalAlignment="Top"
-                                        Id="{Binding id_sales_promotion}" linkEdit_click="pnl_VAT_linkEdit_Click"
+                                        Id="{Binding id_sales_promotion}" linkEdit_click="pnl_Promotion_linkEdit_Click"
                                         DisplayName="{Binding name}"
                                        />
                     </DataTemplate>

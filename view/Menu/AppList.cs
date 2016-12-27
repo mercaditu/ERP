@@ -92,7 +92,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.FixedAssets", entity.App.Names.FixedAssets, "FixedAsset", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Recipe", entity.App.Names.Recipe, "Recipe", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Stock", entity.App.Names.Stock, "ProductStock", entity.CurrentSession.Versions.Lite, "1");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Promotions", entity.App.Names.SalesPromotion, "Promotion", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Configs.Promotion", entity.App.Names.SalesPromotion, "Promotion", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.BranchWalkin", entity.App.Names.FootTraffic, "FootTraffic", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Inventory", entity.App.Names.Inventory, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Movement", entity.App.Names.Movement, "BranchLocation", entity.CurrentSession.Versions.Basic, "1");
@@ -174,8 +174,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Branch", "Branch", "Branch", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Terminal", "Terminal", "Terminal", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Geography", "Geography", "Location", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.VAT", "VAT", "ProductPromotion", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.VATGroup", "VATGroup", "ProductPromotion", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.VAT", "VAT", "VAt", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.VATGroup", "VATGroup", "VATGroup", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Security.User", "User", "User", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Security.UserRole", "UserRole", "UserRole", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Department", "Department", "", entity.CurrentSession.Versions.Lite, "0");

@@ -739,6 +739,11 @@ namespace entity.Brillo.Logic
                     item_movement.credit = 0;
                     item_movement.status = Status;
                     item_movement.id_location = LocationID;
+                    
+                    //Batch Information is carried forward to chil
+                    item_movement.expire_date = parent_Movement.ExpirationDate;
+                    item_movement.code = parent_Movement.code;
+
                     item_movement.parent = db.item_movement.Find(parent_Movement.MovementID);
                     
                     if (ApplicationID == App.Names.Transfer)
@@ -893,6 +898,13 @@ namespace entity.Brillo.Logic
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
                     item_movement.id_purchase_invoice_detail = TransactionDetailID;
+                    purchase_invoice_detail purchase_invoice_detail = db.purchase_invoice_detail.Find(TransactionDetailID);
+                    if (purchase_invoice_detail != null)
+                    {
+                        item_movement.expire_date = purchase_invoice_detail.expiration_date;
+                        item_movement.code = purchase_invoice_detail.lot_number;
+                    }
+
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {

@@ -85,7 +85,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -630,7 +630,6 @@
     <Compile Include="Converters\BoolToActiveConverter.cs" />
     <Compile Include="Converters\CostCenterCanStockItemConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
-    <Compile Include="Converters\IsExpiredObjectVisibilityConverter.cs" />
     <Compile Include="Converters\IsProductObjectVisibilityConverter.cs" />
     <Compile Include="Converters\Text2Collapsed.cs" />
     <Compile Include="Converters\Text2Visibility.cs" />

@@ -17,7 +17,7 @@ namespace Cognitivo.Configs
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            sales_promotionViewSource = ((CollectionViewSource)(this.FindResource("app_vatViewSource")));
+            sales_promotionViewSource = ((CollectionViewSource)(this.FindResource("sales_promotionViewSource")));
             entity.db.sales_promotion.Where(a=>a.id_company == CurrentSession.Id_Company).Load();
             sales_promotionViewSource.Source = entity.db.sales_promotion.Local;
         }
@@ -34,7 +34,7 @@ namespace Cognitivo.Configs
             crud_modal.Children.Add(objPromotion);
         }
 
-        private void pnl_PROmotion_linkEdit_Click(object sender, int intPromotionId)
+        private void pnl_Promotion_linkEdit_Click(object sender, int intPromotionId)
         {
             crud_modal.Visibility = Visibility.Visible;
             cntrl.promotion objPromotion = new cntrl.promotion();

@@ -6,7 +6,7 @@
 			lex:ResxLocalizationProvider.DefaultDictionary="local"
 			lex:LocalizeDictionary.DesignCulture="en-US" 
 			VerticalAlignment="Center"
-		  xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+	xmlns:controls="clr-namespace:cntrl.Controls"
 			xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -14,7 +14,7 @@
 			xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.promotion"
 			Width="600" Loaded="UserControl_Loaded" BorderBrush="#9999ff" BorderThickness="2">
 	<UserControl.Resources>
-		<local:ActiveValueConverter x:Key="ActiveValueConverter"/>
+	
 		<CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_tagBonusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
@@ -30,34 +30,34 @@
 					   HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
 					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
 		</Grid>
-		<TextBlock Text="Define type of Promotions." Style="{StaticResource text_Instructions}"/>
-		<StackPanel HorizontalAlignment="Center">
-			<Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-			<TextBox Style="{StaticResource input_textbox}"
+		<TextBlock Text="Define type of Promotions." />
+        <StackPanel HorizontalAlignment="Center">
+			<Label Content="{lex:Loc Name}"/>
+			<TextBox 
 					 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 					 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 					 metro:TextBoxHelper.ClearTextButton="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}"
 					 metro:TextBoxHelper.SelectAllOnFocus="True"
 					 Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
-			<Label Content="Type" Style="{StaticResource input_label}"/>
-			<ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" SelectionChanged="cbxType_SelectionChanged"
+			<Label Content="Type" />
+			<ComboBox x:Name="cbxType" SelectionChanged="cbxType_SelectionChanged"
 					  SelectedValue="{Binding type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 			<StackPanel Orientation="Horizontal">
 				<StackPanel>
-					<Label Style="{StaticResource input_label}" Content="StartDate" Width="125"/>
+					<Label  Content="StartDate" Width="125"/>
 					<DatePicker SelectedDate="{Binding date_start, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-								Style="{StaticResource input_datepicker}" Width="125"/>
+								Width="125"/>
 				</StackPanel>
 				<StackPanel>
-					<Label Style="{StaticResource input_label}" Content="EndDate" Width="125"/>
+					<Label  Content="EndDate" Width="125"/>
 					<DatePicker SelectedDate="{Binding date_end, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-								Style="{StaticResource input_datepicker}" Width="125"/>
+								 Width="125"/>
 				</StackPanel>
 			</StackPanel>
 
 		</StackPanel>
 		<Rectangle Height="1" Margin="4" Fill="Silver"/>
-		<StackPanel>
+		<StackPanel >
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
@@ -65,51 +65,51 @@
 				</Grid.ColumnDefinitions>
 
 				<StackPanel Grid.Column="0">
-					<Label Content="Parameters" Style="{StaticResource H2}"/>
+					<Label Content="Parameters" />
 					<StackPanel x:Name="Item_Parameter">
-						<Label Content="Item" Style="{StaticResource input_label}"/>
+						<Label Content="Item"/>
 						<controls:SmartBox_Item Text="{Binding InputName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
 					</StackPanel>
 					<StackPanel x:Name="Tag_Parameter">
-						<Label Content="Tags" Style="{StaticResource input_label}"/>
-						<ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
+						<Label Content="Tags" />
+						<ComboBox x:Name="cbxparatag"
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" SelectionChanged="cbxparatag_SelectionChanged"/>
 					</StackPanel>
 					<StackPanel x:Name="Total_Parameter">
-						<Label Content="Total" Style="{StaticResource input_label}"/>
+						<Label Content="Total" />
 						<TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
-						<Label Content="Currency" Style="{StaticResource input_label}"/>
-						<ComboBox x:Name="cbxcurrency" Style="{StaticResource input_combobox}"
+						<Label Content="Currency"/>
+						<ComboBox x:Name="cbxcurrency"
 									ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"  
 									DisplayMemberPath="name" SelectedValuePath="id_currency"/>
 					</StackPanel>
 
 					<StackPanel x:Name="QuntityStep">
-						<Label Content="Quantity Step" Style="{StaticResource input_label}"/>
+						<Label Content="Quantity Step"/>
 						<TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
 					</StackPanel>
 				</StackPanel>
 
 				<StackPanel Grid.Column="1">
-					<Label Content="Output" Style="{StaticResource H2}"/>
+					<Label Content="Output" />
 					<StackPanel x:Name="Item_Bonus">
 						<Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
 						<controls:SmartBox_Item Text="{Binding OutputName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
 					</StackPanel>
 
 					<StackPanel x:Name="Tag_Bonus">
-                        <TextBlock Style="{StaticResource text_Label}" FontWeight="Medium">
+                        <TextBlock  FontWeight="Medium">
                             <Run Text="{lex:Loc Output}"/>
                             <Run Text="{lex:Loc Tags}"/>
                         </TextBlock>
-                        <ComboBox x:Name="cbxbonustag" Style="{StaticResource input_combobox}"
+                        <ComboBox x:Name="cbxbonustag" 
 							  DisplayMemberPath="name" SelectedValuePath="id_tag"
 							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
 							 />
 					</StackPanel>
 					<StackPanel x:Name="Discount">
-						<Label Content="Discount" Style="{StaticResource input_label}"/>
+						<Label Content="Discount" />
 						<TextBox Text="{Binding result_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
 					</StackPanel>
 				</StackPanel>
@@ -118,8 +118,7 @@
 			<Grid Background="WhiteSmoke" Margin="0,4,0,0">
 				<Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
 						FontWeight="Medium" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-				<CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-						  IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+			
 			</Grid>
 		</StackPanel>
 	</StackPanel>

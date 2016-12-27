@@ -287,7 +287,7 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-                        List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference && x.IsPromo == false)).ToList();
+                        List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo == false).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
                         foreach (sales_invoice_detail _Detail_ in sidpromo)
                         {

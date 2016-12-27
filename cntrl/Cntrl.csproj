@@ -306,6 +306,9 @@
     <Compile Include="Curd\SalesOrder.xaml.cs">
       <DependentUpon>SalesOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\promotion.xaml.cs">
+      <DependentUpon>promotion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\VATWithholding.xaml.cs">
       <DependentUpon>VATWithholding.xaml</DependentUpon>
     </Compile>
@@ -868,6 +871,10 @@
     <Page Include="Curd\SalesOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\promotion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\VATWithholding.xaml">
       <Generator>MSBuild:Compile</Generator>

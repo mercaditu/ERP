@@ -383,6 +383,9 @@
     <Compile Include="Configs\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\Promotion.xaml.cs">
+      <DependentUpon>Promotion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Version.xaml.cs">
       <DependentUpon>Version.xaml</DependentUpon>
     </Compile>
@@ -1207,6 +1210,10 @@
     <Page Include="Configs\ItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\Promotion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Version.xaml">
       <SubType>Designer</SubType>

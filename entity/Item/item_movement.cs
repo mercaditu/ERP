@@ -47,14 +47,14 @@ namespace entity
                 if (parent == null)
                 {
                     code = _id_movement.ToString();
-                   
+
                 }
                 else
                 {
                     code = parent.code;
-                  
+
                 }
-                
+
             }
         }
         long _id_movement;
@@ -116,17 +116,17 @@ namespace entity
             {
                 if (child != null)
                 {
-                    _avlquantity = credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
-                    RaisePropertyChanged("avlquantity");
+                    return credit - (child.Count() > 0 ? child.Sum(y => y.debit) : 0);
+
                 }
                 else
                 {
-                    _avlquantity = credit;
-                    RaisePropertyChanged("avlquantity");
+                    return credit;
+
                 }
 
 
-                return _avlquantity;
+
             }
             set
             {

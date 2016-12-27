@@ -45,18 +45,18 @@ namespace Cognitivo.Sales
             {
                 await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
                                             && (
-                    //a.trans_date >= navPagination.start_Date
-                    // && a.trans_date <= navPagination.end_Date 
-                    // && 
+                                             //a.trans_date >= navPagination.start_Date
+                                             // && a.trans_date <= navPagination.end_Date 
+                                             // && 
                                              a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             else
             {
                 await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (
-                    //a.trans_date >= navPagination.start_Date
-                    // && a.trans_date <= navPagination.end_Date 
-                    // && 
+                                             //a.trans_date >= navPagination.start_Date
+                                             // && a.trans_date <= navPagination.end_Date 
+                                             // && 
                                              a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
 
@@ -133,14 +133,14 @@ namespace Cognitivo.Sales
         {
             try
             {
-                
-                    if (SalesOrderDB.SaveChanges() > 0)
-                    {
-                        toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
-                        sales_orderViewSource.View.Refresh();
-                        sbxContact.Text = "";
-                    }
-                           }
+
+                if (SalesOrderDB.SaveChanges() > 0)
+                {
+                    toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
+                    sales_orderViewSource.View.Refresh();
+                    sbxContact.Text = "";
+                }
+            }
             catch (DbEntityValidationException ex)
             {
                 toolBar.msgError(ex);
@@ -502,7 +502,7 @@ namespace Cognitivo.Sales
         public async void SalesBudget_Click(object sender)
         {
             sales_order sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
-            sales_order.contact= await SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefaultAsync();
+            sales_order.contact = await SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefaultAsync();
             sales_order.app_contract = await SalesOrderDB.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
 
             foreach (sales_order_detail detail in sales_order.sales_order_detail)
@@ -544,7 +544,7 @@ namespace Cognitivo.Sales
 
         private void lblCheckCredit(object sender, RoutedEventArgs e)
         {
-           
+
             if (sales_orderViewSource != null)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
@@ -552,7 +552,51 @@ namespace Cognitivo.Sales
                 Class.CreditLimit Limit = new Class.CreditLimit();
                 Limit.Check_CreditAvailability(sales_order);
             }
-           
+
+        }
+
+        private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
+        {
+            sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+            if (sales_order != null && sales_order.status == Status.Documents_General.Approved)
+            {
+                sales_invoice sales_invoice = new sales_invoice();
+                sales_invoice.barcode = sales_order.barcode;
+                sales_invoice.code = sales_order.code;
+                sales_invoice.trans_date = DateTime.Now;
+                sales_invoice.comment = sales_order.comment;
+                sales_invoice.id_condition = sales_order.id_condition;
+                sales_invoice.id_contact = sales_order.id_contact;
+                sales_invoice.contact = sales_order.contact;
+                sales_invoice.id_contract = sales_order.id_contract;
+                sales_invoice.id_currencyfx = sales_order.id_currencyfx;
+                sales_invoice.id_project = sales_order.id_project;
+                sales_invoice.id_sales_rep = sales_order.id_sales_rep;
+                sales_invoice.id_weather = sales_order.id_weather;
+                sales_invoice.is_impex = sales_order.is_impex;
+
+                foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
+                {
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                    sales_invoice_detail.comment = sales_order_detail.comment;
+                    sales_invoice_detail.discount = sales_order_detail.discount;
+                    sales_invoice_detail.id_item = sales_order_detail.id_item;
+                    sales_invoice_detail.item_description = sales_order_detail.item_description;
+                    sales_invoice_detail.id_location = sales_order_detail.id_location;
+                    sales_invoice_detail.id_project_task = sales_order_detail.id_project_task;
+                    sales_invoice_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
+                    sales_invoice_detail.id_vat_group = sales_order_detail.id_vat_group;
+                    sales_invoice_detail.quantity = sales_order_detail.quantity - sales_order_detail.sales_invoice_detail.Sum(x => x.quantity);
+                    sales_invoice_detail.unit_cost = sales_order_detail.unit_cost;
+                    sales_invoice_detail.unit_price = sales_order_detail.unit_price;
+                    sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                }
+
+                SalesOrderDB.sales_invoice.Add(sales_invoice);
+                crm_opportunity crm_opportunity = sales_order.crm_opportunity;
+                crm_opportunity.sales_invoice.Add(sales_invoice);
+                SalesOrderDB.SaveChanges();
+            }
         }
     }
 }

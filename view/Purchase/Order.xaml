@@ -130,7 +130,15 @@
 					<TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
 								<Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
 				</StackPanel>
-				<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="" Style="{StaticResource btn_Label}"/>
+                    <TextBlock Margin="5,0" VerticalAlignment="Center">
+										<Hyperlink PreviewMouseUp="toolBar_btnInvoice_Click">
+											<Run Text="{lex:Loc PurchaseInvoice}"/>
+										</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
 					<Label Content="Z" Style="{StaticResource ico_Label}"/>
 					<CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked"/>
 				</StackPanel>

@@ -25,8 +25,7 @@ namespace cntrl.Class
                 location.name = app_branch.name + "Location";
                 location.is_default = true;
                 location.id_user = CurrentSession.User.id_user;
-
-
+                
                 app_terminal app_terminal = new app_terminal();
                 app_terminal.code = "001";
                 app_terminal.name = CurrentSession.User.name_full + "'s Computer";
@@ -35,6 +34,13 @@ namespace cntrl.Class
                 app_branch.app_location.Add(location);
                 app_branch.app_terminal.Add(app_terminal);
                 UserDB.app_branch.Add(app_branch);
+
+                //Contact Role
+                contact_role role = new contact_role();
+                role.name = "Main Contact";
+                role.is_principal = true;
+                role.can_transact = true;
+                UserDB.contact_role.Add(role);
 
                 //Payment Type
                 payment_type payment_type = new payment_type();
@@ -55,25 +61,25 @@ namespace cntrl.Class
 
                 //Cost Center
                 app_cost_center app_cost_centerProduct = new app_cost_center();
-                app_cost_centerProduct.name = "Products";
+                app_cost_centerProduct.name = "Product";
                 app_cost_centerProduct.is_product = true;
                 app_cost_centerProduct.id_user = CurrentSession.User.id_user;
                 UserDB.app_cost_center.Add(app_cost_centerProduct);
 
                 app_cost_center app_cost_centerRent = new app_cost_center();
-                app_cost_centerRent.name = "Rents";
+                app_cost_centerRent.name = "Rent";
                 app_cost_centerRent.is_administrative = true;
                 app_cost_centerRent.id_user = CurrentSession.User.id_user;
                 UserDB.app_cost_center.Add(app_cost_centerRent);
 
                 app_cost_center app_cost_centerOfficeExp = new app_cost_center();
-                app_cost_centerOfficeExp.name = "Office Expenses";
+                app_cost_centerOfficeExp.name = "Office Expense";
                 app_cost_centerOfficeExp.is_administrative = true;
                 app_cost_centerOfficeExp.id_user = CurrentSession.User.id_user;
                 UserDB.app_cost_center.Add(app_cost_centerOfficeExp);
 
                 app_cost_center app_cost_centerMarketing = new app_cost_center();
-                app_cost_centerMarketing.name = "Products";
+                app_cost_centerMarketing.name = "Marketing";
                 app_cost_centerMarketing.is_administrative = true;
                 app_cost_centerMarketing.id_user = CurrentSession.User.id_user;
                 UserDB.app_cost_center.Add(app_cost_centerMarketing);
@@ -88,18 +94,19 @@ namespace cntrl.Class
                 item_price_listWholesale.name = "Wholesale";
                 item_price_listWholesale.id_user = CurrentSession.User.id_user;
                 UserDB.item_price_list.Add(item_price_listWholesale);
+
                 try
                 {
+                    UserDB.SaveChanges();
+
                     entity.Properties.Settings.Default.company_ID = CurrentSession.Id_Company;
                     entity.Properties.Settings.Default.branch_ID = app_branch.id_branch;
                     entity.Properties.Settings.Default.terminal_ID = app_terminal.id_terminal;
                     entity.Properties.Settings.Default.account_ID = CurrentSession.Id_Account;
                     entity.Properties.Settings.Default.Save();
-                    UserDB.SaveChanges();
                 }
                 catch (System.Exception ex)
                 {
-
                     System.Windows.Forms.MessageBox.Show(ex.ToString()); 
                 }
              

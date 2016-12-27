@@ -23,9 +23,7 @@ namespace entity
         public int id_purchase_invoice_detail { get; set; }
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
-
-     
-
+            
         #region "Navigation Properties"
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual purchase_invoice purchase_invoice
@@ -56,22 +54,18 @@ namespace entity
         {
             get
             {
-
-               
-                
                 return _purchase_invoice_dimension;
             }
             set
             {
-                
-                _purchase_invoice_dimension = value;
-             
-               
+                _purchase_invoice_dimension = value;            
             }
         }
+
         ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
+        public virtual project_task project_task { get; set; }
 
         #endregion
 

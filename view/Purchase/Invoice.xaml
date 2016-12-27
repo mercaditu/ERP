@@ -214,6 +214,14 @@
 												</Hyperlink>
                             </TextBlock>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <Label Content="" Style="{StaticResource btn_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+										<Hyperlink PreviewMouseUp="toolBar_btnReturn_Click">
+											<Run Text="{lex:Loc PurchaseReturn}"/>
+										</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
 									   Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

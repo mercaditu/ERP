@@ -432,6 +432,7 @@ namespace entity
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_cost_center app_cost_center { get; set; }
         public virtual app_location app_location { get; set; }
+      
         public virtual item item { get; set; }
         #endregion
 

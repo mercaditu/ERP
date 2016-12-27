@@ -713,8 +713,6 @@ namespace entity.Brillo.Logic
                 Items_InStockLIST = Items_InStockLIST.OrderBy(x => x.TranDate).ToList();
             }
 
-            //decimal qty_SalesDetail = Quantity;
-
             ///Will create new Item Movements 
             ///if split from Parents is needed.
             foreach (StockList parent_Movement in Items_InStockLIST)
@@ -866,7 +864,6 @@ namespace entity.Brillo.Logic
             {
                 id_movement = 0;
                 item_movement item_movement = new item_movement();
-                //Adding into List if Movement List for this Location is empty.
                 item_movement.comment = Comment;
                 item_movement.id_item_product = item_product.id_item_product;
                 item_movement.debit = Quantity;
@@ -894,17 +891,6 @@ namespace entity.Brillo.Logic
                             item_movement.item_movement_dimension.Add(_item_movement_dimension);
                         }
                     }
-                }
-                else if (ApplicationID == App.Names.PurchaseInvoice)
-                {
-                    item_movement.id_purchase_invoice_detail = TransactionDetailID;
-                    purchase_invoice_detail purchase_invoice_detail = db.purchase_invoice_detail.Find(TransactionDetailID);
-                    if (purchase_invoice_detail != null)
-                    {
-                        item_movement.expire_date = purchase_invoice_detail.expiration_date;
-                        item_movement.code = purchase_invoice_detail.lot_number;
-                    }
-
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
@@ -1023,7 +1009,27 @@ namespace entity.Brillo.Logic
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
                     item_movement.id_purchase_invoice_detail = TransactionDetailID;
+
+                    purchase_invoice_detail detail = null;
+
+                    using (db db = new db())
+                    {
+                        detail = db.purchase_invoice_detail.Find(TransactionDetailID);
+
+                        if (detail != null)
+                        {
+                            if (detail.item != null)
+                            {
+                                if (detail.item.item_product.FirstOrDefault() != null)
+                                {
+                                    item_movement.expire_date = detail.expiration_date;
+                                    item_movement.code = detail.lot_number;
+                                }
+                            }
+                        }
+                    }
                 }
+
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
                     item_movement.id_purchase_return_detail = TransactionDetailID;
@@ -1044,7 +1050,7 @@ namespace entity.Brillo.Logic
                 {
                     item_movement.id_inventory_detail = TransactionDetailID;
                 }
-                // item_movement.transaction_id = TransactionID;
+
                 item_movement.trans_date = TransDate;
 
                 //Logic for Value in case Parent does not Exist, we will take from 

@@ -964,5 +964,48 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved)
+            {
+                sales_return sales_return = new sales_return();
+                sales_return.barcode = sales_invoice.barcode;
+                sales_return.code = sales_invoice.code;
+                sales_return.trans_date = DateTime.Now;
+                sales_return.comment = sales_invoice.comment;
+                sales_return.id_condition = sales_invoice.id_condition;
+                sales_return.id_contact = sales_invoice.id_contact;
+                sales_return.contact = sales_invoice.contact;
+                sales_return.id_contract = sales_invoice.id_contract;
+                sales_return.id_currencyfx = sales_invoice.id_currencyfx;
+                sales_return.id_project = sales_invoice.id_project;
+                sales_return.id_sales_rep = sales_invoice.id_sales_rep;
+                sales_return.id_weather = sales_invoice.id_weather;
+                sales_return.is_impex = sales_invoice.is_impex;
+
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
+                {
+                    sales_return_detail sales_return_detail = new sales_return_detail();
+                    sales_return_detail.comment = sales_invoice_detail.comment;
+                    sales_return_detail.discount = sales_invoice_detail.discount;
+                    sales_return_detail.id_item = sales_invoice_detail.id_item;
+                    sales_return_detail.item_description = sales_invoice_detail.item_description;
+                    sales_return_detail.id_location = sales_invoice_detail.id_location;
+                    sales_return_detail.id_project_task = sales_invoice_detail.id_project_task;
+                    sales_return_detail.sales_invoice_detail = sales_invoice_detail;
+                    sales_return_detail.id_vat_group = sales_invoice_detail.id_vat_group;
+                    sales_return_detail.quantity = sales_invoice_detail.quantity - sales_invoice_detail.sales_return_detail.Sum(x => x.quantity);
+                    sales_return_detail.unit_cost = sales_invoice_detail.unit_cost;
+                    sales_return_detail.unit_price = sales_invoice_detail.unit_price;
+                    sales_return.sales_return_detail.Add(sales_return_detail);
+                }
+
+                SalesInvoiceDB.sales_return.Add(sales_return);
+                crm_opportunity crm_opportunity = sales_invoice.crm_opportunity;
+                crm_opportunity.sales_return.Add(sales_return);
+                SalesInvoiceDB.SaveChanges();
+            }
+        }
     }
 }

@@ -285,7 +285,7 @@ namespace Cognitivo.Purchase
 
 
                     }
-                    
+
                     purchase_invoiceViewSource.View.Refresh();
                     PurchaseInvoiceDB.SaveChanges();
                 }
@@ -577,47 +577,68 @@ namespace Cognitivo.Purchase
             }
 
             //Cost Center
-            if (contact != null)
+            if (item != null)
             {
-                if (contact.app_cost_center != null)
+                //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
+                if (item.item_product.Count() > 0)
                 {
-                    app_cost_center app_cost_center = contact.app_cost_center;
-                    if (app_cost_center.id_cost_center > 0)
-                        purchase_invoice_detail.id_cost_center = app_cost_center.id_cost_center;
+                    int CostCenter = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+
+                    if (CostCenter > 0)
+                    {
+                        purchase_invoice_detail.id_cost_center = CostCenter;
+                    }
+                    else
+                    {
+                        app_cost_center cost_center = new app_cost_center();
+                        cost_center.name = entity.Brillo.Localize.StringText("Product");
+                        cost_center.is_product = true;
+                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+
+                        purchase_invoice_detail.app_cost_center = cost_center;
+                    }
+                }
+                else if (item.item_asset.Count() > 0)
+                {
+                    int CostCenter = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+
+                    if (CostCenter > 0)
+                    {
+                        purchase_invoice_detail.id_cost_center = CostCenter;
+                    }
+                    else
+                    {
+                        app_cost_center cost_center = new app_cost_center();
+                        cost_center.name = entity.Brillo.Localize.StringText("FixedAsset");
+                        cost_center.is_fixedasset = true;
+                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+
+                        purchase_invoice_detail.app_cost_center = cost_center;
+                    }
                 }
             }
             else
             {
-                //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
-                if (item != null)
+                if (contact != null && contact.id_cost_center != null)
                 {
-                    int id_cost_center = 0;
-
-                    if (item.item_product != null)
-                    {
-                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                        if (app_cost_center != null)
-                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
-                        if (id_cost_center > 0)
-                            purchase_invoice_detail.id_cost_center = id_cost_center;
-                    }
-                    else if (item.item_asset != null)
-                    {
-                        app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                        if (app_cost_center != null)
-                            id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
-                        if (id_cost_center > 0)
-                            purchase_invoice_detail.id_cost_center = id_cost_center;
-                    }
+                    purchase_invoice_detail.id_cost_center = (int)contact.id_cost_center;
                 }
                 else
                 {
-                    int id_cost_center = 0;
-                    app_cost_center app_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                    if (app_cost_center != null)
-                        id_cost_center = Convert.ToInt32(app_cost_center.id_cost_center);
+                    int id_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
                     if (id_cost_center > 0)
+                    {
                         purchase_invoice_detail.id_cost_center = id_cost_center;
+                    }
+                    else
+                    {
+                        app_cost_center cost_center = new app_cost_center();
+                        cost_center.name = entity.Brillo.Localize.StringText("Expense");
+                        cost_center.is_administrative = true;
+                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+
+                        purchase_invoice_detail.app_cost_center = cost_center;
+                    }
                 }
             }
 
@@ -992,6 +1013,47 @@ namespace Cognitivo.Purchase
                     purchase_invoice.contact.trans_code = purchase_invoice.code;
                 }
             }
+        }
+
+        private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved)
+            {
+                purchase_return purchase_return = new purchase_return();
+                purchase_return.barcode = purchase_invoice.barcode;
+                purchase_return.code = purchase_invoice.code;
+                purchase_return.trans_date = DateTime.Now;
+                purchase_return.comment = purchase_invoice.comment;
+                purchase_return.id_condition = purchase_invoice.id_condition;
+                purchase_return.id_contact = purchase_invoice.id_contact;
+                purchase_return.contact = purchase_return.contact;
+                purchase_return.id_contract = purchase_invoice.id_contract;
+                purchase_return.id_currencyfx = purchase_invoice.id_currencyfx;
+                purchase_return.id_project = purchase_invoice.id_project;
+                purchase_return.id_sales_rep = purchase_invoice.id_sales_rep;
+                purchase_return.id_weather = purchase_invoice.id_weather;
+                purchase_return.is_impex = purchase_invoice.is_impex;
+
+                foreach (purchase_invoice_detail detail in purchase_invoice.purchase_invoice_detail)
+                {
+                    purchase_return_detail purchase_return_detail = new purchase_return_detail();
+                    purchase_return_detail.comment = detail.comment;
+                    purchase_return_detail.discount = detail.discount;
+                    purchase_return_detail.id_item = detail.id_item;
+                    purchase_return_detail.item_description = detail.item_description;
+                    purchase_return_detail.id_location = detail.id_location;
+                    purchase_return_detail.purchase_invoice_detail = detail;
+                    purchase_return_detail.id_vat_group = detail.id_vat_group;
+                    purchase_return_detail.quantity = detail.quantity - detail.purchase_return_detail.Sum(x => x.quantity);
+                    purchase_return_detail.unit_cost = detail.unit_cost;
+                    purchase_return.purchase_return_detail.Add(purchase_return_detail);
+                }
+
+                PurchaseInvoiceDB.purchase_return.Add(purchase_return);
+                PurchaseInvoiceDB.SaveChanges();
+            }
+
         }
     }
 }

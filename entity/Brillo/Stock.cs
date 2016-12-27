@@ -148,7 +148,11 @@ namespace entity.Brillo
                     StockList Stock = new StockList();
                     Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
                     Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
-                    Stock.ExpirationDate = Convert.ToDateTime(DataRow["expire_date"]);
+                    if (!(DataRow["expire_date"] is DBNull))
+                    {
+                        Stock.ExpirationDate =Convert.ToDateTime(DataRow["expire_date"]);
+                    }
+                 
                     Stock.code = Convert.ToString(DataRow["code"]);
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);

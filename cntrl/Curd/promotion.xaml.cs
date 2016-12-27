@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -32,11 +31,9 @@ namespace cntrl
                 stackMain.DataContext = sales_promotionViewSource;
 
                 item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
-                item_tagBonusViewSource = FindResource("item_tagBonusViewSource") as CollectionViewSource;
 
                 entity.db.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).Load();
                 item_tagViewSource.Source = entity.db.item_tag.Local;
-                item_tagBonusViewSource.Source = entity.db.item_tag.Local;
 
                 app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
                 entity.db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).Load();
@@ -113,13 +110,10 @@ namespace cntrl
                 sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
                 if (sales_promotion != null)
                 {
-                    if (sales_promotion.State == EntityState.Added || sales_promotion.State == EntityState.Modified)
+                    if (entity.db.Entry(sales_promotion).State == EntityState.Added || entity.db.Entry(sales_promotion).State==EntityState.Modified)
                     {
                         sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
                     }
-
-
-
                 }
             }
         }
@@ -132,7 +126,6 @@ namespace cntrl
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Visible;
                 Item_Bonus.Visibility = Visibility.Visible;
                 Discount.Visibility = Visibility.Collapsed;
@@ -146,7 +139,6 @@ namespace cntrl
                 }
 
                 item output = entity.db.items.Find(sales_promotion.reference_bonus);
-
                 if (output != null)
                 {
                     sales_promotion.OutputName = output.name;
@@ -157,12 +149,12 @@ namespace cntrl
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
-                Tag_Bonus.Visibility = Visibility.Visible;
                 Item_Parameter.Visibility = Visibility.Collapsed;
-                Item_Bonus.Visibility = Visibility.Collapsed;
+                Item_Bonus.Visibility = Visibility.Visible;
                 Discount.Visibility = Visibility.Collapsed;
                 QuntityStep.Visibility = Visibility.Visible;
 
+              
                 item output = entity.db.items.Find(sales_promotion.reference_bonus);
 
                 if (output != null)
@@ -176,7 +168,6 @@ namespace cntrl
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Visible;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
@@ -193,29 +184,19 @@ namespace cntrl
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
-                Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Collapsed;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Visible;
-                item_tag item_tag = entity.db.item_tag.Find(sales_promotion.reference);
-                if (item_tag!=null)
-                {
-                    cbxparatag.Text = item_tag.name;
-                }
-               
-
             }
             else if (sales_promotion.type == sales_promotion.Types.Discount_onGrandTotal)
             {
                 Total_Parameter.Visibility = Visibility.Visible;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Bonus.Visibility = Visibility.Collapsed;
                 Item_Parameter.Visibility = Visibility.Collapsed;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Collapsed;
-
             }
         }
     }

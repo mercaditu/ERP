@@ -27,6 +27,7 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             cntrl.promotion objPromotion = new cntrl.promotion();
             sales_promotion sales_promotion = new sales_promotion();
+            sales_promotion.State = EntityState.Added;
             entity.db.sales_promotion.Add(sales_promotion);
             sales_promotionViewSource.View.MoveCurrentToLast();
             objPromotion.sales_promotionViewSource = sales_promotionViewSource;
@@ -38,7 +39,12 @@ namespace Cognitivo.Configs
         {
             crud_modal.Visibility = Visibility.Visible;
             cntrl.promotion objPromotion = new cntrl.promotion();
-            sales_promotionViewSource.View.MoveCurrentTo(entity.db.sales_promotion.Where(x => x.id_sales_promotion == intPromotionId).FirstOrDefault());
+            sales_promotion sales_promotion = entity.db.sales_promotion.Where(x => x.id_sales_promotion == intPromotionId).FirstOrDefault();
+            if (sales_promotion!=null)
+            {
+                sales_promotion.State = EntityState.Modified;
+            }
+            sales_promotionViewSource.View.MoveCurrentTo(sales_promotion);
             objPromotion.sales_promotionViewSource = sales_promotionViewSource;
             objPromotion.entity = entity;
             crud_modal.Children.Add(objPromotion);

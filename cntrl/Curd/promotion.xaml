@@ -17,7 +17,6 @@
 	
 		<CollectionViewSource x:Key="sales_promotionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_promotion}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
-		<CollectionViewSource x:Key="item_tagBonusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
 	</UserControl.Resources>
 	<UserControl.Effect>
@@ -72,9 +71,9 @@
 					</StackPanel>
 					<StackPanel x:Name="Tag_Parameter">
 						<Label Content="Tags" />
-						<ComboBox x:Name="cbxparatag"
-							  DisplayMemberPath="name" SelectedValuePath="id_tag"
-							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" SelectionChanged="cbxparatag_SelectionChanged"/>
+						<ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
+							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectedValue="{Binding reference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" />
 					</StackPanel>
 					<StackPanel x:Name="Total_Parameter">
 						<Label Content="Total" />
@@ -98,16 +97,6 @@
 						<controls:SmartBox_Item Text="{Binding OutputName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
 					</StackPanel>
 
-					<StackPanel x:Name="Tag_Bonus">
-                        <TextBlock  FontWeight="Medium">
-                            <Run Text="{lex:Loc Output}"/>
-                            <Run Text="{lex:Loc Tags}"/>
-                        </TextBlock>
-                        <ComboBox x:Name="cbxbonustag" 
-							  DisplayMemberPath="name" SelectedValuePath="id_tag"
-							  ItemsSource="{Binding Source={StaticResource item_tagBonusViewSource}}" 
-							 />
-					</StackPanel>
 					<StackPanel x:Name="Discount">
 						<Label Content="Discount" />
 						<TextBox Text="{Binding result_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>

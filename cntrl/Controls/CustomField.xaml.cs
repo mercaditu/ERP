@@ -24,22 +24,24 @@ namespace cntrl.Controls
 
 
 
-        public static DependencyProperty FieldNameProperty = DependencyProperty.Register("FieldName", typeof(string), typeof(CustomField));
-        public string FieldName
+        public static DependencyProperty FieldIDProperty = DependencyProperty.Register("FieldID", typeof(Int32), typeof(CustomField));
+        public Int32 FieldID
         {
-            get { return (string)GetValue(FieldNameProperty); }
-            set { SetValue(FieldNameProperty, value); }
+            get { return Convert.ToInt32(GetValue(FieldIDProperty)); }
+            set { SetValue(FieldIDProperty, value); }
         }
+        
+        public entity.app_field.field_types appFieldTypes { get; set; }
+      
 
-        public static readonly DependencyProperty FieldValueProperty = DependencyProperty.Register("FieldValue", typeof(string), typeof(CustomField));
-        public string FieldValue
-        {
-            get { return (string)GetValue(FieldValueProperty); }
-            set { SetValue(FieldValueProperty, value); }
-        }
         public CustomField()
         {
             InitializeComponent();
+        }
+
+        private void CustomField_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbxFieldType.ItemsSource = entity.CurrentSession.AppField.Where(x=>x.field_type== appFieldTypes);
         }
     }
 }

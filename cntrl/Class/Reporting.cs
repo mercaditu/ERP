@@ -10,9 +10,7 @@ namespace cntrl.Class
         {
             ReportList = new List<Report>
             {
-                // Sales (Invoice, Order, and Budget) Detail Reports
-
-                            new Report
+            new Report
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = entity.Brillo.Localize.StringText("CostOfGoodsSold")!= string.Empty ? entity.Brillo.Localize.StringText("CostOfGoodsSold") :"CostOfGoodsSold",
@@ -20,7 +18,7 @@ namespace cntrl.Class
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },
-                new Report
+            new Report
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = entity.Brillo.Localize.StringText("SalesDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetail") :"SalesDetail",

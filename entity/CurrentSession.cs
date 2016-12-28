@@ -118,6 +118,7 @@ namespace entity
         public static Versions Version { get; set; }
 
         public static List<security_crud> Security_CurdList { get; set; }
+        public static List<app_field> AppField { get; set; }
         public static List<security_role_privilage> Security_role_privilageList { get; set; }
 
         public static security_user User { get; set; }
@@ -223,7 +224,7 @@ namespace entity
                 Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-
+                AppField=db.app_field.Where(x => x.id_company == Id_Company).ToList();
                 if (IsLoaded == false)
                 {
                     VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();

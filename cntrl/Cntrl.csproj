@@ -600,6 +600,7 @@
     <EmbeddedResource Include="Reports\Purchases\PurchaseBySupplier.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseTender.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />

@@ -7,7 +7,6 @@ namespace Cognitivo.Configs
 {
     public partial class Settings : Page
     {
-        int CompanyID = entity.Properties.Settings.Default.company_ID;
         CollectionViewSource app_companyViewSource;
 
         Menu.MainWindow mainWindow = App.Current.MainWindow as Menu.MainWindow;
@@ -31,7 +30,7 @@ namespace Cognitivo.Configs
                 int new_CompanyID = ((entity.app_company)app_companyViewSource.View.CurrentItem).id_company;
                 entity.Properties.Settings.Default.Save();
 
-                if (new_CompanyID != CompanyID &&
+                if (new_CompanyID != entity.CurrentSession.Id_Company &&
                     MessageBox.Show(entity.Brillo.Localize.StringText("Applicationrestartwillberequired"), "Cognitivo ERP",
                     MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK) == MessageBoxResult.OK)
                 {
@@ -45,6 +44,8 @@ namespace Cognitivo.Configs
                     entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
                     entity.CurrentSession.Id_Terminal = entity.Properties.Settings.Default.terminal_ID;
                     entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
+                    entity.Properties.Settings.Default.Save();
+
                     //GoBack with changed data.
                     mainWindow.mainFrame.NavigationService.GoBack();
                 }

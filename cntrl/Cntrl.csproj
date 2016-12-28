@@ -214,7 +214,6 @@
     <Compile Include="Class\CheckMovementReApprove.cs" />
     <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
-    <Compile Include="Class\Seeding.cs" />
     <Compile Include="Class\UpdatePaymentReApprove.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsCommon.cs" />

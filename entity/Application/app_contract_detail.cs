@@ -13,6 +13,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            is_order = false;
         }
 
         [Key]
@@ -42,12 +43,10 @@ namespace entity
             {
                 StringBuilder error = new StringBuilder();
 
-                // iterate over all of the properties
-                // of this object - aggregating any validation errors
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
-                    String propertyError = this[prop.Name];
+                    string propertyError = this[prop.Name];
                     if (propertyError != string.Empty)
                     {
                         error.Append((error.Length != 0 ? ", " : "") + propertyError);

@@ -15,6 +15,7 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
+            see_cost = false;
 
             security_curd = new List<security_crud>();
             security_user = new List<security_user>();

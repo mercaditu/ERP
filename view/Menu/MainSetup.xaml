@@ -7,52 +7,81 @@
         xmlns:cls="clr-namespace:Cognitivo.Class"
        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Width="500" Height="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="MainSetup">
 
-    <StackPanel>
-        <Label Content="{lex:Loc Initial Configuration}" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="White" Opacity="0.32"/>
+        </Grid.Background>
+        <TabControl>
+            <TabItem Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Width="256" Height="32">
+                        <ComboBox.Items>
+                            <ItemsControl />
+                        </ComboBox.Items>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabRegister" IsSelected="True">
+                <StackPanel>
+                    <Label Content="{lex:Loc InitialSetup}" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
 
-        <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Rectangle Style="{StaticResource line_Bar}"/>
 
-        <Label Style="{StaticResource H3}" Content="Create Company" HorizontalAlignment="Center"/>
-        <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center">
-            <Label Content="{lex:Loc Company}" Style="{StaticResource input_label}"/>
-            <TextBox x:Name="txtname" Style="{StaticResource input_textbox}"/>
-            <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}"/>
-            <TextBox x:Name="txtalias" Style="{StaticResource input_textbox}"/>
-            <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
-            <TextBox  x:Name="txtGovID" Style="{StaticResource input_textbox}"/>
-            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
-            <TextBox x:Name="txtAddress"
-                         Style="{StaticResource input_textbox}" TextWrapping="Wrap" Height="45"/>
-        </StackPanel>
+                    <Label Style="{StaticResource H3}" Content="{lex:Loc Company}" HorizontalAlignment="Center"/>
+                    <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center">
+                        <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtname" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtalias" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
+                        <TextBox  x:Name="txtGovID" Style="{StaticResource input_textbox}"/>
+                    </StackPanel>
 
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Label Style="{StaticResource H3}" Content="Master User" HorizontalAlignment="Center"/>
+                    <TextBlock Style="{StaticResource text_Instructions}" Text="Create a Master User that will have entire access for the whole system, including the creating of new users. Please remember this credentials, and you may change it later."/>
+                    <StackPanel x:Name="stpUserDisplay" HorizontalAlignment="Center">
+                        <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
 
-        <Rectangle Style="{StaticResource line_Bar}"/>
-        <Label Style="{StaticResource H3}" Content="Master User" HorizontalAlignment="Center"/>
-        <TextBlock Style="{StaticResource text_Instructions}" Text="Create a Master User that will have entire access for the whole system, including the creating of new users. Please remember this credentials, and you may change it later."/>
-        <StackPanel x:Name="stpUserDisplay" HorizontalAlignment="Center">
-            <Label Content="{lex:Loc FullName}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtFullName"   Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
 
-            <TextBox x:Name="txtFullName"   Style="{StaticResource input_textbox}"/>
-            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-
-            <TextBox x:Name="txtName"   Style="{StaticResource input_textbox}"/>
-            <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
-            <PasswordBox x:Name="txtPass" cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"
+                        <TextBox x:Name="txtName"   Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
+                        <PasswordBox x:Name="txtPass" cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"
                                          cls:PasswordHelper.Password="{Binding password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
 
-        </StackPanel>
+                    </StackPanel>
 
-        <Rectangle Style="{StaticResource line_Bar}"/>
-        <Button IsDefault="True" Width="256" Click="btnCreate_Click" Background="Transparent" BorderBrush="Transparent" TabIndex="2">
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
-                <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
-                <Label Content="CREATE" FontSize="12" HorizontalContentAlignment="Center"/>
-            </Grid>
-        </Button>
-    </StackPanel>
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Button IsDefault="True" Width="256" Click="btnCreate_Click" Background="Transparent" BorderBrush="Transparent" TabIndex="2">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
+                            <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
+                            <Label Content="CREATE" FontSize="12" HorizontalContentAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="tabRestart">
+                <StackPanel HorizontalAlignment="Center">
+                    <Image Source="/Cognitivo;component/Images/CognitivoLogo.png" Width="128" Margin="64"/>
+                    <Label Style="{StaticResource H1}" Content="Congratulations" FontWeight="Normal" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Your new company is ready." HorizontalAlignment="Center" Foreground="Gray"/>
+                    <TextBlock Text="Cognitivo ERP will restart in 5 seconds" HorizontalAlignment="Center" Foreground="Gray"/>
+                    <Rectangle Height="64"/>
+                    <Label Style="{StaticResource H3}" Content="Initializing Awsomeness in..." HorizontalAlignment="Center"/>
+                    <Label x:Name="tbxCountDown" Style="{StaticResource H1}" Content="1" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Page>

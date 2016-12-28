@@ -115,7 +115,7 @@ namespace entity
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
-                    String propertyError = this[prop.Name];
+                    string propertyError = this[prop.Name];
                     if (propertyError != string.Empty)
                     {
                         error.Append((error.Length != 0 ? ", " : "") + propertyError);
@@ -142,8 +142,13 @@ namespace entity
                 }
                 if (columnName == "id_role")
                 {
-                    if (id_role == 0)
-                        return "Role needs to be selected";
+                    if (security_role != null)
+                    {
+                        if (id_role == 0)
+                        {
+                            return "Role needs to be selected";
+                        }
+                    }
                 }
                 return "";
             }

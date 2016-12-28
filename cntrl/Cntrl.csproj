@@ -227,6 +227,9 @@
     <Compile Include="Controls\ComboBoxKit.xaml.cs">
       <DependentUpon>ComboBoxKit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomField.xaml.cs">
+      <DependentUpon>CustomField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageViewer.xaml.cs">
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
@@ -604,7 +607,9 @@
     <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />
-    <EmbeddedResource Include="Reports\Sales\SalesByItem.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesByItem.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
@@ -795,6 +800,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ComboBoxKit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

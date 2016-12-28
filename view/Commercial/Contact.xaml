@@ -39,7 +39,11 @@
 		<CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
 		<CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
 		<CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactcontact_field_valueemailViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
+        <CollectionViewSource x:Key="app_fieldemailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactcontact_field_valuephoneViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
+        <CollectionViewSource x:Key="app_fieldphoneViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
 		<CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
 		<CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}"/>
 	</Page.Resources>
@@ -75,7 +79,8 @@
 		<StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
 					Background="White" Orientation="Horizontal" 
 					IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-			<cntrls:ImageViewer ReferenceID="{Binding id_contact, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Contact"  AllowDrop="True" />
+			<cntrls:ImageViewer ReferenceID="{Binding id_contact, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Contact"  AllowDrop="True" 
+                                Margin="16" Height="108" MinWidth="108" MaxWidth="500"/>
 
 			<StackPanel VerticalAlignment="Top" Margin="0,32">
 				<Label Content="{Binding name}" Style="{StaticResource H1}"/>
@@ -130,20 +135,80 @@
 
 					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						<Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
+                        <StackPanel Orientation="Horizontal">
 						<Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
-						<TextBox Style="{StaticResource input_textbox}"
+                            <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldTelephone" 
+								   Style="{StaticResource btn_Label}"/>
+                        </StackPanel>
+                        <TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valuephoneViewSource}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
+												  ItemsSource="{Binding Source={StaticResource app_fieldphoneViewSource}}"
+												  DisplayMemberPath="name" Width="Auto"
+												  SelectedValuePath="id_field" 
+												  SelectedValue="{Binding app_field.id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <VirtualizingStackPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
+                                        <TextBox Text="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextToLabelStyle}"  HorizontalAlignment="Left"/>
+                                        <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <StackPanel Orientation="Horizontal">
 						<Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
-						<TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
+                            <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldEmail" 
+								   Style="{StaticResource btn_Label}"/>
+                        </StackPanel>
+                        <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
 								 Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-						<Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueemailViewSource}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
+												  ItemsSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
+												  DisplayMemberPath="name" Width="Auto"
+												  SelectedValuePath="id_field" 
+												  SelectedValue="{Binding app_field.id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+											<ComboBox.ItemsPanel>
+												<ItemsPanelTemplate>
+													<VirtualizingStackPanel/>
+												</ItemsPanelTemplate>
+											</ComboBox.ItemsPanel>
+										</ComboBox>
+                                        <TextBox Text="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextToLabelStyle}"  HorizontalAlignment="Left"/>
+                                        <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
 						<TextBox x:Name="txtAddress"
 								 Style="{StaticResource input_textbox}"
 								 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
 						<StackPanel Orientation="Horizontal">
 							<Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-							<Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
+							<Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldAccount" 
 								   Style="{StaticResource btn_Label}"/>
 						</StackPanel>
 						<ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
@@ -155,20 +220,21 @@
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
 									<StackPanel>
-										<ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
+										<ComboBox x:Name="cbxFieldType" Style="{StaticResource input_combobox}"
 												  ItemsSource="{Binding Source={StaticResource app_fieldViewSource}}"
 												  DisplayMemberPath="name" Width="Auto"
 												  SelectedValuePath="id_field" 
-												  SelectedValue="{Binding id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+												  SelectedValue="{Binding app_field.id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<ComboBox.ItemsPanel>
 												<ItemsPanelTemplate>
 													<VirtualizingStackPanel/>
 												</ItemsPanelTemplate>
 											</ComboBox.ItemsPanel>
 										</ComboBox>
-										<TextBox Style="{StaticResource input_textbox}"
-												 Text="{Binding value, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-									</StackPanel>
+                                        <TextBox Text="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextToLabelStyle}" HorizontalAlignment="Left"/>
+                                        <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                     
+                                    </StackPanel>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
 						</ItemsControl>

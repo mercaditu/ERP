@@ -17,6 +17,11 @@ namespace Cognitivo.Commercial
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
         CollectionViewSource contactcontact_field_valueViewSource;
+        CollectionViewSource contactcontact_field_valueemailViewSource;
+        CollectionViewSource contactcontact_field_valuephoneViewSource;
+        CollectionViewSource app_fieldViewSource;
+        CollectionViewSource app_fieldemailViewSource;
+        CollectionViewSource app_fieldphoneViewSource;
 
         #region Initilize and load
 
@@ -30,6 +35,10 @@ namespace Cognitivo.Commercial
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
+            contactcontact_field_valueemailViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueemailViewSource");
+
+            contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
+
 
             //Contact
             ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).Load();
@@ -55,9 +64,6 @@ namespace Cognitivo.Commercial
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
             itemPriceListViewSource.Source = CurrentSession.PriceLists; //ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-
-            //SalesRep
-            //ContactDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
             
             CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
             salesRepViewSource.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
@@ -68,14 +74,18 @@ namespace Cognitivo.Commercial
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Currencies; //ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-            
-            //Fields
-            CollectionViewSource app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
-            app_fieldViewSource.Source = ContactDB.app_field.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppBank
             CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
             bankViewSource.Source = ContactDB.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+
+            app_fieldemailViewSource = (CollectionViewSource)FindResource("app_fieldemailViewSource");
+            app_fieldphoneViewSource = (CollectionViewSource)FindResource("app_fieldphoneViewSource");
+            app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
+            ContactDB.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            app_fieldemailViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Email).ToList();
+            app_fieldphoneViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Telephone).ToList();
+            app_fieldViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Account).ToList();
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
@@ -88,6 +98,7 @@ namespace Cognitivo.Commercial
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.OrderBy(a => a.name);
+            Filter();
         }
         #endregion
 
@@ -181,6 +192,79 @@ namespace Cognitivo.Commercial
                     //tabSubscription.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+        private void Filter()
+        {
+            if (contactcontact_field_valueViewSource!=null)
+            {
+                if (contactcontact_field_valueViewSource.View!=null)
+                {
+                    contactcontact_field_valueViewSource.View.Filter = i =>
+                    {
+
+                        contact_field_value contact_field_value = (contact_field_value)i;
+                        if (contact_field_value != null)
+                        {
+                            if (contact_field_value.app_field.field_type==app_field.field_types.Account)
+                            {
+                                return true;
+                            }
+                          
+                        }
+                       
+                        return false;
+                       
+                    };
+                }
+
+            }
+            if (contactcontact_field_valueemailViewSource != null)
+            {
+                if (contactcontact_field_valueemailViewSource.View != null)
+                {
+                    contactcontact_field_valueemailViewSource.View.Filter = i =>
+                    {
+
+                        contact_field_value contact_field_value = (contact_field_value)i;
+                        if (contact_field_value != null)
+                        {
+                            if (contact_field_value.app_field.field_type == app_field.field_types.Email)
+                            {
+                                return true;
+                            }
+
+                        }
+
+                        return false;
+
+                    };
+                }
+
+            }
+            if (contactcontact_field_valuephoneViewSource != null)
+            {
+                if (contactcontact_field_valuephoneViewSource.View != null)
+                {
+                    contactcontact_field_valuephoneViewSource.View.Filter = i =>
+                    {
+
+                        contact_field_value contact_field_value = (contact_field_value)i;
+                        if (contact_field_value != null)
+                        {
+                            if (contact_field_value.app_field.field_type == app_field.field_types.Telephone)
+                            {
+                                return true;
+                            }
+
+                        }
+
+                        return false;
+
+                    };
+                }
+
+            }
+
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -368,10 +452,7 @@ namespace Cognitivo.Commercial
             // FilterSubscription();
         }
 
-        private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Add_field();
-        }
+      
 
         private void MapsDropPin_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -399,27 +480,86 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void Add_field()
+        private void Add_fieldAccount(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                app_field app_field = app_fieldViewSource.View.CurrentItem as app_field;
+                if (app_field == null)
+                {
+                    app_field = new app_field();
+                    app_field.field_type = entity.app_field.field_types.Account;
+                    app_field.name = "EMail";
+                    ContactDB.app_field.Add(app_field);
+
+                    app_fieldViewSource.View.Refresh();
+                    app_fieldViewSource.View.MoveCurrentToLast();
+                }
+                contact_field_value contact_field_value = new contact_field_value();
+                contact_field_value.app_field = app_field;
+                contact.contact_field_value.Add(contact_field_value);
+                contactViewSource.View.Refresh();
+                contactcontact_field_valueViewSource.View.Refresh();
+                contactcontact_field_valueViewSource.View.MoveCurrentToLast();
+            }
+        }
+
+        private void Add_fieldEmail(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                app_field app_field = app_fieldemailViewSource.View.CurrentItem as app_field;
+                if (app_field == null)
+                {
+                    app_field = new app_field();
+                    app_field.field_type = entity.app_field.field_types.Email;
+                    app_field.name = "EMail";
+                    ContactDB.app_field.Add(app_field);
+
+                    app_fieldViewSource.View.Refresh();
+                    app_fieldViewSource.View.MoveCurrentToLast();
+                }
+
+                //}
+
+                contact_field_value contact_field_value = new contact_field_value();
+                contact_field_value.app_field = app_field;
+                contact.contact_field_value.Add(contact_field_value);
+                contactViewSource.View.Refresh();
+                contactcontact_field_valueemailViewSource.View.Refresh();
+                contactcontact_field_valueemailViewSource.View.MoveCurrentToLast();
+            }
+        }
+
+        private void Add_fieldTelephone(object sender, MouseButtonEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact != null)
             {
                 //using (db db = new db())
                 //{
-                if (ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Account).Count() == 0)
+                app_field app_field = app_fieldphoneViewSource.View.CurrentItem as app_field;
+                if (app_field == null)
                 {
-                    app_field app_field = new app_field();
-                    app_field.field_type = entity.app_field.field_types.Account;
-                    app_field.name = "Account";
+                    app_field = new app_field();
+                    app_field.field_type = entity.app_field.field_types.Telephone;
+                    app_field.name = "Telephone";
                     ContactDB.app_field.Add(app_field);
-                    ContactDB.SaveChanges();
+
+                    app_fieldphoneViewSource.View.Refresh();
+                    app_fieldphoneViewSource.View.MoveCurrentToLast();
                 }
+
                 //}
 
                 contact_field_value contact_field_value = new contact_field_value();
+                contact_field_value.app_field = app_field;
                 contact.contact_field_value.Add(contact_field_value);
                 contactViewSource.View.Refresh();
-                contactcontact_field_valueViewSource.View.Refresh();
+                contactcontact_field_valuephoneViewSource.View.Refresh();
+                contactcontact_field_valuephoneViewSource.View.MoveCurrentToLast();
             }
         }
 

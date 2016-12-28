@@ -115,7 +115,7 @@ namespace cntrl
                     {
                         Label Label = new Label();
                         Label.Name = item.ColumnName;
-                        Label.Content = item.ColumnName;
+                        Label.Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName;
                         Label.Foreground = Brushes.Black;
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
                         Label.Style = lblStyle;
@@ -140,7 +140,7 @@ namespace cntrl
                     {
                         Label Label = new Label();
                         Label.Name = item.ColumnName;
-                        Label.Content = item.ColumnName;
+                        Label.Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName;
                         Label.Foreground = Brushes.Black;
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
                         Label.Style = lblStyle;

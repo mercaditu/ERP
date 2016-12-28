@@ -87,13 +87,13 @@
 						<Label Style="{StaticResource input_label}" Content="{lex:Loc StartDate}" />
 						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 							<DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-							<toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="hh:mmtt" />
+                            <toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" CurrentDateTimePart="Hour24" />
 						</StackPanel>
 
 						<Label Style="{StaticResource input_label}" Content="{lex:Loc EndDate}" />
 						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 							<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-							<toolkit:TimePicker x:Name="dtpendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                            <toolkit:TimePicker x:Name="dtpendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" CurrentDateTimePart="Hour24" />
 						</StackPanel>
 
 						<Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />

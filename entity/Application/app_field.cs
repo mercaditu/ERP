@@ -16,7 +16,7 @@ namespace entity
             is_head = true;
         }
 
-        public enum field_types { Telephone = 1, Account = 2}
+        public enum field_types { Telephone = 1, Account = 2,Email=3,Address=4}
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

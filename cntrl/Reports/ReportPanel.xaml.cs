@@ -158,6 +158,7 @@ namespace cntrl
             }
 
         }
+
         public void Fill()
         {
             this.reportViewer.Reset();
@@ -190,9 +191,6 @@ namespace cntrl
 
             ReportDt = dt;
 
-
-
-
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
@@ -214,7 +212,6 @@ namespace cntrl
             reportViewer.RefreshReport();
         }
        
-
         public void Filter()
         {
             this.reportViewer.Reset();
@@ -252,12 +249,10 @@ namespace cntrl
             Generate.GenerateReportList();
             ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
             ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
-
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             Fill();
         }
 

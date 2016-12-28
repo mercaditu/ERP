@@ -10,8 +10,17 @@ namespace cntrl.Class
         {
             ReportList = new List<Report>
             {
-            // Sales (Invoice, Order, and Budget) Detail Reports
-            new Report
+                // Sales (Invoice, Order, and Budget) Detail Reports
+
+                            new Report
+            {
+                Application = entity.App.Names.SalesInvoice,
+                Name ="CostOfGoodsSold",
+                Path = "cntrl.Reports.Sales.CostOfGoodsSold.rdlc",
+                Query = Reports.Sales.Sales.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+                new Report
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name ="SalesDetail",

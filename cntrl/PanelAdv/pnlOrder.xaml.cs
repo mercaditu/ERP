@@ -92,19 +92,19 @@ namespace cntrl.PanelAdv
                 production_order.RaisePropertyChanged("start_date_est");
                 production_order.RaisePropertyChanged("end_date_est");
 
-                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status==Status.Project.InProcess))
+                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status == Status.Project.InProcess))
                 {
                     project_task _project_task = (project_task)item;
                     production_order_detail production_order_detail = new production_order_detail();
-                    if (production_order_detail.item!=null)
+                    if (production_order_detail.item != null)
                     {
                         if (production_order_detail.item.id_item_type != entity.item.item_type.Task)
                         {
                             production_order_detail.status = Status.Production.Pending;
                         }
                     }
-                   
-               
+
+
                     production_order_detail.id_order_detail = _project_task.id_project_task;
                     production_order_detail.name = _project_task.item_description;
                     production_order_detail.code = _project_task.code;
@@ -141,11 +141,11 @@ namespace cntrl.PanelAdv
                     production_order.production_order_detail.Add(production_order_detail);
                 }
 
-                if (production_order==null)
+                if (production_order == null)
                 {
                     shared_dbContext.db.production_order.Add(production_order);
                 }
-                
+
                 production_orderViewSource.View.MoveCurrentToLast();
             }
         }
@@ -156,15 +156,14 @@ namespace cntrl.PanelAdv
             {
                 project_task _project_task = (project_task)item;
 
-                if (_project_task.items.id_item_type!=entity.item.item_type.Task)
+
+                if (_project_task.status == entity.Status.Project.Approved)
                 {
-                    if (_project_task.status == entity.Status.Project.Approved)
-                    {
-                        _project_task.status = entity.Status.Project.InProcess;
-                        _project_task.IsSelected = false;
-                    }
+                    _project_task.status = entity.Status.Project.InProcess;
+                    _project_task.IsSelected = false;
                 }
-             
+
+
             }
 
             IEnumerable<DbEntityValidationResult> validationresult = _dbContext.db.GetValidationErrors();

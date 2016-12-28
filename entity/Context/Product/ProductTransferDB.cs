@@ -245,6 +245,8 @@ namespace entity
                               null, null, null
                               );
                     item_movement_dest.parent = item_movement.parent;
+                    item_movement_dest.code = item_movement.code;
+                    item_movement_dest.expire_date = item_movement.expire_date;
                     base.item_movement.Add(item_movement_dest);
                 }
             }

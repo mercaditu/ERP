@@ -484,7 +484,7 @@ namespace Cognitivo.Production
                 production_orderViewSource.View.Refresh();
                 production_order_detaillViewSource.View.Refresh();
             }
-            catch { }
+            catch(Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)

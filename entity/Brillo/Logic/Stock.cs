@@ -977,6 +977,8 @@ namespace entity.Brillo.Logic
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer_detail = TransactionDetailID;
+
+                
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {

@@ -13,7 +13,7 @@ using System.Windows;
 [assembly: AssemblyCompany("Cognitivo Paraguay")]
 [assembly: AssemblyProduct("Cognitivo ERP")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("The Science ofBusiness")]
+[assembly: AssemblyTrademark("The Science of Business")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

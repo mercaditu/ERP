@@ -41,16 +41,16 @@ namespace Cognitivo
             //if (!File.Exists(destFilePath))
             //    File.Copy(sourceFilePath, destFilePath);
 
-            var CmdSaveAll = new CommandBinding(Class.CustomCommands.SaveAll, HotkeyPressed);
-            CommandManager.RegisterClassCommandBinding(typeof(Window), CmdSaveAll);
-            var CmdNewAll = new CommandBinding(Class.CustomCommands.NewAll, HotkeyPressed);
-            CommandManager.RegisterClassCommandBinding(typeof(Window), CmdNewAll);
-            var CmdDeleteAll = new CommandBinding(Class.CustomCommands.DeleteAll, HotkeyPressed);
-            CommandManager.RegisterClassCommandBinding(typeof(Window), CmdDeleteAll);
-            var CmdCancelAll = new CommandBinding(Class.CustomCommands.CancelAll, HotkeyPressed);
-            CommandManager.RegisterClassCommandBinding(typeof(Window), CmdCancelAll);
-            var CmdEditAll = new CommandBinding(Class.CustomCommands.EditAll, HotkeyPressed);
-            CommandManager.RegisterClassCommandBinding(typeof(Window), CmdEditAll);
+            //var CmdSaveAll = new CommandBinding(Class.CustomCommands.SaveAll, HotkeyPressed);
+            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdSaveAll);
+            //var CmdNewAll = new CommandBinding(Class.CustomCommands.NewAll, HotkeyPressed);
+            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdNewAll);
+            //var CmdDeleteAll = new CommandBinding(Class.CustomCommands.DeleteAll, HotkeyPressed);
+            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdDeleteAll);
+            //var CmdCancelAll = new CommandBinding(Class.CustomCommands.CancelAll, HotkeyPressed);
+            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdCancelAll);
+            //var CmdEditAll = new CommandBinding(Class.CustomCommands.EditAll, HotkeyPressed);
+            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdEditAll);
         }
 
         private void HotkeyPressed(object sender, ExecutedRoutedEventArgs e)

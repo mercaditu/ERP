@@ -36,7 +36,6 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             is_active = true;
-            id_company = entity.Properties.Settings.Default.company_ID;
         }
         public virtual ICollection<app_contract> app_contract { get; set; }
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }

@@ -340,7 +340,7 @@ namespace cntrl
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = CurrentSession.Contracts.Where(a => a.is_active == true
-                                                                        && a.id_company == entity.Properties.Settings.Default.company_ID
+                                                                        && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToList();
                 cbxContract.SelectedIndex = 0;
             }

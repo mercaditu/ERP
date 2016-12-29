@@ -28,6 +28,7 @@ namespace Cognitivo.Configs
             if (app_companyViewSource.View != null)
             {
                 int new_CompanyID = ((entity.app_company)app_companyViewSource.View.CurrentItem).id_company;
+
                 entity.Properties.Settings.Default.Save();
 
                 if (new_CompanyID != entity.CurrentSession.Id_Company &&

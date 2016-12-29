@@ -313,7 +313,7 @@ namespace entity
                 {
                     using (db db = new db())
                     {
-                        if (db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID) != null)
+                        if (db.item_price_list.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company) != null)
                         {
                             PriceList_ID = db.item_price_list.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
                         }

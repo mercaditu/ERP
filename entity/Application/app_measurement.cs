@@ -11,7 +11,7 @@ namespace entity
     {
         public app_measurement()
         {
-            id_company = entity.Properties.Settings.Default.company_ID;
+            id_company = CurrentSession.Id_Company;
             is_active = true;
             id_user =  CurrentSession.Id_User;
             is_head = true;

@@ -67,9 +67,7 @@ namespace entity
             {
                 if (_Id_Branch == 0)
                 {
-
                     _Id_Branch = Properties.Settings.Default.branch_ID;
-                   
                 }
                 return _Id_Branch;
             }
@@ -154,7 +152,6 @@ namespace entity
 
                     Properties.Settings.Default.branch_ID = _Id_Branch;
                     Properties.Settings.Default.Save();
-
                 }
 
                 Properties.Settings.Default.user_Name = User.name_full;

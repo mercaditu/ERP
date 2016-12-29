@@ -146,7 +146,7 @@ namespace cntrl.Curd
         {
             if ((bool)cbxPrint.IsChecked)
             {
-                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType).Load();
+                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType && x.id_company == 1).Load();
             }
             else
             {

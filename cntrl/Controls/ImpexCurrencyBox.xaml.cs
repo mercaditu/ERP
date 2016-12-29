@@ -168,16 +168,15 @@ namespace cntrl.Controls
         {
             using (db db = new db())
             {
-                int company_ID = entity.Properties.Settings.Default.company_ID;
                 if (SelectedValue == 0)
                 {
 
 
-                    if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == company_ID) != null)
+                    if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == CurrentSession.Id_Company) != null)
                     {
                         app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active
                                                                              && x.app_currency.is_priority
-                                                                             && x.id_company == company_ID)
+                                                                             && x.id_company == CurrentSession.Id_Company)
                                                                          .FirstOrDefault();
                         if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
                         {

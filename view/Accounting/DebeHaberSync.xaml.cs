@@ -10,6 +10,7 @@ using System.Net;
 using System.Data.Entity;
 using entity;
 using System.Collections.Generic;
+using cntrl;
 
 namespace Cognitivo.Accounting
 {
@@ -26,12 +27,26 @@ namespace Cognitivo.Accounting
 
         string RelationshipHash = string.Empty;
 
+        public DateTime StartDate
+        {
+            get { return AbsoluteDate.Start(_StartDate); }
+            set { _StartDate = value; fill(); }
+        }
+        private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
+
+        public DateTime EndDate
+        {
+            get { return AbsoluteDate.End(_EndDate); }
+            set { _EndDate = value; fill(); }
+        }
+        private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
+
         public DebeHaberSync()
         {
             InitializeComponent();
 
             DatePanel.StartDate = DateTime.Now.AddMonths(-1);
-            DatePanel.EndDate = DateTime.Now;
+            DatePanel.EndDate = DateTime.Now.Date.AddDays(1).AddTicks(-1);
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_returnViewSource = ((CollectionViewSource)(FindResource("sales_returnViewSource")));

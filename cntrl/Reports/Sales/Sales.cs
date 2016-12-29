@@ -10,6 +10,7 @@
  WHEN sales_invoice.status=4 THEN  'Rejected'
     END 
  as Status,
+sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												sales_invoice.number as Number,
 												sales_invoice.is_impex as Exports,
 												Date(sales_invoice.trans_date) as Date,
@@ -42,7 +43,8 @@
 												round((sales_invoice_detail.quantity * (sales_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
 												(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_price) as Margin,
 												(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_cost) as MarkUp,
-												(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit,
+(sales_invoice_detail.quantity * sales_invoice_detail.unit_cost) as SubTotalCost,												
+(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit,
 												(select name from app_geography where id_geography=contacts.id_geography) as GeoLevel1,
 												(select name from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=contacts.id_geography)) as GeoLevel2,

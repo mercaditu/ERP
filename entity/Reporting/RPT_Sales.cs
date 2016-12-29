@@ -5,6 +5,7 @@ namespace entity.Reporting
     public class RPT_Sales
     {
         public int Status { get; set; }
+        public int DetailID { get; set; }
         public string Number { get; set; }
         public bool Exports { get; set; }
         public DateTime Date { get; set; }
@@ -32,6 +33,7 @@ namespace entity.Reporting
         public decimal UnitPriceVat { get; set; }
         public decimal SubTotal { get; set; }
         public decimal SubTotalVat { get; set; }
+        public decimal SubTotalCost { get; set; }
         public decimal Discount { get; set; }
         public decimal DiscountVat { get; set; }
         public decimal Margin { get; set; }

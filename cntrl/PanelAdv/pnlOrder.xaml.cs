@@ -54,6 +54,8 @@ namespace cntrl.PanelAdv
                 production_lineViewSource = (CollectionViewSource)this.Resources["production_lineViewSource"];
                 shared_dbContext.db.production_line.Load();
                 production_lineViewSource.Source = shared_dbContext.db.production_line.Local;
+
+         
             }
 
 

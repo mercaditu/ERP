@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Accounting.DebeHaberSync"
+﻿<Page x:Class="Cognitivo.Accounting.DebeHaberSync" x:Name="this"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,8 @@
 	<Grid>
 		<Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
 			   VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <cntrl:DateRange x:Name="DatePanel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" Background="Black"/>
+        <cntrl:DateRange x:Name="DatePanel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" Background="Black"
+                          StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}"  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4">
 			<Button Content="Refresh" Margin="4" Padding="4,2" Click="btnData_Refresh"/>

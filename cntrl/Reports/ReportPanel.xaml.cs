@@ -27,7 +27,6 @@ namespace cntrl
                 if (value == true)
                 {
                     DateRange.Visibility = Visibility.Visible;
-
                 }
             }
         }

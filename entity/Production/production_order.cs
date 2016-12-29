@@ -35,6 +35,7 @@ namespace entity
         public int id_production_order { get; set; }
 
         [Required]
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_production_line { get; set; }
         public int? id_weather { get; set; }
 

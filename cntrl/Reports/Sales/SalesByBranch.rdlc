@@ -35,7 +35,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.16667in</Height>
+              <Height>0.19792in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -313,6 +313,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -378,7 +379,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.17708in</Height>
+              <Height>0.21353in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -641,14 +642,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox109">
+                    <Textbox Name="SubTotalCost3">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -662,7 +663,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox109</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost3</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#5dade2</Color>
@@ -718,7 +719,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.18229in</Height>
+              <Height>0.21354in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -981,14 +982,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox110">
+                    <Textbox Name="SubTotalCost2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1002,7 +1003,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox110</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost2</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#85c1e9</Color>
@@ -1058,7 +1059,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.17708in</Height>
+              <Height>0.20833in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1323,14 +1324,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox111">
+                    <Textbox Name="SubTotalCost1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1344,7 +1345,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox111</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#aed6f1</Color>
@@ -1400,7 +1401,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.18229in</Height>
+              <Height>0.20312in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1652,14 +1653,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox112">
+                    <Textbox Name="SubTotalCost">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1672,7 +1673,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox112</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1767,7 +1768,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox23">
                         <CanGrow>true</CanGrow>
@@ -1803,7 +1804,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox158">
                         <CanGrow>true</CanGrow>
@@ -1889,7 +1890,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox3">
                         <CanGrow>true</CanGrow>
@@ -1933,7 +1934,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox11">
                         <CanGrow>true</CanGrow>
@@ -1974,7 +1975,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox14">
                         <CanGrow>true</CanGrow>
@@ -2015,7 +2016,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox17">
                         <CanGrow>true</CanGrow>
@@ -2098,7 +2099,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox99">
                         <CanGrow>true</CanGrow>
@@ -2139,7 +2140,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox107">
                         <CanGrow>true</CanGrow>
@@ -2148,10 +2149,26 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value rd:LocID="Cost">Unit Cost</Value>
+                                <Value rd:LocID="Cost">COGS</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
+                                  <Format>N2</Format>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
+                          </Paragraph>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value rd:LocID="Cost" />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                  <Format>N2</Format>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -2175,12 +2192,13 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17708in</Size>
+                    <Size>0.21354in</Size>
                     <CellContents>
                       <Textbox Name="Textbox139">
                         <CanGrow>true</CanGrow>
@@ -2321,7 +2339,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.28645in</Height>
+        <Height>1.47394in</Height>
         <Width>10.86806in</Width>
         <Style>
           <Border>
@@ -2330,7 +2348,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.26758cm</Height>
+    <Height>3.74382cm</Height>
     <Style />
   </Body>
   <Width>27.60487cm</Width>
@@ -2500,6 +2518,10 @@
           <DataField>Date</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="DetailID">
+          <DataField>DetailID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Discount">
           <DataField>Discount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2511,6 +2533,26 @@
         <Field Name="Exports">
           <DataField>Exports</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel1">
+          <DataField>GeoLevel1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel2">
+          <DataField>GeoLevel2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel3">
+          <DataField>GeoLevel3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel4">
+          <DataField>GeoLevel4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel5">
+          <DataField>GeoLevel5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="GovCode">
           <DataField>GovCode</DataField>
@@ -2558,6 +2600,10 @@
         </Field>
         <Field Name="SubTotal">
           <DataField>SubTotal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SubTotalCost">
+          <DataField>SubTotalCost</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="SubTotalVat">

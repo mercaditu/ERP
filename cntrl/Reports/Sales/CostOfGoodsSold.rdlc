@@ -18,7 +18,7 @@
               <Width>1.36458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.59375in</Width>
+              <Width>0.72917in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.90972in</Width>
@@ -456,7 +456,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -570,7 +570,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -801,7 +801,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -915,7 +915,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1139,14 +1139,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox148">
+                    <Textbox Name="SubTotalCost2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1160,7 +1160,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox148</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost2</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#aed6f1</Color>
@@ -1260,7 +1260,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1458,6 +1458,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -1484,17 +1485,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox149">
+                    <Textbox Name="SubTotalCost1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Quantity.Value * Fields!UnitCost.Value</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -1504,7 +1506,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox149</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1532,6 +1534,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -1603,7 +1606,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1749,14 +1752,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox130">
+                    <Textbox Name="Number">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!Number.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1764,10 +1767,12 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox130</rd:DefaultName>
+                      <rd:DefaultName>Number</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1784,18 +1789,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox131">
+                    <Textbox Name="Quantity1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!Quantity.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1804,7 +1809,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox131</rd:DefaultName>
+                      <rd:DefaultName>Quantity1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1821,18 +1826,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox150">
+                    <Textbox Name="SubTotalCost">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!SubTotalCost.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1841,7 +1846,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox150</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1858,18 +1863,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox134">
+                    <Textbox Name="SubTotal1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!SubTotal.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1878,7 +1883,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox134</rd:DefaultName>
+                      <rd:DefaultName>SubTotal1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1895,19 +1900,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox97">
+                    <Textbox Name="Textbox55">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
+                                <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1916,7 +1920,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox97</rd:DefaultName>
+                      <rd:DefaultName>Textbox55</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1933,19 +1937,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox161">
+                    <Textbox Name="Textbox56">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value * Fields!UnitCost.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1954,7 +1956,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox149</rd:DefaultName>
+                      <rd:DefaultName>Textbox56</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1971,19 +1973,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox129">
+                    <Textbox Name="Textbox57">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SubTotal.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1992,7 +1992,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox129</rd:DefaultName>
+                      <rd:DefaultName>Textbox57</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -2009,19 +2009,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Profit6">
+                    <Textbox Name="Textbox58">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Profit.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2030,7 +2028,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Profit</rd:DefaultName>
+                      <rd:DefaultName>Textbox58</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -2047,19 +2045,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Margin6">
+                    <Textbox Name="Textbox59">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Avg(Fields!Margin.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>p</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2068,7 +2064,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Margin</rd:DefaultName>
+                      <rd:DefaultName>Textbox59</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -2377,7 +2373,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -2640,9 +2635,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixMembers>
-                            <TablixMember>
-                              <KeepWithGroup>After</KeepWithGroup>
-                            </TablixMember>
+                            <TablixMember />
                             <TablixMember>
                               <Group Name="Date">
                                 <GroupExpressions>
@@ -2656,6 +2649,30 @@
                               </SortExpressions>
                               <TablixMembers>
                                 <TablixMember />
+                                <TablixMember>
+                                  <TablixMembers>
+                                    <TablixMember>
+                                      <Group Name="DetailID">
+                                        <GroupExpressions>
+                                          <GroupExpression>=Fields!DetailID.Value</GroupExpression>
+                                        </GroupExpressions>
+                                      </Group>
+                                      <SortExpressions>
+                                        <SortExpression>
+                                          <Value>=Fields!Number.Value</Value>
+                                        </SortExpression>
+                                      </SortExpressions>
+                                      <Visibility>
+                                        <Hidden>true</Hidden>
+                                        <ToggleItem>Date</ToggleItem>
+                                      </Visibility>
+                                    </TablixMember>
+                                  </TablixMembers>
+                                  <Visibility>
+                                    <Hidden>true</Hidden>
+                                    <ToggleItem>Date</ToggleItem>
+                                  </Visibility>
+                                </TablixMember>
                               </TablixMembers>
                               <Visibility>
                                 <Hidden>true</Hidden>
@@ -2682,12 +2699,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixMember>
-            <TablixMember />
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.70484in</Height>
-        <Width>10.11805in</Width>
+        <Width>10.25347in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2698,7 +2714,7 @@
     <Height>1.70484in</Height>
     <Style />
   </Body>
-  <Width>10.11805in</Width>
+  <Width>10.25347in</Width>
   <Page>
     <PageFooter>
       <Height>0.2847in</Height>
@@ -2826,6 +2842,10 @@
           <DataField>Date</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="DetailID">
+          <DataField>DetailID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Discount">
           <DataField>Discount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2904,6 +2924,10 @@
         </Field>
         <Field Name="SubTotal">
           <DataField>SubTotal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SubTotalCost">
+          <DataField>SubTotalCost</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="SubTotalVat">

@@ -149,7 +149,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value rd:LocID="Cost">Unit Cost</Value>
+                              <Value rd:LocID="PricewithVAT">Unit Price Vat</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -188,7 +188,21 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value rd:LocID="PricewithVAT">Unit Price Vat</Value>
+                              <Value rd:LocID="PricewithVAT">COGS</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value rd:LocID="PricewithVAT" />
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -216,6 +230,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1686,14 +1701,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UnitCost">
+                    <Textbox Name="UnitPriceVat1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitCost.Value)</Value>
+                              <Value>=Fields!UnitPriceVat.Value</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1706,7 +1721,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>UnitCost</rd:DefaultName>
+                      <rd:DefaultName>UnitPriceVat1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1722,14 +1737,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UnitPriceVat">
+                    <Textbox Name="SubTotalCost">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!UnitPriceVat.Value)</Value>
+                              <Value>=Fields!SubTotalCost.Value</Value>
                               <Style>
                                 <FontFamily>courier new</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1742,7 +1757,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>UnitPriceVat</rd:DefaultName>
+                      <rd:DefaultName>SubTotalCost</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -2092,6 +2107,10 @@
           <DataField>Date</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="DetailID">
+          <DataField>DetailID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Discount">
           <DataField>Discount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2103,6 +2122,26 @@
         <Field Name="Exports">
           <DataField>Exports</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel1">
+          <DataField>GeoLevel1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel2">
+          <DataField>GeoLevel2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel3">
+          <DataField>GeoLevel3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel4">
+          <DataField>GeoLevel4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeoLevel5">
+          <DataField>GeoLevel5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="GovCode">
           <DataField>GovCode</DataField>
@@ -2150,6 +2189,10 @@
         </Field>
         <Field Name="SubTotal">
           <DataField>SubTotal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SubTotalCost">
+          <DataField>SubTotalCost</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="SubTotalVat">

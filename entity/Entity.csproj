@@ -540,6 +540,27 @@
     <None Include="Properties\DataSources\db.datasource">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\entity.Reporting.ContactBalnace.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Contacts.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ContactSubscription.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.CostBreakDown.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.EmployeeInProduction.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Inventory.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.InventoryValue.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Merchandise.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PendingPayable.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PendingReceivable.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PriceList.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ProductionOrder.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.ProductionStatus.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.PurchaseTender.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.StockByBranch.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Transfers.datasource" />
     <None Include="Properties\DataSources\geo_area.datasource" />
     <None Include="Properties\DataSources\geo_city.datasource" />
     <None Include="Properties\DataSources\geo_country.datasource" />

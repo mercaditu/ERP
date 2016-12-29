@@ -178,12 +178,12 @@ namespace entity
                     ///Transfers & Movement
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                     { 
-                            ProductTransferDB.item_transfer
+                          List<item_transfer> TrasnferList=ProductTransferDB.item_transfer
                             .Where (x => IntArray.Contains(x.id_transfer) )
                             .OrderBy(y => y.trans_date)
-                            .Load();
+                            .ToList();
 
-                        foreach (item_transfer transfer in ProductTransferDB.item_transfer.Local)
+                        foreach (item_transfer transfer in TrasnferList)
                         {
                             transfer.IsSelected = true;
                             foreach (item_transfer_detail detail in transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved))
@@ -196,8 +196,8 @@ namespace entity
                             {
                                 ProductTransferDB.SaveChanges();
 
-                                ProductTransferDB.ApproveOrigin(false);
-                                ProductTransferDB.ApproveDestination(false);
+                                ProductTransferDB.ApproveOrigin(transfer,false);
+                                ProductTransferDB.ApproveDestination(transfer,false);
                             }
                             catch (Exception e)
                             {

@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using entity;
+using System.Data.Entity;
 namespace cntrl.Controls
 {
     /// <summary>
@@ -21,16 +22,22 @@ namespace cntrl.Controls
     /// </summary>
     public partial class CustomField : UserControl
     {
+        db db = new db();
 
 
-
-        public static DependencyProperty FieldIDProperty = DependencyProperty.Register("FieldID", typeof(Int32), typeof(CustomField));
-        public Int32 FieldID
+        public static DependencyProperty FieldIDProperty = DependencyProperty.Register("FieldID", typeof(short), typeof(CustomField));
+        public short FieldID
         {
-            get { return Convert.ToInt32(GetValue(FieldIDProperty)); }
+            get { return (short)GetValue(FieldIDProperty); }
             set { SetValue(FieldIDProperty, value); }
         }
-        
+        public static DependencyProperty FieldNameProperty = DependencyProperty.Register("FieldName", typeof(string), typeof(CustomField));
+        public string FieldName
+        {
+            get { return (string)GetValue(FieldNameProperty); }
+            set { SetValue(FieldNameProperty, value); }
+        }
+
         public entity.app_field.field_types appFieldTypes { get; set; }
       
 
@@ -41,7 +48,29 @@ namespace cntrl.Controls
 
         private void CustomField_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxFieldType.ItemsSource = entity.CurrentSession.AppField.Where(x=>x.field_type== appFieldTypes);
+            db.app_field.Where(x => x.field_type == appFieldTypes).Load();
+            cbxFieldType.ItemsSource = db.app_field.Local;
+        }
+
+        private void cbxFieldType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxFieldType.SelectedItem!=null)
+            {
+                FieldName = cbxFieldType.Text;
+            }
+        }
+
+        private void Add_field(object sender, MouseButtonEventArgs e)
+        {
+           
+                app_field app_field = new app_field();
+                app_field.field_type = appFieldTypes;
+                app_field.name = "New";
+                db.app_field.Add(app_field);
+                db.SaveChanges();
+
+            cbxFieldType.SelectedItem = app_field;
+           
         }
     }
 }

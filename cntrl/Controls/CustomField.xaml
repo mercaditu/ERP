@@ -5,12 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="CustomField_Loaded">
+            Height="80" Width="250" Loaded="CustomField_Loaded">
     <Grid>
-        <StackPanel>
-            <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
+        <StackPanel   HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label Content="+"  PreviewMouseUp="Add_field" 
+								   Style="{StaticResource btn_Label}"/>
+            <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}" Width="250"
 												  SelectedValuePath="id_field"
-												  DisplayMemberPath="name" Width="Auto"
+												  DisplayMemberPath="name" SelectionChanged="cbxFieldType_SelectionChanged"
 												  SelectedValue="{Binding ElementName=_CustomField,Path=FieldID, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -18,6 +20,10 @@
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
-        </StackPanel>    
+            <TextBox Style="{StaticResource TextboxToLabelStyle}"
+								 Text="{Binding ElementName=_CustomField,Path=FieldName, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" Width="250" />
+        </StackPanel>
+       
+       
     </Grid>
 </UserControl>

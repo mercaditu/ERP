@@ -177,14 +177,13 @@ namespace entity
 
                     ///Transfers & Movement
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
-                    {
-                        List<item_transfer> item_transferLIST = 
+                    { 
                             ProductTransferDB.item_transfer
                             .Where (x => IntArray.Contains(x.id_transfer) )
                             .OrderBy(y => y.trans_date)
-                            .ToList();
+                            .Load();
 
-                        foreach (item_transfer transfer in item_transferLIST)
+                        foreach (item_transfer transfer in ProductTransferDB.item_transfer.Local)
                         {
                             transfer.IsSelected = true;
                             foreach (item_transfer_detail detail in transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved))
@@ -196,15 +195,15 @@ namespace entity
                             try
                             {
                                 ProductTransferDB.SaveChanges();
-                                ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
-                                ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+
+                                ProductTransferDB.ApproveOrigin(false);
+                                ProductTransferDB.ApproveDestination(false);
                             }
                             catch (Exception e)
                             {
                                 ErrorMsg += string.Format("/n Transfer: {0}, {1}, Error Msg: {2}", transfer.number, transfer.trans_date, e.Message);
                             }
-
-
+                            
                             transfer.IsSelected = false;
                         }
                     }

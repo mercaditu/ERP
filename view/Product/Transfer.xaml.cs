@@ -81,7 +81,7 @@ namespace Cognitivo.Product
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
             await ProductTransferDB.item_transfer.Where(a =>
                     a.id_company == CurrentSession.Id_Company &&
-                    a.transfer_type == item_transfer.Transfer_type.transfer).OrderByDescending(x => x.trans_date)
+                    a.transfer_type == item_transfer.Transfer_type.transfer).Include(x=>x.app_branch_destination).Include(y=>y.app_branch_origin).OrderByDescending(x => x.trans_date)
                     .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
@@ -170,41 +170,25 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApproveOrigin_Click(object sender)
         {
-            try
-            {
-                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
-                item_transfer.app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
-                item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
-                item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
-                item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+            item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
 
-                TransferSetting TransferSetting = new TransferSetting();
-
-                int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-                toolBar.msgSaved(NumberofRecords);
-                item_transferViewSource.View.Refresh();
-                 item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
-                item_transfer.State = EntityState.Modified;
-            }
-            catch (Exception ex)
+            if (item_transfer != null)
             {
-                toolBar.msgError(ex);
+                item_transfer.IsSelected = true;
+                ProductTransferDB.ApproveOrigin(item_transfer,false);
             }
         }
 
         private void toolBar_btnApproveDestination_Click(object sender)
         {
-            TransferSetting TransferSetting = new TransferSetting();
-
             item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
-            item_transfer.IsSelected = true;
 
-            int NumberOfRecords = ProductTransferDB.ApproveDestination((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-            if (NumberOfRecords > 0)
+            if (item_transfer != null)
             {
-                itemMovement = new Configs.itemMovement();
-                toolBar.msgSaved(NumberOfRecords);
+                item_transfer.IsSelected = true;
+                ProductTransferDB.ApproveDestination(item_transfer,false);
             }
+           
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)

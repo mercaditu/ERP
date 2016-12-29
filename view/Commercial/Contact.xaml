@@ -151,17 +151,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
-												  ItemsSource="{Binding Source={StaticResource app_fieldphoneViewSource}}"
-												  DisplayMemberPath="name" Width="Auto"
-												  SelectedValue="{Binding app_field.id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                            <ComboBox.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <VirtualizingStackPanel/>
-                                                </ItemsPanelTemplate>
-                                            </ComboBox.ItemsPanel>
-                                        </ComboBox>
-                                        <TextBox Text="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextToLabelStyle}"  HorizontalAlignment="Left"/>
+                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Telephone"/>
                                         <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                 </DataTemplate>
@@ -183,17 +173,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
-												  ItemsSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
-												  DisplayMemberPath="name" Width="Auto"
-												  SelectedValue="{Binding app_field.id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-											<ComboBox.ItemsPanel>
-												<ItemsPanelTemplate>
-													<VirtualizingStackPanel/>
-												</ItemsPanelTemplate>
-											</ComboBox.ItemsPanel>
-										</ComboBox>
-                                        <TextBox Text="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextToLabelStyle}"  HorizontalAlignment="Left"/>
+                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Email"/>
                                         <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
                                     </StackPanel>
@@ -219,7 +199,7 @@
 								<DataTemplate>
 									<StackPanel>
 
-                                        <cntrls:CustomField FieldID="{Binding app_field.id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Account"/>
+                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Account"/>
                                         <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                      
                                     </StackPanel>

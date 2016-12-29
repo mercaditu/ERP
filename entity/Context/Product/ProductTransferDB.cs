@@ -60,60 +60,45 @@ namespace entity
         /// <summary>
         /// Should only
         /// </summary>
-        public int ApproveOrigin(int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
+        public int ApproveOrigin(item_transfer item_transfer, bool MoveByTruck)
         {
+
             NumberOfRecords = 0;
-            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
-            {
-                if (item_transfer.id_transfer == 0)
-                {
-                    SaveChanges();
-                }
+            if (item_transfer.id_transfer==0)
+           {
+                SaveChanges();
             }
-            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
-            {
+
+            //Run foreach on all Transfers that are selected and that Item Transfer Detail is still pending.
+            //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.item_transfer_detail.Where(y => y.status == Status.Documents_General.Pending).Count() > 0))
+            //{
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Pending))
                 {
-                    Discount_Items_Origin(item_transfer_detail, ID_BranchOrigin, ID_BranchDestination, movebytruck);
+                    Discount_Items_Origin(item_transfer_detail, MoveByTruck);
 
                     //transit
                     NumberOfRecords += 1;
                     item_transfer.status = Status.Transfer.Transit;
-
-                    ///The Raise property code was cuasing the toolbar to be unresponsive to status changes, 
-                    ///causeing the user to close and start again. and so i commented it.
-                    //item_transfer.RaisePropertyChanged("status");
+                    item_transfer.RaisePropertyChanged("status");
                 }
+          //  }
 
-                //if (item_transfer != null)
-                //{
-                //        entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
-                //}
-            }
-
-            try
-            {
-                base.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            base.SaveChanges();
 
             return NumberOfRecords;
         }
 
-        public int ApproveDestination(int ID_BranchOrigin, int ID_BranchDestination, bool MoveByTruck)
+        public int ApproveDestination(item_transfer item_transfer,bool MoveByTruck)
         {
             NumberOfRecords = 0;
 
-            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
-            {
+            //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
+            //{
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
                 {
                     if (item_transfer_detail.item_product != null)
                     {
-                        Credit_Items_Destination(item_transfer_detail, ID_BranchOrigin, ID_BranchDestination, MoveByTruck);
+                        Credit_Items_Destination(item_transfer_detail, MoveByTruck);
 
                         NumberOfRecords += 1;
                         item_transfer_detail.timestamp = DateTime.Now;
@@ -166,7 +151,7 @@ namespace entity
                     item_transfer.RaisePropertyChanged("number");
                 }
 
-            }
+           // }
 
             base.SaveChanges();
 
@@ -177,11 +162,11 @@ namespace entity
         /// Executes code that will insert Invoiced Items into Movement.
         /// </summary>
         /// <param name="invoice"></param>
-        public async void Credit_Items_Destination(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool MoveByTruck)
+        public async void Credit_Items_Destination(item_transfer_detail item_transfer_detail, bool MoveByTruck)
         {
             Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
             app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
-            app_location app_location_dest = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
+            app_location app_location_dest = CurrentSession.Locations.Where(x => x.id_branch == item_transfer_detail.item_transfer.app_branch_destination.id_branch && x.is_default).FirstOrDefault();
 
             if (MoveByTruck)
             {
@@ -199,7 +184,7 @@ namespace entity
 
                 base.item_movement.AddRange(item_movement_LIST);
 
-                app_location app_location_origin = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
+                app_location app_location_origin = CurrentSession.Locations.Where(x => x.id_branch == item_transfer_detail.item_transfer.app_branch_origin.id_branch && x.is_default).FirstOrDefault();
 
                 //Credit in Origin only if it is MoveByTruck.
                 item_movement item_movement_origin;
@@ -256,14 +241,14 @@ namespace entity
         /// Executes code that will insert Invoiced Items into Movement.
         /// </summary>
         /// <param name="invoice"></param>
-        public void Discount_Items_Origin(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
+        public void Discount_Items_Origin(item_transfer_detail item_transfer_detail, bool movebytruck)
         {
             Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             if (item_transfer_detail.item_product != null)
             {
                 app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault();
-                app_location app_location = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
+                app_location LocationOrigin = CurrentSession.Locations.Where(x => x.id_branch == item_transfer_detail.item_transfer.app_branch_origin.id_branch && x.is_default).FirstOrDefault();
 
                 if (movebytruck)
                 {
@@ -276,17 +261,17 @@ namespace entity
                     else
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
+                        Items_InStockLIST = stockBrillo.List(LocationOrigin.id_branch, LocationOrigin.id_location, item_transfer_detail.id_item_product);
                     }
 
                     List<item_movement> item_movement_originList;
-                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,
+                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, LocationOrigin.id_location,
                             item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                     base.item_movement.AddRange(item_movement_originList);
 
                     item_movement item_movement_Dest;
-                    app_location app_locationdest = CurrentSession.Locations.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
+                    app_location app_locationdest = CurrentSession.Locations.Where(x => x.id_branch == item_transfer_detail.item_transfer.app_branch_destination.id_branch && x.is_default).FirstOrDefault();
 
                     item_movement_Dest = stock.CreditOnly_Movement(
                         Status.Stock.InStock,
@@ -315,12 +300,12 @@ namespace entity
                     else
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
+                        Items_InStockLIST = stockBrillo.List(LocationOrigin.id_branch, LocationOrigin.id_location, item_transfer_detail.id_item_product);
                     }
                     
                     ///Debit Movement from Origin.
                     List<item_movement> item_movement_originList;
-                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,
+                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, LocationOrigin.id_location,
                             item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                     base.item_movement.AddRange(item_movement_originList);

@@ -1,7 +1,7 @@
 
 namespace entity
 {
-    using entity.Brillo;
+    using Brillo;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -46,14 +46,14 @@ namespace entity
                     using (db db = new db())
                     {
                         int old_currencyfx = id_currencyfx;
-                        if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
+                        if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                         {
-                            id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
+                            id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_currencyfx;
                             RaisePropertyChanged("id_currencyfx");
                         }
                         else
                         {
-                            id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                            id_currencyfx = db.app_currencyfx.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_currencyfx;
                             RaisePropertyChanged("id_currencyfx");
                         }
                         RaisePropertyChanged("value");
@@ -62,8 +62,10 @@ namespace entity
             }
         }
         int _id_currency;
+
         [NotMapped]
         public int Default_id_currencyfx { get; set; }
+
         public int id_currencyfx
         {
             get
@@ -84,12 +86,12 @@ namespace entity
                         {
                             using (db db = new db())
                             {
-                                if (db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx).FirstOrDefault() != null)
+                                if (db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                                 {
-                                    app_currencyfx oldfx = db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx).FirstOrDefault();
-                                    if (db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx).FirstOrDefault() != null)
+                                    app_currencyfx oldfx = db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                                    if (db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                                     {
-                                        app_currencyfx newfx = db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx).FirstOrDefault();
+                                        app_currencyfx newfx = db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
                                         if (oldfx.id_currency != newfx.id_currency)
                                         {
                                             this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
@@ -112,6 +114,7 @@ namespace entity
         /// </summary>
         [NotMapped]
         public App.Names App_Name { get; set; }
+
         [NotMapped]
         public int id_payment_schedual { get; set; }
 
@@ -166,16 +169,21 @@ namespace entity
             }
             set
             {
-                if (_value != value)
+                if (value > 0)
                 {
 
-                    _value = value;
-                    RaisePropertyChanged("value");
 
-                    if (payment != null)
+                    if (_value != value)
                     {
-                        ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
-                        RaisePropertyChanged("ValueInDefaultCurrency");
+
+                        _value = value;
+                        RaisePropertyChanged("value");
+
+                        if (payment != null)
+                        {
+                            ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
+                            RaisePropertyChanged("ValueInDefaultCurrency");
+                        }
                     }
                 }
             }
@@ -190,33 +198,6 @@ namespace entity
         {
             get
             {
-                ////if (_ValueInDefaultCurrency == 0)
-                ////{
-                //if (payment != null)
-                //{
-                //	if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
-                //	{
-
-                //                    //decimal amount = 0;
-                //                    //foreach (payment_detail payment_detail in payment.payment_detail)
-                //                    //{
-
-                //                    return Currency.convert_Values
-                //			(
-                //			value, 
-                //			id_currencyfx, 
-                //			CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrentSession.Currency_Default.id_currency).FirstOrDefault().id_currencyfx, 
-                //			App.Modules.Sales
-                //			);
-
-                //		//}
-
-                //		//value = payment.GrandTotal - amount;
-                //		//return payment.GrandTotal - amount;
-
-                //	}
-                //}
-                ////}
                 if (_ValueInDefaultCurrency == 0)
                 {
                     if (payment != null)
@@ -228,14 +209,13 @@ namespace entity
                             {
                                 amount += Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
                             }
+
                             this.value = payment.GrandTotal - amount;
 
                             return payment.GrandTotal - amount;
                         }
                     }
                 }
-
-
 
                 return _ValueInDefaultCurrency;
             }
@@ -276,16 +256,16 @@ namespace entity
 
                     using (db db = new db())
                     {
-                        app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                        app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
                         if (_app_range != null)
                         {
-                            if (payment!=null)
+                            if (payment != null)
                             {
                                 Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment.id_branch).FirstOrDefault().code;
                                 Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment.id_terminal).FirstOrDefault().code;
                             }
-                        
+
                             NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                             RaisePropertyChanged("NumberWatermark");
                         }
@@ -313,11 +293,11 @@ namespace entity
         public virtual payment payment { get; set; }
         public virtual payment_type payment_type { get; set; }
 
-        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual app_account app_account { get; set; }
         public virtual app_bank app_bank { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }
 
+        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
 
@@ -358,8 +338,14 @@ namespace entity
                     if (Max_Value > 0)
                     {
                         if (value > Max_Value)
-                            return "Amount is not Higher than Credit Note Balace: " + Math.Round(Max_Value,2);
+                            return "Amount is not Higher than Credit Note Balace: " + Math.Round(Max_Value, 2);
                     }
+                    if (payment.Balance > 0)
+                    {
+                        if (payment.GrandTotalDetail > payment.Balance)
+                            return "Amount is not Higher than Balace: " + Math.Round(payment.Balance, 2);
+                    }
+
                 }
 
                 if (columnName == "id_payment_type")

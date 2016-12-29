@@ -14,11 +14,13 @@ namespace entity
             Delete,
             NotProcess
         }
+
         public enum ActionsStatus
         {
             Green,
             Red
         }
+
         public payment_schedual()
         {
             id_company = CurrentSession.Id_Company;

@@ -52,42 +52,10 @@ namespace cntrl.Curd
                 payment.contact = contacts;
             }
 
-            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currencyfx }))
+            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
-
-                int id_currencyfx = (int)id.id_currencyfx;
-                payment_detail payment_detail = new payment_detail();
-                payment_detail.payment = payment;
-
-
-                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
-                if (app_currencyfx != null)
-                {
-                    payment_detail.Default_id_currencyfx = id_currencyfx;
-                    payment_detail.id_currencyfx = id_currencyfx;
-                    payment_detail.payment.id_currencyfx = id_currencyfx;
-                    payment_detail.app_currencyfx = app_currencyfx;
-                }
-
-
-                payment_detail.IsSelected = true;
-
-
-
-                if (Mode == Modes.Recievable)
-                {
-                    payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountReceivableBalance);
-                    payment_detail.payment.Balance = payment_detail.value;
-
-                }
-                else
-                {
-                    payment_detail.value = payment_schedualList.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.AccountPayableBalance);
-                    payment_detail.payment.Balance = payment_detail.value;
-                }
-
-
-                payment.payment_detail.Add(payment_detail);
+                //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
+                Add_PaymentDetail(id.id_currency);
             }
 
             payment.RaisePropertyChanged("GrandTotal");
@@ -166,99 +134,14 @@ namespace cntrl.Curd
 
         private void SaveChanges(object sender, EventArgs e)
         {
-
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
             PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
 
-            List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected).ToList();
-            foreach (payment_detail _payment_detail in payment_detailList)
-            {
-
-                decimal amount = _payment_detail.value;
-
-
-
-
-                foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.id_currencyfx == _payment_detail.Default_id_currencyfx))
-                {
-                    if (amount > 0)
-                    {
-
-
-                        int id_currencyfx = _payment_detail.id_currencyfx;
-                        payment_detail payment_detail = new payment_detail();
-                        payment_detail.payment = payment;
-
-                        payment_detail.id_account = _payment_detail.id_account;
-                        payment_detail.id_payment_type = _payment_detail.id_payment_type;
-                        payment_detail.comment = _payment_detail.comment;
-                        app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Find(id_currencyfx);
-                        if (app_currencyfx != null)
-                        {
-                            payment_detail.id_currencyfx = id_currencyfx;
-                            payment_detail.payment.id_currencyfx = id_currencyfx;
-                            payment_detail.app_currencyfx = app_currencyfx;
-                        }
-
-
-                        payment_detail.IsSelected = true;
-
-                        if (Mode == Modes.Recievable)
-                        {
-
-                            payment_detail.id_sales_return = _payment_detail.id_sales_return;
-
-                        }
-                        else
-                        {
-                            payment_detail.id_purchase_return = _payment_detail.id_purchase_return;
-                        }
-
-                        Decimal TotalAmount = 0;
-                        if (Mode == Modes.Recievable)
-                        {
-                            TotalAmount = payment_schedual.debit;
-
-                        }
-                        else if (Mode == Modes.Payable)
-                        {
-                            TotalAmount = payment_schedual.credit;
-                        }
-                        TotalAmount = entity.Brillo.Currency.convert_Values(TotalAmount, payment_schedual.id_currencyfx, _payment_detail.id_currencyfx, App.Modules.Sales);
-
-                        if (TotalAmount > amount)
-                        {
-                            payment_detail.value = amount;
-                            amount = 0;
-                        }
-                        else
-                        {
-                            payment_detail.value = TotalAmount;
-                            amount = amount - payment_schedual.debit;
-                        }
-
-                        payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-
-                        payment.payment_detail.Add(payment_detail);
-
-                    }
-                }
-                PaymentDB.payment_detail.Remove(_payment_detail);
-
-
-            }
             foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
-                if (Mode == Modes.Recievable)
-                {
-
-                    PaymentDB.Approve(payment_detail.id_payment_schedual, true);
-                }
-                else
-                {
-                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
-                }
+                bool IsRecievable = Mode == Modes.Recievable ? true : false;
+                PaymentDB.Approve(payment_detail.id_payment_schedual, IsRecievable);
             }
             lblCancel_MouseDown(null, null);
         }
@@ -373,29 +256,46 @@ namespace cntrl.Curd
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
+            Add_PaymentDetail(CurrentSession.Currency_Default.id_currency);
+        }
+
+        private void Add_PaymentDetail(int CurrencyID)
+        {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detail = new payment_detail();
-            payment_detail.id_payment = payment.id_payment;
-            payment_detail.payment = payment;
-            payment_detail.IsSelected = true;
 
-            int id_currencyfx = payment_schedualList.FirstOrDefault().id_currencyfx;
-            if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+            if (payment != null)
             {
-                payment_detail.id_currency = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault().id_currency;
-                payment_detail.id_currencyfx = id_currencyfx;
-                payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
-            }
-            int id_payment_schedual = payment_schedualList.FirstOrDefault().id_payment_schedual;
-            if (PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault() != null)
-            {
-                payment_schedual _payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
-                payment_detail.payment_schedual.Add(_payment_schedual);
+                payment_detail payment_detail = new payment_detail();
+                payment_detail.payment = payment;
 
+                //Get current Active Rate of selected Currency.
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+
+                if (app_currencyfx != null)
+                {
+                    payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.app_currencyfx = app_currencyfx;
+                }
+
+                payment_detail.IsSelected = true;
+
+                //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
+                if (Mode == Modes.Recievable)
+                {
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance);
+                    payment_detail.payment.Balance = payment_detail.value;
+                }
+                else
+                {
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance);
+                    payment_detail.payment.Balance = payment_detail.value;
+                }
+
+                payment.payment_detail.Add(payment_detail);
+                paymentpayment_detailViewSource.View.Refresh();
             }
-            payment_detail.value = payment_detail.payment.Balance - payment_detail.payment.GrandTotalDetail;
-            payment.payment_detail.Add(payment_detail);
-            paymentpayment_detailViewSource.View.Refresh();
         }
 
         private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)

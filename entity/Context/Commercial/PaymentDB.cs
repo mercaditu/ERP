@@ -95,7 +95,7 @@ namespace entity
         }
         #endregion
 
-        public void Approve(int id_payment_schedual, bool PrintRequire)
+        public void Approve(int id_payment_schedual, bool IsRecievable)
         {
             foreach (payment payment in payments.Local.Where(x => x.status != Status.Documents_General.Approved && x.IsSelected))
             {
@@ -108,32 +108,27 @@ namespace entity
                 payment_schedual _payment_schedual = payment_schedual.Find(id_payment_schedual);
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
-                MakePayment(_payment_schedual, payment, PrintRequire);
+                MakePayment(_payment_schedual, payment, IsRecievable);
             }
         }
 
-        public async void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
+        public async void MakePayment(payment_schedual Parent_Schedual, payment payment, bool IsRecievable)
         {
             foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
-                if (payment_detail.id_payment_schedual > 0)
-                {
-                    Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
-                }
+                //if (payment_detail.id_payment_schedual > 0)
+                //{
+                //    Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
+                //}
 
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
-                payment_schedual balance_payment_schedual = new payment_schedual();
+                payment_schedual child_schedual = new payment_schedual();
 
                 //Assigns appCurrencyFX ID & Entity
                 if (payment_detail.id_currencyfx == 0)
                 {
-                    app_currencyfx _currencyfx = await app_currencyfx.FindAsync(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
-                    if (_currencyfx != null)
-                    {
-                        payment_detail.id_currencyfx = _currencyfx.id_currencyfx;
-                        payment_detail.app_currencyfx = _currencyfx;
-                    }
+                    payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                 }
 
                 ///Assigns appCurrencyFX Entity which is needed for Printing.
@@ -154,22 +149,19 @@ namespace entity
                     payment_detail.id_account = CurrentSession.Id_Account;
                 }
 
-
-
+               
                 ///Logic for Value in Balance Payment Schedual.
-                if ((Parent_Schedual.id_purchase_invoice != null && Parent_Schedual.id_purchase_invoice > 0) ||
-                   (Parent_Schedual.id_purchase_order != null && Parent_Schedual.id_purchase_order > 0)
-                    || (  Parent_Schedual.id_sales_return != null && Parent_Schedual.id_sales_return > 0 ))
+                if (IsRecievable == false)
                 {
                     ///If PaymentDetail Value is Negative.
                     ///
                     if (payment_detail.app_currencyfx.id_currency != Parent_Schedual.app_currencyfx.id_currency)
                     {
-                        balance_payment_schedual.debit = Math.Abs(Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Purchase));
+                        child_schedual.debit = Math.Abs(Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Purchase));
                     }
                     else
                     {
-                        balance_payment_schedual.debit = Math.Abs(payment_detail.value);
+                        child_schedual.debit = Math.Abs(payment_detail.value);
                     }
                 }
                 else
@@ -177,74 +169,80 @@ namespace entity
                     ///If PaymentDetail Value is Positive.
                     if (payment_detail.app_currencyfx.id_currency != Parent_Schedual.app_currencyfx.id_currency)
                     {
-                        balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
+                        child_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
                     }
                     else
                     {
-                        balance_payment_schedual.credit = payment_detail.value;
+                        child_schedual.credit = payment_detail.value;
+                    }
+                }
+
+                child_schedual.status = Status.Documents_General.Approved;
+                child_schedual.id_contact = Parent_Schedual.id_contact;
+                child_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
+                child_schedual.trans_date = payment_detail.trans_date;
+                child_schedual.expire_date = Parent_Schedual.expire_date;
+
+                decimal ChildBalance = 0;
+                foreach (payment_schedual parent in base.payment_schedual.Local)
+                {
+                    child_schedual.parent = parent;
+                    ChildBalance = child_schedual.credit; ;
+
+                    if (parent.debit < ChildBalance)
+                    {
+                        child_schedual.credit = parent.debit;
+                        ChildBalance -= parent.debit;
                     }
                 }
 
 
-                balance_payment_schedual.parent = Parent_Schedual;
-                balance_payment_schedual.status = Status.Documents_General.Approved;
-                balance_payment_schedual.id_contact = Parent_Schedual.id_contact;
-                balance_payment_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
-                balance_payment_schedual.trans_date = payment_detail.trans_date;
-                balance_payment_schedual.expire_date = Parent_Schedual.expire_date;
-                
                 string ModuleName = string.Empty;
-
                 ///
                 if (Parent_Schedual.id_purchase_invoice != null)
                 {
-                    balance_payment_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
+                    child_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                     ModuleName = "PurchaseInvoice";
                 }
 
                 ///
-
                 if (payment_detail.payment_schedual.FirstOrDefault() != null)
                 {
-                    balance_payment_schedual.id_purchase_order = payment_detail.payment_schedual.Select(x => x.id_purchase_order).FirstOrDefault();
+                    child_schedual.id_purchase_order = payment_detail.payment_schedual.Select(x => x.id_purchase_order).FirstOrDefault();
                     ModuleName = "PurchaseOrder";
                 }
 
                 ///
-                if (Parent_Schedual.id_purchase_return != null)
+                if (payment_detail.id_purchase_return != null)
                 {
-                    balance_payment_schedual.id_purchase_return = Parent_Schedual.id_purchase_return;
-                    ModuleName = "PurchaseReturn";
+                    child_schedual.id_purchase_return = payment_detail.id_purchase_return;
+                    ModuleName += " & Return";
                 }
 
                 ///
                 if (Parent_Schedual.id_sales_invoice != null)
                 {
-                    balance_payment_schedual.id_sales_invoice = Parent_Schedual.id_sales_invoice;
+                    child_schedual.id_sales_invoice = Parent_Schedual.id_sales_invoice;
                     ModuleName = "SalesInvoice";
-                }
-
-                ///
-                if (Parent_Schedual.id_sales_order != null)
-                {
-                    balance_payment_schedual.id_sales_order = Parent_Schedual.id_sales_order;
-                    ModuleName = "SalesOrder";
                 }
 
                 ///
                 if (payment_detail.id_sales_return != null)
                 {
-                    balance_payment_schedual.id_sales_return = payment_detail.id_sales_return;
-                  //  ModuleName = "SalesReturn";
+                    child_schedual.id_sales_return = payment_detail.id_sales_return;
+                    ModuleName += " & Return";
                 }
-                if (payment_detail.id_purchase_return != null)
+                ///
+                if (Parent_Schedual.id_sales_order != null)
                 {
-                    balance_payment_schedual.id_purchase_return = payment_detail.id_purchase_return;
-                    //  ModuleName = "SalesReturn";
+                    child_schedual.id_sales_order = Parent_Schedual.id_sales_order;
+                    ModuleName = "SalesOrder";
                 }
 
+
+
                 //Add Balance Payment Schedual into Context. 
-                payment_detail.payment_schedual.Add(balance_payment_schedual);
+                payment_detail.payment_schedual.Add(child_schedual);
 
 
                 ///Code to specify Accounts.

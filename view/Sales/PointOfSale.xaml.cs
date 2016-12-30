@@ -89,6 +89,11 @@ namespace Cognitivo.Sales
                 tabPayment.Focus();
                 return;
             }
+            if (payment.GrandTotalDetail > Math.Round(sales_invoice.GrandTotal, 2))
+            {
+                tabPayment.Focus();
+                return;
+            }
 
             /// If all validation is met, then we can start Sales Process.
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
@@ -98,7 +103,7 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesInvoiceDB.Approve(true);
 
-               List<payment_schedual> payment_schedualList= SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList,true);
 
                 //Start New Sale
@@ -184,11 +189,12 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            //This code helps protect wrong Terminal and Branch PC from making same invoice.
             tabPOS.IsSelected = true;
-            if (CurrentSession.Id_Branch==0)
+            if (CurrentSession.Id_Branch == 0)
             {
                 tabTerminal.IsSelected = true;
-                cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.ToList();
+                cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
                 stackBranch.Visibility = Visibility.Visible;
             }
             else
@@ -199,14 +205,17 @@ namespace Cognitivo.Sales
                     app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                     if (app_branch != null)
                     {
-                        if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count()==0)
+                        if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count() == 0)
                         {
-                            cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
+                            cbxTerminal.ItemsSource = app_branch.app_terminal.Where(x => x.is_active).ToList();
                             tabTerminal.IsSelected = true;
                         }
-                       
-                       
                     }
+                }
+                else
+                {
+                    cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
+                    tabTerminal.IsSelected = true;
                 }
                 stackBranch.Visibility = Visibility.Hidden;
             }
@@ -293,7 +302,7 @@ namespace Cognitivo.Sales
             
             payment_detail.State = EntityState.Added;
             payment_detail.IsSelected = true;
-        
+            payment_detail.Default_id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             payment_detail.id_currency = CurrentSession.Currency_Default.id_currency;
 
@@ -469,30 +478,21 @@ namespace Cognitivo.Sales
 
         private void btnSaveBranchTerminal_Click(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings Settings = new entity.Properties.Settings();
-
-            if (CurrentSession.Id_Branch==0)
-            {
-                app_branch app_branch = (app_branch)cbxBranch.SelectedItem;
-                if (app_branch != null)
-                {
-                    Settings.branch_ID = app_branch.id_branch;
-                    Settings.branch_Name = app_branch.name;
-                }
-             
-              
-              
-
-               
-            }
-            app_terminal app_terminal = (app_terminal)cbxTerminal.SelectedItem;
+            app_terminal app_terminal = cbxTerminal.SelectedItem as app_terminal;
             if (app_terminal != null)
             {
-                Settings.terminal_ID = app_terminal.id_terminal;
+                CurrentSession.Id_Terminal = app_terminal.id_terminal;
+                CurrentSession.Id_Branch = app_terminal.id_branch;
+
+                entity.Properties.Settings Settings = new entity.Properties.Settings();
+                Settings.branch_ID = CurrentSession.Id_Branch;
+                Settings.terminal_ID = CurrentSession.Id_Terminal;
                 Settings.terminal_Name = app_terminal.name;
-            }
-         
-            Settings.Save();
+                Settings.Save();
+
+                tabPOS.IsSelected = true;
+                tabContact.IsSelected = true;
+            }    
         }
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)

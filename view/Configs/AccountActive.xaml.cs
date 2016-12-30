@@ -100,7 +100,6 @@ namespace Cognitivo.Configs
                         {
                             foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                             {
-                            
                                 Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                                 clsTransferAmount.PaymentTypeName = payment_type.name;
                                 clsTransferAmount.amount = 0;
@@ -109,7 +108,6 @@ namespace Cognitivo.Configs
                                 clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
                                 listOpenAmt.Add(clsTransferAmount);
                             }
-                          
                         }
                         else
                         {
@@ -126,20 +124,18 @@ namespace Cognitivo.Configs
                                     listOpenAmt.Add(clsTransferAmount);
                                     
                                 }
-                            
                             }
                         }
                     }
-
                 }
                 else
                 {
                     List<app_currency> app_currencyList = new List<app_currency>();
-                    app_currencyList = db.app_currency.ToList();
+                    app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
                     foreach (app_currency app_currency in app_currencyList)
                     {
-                        foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
+                        foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.id_company == CurrentSession.Id_Company).ToList())
                         {
 
                             Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();

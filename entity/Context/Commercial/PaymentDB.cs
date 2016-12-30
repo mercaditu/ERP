@@ -161,11 +161,12 @@ namespace entity
                 {
                     ///If PaymentDetail Value is Positive.
 
-                    decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.app_currencyfx.id_currencyfx, App.Modules.Sales);
+                    decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
                         if (ChildBalance > 0)
                         {
+                            //Payment Detail is greater or equal to Schedual
                             if (ChildBalance >= parent.debit)
                             {
                                 child_schedual.credit = parent.debit;
@@ -173,7 +174,7 @@ namespace entity
                                 ChildBalance -= parent.debit;
                             }
                             else
-                            {
+                            { //Schedual is greater than Payment Detail.
                                 child_schedual.credit = ChildBalance;
                                 child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
                                 ChildBalance -= ChildBalance;

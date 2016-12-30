@@ -136,12 +136,12 @@ namespace cntrl.Curd
         {
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
+           
 
-            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
+            foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
                 bool IsRecievable = Mode == Modes.Recievable ? true : false;
-                PaymentDB.Approve(payment_detail.id_payment_schedual, IsRecievable);
+                PaymentDB.Approve(payment_schedualList, IsRecievable);
             }
             lblCancel_MouseDown(null, null);
         }
@@ -256,8 +256,13 @@ namespace cntrl.Curd
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
-            Add_PaymentDetail(CurrentSession.Currency_Default.id_currency);
+            payment_detail payment_detail=paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+            if (payment_detail!=null)
+            {
+                Add_PaymentDetail(payment_detail.app_currencyfx.id_currency);
+            }
         }
+         
 
         private void Add_PaymentDetail(int CurrencyID)
         {
@@ -284,13 +289,15 @@ namespace cntrl.Curd
                 //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
                 if (Mode == Modes.Recievable)
                 {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance);
-                    payment_detail.payment.Balance = payment_detail.value;
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
+                                                                           - payment.payment_detail.Where(x=>x.app_currencyfx.id_currency==CurrencyID).Sum(x => x.value);
+
                 }
                 else
                 {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance);
-                    payment_detail.payment.Balance = payment_detail.value;
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
+                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+
                 }
 
                 payment.payment_detail.Add(payment_detail);
@@ -302,7 +309,7 @@ namespace cntrl.Curd
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
             payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            payment.payment_detail.Remove(payment_detail);
+            PaymentDB.payment_detail.Remove(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
         }
 

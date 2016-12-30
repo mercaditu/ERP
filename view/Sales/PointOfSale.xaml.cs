@@ -98,8 +98,8 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesInvoiceDB.Approve(true);
 
-                int id_payment_schedual = await SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).Select(y => y.id_payment_schedual).FirstOrDefaultAsync();
-                PaymentDB.Approve(id_payment_schedual, (bool)chkreceipt.IsChecked);
+               List<payment_schedual> payment_schedualList= SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                PaymentDB.Approve(payment_schedualList, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
                 New_Sale_Payment();

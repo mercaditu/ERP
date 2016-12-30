@@ -184,6 +184,7 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+
             New_Sale_Payment();
 
             //PAYMENT TYPE

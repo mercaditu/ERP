@@ -184,7 +184,35 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            tabPOS.IsSelected = true;
+            if (CurrentSession.Id_Branch==0)
+            {
+                tabTerminal.IsSelected = true;
+                cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.ToList();
+                stackBranch.Visibility = Visibility.Visible;
+            }
+            else
+            {
 
+                if (CurrentSession.Id_Terminal > 0)
+                {
+                    app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                    if (app_branch != null)
+                    {
+                        if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count()==0)
+                        {
+                            cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
+                            tabTerminal.IsSelected = true;
+                        }
+                       
+                       
+                    }
+                }
+                stackBranch.Visibility = Visibility.Hidden;
+            }
+
+           
+            
             New_Sale_Payment();
 
             //PAYMENT TYPE
@@ -439,6 +467,41 @@ namespace Cognitivo.Sales
             sales_invoice.RaisePropertyChanged("GrandTotal");
         }
 
-     
+        private void btnSaveBranchTerminal_Click(object sender, RoutedEventArgs e)
+        {
+            entity.Properties.Settings Settings = new entity.Properties.Settings();
+
+            if (CurrentSession.Id_Branch==0)
+            {
+                app_branch app_branch = (app_branch)cbxBranch.SelectedItem;
+                if (app_branch != null)
+                {
+                    Settings.branch_ID = app_branch.id_branch;
+                    Settings.branch_Name = app_branch.name;
+                }
+             
+              
+              
+
+               
+            }
+            app_terminal app_terminal = (app_terminal)cbxTerminal.SelectedItem;
+            if (app_terminal != null)
+            {
+                Settings.terminal_ID = app_terminal.id_terminal;
+                Settings.terminal_Name = app_terminal.name;
+            }
+         
+            Settings.Save();
+        }
+
+        private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            app_branch app_branch = (app_branch)cbxBranch.SelectedItem;
+            if (app_branch != null)
+            {
+                cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == app_branch.id_branch).ToList();
+            }
+        }
     }
 }

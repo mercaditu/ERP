@@ -28,15 +28,12 @@
 					   HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
 					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
 		</Grid>
-	   
-		<StackPanel HorizontalAlignment="Center">
-		   
 
-			<Rectangle Height="1" Margin="3" Fill="Silver"/>
-
-			<DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="300" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
+        <StackPanel HorizontalAlignment="Center" Height="233">
+            <Rectangle Height="1" Margin="3" Fill="Silver"/>
+            <DataGrid Height="227" x:Name="item_movement_detailDataGrid" Width="300" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
 							  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
-							  EnableRowVirtualization="True" 
+							  EnableRowVirtualization="True"
 							  RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True"/>

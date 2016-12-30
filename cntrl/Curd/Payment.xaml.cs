@@ -149,7 +149,11 @@ namespace cntrl.Curd
                     TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountPayableBalance);
                 }
 
-                Decimal TotalPaid = payment.payment_detail.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.value);
+                Decimal TotalPaid = 0;
+                foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.app_currencyfx.app_currency.id_currency == id.id_currency).ToList())
+                {
+                    TotalPaid += entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                }
                 if (TotalPaid > TotalPayable)
                 {
                     String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;

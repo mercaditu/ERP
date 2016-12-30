@@ -126,6 +126,63 @@ namespace entity
                 ///Use this to Balance pending payments.
                 payment_schedual child_schedual = new payment_schedual();
 
+                if (IsRecievable == false)
+                {
+                    ///If PaymentDetail Value is Negative.
+                    ///
+                    decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                    foreach (payment_schedual parent in payment_schedualList.Where(x=>x.AccountPayableBalance>0))
+                    {
+                        if (ChildBalance > 0)
+                        {
+                            if (Math.Round(ChildBalance,2) >= Math.Round(parent.credit))
+                            {
+                                child_schedual.debit = parent.credit;
+                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                {
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                }
+
+                                ChildBalance -= parent.credit;
+                            }
+                            else
+                            {
+                                child_schedual.debit = ChildBalance;
+                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                {
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                }
+                                ChildBalance -= ChildBalance;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ///If PaymentDetail Value is Positive.
+
+                    decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.app_currencyfx.id_currencyfx, App.Modules.Sales);
+                    foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
+                    {
+                        if (ChildBalance > 0)
+                        {
+                            if (ChildBalance >= parent.debit)
+                            {
+                                child_schedual.credit = parent.debit;
+                                child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                ChildBalance -= parent.debit;
+                            }
+                            else
+                            {
+                                child_schedual.credit = ChildBalance;
+                                child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                ChildBalance -= ChildBalance;
+                            }
+                        }
+                    }
+                }
+                //End Mode IF
+
                 //Assigns appCurrencyFX ID & Entity
                 if (payment_detail.id_currencyfx == 0)
                 {
@@ -152,62 +209,7 @@ namespace entity
 
             
                 ///Logic for Value in Balance Payment Schedual.
-                if (IsRecievable == false)
-                {
-                    ///If PaymentDetail Value is Negative.
-                    ///
-                    decimal ChildBalance = payment_detail.value;
-                    foreach (payment_schedual parent in payment_schedualList)
-                    {
-                        if (ChildBalance > 0)
-                        {
-                            if (ChildBalance >= parent.credit)
-                            {
-                                child_schedual.debit = parent.credit;
-                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault()!=null)
-                                {
-                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                }
-                              
-                                ChildBalance -= parent.credit;
-                            }
-                            else
-                            {
-                                child_schedual.debit = ChildBalance;
-                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
-                                {
-                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                }
-                                ChildBalance -= ChildBalance;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    ///If PaymentDetail Value is Positive.
-
-                    decimal ChildBalance = payment_detail.value;
-                    foreach (payment_schedual parent in payment_schedualList)
-                    {
-                        if (ChildBalance > 0)
-                        {
-                            if (ChildBalance >= parent.debit)
-                            {
-                                child_schedual.credit = parent.debit;
-                                child_schedual.parent =  base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault(); 
-                                ChildBalance -= parent.debit;
-                            }
-                            else
-                            {
-                                child_schedual.credit = ChildBalance;
-                                child_schedual.parent =  base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault(); 
-                                ChildBalance -= ChildBalance;
-                            }
-                        }
-                    }
-                }
-                //End Mode IF
+           
 
                 Parent_Schedual = child_schedual.parent;
 

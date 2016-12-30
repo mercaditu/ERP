@@ -1,31 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using entity;
-using entity.Brillo;
-using cntrl.PanelAdv;
-using System.Windows;
 
 namespace cntrl.Class
 {
     public class CheckMovementReApprove
     {
-
-        public string CheckValueChange(db db, int ID, entity.App.Names Application)
+        public string CheckValueChange(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
                 string movmessage = "";
+
                 using (db temp = new db())
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-
                     foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
                     {
                         sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
@@ -38,7 +30,6 @@ namespace cntrl.Class
                                 if (item_movement_value != null)
                                 {
                                     movmessage += item_movement_value.unit_value + "-->" + sales_invoice_detail.unit_price;
-
                                 }
                             }
 

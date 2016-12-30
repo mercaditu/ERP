@@ -159,28 +159,29 @@ namespace entity
                     decimal ChildBalance = payment_detail.value;
                     foreach (payment_schedual parent in payment_schedualList)
                     {
-
-
                         if (ChildBalance > 0)
                         {
                             if (ChildBalance >= parent.credit)
                             {
                                 child_schedual.debit = parent.credit;
-                                child_schedual.parent = parent;
+                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault()!=null)
+                                {
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                }
+                              
                                 ChildBalance -= parent.credit;
                             }
                             else
                             {
                                 child_schedual.debit = ChildBalance;
-                                child_schedual.parent = parent;
+                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                {
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                }
                                 ChildBalance -= ChildBalance;
                             }
                         }
-
-
-
                     }
-
                 }
                 else
                 {
@@ -189,29 +190,25 @@ namespace entity
                     decimal ChildBalance = payment_detail.value;
                     foreach (payment_schedual parent in payment_schedualList)
                     {
-
-
                         if (ChildBalance > 0)
                         {
                             if (ChildBalance >= parent.debit)
                             {
                                 child_schedual.credit = parent.debit;
-                                child_schedual.parent = parent;
+                                child_schedual.parent =  base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault(); 
                                 ChildBalance -= parent.debit;
                             }
                             else
                             {
                                 child_schedual.credit = ChildBalance;
-                                child_schedual.parent = parent;
+                                child_schedual.parent =  base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault(); 
                                 ChildBalance -= ChildBalance;
                             }
                         }
-
-
-
                     }
-
                 }
+                //End Mode IF
+
                 Parent_Schedual = child_schedual.parent;
 
                 child_schedual.status = Status.Documents_General.Approved;
@@ -219,9 +216,6 @@ namespace entity
                 child_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
                 child_schedual.trans_date = payment_detail.trans_date;
                 child_schedual.expire_date = Parent_Schedual.expire_date;
-
-
-
 
                 string ModuleName = string.Empty;
                 ///

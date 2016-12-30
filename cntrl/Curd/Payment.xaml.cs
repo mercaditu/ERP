@@ -136,9 +136,29 @@ namespace cntrl.Curd
         {
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
-           
+            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            {
+                Decimal TotalPayable = 0;
+                if (Mode==Modes.Recievable)
+                {
 
-            foreach (payment_detail payment_detail in payment.payment_detail.ToList())
+                    TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountReceivableBalance);
+                }
+                else
+                {
+                    TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountPayableBalance);
+                }
+
+                Decimal TotalPaid = payment.payment_detail.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.value);
+                if (TotalPaid > TotalPayable)
+                {
+                    String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
+                    MessageBox.Show("Your Amount Is Higher Than :-" + TotalPayable + Currency);
+                    return;
+                }
+            }
+
+                foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
                 bool IsRecievable = Mode == Modes.Recievable ? true : false;
                 PaymentDB.Approve(payment_schedualList, IsRecievable);

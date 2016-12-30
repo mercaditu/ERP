@@ -550,7 +550,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -593,6 +593,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -614,6 +615,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -932,7 +934,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -975,6 +977,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -996,6 +999,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1315,7 +1319,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1358,6 +1362,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1379,6 +1384,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1698,7 +1704,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1741,6 +1747,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1762,6 +1769,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2079,7 +2087,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2142,6 +2150,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2452,7 +2461,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/Fields!UnitPrice.Value, 0)</Value>
+                              <Value>=IIf(Fields!Discount.Value &gt; 0, Fields!Discount.Value/(Fields!UnitPrice.Value + Fields!Discount.Value), 0)</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2513,6 +2522,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>

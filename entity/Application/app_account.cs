@@ -6,7 +6,6 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    using System.Linq;
 
     public partial class app_account : Audit, IDataErrorInfo
     {
@@ -24,6 +23,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            is_active = true;
             app_account_session = new List<app_account_session>();
         }
 

@@ -50,7 +50,7 @@ namespace cntrl
                 app_bankViewSource.Source = entity.db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_terminalViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_terminalViewSource");
-                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true).OrderBy(a => a.name).ToList();
+                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true && a.id_company==CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_currencyViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_currencyViewSource");
                 app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();

@@ -655,7 +655,7 @@ namespace entity.Brillo.Document
                 ChequeDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
                 PaymentDate = g.trans_date,
                 Memo = g.comment,
-                AmountNumber = g.value,
+                AmountNumber = Convert.ToInt32(g != null ? g.value : 0),
                 AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
                     //Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))

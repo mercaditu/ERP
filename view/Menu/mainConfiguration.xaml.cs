@@ -82,5 +82,6 @@ namespace Cognitivo.Menu
             MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
             rootWindow.mainFrame.Navigate(null);
         }
+
     }
 }

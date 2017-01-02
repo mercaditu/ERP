@@ -4,6 +4,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using entity;
+using System.Net.Http;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Cognitivo.Menu
 {
@@ -16,12 +23,26 @@ namespace Cognitivo.Menu
         {
             InitializeComponent();
         }
+        public class LicenceInfo
+        {
+            public string slm_action { get; set; }
+            public string secret_key { get; set; }
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+            public string email { get; set; }
+            public string company_name { get; set; }
+
+        }
+        public class LicenceRegistration
+        {
+            public string Key { get; set; }
+        }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
-        {            
-            if (txtname.Text == string.Empty || txtalias.Text == string.Empty 
-                || txtGovID.Text == string.Empty || txtFullName.Text == string.Empty 
-                || txtName.Text == string.Empty || txtPass.Password == string.Empty )
+        {
+            if (txtname.Text == string.Empty || txtalias.Text == string.Empty
+                || txtGovID.Text == string.Empty || txtFullName.Text == string.Empty
+                || txtName.Text == string.Empty || txtPass.Password == string.Empty)
             {
                 MessageBox.Show("Fill all Fields");
                 return;
@@ -40,7 +61,37 @@ namespace Cognitivo.Menu
             using (db db = new db())
             {
                 db.app_company.Add(app_company);
+
+                //var webAddr = "http://localhost/wordpress/save_record";
+                         
+
+                //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                //httpWebRequest.ContentType = "application/json";
+                //httpWebRequest.Method = "POST";
+                //LicenceInfo licence = new LicenceInfo();
+                //licence.slm_action = "slm_create_new";
+                //licence.secret_key = "5869f1b7e828f4.28406472";
+                //licence.first_name = txtname.Text;
+                //licence.last_name = txtalias.Text;
+                //licence.email = "pankeel@cognitivo.in";
+                //licence.company_name = txtname.Text + "-" + txtGovID.Text;
+
+                //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                //{
+                //    streamWriter.Write(new JavaScriptSerializer().Serialize(licence));
+                //    streamWriter.Flush();
+                //    streamWriter.Close();
+                //}
+
+                //var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                //using (Stream stream = httpResponse.GetResponseStream())
+                //{
+                //    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                //    String responseString = reader.ReadToEnd();
+                //    app_company.version = responseString;
+                //}
                 db.SaveChanges();
+
 
                 entity.Properties.Settings Settings = new entity.Properties.Settings();
                 Settings.company_ID = app_company.id_company;
@@ -269,7 +320,7 @@ namespace Cognitivo.Menu
 
                 try
                 {
-                    Dispatcher.BeginInvoke((Action)(() => 
+                    Dispatcher.BeginInvoke((Action)(() =>
                     {
                         entity.Properties.Settings Settings = new entity.Properties.Settings();
                         Settings.branch_ID = app_branch.id_branch;
@@ -281,7 +332,7 @@ namespace Cognitivo.Menu
 
                         Settings.Save();
                         progBar.Value = 100;
-                        
+
                         Countdown(5, TimeSpan.FromSeconds(1), cur => tbxCountDown.Content = cur.ToString());
                         tabRestart.IsSelected = true;
                     }));

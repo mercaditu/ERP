@@ -350,7 +350,14 @@ namespace Cognitivo.Production
                         {
                             production_order_dimension production_order_dimension = new production_order_dimension();
                             production_order_dimension.id_dimension = item_dimension.id_app_dimension;
-                            production_order_dimension.app_dimension = item_dimension.app_dimension;
+                            production_order_dimension.RaisePropertyChanged("id_dimension");
+                            app_dimension app_dimension= ExecutionDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
+                            if (app_dimension!=null)
+                            {
+                                production_order_dimension.app_dimension = app_dimension;
+                            }
+                            
+                            production_order_dimension.RaisePropertyChanged("app_dimension");
                             production_order_dimension.id_measurement = item_dimension.id_measurement;
                             production_order_dimension.app_measurement = item_dimension.app_measurement;
                             production_order_dimension.value = item_dimension.value;
@@ -892,6 +899,7 @@ namespace Cognitivo.Production
             treeService.UpdateLayout();
             treeProduct.UpdateLayout();
         }
+
 
         private void btnInsert_Click(object sender, EventArgs e)
         {

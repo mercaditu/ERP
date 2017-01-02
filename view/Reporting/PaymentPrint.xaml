@@ -45,7 +45,7 @@
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                        <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" recordName="payment.contact.name"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											
@@ -60,7 +60,7 @@
             <metro:ToggleSwitch x:Name="Print" Width="150" Content="Printed" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" Height="50" VerticalAlignment="Top" Checked="Print_Checked" Unchecked="Print_Checked"/>
             <StackPanel>
               
-                <Label Content="PaymentType" Style="{StaticResource input_label}"/>
+                <Label Content="PaymentType" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
                 <Label Content="{Binding payment_type.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
 
                 <Label Content="Account" Style="{StaticResource input_label}"/>

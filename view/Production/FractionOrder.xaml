@@ -237,7 +237,7 @@
 												   
 													  RowDetailsVisibilityMode="VisibleWhenSelected">
 											<DataGrid.Columns>
-												<DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                <DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 																		Header="{lex:Loc Cognitivo:local:Dimension}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto" IsReadOnly="True"/>
 												<DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 

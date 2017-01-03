@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
 using entity.Brillo;
+using System.Windows;
 
 namespace entity
 {
@@ -22,7 +23,7 @@ namespace entity
 
             if (Is_PaymentRecievable)
             {
-                payment.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+                payment.app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             }
 
             payment.IsSelected = true;
@@ -206,6 +207,7 @@ namespace entity
                 if (payment_detail.id_account == 0 || payment_detail.id_account == null)
                 {
                     payment_detail.id_account = CurrentSession.Id_Account;
+                    payment_detail.app_account = await app_account.Where(x => x.id_account== CurrentSession.Id_Account).FirstOrDefaultAsync();
                 }
 
             
@@ -278,6 +280,7 @@ namespace entity
                     app_account_detail app_account_detail = new app_account_detail();
 
                     app_account_detail.id_account = (int)payment_detail.id_account;
+                    app_account_detail.app_account = payment_detail.app_account;
                     app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;
                     app_account_detail.payment_detail = payment_detail;
@@ -356,9 +359,14 @@ namespace entity
                 payment.RaisePropertyChanged("number");
             }
 
-            base.SaveChanges();
-
-
+            try
+            {
+                base.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             if (IsRecievable)
             {
                 Brillo.Document.Start.Automatic(payment, app_document_range);

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -167,6 +170,46 @@ namespace entity
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                 myTimer.Interval = 60000;
                 myTimer.Start();
+
+                //var webAddr = "http://localhost/LicenceManager/public/LicenceVerify";
+                //string licensekey = "";
+                //using (db db = new db())
+                //{
+                //    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
+                //    if (app_company!=null)
+                //    {
+                //        licensekey = app_company.version;
+                //    }
+                //}
+
+
+              
+                //if (licensekey == "" || licensekey == null)
+                //{
+                //    Version = Versions.Lite;
+                //}
+                //else
+                //{
+                //    webAddr = webAddr + "/" + licensekey;
+                //    var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                //    httpWebRequest.ContentType = "application/json";
+                //    httpWebRequest.Method = "get";
+
+
+
+                //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                //    using (Stream stream = httpResponse.GetResponseStream())
+                //    {
+                //        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                //        String responseString = reader.ReadToEnd();
+                //        if (responseString == "false")
+                //        {
+                //            Version = Versions.Lite;
+                //        }
+
+                //    }
+                //}
+               
             }
         }
 

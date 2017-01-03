@@ -42,7 +42,7 @@
                     Content = SalesInvoice(sales_invoice);
                     Print(Content, app_document, PrinterName);
                 }
-                else if (app_document.id_application == App.Names.PaymentUtility)
+                else if (app_document.id_application == App.Names.PointOfSale)
                 {
                     payment payment = (payment)obj;
                     Content = Payment(payment);

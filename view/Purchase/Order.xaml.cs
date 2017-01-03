@@ -625,7 +625,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
-            if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved)
+            if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved && purchase_order.purchase_invoice.Count()==0)
             {
                 purchase_invoice purchase_invoice = new purchase_invoice();
                 purchase_invoice.barcode = purchase_order.barcode;
@@ -641,10 +641,11 @@ namespace Cognitivo.Purchase
                 purchase_invoice.id_sales_rep = purchase_order.id_sales_rep;
                 purchase_invoice.id_weather = purchase_order.id_weather;
                 purchase_invoice.is_impex = purchase_order.is_impex;
-
+                purchase_invoice.purchase_order = purchase_order;
                 foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
                 {
                     purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
+                    purchase_invoice_detail.id_cost_center = detail.id_cost_center;
                     purchase_invoice_detail.comment = detail.comment;
                     purchase_invoice_detail.discount = detail.discount;
                     purchase_invoice_detail.id_item = detail.id_item;
@@ -659,6 +660,12 @@ namespace Cognitivo.Purchase
 
                 PurchaseOrderDB.purchase_invoice.Add(purchase_invoice);
                 PurchaseOrderDB.SaveChanges();
+                MessageBox.Show("Invoice Create Sucessfully");
+              
+            }
+            else
+            {
+                MessageBox.Show("Invoice Already Created Or Status is Not Approved...");
             }
         }
     }

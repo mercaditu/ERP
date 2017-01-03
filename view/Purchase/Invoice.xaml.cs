@@ -1018,7 +1018,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
-            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved)
+            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.purchase_return.Count()==0)
             {
                 purchase_return purchase_return = new purchase_return();
                 purchase_return.barcode = purchase_invoice.barcode;
@@ -1034,10 +1034,11 @@ namespace Cognitivo.Purchase
                 purchase_return.id_sales_rep = purchase_invoice.id_sales_rep;
                 purchase_return.id_weather = purchase_invoice.id_weather;
                 purchase_return.is_impex = purchase_invoice.is_impex;
-
+                purchase_return.purchase_invoice = purchase_invoice;
                 foreach (purchase_invoice_detail detail in purchase_invoice.purchase_invoice_detail)
                 {
                     purchase_return_detail purchase_return_detail = new purchase_return_detail();
+                    purchase_return_detail.id_cost_center = detail.id_cost_center;
                     purchase_return_detail.comment = detail.comment;
                     purchase_return_detail.discount = detail.discount;
                     purchase_return_detail.id_item = detail.id_item;
@@ -1052,6 +1053,11 @@ namespace Cognitivo.Purchase
 
                 PurchaseInvoiceDB.purchase_return.Add(purchase_return);
                 PurchaseInvoiceDB.SaveChanges();
+                MessageBox.Show("Return Created Successfully..");
+            }
+            else
+            {
+                MessageBox.Show("Return Already Created Or Status is Not Approved ..");
             }
 
         }

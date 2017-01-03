@@ -62,27 +62,15 @@ namespace Cognitivo.Menu
             {
                 db.app_company.Add(app_company);
 
-                //var webAddr = "http://localhost/wordpress/save_record";
-                         
+                //var webAddr = "http://localhost/LicenceManager/public/Licence";
 
+                //webAddr = webAddr + "/" + txtname.Text + "/" + txtalias.Text+"/" + txtname.Text + "_" + txtGovID.Text + "/" + "pankeel@cognitivo.in";
                 //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 //httpWebRequest.ContentType = "application/json";
-                //httpWebRequest.Method = "POST";
-                //LicenceInfo licence = new LicenceInfo();
-                //licence.slm_action = "slm_create_new";
-                //licence.secret_key = "5869f1b7e828f4.28406472";
-                //licence.first_name = txtname.Text;
-                //licence.last_name = txtalias.Text;
-                //licence.email = "pankeel@cognitivo.in";
-                //licence.company_name = txtname.Text + "-" + txtGovID.Text;
+                //httpWebRequest.Method = "get";
+            
 
-                //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                //{
-                //    streamWriter.Write(new JavaScriptSerializer().Serialize(licence));
-                //    streamWriter.Flush();
-                //    streamWriter.Close();
-                //}
-
+          
                 //var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 //using (Stream stream = httpResponse.GetResponseStream())
                 //{

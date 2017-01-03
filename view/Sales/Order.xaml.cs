@@ -558,7 +558,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-            if (sales_order != null && sales_order.status == Status.Documents_General.Approved)
+            if (sales_order != null && sales_order.status == Status.Documents_General.Approved && sales_order.sales_invoice.Count()==0)
             {
                 sales_invoice sales_invoice = new sales_invoice();
                 sales_invoice.barcode = sales_order.barcode;
@@ -574,7 +574,7 @@ namespace Cognitivo.Sales
                 sales_invoice.id_sales_rep = sales_order.id_sales_rep;
                 sales_invoice.id_weather = sales_order.id_weather;
                 sales_invoice.is_impex = sales_order.is_impex;
-
+                sales_invoice.sales_order = sales_order;
                 foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
                 {
                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -596,6 +596,11 @@ namespace Cognitivo.Sales
                 crm_opportunity crm_opportunity = sales_order.crm_opportunity;
                 crm_opportunity.sales_invoice.Add(sales_invoice);
                 SalesOrderDB.SaveChanges();
+                MessageBox.Show("Invoice Created Successfully..");
+            }
+            else
+            {
+                MessageBox.Show("Invoice Already Created Or Status is Not Approved..");
             }
         }
     }

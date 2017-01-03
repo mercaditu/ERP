@@ -407,7 +407,7 @@ namespace Cognitivo.Sales
                 sales_order.id_sales_rep = sales_budget.id_sales_rep;
                 sales_order.id_weather = sales_budget.id_weather;
                 sales_order.is_impex = sales_budget.is_impex;
-                
+                sales_order.sales_budget = sales_budget;
                 foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                 {
                     sales_order_detail sales_order_detail = new sales_order_detail();
@@ -429,6 +429,11 @@ namespace Cognitivo.Sales
                 crm_opportunity crm_opportunity = sales_budget.crm_opportunity;
                 crm_opportunity.sales_order.Add(sales_order);
                 SalesBudgetDB.SaveChanges();
+                MessageBox.Show("Order Created Successfully..");
+            }
+            else
+            {
+                MessageBox.Show("Order Already Created Or Status is Not Approved ..");
             }
         }
 

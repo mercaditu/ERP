@@ -967,7 +967,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved)
+            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved && sales_invoice.sales_return.Count()==0)
             {
                 sales_return sales_return = new sales_return();
                 sales_return.barcode = sales_invoice.barcode;
@@ -983,7 +983,7 @@ namespace Cognitivo.Sales
                 sales_return.id_sales_rep = sales_invoice.id_sales_rep;
                 sales_return.id_weather = sales_invoice.id_weather;
                 sales_return.is_impex = sales_invoice.is_impex;
-
+                sales_return.sales_invoice = sales_invoice;
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
                 {
                     sales_return_detail sales_return_detail = new sales_return_detail();
@@ -1005,6 +1005,11 @@ namespace Cognitivo.Sales
                 crm_opportunity crm_opportunity = sales_invoice.crm_opportunity;
                 crm_opportunity.sales_return.Add(sales_return);
                 SalesInvoiceDB.SaveChanges();
+                MessageBox.Show("Return Created Successfully ..");
+            }
+            else
+            {
+                MessageBox.Show("Return Already Created Or Status is Not Approved..");
             }
         }
     }

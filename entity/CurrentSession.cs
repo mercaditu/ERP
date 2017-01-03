@@ -71,10 +71,25 @@ namespace entity
                 if (_Id_Branch == 0)
                 {
                     _Id_Branch = Properties.Settings.Default.branch_ID;
+                    NotifyStaticPropertyChanged("Id_Branch");
                 }
                 return _Id_Branch;
             }
-            set { _Id_Branch = value; }
+            set
+            {
+                _Id_Branch = value;
+                using (db db = new db())
+                {
+                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == value).FirstOrDefault();
+                    if (app_branch != null)
+                    {
+                        Properties.Settings.Default.branch_Name = app_branch.name;
+                        Properties.Settings.Default.Save();
+                    }
+
+
+                }
+            }
         }
         static int _Id_Branch;
 
@@ -85,10 +100,25 @@ namespace entity
                 if (_Id_Terminal == 0)
                 {
                     _Id_Terminal = Properties.Settings.Default.terminal_ID;
+                    NotifyStaticPropertyChanged("Id_Terminal");
                 };
                 return _Id_Terminal;
             }
-            set { _Id_Terminal = value; }
+            set
+            {
+                _Id_Terminal = value;
+                using (db db = new db())
+                {
+                    app_terminal app_terminal = db.app_terminal.Where(x => x.id_terminal == value).FirstOrDefault();
+                    if (app_terminal != null)
+                    {
+                        Properties.Settings.Default.terminal_Name = app_terminal.name;
+                        Properties.Settings.Default.Save();
+                    }
+
+
+                }
+            }
         }
         static int _Id_Terminal;
 
@@ -99,10 +129,25 @@ namespace entity
                 if (_Id_Account == 0)
                 {
                     _Id_Account = Properties.Settings.Default.account_ID;
+                    NotifyStaticPropertyChanged("Id_Account");
                 };
                 return _Id_Account;
             }
-            set { _Id_Account = value; }
+            set
+            {
+                _Id_Account = value;
+                using (db db = new db())
+                {
+                    app_account app_account = db.app_account.Where(x => x.id_account == value).FirstOrDefault();
+                    if (app_account != null)
+                    {
+                        Properties.Settings.Default.account_Name = app_account.name;
+                        Properties.Settings.Default.Save();
+                    }
+
+
+                }
+            }
         }
         static int _Id_Account;
 
@@ -183,7 +228,7 @@ namespace entity
                 //}
 
 
-              
+
                 //if (licensekey == "" || licensekey == null)
                 //{
                 //    Version = Versions.Lite;
@@ -209,7 +254,7 @@ namespace entity
 
                 //    }
                 //}
-               
+
             }
         }
 
@@ -264,7 +309,7 @@ namespace entity
                 Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                AppField=db.app_field.Where(x => x.id_company == Id_Company).ToList();
+                AppField = db.app_field.Where(x => x.id_company == Id_Company).ToList();
                 if (IsLoaded == false)
                 {
                     VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();

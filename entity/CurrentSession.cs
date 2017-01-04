@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -71,7 +68,6 @@ namespace entity
                 if (_Id_Branch == 0)
                 {
                     _Id_Branch = Properties.Settings.Default.branch_ID;
-                    NotifyStaticPropertyChanged("Id_Branch");
                 }
                 return _Id_Branch;
             }
@@ -86,8 +82,6 @@ namespace entity
                         Properties.Settings.Default.branch_Name = app_branch.name;
                         Properties.Settings.Default.Save();
                     }
-
-
                 }
             }
         }
@@ -100,7 +94,6 @@ namespace entity
                 if (_Id_Terminal == 0)
                 {
                     _Id_Terminal = Properties.Settings.Default.terminal_ID;
-                    NotifyStaticPropertyChanged("Id_Terminal");
                 };
                 return _Id_Terminal;
             }
@@ -129,7 +122,6 @@ namespace entity
                 if (_Id_Account == 0)
                 {
                     _Id_Account = Properties.Settings.Default.account_ID;
-                    NotifyStaticPropertyChanged("Id_Account");
                 };
                 return _Id_Account;
             }
@@ -144,8 +136,6 @@ namespace entity
                         Properties.Settings.Default.account_Name = app_account.name;
                         Properties.Settings.Default.Save();
                     }
-
-
                 }
             }
         }
@@ -191,14 +181,14 @@ namespace entity
                 UserRole = Role;
                 Version = Role.Version;
 
-                if (_Id_Branch == 0)
+                if (Id_Branch == 0)
                 {
                     using (db db = new db())
                     {
-                        _Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).FirstOrDefault().id_branch;
+                        Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).FirstOrDefault().id_branch;
                     }
 
-                    Properties.Settings.Default.branch_ID = _Id_Branch;
+                    Properties.Settings.Default.branch_ID = Id_Branch;
                     Properties.Settings.Default.Save();
                 }
 
@@ -215,34 +205,6 @@ namespace entity
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                 myTimer.Interval = 60000;
                 myTimer.Start();
-
-                //entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                //string licensekey = "";
-                //using (db db = new db())
-                //{
-                //    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-                //    if (app_company != null)
-                //    {
-                //        if (app_company.version != null || app_company.version == "")
-                //        {
-                //            licensekey = app_company.version;
-                //        }
-                //        else
-                //        {
-                           
-                //            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
-                //        }
-                //    }
-                //}
-
-
-
-                //if (Licence.VerifyLicence(licensekey)==false)
-                //{
-                //    Version = Versions.Lite;
-                //}
-
-
             }
         }
 
@@ -298,6 +260,7 @@ namespace entity
                 Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 AppField = db.app_field.Where(x => x.id_company == Id_Company).ToList();
+
                 if (IsLoaded == false)
                 {
                     VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();

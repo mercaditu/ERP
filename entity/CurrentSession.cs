@@ -73,14 +73,17 @@ namespace entity
             }
             set
             {
-                _Id_Branch = value;
-                using (db db = new db())
+                if (_Id_Branch != value)
                 {
-                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == value).FirstOrDefault();
-                    if (app_branch != null)
+                    _Id_Branch = value;
+                    using (db db = new db())
                     {
-                        Properties.Settings.Default.branch_Name = app_branch.name;
-                        Properties.Settings.Default.Save();
+                        app_branch app_branch = db.app_branch.Where(x => x.id_branch == value).FirstOrDefault();
+                        if (app_branch != null)
+                        {
+                            Properties.Settings.Default.branch_Name = app_branch.name;
+                            Properties.Settings.Default.Save();
+                        }
                     }
                 }
             }

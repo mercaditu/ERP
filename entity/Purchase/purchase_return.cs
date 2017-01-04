@@ -172,6 +172,24 @@ namespace entity
         }
         private decimal _DiscountWithoutPercentage;
 
+        public new System.Data.Entity.EntityState State
+        {
+            get { return _State; }
+            set
+            {
+                if (value != _State)
+                {
+                    _State = value;
+                    RaisePropertyChanged("State");
+                    base.State = value;
+                    foreach (purchase_return_detail detail in purchase_return_detail)
+                    {
+                        detail.State = value;
+                    }
+                }
+            }
+        }
+        System.Data.Entity.EntityState _State;
         //TimeCapsule
         public ICollection<purchase_return> older { get; set; }
         public purchase_return newer { get; set; }

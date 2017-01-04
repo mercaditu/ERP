@@ -216,44 +216,32 @@ namespace entity
                 myTimer.Interval = 60000;
                 myTimer.Start();
 
-                //var webAddr = "http://localhost/LicenceManager/public/LicenceVerify";
+                //entity.Brillo.Licence Licence = new entity.Brillo.Licence();
                 //string licensekey = "";
                 //using (db db = new db())
                 //{
                 //    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-                //    if (app_company!=null)
+                //    if (app_company != null)
                 //    {
-                //        licensekey = app_company.version;
+                //        if (app_company.version != null || app_company.version == "")
+                //        {
+                //            licensekey = app_company.version;
+                //        }
+                //        else
+                //        {
+                           
+                //            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
+                //        }
                 //    }
                 //}
 
 
 
-                //if (licensekey == "" || licensekey == null)
+                //if (Licence.VerifyLicence(licensekey)==false)
                 //{
                 //    Version = Versions.Lite;
                 //}
-                //else
-                //{
-                //    webAddr = webAddr + "/" + licensekey;
-                //    var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-                //    httpWebRequest.ContentType = "application/json";
-                //    httpWebRequest.Method = "get";
 
-
-
-                //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                //    using (Stream stream = httpResponse.GetResponseStream())
-                //    {
-                //        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                //        String responseString = reader.ReadToEnd();
-                //        if (responseString == "false")
-                //        {
-                //            Version = Versions.Lite;
-                //        }
-
-                //    }
-                //}
 
             }
         }

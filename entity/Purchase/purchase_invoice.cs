@@ -211,6 +211,26 @@ namespace entity
         }
         Boolean _displayexpire=false;
 
+        [NotMapped]
+        public new System.Data.Entity.EntityState State
+        {
+            get { return _State; }
+            set
+            {
+                if (value != _State)
+                {
+                    _State = value;
+                    RaisePropertyChanged("State");
+                    base.State = value;
+                    foreach (purchase_invoice_detail detail in purchase_invoice_detail)
+                    {
+                        detail.State = value;
+                    }
+                }
+            }
+        }
+        System.Data.Entity.EntityState _State;
+
         #region "Navigation Properties"
         public virtual purchase_order purchase_order { get; set; }
         public virtual app_department app_department { get; set; }

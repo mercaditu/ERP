@@ -62,22 +62,8 @@ namespace Cognitivo.Menu
             {
                 db.app_company.Add(app_company);
 
-                //var webAddr = "http://localhost/LicenceManager/public/Licence";
-
-                //webAddr = webAddr + "/" + txtname.Text + "/" + txtalias.Text+"/" + txtname.Text + "_" + txtGovID.Text + "/" + "pankeel@cognitivo.in";
-                //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-                //httpWebRequest.ContentType = "application/json";
-                //httpWebRequest.Method = "get";
-            
-
-          
-                //var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                //using (Stream stream = httpResponse.GetResponseStream())
-                //{
-                //    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                //    String responseString = reader.ReadToEnd();
-                //    app_company.version = responseString;
-                //}
+                //entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+                //app_company.version = Licence.CreateLicence(txtname.Text, txtalias.Text, txtName + "-" + txtGovID.Text, "");
                 db.SaveChanges();
 
 

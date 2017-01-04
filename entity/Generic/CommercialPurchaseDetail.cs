@@ -283,28 +283,23 @@ namespace entity
             get { return _discount; }
             set
             {
+
                 if (_discount != value)
                 {
-                    if (State > 0)
+                
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         ApplyDiscount_UnitPrice(_discount, value, unit_cost);
-
-                        _discount = value;
-                        RaisePropertyChanged("discount");
-
-                        Calculate_UnitVatDiscount(_discount);
-                        Calculate_SubTotalDiscount(_discount);
-
                     }
-                    else
-                    {
-                        _discount = value;
-                        RaisePropertyChanged("discount");
+                    _discount = value;
+                    RaisePropertyChanged("discount");
+                    Calculate_UnitVatDiscount(value);
+                    Calculate_SubTotalDiscount(value);
 
-                        Calculate_UnitVatDiscount(_discount);
-                        Calculate_SubTotalDiscount(_discount);
-                    }
+                  
                 }
+
+             
             }
         }
         private decimal _discount;
@@ -320,13 +315,17 @@ namespace entity
             {
                 if (_DiscountVat != value)
                 {
-                    Calculate_UnitDiscount(value);
-
                     _DiscountVat = value;
                     RaisePropertyChanged("DiscountVat");
 
-                    Calculate_SubTotalVatDiscount(_DiscountVat);
+                    if (State > 0)
+                    {
+                        Calculate_UnitDiscount(value);
+                        Calculate_SubTotalVatDiscount(value);
+                    }
+                
                 }
+              
             }
         }
         private decimal _DiscountVat;

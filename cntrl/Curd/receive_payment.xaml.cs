@@ -235,7 +235,7 @@ namespace cntrl.Curd
                         PaymentDB.payments.Add(payment);
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         payment_schedualList.Add(payment_schedual);
-                        PaymentDB.MakePayment(payment_schedualList, payment,true);
+                        PaymentDB.MakePayment(payment_schedualList, payment,true,true);
                         imgCancel_MouseDown(null, null);
                    
                     }

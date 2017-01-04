@@ -96,7 +96,7 @@ namespace entity
         }
         #endregion
 
-        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable)
+        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable,bool is_print)
         {
             foreach (payment payment in payments.Local.Where(x => x.status != Status.Documents_General.Approved && x.IsSelected))
             {
@@ -109,11 +109,11 @@ namespace entity
               
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
-                MakePayment(payment_schedualList, payment, IsRecievable);
+                MakePayment(payment_schedualList, payment, IsRecievable, is_print);
             }
         }
 
-        public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable)
+        public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable, bool is_print)
         {
             payment_schedual Parent_Schedual;
             foreach (payment_detail payment_detail in payment.payment_detail.ToList())
@@ -367,7 +367,7 @@ namespace entity
             {
                 MessageBox.Show(ex.ToString());
             }
-            if (IsRecievable)
+            if (is_print)
             {
                 Brillo.Document.Start.Automatic(payment, app_document_range);
             }

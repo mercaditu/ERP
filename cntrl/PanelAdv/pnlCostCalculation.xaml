@@ -13,7 +13,7 @@
 			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" Background="White"
-			 MinHeight="256" MaxHeight="538" MaxWidth="800" Loaded="UserControl_Loaded">
+			 MinHeight="256" MaxHeight="600" MaxWidth="800" Loaded="UserControl_Loaded">
 	<UserControl.Resources>
 		<CollectionViewSource x:Key="outputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
 		<CollectionViewSource x:Key="inputViewSource" Source="{Binding Costs, Source={StaticResource outputViewSource}}"/>

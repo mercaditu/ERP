@@ -1,16 +1,11 @@
-﻿//All paths lead to God.
-
-using MySql.Data.MySqlClient;
-using System;
+﻿
 using System.Data.Entity;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using System.Xml;
 
 namespace Cognitivo
 {

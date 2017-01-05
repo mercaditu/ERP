@@ -105,22 +105,26 @@ namespace cntrl.Class
             }
             return OutputLists;
         }
-        public List<OutputList> CalculateOutputOrderRecipe(List<item_recepie_detail> Listitem_recepie_detail)
+        public List<OutputList> CalculateOutputOrderRecipe(List<item_recepie> Listitem_recepie)
         {
             db db = new db();
             List<OutputList> OutputLists = new List<OutputList>();
 
             OutputList OutputList = new OutputList();
-            OutputList.id_order_detail = (int)Listitem_recepie_detail.FirstOrDefault().id_recepie;
-            OutputList.Name = Listitem_recepie_detail.FirstOrDefault().item.name;
-            OutputList.Code = Listitem_recepie_detail.FirstOrDefault().item.code;
-            List<CostList> costlists = CalculateOrderCostReceipe(Listitem_recepie_detail);
-            foreach (CostList CostList in costlists)
+            foreach (item_recepie item_recepie in Listitem_recepie)
             {
-                OutputList.Costs.Add(CostList);
-            }
+                OutputList.id_order_detail = (int)item_recepie.id_recepie;
+                OutputList.Name = item_recepie.item.name;
+                OutputList.Code = item_recepie.item.code;
+                List<CostList> costlists = CalculateOrderCostReceipe(item_recepie.item_recepie_detail.ToList());
+                foreach (CostList CostList in costlists)
+                {
+                    OutputList.Costs.Add(CostList);
+                }
 
-            OutputLists.Add(OutputList);
+                OutputLists.Add(OutputList);
+            }
+          
 
             return OutputLists;
         }

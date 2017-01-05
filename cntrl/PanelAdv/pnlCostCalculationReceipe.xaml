@@ -15,8 +15,9 @@
 			 mc:Ignorable="d" Background="White"
 			 MinHeight="256" MaxHeight="538" MaxWidth="800" Loaded="UserControl_Loaded">
 	<UserControl.Resources>
-		<CollectionViewSource x:Key="outputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
-		<CollectionViewSource x:Key="inputViewSource" Source="{Binding Costs, Source={StaticResource outputViewSource}}"/>
+        <CollectionViewSource x:Key="inputViewSource" d:DesignSource="{d:DesignInstance {x:Type class:OutputList}, CreateList=True}"/>
+        <CollectionViewSource x:Key="outputViewSource" Source="{Binding Costs, Source={StaticResource inputViewSource}}"/>
+      
 	</UserControl.Resources>
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
@@ -33,7 +34,7 @@
 			<ListBox Background="{StaticResource AccentColor_Introvert}" Width="256"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-					 ItemContainerStyle="{StaticResource nav_ListSelection}" ItemsSource="{Binding Source={StaticResource outputViewSource}}">
+					 ItemContainerStyle="{StaticResource nav_ListSelection}" ItemsSource="{Binding Source={StaticResource inputViewSource}}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<control:navList recordCode="{Binding Code}" recordName="{Binding Name}"/>
@@ -52,15 +53,15 @@
 						<Label Style="{StaticResource generic_Label}" Content="{Binding Code, FallbackValue=Code}" Margin="0,-10,0,0"/>
 						<StackPanel Orientation="Horizontal">
 							<Label Style="{StaticResource input_label}" ContentStringFormat="N2"
-                                   Content="{Binding GrandTotalCost, StringFormat=N2, Mode=TwoWay,Source={StaticResource outputViewSource}, FallbackValue=0.00}"/>
+                                   Content="{Binding GrandTotalCost, StringFormat=N2, Mode=TwoWay,Source={StaticResource inputViewSource}, FallbackValue=0.00}"/>
 							<Label Style="{StaticResource generic_Label}" Content="|"/>
-                            <Label Style="{StaticResource generic_Label}" ContentStringFormat="N2" Content="{Binding GrandTotalSubTotal, StringFormat=N2, Mode=TwoWay,Source={StaticResource outputViewSource}, FallbackValue=0.00}"/>
+                            <Label Style="{StaticResource generic_Label}" ContentStringFormat="N2" Content="{Binding GrandTotalSubTotal, StringFormat=N2, Mode=TwoWay,Source={StaticResource inputViewSource}, FallbackValue=0.00}"/>
 						</StackPanel>
 					</StackPanel>
 				</StackPanel>
 				<DataGrid x:Name="InputDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" Margin="0,80,0,0"
 								EnableRowVirtualization="True" Height="Auto"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible"
-								RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource inputViewSource}}">
+								RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource outputViewSource}}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" MinWidth="128" MaxWidth="256" Binding="{Binding Name}"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Width="64" Binding="{Binding Quantity}"/>

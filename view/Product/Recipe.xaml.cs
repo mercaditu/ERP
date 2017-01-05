@@ -173,6 +173,9 @@ namespace Cognitivo.Product
                 {
                     cntrl.PanelAdv.pnlCostCalculationReceipe pnlCostCalculationReceipe = new cntrl.PanelAdv.pnlCostCalculationReceipe();
                     pnlCostCalculationReceipe.Outputitem_recepie_detailList = item_recepie_detailList;
+                    List<item_recepie> item_recepieList = new List<item_recepie>();
+                    item_recepieList.Add(item_recepie);
+                    pnlCostCalculationReceipe.Inputitem_recepieList = item_recepieList;
                     crud_modal_cost.Visibility = Visibility.Visible;
                     crud_modal_cost.Children.Add(pnlCostCalculationReceipe);
                 }

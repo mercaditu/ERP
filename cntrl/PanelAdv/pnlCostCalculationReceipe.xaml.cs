@@ -12,6 +12,7 @@ namespace cntrl.PanelAdv
     public partial class pnlCostCalculationReceipe : UserControl
     {
         public List<item_recepie_detail> Outputitem_recepie_detailList { get; set; }
+        public List<item_recepie> Inputitem_recepieList { get; set; }
         CollectionViewSource inputViewSource;
         CollectionViewSource outputViewSource;
         public pnlCostCalculationReceipe()
@@ -33,9 +34,9 @@ namespace cntrl.PanelAdv
             {
                 Class.CostCalculation CostCalculation = new Class.CostCalculation();
                 inputViewSource = FindResource("inputViewSource") as CollectionViewSource;
-
+                inputViewSource.Source = CostCalculation.CalculateOutputOrderRecipe(Inputitem_recepieList);
                 outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
-                outputViewSource.Source = CostCalculation.CalculateOutputOrderRecipe(Outputitem_recepie_detailList);
+             
 
 
             }

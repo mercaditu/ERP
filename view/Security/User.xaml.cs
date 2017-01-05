@@ -54,9 +54,9 @@ namespace Cognitivo.Security
 
             if (CurrentSession.User != null)
             {
-                security_user.id_created_user =  CurrentSession.Id_User;
+                security_user.id_created_user = CurrentSession.Id_User;
             }
-    
+
             UserDB.security_user.Add(security_user);
             security_user_view_source.View.MoveCurrentTo(security_user);
         }
@@ -72,6 +72,16 @@ namespace Cognitivo.Security
                 }
                 else
                 {
+                    entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+                 
+                    if (Licence.ComapnyLicence!= null)
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
                     if (UserDB.SaveChanges() > 0)
                     {
                         toolBar.msgSaved(1);

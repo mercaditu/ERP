@@ -41,6 +41,7 @@ namespace Cognitivo.Configs
 
             CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
             app_accountDestViewSource.Source = db.app_account.Local;
+
             //Payment Type 
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
@@ -74,13 +75,14 @@ namespace Cognitivo.Configs
             //Account detail.
             app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
             app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
-                .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
+                .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                 .Select(s => new
                 {
                     cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
                     payType = s.Max(ad => ad.payment_type.name),
                     amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                 }).ToList();
+
             CurrentSession.Id_Account = objAccount.id_account;
 
             if (frmActive.Children.Count>0)
@@ -125,9 +127,9 @@ namespace Cognitivo.Configs
                     if (idOriginAccount != null && idDestiAccount != null && payment_type != null)
                     {
                         app_account_detail objOriginAcDetail = new app_account_detail();
-                        if (db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).FirstOrDefault() != null)
+                        if (db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).Any())
                         {
-                            objOriginAcDetail.id_session = db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).FirstOrDefault().id_session;
+                            objOriginAcDetail.id_session = db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).Select(y => y.id_session).FirstOrDefault();
                         }
 
                         objOriginAcDetail.id_account = idOriginAccount.id_account;
@@ -139,9 +141,9 @@ namespace Cognitivo.Configs
                         objOriginAcDetail.trans_date = DateTime.Now;
 
                         app_account_detail objDestinationAcDetail = new app_account_detail();
-                        if (db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).FirstOrDefault() != null)
+                        if (db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).Any())
                         {
-                            objDestinationAcDetail.id_session = db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).FirstOrDefault().id_session;
+                            objDestinationAcDetail.id_session = db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).Select(y => y.id_session).FirstOrDefault();
                         }
 
                         objDestinationAcDetail.id_account = idDestiAccount.id_account;
@@ -155,13 +157,13 @@ namespace Cognitivo.Configs
                         bool is_direct = payment_type.is_direct;
                         if (is_direct)
                         {
-                            objOriginAcDetail.status = entity.Status.Documents_General.Approved;
-                            objDestinationAcDetail.status = entity.Status.Documents_General.Approved;
+                            objOriginAcDetail.status = Status.Documents_General.Approved;
+                            objDestinationAcDetail.status = Status.Documents_General.Approved;
                         }
                         else
                         {
-                            objOriginAcDetail.status = entity.Status.Documents_General.Pending;
-                            objDestinationAcDetail.status = entity.Status.Documents_General.Pending;
+                            objOriginAcDetail.status = Status.Documents_General.Pending;
+                            objDestinationAcDetail.status = Status.Documents_General.Pending;
                         }
 
                         db.app_account_detail.Add(objOriginAcDetail);

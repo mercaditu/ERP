@@ -24,7 +24,7 @@ namespace cntrl.Class
 
                     item_movement item_movement = db.item_movement
                                   .Where(x => x.id_item_product == id_item_product && x.credit > 0)
-                                  .OrderByDescending(y => y.trans_date)
+                                  .OrderBy(y => y.trans_date)
                                   .FirstOrDefault();
                     if (item_movement != null)
                     {

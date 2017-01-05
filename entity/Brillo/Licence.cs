@@ -12,7 +12,7 @@ namespace entity.Brillo
     {
         public string CreateLicence(string FirstName,string LastName,string CompanyName,string Email)
         {
-            var webAddr = "http://localhost/LicenceManager/public/Licence";
+            var webAddr = "http://www.cognitivo.in/LicenceManager/public/Licence";
 
             if (Email=="")
             {
@@ -38,7 +38,7 @@ namespace entity.Brillo
         }
         public bool VerifyLicence(String LicenceKey)
         {
-            var webAddr = "http://localhost/LicenceManager/public/LicenceVerify";
+            var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVerify";
             webAddr = webAddr + "/" + LicenceKey;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";

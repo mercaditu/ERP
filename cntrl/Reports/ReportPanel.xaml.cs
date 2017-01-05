@@ -202,9 +202,22 @@ namespace cntrl
             reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
 
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+       
 
-            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+            //if (Report.Path=="cntrl.Reports.Productions.ProductionStatus.rdlc")
+            //{
+            //    ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            //    ReportParameter ParametersCost = new ReportParameter("ParametersCost", CurrentSession.UserRole.see_cost.ToString());
+            //    reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            //}
+            //else
+            //{
+                ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+              
+                reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters});
+          //  }
+
+         
 
 
             reportViewer.Refresh();
@@ -228,10 +241,18 @@ namespace cntrl
 
             reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
+            //if (Report.Path == "cntrl.Reports.Productions.ProductionStatus.rdlc")
+            //{
+            //    ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            //    ReportParameter ParametersCost = new ReportParameter("ParametersCost", CurrentSession.UserRole.see_cost.ToString());
+            //    reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            //}
+            //else
+            //{
+                ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
 
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
-
-            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+                reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+           // }
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();

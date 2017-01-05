@@ -18,7 +18,6 @@
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <local:InitialsConverter x:Key="InitialsConverter"/>
-        
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -36,7 +35,7 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
 
-            <TextBlock Text="Define brands of products." Style="{StaticResource text_Instructions}"/>
+            <TextBlock Text="Define brands for products." Style="{StaticResource text_Instructions}"/>
             <StackPanel HorizontalAlignment="Center" Margin="0,0,0,8">
                 <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
                 <TextBox Style="{StaticResource input_textbox}"
@@ -44,13 +43,12 @@
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                         Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Supplier}" Style="{DynamicResource input_label}"/>
-                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True"  Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-               
-                   
-               
+                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True"  Select="set_ContactPref" />
+
+
+
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

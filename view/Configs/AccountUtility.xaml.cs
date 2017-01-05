@@ -29,19 +29,18 @@ namespace Cognitivo.Configs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
+            
             //Main Account DataGrid.
             app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            db.app_account
-                .Where(a => a.id_company == CurrentSession.Id_Company).Take(100).Load();
             app_accountViewSource.Source = db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
-
+            
             app_account_listViewSource = this.FindResource("app_account_listViewSource") as CollectionViewSource;
-            app_account_listViewSource.Source =
-                db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == CurrentSession.Id_Company).ToList();
+            app_account_listViewSource.Source = db.app_account.Local.Where(a => a.id_account_type == app_account.app_account_type.Terminal).ToList();
 
             CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
-            app_accountDestViewSource.Source = db.app_account.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+            app_accountDestViewSource.Source = db.app_account.Local;
             //Payment Type 
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
@@ -208,9 +207,9 @@ namespace Cognitivo.Configs
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tabAccount.SelectedIndex==2)
+            if (tabAccount.SelectedIndex == 2)
             {
-                app_account_listViewSource.Source = db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal).ToList();
+                app_account_listViewSource.Source = db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == CurrentSession.Id_Company).ToList();
                 app_account_listViewSource.View.Refresh();
              
             }

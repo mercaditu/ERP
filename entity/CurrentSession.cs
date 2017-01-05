@@ -54,7 +54,21 @@ namespace entity
             }
             set
             {
-                _Id_Company = value;
+                if (_Id_Company != value)
+                {
+                    _Id_Company = value;
+
+                    using (db db = new db())
+                    {
+                        app_company app_company = db.app_company.Where(x => x.id_company == value).FirstOrDefault();
+                        if (app_company != null)
+                        {
+                            Properties.Settings.Default.company_ID = app_company.id_company;
+                            Properties.Settings.Default.company_Name = app_company.name;
+                            Properties.Settings.Default.Save();
+                        }
+                    }
+                }
             }
         }
         static int _Id_Company;
@@ -81,6 +95,7 @@ namespace entity
                         app_branch app_branch = db.app_branch.Where(x => x.id_branch == value).FirstOrDefault();
                         if (app_branch != null)
                         {
+                            Properties.Settings.Default.branch_ID = app_branch.id_branch;
                             Properties.Settings.Default.branch_Name = app_branch.name;
                             Properties.Settings.Default.Save();
                         }
@@ -108,6 +123,7 @@ namespace entity
                     app_terminal app_terminal = db.app_terminal.Where(x => x.id_terminal == value).FirstOrDefault();
                     if (app_terminal != null)
                     {
+                        Properties.Settings.Default.terminal_ID = app_terminal.id_terminal;
                         Properties.Settings.Default.terminal_Name = app_terminal.name;
                         Properties.Settings.Default.Save();
                     }
@@ -136,6 +152,7 @@ namespace entity
                     app_account app_account = db.app_account.Where(x => x.id_account == value).FirstOrDefault();
                     if (app_account != null)
                     {
+                        Properties.Settings.Default.account_ID = app_account.id_account;
                         Properties.Settings.Default.account_Name = app_account.name;
                         Properties.Settings.Default.Save();
                     }

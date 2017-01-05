@@ -164,10 +164,10 @@
 					<StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						<Grid>
 							<Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+							<!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 								<Label Content="+" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="AddBrand_PreviewMouseUp" />
 								<Label Content="e" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="EditBrand_PreviewMouseUp" />
-							</StackPanel>
+							</StackPanel>-->
 						</Grid>
 
 						<ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}" 

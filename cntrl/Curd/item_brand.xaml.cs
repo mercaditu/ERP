@@ -43,16 +43,11 @@ namespace cntrl.Curd
 
                 if (!isExternalCall)
                 {
-
-                  
                     stackMain.DataContext = item_brandViewSource;
                     _item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
-                 
                 }
                 else
                 {
-
-                 
                     MainViewSource.View.MoveCurrentTo(curObject);
                     if (operationMode == Class.clsCommon.Mode.Add)
                     {
@@ -72,6 +67,19 @@ namespace cntrl.Curd
                     }
                   
                 }
+
+                if (_item_brand.contact != null)
+                {
+                    sbxContact.Text = _item_brand.contact.name;
+                }
+                else
+                {
+                    using (entity.db _db = new entity.db())
+                    {
+                        sbxContact.Text = _db.contacts.Where( x => x.id_contact == _item_brand.id_contact).Select(y => y.name).FirstOrDefault();
+                    }
+                }
+
             }
         }
 

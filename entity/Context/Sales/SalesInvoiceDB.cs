@@ -182,6 +182,11 @@ namespace entity
 
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
 
+                        if (app_document_range != null)
+                        {
+                            invoice.code = app_document_range.code;
+                        }
+
                         invoice.is_issued = true;
                         invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         invoice.RaisePropertyChanged("number");

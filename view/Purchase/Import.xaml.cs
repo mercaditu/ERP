@@ -355,6 +355,8 @@ namespace Cognitivo.Purchase
                 impex impex = impexDataGrid.SelectedItem as impex;
                 impex.impex_expense.Remove(e.Parameter as impex_expense);
                 impeximpex_expenseViewSource.View.Refresh();
+
+                impexDataGrid_SelectionChanged(null, null);
             }
         }
 
@@ -478,6 +480,11 @@ namespace Cognitivo.Purchase
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Calculate_Click(sender, e);
+        }
+
+        private void impeximpex_expenseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            impexDataGrid_SelectionChanged(null, null);
         }
 
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

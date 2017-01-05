@@ -157,8 +157,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <DataGrid  x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" 
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4" >
+                                       ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" 
+                                       RowEditEnding="impeximpex_expenseDataGrid_RowEditEnding"
+                                       RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4" >
                                 <DataGrid.Columns>
 
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:IncotermCondition}" Width="*" ItemsSource="{Binding Source={StaticResource incotermconditionViewSource}}"

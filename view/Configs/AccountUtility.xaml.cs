@@ -74,7 +74,11 @@ namespace Cognitivo.Configs
         {
             //Account detail.
             app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
+            int SessionID = objAccount.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
+
+
             app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
+                .Where(x => x.id_session == SessionID)
                 .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                 .Select(s => new
                 {

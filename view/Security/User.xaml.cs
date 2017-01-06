@@ -74,7 +74,7 @@ namespace Cognitivo.Security
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
                  
-                    if (Licence.ComapnyLicence!= null)
+                    if (Licence.CompanyLicence!= null)
                     {
                         
                     }

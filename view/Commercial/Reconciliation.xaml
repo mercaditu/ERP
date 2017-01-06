@@ -56,7 +56,7 @@
 		<Grid Grid.Row="1" Grid.Column="1" Background="Azure">
 			<Grid Grid.Column="2">
 				<Label Content="System" Style="{StaticResource H2}"/>
-				<DataGrid x:Name="dgvAccountDetail" Style="{StaticResource main_Datagrid}" Margin="0,50,0,0" 
+				<DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}" Margin="0,50,0,0" 
 						  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}" >
 					<DataGrid.RowStyle>
 						<Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
@@ -64,7 +64,9 @@
 						</Style>
 					</DataGrid.RowStyle>
 					<DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="" Width="32" 
+                                            ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                            EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                         <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -75,12 +77,12 @@
                         <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}"/>
 
                         <!-- Balance -->
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Debit}" Binding="{Binding debit, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Credit}" Binding="{Binding credit, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Debit}" Binding="{Binding debit, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Credit}" Binding="{Binding credit, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 						<!-- Match -->
-                        <DataGridTextColumn Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}"/>
 
-                        <DataGridTextColumn Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 						<!--<DataGridTemplateColumn Width="Auto" Header="">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
@@ -112,9 +114,15 @@
 				</DataGrid>
 			</Grid>
 		</Grid>
-		<cntrl:toolBar x:Name="toolBar" appName="Reconciliation"
+        <!--<cntrl:toolBar x:Name="toolBar" appName="Reconciliation"
                        btnApprove_Click="toolBar_btnApprove_Click"
-                       btnAnull_Click="toolBar_btnAnull_Click"
-					   VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-	</Grid>
+                       btnAnull_Click="toolBar_btnAnull_Click" State="{Binding State,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                       Status="{Binding status,Source={StaticResource app_accountapp_account_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+					   VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>-->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center"  DataContext="{Binding SelectedItem_, ElementName=treeProject}">
+
+            <cntrl:toolIcon x:Name="btnapprove" Click="toolBar_btnApprove_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center" />
+            <cntrl:toolIcon x:Name="btnanull" Click="toolBar_btnAnull_Click" imgSource="k" icoName="Rechazar" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
 </Page>

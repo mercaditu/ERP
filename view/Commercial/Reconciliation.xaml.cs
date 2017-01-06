@@ -22,9 +22,13 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-            db.app_account.Where(x => x.id_company==CurrentSession.Id_Company && x.id_account_type == app_account.app_account_type.Bank).Load();
+            db.app_account.Where(x => x.id_company==CurrentSession.Id_Company && x.id_account_type == entity.app_account.app_account_type.Bank).Load();
             app_accountViewSource.Source = db.app_account.Local;
             app_accountapp_account_detailViewSource = ((CollectionViewSource)(FindResource("app_accountapp_account_detailViewSource")));
+
+
+          
+
         }
         
         //private void ApproveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -87,10 +91,15 @@ namespace Cognitivo.Commercial
 
         private void dgvAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
+            if (app_account!=null)
+            {
+                app_account.State = EntityState.Modified;
+            }
+         
         }
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void toolBar_btnApprove_Click(object sender,RoutedEventArgs e)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
 
@@ -106,7 +115,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void toolBar_btnAnull_Click(object sender, RoutedEventArgs e)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
 

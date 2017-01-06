@@ -13,8 +13,13 @@ namespace entity
         {
             purchase_packing purchase_packing = new purchase_packing();
             purchase_packing.State = EntityState.Added;
-            purchase_packing.status= Status.Documents_General.Pending;
-            purchase_packing.id_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
+            purchase_packing.status = Status.Documents_General.Pending;
+            app_document_range app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            if (app_document_range != null)
+            {
+                purchase_packing.id_range = app_document_range.id_range;
+            }
+
             purchase_packing.IsSelected = true;
             purchase_packing.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             return purchase_packing;
@@ -39,7 +44,7 @@ namespace entity
                 if (purchase_packing.IsSelected && purchase_packing.Error == null)
                 {
 
-                  
+
 
                     if (purchase_packing.State == EntityState.Added)
                     {
@@ -83,7 +88,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
-                
+
                     if (purchase_packing.status != Status.Documents_General.Approved)
                     {
                         if (IsDiscountStock)
@@ -109,9 +114,9 @@ namespace entity
 
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_packing.id_range).FirstOrDefault();
                             purchase_packing.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                            purchase_packing.RaisePropertyChanged("number");  
+                            purchase_packing.RaisePropertyChanged("number");
                         }
-                     
+
                         purchase_packing.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }

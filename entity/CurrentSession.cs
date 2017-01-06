@@ -236,32 +236,34 @@ namespace entity
                 {
                     Brillo.Licence Licence = new Brillo.Licence();
                     string licensekey = "";
-                    using (db db = new db())
+                    db db = new db();
+
+                    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
+                    if (app_company != null)
                     {
-                        app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-                        if (app_company != null)
+                        if (app_company.version != null || app_company.version == "")
                         {
-                            if (app_company.version != null || app_company.version == "")
-                            {
-                                licensekey = app_company.version;
-                            }
-                            else
-                            {
-                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
-                            }
+                            licensekey = app_company.version;
+                        }
+                        else
+                        {
+                            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
                         }
                     }
 
+
                     Licence.VerifyCompanyLicence(licensekey);
 
-                    if (Licence.ComapnyLicence == null)
+                    if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
                     {
                         Version = Versions.Lite;
                     }
+                   
                 }
-                catch
+                catch (Exception e)
                 {
-                    //Version = Versions.Lite;
+                   // System.Windows.Forms.MessageBox.Show(e.ToString());
+                    Version = Versions.Lite;
                 }
             }
         }

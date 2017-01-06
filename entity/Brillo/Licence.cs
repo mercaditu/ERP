@@ -10,6 +10,10 @@ namespace entity.Brillo
 {
     public class licence
     {
+        public licence()
+        {
+            versions = new List<versions>();
+        }
         public int id { get; set; }
         public string license_key { get; set; }
         public string first_name { get; set; }
@@ -30,7 +34,7 @@ namespace entity.Brillo
     }
     public class Licence
     {
-       public licence ComapnyLicence  ;
+       public licence CompanyLicence;
         public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email)
         {
             var webAddr = "http://localhost/LicenceManager/public/Licence";
@@ -66,7 +70,7 @@ namespace entity.Brillo
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 string jsondata = reader.ReadToEnd();
-                List<licence> CompanyLicence =  JsonConvert.DeserializeObject<List<licence>>(jsondata);
+               CompanyLicence =  JsonConvert.DeserializeObject<licence>(jsondata);
             }
         }
      

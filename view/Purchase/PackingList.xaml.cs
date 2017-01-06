@@ -48,6 +48,7 @@ namespace Cognitivo.Purchase
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
             }));
+            cbxBranch.SelectedIndex = 0;
         }
 
         #region Toolbar Events

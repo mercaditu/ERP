@@ -61,12 +61,23 @@ namespace Cognitivo.Security
         {
             try
             {
+                Licence Licence = new Licence();
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 if (security_role != null)
                 {
                     CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
                     security_role.Version = version;
-
+                    int LocalUser = UserRoleDB.security_role.Where(x => x.version == version.ToString()).Sum(x => x.security_user.Count);
+                    int serverUser = 0;
+                    entity.Brillo.versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)version).FirstOrDefault();
+                    if (versions != null)
+                    {
+                        serverUser = versions.user_number;
+                    }
+                    if (LocalUser > serverUser)
+                    {
+                        security_role.Version = CurrentSession.Versions.Lite;
+                    }
                     UserRoleDB.SaveChanges();
 
                     CurrentSession.Load_Security();

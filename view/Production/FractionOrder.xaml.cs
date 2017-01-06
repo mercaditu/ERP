@@ -126,9 +126,6 @@ namespace Cognitivo.Production
 
             production_order_detaillServiceViewSource = FindResource("production_order_detaillServiceViewSource") as CollectionViewSource;
 
-            //production_executionViewSource = FindResource("production_executionViewSource") as CollectionViewSource;
-            //production_executionViewSource.Source = OrderDB.production_execution.Where(a => a.id_company == CurrentSession.Id_Company && a.production_order.types == production_order.ProductionOrderTypes.Fraction).ToList();
-
             production_executionproduction_execustion_detailViewSource = FindResource("production_executionproduction_execustion_detailViewSource") as CollectionViewSource;
 
             production_orderproduction_order_detailViewSource = FindResource("production_orderproduction_order_detailViewSource") as CollectionViewSource;
@@ -450,7 +447,16 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in production_order_detailLIST)
             {
-                production_order_detail.status = Status.Production.Anull;
+                //if pending, simply remove.
+                if (production_order_detail.status == Status.Production.Pending)
+                {
+                    ExecutionDB.production_order_detail.Remove(production_order_detail);
+                }
+                else
+                {
+                    production_order_detail.status = Status.Production.Anull;
+                }
+
                 production_order_detail.IsSelected = false;
             }
 

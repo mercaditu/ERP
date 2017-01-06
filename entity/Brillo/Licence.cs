@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -41,23 +39,19 @@ namespace entity.Brillo
             {
                 Email = "abc@FirstName.com";
             }
+
             webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "get";
-
-
-
+            
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (Stream stream = httpResponse.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 String responseString = reader.ReadToEnd();
                 return responseString;
-
             }
-
-
         }
         public void VerifyCompanyLicence(String LicenceKey)
         {
@@ -66,17 +60,13 @@ namespace entity.Brillo
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "get";
-
-
-
+            
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (Stream stream = httpResponse.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 string jsondata = reader.ReadToEnd();
                 List<licence> CompanyLicence =  JsonConvert.DeserializeObject<List<licence>>(jsondata);
-
-
             }
         }
      

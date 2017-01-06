@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-
 namespace entity
 {
     public static class CurrentSession
@@ -182,8 +181,15 @@ namespace entity
 
         public static bool IsDataLoading
         {
-            get { return _IsDataLoading; }
-            set { _IsDataLoading = value; NotifyStaticPropertyChanged("IsDataLoading"); }
+            get
+            {
+                return _IsDataLoading;
+            }
+            set
+            {
+                _IsDataLoading = value;
+                NotifyStaticPropertyChanged("IsDataLoading");
+            }
         }
         private static bool _IsDataLoading = false;
 
@@ -225,30 +231,37 @@ namespace entity
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                 myTimer.Interval = 60000;
                 myTimer.Start();
-                entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                string licensekey = "";
-                using (db db = new db())
-                {
-                    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-                    if (app_company != null)
-                    {
-                        if (app_company.version != null || app_company.version == "")
-                        {
-                            licensekey = app_company.version;
-                        }
-                        else
-                        {
 
-                            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
+                try
+                {
+                    Brillo.Licence Licence = new Brillo.Licence();
+                    string licensekey = "";
+                    using (db db = new db())
+                    {
+                        app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
+                        if (app_company != null)
+                        {
+                            if (app_company.version != null || app_company.version == "")
+                            {
+                                licensekey = app_company.version;
+                            }
+                            else
+                            {
+                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
+                            }
                         }
                     }
+
+                    Licence.VerifyCompanyLicence(licensekey);
+
+                    if (Licence.ComapnyLicence == null)
+                    {
+                        Version = Versions.Lite;
+                    }
                 }
-
-                Licence.VerifyCompanyLicence(licensekey);
-
-                if (Licence.ComapnyLicence == null)
+                catch
                 {
-                    Version = Versions.Lite;
+                    //Version = Versions.Lite;
                 }
             }
         }

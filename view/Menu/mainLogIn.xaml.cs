@@ -54,7 +54,6 @@ namespace Cognitivo.Menu
         private async void check_createdb()
         {
             entity.Properties.Settings Settings = new entity.Properties.Settings();
-            app_company app_company = null;
 
             await Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -80,32 +79,7 @@ namespace Cognitivo.Menu
                     await Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
                     return;
                 }
-             
-                //if (CurrentSession.Id_Company == 0)
-                //{
-                //    await Dispatcher.BeginInvoke((Action)(() =>
-                //    {
-                //        myFrame.Navigate(new Configs.Settings());
-                //        return;
-                //    }));
-                //}
-                //if (CurrentSession.Id_Branch== 0)
-                //{
-                //    await Dispatcher.BeginInvoke((Action)(() =>
-                //    {
-                //        myFrame.Navigate(new Configs.Settings());
-                //        return;
-                //    }));
-                //}
-
-                app_company = await db.app_company.FindAsync(CurrentSession.Id_Company);
             }
-
-            await Dispatcher.BeginInvoke((Action)(() =>
-            {
-                Settings.company_Name = app_company != null ? string.IsNullOrEmpty(app_company.alias) ? app_company.alias : app_company.name : "";
-                Settings.Save();
-            }));
         }
 
         private void btnLogIn_Click(object sender, EventArgs e)

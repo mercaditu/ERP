@@ -1,4 +1,5 @@
-﻿<Page xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" x:Class="Cognitivo.Menu.mainMenu_Corporate" Title="mainMenu"
+﻿<Page xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      x:Class="Cognitivo.Menu.mainMenu_Corporate" Title="mainMenu"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,10 +7,10 @@
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:chart="clr-namespace:cntrl.Chart;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-          xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-          lex:LocalizeDictionary.DesignCulture="en-US" 
-          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-          lex:ResxLocalizationProvider.DefaultDictionary="local"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      lex:LocalizeDictionary.DesignCulture="en-US" 
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+      lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
       MinWidth="800" MinHeight="600">
@@ -48,7 +49,8 @@
     </Page.Triggers>
     <Grid>
         <ProgressBar IsIndeterminate="True" Height="4" Background="Transparent" 
-                     BorderThickness="0" Margin="0" VerticalAlignment="Top" Visibility="{Binding Source={x:Static entity:CurrentSession.IsDataLoading}, Converter={StaticResource Bool2Visi}}"/>
+                     BorderThickness="0" Margin="0" VerticalAlignment="Top" 
+                     Visibility="{Binding Source={x:Static entity:CurrentSession.IsDataLoading}, Mode=OneWay, Converter={StaticResource Bool2Visi}}"/>
         <Grid VerticalAlignment="Top">
             <Grid.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.5"/>
@@ -82,14 +84,6 @@
                                   ModuleName="{lex:Loc HumanResources}"
                                   MouseUp="get_Apps"
                                   Tag="HumanResources"/>
-                <!--<cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_Event.png"
-                                  ModuleName="{lex:Loc EventManagement}"
-                                  MouseUp="get_Apps"
-                                  Tag="Project_Event"/>-->
-                <!--<cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_PrintingPress.png"
-                                  ModuleName="{lex:Loc PrintingPress}"
-                                  MouseUp="get_Apps"
-                                  Tag="Project_PrintingPress"/>-->
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject.png"
                                   ModuleName="{lex:Loc Project}"
                                   MouseUp="get_Apps"

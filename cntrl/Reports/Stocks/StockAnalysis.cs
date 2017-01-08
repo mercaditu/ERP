@@ -33,7 +33,8 @@
 		where curr.is_priority
 		) as RetailPrice on i.id_item = RetailPrice.id_item
 		left join item_brand as b on i.id_brand = b.id_brand
-		left join contacts as c on b.id_contact = c.id_contact";
+		left join contacts as c on b.id_contact = c.id_contact
+		where im.trans_date < '@EndDate'";
 	}
 }
 

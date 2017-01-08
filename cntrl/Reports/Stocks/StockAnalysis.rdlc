@@ -319,7 +319,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>3</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -937,7 +936,7 @@ Sum(Fields!Sales.Value) / DateDiff(DateInterval.Day, Min(Fields!Date.Value), Dat
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2in</Height>
+    <Height>0.75521in</Height>
     <Style />
   </Body>
   <Width>7.26042in</Width>
@@ -1031,6 +1030,12 @@ Sum(Fields!Sales.Value) / DateDiff(DateInterval.Day, Min(Fields!Date.Value), Dat
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Parameters">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>03a90243-d1e6-4364-80e4-85e06cb1a282</rd:ReportID>
 </Report>

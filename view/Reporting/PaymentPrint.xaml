@@ -59,16 +59,19 @@
         <Grid Grid.Column="1" Background="White" DataContext="{Binding Source={StaticResource payment_detailViewSource}}">
             <metro:ToggleSwitch x:Name="Print" Width="150" Content="Printed" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" Height="50" VerticalAlignment="Top" Checked="Print_Checked" Unchecked="Print_Checked"/>
             <StackPanel>
-              
+                <Label Content="Contact" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding payment.contact.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
+
+
                 <Label Content="PaymentType" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-                <Label Content="{Binding payment_type.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding payment_type.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
 
                 <Label Content="Account" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding app_account.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding app_account.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
                 <Label Content="Value" Style="{StaticResource input_label}" Margin="0,0,0.5,0"/>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
-                    <Label Content="{Binding app_currencyfx.app_currency.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding value, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding app_currencyfx.app_currency.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                 </StackPanel>
                 <Label Content="Document" Style="{StaticResource input_label}"/>
                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 

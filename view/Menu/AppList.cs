@@ -51,14 +51,14 @@ namespace Cognitivo.Menu
             dtApp.Columns.Add("HasReport");
 
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Basic, "1");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "SalesBudget", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.PointofSale", entity.App.Names.PointOfSale, "PointofSale", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Return", entity.App.Names.SalesReturn, "SalesReturn", entity.CurrentSession.Versions.Basic, "1");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Basic, "0");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "ProductSend", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.Packing", entity.App.Names.PackingList, "", entity.CurrentSession.Versions.Medium, "0");

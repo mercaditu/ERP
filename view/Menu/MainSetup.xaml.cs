@@ -4,13 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using entity;
-using System.Net.Http;
-using System.Net;
-using System.IO;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json;
-using System.Text;
-using System.Collections.Generic;
 
 namespace Cognitivo.Menu
 {
@@ -62,9 +55,16 @@ namespace Cognitivo.Menu
             {
                 db.app_company.Add(app_company);
 
-                entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "");
-                db.SaveChanges();
+                try
+                {
+                    entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "");
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Online Registration Failed. Setup will continue under Lite Plan.", "Cognitivo ERP");
+                }
 
 
                 entity.Properties.Settings Settings = new entity.Properties.Settings();

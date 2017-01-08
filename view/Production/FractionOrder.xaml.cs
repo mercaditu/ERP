@@ -220,10 +220,6 @@ namespace Cognitivo.Production
             filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
-
-
-
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -294,6 +290,7 @@ namespace Cognitivo.Production
                         production_order_detail_output.quantity = 1;
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
+
                         foreach (item_dimension item_dimension in item.item_dimension)
                         {
                             production_order_dimension production_order_dimension = new production_order_dimension();
@@ -327,7 +324,6 @@ namespace Cognitivo.Production
 
                         filter_task();
                     }
-                 
                 }
                 else
                 {
@@ -487,8 +483,6 @@ namespace Cognitivo.Production
                     production_order_detail.status = entity.Status.Production.Approved;
                 }
 
-
-
                 if (ExecutionDB.SaveChanges() > 0)
                 {
                     filter_task();
@@ -518,7 +512,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
-                production_order_detail.status = entity.Status.Production.QA_Rejected;
+                production_order_detail.status = Status.Production.QA_Rejected;
             }
 
             ExecutionDB.SaveChanges();
@@ -546,12 +540,12 @@ namespace Cognitivo.Production
                 if (production_order_detail.is_input)
                 {
                     ToggleQuantity.IsChecked = false;
-                    stpproduct.Visibility = System.Windows.Visibility.Collapsed;
+                    stpproduct.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     ToggleQuantity.IsChecked = true;
-                    stpproduct.Visibility = System.Windows.Visibility.Visible;
+                    stpproduct.Visibility = Visibility.Visible;
                 }
 
                 List<production_order_detail> production_order_detailList = ExecutionDB.production_order_detail.ToList();

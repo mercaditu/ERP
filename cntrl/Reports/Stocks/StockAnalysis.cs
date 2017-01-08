@@ -4,7 +4,7 @@
 
 	{
 		public static string query = @" 
-        select 
+		select 
 		b.name as Brand,
 		bc.name as Branch, 
 		c.name as Supplier,
@@ -19,14 +19,14 @@
 		im.id_movement,
 		im.trans_date as Date,
 		if(im.id_sales_invoice_detail > 0, debit, 0) as Sales,
-        RetailPrice.value as Price,
-        RetailPrice.Currency as Currency
+		RetailPrice.value as Price,
+		RetailPrice.Currency as Currency
 		from item_movement as im
 		inner join app_location as loc on im.id_location = loc.id_location
 		inner join app_branch as bc on bc.id_branch = loc.id_branch
 		inner join item_product as ip on im.id_item_product = ip.id_item_product
 		inner join items as i on ip.id_item = i.id_item
-        left join (
+		left join (
 		select price.value, price.id_item, curr.name as Currency from item_price as price 
 		inner join item_price_list as plist on price.id_price_list = plist.id_price_list
 		inner join app_currency as curr on price.id_currency = curr.id_currency

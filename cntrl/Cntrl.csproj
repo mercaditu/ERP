@@ -616,6 +616,7 @@
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Movement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\PriceList.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\StockAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockFlow.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockValue.rdlc" />
@@ -749,6 +750,7 @@
     <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.StockAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.StockByBranch.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.StockFlowDimension.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Transfers.datasource" />

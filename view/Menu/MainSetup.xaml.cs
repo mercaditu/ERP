@@ -63,7 +63,7 @@ namespace Cognitivo.Menu
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Online Registration Failed. Setup will continue under Lite Plan.", "Cognitivo ERP");
+                    MessageBox.Show("Online Registration has failed. Cognitivo ERP will continue this setup under 'Lite' Plan.", "Cognitivo ERP");
                 }
 
 

@@ -358,6 +358,7 @@
     <Compile Include="Reporting\RPT_Purchase.cs" />
     <Compile Include="Reporting\PendingPayable.cs" />
     <Compile Include="Reporting\RPT_Sales.cs" />
+    <Compile Include="Reporting\StockAnalysis.cs" />
     <Compile Include="Reporting\StockByBranch.cs" />
     <Compile Include="Reporting\Stock.cs" />
     <Compile Include="Reporting\Transfer.cs" />

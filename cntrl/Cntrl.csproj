@@ -553,6 +553,7 @@
     <Compile Include="Reports\Stocks\CostBreakDown.cs" />
     <Compile Include="Reports\Stocks\InventorySummary.cs" />
     <Compile Include="Reports\Stocks\InventoryValue.cs" />
+    <Compile Include="Reports\Stocks\StockAnalysis.cs" />
     <Compile Include="Reports\Stocks\Merchandise.cs" />
     <Compile Include="Reports\Stocks\PriceList.cs" />
     <Compile Include="Reports\Stocks\Stock.cs" />

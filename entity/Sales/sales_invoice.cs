@@ -24,8 +24,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
-            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
-            
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; } 
         }
 
         [NotMapped]
@@ -95,7 +94,6 @@ namespace entity
                         }
                     }
                     RaisePropertyChanged("GrandTotal");
-                    //calc_credit(GrandTotal);   
                 }
             }
         }
@@ -227,11 +225,9 @@ namespace entity
         #region "Foreign Key"
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual sales_order sales_order { get; set; }
-
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual ICollection<sales_return> sales_return { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
-
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         #endregion
 
@@ -287,7 +283,7 @@ namespace entity
                 if (columnName == "DiscountPercentage")
                 {
                     if (DiscountPercentage > 1)
-                        return "Discount percentage not excedd 100%";
+                        return "Discount percentage can't exceed 100%";
                 }
                 return "";
             }

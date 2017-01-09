@@ -59,13 +59,13 @@ namespace Cognitivo.Menu
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
                     app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "");
-                    db.SaveChanges();
+                 
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Online Registration has failed. Cognitivo ERP will continue this setup under 'Lite' Plan.", "Cognitivo ERP");
                 }
-
+                db.SaveChanges();
 
                 entity.Properties.Settings Settings = new entity.Properties.Settings();
                 Settings.company_ID = app_company.id_company;

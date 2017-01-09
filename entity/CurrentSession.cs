@@ -263,7 +263,7 @@ namespace entity
                 catch (Exception e)
                 {
                    // System.Windows.Forms.MessageBox.Show(e.ToString());
-                    Version = Versions.Lite;
+                   // Version = Versions.Lite;
                 }
             }
         }

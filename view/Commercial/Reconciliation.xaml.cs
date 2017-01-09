@@ -22,40 +22,10 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-            db.app_account.Where(x => x.id_company==CurrentSession.Id_Company && x.id_account_type == entity.app_account.app_account_type.Bank).Load();
+            db.app_account.Where(x => x.id_company == CurrentSession.Id_Company && x.id_account_type == app_account.app_account_type.Bank).Load();
             app_accountViewSource.Source = db.app_account.Local;
             app_accountapp_account_detailViewSource = ((CollectionViewSource)(FindResource("app_accountapp_account_detailViewSource")));
-
-
-          
-
         }
-        
-        //private void ApproveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        //{
-        //    if (e.Parameter as app_account_detail != null)
-        //    {
-        //        e.CanExecute = true;
-        //    }
-        //}
-
-        //private void ApproveCommand_Executed(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        //private void AnullCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        //{
-        //    if (e.Parameter as app_account_detail != null)
-        //    {
-        //        e.CanExecute = true;
-        //    }
-        //}
-
-        //private void AnullCommand_Executed(object sender, RoutedEventArgs e)
-        //{
-
-        //}
 
         private void PendingCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

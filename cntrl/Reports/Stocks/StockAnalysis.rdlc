@@ -484,7 +484,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)-Sum(Fields!Credit.Value)</Value>
+                              <Value>=Sum(Fields!Credit.Value)-Sum(Fields!Debit.Value)</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -631,7 +631,6 @@ Sum(Fields!Sales.Value) / DateDiff(DateInterval.Day, Min(Fields!Date.Value), Dat
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

@@ -89,7 +89,7 @@
 														 Type_Name="{Binding item.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 														 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-														 Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+														 Quantity="{Binding quantity,StringFormat=N2,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 								</HierarchicalDataTemplate>
 							</Grid.Resources>
 							<Grid Grid.Column="0">

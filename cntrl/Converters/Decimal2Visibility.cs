@@ -16,16 +16,18 @@ namespace Cognitivo.Converters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            string number = (string)value;
             if (value != null)
             {
                 try
                 {
+                    value= new string(number.Where(c => char.IsDigit(c)).ToArray());
                     decimal Amount = System.Convert.ToDecimal(value);
                     if (Amount > 0)
                     { return Visibility.Visible; }
                 }
-                catch
-                { }
+                catch(Exception ex)
+                { System.Windows.Forms.MessageBox.Show(ex.ToString());}
             }
             return Visibility.Collapsed;
         }

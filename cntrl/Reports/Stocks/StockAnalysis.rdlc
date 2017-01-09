@@ -631,6 +631,7 @@ Sum(Fields!Sales.Value) / DateDiff(DateInterval.Day, Min(Fields!Date.Value), Dat
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

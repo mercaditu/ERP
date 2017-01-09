@@ -616,7 +616,9 @@
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Movement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\PriceList.rdlc" />
-    <EmbeddedResource Include="Reports\Stocks\StockAnalysis.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\StockAnalysis.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Stocks\StockFlow.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockMovement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockValue.rdlc" />

@@ -350,7 +350,7 @@ namespace cntrl.Class
             {
                 Application = entity.App.Names.Stock,
                 Name = entity.Brillo.Localize.StringText("StockAnalysis")!= string.Empty ? entity.Brillo.Localize.StringText("StockAnalysis") :"StockAnalysis",
-                Path = "cntrl.Reports.Stock.StockAnalysis.rdlc",
+                Path = "cntrl.Reports.Stocks.StockAnalysis.rdlc",
                 Query = Reports.Stock.StockAnalysis.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },

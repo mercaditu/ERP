@@ -78,9 +78,10 @@ namespace Cognitivo.Commercial
                 foreach (app_account_detail app_account_detail in app_account.app_account_detail.Where(x => x.IsSelected))
                 {
                     app_account_detail.status = Status.Documents_General.Approved;
-                    app_accountapp_account_detailViewSource.View.Refresh();
+                    app_account_detail.RaisePropertyChanged("status");
                 }
 
+                app_accountapp_account_detailViewSource.View.Refresh();
                 db.SaveChanges();
             }
         }
@@ -94,9 +95,10 @@ namespace Cognitivo.Commercial
                 foreach (app_account_detail app_account_detail in app_account.app_account_detail.Where(x => x.IsSelected))
                 {
                     app_account_detail.status = Status.Documents_General.Annulled;
-                    app_accountapp_account_detailViewSource.View.Refresh();
+                    app_account_detail.RaisePropertyChanged("status");
                 }
 
+                app_accountapp_account_detailViewSource.View.Refresh();
                 db.SaveChanges();
             }
         }

@@ -29,7 +29,7 @@ namespace entity.Brillo
         public int id { get; set; }
         public int lic_key_id { get; set; }
         public int user_number { get; set; }
-        public int version { get; set; }
+        public int? version { get; set; }
         public DateTime date_expiry { get; set; }
     }
     public class Licence
@@ -37,7 +37,7 @@ namespace entity.Brillo
        public licence CompanyLicence;
         public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email)
         {
-            var webAddr = "http://localhost/LicenceManager/public/Licence";
+            var webAddr = "http://www.cognitivo.in/LicenceManager/public/Licence";
 
             if (Email == "")
             {
@@ -59,7 +59,7 @@ namespace entity.Brillo
         }
         public void VerifyCompanyLicence(String LicenceKey)
         {
-            var webAddr = "http://localhost/LicenceManager/public/LicenceVerify";
+            var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVerify";
             webAddr = webAddr + "/" + LicenceKey;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";

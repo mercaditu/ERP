@@ -213,10 +213,6 @@ namespace entity
         public ICollection<sales_invoice> older { get; set; }
         public sales_invoice newer { get; set; }
 
-
-        public 
-
-
         public void UpdateVAT_Totals()
         {
             ICollection<CommercialVAT> _CommercialVAT = new List<CommercialVAT>();

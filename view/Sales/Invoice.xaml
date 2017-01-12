@@ -174,9 +174,9 @@
 					<!-- CRUD Modal -->
 					<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-                    <Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"  
+					<Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"  
 						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="600"/>
-                    <Grid Name="crud_modalDuePaymnet" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+					<Grid Name="crud_modalDuePaymnet" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="500">
 						<Grid>
 							<Grid.RowDefinitions>
@@ -242,7 +242,7 @@
 									<ColumnDefinition Width="1*"/>
 								</Grid.ColumnDefinitions>
 								<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-                                  
+								  
 									<Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
 									<DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"
 												metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -305,9 +305,9 @@
 								<!--sidepanel-->
 								<StackPanel Grid.Column="1">
 									<Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                                    <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}"/>
-                                    <Label Content="{Binding contact.alias,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_invoiceViewSource}}" Style="{StaticResource input_label}"/>
-                                    <StackPanel Orientation="Horizontal" Margin="4,0" 
+									<Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}"/>
+									<Label Content="{Binding contact.alias,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_invoiceViewSource}}" Style="{StaticResource input_label}"/>
+									<StackPanel Orientation="Horizontal" Margin="4,0" 
 												Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
 										<TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
 										<TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}"/>
@@ -431,15 +431,15 @@
 											<Label Content="" Style="{StaticResource btn_Label}"/>
 											<TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
 										</StackPanel>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <Label Content="" Style="{StaticResource btn_Label}"/>
-                                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+										<StackPanel Orientation="Horizontal" >
+											<Label Content="" Style="{StaticResource btn_Label}"/>
+											<TextBlock Margin="5,0" VerticalAlignment="Center">
 										<Hyperlink PreviewMouseUp="toolBar_btnReturn_Click">
 											<Run Text="{lex:Loc SalesReturn}"/>
 										</Hyperlink>
-                                            </TextBlock>
-                                        </StackPanel>
-                                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
+											</TextBlock>
+										</StackPanel>
+										<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<Label Content="" Style="{StaticResource btn_Label}"/>
 											<TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
@@ -705,10 +705,10 @@
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
 
 									</DataGridTextColumn>
-                                    <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+									<DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" 
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
-                                    </DataGridTextColumn>
+									</DataGridTextColumn>
 									<!-- UnitPrice_Vat -->
 									<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 

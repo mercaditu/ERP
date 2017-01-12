@@ -40,7 +40,7 @@ namespace entity
             Cambio,
             Marketing,
             Muestra,
-            Otros
+            Other
         }
 
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]

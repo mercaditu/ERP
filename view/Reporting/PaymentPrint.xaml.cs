@@ -76,7 +76,7 @@ namespace Cognitivo.Reporting
             payment_type payment_type = payment_typeViewSource.View.CurrentItem as payment_type;
             if (payment_type != null)
             {
-                payment_detailViewSource.Source = db.payment_detail.Where(x => x.id_payment_type == payment_type.id_payment_type && x.is_read == Print.IsChecked).ToList();
+                payment_detailViewSource.Source = db.payment_detail.Where(x => x.id_payment_type == payment_type.id_payment_type && x.is_read == Print.IsChecked && x.id_payment > 0).ToList();
             }
         }
 

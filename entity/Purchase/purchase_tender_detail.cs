@@ -46,7 +46,6 @@ namespace entity
 
                     //update quantity
                     update_SubTotal();
-                   
                 }
             }
         }

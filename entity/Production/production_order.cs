@@ -168,7 +168,7 @@ namespace entity
                 if (columnName == "id_production_line")
                 {
                     if (id_production_line == 0)
-                        return "production line needs to be selected";
+                        return "Please select a Production Line";
                 }
                 return "";
             }

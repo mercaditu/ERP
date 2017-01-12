@@ -272,6 +272,8 @@ namespace entity
             get { return SubTotal_Vat - SubTotal; }
         }
 
+        public int? id_sales_promotion { get; set; }
+
         #region "Foreign Key"
 
         public virtual app_vat_group app_vat_group { get; set; }
@@ -296,15 +298,11 @@ namespace entity
         }
         private item _item;
 
+        public virtual sales_promotion sales_promotion { get; set; }
+
         #endregion
 
-
         #region Methods
-
-        public void Item_Select()
-        {
-
-        }
 
         /// <summary>
         /// 
@@ -331,7 +329,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        public void update_UnitPriceVAT()
+        private void update_UnitPriceVAT()
         {
             UnitPrice_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
             RaisePropertyChanged("UnitPrice_Vat");
@@ -340,7 +338,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        public void update_SubTotal()
+        private void update_SubTotal()
         {
             SubTotal = _unit_price * _quantity;
             RaisePropertyChanged("SubTotal");
@@ -359,9 +357,8 @@ namespace entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public decimal get_SalesPrice()
+        private decimal get_SalesPrice()
         {
-
             if (id_item > 0)
             {
                 if (Contact != null)
@@ -379,11 +376,8 @@ namespace entity
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
                 if (PriceList_ID == 0)
                 {
-                    PriceList_ID = CurrentSession.PriceLists.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
+                    PriceList_ID = CurrentSession.PriceLists.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).Select(x => x.id_price_list).FirstOrDefault();
                 }
-
-                //Step 1 1/2. Check if Quantity gets us a better Price List.
-
 
                 //Step 2. Get Price in Currency.
                 if (CurrencyFX_ID > 0)
@@ -412,19 +406,19 @@ namespace entity
                             if (ItemPrices.Where(x => x.id_price_list == PriceList_ID).Any())
                             {
                                 item_price = ItemPrices.Where(x => x.id_price_list == PriceList_ID).FirstOrDefault();
-                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).Select(x => x.id_currencyfx).FirstOrDefault();
                                 return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
                             else if (ItemPrices.Where(x => x.id_currency == app_currencyfx.id_currency).Any())
                             {
                                 item_price = ItemPrices.Where(x => x.id_currency == app_currencyfx.id_currency).FirstOrDefault();
-                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).Select(x => x.id_currencyfx).FirstOrDefault();
                                 return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
                             else if (ItemPrices.FirstOrDefault() != null)
                             {
                                 item_price = ItemPrices.FirstOrDefault();
-                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().id_currencyfx;
+                                int FxRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == item_price.id_currency).Select(x => x.id_currencyfx).FirstOrDefault();
                                 return Currency.convert_Values(item_price.value, FxRate, CurrencyFX_ID, App.Modules.Sales);
                             }
                         }
@@ -434,6 +428,77 @@ namespace entity
 
             return 0;
         }
+
+
+        #region Discount Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldDiscount"></param>
+        /// <param name="value"></param>
+        /// <param name="unit_cost"></param>
+        private void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
+        {
+            if (this.unit_price > 0)
+            {
+                this.unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+                RaisePropertyChanged("unit_price");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discountvat"></param>
+        private void Calculate_UnitDiscount(decimal discountvat)
+        {
+            decimal calc_discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+
+            ApplyDiscount_UnitPrice(_discount, calc_discount, unit_price);
+            _discount = calc_discount;
+            Calculate_SubTotalDiscount(_discount);
+            RaisePropertyChanged("discount");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
+        private void Calculate_UnitVatDiscount(decimal discount)
+        {
+            _DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
+            Calculate_SubTotalVatDiscount(_DiscountVat);
+            RaisePropertyChanged("DiscountVat");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
+        private void Calculate_SubTotalDiscount(decimal discount)
+        {
+            Discount_SubTotal = discount * _quantity;
+            RaisePropertyChanged("Discount_SubTotal");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DiscountVat"></param>
+        private void Calculate_SubTotalVatDiscount(decimal DiscountVat)
+        {
+            _Discount_SubTotal_Vat = DiscountVat * _quantity;
+            RaisePropertyChanged("Discount_SubTotal_Vat");
+        }
+
+        private void Calculate_PercentageDiscount(decimal Percentage)
+        {
+            discount = unit_price * Percentage;
+            RaisePropertyChanged("discount");
+        }
+
+        #endregion
 
         #endregion
 
@@ -475,8 +540,6 @@ namespace entity
             {
                 if (_DiscountVat != value)
                 {
-
-
                     if (State > 0)
                     {
                         Calculate_UnitDiscount(value);
@@ -506,7 +569,6 @@ namespace entity
             }
         }
         private decimal _Discount_SubTotal;
-
 
         /// <summary>
         /// 
@@ -546,72 +608,6 @@ namespace entity
         }
         private decimal _DiscountPercentage_SubTotal_Vat;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="oldDiscount"></param>
-        /// <param name="value"></param>
-        /// <param name="unit_cost"></param>
-        public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
-        {
-            if (this.unit_price>0)
-            {
-                this.unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
-                RaisePropertyChanged("unit_price");
-            }
-      
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="discountvat"></param>
-        public void Calculate_UnitDiscount(decimal discountvat)
-        {
-            decimal calc_discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
-
-            ApplyDiscount_UnitPrice(_discount, calc_discount, unit_price);
-            _discount = calc_discount;
-            Calculate_SubTotalDiscount(_discount);
-            RaisePropertyChanged("discount");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="discount"></param>
-        public void Calculate_UnitVatDiscount(decimal discount)
-        {
-            _DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
-            Calculate_SubTotalVatDiscount(_DiscountVat);
-            RaisePropertyChanged("DiscountVat");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="discount"></param>
-        public void Calculate_SubTotalDiscount(decimal discount)
-        {
-            Discount_SubTotal = discount * _quantity;
-            RaisePropertyChanged("Discount_SubTotal");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="DiscountVat"></param>
-        public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
-        {
-            _Discount_SubTotal_Vat = DiscountVat * _quantity;
-            RaisePropertyChanged("Discount_SubTotal_Vat");
-        }
-
-        public void Calculate_PercentageDiscount(decimal Percentage)
-        {
-            discount = unit_price * Percentage;
-            RaisePropertyChanged("discount");
-        }
         #endregion
     }
 }

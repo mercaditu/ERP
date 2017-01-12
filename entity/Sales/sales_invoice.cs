@@ -38,6 +38,7 @@ namespace entity
                     _State = value;
                     RaisePropertyChanged("State");
                     base.State = value;
+
                     foreach (sales_invoice_detail detail in sales_invoice_detail)
                     {
                         detail.State = value;
@@ -211,6 +212,10 @@ namespace entity
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }
         public sales_invoice newer { get; set; }
+
+
+        public 
+
 
         public void UpdateVAT_Totals()
         {

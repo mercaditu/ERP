@@ -119,10 +119,7 @@ namespace Cognitivo.Sales
                 {
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 }
-             
             }
-        
-           
         }
 
         private async void load_SecondaryDataThread()

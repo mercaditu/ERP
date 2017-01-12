@@ -21,9 +21,7 @@ namespace entity
         public int id_purchase_tender_item { get; set; }
         public int id_purchase_tender { get; set; }
         public int? id_item { get; set; }
-
         public int? id_project_task { get; set; }
-
         public string item_description { get; set; }
 
         /// <summary>

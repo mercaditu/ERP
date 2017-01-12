@@ -22,6 +22,7 @@ namespace entity
         public int id_purchase_packing { get; set; }
         public int? id_purchase_order_detail { get; set; }
         public int? id_location { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_item
@@ -42,6 +43,7 @@ namespace entity
             }
         }
         private int _id_item;
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public decimal quantity
@@ -58,8 +60,10 @@ namespace entity
             }
         }
         private decimal _quantity;
-        
 
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
+        
         [NotMapped]
         public int id_branch { get; set; }
 

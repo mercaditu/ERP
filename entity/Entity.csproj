@@ -195,8 +195,13 @@
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
     <Compile Include="BrilloQuery\Sales.cs" />
+    <Compile Include="Commercial\loyalty_member_detail.cs" />
+    <Compile Include="Commercial\loyalty_member.cs" />
+    <Compile Include="Commercial\loyalty_tier.cs" />
     <Compile Include="Commercial\contact_tag.cs" />
     <Compile Include="Commercial\contact_tag_detail.cs" />
+    <Compile Include="Commercial\payment_approve.cs" />
+    <Compile Include="Commercial\payment_approve_detail.cs" />
     <Compile Include="Commercial\payment_withholding_detail.cs" />
     <Compile Include="Commercial\refinance.cs" />
     <Compile Include="Context\BaseDB.cs" />

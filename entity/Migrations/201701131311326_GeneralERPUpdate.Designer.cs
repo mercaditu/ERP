@@ -13,7 +13,7 @@ namespace entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201701131222467_GeneralERPUpdate"; }
+            get { return "201701131311326_GeneralERPUpdate"; }
         }
         
         string IMigrationMetadata.Source

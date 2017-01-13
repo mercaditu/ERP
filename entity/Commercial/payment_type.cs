@@ -59,6 +59,7 @@ namespace entity
 
         public virtual app_document app_document { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
+         
 
         public string Error
         {

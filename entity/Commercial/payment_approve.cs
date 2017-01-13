@@ -14,7 +14,7 @@ namespace entity
             is_head = true;
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;
-            payment_detail = new List<payment_detail>();
+            payment_approve_detail = new List<payment_approve_detail>();
 
             //Session Variables
             id_company = CurrentSession.Id_Company;
@@ -104,9 +104,9 @@ namespace entity
             get
             {
                 _GrandTotalDetail = 0;
-                foreach (payment_detail _payment_detail in payment_detail)
+                foreach (payment_approve_detail _payment_approve_detail in payment_approve_detail)
                 {
-                    _GrandTotalDetail += _payment_detail.ValueInDefaultCurrency;
+                    _GrandTotalDetail += _payment_approve_detail.ValueInDefaultCurrency;
                 }
                 return Math.Round(_GrandTotalDetail, 2);
             }
@@ -124,9 +124,9 @@ namespace entity
             get
             {
                 _GrandTotalDetailValue = 0;
-                foreach (payment_detail _payment_detail in payment_detail)
+                foreach (payment_approve_detail _payment_approve_detail in payment_approve_detail)
                 {
-                    _GrandTotalDetailValue += _payment_detail.value;
+                    _GrandTotalDetailValue += _payment_approve_detail.value;
                 }
                 return Math.Round(_GrandTotalDetailValue, 2);
             }
@@ -189,7 +189,7 @@ namespace entity
         /// </summary>
         public DateTime trans_date { get; set; }
 
-        public virtual ICollection<payment_detail> payment_detail { get; set; }
+        public virtual ICollection<payment_approve_detail> payment_approve_detail { get; set; }
 
         public virtual sales_rep sales_rep { get; set; }
     }

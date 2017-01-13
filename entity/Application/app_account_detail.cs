@@ -32,6 +32,7 @@ namespace entity
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx { get; set; }
         public int? id_payment_detail { get; set; }
+        public int? id_payment_approve_detail { get; set; }
         public int id_payment_type { get; set; }
         public Status.Documents_General status { get; set; }
         public decimal debit { get; set; }
@@ -46,6 +47,7 @@ namespace entity
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual payment_type payment_type { get; set; }
         public virtual payment_detail payment_detail { get; set; }
+        public virtual payment_approve_detail payment_approve_detail { get; set; }
         public virtual app_account_session app_account_session { get; set; }
         public string Error
         {

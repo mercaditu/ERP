@@ -23,9 +23,9 @@ namespace entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_payment_detail { get; set; }
+        public int id_payment_approve_detail { get; set; }
         public int? id_bank { get; set; }
-        public int? id_payment { get; set; }
+        public int? id_payment_approve { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }
@@ -178,9 +178,9 @@ namespace entity
                         _value = value;
                         RaisePropertyChanged("value");
 
-                        if (payment != null)
+                        if (payment_approve != null)
                         {
-                            ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
+                            ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment_approve.id_currencyfx, App.Modules.Sales);
                             RaisePropertyChanged("ValueInDefaultCurrency");
                         }
                     }
@@ -199,19 +199,19 @@ namespace entity
             {
                 if (_ValueInDefaultCurrency == 0)
                 {
-                    if (payment != null)
+                    if (payment_approve != null)
                     {
-                        if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                        if (payment_approve.State != System.Data.Entity.EntityState.Added || payment_approve.State != System.Data.Entity.EntityState.Modified)
                         {
                             decimal amount = 0;
-                            foreach (payment_detail payment_detail in payment.payment_detail)
+                            foreach (payment_approve_detail payment_approve_detail in payment_approve.payment_approve_detail)
                             {
-                                amount += Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
+                                amount += Currency.convert_Values(payment_approve_detail.value, payment_approve_detail.id_currencyfx, payment_approve.id_currencyfx, App.Modules.Sales);
                             }
 
-                            this.value = payment.GrandTotal - amount;
+                            this.value = payment_approve.GrandTotal - amount;
 
-                            return payment.GrandTotal - amount;
+                            return payment_approve.GrandTotal - amount;
                         }
                     }
                 }
@@ -226,7 +226,7 @@ namespace entity
                     RaisePropertyChanged("ValueInDefaultCurrency");
 
                     //To refresh header for payment toal in DefaultCurrency.
-                    payment.RaisePropertyChanged("GrandTotalDetail");
+                    payment_approve.RaisePropertyChanged("GrandTotalDetail");
                 }
             }
         }
@@ -259,10 +259,10 @@ namespace entity
 
                         if (_app_range != null)
                         {
-                            if (payment != null)
+                            if (payment_approve != null)
                             {
-                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment.id_branch).FirstOrDefault().code;
-                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment.id_terminal).FirstOrDefault().code;
+                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment_approve.id_branch).FirstOrDefault().code;
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment_approve.id_terminal).FirstOrDefault().code;
                             }
 
                             NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
@@ -289,7 +289,7 @@ namespace entity
         public string NumberWatermark { get; set; }
 
         public string comment { get; set; }
-        public virtual payment payment { get; set; }
+        public virtual payment_approve payment_approve { get; set; }
         public virtual payment_type payment_type { get; set; }
 
         public virtual app_account app_account { get; set; }
@@ -339,10 +339,10 @@ namespace entity
                         if (value > Max_Value)
                             return "Amount is not Higher than Credit Note Balace: " + Math.Round(Max_Value, 2);
                     }
-                    if (payment.Balance > 0)
+                    if (payment_approve.Balance > 0)
                     {
-                        if (payment.GrandTotalDetail > payment.Balance)
-                            return "Amount is not Higher than Balace: " + Math.Round(payment.Balance, 2);
+                        if (payment_approve.GrandTotalDetail > payment_approve.Balance)
+                            return "Amount is not Higher than Balace: " + Math.Round(payment_approve.Balance, 2);
                     }
 
                 }

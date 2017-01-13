@@ -17,10 +17,12 @@ namespace entity
         public int id_payment_type_detail { get; set; }
         public int id_payment_type { get; set; }
         public int id_payment_detail { get; set; }
+        public int id_payment_approve_detail { get; set; }
         public short id_field { get; set; }
         public string value { get; set; }
     
         public virtual app_field app_field { get; set; }
         public virtual payment_detail payment_detail { get; set; }
+        public virtual payment_approve_detail payment_approve_detail { get; set; }
     }
 }

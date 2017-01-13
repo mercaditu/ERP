@@ -41,13 +41,26 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            List<payment_schedual> SchedualList = PaymentDB.payment_schedual.Local.Where(x => x.IsSelected).ToList();
-            if (SchedualList.Count() > 0)
+            List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
+
+            if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
             {
-                cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(ref PaymentDB, SchedualList);
-                crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(PaymentApproval);
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
             }
+            else if (payment_schedualViewSource.View.OfType<payment_schedual>().ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().ToList();
+            }
+            else
+            {
+                //If nothing found, then exit.
+                return;
+            }
+
+            cntrl.Curd.PaymentApproval PaymentApproval = new cntrl.Curd.PaymentApproval(cntrl.Curd.PaymentApproval.Modes.Payable, PaymentSchedualList, ref PaymentDB);
+
+            crud_modal.Visibility = Visibility.Visible;
+            crud_modal.Children.Add(PaymentApproval);
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

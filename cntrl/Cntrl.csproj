@@ -312,6 +312,9 @@
     <Compile Include="Curd\Item_Asset_Group.xaml.cs">
       <DependentUpon>Item_Asset_Group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\PaymentApproval.xaml.cs">
+      <DependentUpon>PaymentApproval.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\PaymentEdit.xaml.cs">
       <DependentUpon>PaymentEdit.xaml</DependentUpon>
     </Compile>
@@ -374,9 +377,6 @@
     </Compile>
     <Compile Include="Curd\measurement_type.xaml.cs">
       <DependentUpon>measurement_type.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Curd\PaymentApproval.xaml.cs">
-      <DependentUpon>PaymentApproval.xaml</DependentUpon>
     </Compile>
     <Compile Include="Curd\payment_type.xaml.cs">
       <DependentUpon>payment_type.xaml</DependentUpon>
@@ -883,6 +883,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Curd\PaymentApproval.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Curd\PaymentEdit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -966,10 +970,6 @@
     <Page Include="Curd\measurement_type.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\PaymentApproval.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\payment_type.xaml">
       <SubType>Designer</SubType>

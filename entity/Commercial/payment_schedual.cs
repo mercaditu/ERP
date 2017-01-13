@@ -44,6 +44,7 @@ namespace entity
         public int? id_purchase_order { get; set; }
         public int? id_note { get; set; }
         public int? id_payment_detail { get; set; }
+        public int? id_payment_approve_detail { get; set; }
         public Status.Documents_General status { get; set; }
         public int id_contact { get; set; }
         public int id_currencyfx { get; set; }
@@ -166,7 +167,7 @@ namespace entity
         //Hierarchy
         public virtual ICollection<payment_schedual> child { get; set; }
         public virtual payment_schedual parent { get; set; }
-
+        public virtual payment_approve_detail payment_approve_detail { get; set; }
         public virtual payment_detail payment_detail { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }

@@ -93,7 +93,7 @@ namespace Cognitivo.Accounting
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
-                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
+                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).Include(x => x.contact).ToListAsync();
         }
 
         public async void Get_Payment()
@@ -113,7 +113,7 @@ namespace Cognitivo.Accounting
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
-                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).ToListAsync();
+                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).Include(x => x.contact).ToListAsync();
         }
 
         public async void Get_PurchaseReturnInvoice()
@@ -123,7 +123,7 @@ namespace Cognitivo.Accounting
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
-                x.status == Status.Documents_General.Approved).ToListAsync();
+                x.status == Status.Documents_General.Approved).Include(x => x.contact).ToListAsync();
         }
 
         public async void Get_PurchaseInvoice()
@@ -133,7 +133,7 @@ namespace Cognitivo.Accounting
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
-                x.status == Status.Documents_General.Approved).ToListAsync();
+                x.status == Status.Documents_General.Approved).Include(x => x.contact).ToListAsync();
         }
 
         private async void Get_ItemAsset()

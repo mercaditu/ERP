@@ -89,7 +89,15 @@ namespace DebeHaber
             Currency = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.code : "" : "";
 
             DocNumber = sales_invoice.number;
-            DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
+            if (string.IsNullOrEmpty(sales_invoice.code))
+            {
+                DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
+            }
+            else
+            {
+                DocCode = sales_invoice.code;
+            }
+            
             DocExpiry = (sales_invoice.app_document_range != null ? sales_invoice.app_document_range.expire_date != null ? sales_invoice.app_document_range.expire_date: DateTime.Now : DateTime.Now);
         }
 
@@ -220,7 +228,7 @@ namespace DebeHaber
             {
                 if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
                 {
-                    CC.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                    CC.Name = db.app_cost_center.Where(x => x.is_product).Select(x => x.name).FirstOrDefault();
                     CC.Type = CostCenterTypes.Merchendice;
                 }
                 else

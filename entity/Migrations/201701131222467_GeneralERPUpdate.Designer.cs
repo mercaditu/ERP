@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddLoyalty_PaymentApprove : IMigrationMetadata
+    public sealed partial class GeneralERPUpdate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLoyalty_PaymentApprove));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(GeneralERPUpdate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701131134132_AddLoyalty_PaymentApprove"; }
+            get { return "201701131222467_GeneralERPUpdate"; }
         }
         
         string IMigrationMetadata.Source

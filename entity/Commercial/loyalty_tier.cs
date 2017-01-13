@@ -20,7 +20,7 @@
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_tag { get; set; }
+        public int id_tier { get; set; }
 
         [Required]
         public string name { get; set; }

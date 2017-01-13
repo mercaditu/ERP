@@ -21,7 +21,7 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_member { get; set; }
-
+        public int id_tier { get; set; }
         public int? id_contact { get; set; }
 
         [Required]

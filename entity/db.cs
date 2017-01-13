@@ -99,6 +99,8 @@
         public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<payment_promissory_note> payment_promissory_note { get; set; }
         public virtual DbSet<payment_detail> payment_detail { get; set; }
+        public virtual DbSet<payment_approve> payment_approve { get; set; }
+        public virtual DbSet<payment_approve_detail> payment_approve_detail { get; set; }
         public virtual DbSet<payment_type> payment_type { get; set; }
         public virtual DbSet<payment_type_detail> payment_type_detail { get; set; }
         public virtual DbSet<payment_schedual> payment_schedual { get; set; }
@@ -168,5 +170,9 @@
         public virtual DbSet<project_event_template> project_event_template { get; set; }
         public virtual DbSet<project_event_template_variable> project_event_template_variable { get; set; }
         public virtual DbSet<project_event_template_fixed> project_event_template_fixed { get; set; }
+
+        public virtual DbSet<loyalty_member> loyalty_member { get; set; }
+        public virtual DbSet<loyalty_member_detail> loyalty_member_detail { get; set; }
+        public virtual DbSet<loyalty_tier> loyalty_tier { get; set; }
     }
 }

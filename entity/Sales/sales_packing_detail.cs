@@ -25,6 +25,7 @@ namespace entity
         public int id_sales_packing { get; set; }
         public int? id_sales_order_detail { get; set; }
         public int? id_location { get; set; }
+        public long? id_movement { get; set; }
 
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]

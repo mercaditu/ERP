@@ -80,17 +80,12 @@
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
-                                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
-                                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                  SelectedIndex="0"
                                   Style="{StaticResource input_combobox}"
                                   SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                <TextBox
-                                metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
-                                metro:TextBoxHelper.SelectAllOnFocus="True"
-                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                             Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <TextBox Style="{StaticResource input_textbox}"
+                    Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
                         <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
@@ -112,12 +107,6 @@
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                    <StackPanel Orientation="Horizontal" Margin="4,0" 
-                                                Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
-
-                        <TextBlock Text="" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Crimson"/>
-                        <TextBlock Text="Truck" Style="{StaticResource text_Label}"/>
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="" Style="{StaticResource btn_Label}"/>
                         <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -126,28 +115,6 @@
                                     </Hyperlink>
                         </TextBlock>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
-                        <Label Content="A" Style="{StaticResource btn_Label}" Margin="0,0,4,0"/>
-                        <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
-                                    <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
-                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
-                               PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                            <Border BorderThickness="1" BorderBrush="Gray">
-                                <StackPanel Background="WhiteSmoke" Width="180">
-                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                                    <WrapPanel>
-                                        <CheckBox Margin="6,0,0,0" x:Name="chkDiscountStock" 
-                                                  IsChecked="{Binding Source={x:Static pref:TransferSetting.Default}, Path=movebytruck, Mode=TwoWay}">
-                                            <Label Content="Truck" Style="{StaticResource generic_Label}"/>
-                                        </CheckBox>
-
-                                    </WrapPanel>
-
-                                </StackPanel>
-                            </Border>
-                        </Popup>
-                    </StackPanel>
-
                 </StackPanel>
                 <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Margin="5,5,5,1"/>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"

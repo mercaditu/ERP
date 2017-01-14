@@ -106,12 +106,6 @@
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                    <StackPanel Orientation="Horizontal" Margin="4,0" 
-                                                Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
-
-                        <TextBlock Text="" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Crimson"/>
-                        <TextBlock Text="Truck" Style="{StaticResource text_Label}"/>
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="" Style="{StaticResource btn_Label}"/>
                         <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -120,28 +114,6 @@
                                     </Hyperlink>
                         </TextBlock>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
-                        <Label Content="A" Style="{StaticResource btn_Label}" Margin="0,0,4,0"/>
-                        <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
-                                    <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
-                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
-                               PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                            <Border BorderThickness="1" BorderBrush="Gray">
-                                <StackPanel Background="WhiteSmoke" Width="180">
-                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                                    <WrapPanel>
-                                        <CheckBox Margin="6,0,0,0" x:Name="chkDiscountStock" 
-                                                  IsChecked="{Binding Source={x:Static pref:TransferSetting.Default}, Path=movebytruck, Mode=TwoWay}">
-                                            <Label Content="Truck" Style="{StaticResource generic_Label}"/>
-                                        </CheckBox>
-
-                                    </WrapPanel>
-
-                                </StackPanel>
-                            </Border>
-                        </Popup>
-                    </StackPanel>
-
                 </StackPanel>
                 <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Margin="5,5,5,1"/>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"

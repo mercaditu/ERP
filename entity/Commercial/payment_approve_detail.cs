@@ -30,7 +30,6 @@ namespace entity
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }
 
-        [NotMapped]
         public int id_currency
         {
             get
@@ -67,6 +66,7 @@ namespace entity
         [NotMapped]
         public int Default_id_currencyfx { get; set; }
 
+        [NotMapped]
         public int id_currencyfx
         {
             get
@@ -294,7 +294,7 @@ namespace entity
 
         public virtual app_account app_account { get; set; }
         public virtual app_bank app_bank { get; set; }
-        public virtual app_currencyfx app_currencyfx { get; set; }
+        public virtual app_currency app_currency { get; set; }
 
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }

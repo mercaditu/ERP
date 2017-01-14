@@ -26,8 +26,6 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_payment_approve { get; set; }
-        public int? id_weather { get; set; }
-        public int? id_sales_rep { get; set; }
 
         /// <summary>
         /// 
@@ -104,9 +102,9 @@ namespace entity
             get
             {
                 _GrandTotalDetail = 0;
-                foreach (payment_approve_detail _payment_approve_detail in payment_approve_detail)
+                foreach (payment_approve_detail payment_approve_detail in payment_approve_detail)
                 {
-                    _GrandTotalDetail += _payment_approve_detail.ValueInDefaultCurrency;
+                    _GrandTotalDetail += payment_approve_detail.ValueInDefaultCurrency;
                 }
                 return Math.Round(_GrandTotalDetail, 2);
             }
@@ -124,9 +122,9 @@ namespace entity
             get
             {
                 _GrandTotalDetailValue = 0;
-                foreach (payment_approve_detail _payment_approve_detail in payment_approve_detail)
+                foreach (payment_approve_detail payment_approve_detail in payment_approve_detail)
                 {
-                    _GrandTotalDetailValue += _payment_approve_detail.value;
+                    _GrandTotalDetailValue += payment_approve_detail.value;
                 }
                 return Math.Round(_GrandTotalDetailValue, 2);
             }
@@ -190,7 +188,5 @@ namespace entity
         public DateTime trans_date { get; set; }
 
         public virtual ICollection<payment_approve_detail> payment_approve_detail { get; set; }
-
-        public virtual sales_rep sales_rep { get; set; }
     }
 }

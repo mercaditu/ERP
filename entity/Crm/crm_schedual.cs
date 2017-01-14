@@ -1,7 +1,6 @@
 namespace entity
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,6 +24,8 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_schedual { get; set; }
+        public int id_opportunity { get; set; }
+        public int id_contact { get; set; }
         public Types type { get; set; }
         public int ref_id {get;set;}
         public DateTime start_date { get; set; }
@@ -32,5 +33,7 @@ namespace entity
 
         public string comment { get; set; }
 
+        public virtual crm_opportunity crm_opportunity { get; set; }
+        public virtual contact contact { get; set; }
     }
 }

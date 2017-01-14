@@ -496,6 +496,9 @@
     <Compile Include="Product\SuppliesRequest.xaml.cs">
       <DependentUpon>SuppliesRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\MobileBranch.xaml.cs">
+      <DependentUpon>MobileBranch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\TransferSetting.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -1318,6 +1321,10 @@
     <Page Include="Product\SuppliesRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Product\MobileBranch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Product\Transfer.xaml">
       <Generator>MSBuild:Compile</Generator>

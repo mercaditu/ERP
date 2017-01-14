@@ -44,6 +44,11 @@ namespace entity
         public bool is_active { get; set; }
         public bool is_collection_agent { get; set; }
 
+        public decimal daily_goal { get; set; }
+
+        [NotMapped]
+        public decimal montly_goal { get; set; }
+
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }
         public virtual IEnumerable<sales_order> sales_order { get; set; }
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }

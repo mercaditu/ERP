@@ -32,10 +32,5 @@ namespace entity
         public virtual ICollection<sales_packing> sales_packing { get; set; }
         public virtual ICollection<sales_invoice> sales_invoice { get; set; }
         public virtual ICollection<sales_return> sales_return { get; set; }
-
-        //public void Add(crm_opportunity crm_opportunity)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

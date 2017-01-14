@@ -94,6 +94,7 @@
                                 ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                 Style="{StaticResource input_datepicker}"/>
 
+
                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="statusComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource statusViewSource}}" Width="180"

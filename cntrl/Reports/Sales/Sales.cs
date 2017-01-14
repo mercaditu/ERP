@@ -2,7 +2,7 @@
 {
 	public static class Sales
 	{
-		public static string query = @" 	select 
+        public static string query = @" 	select 
 												   CASE 
       WHEN sales_invoice.status=1 THEN 'Pending'
       WHEN sales_invoice.status=2 THEN  'Approved'
@@ -10,6 +10,15 @@
  WHEN sales_invoice.status=4 THEN  'Rejected'
     END 
  as Status,
+	CASE 
+      WHEN sales_invoice.trans_type=0 THEN 'Normal'
+      WHEN sales_invoice.trans_type=1 THEN  'Bonificacion'
+      WHEN sales_invoice.trans_type=2 THEN  'Change'
+        WHEN sales_invoice.trans_type=3 THEN  'Marketing'
+        WHEN sales_invoice.trans_type=2 THEN  'Sample'
+        WHEN sales_invoice.trans_type=3 THEN  'Other'
+    END 
+ as Type,
 sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												sales_invoice.number as Number,
 												sales_invoice.is_impex as Exports,
@@ -43,23 +52,23 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												round((sales_invoice_detail.quantity * (sales_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
 												(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_price) as Margin,
 												(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) / (sales_invoice_detail.unit_cost) as MarkUp,
-(sales_invoice_detail.quantity * sales_invoice_detail.unit_cost) as SubTotalCost,												
-(sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit,
+                                                (sales_invoice_detail.quantity * sales_invoice_detail.unit_cost) as SubTotalCost,												
+                                                (sales_invoice_detail.unit_price - sales_invoice_detail.unit_cost) as Profit,
 												(select name from app_geography where id_geography=contacts.id_geography) as GeoLevel1,
 												(select name from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=contacts.id_geography)) as GeoLevel2,
 
 												(select name from app_geography where id_geography=
-												 (select parent_id_geography from app_geography where id_geography=
+												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=contacts.id_geography))) as GeoLevel3,
 												(select name from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=
-												 (select parent_id_geography from app_geography where id_geography=
+												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=contacts.id_geography)))) as GeoLevel4,
 												(select name from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=
-												 (select parent_id_geography from app_geography where id_geography=
+												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=contacts.id_geography))))) as GeoLevel5
 
 												from sales_invoice_detail

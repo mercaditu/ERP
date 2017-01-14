@@ -44,10 +44,11 @@ namespace entity
         public bool is_active { get; set; }
         public bool is_collection_agent { get; set; }
 
-        public decimal daily_goal { get; set; }
+        public decimal monthly_goal { get; set; }
 
         [NotMapped]
-        public decimal montly_goal { get; set; }
+        public decimal daily_goal { get { _daily_goal = monthly_goal / 30; return _daily_goal; } set { _daily_goal = value; monthly_goal = value * 30; RaisePropertyChanged("monthly_goal"); } }
+        private decimal _daily_goal;
 
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }
         public virtual IEnumerable<sales_order> sales_order { get; set; }

@@ -54,9 +54,14 @@
                     <Label Content="{lex:Loc CommisionBase}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commision_baseTextBox" Style="{StaticResource input_textbox}"
 						Text="{Binding commision_base, Mode=TwoWay, StringFormat={}{0:N0}, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                    <Label Content="{lex:Loc Goal}" Style="{StaticResource input_label}"/>
+                    <TextBox Style="{StaticResource input_textbox}"
+						Text="{Binding monthly_goal, Mode=TwoWay, NotifyOnValidationError=true, 
+                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
                     <Label Content="{lex:Loc CommisionTemplate}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commision_calculationTextBox" Style="{StaticResource input_textbox}"
-						Text="{Binding commision_calculation, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+						Text="{Binding commision_calculation, Mode=TwoWay, NotifyOnValidationError=true, 
+                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
                     <CheckBox x:Name="is_activeCheckBox" 
                               Content="{lex:Loc Active}" 
                               FlowDirection="LeftToRight" 

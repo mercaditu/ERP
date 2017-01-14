@@ -22,7 +22,6 @@ namespace entity
                 {
                     _id_contact = value;
                     RaisePropertyChanged("id_contact");
-                   //calc_credit(_GrandTotal);
                 }
             }
         }

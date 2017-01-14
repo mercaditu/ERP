@@ -192,7 +192,7 @@ namespace Cognitivo.Sales
                     CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
                     UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
                     CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
-                    //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+
                     string Message = CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
 
                     if (Message != "")
@@ -203,6 +203,7 @@ namespace Cognitivo.Sales
                             UpdatePaymentReApprove.Update_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                         }
                     }
+
                     Message = CheckPaymentReApprove.Check_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                     if (Message != "")
                     {
@@ -210,10 +211,9 @@ namespace Cognitivo.Sales
                         if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdatePaymentReApprove.Update_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-
                         }
                     }
+
                     Message = CheckPaymentReApprove.Check_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                     if (Message != "")
                     {
@@ -225,6 +225,7 @@ namespace Cognitivo.Sales
 
                         }
                     }
+
                     Message += CheckPaymentReApprove.Check_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                     if (Message != "")
                     {
@@ -236,6 +237,7 @@ namespace Cognitivo.Sales
 
                         }
                     }
+
                     Message = CheckPaymentReApprove.Check_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                     if (Message != "")
                     {
@@ -247,8 +249,6 @@ namespace Cognitivo.Sales
 
                         }
                     }
-
-
 
                     Message = "";
                     Message = CheckMovementReApprove.CheckQuantityUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
@@ -303,9 +303,6 @@ namespace Cognitivo.Sales
                         }
                     }
 
-
-
-
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);
                 sales_invoiceViewSource.View.Refresh();
@@ -318,7 +315,8 @@ namespace Cognitivo.Sales
                 {
                     if (app_document_range.range_current > app_document_range.range_end)
                     {
-                        toolBar.msgWarning("Document range is Over");
+                        toolBar.msgWarning("Document Range is finished.");
+                        return;
                     }
                 }
 

@@ -35,7 +35,7 @@ namespace entity
         private void validate_order()
         {
             NumberOfRecords = 0;
-            foreach (production_order production_order in base.production_order.Local)
+            foreach (production_order production_order in base.production_order.Local.Where(x => x.id_production_line > 0))
             {
                 if (production_order.IsSelected && production_order.Error == null)
                 {

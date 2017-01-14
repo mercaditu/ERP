@@ -50,7 +50,7 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-            List<sales_order> sales_orderLIST = base.sales_order.Local.ToList();
+            List<sales_order> sales_orderLIST = base.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0).ToList();
             foreach (sales_order sales_order in sales_orderLIST)
             {
                 if(sales_order.IsSelected && sales_order.Error == null)
@@ -112,7 +112,7 @@ namespace entity
         public bool Approve()
         {
 
-            foreach (sales_order sales_order in base.sales_order.Local.Where(x => x.status != Status.Documents_General.Approved))
+            foreach (sales_order sales_order in base.sales_order.Local.Where(x => x.status != Status.Documents_General.Approved && x.id_contact > 0))
             {
                 NumberOfRecords = 0;
 
@@ -120,7 +120,7 @@ namespace entity
                     sales_order.IsSelected &&
                     sales_order.Error == null)
                 {
-                    if (sales_order.id_sales_order == 0)
+                    if (sales_order.id_sales_order == 0 && sales_order.id_contact > 0)
                     {
                         SaveChanges();
                     }

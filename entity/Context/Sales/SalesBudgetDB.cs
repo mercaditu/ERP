@@ -46,7 +46,7 @@ namespace entity
 
             foreach (sales_budget sales_budget in base.sales_budget.Local)
             {
-                if (sales_budget.IsSelected && sales_budget.Error == null)
+                if (sales_budget.IsSelected && sales_budget.Error == null && sales_budget.id_contact > 0)
                 {
                     if (sales_budget.State == EntityState.Added)
                     {
@@ -71,6 +71,7 @@ namespace entity
 
                     NumberOfRecords += 1;
                 }
+
                 if (sales_budget.State > 0)
                 {
                     if (sales_budget.State != EntityState.Unchanged)
@@ -95,7 +96,7 @@ namespace entity
         public bool Approve()
         {
             NumberOfRecords = 0;
-            foreach (sales_budget sales_budget in base.sales_budget.Local.Where(x => x.status != Status.Documents_General.Approved))
+            foreach (sales_budget sales_budget in base.sales_budget.Local.Where(x => x.status != Status.Documents_General.Approved && x.id_contact > 0))
             {
                 if (sales_budget.status != Status.Documents_General.Approved &&
                     sales_budget.IsSelected &&
@@ -105,6 +106,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
+
                     sales_budget.app_condition = app_condition.Find(sales_budget.id_condition);
                     sales_budget.app_contract = app_contract.Find(sales_budget.id_contract);
                     sales_budget.app_currencyfx = app_currencyfx.Find(sales_budget.id_currencyfx);

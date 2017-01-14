@@ -57,7 +57,7 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-            foreach (sales_invoice invoice in sales_invoice.Local.Where(x => x.IsSelected))
+            foreach (sales_invoice invoice in sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
                 if (invoice.Error == null)
                 {
@@ -133,9 +133,9 @@ namespace entity
 
             foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved && x.is_head
-                                                        && x.IsSelected && x.Error == null))
+                                                        && x.IsSelected && x.Error == null && x.id_contact > 0))
             {
-                if (invoice.id_sales_invoice == 0)
+                if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
                     SaveChanges();
                 }

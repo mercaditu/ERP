@@ -195,8 +195,6 @@
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
     <Compile Include="BrilloQuery\Sales.cs" />
-    <Compile Include="Commercial\schedual_detail.cs" />
-    <Compile Include="Commercial\schedual.cs" />
     <Compile Include="Commercial\loyalty_member_detail.cs" />
     <Compile Include="Commercial\loyalty_member.cs" />
     <Compile Include="Commercial\loyalty_tier.cs" />

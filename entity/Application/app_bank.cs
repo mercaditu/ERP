@@ -29,7 +29,7 @@ namespace entity
         }
         private bool _is_active;
 
-        public bool is_suppliers { get; set; }
+        public bool for_supplier { get; set; }
         public string branch_name { get; set; }
         public string branch_address { get; set; }
         public string country { get; set; }

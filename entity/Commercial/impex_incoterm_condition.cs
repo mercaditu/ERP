@@ -15,12 +15,21 @@ namespace entity
             is_head = true;
         }
 
+        public enum Types
+        {
+            Shipping,
+            Insurance,
+            CustomsDuty,
+            Legal,
+            Others
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_incoterm_condition { get; set; }
         [Required]
         public string name { get; set; }
-
+        public Types type { get; set; }
         public virtual ICollection<impex_incoterm_detail> impex_incoterm_detail {get;set;}
         public virtual ICollection<impex_expense> impex_expense { get; set; }
 

@@ -324,6 +324,9 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+        [NotMapped]
+        public bool is_locked { get; set; }
+
         public string this[string columnName]
         {
             get

@@ -52,7 +52,18 @@ namespace cntrl.Curd
                 payment.contact = contacts;
             }
 
-            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            foreach (var id in payment_schedualList.Where(x => x.id_payment_approve_detail>0).GroupBy(x => new
+                                                                        {
+                                                                            payment_type = x.payment_approve_detail.id_payment_type,
+                                                                            Account = x.payment_approve_detail.id_account,
+                                                                            Currency = x.app_currencyfx.id_currency
+                                                                        }).Select(x => new { x.Key.payment_type,x.Key.Account,x.Key.Currency }))
+            {
+                //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
+                Add_PaymentDetailApprove(id.Currency);
+            }
+
+            foreach (var id in payment_schedualList.Where(x=>x.id_payment_approve_detail==0).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.id_currency);
@@ -287,7 +298,47 @@ namespace cntrl.Curd
                 Add_PaymentDetail(payment_detail.app_currencyfx.id_currency);
             }
         }
-         
+
+        private void Add_PaymentDetailApprove(int CurrencyID)
+        {
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+
+            if (payment != null)
+            {
+                payment_detail payment_detail = new payment_detail();
+                payment_detail.payment = payment;
+                payment_detail.is_locked = true;
+                //Get current Active Rate of selected Currency.
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+
+                if (app_currencyfx != null)
+                {
+                    payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.app_currencyfx = app_currencyfx;
+                }
+
+                payment_detail.IsSelected = true;
+
+                //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
+                if (Mode == Modes.Recievable)
+                {
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
+                                                                           - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+
+                }
+                else
+                {
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
+                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+
+                }
+
+                payment.payment_detail.Add(payment_detail);
+                paymentpayment_detailViewSource.View.Refresh();
+            }
+        }
 
         private void Add_PaymentDetail(int CurrencyID)
         {
@@ -297,8 +348,7 @@ namespace cntrl.Curd
             {
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
-
-                //Get current Active Rate of selected Currency.
+                 //Get current Active Rate of selected Currency.
                 app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
 
                 if (app_currencyfx != null)

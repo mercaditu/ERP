@@ -52,7 +52,7 @@
 		<!-- Body -->
 		<Grid Grid.Column="1" Grid.Row="1"  Background="White" >
 			<ScrollViewer Margin="0,0,0,30">
-				<StackPanel>
+                <StackPanel IsEnabled="{Binding is_locked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource paymentpayment_detailViewSource}}">
 					<Label Content="{Binding contact.name}" Style="{StaticResource H3}"/>
 					<!-- Header -->
 					<WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
@@ -100,7 +100,7 @@
 					</Grid>
 					<!-- Detail -->
 					<StackPanel Orientation="Horizontal">
-						<StackPanel Width="256" Margin="4">
+						<StackPanel Width="256" Margin="4" >
 							<ListBox Background="{StaticResource AccentColor_Introvert}" x:Name="dgvPaymentDetail"
 									 ScrollViewer.VerticalScrollBarVisibility="Auto"
 									 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 

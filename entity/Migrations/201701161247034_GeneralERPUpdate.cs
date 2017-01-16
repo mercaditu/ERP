@@ -7,7 +7,6 @@ namespace entity.Migrations
     {
         public override void Up()
         {
-       
             CreateTable(
                 "payment_approve_detail",
                 c => new
@@ -81,6 +80,47 @@ namespace entity.Migrations
                 .Index(t => t.id_terminal)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
+            
+            CreateTable(
+                "production_service_account",
+                c => new
+                    {
+                        id_production_service_account = c.Int(nullable: false, identity: true),
+                        id_contact = c.Int(nullable: false),
+                        id_item = c.Int(nullable: false),
+                        id_order_detail = c.Int(),
+                        id_purchase_order_detail = c.Int(),
+                        id_purchase_invoice_detail = c.Int(),
+                        status = c.Int(),
+                        unit_cost = c.Decimal(nullable: false, precision: 20, scale: 9),
+                        debit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                        credit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                        trans_date = c.DateTime(nullable: false, precision: 0),
+                        exp_date = c.DateTime(precision: 0),
+                        id_company = c.Int(nullable: false),
+                        id_user = c.Int(nullable: false),
+                        is_head = c.Boolean(nullable: false),
+                        timestamp = c.DateTime(nullable: false, precision: 0),
+                        is_read = c.Boolean(nullable: false),
+                        parent_id_production_service_account = c.Int(),
+                    })
+                .PrimaryKey(t => t.id_production_service_account)                
+                .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
+                .ForeignKey("production_service_account", t => t.parent_id_production_service_account)
+                .ForeignKey("contacts", t => t.id_contact, cascadeDelete: true)
+                .ForeignKey("items", t => t.id_item, cascadeDelete: true)
+                .ForeignKey("production_order_detail", t => t.id_order_detail)
+                .ForeignKey("purchase_invoice_detail", t => t.id_purchase_invoice_detail)
+                .ForeignKey("purchase_order_detail", t => t.id_purchase_order_detail)
+                .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
+                .Index(t => t.id_contact)
+                .Index(t => t.id_item)
+                .Index(t => t.id_order_detail)
+                .Index(t => t.id_purchase_order_detail)
+                .Index(t => t.id_purchase_invoice_detail)
+                .Index(t => t.id_company)
+                .Index(t => t.id_user)
+                .Index(t => t.parent_id_production_service_account);
             
             CreateTable(
                 "crm_schedual",
@@ -190,12 +230,11 @@ namespace entity.Migrations
             AddColumn("app_bank", "country", c => c.String(unicode: false));
             AddColumn("app_bank", "swift_code", c => c.String(unicode: false));
             AddColumn("app_bank", "intermediary_bank", c => c.String(unicode: false));
+            AddColumn("hr_position", "id_contact", c => c.Int());
             AddColumn("app_contract", "is_purchase", c => c.Boolean(nullable: false));
             AddColumn("app_contract", "is_sales", c => c.Boolean(nullable: false));
-            AddColumn("production_execution_detail", "id_production_account", c => c.Int());
-            AddColumn("production_execution_detail", "production_account_id_production_account", c => c.Int());
-            AddColumn("production_execution_detail", "production_account_id_production_account1", c => c.Int());
-            AddColumn("production_account", "Oldproduction_execution_detail_id_execution_detail", c => c.Int());
+            AddColumn("production_execution_detail", "id_service_account", c => c.Int());
+            AddColumn("production_execution_detail", "production_service_account_id_production_service_account", c => c.Int());
             AddColumn("payment_type_detail", "id_payment_approve_detail", c => c.Int(nullable: false));
             AddColumn("payment_schedual", "id_payment_approve_detail", c => c.Int());
             AddColumn("sales_rep", "monthly_goal", c => c.Decimal(nullable: false, precision: 20, scale: 9));
@@ -214,31 +253,27 @@ namespace entity.Migrations
             AddColumn("purchase_packing_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
             AddColumn("purchase_packing_detail", "batch_code", c => c.String(unicode: false));
             CreateIndex("app_account_detail", "id_payment_approve_detail");
-            CreateIndex("production_execution_detail", "production_account_id_production_account");
-            CreateIndex("production_execution_detail", "production_account_id_production_account1");
-            CreateIndex("production_account", "Oldproduction_execution_detail_id_execution_detail");
+            CreateIndex("hr_position", "id_contact");
             CreateIndex("payment_type_detail", "id_payment_approve_detail");
             CreateIndex("payment_schedual", "id_payment_approve_detail");
+            CreateIndex("production_execution_detail", "production_service_account_id_production_service_account");
+            CreateIndex("sales_order_detail", "id_sales_promotion");
             CreateIndex("sales_budget_detail", "id_sales_promotion");
             CreateIndex("sales_invoice_detail", "id_sales_promotion");
-            CreateIndex("sales_order_detail", "id_sales_promotion");
             CreateIndex("sales_return_detail", "id_sales_promotion");
-            AddForeignKey("production_account", "Oldproduction_execution_detail_id_execution_detail", "production_execution_detail", "id_execution_detail");
             AddForeignKey("app_account_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
             AddForeignKey("payment_schedual", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
-            AddForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
+            AddForeignKey("production_execution_detail", "production_service_account_id_production_service_account", "production_service_account", "id_production_service_account");
             AddForeignKey("sales_invoice_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_budget_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
+            AddForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail", cascadeDelete: true);
-            AddForeignKey("production_execution_detail", "production_account_id_production_account1", "production_account", "id_production_account");
-            AddForeignKey("production_execution_detail", "production_account_id_production_account", "production_account", "id_production_account");
+            AddForeignKey("hr_position", "id_contact", "contacts", "id_contact");
         }
         
         public override void Down()
         {
-            DropForeignKey("production_execution_detail", "production_account_id_production_account", "production_account");
-            DropForeignKey("production_execution_detail", "production_account_id_production_account1", "production_account");
             DropForeignKey("loyalty_tier", "id_user", "security_user");
             DropForeignKey("loyalty_member", "id_tier", "loyalty_tier");
             DropForeignKey("loyalty_tier", "id_company", "app_company");
@@ -253,13 +288,23 @@ namespace entity.Migrations
             DropForeignKey("crm_schedual", "id_opportunity", "crm_opportunity");
             DropForeignKey("crm_schedual", "id_contact", "contacts");
             DropForeignKey("crm_schedual", "id_company", "app_company");
+            DropForeignKey("hr_position", "id_contact", "contacts");
             DropForeignKey("payment_approve_detail", "id_user", "security_user");
             DropForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail");
             DropForeignKey("payment_approve_detail", "id_payment_type", "payment_type");
+            DropForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion");
             DropForeignKey("sales_budget_detail", "id_sales_promotion", "sales_promotion");
             DropForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion");
             DropForeignKey("sales_invoice_detail", "id_sales_promotion", "sales_promotion");
-            DropForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion");
+            DropForeignKey("production_service_account", "id_user", "security_user");
+            DropForeignKey("production_service_account", "id_purchase_order_detail", "purchase_order_detail");
+            DropForeignKey("production_service_account", "id_purchase_invoice_detail", "purchase_invoice_detail");
+            DropForeignKey("production_service_account", "id_order_detail", "production_order_detail");
+            DropForeignKey("production_execution_detail", "production_service_account_id_production_service_account", "production_service_account");
+            DropForeignKey("production_service_account", "id_item", "items");
+            DropForeignKey("production_service_account", "id_contact", "contacts");
+            DropForeignKey("production_service_account", "parent_id_production_service_account", "production_service_account");
+            DropForeignKey("production_service_account", "id_company", "app_company");
             DropForeignKey("payment_schedual", "id_payment_approve_detail", "payment_approve_detail");
             DropForeignKey("payment_approve", "id_user", "security_user");
             DropForeignKey("payment_approve_detail", "id_payment_approve", "payment_approve");
@@ -274,7 +319,6 @@ namespace entity.Migrations
             DropForeignKey("payment_approve_detail", "id_bank", "app_bank");
             DropForeignKey("app_account_detail", "id_payment_approve_detail", "payment_approve_detail");
             DropForeignKey("payment_approve_detail", "id_account", "app_account");
-            DropForeignKey("production_account", "Oldproduction_execution_detail_id_execution_detail", "production_execution_detail");
             DropIndex("loyalty_tier", new[] { "id_user" });
             DropIndex("loyalty_tier", new[] { "id_company" });
             DropIndex("loyalty_member_detail", new[] { "id_user" });
@@ -290,9 +334,18 @@ namespace entity.Migrations
             DropIndex("crm_schedual", new[] { "id_opportunity" });
             DropIndex("crm_schedual", new[] { "id_sales_rep" });
             DropIndex("sales_return_detail", new[] { "id_sales_promotion" });
-            DropIndex("sales_order_detail", new[] { "id_sales_promotion" });
             DropIndex("sales_invoice_detail", new[] { "id_sales_promotion" });
             DropIndex("sales_budget_detail", new[] { "id_sales_promotion" });
+            DropIndex("sales_order_detail", new[] { "id_sales_promotion" });
+            DropIndex("production_service_account", new[] { "parent_id_production_service_account" });
+            DropIndex("production_service_account", new[] { "id_user" });
+            DropIndex("production_service_account", new[] { "id_company" });
+            DropIndex("production_service_account", new[] { "id_purchase_invoice_detail" });
+            DropIndex("production_service_account", new[] { "id_purchase_order_detail" });
+            DropIndex("production_service_account", new[] { "id_order_detail" });
+            DropIndex("production_service_account", new[] { "id_item" });
+            DropIndex("production_service_account", new[] { "id_contact" });
+            DropIndex("production_execution_detail", new[] { "production_service_account_id_production_service_account" });
             DropIndex("payment_schedual", new[] { "id_payment_approve_detail" });
             DropIndex("payment_approve", new[] { "id_user" });
             DropIndex("payment_approve", new[] { "id_company" });
@@ -309,9 +362,7 @@ namespace entity.Migrations
             DropIndex("payment_approve_detail", new[] { "id_payment_approve" });
             DropIndex("payment_approve_detail", new[] { "id_bank" });
             DropIndex("payment_type_detail", new[] { "id_payment_approve_detail" });
-            DropIndex("production_account", new[] { "Oldproduction_execution_detail_id_execution_detail" });
-            DropIndex("production_execution_detail", new[] { "production_account_id_production_account1" });
-            DropIndex("production_execution_detail", new[] { "production_account_id_production_account" });
+            DropIndex("hr_position", new[] { "id_contact" });
             DropIndex("app_account_detail", new[] { "id_payment_approve_detail" });
             DropColumn("purchase_packing_detail", "batch_code");
             DropColumn("purchase_packing_detail", "expire_date");
@@ -330,12 +381,11 @@ namespace entity.Migrations
             DropColumn("sales_rep", "monthly_goal");
             DropColumn("payment_schedual", "id_payment_approve_detail");
             DropColumn("payment_type_detail", "id_payment_approve_detail");
-            DropColumn("production_account", "Oldproduction_execution_detail_id_execution_detail");
-            DropColumn("production_execution_detail", "production_account_id_production_account1");
-            DropColumn("production_execution_detail", "production_account_id_production_account");
-            DropColumn("production_execution_detail", "id_production_account");
+            DropColumn("production_execution_detail", "production_service_account_id_production_service_account");
+            DropColumn("production_execution_detail", "id_service_account");
             DropColumn("app_contract", "is_sales");
             DropColumn("app_contract", "is_purchase");
+            DropColumn("hr_position", "id_contact");
             DropColumn("app_bank", "intermediary_bank");
             DropColumn("app_bank", "swift_code");
             DropColumn("app_bank", "country");
@@ -347,10 +397,9 @@ namespace entity.Migrations
             DropTable("loyalty_member_detail");
             DropTable("loyalty_member");
             DropTable("crm_schedual");
+            DropTable("production_service_account");
             DropTable("payment_approve");
             DropTable("payment_approve_detail");
-            CreateIndex("production_account", "id_execution_detail");
-            AddForeignKey("production_account", "id_execution_detail", "production_execution_detail", "id_execution_detail");
         }
     }
 }

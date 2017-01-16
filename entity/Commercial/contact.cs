@@ -282,6 +282,7 @@ namespace entity
         public virtual IEnumerable<project_event> project_costing { get; set; }
         public virtual IEnumerable<project> project { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
+        public virtual IEnumerable<production_service_account> production_service_account { get; set; }
         public virtual IEnumerable<production_account> production_account { get; set; }
 
         public virtual ICollection<contact_tag_detail> contact_tag_detail { get; set; }

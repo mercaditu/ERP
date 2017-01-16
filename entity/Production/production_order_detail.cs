@@ -174,6 +174,7 @@ namespace entity
         //Self Referencing
         public virtual production_order_detail parent { get; set; }
         public virtual ICollection<production_order_detail> child { get; set; }
+        public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
         public virtual ICollection<production_order_dimension> production_order_dimension { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }

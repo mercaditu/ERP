@@ -143,15 +143,15 @@ namespace entity
                             {
 
 
-                                production_account production_account = new entity.production_account();
-                                production_account.id_contact = purchase_order_detail.purchase_order.id_contact;
-                                production_account.id_item = purchase_order_detail.id_item;
-                                production_account.id_purchase_order_detail = purchase_order_detail.id_purchase_order_detail;
-                                production_account.unit_cost = purchase_order_detail.unit_cost;
-                                production_account.debit = 0;
-                                production_account.credit = purchase_order_detail.quantity;
-                                production_account.exp_date = purchase_order_detail.expiration_date;
-                                base.production_account.Add(production_account);
+                                production_service_account production_service_account = new entity.production_service_account();
+                                production_service_account.id_contact = purchase_order_detail.purchase_order.id_contact;
+                                production_service_account.id_item = (int)purchase_order_detail.id_item;
+                                production_service_account.id_purchase_order_detail = purchase_order_detail.id_purchase_order_detail;
+                                production_service_account.unit_cost = purchase_order_detail.unit_cost;
+                                production_service_account.debit = 0;
+                                production_service_account.credit = purchase_order_detail.quantity;
+                                production_service_account.exp_date = purchase_order_detail.expiration_date;
+                                base.production_service_account.Add(production_service_account);
                             }
                         }
 

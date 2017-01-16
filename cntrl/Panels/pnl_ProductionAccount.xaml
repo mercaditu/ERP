@@ -17,7 +17,7 @@
              BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="production_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_account}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_service_account}, CreateList=True}"/>
        
     </UserControl.Resources>
 

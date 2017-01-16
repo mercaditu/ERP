@@ -28,7 +28,8 @@ namespace entity
         public int id_execution_detail { get; set; }
         public int? id_order_detail { get; set; }
         public int? id_project_task { get; set; }
-        public int? id_production_account { get; set; }
+        public int? id_service_account { get; set; }
+
         public int? id_time_coefficient { get; set; }
         public int? id_contact { get; set; }
         public int? id_item { get; set; }
@@ -120,10 +121,11 @@ namespace entity
         public virtual production_execution_detail parent { get; set; }
         public virtual ICollection<production_execution_detail> child { get; set; }
         public virtual ICollection<production_execution_dimension> production_execution_dimension { get; set; }
+        public virtual ICollection<production_account> production_account { get; set; }
+        public virtual production_service_account production_service_account { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }
-        public virtual production_account production_account { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual item item { get; set; }
         public virtual contact contact { get; set; }

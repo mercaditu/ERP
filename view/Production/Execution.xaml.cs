@@ -27,7 +27,7 @@ namespace Cognitivo.Production
             production_order_detaillViewSource,
 
             item_dimensionViewSource;
-       
+
         public Execution()
         {
             InitializeComponent();
@@ -627,13 +627,13 @@ namespace Cognitivo.Production
 
             if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
             {
-              
+
                 pnl_ProductionAccount.ExecutionDB = ExecutionDB;
 
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(pnl_ProductionAccount);
 
-              
+
 
             }
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
@@ -734,23 +734,22 @@ namespace Cognitivo.Production
 
         private void crud_modalAccount_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modalAccount.Visibility==Visibility.Hidden || crud_modalAccount.Visibility == Visibility.Collapsed)
+            if (crud_modalAccount.Visibility == Visibility.Hidden || crud_modalAccount.Visibility == Visibility.Collapsed)
             {
-                List<production_account> production_accountList= pnl_ProductionAccount.production_accountList;
-                production_execution_detail production_execution_detail = crud_modalAccount.production_execution_detail;
-                foreach (production_account _production_account in production_accountList)
+                List<production_service_account> production_accountList = pnl_ProductionAccount.production_accountList;
+                production_execution_detail production_execution_detail = pnl_ProductionAccount.production_execution_detail;
+                foreach (production_service_account _production_account in production_accountList)
                 {
-                    production_account production_account = new entity.production_account();
-                    production_account.id_contact = (int)production_execution_detail.id_contact;
-                    production_account.id_item = production_execution_detail.id_item;
-                    production_account.unit_cost = production_execution_detail.unit_cost;
-                    production_account.debit = 0;
-                    production_account.credit = production_execution_detail.quantity;
-                    ExecutionDB.production_account.Add(production_account);
-                    production_execution_detail.id_production_account = production_account.id_production_account;
-                    production_execution_detail.production_account = production_account;
+                    production_service_account production_service_account = new entity.production_service_account();
+                    production_service_account.id_contact = (int)production_execution_detail.id_contact;
+                    production_service_account.id_item = (int)production_execution_detail.id_item;
+                    production_service_account.unit_cost = production_execution_detail.unit_cost;
+                    production_service_account.debit = 0;
+                    production_service_account.credit = production_execution_detail.quantity;
+                    ExecutionDB.production_service_account.Add(production_service_account);
+                   // production_execution_detail._production_account = production_account;
                 }
-               
+
             }
         }
 

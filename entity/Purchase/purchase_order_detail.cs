@@ -54,6 +54,7 @@ namespace entity
         public virtual IEnumerable<purchase_packing_detail> purchase_packing_detail { get; set; }
         public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_order_dimension> purchase_order_dimension { get; set; }
+        public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
 
         #endregion

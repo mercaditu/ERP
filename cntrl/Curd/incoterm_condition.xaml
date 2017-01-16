@@ -36,15 +36,22 @@
         </Grid>
         <TextBlock Text="Define incoterm condition." Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center">
+            <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
+            <AdornerDecorator>
+                <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxConditionTypes" 
+						  SelectedValue="{Binding type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+						  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+						  ValidatesOnDataErrors=True}"/>
+            </AdornerDecorator>
+
             <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
             <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
-                     
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                     
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
+                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </StackPanel>
 
         <Grid Background="WhiteSmoke">

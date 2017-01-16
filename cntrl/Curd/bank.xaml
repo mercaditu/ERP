@@ -12,8 +12,7 @@
              VerticalAlignment="Center" Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <local:InitialsConverter x:Key="InitialsConverter"/>
-        
+        <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -37,15 +36,65 @@
                      Text="{Binding name, Mode=TwoWay, 
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,
                                     ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-
+            <CheckBox x:Name="chbxIntlTransfer" Content="{Binding Transfer}" IsChecked="True" Style="{StaticResource input_checkbox}"/>
+            <TabControl Visibility="{Binding ElementName=chbxIntlTransfer, Path=IsChecked, Converter={StaticResource Bool2Visi}}">
+                <TabItem Header="{lex:Loc Bank}">
+                    <Grid>
+                        <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                     Text="{Binding branch, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc City}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                     Text="{Binding city, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Country}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                     Text="{Binding country, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Swift}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                     Text="{Binding swift_code, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{lex:Loc Intermediary}">
+                    <Grid>
+                        <Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                                 Text="{Binding intermediary_bank, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc City}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                                 Text="{Binding intermediary_city, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Country}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                                 Text="{Binding intermediary_country, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Swift}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                                 Text="{Binding intermediary_swift, Mode=TwoWay, 
+                                    NotifyOnValidationError=true, ValidatesOnDataErrors=True,
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
 
-            <DataGrid x:Name="app_bankapp_accountdatagrid" ItemsSource="{Binding app_account}" AutoGenerateColumns="False" MaxWidth="260"
+            <DataGrid x:Name="app_bankapp_accountdatagrid" ItemsSource="{Binding app_account}" 
+                      AutoGenerateColumns="False" MaxWidth="260" Height="64" IsReadOnly="True"
                           BorderThickness="1" BorderBrush="WhiteSmoke">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Account}" Width="*" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Width="*" Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Amount}" Width="*" Binding="{Binding initial_amount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

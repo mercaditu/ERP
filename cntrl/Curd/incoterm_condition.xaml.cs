@@ -30,6 +30,8 @@ namespace cntrl.Curd
             {
                 stackFields.DataContext = conditionViewSource;
             }
+
+            cbxConditionTypes.ItemsSource = Enum.GetValues(typeof(entity.impex_incoterm_condition.incoterm_Types)).OfType<entity.impex_incoterm_condition.incoterm_Types>().ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

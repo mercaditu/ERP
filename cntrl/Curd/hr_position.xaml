@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             	xmlns:Controls="clr-namespace:cntrl.Controls"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
                xmlns:entity="clr-namespace:entity;assembly=Entity"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -45,6 +46,11 @@
             <ComboBox ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_department"
                                   SelectedValue="{Binding id_department, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                   Style="{StaticResource input_combobox}" SelectedItem="{Binding app_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
+            <AdornerDecorator>
+                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
+											   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </AdornerDecorator>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

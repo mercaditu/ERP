@@ -15,7 +15,7 @@ namespace entity
             is_head = true;
         }
 
-        public enum Types
+        public enum incoterm_Types
         {
             Shipping,
             Insurance,
@@ -29,7 +29,7 @@ namespace entity
         public int id_incoterm_condition { get; set; }
         [Required]
         public string name { get; set; }
-        public Types type { get; set; }
+        public incoterm_Types type { get; set; }
         public virtual ICollection<impex_incoterm_detail> impex_incoterm_detail {get;set;}
         public virtual ICollection<impex_expense> impex_expense { get; set; }
 

@@ -292,6 +292,7 @@ namespace entity
         public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
         public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
         public virtual ICollection<item_asset> item_asset { get; set; }
+        public virtual ICollection<hr_position> hr_position { get; set; }
 
         #region Validation
 

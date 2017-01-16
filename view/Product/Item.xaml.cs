@@ -255,7 +255,7 @@ namespace Cognitivo.Product
             item item = (item)itemDataGrid.SelectedItem;
             // item_vatDataGrid.CancelEdit();
             item_priceDataGrid.CancelEdit();
-            item_dimentionDataGrid.CancelEdit();
+            //item_dimentionDataGrid.CancelEdit();
             itemViewSource.View.MoveCurrentToFirst();
 
             if (item.State == EntityState.Added)
@@ -456,9 +456,9 @@ namespace Cognitivo.Product
                     }
                     if (e.Parameter as item_dimension != null)
                     {
-                        item_dimentionDataGrid.CancelEdit();
-                        ItemDB.item_dimension.Remove(e.Parameter as item_dimension);
-                        itemitem_dimentionViewSource.View.Refresh();
+                        //item_dimentionDataGrid.CancelEdit();
+                        //ItemDB.item_dimension.Remove(e.Parameter as item_dimension);
+                        //itemitem_dimentionViewSource.View.Refresh();
                     }
 
                     if (e.Parameter as item_tag_detail != null)
@@ -469,9 +469,9 @@ namespace Cognitivo.Product
                     }
                     if (e.Parameter as item_conversion_factor != null)
                     {
-                        item_conversion_factorDataGrid.CancelEdit();
-                        ItemDB.item_conversion_factor.Remove(e.Parameter as item_conversion_factor);
-                        itemitem_conversion_factorViewSource.View.Refresh();
+                    //    item_conversion_factorDataGrid.CancelEdit();
+                    //    ItemDB.item_conversion_factor.Remove(e.Parameter as item_conversion_factor);
+                    //    itemitem_conversion_factorViewSource.View.Refresh();
                     }
                 }
             }

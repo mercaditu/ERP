@@ -57,7 +57,7 @@ namespace entity.Brillo.Promotion
 
         private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-            if (Promo.type == sales_promotion.Types.BuyThis_GetThat)
+            if (Promo.type == sales_promotion.salesPromotion.BuyThis_GetThat)
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
@@ -66,7 +66,7 @@ namespace entity.Brillo.Promotion
                         if (Promo.quantity_step > 0)
                         {
                             Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Types.BuyThis_GetThat;
+                            _Promo.Type = sales_promotion.salesPromotion.BuyThis_GetThat;
                             _Promo.Shared = true;
 
                             _Detail.Promos.Add(_Promo);
@@ -118,7 +118,7 @@ namespace entity.Brillo.Promotion
         {
 
 
-            if (Promo.type == sales_promotion.Types.BuyTag_GetThat)
+            if (Promo.type == sales_promotion.salesPromotion.BuyTag_GetThat)
             {
 
 
@@ -149,7 +149,7 @@ namespace entity.Brillo.Promotion
                     foreach (DetailTag _DetailTag in DetailTagList)
                     {
                         Promo _Promo = new Promo();
-                        _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
+                        _Promo.Type = sales_promotion.salesPromotion.BuyTag_GetThat;
                         _Promo.Shared = true;
 
 
@@ -220,7 +220,7 @@ namespace entity.Brillo.Promotion
 
         private void Discount_onItem(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-            if (Promo.type == sales_promotion.Types.Discount_onItem)
+            if (Promo.type == sales_promotion.salesPromotion.Discount_onItem)
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
@@ -229,7 +229,7 @@ namespace entity.Brillo.Promotion
                         if (Promo.quantity_step > 0)
                         {
                             Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Types.Discount_onItem;
+                            _Promo.Type = sales_promotion.salesPromotion.Discount_onItem;
                             _Promo.Shared = true;
 
                             _Detail.Promos.Add(_Promo);
@@ -254,7 +254,7 @@ namespace entity.Brillo.Promotion
 
         private void Discount_onTag(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-            if (Promo.type == sales_promotion.Types.Discount_onTag)
+            if (Promo.type == sales_promotion.salesPromotion.Discount_onTag)
             {
                 decimal TotalQuantity = 0;
 
@@ -284,7 +284,7 @@ namespace entity.Brillo.Promotion
                     foreach (DetailTag _DetailTag in DetailTagList)
                     {
                         Promo _Promo = new Promo();
-                        _Promo.Type = sales_promotion.Types.BuyTag_GetThat;
+                        _Promo.Type = sales_promotion.salesPromotion.BuyTag_GetThat;
                         _Promo.Shared = true;
 
                         List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo == false).ToList();
@@ -300,7 +300,7 @@ namespace entity.Brillo.Promotion
         }
         private void Discount_onGrandTotal(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-            if (Promo.type == sales_promotion.Types.Discount_onGrandTotal)
+            if (Promo.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
             {
                 if (Promo.reference == SalesInvoice.app_currencyfx.id_currency)
                 {
@@ -364,14 +364,14 @@ namespace entity.Brillo.Promotion
                 //    }
                 //}
 
-                if (Promo.type == sales_promotion.Types.BuyThis_GetThat)
+                if (Promo.type == sales_promotion.salesPromotion.BuyThis_GetThat)
                 {
                     if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
                     {
                         foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                         {
                             Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Types.BuyThis_GetThat;
+                            _Promo.Type = sales_promotion.salesPromotion.BuyThis_GetThat;
                             _Promo.Shared = true;
 
                             using (db db = new db())
@@ -436,7 +436,7 @@ namespace entity.Brillo.Promotion
 
     public class Promo
     {
-        public sales_promotion.Types Type { get; set; }
+        public sales_promotion.salesPromotion Type { get; set; }
         public decimal DiscountValue { get; set; }
         public bool Shared { get; set; }
     }

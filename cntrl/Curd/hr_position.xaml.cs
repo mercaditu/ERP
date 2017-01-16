@@ -102,5 +102,23 @@ namespace cntrl
             //    btnSave_Click(sender, e);
             //}
         }
+        private void set_ContactPref(object sender, EventArgs e)
+        {
+            entity.hr_position hr_position=objCollectionViewSource.View.CurrentItem as entity.hr_position;
+            if (sbxContact.ContactID > 0)
+            {
+                
+                if (hr_position != null)
+                {
+                    contact contact = entity.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    hr_position.id_contact = contact.id_contact;
+                    hr_position.contact = contact;
+                }
+
+            
+
+                
+            }
+        }
     }
 }

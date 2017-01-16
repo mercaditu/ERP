@@ -23,9 +23,12 @@
         [Required]
         public bool is_active { get; set; }
 
+        public int? id_contact { get; set; }
+
         //Heirarchy Nav Properties
         public virtual hr_position parent { get; set; }
         public virtual ICollection<hr_position> child { get; set; }
+        public virtual contact contact { get; set; }
 
         //Nav Properties
         public virtual app_department app_department { get; set; }

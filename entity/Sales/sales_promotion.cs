@@ -6,7 +6,7 @@ namespace entity
 
     public partial class sales_promotion : Audit
     {
-        public enum Types
+        public enum salesPromotion
         {
             Discount_onGrandTotal = 1,
             //Discount_onQuantityTotal = 2,
@@ -32,7 +32,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_promotion { get; set; }
-        public Types type { get; set; }
+        public salesPromotion type { get; set; }
         public string name { get; set; }
         public int reference { get; set; }
 

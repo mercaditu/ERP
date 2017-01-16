@@ -136,6 +136,25 @@ namespace entity
                         }
 
                         purchase_order.status = Status.Documents_General.Approved;
+                      
+                        foreach (purchase_order_detail purchase_order_detail in purchase_order.purchase_order_detail)
+                        {
+                            if (purchase_order_detail.item.id_item_type==item.item_type.ServiceContract)
+                            {
+
+
+                                production_account production_account = new entity.production_account();
+                                production_account.id_contact = purchase_order_detail.purchase_order.id_contact;
+                                production_account.id_item = purchase_order_detail.id_item;
+                                production_account.id_purchase_order_detail = purchase_order_detail.id_purchase_order_detail;
+                                production_account.unit_cost = purchase_order_detail.unit_cost;
+                                production_account.debit = 0;
+                                production_account.credit = purchase_order_detail.quantity;
+                                production_account.exp_date = purchase_order_detail.expiration_date;
+                                base.production_account.Add(production_account);
+                            }
+                        }
+
                         SaveChanges();
                     }
 

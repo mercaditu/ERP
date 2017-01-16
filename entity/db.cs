@@ -119,6 +119,7 @@
         public virtual DbSet<project_task> project_task { get; set; }
         public virtual DbSet<project_task_dimension> project_task_dimension { get; set; }
         public virtual DbSet<crm_opportunity> crm_opportunity { get; set; }
+        public virtual DbSet<crm_schedual> crm_schedual { get; set; }
         public virtual DbSet<sales_budget> sales_budget { get; set; }
         public virtual DbSet<sales_budget_detail> sales_budget_detail { get; set; }
         public virtual DbSet<sales_order> sales_order { get; set; }

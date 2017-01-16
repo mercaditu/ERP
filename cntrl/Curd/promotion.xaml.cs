@@ -40,7 +40,7 @@ namespace cntrl
                 app_currencyViewSource.Source = entity.db.app_currency.Local;
 
 
-                cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.Types)).OfType<sales_promotion.Types>().ToList();
+                cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.salesPromotion)).OfType<sales_promotion.salesPromotion>().ToList();
 
             }
         }
@@ -122,7 +122,7 @@ namespace cntrl
         {
             sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
 
-            if (sales_promotion.type == sales_promotion.Types.BuyThis_GetThat)
+            if (sales_promotion.type == sales_promotion.salesPromotion.BuyThis_GetThat)
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
@@ -145,7 +145,7 @@ namespace cntrl
                     sales_promotion.RaisePropertyChanged("OutputName");
                 }
             }
-            else if (sales_promotion.type == sales_promotion.Types.BuyTag_GetThat)
+            else if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat)
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
@@ -164,7 +164,7 @@ namespace cntrl
                 }
                 QuntityStep.Visibility = Visibility.Visible;
             }
-            else if (sales_promotion.type == sales_promotion.Types.Discount_onItem)
+            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onItem)
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Collapsed;
@@ -180,7 +180,7 @@ namespace cntrl
                 }
                 QuntityStep.Visibility = Visibility.Visible;
             }
-            else if (sales_promotion.type == sales_promotion.Types.Discount_onTag)
+            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
             {
                 Total_Parameter.Visibility = Visibility.Collapsed;
                 Tag_Parameter.Visibility = Visibility.Visible;
@@ -189,7 +189,7 @@ namespace cntrl
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Visible;
             }
-            else if (sales_promotion.type == sales_promotion.Types.Discount_onGrandTotal)
+            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
             {
                 Total_Parameter.Visibility = Visibility.Visible;
                 Tag_Parameter.Visibility = Visibility.Collapsed;

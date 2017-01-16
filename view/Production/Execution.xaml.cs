@@ -25,7 +25,7 @@ namespace Cognitivo.Production
         CollectionViewSource
             production_orderViewSource,
             production_order_detaillViewSource,
-       
+
             item_dimensionViewSource;
 
         public Execution()
@@ -40,7 +40,7 @@ namespace Cognitivo.Production
 
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
-       
+
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
             await ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.type != production_order.ProductionOrderTypes.Fraction).LoadAsync();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
@@ -58,7 +58,7 @@ namespace Cognitivo.Production
             cmbcoefficient.SelectedIndex = -1;
 
             dtpstarttime.Text = DateTime.Now.ToString();
-           dtpendtime.Text = DateTime.Now.ToString();
+            dtpendtime.Text = DateTime.Now.ToString();
 
             filter_task();
             RefreshData();
@@ -98,13 +98,13 @@ namespace Cognitivo.Production
                     int id = contact.id_contact;
                     if (id > 0)
                     {
-                      //  production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
+                        //  production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
                         production_execution_detail _production_execution_detail = new production_execution_detail();
 
                         //Check for contact
                         _production_execution_detail.id_contact = contact.id_contact;
                         _production_execution_detail.contact = contact;
-                       // _production_execution_detail.quantity = 1;
+                        // _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
                         _production_execution_detail.is_input = production_order_detail.is_input;
@@ -179,7 +179,7 @@ namespace Cognitivo.Production
         {
             production_order production_order = (production_order)projectDataGrid.SelectedItem;
             production_order.State = EntityState.Unchanged;
-           
+
         }
 
         private void toolBar_btnApprove_Click(object sender)
@@ -234,7 +234,7 @@ namespace Cognitivo.Production
                 {
                     tabService.IsSelected = true;
                     production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
-                    
+
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                 {
@@ -377,7 +377,7 @@ namespace Cognitivo.Production
             }
         }
 
-     
+
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -449,7 +449,7 @@ namespace Cognitivo.Production
             {
                 DataGrid exexustiondetail = (DataGrid)e.Source;
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                
+
                 if (result == MessageBoxResult.Yes)
                 {
                     production_order_detail production_order_detail = treeOrder.SelectedItem_ as production_order_detail;
@@ -484,7 +484,7 @@ namespace Cognitivo.Production
                 production_orderViewSource.View.Refresh();
                 production_order_detaillViewSource.View.Refresh();
             }
-            catch(Exception ex) { MessageBox.Show(ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
@@ -494,7 +494,7 @@ namespace Cognitivo.Production
             string ItemType = btn.Name;
 
             decimal Quantity = 0M;
-            CollectionViewSource Collection = null; 
+            CollectionViewSource Collection = null;
             item.item_type type = item.item_type.Task;
             production_order_detail = treeOrder.SelectedItem_ as production_order_detail;
             Collection = production_execution_detailViewSource;
@@ -564,7 +564,7 @@ namespace Cognitivo.Production
                             }
                             if (avlqty < QuantityExe)
                             {
-                                toolBar.msgWarning("Item is Not in Stock;Execustion Quantity Is "+ Math.Round(QuantityExe,2)+ " Stock Quantity Is "+ Math.Round(avlqty,2));
+                                toolBar.msgWarning("Item is Not in Stock;Execustion Quantity Is " + Math.Round(QuantityExe, 2) + " Stock Quantity Is " + Math.Round(avlqty, 2));
                                 return;
                             }
                             Insert_IntoDetail(production_order_detail, Quantity);
@@ -598,7 +598,7 @@ namespace Cognitivo.Production
 
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
-           
+
             // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
@@ -616,7 +616,7 @@ namespace Cognitivo.Production
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
-            
+
             if (production_order_detail.item.unit_cost != null)
             {
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
@@ -624,6 +624,20 @@ namespace Cognitivo.Production
 
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
+            if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
+            {
+
+                production_account production_account = new entity.production_account();
+                production_account.id_contact =(int) _production_execution_detail.id_contact;
+                production_account.id_item = _production_execution_detail.id_item;
+                production_account.unit_cost = _production_execution_detail.unit_cost;
+                production_account.debit = 0;
+                production_account.credit = production_order_detail.quantity;
+                ExecutionDB.production_account.Add(production_account);
+                _production_execution_detail.id_production_account = production_account.id_production_account;
+                _production_execution_detail.production_account = production_account;
+
+            }
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
 
@@ -683,7 +697,7 @@ namespace Cognitivo.Production
         {
             filter_task();
         }
-        
+
         public void filter_task()
         {
             if (production_order_detaillViewSource != null)
@@ -720,7 +734,7 @@ namespace Cognitivo.Production
             }
         }
 
-     
+
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

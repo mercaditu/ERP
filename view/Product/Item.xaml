@@ -258,7 +258,7 @@
 										  ScrollViewer.VerticalScrollBarVisibility="Auto" />
 					</StackPanel>
 				</TabItem>
-				<TabItem Header="{lex:Loc Usage}" Visibility="{Binding SelectedIndex, FallbackValue=Visible, ConverterParameter=0, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
+				<!--<TabItem Header="{lex:Loc Usage}" Visibility="{Binding SelectedIndex, FallbackValue=Visible, ConverterParameter=0, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
 					<StackPanel Orientation="Vertical" Grid.ColumnSpan="2" DataContext="{StaticResource itemViewSource}">
 						<Label Content="{lex:Loc Measurement}"  Style="{StaticResource input_label}"/>
 						<ComboBox Style="{StaticResource input_combobox}" 
@@ -344,7 +344,7 @@
 						<TextBox x:Name="stock_minTextBox" Grid.Column="1" Grid.Row="3" 
 								 Text="{Binding stock_min, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
 					</Grid>
-				</TabItem>
+				</TabItem>-->
 				<TabItem Header="{lex:Loc Service}" Visibility="{Binding SelectedIndex, ConverterParameter=2, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
 					<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						

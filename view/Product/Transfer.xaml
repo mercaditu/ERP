@@ -142,7 +142,7 @@
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable, Converter={StaticResource True2False}}"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0">
+                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,29,0,3">
                             <DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                                     <Setter Property="Foreground" Value="{Binding InStock, Converter={StaticResource Bool2Color}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>

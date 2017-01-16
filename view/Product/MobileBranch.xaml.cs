@@ -183,22 +183,22 @@ namespace Cognitivo.Product
            
         }
 
-        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            popupCustomize.PopupAnimation = PopupAnimation.Fade;
-            popupCustomize.StaysOpen = false;
-            popupCustomize.IsOpen = true;
-        }
+        //private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    popupCustomize.PopupAnimation = PopupAnimation.Fade;
+        //    popupCustomize.StaysOpen = false;
+        //    popupCustomize.IsOpen = true;
+        //}
 
-        private void popupCustomize_Closed(object sender, EventArgs e)
-        {
-            TransferSetting TransferSetting = new TransferSetting();
+        //private void popupCustomize_Closed(object sender, EventArgs e)
+        //{
+        //    TransferSetting TransferSetting = new TransferSetting();
 
-            popupCustomize.PopupAnimation = PopupAnimation.Fade;
-            TransferSetting.Default.Save();
-            TransferSetting = TransferSetting.Default;
-            popupCustomize.IsOpen = false;
-        }
+        //    popupCustomize.PopupAnimation = PopupAnimation.Fade;
+        //    TransferSetting.Default.Save();
+        //    TransferSetting = TransferSetting.Default;
+        //    popupCustomize.IsOpen = false;
+        //}
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {

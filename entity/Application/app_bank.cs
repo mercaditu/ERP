@@ -30,13 +30,16 @@ namespace entity
         private bool _is_active;
 
         public bool for_supplier { get; set; }
-        public string branch_name { get; set; }
-        public string branch_address { get; set; }
+        public string branch { get; set; }
+        public string city { get; set; }
         public string country { get; set; }
         public string swift_code { get; set; }
         public string intermediary_bank { get; set; }
+        public string intermediary_city { get; set; }
+        public string intermediary_country { get; set; }
+        public string intermediary_swift { get; set; }
 
-        
+
         public app_bank()
         { 
             app_account = new List<app_account>();

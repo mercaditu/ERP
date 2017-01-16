@@ -137,7 +137,7 @@ namespace entity
                 if (value == true)
                 {
                     id_company = null;
-                    this.app_company = null;
+                    app_company = null;
                 }
                 else
                 {

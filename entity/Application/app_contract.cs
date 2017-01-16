@@ -29,11 +29,15 @@ namespace entity
                 }
             }
         }
-        private bool _is_active;[Required]
+        private bool _is_active;
+        [Required]
         public bool is_default { get; set; }
         [Required]
         public bool is_promissory { get; set; }
         public decimal? surcharge { get; set; }
+
+        public bool is_purchase { get; set; }
+        public bool is_sales { get; set; }
 
         public app_contract()
         {

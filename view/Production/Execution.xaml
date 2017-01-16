@@ -60,6 +60,8 @@
 		</Grid.RowDefinitions>
 		<Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.Row="1" Grid.Column="1"
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+        <Grid x:Name="crud_modalAccount" Background="#7FC0C0C0" Visibility="Hidden" Grid.Row="1" Grid.Column="1"
+			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalAccount_IsVisibleChanged"/>
         <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <!--<Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"

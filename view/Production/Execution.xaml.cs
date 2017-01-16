@@ -17,7 +17,7 @@ namespace Cognitivo.Production
         public bool ViewAll { get; set; }
 
         ExecutionDB ExecutionDB = new ExecutionDB();
-
+        cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
         //Production EXECUTION CollectionViewSource
         CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
 
@@ -27,7 +27,7 @@ namespace Cognitivo.Production
             production_order_detaillViewSource,
 
             item_dimensionViewSource;
-
+       
         public Execution()
         {
             InitializeComponent();
@@ -624,18 +624,16 @@ namespace Cognitivo.Production
 
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
+
             if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
             {
+              
+                pnl_ProductionAccount.ExecutionDB = ExecutionDB;
 
-                production_account production_account = new entity.production_account();
-                production_account.id_contact =(int) _production_execution_detail.id_contact;
-                production_account.id_item = _production_execution_detail.id_item;
-                production_account.unit_cost = _production_execution_detail.unit_cost;
-                production_account.debit = 0;
-                production_account.credit = production_order_detail.quantity;
-                ExecutionDB.production_account.Add(production_account);
-                _production_execution_detail.id_production_account = production_account.id_production_account;
-                _production_execution_detail.production_account = production_account;
+                crud_modal.Visibility = Visibility.Visible;
+                crud_modal.Children.Add(pnl_ProductionAccount);
+
+              
 
             }
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
@@ -734,7 +732,27 @@ namespace Cognitivo.Production
             }
         }
 
-
+        private void crud_modalAccount_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (crud_modalAccount.Visibility==Visibility.Hidden || crud_modalAccount.Visibility == Visibility.Collapsed)
+            {
+                List<production_account> production_accountList= pnl_ProductionAccount.production_accountList;
+                production_execution_detail production_execution_detail = crud_modalAccount.production_execution_detail;
+                foreach (production_account _production_account in production_accountList)
+                {
+                    production_account production_account = new entity.production_account();
+                    production_account.id_contact = (int)production_execution_detail.id_contact;
+                    production_account.id_item = production_execution_detail.id_item;
+                    production_account.unit_cost = production_execution_detail.unit_cost;
+                    production_account.debit = 0;
+                    production_account.credit = production_execution_detail.quantity;
+                    ExecutionDB.production_account.Add(production_account);
+                    production_execution_detail.id_production_account = production_account.id_production_account;
+                    production_execution_detail.production_account = production_account;
+                }
+               
+            }
+        }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

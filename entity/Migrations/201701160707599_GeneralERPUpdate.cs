@@ -7,9 +7,7 @@ namespace entity.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("production_account", "id_execution_detail", "production_execution_detail", "id_execution_detail");
-            DropForeignKey("production_account", "id_execution_detail", "production_execution_detail");
-            DropIndex("production_account", new[] { "id_execution_detail" });
+       
             CreateTable(
                 "payment_approve_detail",
                 c => new

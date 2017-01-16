@@ -61,10 +61,10 @@ namespace cntrl.Curd
                 payment_approve.contact = contacts;
             }
 
-            foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            foreach (payment_schedual payment_schedual in payment_schedualList)
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
-                Add_PaymentDetail(id.id_currency);
+                Add_PaymentDetail(payment_schedual);
             }
 
             payment_approve.RaisePropertyChanged("GrandTotal");
@@ -170,13 +170,9 @@ namespace cntrl.Curd
                     return;
                 }
             }
+
+        
             PaymentDB.SaveChanges();
-            //    foreach (payment_approve_detail payment_approve_detail in payment_approve.payment_approve_detail.ToList())
-            //{
-            //    bool IsRecievable = Mode == Modes.Recievable ? true : false;
-            //    bool IsPrintable = Mode == Modes.Recievable ? true : false;
-            //    PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable);
-            //}
             lblCancel_MouseDown(null, null);
         }
 
@@ -288,20 +284,13 @@ namespace cntrl.Curd
 
         #endregion
 
-        private void btnAddDetail_Click(object sender, RoutedEventArgs e)
-        {
-            payment_approve_detail payment_approve_detail = payment_approvepayment_approve_detailViewSource.View.CurrentItem as payment_approve_detail;
-            if (payment_approve_detail != null)
-            {
-                Add_PaymentDetail(payment_approve_detail.id_currency);
-            }
-        }
+     
          
 
-        private void Add_PaymentDetail(int CurrencyID)
+        private void Add_PaymentDetail(payment_schedual payment_schedual)
         {
             payment_approve payment_approve = payment_approveViewSource.View.CurrentItem as payment_approve;
-
+            int CurrencyID = payment_schedual.app_currencyfx.id_currency;
             if (payment_approve != null)
             {
                 payment_approve_detail payment_approve_detail = new payment_approve_detail();
@@ -316,6 +305,7 @@ namespace cntrl.Curd
                     payment_approve_detail.id_currency = app_currencyfx.id_currency;
                     payment_approve_detail.id_currencyfx = app_currencyfx.id_currencyfx;
                     payment_approve_detail.payment_approve.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_approve_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
                    // payment_approve_detail.app_currencyfx = app_currencyfx;
                 }
 

@@ -17,6 +17,7 @@ namespace entity.Migrations
                         id_sales_return = c.Int(),
                         id_purchase_return = c.Int(),
                         id_account = c.Int(),
+                        id_payment_schedual = c.Int(nullable: false),
                         id_currency = c.Int(nullable: false),
                         id_payment_type = c.Int(nullable: false),
                         payment_type_ref = c.Short(),
@@ -38,11 +39,13 @@ namespace entity.Migrations
                 .ForeignKey("app_currency", t => t.id_currency, cascadeDelete: true)
                 .ForeignKey("app_document_range", t => t.id_range)
                 .ForeignKey("payment_approve", t => t.id_payment_approve)
+                .ForeignKey("payment_schedual", t => t.id_payment_schedual, cascadeDelete: true)
                 .ForeignKey("payment_type", t => t.id_payment_type, cascadeDelete: true)
                 .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
                 .Index(t => t.id_bank)
                 .Index(t => t.id_payment_approve)
                 .Index(t => t.id_account)
+                .Index(t => t.id_payment_schedual)
                 .Index(t => t.id_currency)
                 .Index(t => t.id_payment_type)
                 .Index(t => t.id_range)
@@ -224,19 +227,21 @@ namespace entity.Migrations
                 .Index(t => t.id_user);
             
             AddColumn("app_account_detail", "id_payment_approve_detail", c => c.Int());
-            AddColumn("app_bank", "for_supplier", c => c.Boolean(nullable: false));
-            AddColumn("app_bank", "branch_name", c => c.String(unicode: false));
-            AddColumn("app_bank", "branch_address", c => c.String(unicode: false));
+            AddColumn("app_bank", "can_transfer", c => c.Boolean(nullable: false));
+            AddColumn("app_bank", "branch", c => c.String(unicode: false));
+            AddColumn("app_bank", "city", c => c.String(unicode: false));
             AddColumn("app_bank", "country", c => c.String(unicode: false));
             AddColumn("app_bank", "swift_code", c => c.String(unicode: false));
             AddColumn("app_bank", "intermediary_bank", c => c.String(unicode: false));
+            AddColumn("app_bank", "intermediary_city", c => c.String(unicode: false));
+            AddColumn("app_bank", "intermediary_country", c => c.String(unicode: false));
+            AddColumn("app_bank", "intermediary_swift", c => c.String(unicode: false));
             AddColumn("hr_position", "id_contact", c => c.Int());
             AddColumn("app_contract", "is_purchase", c => c.Boolean(nullable: false));
             AddColumn("app_contract", "is_sales", c => c.Boolean(nullable: false));
             AddColumn("production_execution_detail", "id_service_account", c => c.Int());
             AddColumn("production_execution_detail", "production_service_account_id_production_service_account", c => c.Int());
             AddColumn("payment_type_detail", "id_payment_approve_detail", c => c.Int(nullable: false));
-            AddColumn("payment_schedual", "id_payment_approve_detail", c => c.Int());
             AddColumn("sales_rep", "monthly_goal", c => c.Decimal(nullable: false, precision: 20, scale: 9));
             AddColumn("sales_budget_detail", "id_sales_promotion", c => c.Int());
             AddColumn("sales_order_detail", "id_sales_promotion", c => c.Int());
@@ -255,14 +260,12 @@ namespace entity.Migrations
             CreateIndex("app_account_detail", "id_payment_approve_detail");
             CreateIndex("hr_position", "id_contact");
             CreateIndex("payment_type_detail", "id_payment_approve_detail");
-            CreateIndex("payment_schedual", "id_payment_approve_detail");
             CreateIndex("production_execution_detail", "production_service_account_id_production_service_account");
             CreateIndex("sales_order_detail", "id_sales_promotion");
             CreateIndex("sales_budget_detail", "id_sales_promotion");
             CreateIndex("sales_invoice_detail", "id_sales_promotion");
             CreateIndex("sales_return_detail", "id_sales_promotion");
             AddForeignKey("app_account_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
-            AddForeignKey("payment_schedual", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
             AddForeignKey("production_execution_detail", "production_service_account_id_production_service_account", "production_service_account", "id_production_service_account");
             AddForeignKey("sales_invoice_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
@@ -305,7 +308,7 @@ namespace entity.Migrations
             DropForeignKey("production_service_account", "id_contact", "contacts");
             DropForeignKey("production_service_account", "parent_id_production_service_account", "production_service_account");
             DropForeignKey("production_service_account", "id_company", "app_company");
-            DropForeignKey("payment_schedual", "id_payment_approve_detail", "payment_approve_detail");
+            DropForeignKey("payment_approve_detail", "id_payment_schedual", "payment_schedual");
             DropForeignKey("payment_approve", "id_user", "security_user");
             DropForeignKey("payment_approve_detail", "id_payment_approve", "payment_approve");
             DropForeignKey("payment_approve", "id_contact", "contacts");
@@ -346,7 +349,6 @@ namespace entity.Migrations
             DropIndex("production_service_account", new[] { "id_item" });
             DropIndex("production_service_account", new[] { "id_contact" });
             DropIndex("production_execution_detail", new[] { "production_service_account_id_production_service_account" });
-            DropIndex("payment_schedual", new[] { "id_payment_approve_detail" });
             DropIndex("payment_approve", new[] { "id_user" });
             DropIndex("payment_approve", new[] { "id_company" });
             DropIndex("payment_approve", new[] { "id_terminal" });
@@ -358,6 +360,7 @@ namespace entity.Migrations
             DropIndex("payment_approve_detail", new[] { "id_range" });
             DropIndex("payment_approve_detail", new[] { "id_payment_type" });
             DropIndex("payment_approve_detail", new[] { "id_currency" });
+            DropIndex("payment_approve_detail", new[] { "id_payment_schedual" });
             DropIndex("payment_approve_detail", new[] { "id_account" });
             DropIndex("payment_approve_detail", new[] { "id_payment_approve" });
             DropIndex("payment_approve_detail", new[] { "id_bank" });
@@ -379,19 +382,21 @@ namespace entity.Migrations
             DropColumn("sales_order_detail", "id_sales_promotion");
             DropColumn("sales_budget_detail", "id_sales_promotion");
             DropColumn("sales_rep", "monthly_goal");
-            DropColumn("payment_schedual", "id_payment_approve_detail");
             DropColumn("payment_type_detail", "id_payment_approve_detail");
             DropColumn("production_execution_detail", "production_service_account_id_production_service_account");
             DropColumn("production_execution_detail", "id_service_account");
             DropColumn("app_contract", "is_sales");
             DropColumn("app_contract", "is_purchase");
             DropColumn("hr_position", "id_contact");
+            DropColumn("app_bank", "intermediary_swift");
+            DropColumn("app_bank", "intermediary_country");
+            DropColumn("app_bank", "intermediary_city");
             DropColumn("app_bank", "intermediary_bank");
             DropColumn("app_bank", "swift_code");
             DropColumn("app_bank", "country");
-            DropColumn("app_bank", "branch_address");
-            DropColumn("app_bank", "branch_name");
-            DropColumn("app_bank", "for_supplier");
+            DropColumn("app_bank", "city");
+            DropColumn("app_bank", "branch");
+            DropColumn("app_bank", "can_transfer");
             DropColumn("app_account_detail", "id_payment_approve_detail");
             DropTable("loyalty_tier");
             DropTable("loyalty_member_detail");

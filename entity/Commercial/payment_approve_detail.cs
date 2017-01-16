@@ -18,7 +18,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
-            payment_schedual = new List<payment_schedual>();
+          //  payment_schedual = new List<payment_schedual>();
         }
 
         [Key]
@@ -29,7 +29,7 @@ namespace entity
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }
-
+        public int id_payment_schedual { get; set; }
         public int id_currency
         {
             get
@@ -117,8 +117,7 @@ namespace entity
         [NotMapped]
         public App.Names App_Name { get; set; }
 
-        [NotMapped]
-        public int id_payment_schedual { get; set; }
+       
 
         /// <summary>
         /// 
@@ -296,7 +295,7 @@ namespace entity
         public virtual app_bank app_bank { get; set; }
         public virtual app_currency app_currency { get; set; }
 
-        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
+        public virtual payment_schedual payment_schedual { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
 

@@ -29,9 +29,8 @@ namespace cntrl.Curd
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 stackFields.DataContext = conditionViewSource;
+                cbxConditionTypes.ItemsSource = Enum.GetValues(typeof(entity.impex_incoterm_condition.incoterm_Types)).OfType<entity.impex_incoterm_condition.incoterm_Types>().ToList();
             }
-
-            cbxConditionTypes.ItemsSource = Enum.GetValues(typeof(entity.impex_incoterm_condition.incoterm_Types)).OfType<entity.impex_incoterm_condition.incoterm_Types>().ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

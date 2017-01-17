@@ -114,7 +114,7 @@ namespace entity
         public decimal unit_value { get; set; }
 
 
-        public DateTime expire_date { get; set; }
+        public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
         public virtual item_inventory item_inventory { get; set; }

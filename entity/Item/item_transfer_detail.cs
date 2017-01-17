@@ -80,7 +80,7 @@ namespace entity
         decimal _quantity_destination;
 
 
-        public DateTime expire_date { get; set; }
+        public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
         public virtual item_transfer item_transfer { get; set; }

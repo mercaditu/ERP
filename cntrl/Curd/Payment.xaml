@@ -124,7 +124,7 @@
 							</StackPanel>
 						</StackPanel>
                         <StackPanel x:Name="stppaymentdetail" 
-                                    IsEnabled="{Binding is_locked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource True2False}, Source={StaticResource paymentpayment_detailViewSource}}">
+                                    IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}, Source={StaticResource paymentpayment_detailViewSource}}">
 							<Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
 							<ComboBox x:Name="cbxPamentType"
 									  DisplayMemberPath="name" SelectedValuePath="id_payment_type"

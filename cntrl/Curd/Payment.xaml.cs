@@ -327,8 +327,8 @@ namespace cntrl.Curd
                 }
                 else
                 {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
-                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID && x.payment_approve_detail == null).Sum(x => x.AccountPayableBalance)
+                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID && x.IsLocked == false).Sum(x => x.value);
                 }
 
                 if (AccountID != null && PaymentTypeID != null)
@@ -336,14 +336,20 @@ namespace cntrl.Curd
                     payment_detail.IsLocked = true;
                     payment_detail.id_account = (int)AccountID;
                     payment_detail.id_payment_type = (int)PaymentTypeID;
-
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
-                                                        - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+                    //Over wright Detail Value with Approved Value
+                    payment_detail.value = payment_schedualList
+                        .Where(x => x.payment_approve_detail != null &&
+                                    x.payment_approve_detail.id_currency == CurrencyID && 
+                                    x.payment_approve_detail.id_account == (int)AccountID &&
+                                    x.payment_approve_detail.id_payment_type == PaymentTypeID)
+                        .Sum(x => x.payment_approve_detail.value);
                 }
                 else
                 {
                     payment_detail.IsLocked = false;
+                    payment_detail.id_account = CurrentSession.Id_Account;
                 }
+
                 payment_detail.IsSelected = true;
 
                 payment.payment_detail.Add(payment_detail);
@@ -363,7 +369,5 @@ namespace cntrl.Curd
         {
 
         }
-
-
     }
 }

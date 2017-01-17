@@ -42,7 +42,7 @@ namespace entity
         }
         decimal _balance;
 
-        public DateTime expire_date { get; set; }
+        public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
         #region "Nav Properties"
 

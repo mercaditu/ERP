@@ -26,7 +26,7 @@ namespace entity
         public int id_purchase_order { get; set; }
         public int? id_purchase_tender_detail { get; set; }
 
-        public DateTime expire_date { get; set; }
+        public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
         #region "Navigation Properties"

@@ -18,7 +18,6 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
-          //  payment_schedual = new List<payment_schedual>();
         }
 
         [Key, ForeignKey("payment_schedual")]

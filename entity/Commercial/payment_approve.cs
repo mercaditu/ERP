@@ -64,8 +64,8 @@ namespace entity
 
                             if (_app_range != null)
                             {
-                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).Select(x => x.code).FirstOrDefault();
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == id_terminal).Select(x => x.code).FirstOrDefault();
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                                 number = NumberWatermark;
                                 RaisePropertyChanged("NumberWatermark");

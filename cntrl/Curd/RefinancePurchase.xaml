@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="cntrl.Curd.Refinance" x:Name="_Refinance"
+﻿<UserControl x:Class="cntrl.Curd.RefinancePurchase" x:Name="_Refinance"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,9 +17,7 @@
              xmlns:entity="clr-namespace:entity;assembly=entity" 
              mc:Ignorable="d" Width="420" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <Convert:Bool2Collapsed x:Key="bool2visibility"/>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
+         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
@@ -38,7 +36,7 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             <StackPanel Orientation="Horizontal">
-                <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
+                <!--<ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource nav_ListSelection}"
@@ -54,16 +52,12 @@
                                                Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </ListBox>-->
                 <StackPanel x:Name="stpDisplay" HorizontalAlignment="Right">
                     <Label Content="{Binding contact.name}"  Style="{StaticResource H3}"/>
-                    <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                    <ComboBox x:Name="cbxCurrency" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
-                         DisplayMemberPath="name" SelectedValuePath="id_currency" SelectionChanged="cbxCurrency_SelectionChanged"
-                          Style="{StaticResource input_combobox}"/>
-
+                  
                     <Rectangle Fill="Silver" Height="1" Margin="8"/>
-                    <DataGrid x:Name="dgFinance"  AutoGenerateColumns="False" RowEditEnding="DataGrid_RowEditEnding" ItemsSource="{Binding}"  >
+                    <DataGrid x:Name="dgFinance"  AutoGenerateColumns="False" ItemsSource="{Binding}"  >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn x:Name="dateColumn" Header="{lex:Loc Cognitivo:local:Date}" Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -73,27 +67,17 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        		Header="{lex:Loc Cognitivo:local:Receivable}" Width="auto" Visibility="{Binding Recievable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}"/>
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        		Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" Visibility="{Binding Payable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}"/>
-                        </DataGrid.Columns>
+                        		Header="{lex:Loc Cognitivo:local:Receivable}" Width="auto" IsReadOnly="True"/>
+                                                   </DataGrid.Columns>
                     </DataGrid>
-                    <Label Content="Balance" Style="{StaticResource input_label}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Name="lblBalance" Content="{Binding AccountReceivableBalance}" Style="{StaticResource generic_Label}"/>
-                        <Label Content="{Binding Path=Text, ElementName=cbxCurrency}" Style="{StaticResource generic_Label}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Name="lbldiff" Style="{StaticResource generic_Label}"/>
-                        <Label Content="{Binding Path=Text,ElementName=cbxCurrency}" Style="{StaticResource generic_Label}"/>
-                    </StackPanel>
+                
+                   
                 </StackPanel>
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_MouseUp"/>
-                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+               
             </Grid>
            
 

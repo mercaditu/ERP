@@ -19,7 +19,7 @@ namespace Cognitivo.Sales
     {
         CollectionViewSource sales_orderViewSource;
         SalesOrderDB SalesOrderDB = new SalesOrderDB();
-
+        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         public Order()
         {
             InitializeComponent();
@@ -322,14 +322,28 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
-                    Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem));
+                    if (item.item_product.Count()>0)
+                    {
+                        if (item.item_product.FirstOrDefault()!=null && item.item_product.FirstOrDefault().can_expire)
+                        {
+                            crud_modalExpire.Visibility = Visibility.Visible;
+                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
+                            pnl_ItemMovementExpiry.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        }
+                    }
+                    else
+                    {
+                        Settings SalesSettings = new Settings();
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
+                    }
+                 
                 }
                 sales_order.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem)
+        private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem,int? movement_id)
         {
             if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
@@ -341,7 +355,7 @@ namespace Cognitivo.Sales
                 _sales_order_detail.item_description = item.description;
                 _sales_order_detail.item = item;
                 _sales_order_detail.id_item = item.id_item;
-
+                _sales_order_detail.movement_id = movement_id;
                 sales_order.sales_order_detail.Add(_sales_order_detail);
             }
             else
@@ -601,6 +615,22 @@ namespace Cognitivo.Sales
             else
             {
                 MessageBox.Show("Invoice Already Created Or Status is Not Approved..");
+            }
+        }
+
+        private  async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+            item item = await SalesOrderDB.items.FindAsync(sbxItem.ItemID);
+
+            if (item != null && item.id_item > 0 && sales_order != null)
+            {
+                if (pnl_ItemMovementExpiry.item_movement!=null)
+                {
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                }
+              
             }
         }
     }

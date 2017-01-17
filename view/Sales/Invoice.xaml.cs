@@ -1007,5 +1007,26 @@ namespace Cognitivo.Sales
                 MessageBox.Show("Return Already Created Or Status is Not Approved..");
             }
         }
+
+        private void Refinance_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            if (sales_invoice != null)
+            {
+                entity.Brillo.Security Security = new entity.Brillo.Security(entity.App.Names.AccountsReceivable);
+                if (Security.create)
+                {
+                    crud_modal.Visibility = Visibility.Visible;
+                    cntrl.Curd.RefinanceSales RefinanceSales = new cntrl.Curd.RefinanceSales();
+                    RefinanceSales.sales_invoice = sales_invoice;
+                    crud_modal.Children.Add(RefinanceSales);
+                }
+                else
+                {
+                    toolBar.msgWarning("Access Denied. Please contact your Administrator.");
+                }
+            }
+        }
     }
 }

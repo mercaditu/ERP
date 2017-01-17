@@ -206,6 +206,15 @@
 							</Hyperlink>
                             </TextBlock>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0"
+													IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
+                            <Label Content="$" Style="{StaticResource btn_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+												<Hyperlink PreviewMouseUp="Refinance_PreviewMouseUp">
+													<Run Text="{lex:Loc Refinance}"/>
+												</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" >
                             <Label Content="" Style="{StaticResource btn_Label}"/>
                             <TextBlock VerticalAlignment="Center">

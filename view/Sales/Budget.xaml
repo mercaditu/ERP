@@ -46,7 +46,9 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="sales_budgetDataGrid" Style="{StaticResource nav_List}"
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="sales_budgetDataGrid" Style="{StaticResource nav_List}"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="sales_budgetDataGrid_SelectionChanged"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}"
 				 ItemsSource="{Binding}" Grid.Row="1">

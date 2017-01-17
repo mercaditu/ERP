@@ -127,6 +127,8 @@ namespace entity
             Inventory = 26,
             [LocalizedDescription("Transfer")]
             Transfer = 30,
+            [LocalizedDescription("TransferByBranch")]
+            TransferByBranch = 139,
             [LocalizedDescription("Recipe")]
             Recipe = 32,
             [LocalizedDescription("Stock")]

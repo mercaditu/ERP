@@ -28,7 +28,8 @@
 		<BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 		<converter:CustomStringFormatConverter x:Key="CustomStringFormat"/>
 		<converter:Status2Enable x:Key="Status2Enable"/>
-		<converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
 		<converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
 		<converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable"/>
 		<converter:TrueToFalseConverter x:Key="TrueToFalse"/>
@@ -427,7 +428,16 @@
 												</Hyperlink>
 											</TextBlock>
 										</StackPanel>
-										<StackPanel Orientation="Horizontal" >
+                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0"
+													IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
+                                            <Label Content="$" Style="{StaticResource btn_Label}"/>
+                                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+												<Hyperlink PreviewMouseUp="Refinance_PreviewMouseUp">
+													<Run Text="{lex:Loc Refinance}"/>
+												</Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
 											<Label Content="" Style="{StaticResource btn_Label}"/>
 											<TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
 										</StackPanel>
@@ -745,7 +755,35 @@
 										</DataGridTemplateColumn.CellTemplate>
 									</DataGridTemplateColumn>
 								</DataGrid.Columns>
-							</DataGrid>
+
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <Grid Background="WhiteSmoke" Margin="4">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                <Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
+                                                    <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
+											FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
+                                                    <Image x:Name="imageViewer" Margin="4"/>
+                                                </Grid>
+                                                <StackPanel>
+                                                    <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                                    <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                                </StackPanel>
+                                                <StackPanel Visibility="{Binding item,Source={StaticResource sales_invoicesales_invoice_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
+                                                    <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
+                                                    <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding lot_number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                                    <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                                                    <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expiration_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                          
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
+                            </DataGrid>
 						</Grid>
 					</Grid>
 				</Grid>

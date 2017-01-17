@@ -18,7 +18,7 @@ namespace Cognitivo.Sales
 
         CollectionViewSource sales_budgetViewSource,
             sales_budgetsales_budget_detailViewSource;
-
+        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         public Budget()
         {
             InitializeComponent();
@@ -216,15 +216,29 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_budget != null)
                 {
-                    Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem));
+                    if (item.item_product.Count() > 0)
+                    {
+                        if (item.item_product.FirstOrDefault() != null && item.item_product.FirstOrDefault().can_expire)
+                        {
+                            crud_modalExpire.Visibility = Visibility.Visible;
+                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
+                            pnl_ItemMovementExpiry.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        }
+                    }
+                    else
+                    {
+                        Settings SalesSettings = new Settings();
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem,null));
+                    }
+                   
                 }
 
                 sales_budget.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem)
+        private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem,int? movement_id)
         {
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
@@ -237,7 +251,7 @@ namespace Cognitivo.Sales
                 _sales_budget_detail.item_description = item.description;
                 _sales_budget_detail.item = item;
                 _sales_budget_detail.id_item = item.id_item;
-
+                _sales_budget_detail.movement_id = movement_id;
                 sales_budget.sales_budget_detail.Add(_sales_budget_detail);
             }
             else
@@ -445,6 +459,21 @@ namespace Cognitivo.Sales
             {
                 decimal TrailingDecimals = sales_budget.GrandTotal - Math.Floor(sales_budget.GrandTotal);
                 sales_budget.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
+        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
+            item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
+
+            if (item != null && item.id_item > 0 && sales_budget != null)
+            {
+                if (pnl_ItemMovementExpiry.item_movement != null)
+                {
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                }
+
             }
         }
     }

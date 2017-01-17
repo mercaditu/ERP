@@ -1065,5 +1065,25 @@ namespace Cognitivo.Purchase
             }
 
         }
+
+        private void Refinance_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+            if (purchase_invoice != null)
+            {
+                entity.Brillo.Security Security = new entity.Brillo.Security(entity.App.Names.AccountsReceivable);
+                if (Security.create)
+                {
+                    crud_modal.Visibility = Visibility.Visible;
+                    cntrl.Curd.RefinancePurchase RefinancePurchase = new cntrl.Curd.RefinancePurchase();
+                    RefinancePurchase.purchase_invoice = purchase_invoice;
+                    crud_modal.Children.Add(RefinancePurchase);
+                }
+                else
+                {
+                    toolBar.msgWarning("Access Denied. Please contact your Administrator.");
+                }
+            }
+        }
     }
 }

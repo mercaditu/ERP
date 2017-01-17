@@ -322,15 +322,14 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
-                    if (item.item_product.Count()>0)
+                    item_product item_product = item.item_product.FirstOrDefault();
+
+                    if (item_product != null && item_product.can_expire)
                     {
-                        if (item.item_product.FirstOrDefault()!=null && item.item_product.FirstOrDefault().can_expire)
-                        {
-                            crud_modalExpire.Visibility = Visibility.Visible;
-                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
-                            pnl_ItemMovementExpiry.id_item_product = item.item_product.FirstOrDefault().id_item_product;
-                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-                        }
+                        crud_modalExpire.Visibility = Visibility.Visible;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
+                        pnl_ItemMovementExpiry.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                     }
                     else
                     {

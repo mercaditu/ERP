@@ -15,15 +15,15 @@
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" VerticalAlignment="Center" 
 			 Width="550" Height="600" Loaded="UserControl_Loaded"
-			 BorderBrush="RoyalBlue" BorderThickness="2">
+			 BorderBrush="Crimson" BorderThickness="2">
   
 	<UserControl.Resources>
 		<Converters:ActiveValueConverter x:Key="ActiveValueConverter"/>
 		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
 		<CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}"/>
 		<CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
-        <CollectionViewSource x:Key="payment_approveViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_approve}, CreateList=True}"/>
-        <CollectionViewSource x:Key="payment_approvepayment_approve_detailViewSource" Source="{Binding payment_approve_detail, Source={StaticResource payment_approveViewSource}}"/>
+		<CollectionViewSource x:Key="payment_approveViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_approve}, CreateList=True}"/>
+		<CollectionViewSource x:Key="payment_approvepayment_approve_detailViewSource" Source="{Binding payment_approve_detail, Source={StaticResource payment_approveViewSource}}"/>
 		<CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
 		<CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
 	</UserControl.Resources>
@@ -31,17 +31,17 @@
 	<UserControl.Effect>
 		<DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
 	</UserControl.Effect>
-    <Grid DataContext="{StaticResource payment_approvepayment_approve_detailViewSource}" Margin="0,1,0,-1">
+	<Grid DataContext="{StaticResource payment_approvepayment_approve_detailViewSource}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		
 		<!-- TopBar -->
-		<Grid Background="RoyalBlue">
+		<Grid Background="Crimson">
 			<Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="$" FontSize="25" Margin="8,0"
 				   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White"/>
-			<TextBlock x:Name="lblTitle" Text="{lex:Loc Payment}" FontSize="25" Margin="40,3,0,0" Foreground="White"/>
+			<TextBlock x:Name="lblTitle" Text="{lex:Loc PaymentOrder}" FontSize="25" Margin="40,3,0,0" Foreground="White"/>
 			<Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
 					 Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
 			<Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
@@ -166,13 +166,13 @@
 														 Width="256" HorizontalAlignment="Left">
 									<cntrl:SearchableTextbox.Columns>
 										<cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-                                        <cntrl:SmartBoxColumn Header="Number" ForProperty="number" Binding="{Binding number, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-                                        <cntrl:SmartBoxColumn Header="Comment" ForProperty="comment" Binding="{Binding comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-                                        <cntrl:SmartBoxColumn Header="Balance" ForProperty="comment" Binding="{Binding Balance, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="False"/>
-                                    </cntrl:SearchableTextbox.Columns>
+										<cntrl:SmartBoxColumn Header="Number" ForProperty="number" Binding="{Binding number, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+										<cntrl:SmartBoxColumn Header="Comment" ForProperty="comment" Binding="{Binding comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+										<cntrl:SmartBoxColumn Header="Balance" ForProperty="comment" Binding="{Binding Balance, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="False"/>
+									</cntrl:SearchableTextbox.Columns>
 								</cntrl:SearchableTextbox>-->
-                                <Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="sbxPurchaseReturn_Select"/>
-                            </StackPanel>
+								<Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="sbxPurchaseReturn_Select"/>
+							</StackPanel>
 
 							<StackPanel x:Name="stpcreditsales" Visibility="Collapsed">
 								<TextBlock  Style="{StaticResource text_Label}" FontWeight="Medium">
@@ -187,8 +187,8 @@
 										<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Comment}" ForProperty="comment" Binding="{Binding comment, Mode=Default}" EnableSearch="True"/>
 									</cntrl:SearchableTextbox.Columns>
 								</cntrl:SearchableTextbox>-->
-                                <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="sbxReturn_Select"/>
-                            </StackPanel>
+								<Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="sbxReturn_Select"/>
+							</StackPanel>
 							
 							<Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
 							<TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"

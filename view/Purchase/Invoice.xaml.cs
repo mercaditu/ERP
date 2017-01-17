@@ -155,14 +155,13 @@ namespace Cognitivo.Purchase
 
             if (purchase_invoice.status == Status.Documents_General.Approved)
             {
-
                 if (purchase_invoice != null)
                 {
                     UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
                     CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
                     UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
                     CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
-                    //  MovementReApprove.Start(SalesInvoiceDB,sales_invoice.id_sales_invoice,entity.App.Names.SalesInvoice);
+
                     string Message = CheckPaymentReApprove.Check_ContractChanges(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
 
                     if (Message != "")

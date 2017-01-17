@@ -19,7 +19,8 @@
   
 	<UserControl.Resources>
 		<Converters:ActiveValueConverter x:Key="ActiveValueConverter"/>
-		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
+        <Converters:TrueToFalseConverter x:Key="True2False"/>
+        <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
 		<CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}"/>
 		<CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
 		<CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
@@ -52,7 +53,7 @@
 		<!-- Body -->
 		<Grid Grid.Column="1" Grid.Row="1"  Background="White" >
 			<ScrollViewer Margin="0,0,0,30">
-                <StackPanel IsEnabled="{Binding is_locked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource paymentpayment_detailViewSource}}">
+                <StackPanel>
 					<Label Content="{Binding contact.name}" Style="{StaticResource H3}"/>
 					<!-- Header -->
 					<WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
@@ -122,7 +123,8 @@
 									   ContentStringFormat="N2" Style="{StaticResource H2}"/>
 							</StackPanel>
 						</StackPanel>
-						<StackPanel x:Name="stppaymentdetail" >
+                        <StackPanel x:Name="stppaymentdetail" 
+                                    IsEnabled="{Binding is_locked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource True2False}, Source={StaticResource paymentpayment_detailViewSource}}">
 							<Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
 							<ComboBox x:Name="cbxPamentType"
 									  DisplayMemberPath="name" SelectedValuePath="id_payment_type"

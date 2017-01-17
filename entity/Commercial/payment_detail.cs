@@ -325,7 +325,12 @@ namespace entity
             }
         }
         [NotMapped]
-        public bool is_locked { get; set; }
+        public bool IsLocked
+        {
+            get { return _IsLocked; }
+            set { _IsLocked = value; RaisePropertyChanged("IsLocked"); }
+        }
+        private bool _IsLocked = false;
 
         public string this[string columnName]
         {

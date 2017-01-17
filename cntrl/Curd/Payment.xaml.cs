@@ -52,21 +52,22 @@ namespace cntrl.Curd
                 payment.contact = contacts;
             }
 
-            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail!=null).GroupBy(x => new
+            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail != null)
+                .GroupBy(x => new
                                                                         {
                                                                             payment_type = x.payment_approve_detail.id_payment_type,
                                                                             Account = x.payment_approve_detail.id_account,
-                                                                            Currency = x.app_currencyfx.id_currency
-                                                                        }).Select(x => new { x.Key.payment_type,x.Key.Account,x.Key.Currency }))
+                                                                            Currency = x.payment_approve_detail.id_currency
+                                                                        }).Select(x => new { x.Key.payment_type, x.Key.Account, x.Key.Currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
-                Add_PaymentDetailApprove(id.Currency);
+                Add_PaymentDetail(id.Currency, id.payment_type, id.Account);
             }
 
             foreach (var id in payment_schedualList.Where(x=>x.payment_approve_detail==null).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
-                Add_PaymentDetail(id.id_currency);
+                Add_PaymentDetail(id.id_currency, null, null);
             }
 
             payment.RaisePropertyChanged("GrandTotal");
@@ -295,52 +296,11 @@ namespace cntrl.Curd
             payment_detail payment_detail=paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
             if (payment_detail!=null)
             {
-                Add_PaymentDetail(payment_detail.app_currencyfx.id_currency);
+                Add_PaymentDetail(payment_detail.app_currencyfx.id_currency, null, null);
             }
         }
 
-        private void Add_PaymentDetailApprove(int CurrencyID)
-        {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-
-            if (payment != null)
-            {
-                payment_detail payment_detail = new payment_detail();
-                payment_detail.payment = payment;
-                payment_detail.is_locked = true;
-                //Get current Active Rate of selected Currency.
-                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-
-                if (app_currencyfx != null)
-                {
-                    payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_detail.app_currencyfx = app_currencyfx;
-                }
-
-                payment_detail.IsSelected = true;
-
-                //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
-                if (Mode == Modes.Recievable)
-                {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
-                                                                           - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
-
-                }
-                else
-                {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
-                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
-
-                }
-
-                payment.payment_detail.Add(payment_detail);
-                paymentpayment_detailViewSource.View.Refresh();
-            }
-        }
-
-        private void Add_PaymentDetail(int CurrencyID)
+        private void Add_PaymentDetail(int CurrencyID, int? PaymentTypeID, int? AccountID)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
@@ -359,21 +319,32 @@ namespace cntrl.Curd
                     payment_detail.app_currencyfx = app_currencyfx;
                 }
 
-                payment_detail.IsSelected = true;
-
                 //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
                 if (Mode == Modes.Recievable)
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
-                                                                           - payment.payment_detail.Where(x=>x.app_currencyfx.id_currency==CurrencyID).Sum(x => x.value);
-
+                                                                           - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
                 }
                 else
                 {
                     payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
                                                                             - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
-
                 }
+
+                if (AccountID != null && PaymentTypeID != null)
+                {
+                    payment_detail.IsLocked = true;
+                    payment_detail.id_account = (int)AccountID;
+                    payment_detail.id_payment_type = (int)PaymentTypeID;
+
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
+                                                        - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
+                }
+                else
+                {
+                    payment_detail.IsLocked = false;
+                }
+                payment_detail.IsSelected = true;
 
                 payment.payment_detail.Add(payment_detail);
                 paymentpayment_detailViewSource.View.Refresh();

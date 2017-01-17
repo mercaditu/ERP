@@ -12,7 +12,6 @@ namespace entity
         {
             purchase_invoice purchase_invoice = new purchase_invoice();
 
-            //purchase_invoice.id_range = Brillo.GetDefault.Range(App.Names.PurchaseInvoice);
             purchase_invoice.status = Status.Documents_General.Pending;
             purchase_invoice.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_invoice.State = EntityState.Added;

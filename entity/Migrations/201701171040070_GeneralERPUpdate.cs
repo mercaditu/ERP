@@ -11,13 +11,12 @@ namespace entity.Migrations
                 "payment_approve_detail",
                 c => new
                     {
-                        id_payment_approve_detail = c.Int(nullable: false, identity: true),
+                        id_payment_approve_detail = c.Int(nullable: false),
                         id_bank = c.Int(),
                         id_payment_approve = c.Int(),
                         id_sales_return = c.Int(),
                         id_purchase_return = c.Int(),
                         id_account = c.Int(),
-                        id_payment_schedual = c.Int(nullable: false),
                         id_currency = c.Int(nullable: false),
                         id_payment_type = c.Int(nullable: false),
                         payment_type_ref = c.Short(),
@@ -39,13 +38,13 @@ namespace entity.Migrations
                 .ForeignKey("app_currency", t => t.id_currency, cascadeDelete: true)
                 .ForeignKey("app_document_range", t => t.id_range)
                 .ForeignKey("payment_approve", t => t.id_payment_approve)
-                .ForeignKey("payment_schedual", t => t.id_payment_schedual, cascadeDelete: true)
+                .ForeignKey("payment_schedual", t => t.id_payment_approve_detail)
                 .ForeignKey("payment_type", t => t.id_payment_type, cascadeDelete: true)
                 .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
+                .Index(t => t.id_payment_approve_detail)
                 .Index(t => t.id_bank)
                 .Index(t => t.id_payment_approve)
                 .Index(t => t.id_account)
-                .Index(t => t.id_payment_schedual)
                 .Index(t => t.id_currency)
                 .Index(t => t.id_payment_type)
                 .Index(t => t.id_range)
@@ -89,7 +88,7 @@ namespace entity.Migrations
                 c => new
                     {
                         id_production_service_account = c.Int(nullable: false, identity: true),
-                        id_contact = c.Int(nullable: false),
+                        id_contact = c.Int(),
                         id_item = c.Int(nullable: false),
                         id_order_detail = c.Int(),
                         id_purchase_order_detail = c.Int(),
@@ -110,7 +109,7 @@ namespace entity.Migrations
                 .PrimaryKey(t => t.id_production_service_account)                
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("production_service_account", t => t.parent_id_production_service_account)
-                .ForeignKey("contacts", t => t.id_contact, cascadeDelete: true)
+                .ForeignKey("contacts", t => t.id_contact)
                 .ForeignKey("items", t => t.id_item, cascadeDelete: true)
                 .ForeignKey("production_order_detail", t => t.id_order_detail)
                 .ForeignKey("purchase_invoice_detail", t => t.id_purchase_invoice_detail)
@@ -241,14 +240,34 @@ namespace entity.Migrations
             AddColumn("app_contract", "is_sales", c => c.Boolean(nullable: false));
             AddColumn("production_execution_detail", "id_service_account", c => c.Int());
             AddColumn("production_execution_detail", "production_service_account_id_production_service_account", c => c.Int());
-            AddColumn("payment_type_detail", "id_payment_approve_detail", c => c.Int(nullable: false));
+            AddColumn("payment_type_detail", "id_payment_approve_detail", c => c.Int());
+            AddColumn("purchase_invoice_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("purchase_invoice_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("purchase_order_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("purchase_order_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_rep", "monthly_goal", c => c.Decimal(nullable: false, precision: 20, scale: 9));
+            AddColumn("purchase_return_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("purchase_return_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("sales_budget_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("sales_budget_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_budget_detail", "id_sales_promotion", c => c.Int());
+            AddColumn("sales_order_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("sales_order_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_order_detail", "id_sales_promotion", c => c.Int());
+            AddColumn("sales_invoice_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("sales_invoice_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_invoice_detail", "id_sales_promotion", c => c.Int());
             AddColumn("sales_packing_detail", "id_movement", c => c.Long());
+            AddColumn("sales_packing_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("sales_packing_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("sales_return_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("sales_return_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_return_detail", "id_sales_promotion", c => c.Int());
             AddColumn("item_transfer_detail", "status_dest", c => c.Int(nullable: false));
+            AddColumn("item_transfer_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("item_transfer_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("item_inventory_detail", "expire_date", c => c.DateTime(nullable: false, precision: 0));
+            AddColumn("item_inventory_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("impexes", "est_shipping_date", c => c.DateTime(precision: 0));
             AddColumn("impexes", "real_shipping_date", c => c.DateTime(precision: 0));
             AddColumn("impexes", "est_landed_date", c => c.DateTime(precision: 0));
@@ -271,7 +290,7 @@ namespace entity.Migrations
             AddForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_budget_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
-            AddForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail", cascadeDelete: true);
+            AddForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
             AddForeignKey("hr_position", "id_contact", "contacts", "id_contact");
         }
         
@@ -295,6 +314,7 @@ namespace entity.Migrations
             DropForeignKey("payment_approve_detail", "id_user", "security_user");
             DropForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail");
             DropForeignKey("payment_approve_detail", "id_payment_type", "payment_type");
+            DropForeignKey("payment_approve_detail", "id_payment_approve_detail", "payment_schedual");
             DropForeignKey("sales_order_detail", "id_sales_promotion", "sales_promotion");
             DropForeignKey("sales_budget_detail", "id_sales_promotion", "sales_promotion");
             DropForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion");
@@ -308,7 +328,6 @@ namespace entity.Migrations
             DropForeignKey("production_service_account", "id_contact", "contacts");
             DropForeignKey("production_service_account", "parent_id_production_service_account", "production_service_account");
             DropForeignKey("production_service_account", "id_company", "app_company");
-            DropForeignKey("payment_approve_detail", "id_payment_schedual", "payment_schedual");
             DropForeignKey("payment_approve", "id_user", "security_user");
             DropForeignKey("payment_approve_detail", "id_payment_approve", "payment_approve");
             DropForeignKey("payment_approve", "id_contact", "contacts");
@@ -360,10 +379,10 @@ namespace entity.Migrations
             DropIndex("payment_approve_detail", new[] { "id_range" });
             DropIndex("payment_approve_detail", new[] { "id_payment_type" });
             DropIndex("payment_approve_detail", new[] { "id_currency" });
-            DropIndex("payment_approve_detail", new[] { "id_payment_schedual" });
             DropIndex("payment_approve_detail", new[] { "id_account" });
             DropIndex("payment_approve_detail", new[] { "id_payment_approve" });
             DropIndex("payment_approve_detail", new[] { "id_bank" });
+            DropIndex("payment_approve_detail", new[] { "id_payment_approve_detail" });
             DropIndex("payment_type_detail", new[] { "id_payment_approve_detail" });
             DropIndex("hr_position", new[] { "id_contact" });
             DropIndex("app_account_detail", new[] { "id_payment_approve_detail" });
@@ -375,13 +394,33 @@ namespace entity.Migrations
             DropColumn("impexes", "est_landed_date");
             DropColumn("impexes", "real_shipping_date");
             DropColumn("impexes", "est_shipping_date");
+            DropColumn("item_inventory_detail", "batch_code");
+            DropColumn("item_inventory_detail", "expire_date");
+            DropColumn("item_transfer_detail", "batch_code");
+            DropColumn("item_transfer_detail", "expire_date");
             DropColumn("item_transfer_detail", "status_dest");
             DropColumn("sales_return_detail", "id_sales_promotion");
+            DropColumn("sales_return_detail", "batch_code");
+            DropColumn("sales_return_detail", "expire_date");
+            DropColumn("sales_packing_detail", "batch_code");
+            DropColumn("sales_packing_detail", "expire_date");
             DropColumn("sales_packing_detail", "id_movement");
             DropColumn("sales_invoice_detail", "id_sales_promotion");
+            DropColumn("sales_invoice_detail", "batch_code");
+            DropColumn("sales_invoice_detail", "expire_date");
             DropColumn("sales_order_detail", "id_sales_promotion");
+            DropColumn("sales_order_detail", "batch_code");
+            DropColumn("sales_order_detail", "expire_date");
             DropColumn("sales_budget_detail", "id_sales_promotion");
+            DropColumn("sales_budget_detail", "batch_code");
+            DropColumn("sales_budget_detail", "expire_date");
+            DropColumn("purchase_return_detail", "batch_code");
+            DropColumn("purchase_return_detail", "expire_date");
             DropColumn("sales_rep", "monthly_goal");
+            DropColumn("purchase_order_detail", "batch_code");
+            DropColumn("purchase_order_detail", "expire_date");
+            DropColumn("purchase_invoice_detail", "batch_code");
+            DropColumn("purchase_invoice_detail", "expire_date");
             DropColumn("payment_type_detail", "id_payment_approve_detail");
             DropColumn("production_execution_detail", "production_service_account_id_production_service_account");
             DropColumn("production_execution_detail", "id_service_account");

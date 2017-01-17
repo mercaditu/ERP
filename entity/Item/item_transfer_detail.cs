@@ -1,10 +1,11 @@
 
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class item_transfer_detail : Audit
     {
         public item_transfer_detail()
@@ -77,6 +78,10 @@ namespace entity
             }
         }
         decimal _quantity_destination;
+
+
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
 
         public virtual item_transfer item_transfer { get; set; }
         public virtual item_product item_product { get; set; }

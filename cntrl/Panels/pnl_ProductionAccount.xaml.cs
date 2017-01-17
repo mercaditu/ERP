@@ -31,8 +31,8 @@ namespace cntrl.Panels
         {
 
             production_accountViewSource = ((CollectionViewSource)(FindResource("production_accountViewSource")));
-            ExecutionDB.production_service_account.Where(a => a.id_company == CurrentSession.Id_Company &&  (a.debit-a.child.Sum(x=>x.credit))> production_execution_detail.quantity).Load();
-            production_accountViewSource.Source = ExecutionDB.production_service_account.Local;
+            List<production_service_account> production_service_accountList = ExecutionDB.production_service_account.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            production_accountViewSource.Source = production_service_accountList.Where(a => a.Balance >= production_execution_detail.quantity).ToList();
 
 
           

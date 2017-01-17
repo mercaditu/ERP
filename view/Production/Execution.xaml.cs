@@ -61,7 +61,7 @@ namespace Cognitivo.Production
             dtpendtime.Text = DateTime.Now.ToString();
 
             filter_task();
-            RefreshData();
+           // RefreshData();
         }
 
         private void toolBar_btnSave_Click(object sender)
@@ -629,9 +629,9 @@ namespace Cognitivo.Production
             {
 
                 pnl_ProductionAccount.ExecutionDB = ExecutionDB;
-
-                crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(pnl_ProductionAccount);
+                pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
+                crud_modalAccount.Visibility = Visibility.Visible;
+                crud_modalAccount.Children.Add(pnl_ProductionAccount);
 
 
 
@@ -741,7 +741,7 @@ namespace Cognitivo.Production
                 foreach (production_service_account _production_account in production_accountList)
                 {
                     production_service_account production_service_account = new entity.production_service_account();
-                    production_service_account.id_contact = (int)production_execution_detail.id_contact;
+                    production_service_account.id_contact = production_execution_detail.id_contact;
                     production_service_account.id_item = (int)production_execution_detail.id_item;
                     production_service_account.unit_cost = production_execution_detail.unit_cost;
                     production_service_account.debit = 0;

@@ -41,7 +41,7 @@ namespace cntrl.Curd
             payment_approve.status = Status.Documents_General.Pending;
             payment_approve.State = EntityState.Added;
 
-            if (Mode==Modes.Recievable)
+            if (Mode == Modes.Recievable)
             {
                 payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             }
@@ -49,7 +49,7 @@ namespace cntrl.Curd
             payment_approve.IsSelected = true;
 
             PaymentDB.payment_approve.Add(payment_approve);
-            payment_approveViewSource.Source = PaymentDB.payments.Local;
+            payment_approveViewSource.Source = PaymentDB.payment_approve.Local;
 
             int id_contact = payment_schedualList.FirstOrDefault().id_contact;
             sbxReturn.ContactID = id_contact;
@@ -148,7 +148,7 @@ namespace cntrl.Curd
             foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 Decimal TotalPayable = 0;
-                if (Mode==Modes.Recievable)
+                if (Mode == Modes.Recievable)
                 {
 
                     TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountReceivableBalance);
@@ -170,9 +170,15 @@ namespace cntrl.Curd
                     return;
                 }
             }
+            try
+            {
+                PaymentDB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
-        
-            PaymentDB.SaveChanges();
             lblCancel_MouseDown(null, null);
         }
 
@@ -284,8 +290,8 @@ namespace cntrl.Curd
 
         #endregion
 
-     
-         
+
+
 
         private void Add_PaymentDetail(payment_schedual payment_schedual)
         {
@@ -305,8 +311,8 @@ namespace cntrl.Curd
                     payment_approve_detail.id_currency = app_currencyfx.id_currency;
                     payment_approve_detail.id_currencyfx = app_currencyfx.id_currencyfx;
                     payment_approve_detail.payment_approve.id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_approve_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
-                   // payment_approve_detail.app_currencyfx = app_currencyfx;
+                    payment_approve_detail.payment_schedual = payment_schedual;
+                    // payment_approve_detail.app_currencyfx = app_currencyfx;
                 }
 
                 payment_approve_detail.IsSelected = true;
@@ -315,7 +321,7 @@ namespace cntrl.Curd
                 if (Mode == Modes.Recievable)
                 {
                     payment_approve_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
-                                                                           - payment_approve.payment_approve_detail.Where(x=>x.id_currency==CurrencyID).Sum(x => x.value);
+                                                                           - payment_approve.payment_approve_detail.Where(x => x.id_currency == CurrencyID).Sum(x => x.value);
 
                 }
                 else
@@ -325,6 +331,8 @@ namespace cntrl.Curd
 
                 }
 
+                payment_schedual.payment_approve_detail = payment_approve_detail;
+                payment_schedual.status = Status.Documents_General.Approved;
                 payment_approve.payment_approve_detail.Add(payment_approve_detail);
                 payment_approvepayment_approve_detailViewSource.View.Refresh();
             }

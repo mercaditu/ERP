@@ -52,7 +52,7 @@ namespace cntrl.Curd
                 payment.contact = contacts;
             }
 
-            foreach (var id in payment_schedualList.Where(x => x.id_payment_approve_detail>0).GroupBy(x => new
+            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail!=null).GroupBy(x => new
                                                                         {
                                                                             payment_type = x.payment_approve_detail.id_payment_type,
                                                                             Account = x.payment_approve_detail.id_account,
@@ -63,7 +63,7 @@ namespace cntrl.Curd
                 Add_PaymentDetailApprove(id.Currency);
             }
 
-            foreach (var id in payment_schedualList.Where(x=>x.id_payment_approve_detail==0).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            foreach (var id in payment_schedualList.Where(x=>x.payment_approve_detail==null).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.id_currency);

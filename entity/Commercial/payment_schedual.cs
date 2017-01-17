@@ -44,7 +44,6 @@ namespace entity
         public int? id_purchase_order { get; set; }
         public int? id_note { get; set; }
         public int? id_payment_detail { get; set; }
-        public int? id_payment_approve_detail { get; set; }
         public Status.Documents_General status { get; set; }
         public int id_contact { get; set; }
         public int id_currencyfx { get; set; }

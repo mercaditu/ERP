@@ -25,6 +25,8 @@ namespace entity
         public int id_sales_return { get; set; }
         public bool has_return { get; set; }
 
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
         [NotMapped]
         public decimal Balance
         {

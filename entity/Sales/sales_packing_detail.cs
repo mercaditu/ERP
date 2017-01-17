@@ -60,10 +60,13 @@ namespace entity
             }
         }
         private decimal _quantity;
-        
+
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
 
         [NotMapped]
         public int id_branch { get; set; }
+
 
         public virtual sales_packing sales_packing { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }

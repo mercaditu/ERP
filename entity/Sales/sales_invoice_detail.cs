@@ -42,6 +42,9 @@ namespace entity
         }
         decimal _Balance;
 
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
+
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice
         {

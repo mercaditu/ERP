@@ -17,7 +17,7 @@ namespace entity
         public int id_payment_type_detail { get; set; }
         public int id_payment_type { get; set; }
         public int id_payment_detail { get; set; }
-        public int id_payment_approve_detail { get; set; }
+        public int? id_payment_approve_detail { get; set; }
         public short id_field { get; set; }
         public string value { get; set; }
     

@@ -20,7 +20,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_production_service_account { get; set; }
-        public int id_contact { get; set; }
+        public int? id_contact { get; set; }
         public int id_item { get; set; }
         public int? id_order_detail { get; set; }
     
@@ -35,6 +35,10 @@ namespace entity
         public decimal debit { get; set; }
         [Required]
         public decimal credit { get; set; }
+
+        [NotMapped]
+        public decimal Balance { get { return credit- child.Sum(x => x.debit); } set { _Balance = value;  } }
+        decimal _Balance;
 
         [Required]
         public DateTime trans_date { get; set; }

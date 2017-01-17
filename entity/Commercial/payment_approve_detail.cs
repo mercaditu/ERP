@@ -21,16 +21,14 @@ namespace entity
           //  payment_schedual = new List<payment_schedual>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, ForeignKey("payment_schedual")]
         public int id_payment_approve_detail { get; set; }
         public int? id_bank { get; set; }
         public int? id_payment_approve { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }
-        public int id_payment_schedual { get; set; }
-        public int id_currency
+       public int id_currency
         {
             get
             {
@@ -294,7 +292,6 @@ namespace entity
         public virtual app_account app_account { get; set; }
         public virtual app_bank app_bank { get; set; }
         public virtual app_currency app_currency { get; set; }
-
         public virtual payment_schedual payment_schedual { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }

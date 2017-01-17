@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel;
     using System.Text;
     using System.Linq;
+    using System;
 
     public partial class sales_budget_detail : CommercialSalesDetail, IDataErrorInfo
     {
@@ -37,8 +38,9 @@ namespace entity
             }
         }
         decimal _balance;
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
 
-    
 
         #region "Foreign Key"
         public virtual sales_budget sales_budget

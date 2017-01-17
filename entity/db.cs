@@ -6,6 +6,7 @@
     {
         public db() : base("name=Cognitivo.Properties.Settings.MySQLconnString")
         {
+          
             Configuration.LazyLoadingEnabled = true;
         }
 

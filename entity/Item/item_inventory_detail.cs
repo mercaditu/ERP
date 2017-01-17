@@ -113,6 +113,10 @@ namespace entity
         public int id_currencyfx { get; set; }
         public decimal unit_value { get; set; }
 
+
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
+
         public virtual item_inventory item_inventory { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }

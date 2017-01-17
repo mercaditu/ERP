@@ -1,5 +1,6 @@
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -23,7 +24,10 @@ namespace entity
         public int id_purchase_invoice_detail { get; set; }
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
-            
+
+        public DateTime expire_date { get; set; }
+        public string batch_code { get; set; }
+
         #region "Navigation Properties"
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual purchase_invoice purchase_invoice

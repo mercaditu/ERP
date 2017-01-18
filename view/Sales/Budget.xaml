@@ -26,7 +26,8 @@
 		<converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
 		<converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
 		<converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable"/>
-		<CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget},CreateList=True}"/>
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget},CreateList=True}"/>
 		<CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
 		<CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
 
@@ -396,7 +397,30 @@
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
 					</DataGrid.Columns>
-				</DataGrid>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                                    <StackPanel>
+                                        <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                        <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
+                                        <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
+                                        <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                        <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                                        <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
 			</Grid>
 		</Grid>
 

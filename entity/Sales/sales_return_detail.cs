@@ -93,6 +93,8 @@ namespace entity
             }
         }
 
+        public int? movement_id { get; set; }
+
         public string this[string columnName]
         {
             get

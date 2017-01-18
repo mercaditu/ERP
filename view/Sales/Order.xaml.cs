@@ -602,7 +602,9 @@ namespace Cognitivo.Sales
                     sales_invoice_detail.quantity = sales_order_detail.quantity - sales_order_detail.sales_invoice_detail.Sum(x => x.quantity);
                     sales_invoice_detail.unit_cost = sales_order_detail.unit_cost;
                     sales_invoice_detail.unit_price = sales_order_detail.unit_price;
+                    sales_invoice_detail.movement_id = sales_order_detail.movement_id;
                     sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+
                 }
 
                 SalesOrderDB.sales_invoice.Add(sales_invoice);
@@ -624,13 +626,20 @@ namespace Cognitivo.Sales
 
             if (item != null && item.id_item > 0 && sales_order != null)
             {
+                Settings SalesSettings = new Settings();
                 if (pnl_ItemMovementExpiry.item_movement!=null)
                 {
-                    Settings SalesSettings = new Settings();
+                  
                     Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
                 }
-              
+                else
+                {
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
+                }
+
             }
         }
+
+       
     }
 }

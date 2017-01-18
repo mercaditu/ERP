@@ -788,6 +788,7 @@ namespace Cognitivo.Sales
                                                                                  .FirstOrDefault();
                     sales_invoice_detail.id_vat_group = _sales_order_detail.id_vat_group;
                     sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
+                    sales_invoice_detail.movement_id = _sales_order_detail.movement_id;
                     if (sales_invoice_detail.quantity > 0)
                     {
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
@@ -993,6 +994,7 @@ namespace Cognitivo.Sales
                     sales_return_detail.quantity = sales_invoice_detail.quantity - sales_invoice_detail.sales_return_detail.Sum(x => x.quantity);
                     sales_return_detail.unit_cost = sales_invoice_detail.unit_cost;
                     sales_return_detail.unit_price = sales_invoice_detail.unit_price;
+                    sales_return_detail.movement_id = sales_invoice_detail.movement_id;
                     sales_return.sales_return_detail.Add(sales_return_detail);
                 }
 

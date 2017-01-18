@@ -86,11 +86,14 @@
             <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
                         Grid.Column="1" Grid.Row="0" Margin="4,0,0,0">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="" Style="{StaticResource btn_Label}"/>
+                    <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
+                </StackPanel>
                 <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
+                <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding est_shipping_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, 
+                <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding est_landed_date, Mode=TwoWay, NotifyOnValidationError=true, 
                                 ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                 Style="{StaticResource input_datepicker}"/>
 
@@ -108,6 +111,7 @@
                             </Hyperlink>
                     </TextBlock>
                 </StackPanel>
+             
             </StackPanel>
 
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch"/>

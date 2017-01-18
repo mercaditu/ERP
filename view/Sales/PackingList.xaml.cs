@@ -18,7 +18,7 @@ namespace Cognitivo.Sales
         Sales.Settings SalesSettings = new Settings();
         CollectionViewSource sales_packingViewSource, sales_packingsales_packinglist_detailViewSource, sales_orderViewSource;
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
-
+        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         public PackingList()
         {
             InitializeComponent();
@@ -126,12 +126,27 @@ namespace Cognitivo.Sales
                  
                     if (cbxBranch.SelectedItem != null)
                     { app_branch = cbxBranch.SelectedItem as app_branch; }
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch));
+
+                    item_product item_product = item.item_product.FirstOrDefault();
+
+                    if (item_product != null && item_product.can_expire)
+                    {
+                        crud_modalExpire.Visibility = Visibility.Visible;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
+                        pnl_ItemMovementExpiry.id_item_product = item_product.id_item_product;
+                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    }
+                    else
+                    {
+
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch,null));
+                    }
+                   
                 }
             }
         }
 
-        private void select_Item(sales_packing sales_packing, item item,app_branch app_branch)
+        private void select_Item(sales_packing sales_packing, item item,app_branch app_branch,int? movement_id)
         {
             if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
             {
@@ -140,6 +155,7 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.item = item;
                 _sales_packing_detail.quantity = 1;
                 _sales_packing_detail.id_item = item.id_item;
+                _sales_packing_detail.id_movement = movement_id;
                 if (app_branch != null)
                 {
                    
@@ -289,7 +305,7 @@ namespace Cognitivo.Sales
                         sales_packing_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
                         sales_packing_detail.id_item = _sales_order_detail.id_item;
                         sales_packing_detail.item = _sales_order_detail.item;
-
+                        sales_packing_detail.id_movement = _sales_order_detail.movement_id;
                         sales_packing_detail.quantity = _sales_order_detail.quantity;
                         sales_packing.sales_packing_detail.Add(sales_packing_detail);
                     }
@@ -368,6 +384,26 @@ namespace Cognitivo.Sales
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();
 
 
+            }
+        }
+        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            sales_packing sales_packing = sales_packingDataGrid.SelectedItem as sales_packing;
+            item item = await dbContext.items.FindAsync(sbxItem.ItemID);
+            app_branch app_branch=null;
+            if (item != null && item.id_item > 0 && sales_packing != null)
+            {
+                if (cbxBranch.SelectedItem != null)
+                {  app_branch = cbxBranch.SelectedItem as app_branch; }
+                if (pnl_ItemMovementExpiry.item_movement != null)
+                {
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                }
+                else
+                {
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null));
+                }
             }
         }
 

@@ -997,7 +997,7 @@ namespace Cognitivo.Purchase
             {
                 using (db db = new db())
                 {
-                    if (db.purchase_invoice.Where(x => x.number == purchase_invoice.number && x.id_purchase_invoice > 0 && x.id_contact == purchase_invoice.id_contact).Any())
+                    if (db.purchase_invoice.Where(x => x.number == purchase_invoice.number && x.id_purchase_invoice > 0 && x.id_contact == purchase_invoice.id_contact).Count()>0)
                     {
                         toolBar.msgWarning("Duplicate Invoice");
                     }

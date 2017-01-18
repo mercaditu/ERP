@@ -17,7 +17,8 @@
 
 	<Page.Resources>
 		<BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-		<converter:TrueToFalseConverter x:Key="True2False"/>
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <converter:TrueToFalseConverter x:Key="True2False"/>
 		<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
 		<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
 		<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
@@ -45,8 +46,9 @@
 		
 		<Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" 
 			  Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-
-		<ListBox x:Name="item_transferDataGrid"
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
+        <ListBox x:Name="item_transferDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			  
@@ -206,7 +208,30 @@
 							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 												Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="64"/>
 						</DataGrid.Columns>
-					</DataGrid>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    
+                                        <StackPanel>
+                                            <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                            <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                        </StackPanel>
+                                        <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
+                                            <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
+                                            <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                                            <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                              
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
 					<Rectangle Width="1" Margin="6" Fill="Silver" Grid.Column="1"/>
 					<DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" Grid.Column="1"
 							  EnableRowVirtualization="True" IsReadOnly="True" CanUserAddRows="False"

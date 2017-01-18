@@ -262,9 +262,9 @@
     <Compile Include="Migrations\201612221308116_PaymentSchedualUpdate.Designer.cs">
       <DependentUpon>201612221308116_PaymentSchedualUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701171329024_GeneralERPUpdate.cs" />
-    <Compile Include="Migrations\201701171329024_GeneralERPUpdate.Designer.cs">
-      <DependentUpon>201701171329024_GeneralERPUpdate.cs</DependentUpon>
+    <Compile Include="Migrations\201701180714102_GeneralERPUpdate.cs" />
+    <Compile Include="Migrations\201701180714102_GeneralERPUpdate.Designer.cs">
+      <DependentUpon>201701180714102_GeneralERPUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account_.cs" />
@@ -710,8 +710,8 @@
     <EmbeddedResource Include="Migrations\201612221308116_PaymentSchedualUpdate.resx">
       <DependentUpon>201612221308116_PaymentSchedualUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701171329024_GeneralERPUpdate.resx">
-      <DependentUpon>201701171329024_GeneralERPUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701180714102_GeneralERPUpdate.resx">
+      <DependentUpon>201701180714102_GeneralERPUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

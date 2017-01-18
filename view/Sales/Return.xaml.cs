@@ -20,7 +20,7 @@ namespace Cognitivo.Sales
 
         CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
-
+        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         public Return()
         {
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace Cognitivo.Sales
             salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
         }
 
-        private  void load_SecondaryDataThread()
+        private void load_SecondaryDataThread()
         {
             sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
 
@@ -238,13 +238,27 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_return != null)
                 {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item));
+                    item_product item_product = item.item_product.FirstOrDefault();
+
+                    if (item_product != null && item_product.can_expire)
+                    {
+                        crud_modalExpire.Visibility = Visibility.Visible;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
+                        pnl_ItemMovementExpiry.id_item_product = item_product.id_item_product;
+                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    }
+                    else
+                    {
+
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item, null));
+                    }
+
                 }
                 sales_return.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_return sales_return, item item)
+        private void select_Item(sales_return sales_return, item item, int? movement_id)
         {
             if (sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
             {
@@ -255,7 +269,7 @@ namespace Cognitivo.Sales
                 _sales_return_detail.item_description = item.description;
                 _sales_return_detail.item = item;
                 _sales_return_detail.id_item = item.id_item;
-
+                _sales_return_detail.movement_id = movement_id;
                 sales_return.sales_return_detail.Add(_sales_return_detail);
             }
             else
@@ -432,6 +446,23 @@ namespace Cognitivo.Sales
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
+        }
+        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            sales_return sales_return = sales_returnDataGrid.SelectedItem as sales_return;
+            item item = await SalesReturnDB.items.FindAsync(sbxItem.ItemID);
+
+            if (item != null && item.id_item > 0 && sales_return != null)
+            {
+                if (pnl_ItemMovementExpiry.item_movement != null)
+                {
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                }
+                else
+                {
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item, null));
+                }
+            }
         }
     }
 }

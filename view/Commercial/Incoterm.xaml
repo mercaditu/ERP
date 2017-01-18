@@ -51,7 +51,8 @@
 				<TextBox x:Name="nameTextBox" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
 				<Label Content="{lex:Loc ISOCode}" Style="{StaticResource input_label}"/>
 				<TextBox x:Name="code_isoTextBox" Text="{Binding code_iso, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
-				<CheckBox x:Name="is_priorityCheckBox" Content="{lex:Loc Default}" IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
+             
+                <CheckBox x:Name="is_priorityCheckBox" Content="{lex:Loc Default}" IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
 			</StackPanel>
 			<DataGrid x:Name="incoterm_detailsDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1"
 						  EnableRowVirtualization="True" Height="Auto" 

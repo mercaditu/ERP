@@ -154,6 +154,9 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
+        public int? movement_id { get; internal set; }
+
         public string this[string columnName]
         {
             get

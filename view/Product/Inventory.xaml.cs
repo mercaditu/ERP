@@ -280,6 +280,7 @@ namespace Cognitivo.Product
             item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
             if (item_inventory_detail != null)
             {
+
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
                 objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
 

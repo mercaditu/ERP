@@ -39,7 +39,9 @@
 		<!-- toolBar -->
 		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
-		<cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
+        <!--<Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>-->
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
 					   btnEdit_Click="toolBar_btnEdit_Click" 
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnNew_Click="toolBar_btnNew_Click"

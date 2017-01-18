@@ -111,7 +111,7 @@ namespace cntrl.PanelAdv
                         sales_order_detail.id_vat_group = sales_budget_detail.id_vat_group;
                         sales_order_detail.unit_price = sales_budget_detail.unit_price;
                         sales_order_detail.id_project_task = sales_budget_detail.id_project_task;
-
+                        sales_order_detail.movement_id = sales_budget_detail.movement_id;
                         decimal quantity = 0;
 
                         quantity = db.sales_order_detail

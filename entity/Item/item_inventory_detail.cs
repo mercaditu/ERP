@@ -121,6 +121,8 @@ namespace entity
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
         public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
+        public int? movement_id { get; set; }
+
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;

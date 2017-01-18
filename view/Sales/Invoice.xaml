@@ -758,7 +758,7 @@
 
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
-                                        <Grid Background="WhiteSmoke" Margin="4">
+                                        <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                                 <Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
                                                     <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"

@@ -57,8 +57,18 @@ namespace entity.Brillo.Logic
                     }
                     else
                     {
-                        Brillo.Stock stock = new Brillo.Stock();
-                        List<StockList> Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
+                        List<StockList> Items_InStockLIST = null;
+                        if (purchase_return_detail.movement_id != null && purchase_return_detail.movement_id > 0)
+                        {
+                            Brillo.Stock stockBrillo = new Brillo.Stock();
+                            Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(purchase_return_detail.movement_id));
+                        }
+                        else
+                        {
+                            Brillo.Stock stock = new Brillo.Stock();
+                            Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
+                        }
+                     
 
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                  App.Names.PurchaseReturn,
@@ -87,9 +97,18 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                     packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-
-                    Brillo.Stock stock = new Brillo.Stock();
-                    List<StockList> Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, (int)packing_detail.id_location, item_product.id_item_product);
+                    List<StockList> Items_InStockLIST = null;
+                    if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
+                    {
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(packing_detail.id_movement));
+                    }
+                    else
+                    {
+                        Brillo.Stock stock = new Brillo.Stock();
+                        Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, (int)packing_detail.id_location, item_product.id_item_product);
+                    }
+                       
 
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
@@ -396,9 +415,17 @@ namespace entity.Brillo.Logic
                                     detail.app_location = db.app_location.Find(detail.id_location);
                                 }
 
-                                Brillo.Stock stock = new Brillo.Stock();
-                                List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_productSub.id_item_product);
-
+                                List<StockList> Items_InStockLIST = null;
+                                if (detail.movement_id != null && detail.movement_id > 0)
+                                {
+                                    Brillo.Stock stockBrillo = new Brillo.Stock();
+                                    Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(detail.movement_id));
+                                }
+                                else
+                                {
+                                    Brillo.Stock stock = new Brillo.Stock();
+                                   Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_productSub.id_item_product);
+                                }
                                 item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                             App.Names.SalesInvoice,
                                                             detail.id_sales_invoice,
@@ -429,8 +456,18 @@ namespace entity.Brillo.Logic
                         {
                             detail.app_location = db.app_location.Find(detail.id_location);
                         }
-                        Brillo.Stock stock = new Brillo.Stock();
-                        List<StockList> Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_product.id_item_product);
+                        List<StockList> Items_InStockLIST = null;
+                        if (detail.movement_id != null && detail.movement_id > 0)
+                        {
+                            Brillo.Stock stockBrillo = new Brillo.Stock();
+                            Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(detail.movement_id));
+                        }
+                        else
+                        {
+                            Brillo.Stock stock = new Brillo.Stock();
+                            Items_InStockLIST = stock.List(detail.app_location.id_branch, (int)detail.id_location, item_product.id_item_product);
+                        }
+                       
 
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.SalesInvoice,
@@ -581,8 +618,18 @@ namespace entity.Brillo.Logic
                         }
                         else if (delta < 0)
                         {
-                            Brillo.Stock stock = new Brillo.Stock();
-                            List<StockList> Items_InStockLIST = stock.List(item_inventory_detail.app_location.id_branch, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
+                            List<StockList> Items_InStockLIST = null;
+                            if (item_inventory_detail.movement_id != null && item_inventory_detail.movement_id > 0)
+                            {
+                                Brillo.Stock stockBrillo = new Brillo.Stock();
+                                Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(item_inventory_detail.movement_id));
+                            }
+                            else
+                            {
+                                Brillo.Stock stock = new Brillo.Stock();
+                                Items_InStockLIST = stock.List(item_inventory_detail.app_location.id_branch, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
+                            }
+                           
 
                             item_movementList.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,

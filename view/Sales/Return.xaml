@@ -26,7 +26,8 @@
 		<Converter:TrueToFalseConverter x:Key="TrueToFalse"/>
 		<Converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
 		<Converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
-		<CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
+        <Converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_returnViewSource}}"/>
 		<CollectionViewSource x:Key="sales_returnsales_return_detailViewSource" Source="{Binding sales_return_detail, Source={StaticResource sales_returnViewSource}}"/>
@@ -44,7 +45,9 @@
 		</Grid.ColumnDefinitions>
 		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-		<cntrl:toolBar x:Name="toolBar" appName="SalesReturn"
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
+        <cntrl:toolBar x:Name="toolBar" appName="SalesReturn"
 					   btnCancel_Click="toolBar_btnCancel_Click" 
 					   btnDelete_Click="toolBar_btnDelete_Click"  
 					   btnSearch_Click="toolBar_btnSearch_Click"
@@ -311,7 +314,30 @@
 									</DataGridTemplateColumn.CellTemplate>
 								</DataGridTemplateColumn>
 							</DataGrid.Columns>
-						</DataGrid>
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                                            <StackPanel>
+                                                <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                                <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                            </StackPanel>
+                                            <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
+                                                <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
+                                                <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                                <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                                                <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
+                        </DataGrid>
 					</StackPanel>
 				</Grid>
 			</Grid>

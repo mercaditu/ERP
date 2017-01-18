@@ -428,28 +428,31 @@ namespace Cognitivo.Product
         }
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            item item = ProductTransferDB.items.Find(sbxItem.ItemID);
-            item_product item_product = item.item_product.FirstOrDefault();
-            if (item != null && item.id_item > 0 && item_transfer != null)
+            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
-                item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                item_transfer_detail.id_item_product = item_product.id_item_product;
-                item_transfer_detail.item_product = item_product;
-                item_transfer_detail.quantity_destination = 1;
-                item_transfer_detail.quantity_origin = 1;
-
-
-                if (pnl_ItemMovementExpiry.item_movement != null)
+                item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+                item item = ProductTransferDB.items.Find(sbxItem.ItemID);
+                item_product item_product = item.item_product.FirstOrDefault();
+                if (item != null && item.id_item > 0 && item_transfer != null)
                 {
+                    item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                    item_transfer_detail.id_item_product = item_product.id_item_product;
+                    item_transfer_detail.item_product = item_product;
+                    item_transfer_detail.quantity_destination = 1;
+                    item_transfer_detail.quantity_origin = 1;
 
-                    item_transfer_detail.movement_id =(int)pnl_ItemMovementExpiry.item_movement.id_movement;
+
+                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    {
+
+                        item_transfer_detail.movement_id = (int)pnl_ItemMovementExpiry.item_movement.id_movement;
+                    }
+
+                    item_transfer.item_transfer_detail.Add(item_transfer_detail);
+
+                    CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
+                    item_transferitem_transfer_detailViewSource.View.Refresh();
                 }
-
-                item_transfer.item_transfer_detail.Add(item_transfer_detail);
-
-                CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
-                item_transferitem_transfer_detailViewSource.View.Refresh();
             }
         }
     }

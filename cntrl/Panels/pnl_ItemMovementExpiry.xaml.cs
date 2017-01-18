@@ -35,7 +35,7 @@ namespace cntrl.Panels
         {
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            ProductMovementDB.item_movement.Where(a =>a.id_item_product== id_item_product && a.id_company == CurrentSession.Id_Company && a.code!=null && a.expire_date!=null && a.avlquantity>0).Load();
+            ProductMovementDB.item_movement.Where(a =>a.id_item_product== id_item_product && a.id_company == CurrentSession.Id_Company && a.code!=null && a.expire_date!=null && (a.credit - (a.child.Count() > 0 ? a.child.Sum(y => y.debit) : 0) )> 0).Load();
             item_movementViewSource.Source = ProductMovementDB.item_movement.Local;
             
         }

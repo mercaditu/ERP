@@ -388,21 +388,24 @@ namespace Cognitivo.Sales
         }
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            sales_packing sales_packing = sales_packingDataGrid.SelectedItem as sales_packing;
-            item item = await dbContext.items.FindAsync(sbxItem.ItemID);
-            app_branch app_branch=null;
-            if (item != null && item.id_item > 0 && sales_packing != null)
+            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
-                if (cbxBranch.SelectedItem != null)
-                {  app_branch = cbxBranch.SelectedItem as app_branch; }
-                if (pnl_ItemMovementExpiry.item_movement != null)
+                sales_packing sales_packing = sales_packingDataGrid.SelectedItem as sales_packing;
+                item item = await dbContext.items.FindAsync(sbxItem.ItemID);
+                app_branch app_branch = null;
+                if (item != null && item.id_item > 0 && sales_packing != null)
                 {
-                    Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
-                }
-                else
-                {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null));
+                    if (cbxBranch.SelectedItem != null)
+                    { app_branch = cbxBranch.SelectedItem as app_branch; }
+                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    {
+                        Settings SalesSettings = new Settings();
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                    }
+                    else
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null));
+                    }
                 }
             }
         }

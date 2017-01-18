@@ -486,19 +486,22 @@ namespace Cognitivo.Purchase
 
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
-            item item = await dbContext.items.FindAsync(sbxItem.ItemID);
-
-            if (item != null && item.id_item > 0 && _purchase_return != null)
+            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
-                if (pnl_ItemMovementExpiry.item_movement != null)
-                {
+                purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
+                item item = await dbContext.items.FindAsync(sbxItem.ItemID);
 
-                    Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
-                }
-                else
+                if (item != null && item.id_item > 0 && _purchase_return != null)
                 {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, null));
+                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    {
+
+                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                    }
+                    else
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, null));
+                    }
                 }
             }
         }

@@ -463,22 +463,26 @@ namespace Cognitivo.Sales
         }
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-            item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
-
-            if (item != null && item.id_item > 0 && sales_budget != null)
+            if (crud_modalExpire.Visibility==Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
-                Settings SalesSettings = new Settings();
-                if (pnl_ItemMovementExpiry.item_movement != null)
+                sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
+                item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
+
+                if (item != null && item.id_item > 0 && sales_budget != null)
                 {
-                  
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
-                }
-                else
-                {
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
+                    Settings SalesSettings = new Settings();
+                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    {
+
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, Convert.ToInt32(pnl_ItemMovementExpiry.item_movement.id_movement)));
+                    }
+                    else
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
+                    }
                 }
             }
+          
         }
     }
 }

@@ -994,11 +994,12 @@ namespace Cognitivo.Purchase
         private void btnInvoiceNumber_LostFocus(object sender, RoutedEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+
             if (purchase_invoice != null && !string.IsNullOrEmpty(purchase_invoice.number) && purchase_invoice.id_contact > 0)
             {
                 using (db db = new db())
                 {
-                    if (db.purchase_invoice.Where(x => x.number == purchase_invoice.number && x.id_purchase_invoice > 0 && x.id_contact == purchase_invoice.id_contact).Count()>0)
+                    if (db.purchase_invoice.Where(x => x.number == purchase_invoice.number && x.id_contact == purchase_invoice.id_contact).Count() > 0)
                     {
                         toolBar.msgWarning("Duplicate Invoice");
                     }
@@ -1022,6 +1023,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+
             if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.purchase_return.Count()==0)
             {
                 purchase_return purchase_return = new purchase_return();

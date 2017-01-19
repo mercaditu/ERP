@@ -1,54 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
 using entity;
-using System.Data.Entity.Validation;
 using System.Windows.Input;
 using entity.BrilloQuery;
+using System.Data;
+using System;
+using System.Collections.Generic;
 
 namespace cntrl.Panels
 {
-    /// <summary>
-    /// Interaction logic for pnl_ItemMovement.xaml
-    /// </summary>
     public partial class pnl_ItemMovementExpiry : UserControl
     {
 
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
-        CollectionViewSource item_movementViewSource;
-        public item_movement item_movement { get; set; }
-        public int  id_item_product { get; set; }
+        CollectionViewSource BatchCodeViewSource;
 
-        public pnl_ItemMovementExpiry()
+        public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
         {
             InitializeComponent();
+            UserControl_Loaded(BranchID, LocationID, ProductID);
         }
 
-     
-
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Loaded(int? BranchID, int? LocationID, int ProductID)
         {
+            BatchCodeViewSource = ((CollectionViewSource)(FindResource("BatchCodeViewSource")));
 
-            item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            string query = @"select l.id_location, b.id_branch, i.code, i.name, im.code, im.expire_date, im.credit, sum(child.debit), im.credit - sum(child.debit) as Balance
+            //We are not certain if we should search by Location or Branch. This helps in choosing only Branch if is selected.
+            string LocationWhere = "";
+            if (BranchID != null)
+            {
+                LocationWhere = "and l.id_branch = " + BranchID;
+            }
+            else
+            {
+                LocationWhere = "and l.id_location = " + LocationID;
+            }
+
+            string query = @"select l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
+                                im.code as BatchCode, im.expire_date as ExpiryDate, 
+                                (im.credit - sum(child.debit)) as Balance
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                where im.credit - sum(child.debit) > 0 and ip.can_expire = true and l.id_branch = @BranchID and l.id_company = @CompanyID
+                                where im.credit - sum(child.debit) > 0 and ip.can_expire = true 
+                                      @LocationWhere and l.id_company = @CompanyID
+                                      and im.id_item_product = @ProductID
                                 group by im.id_movement
                                 order by im.expire_date";
+
+            query = query.Replace("@LocationWhere", LocationWhere);
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
-            query = query.Replace("@BranchID", CurrentSession.Id_Branch.ToString());
-            item_movementViewSource.Source = QueryExecutor.DT(query);
+            query = query.Replace("@ProductID", ProductID.ToString());
+            BatchCodeViewSource.Source = BatchCodeLoader(QueryExecutor.DT(query));
         }
        
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
@@ -67,10 +74,37 @@ namespace cntrl.Panels
             parentGrid.Visibility = Visibility.Hidden;
         }
 
+        private List<ExpiryInStock> BatchCodeLoader(DataTable dt)
+        {
+            List<ExpiryInStock> ListOfStock = new List<ExpiryInStock>();
 
+            foreach (DataRow DataRow in dt.Rows)
+            {
+                ExpiryInStock ExpiryInStock = new ExpiryInStock();
+                ExpiryInStock.Location = Convert.ToString(DataRow["Location"]); ;
+                ExpiryInStock.Branch = Convert.ToString(DataRow["Branch"]); ;
+                ExpiryInStock.Code = Convert.ToString(DataRow["Code"]); ;
+                ExpiryInStock.Items = Convert.ToString(DataRow["Items"]); ;
+                ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]); ;
+                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
+                ExpiryInStock.Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"]);
 
+                ListOfStock.Add(ExpiryInStock);
+            }
 
-
-
+            return ListOfStock;
+        }
     }
+
+    public class ExpiryInStock
+    {
+        public string Location { get; set; }
+        public string Branch { get; set; }
+        public string Code { get; set; }
+        public string Items { get; set; }
+        public string BatchCode { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public decimal Balance { get; set; }
+    }
+
 }

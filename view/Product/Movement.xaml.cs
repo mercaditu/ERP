@@ -288,12 +288,14 @@ namespace Cognitivo.Product
 
         private void cbxItem_KeyDown(object sender, RoutedEventArgs e)
         {
+
             if (sbxItem.ItemID > 0)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
                 item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 item_product item_product = item.item_product.FirstOrDefault();
-                if (item != null)
+
+                if (item != null && item_transfer != null)
                 {
                     if (item.item_dimension.Count() > 0)
                     {
@@ -309,36 +311,27 @@ namespace Cognitivo.Product
                     }
                     else if (item_product != null && item_product.can_expire)
                     {
-
                         crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
-                        pnl_ItemMovementExpiry.id_item_product = item_product.id_item_product;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(null, item_transfer.app_location_origin.id_location, item_product.id_item_product);
                         crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-
-
                     }
                     else
                     {
                         if (item_product != null)
                         {
-                            if (item_transfer != null)
-                            {
-                                item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                                item_transfer_detail.id_item_product = item_product.id_item_product;
-                                item_transfer_detail.item_product = item_product;
-                                item_transfer_detail.quantity_destination = 1;
-                                item_transfer_detail.quantity_origin = 1;
+                            item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                            item_transfer_detail.id_item_product = item_product.id_item_product;
+                            item_transfer_detail.item_product = item_product;
+                            item_transfer_detail.quantity_destination = 1;
+                            item_transfer_detail.quantity_origin = 1;
 
-                                item_transfer.item_transfer_detail.Add(item_transfer_detail);
-                            }
+                            item_transfer.item_transfer_detail.Add(item_transfer_detail);
                         }
-
 
                         CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
                         item_transferitem_transfer_detailViewSource.View.Refresh();
                     }
                 }
-
             }
         }
 

@@ -410,7 +410,8 @@ namespace Cognitivo.Sales
         private void toolBar_btnOrder_Click(object sender, MouseButtonEventArgs e)
         {
             sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-            if (sales_budget != null && sales_budget.status==Status.Documents_General.Approved)
+
+            if (sales_budget != null && sales_budget.status == Status.Documents_General.Approved)
             {
                 sales_order sales_order = new sales_order();
                 sales_order.barcode = sales_budget.barcode;
@@ -428,6 +429,7 @@ namespace Cognitivo.Sales
                 sales_order.id_weather = sales_budget.id_weather;
                 sales_order.is_impex = sales_budget.is_impex;
                 sales_order.sales_budget = sales_budget;
+
                 foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                 {
                     sales_order_detail sales_order_detail = new sales_order_detail();
@@ -443,6 +445,13 @@ namespace Cognitivo.Sales
                     sales_order_detail.unit_cost = sales_budget_detail.unit_cost;
                     sales_order_detail.unit_price = sales_budget_detail.unit_price;
                     sales_order_detail.movement_id=sales_budget_detail.movement_id;
+
+                    if (sales_budget_detail.expire_date != null || !string.IsNullOrEmpty(sales_budget_detail.batch_code))
+                    {
+                        sales_order_detail.expire_date = sales_budget_detail.expire_date;
+                        sales_order_detail.batch_code = sales_budget_detail.batch_code;
+                    }
+
                     sales_order.sales_order_detail.Add(sales_order_detail);
                 }
 
@@ -454,7 +463,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                MessageBox.Show("Order Already Created Or Status is Not Approved ..");
+                MessageBox.Show("Order already created or status is not Approved..");
             }
         }
 

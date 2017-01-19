@@ -354,6 +354,7 @@ namespace Cognitivo.Sales
                 _sales_order_detail.item_description = item.description;
                 _sales_order_detail.item = item;
                 _sales_order_detail.id_item = item.id_item;
+
                 if (item_movement != null)
                 {
                     _sales_order_detail.batch_code = item_movement.code;
@@ -577,7 +578,8 @@ namespace Cognitivo.Sales
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-            if (sales_order != null && sales_order.status == Status.Documents_General.Approved && sales_order.sales_invoice.Count()==0)
+
+            if (sales_order != null && sales_order.status == Status.Documents_General.Approved && sales_order.sales_invoice.Count() == 0)
             {
                 sales_invoice sales_invoice = new sales_invoice();
                 sales_invoice.barcode = sales_order.barcode;
@@ -594,9 +596,11 @@ namespace Cognitivo.Sales
                 sales_invoice.id_weather = sales_order.id_weather;
                 sales_invoice.is_impex = sales_order.is_impex;
                 sales_invoice.sales_order = sales_order;
+
                 foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
                 {
                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
                     sales_invoice_detail.comment = sales_order_detail.comment;
                     sales_invoice_detail.discount = sales_order_detail.discount;
                     sales_invoice_detail.id_item = sales_order_detail.id_item;
@@ -605,12 +609,19 @@ namespace Cognitivo.Sales
                     sales_invoice_detail.id_project_task = sales_order_detail.id_project_task;
                     sales_invoice_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
                     sales_invoice_detail.id_vat_group = sales_order_detail.id_vat_group;
-                    sales_invoice_detail.quantity = sales_order_detail.quantity - sales_order_detail.sales_invoice_detail.Sum(x => x.quantity);
+                    sales_invoice_detail.quantity = sales_order_detail.quantity - (sales_order_detail.sales_invoice_detail != null ? sales_order_detail.sales_invoice_detail.Sum(x => x.quantity) : 0);
                     sales_invoice_detail.unit_cost = sales_order_detail.unit_cost;
                     sales_invoice_detail.unit_price = sales_order_detail.unit_price;
                     sales_invoice_detail.movement_id = sales_order_detail.movement_id;
-                    sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
+                    //If both are null, then we can just ignore the whole code.
+                    if (sales_order_detail.expire_date != null || !string.IsNullOrEmpty(sales_order_detail.batch_code))
+                    {
+                        sales_invoice_detail.expire_date = sales_order_detail.expire_date;
+                        sales_invoice_detail.batch_code = sales_order_detail.batch_code;
+                    }
+
+                    sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
 
                 SalesOrderDB.sales_invoice.Add(sales_invoice);
@@ -621,7 +632,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                MessageBox.Show("Invoice Already Created Or Status is Not Approved..");
+                MessageBox.Show("Invoice already created Or status is not Approved..");
             }
         }
 

@@ -12,12 +12,12 @@
              lex:LocalizeDictionary.DesignCulture="en-US" 
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
-             xmlns:entity="clr-namespace:entity;assembly=entity" 
+             xmlns:local="clr-namespace:cntrl.Panels" 
              mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
              BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="ExpiryInStockViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ExpiryInStock}, CreateList=True}"/>
      
     </UserControl.Resources>
 
@@ -37,11 +37,11 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource item_movementViewSource}">
+            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource BatchCodeViewSource}">
                 <StackPanel x:Name="stpDisplay">
                     <Label Content="{Binding items.name}" Style="{StaticResource input_label}"/>
                     <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340"
-                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
+                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource BatchCodeViewSource}}"
                               EnableRowVirtualization="True"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>

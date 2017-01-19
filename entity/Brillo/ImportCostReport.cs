@@ -1,12 +1,8 @@
-﻿using entity;
-using entity.Class;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Class
 {
@@ -18,13 +14,11 @@ namespace entity.Class
         {
             List<Impex_ItemDetail> Impex_ItemDetailLIST = new List<Impex_ItemDetail>();
             List<impex_incoterm> impex_incotermList = ImpexDB.impex_incoterm.ToList();
-            List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
+            List<Impex_Products> Impex_ProductsLIST = new List<Impex_Products>();
             purchase_invoice PurchaseInvoice = impex.impex_expense.FirstOrDefault().purchase_invoice;
+
             foreach (impex_incoterm Incoterm in impex_incotermList)
             {
-
-
-
                 List<impex_incoterm_detail> IncotermDetail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == Incoterm.id_incoterm && i.buyer == true).ToList();
                 decimal totalExpense = 0;
 
@@ -37,7 +31,6 @@ namespace entity.Class
                         foreach (impex_incoterm_detail item in IncotermDetail)
                         {
                             impex_expense impex_expense = new impex_expense();
-
                             impex_expense _impex_expense = ImpexDB.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_purchase_invoice == PurchaseInvoice.id_purchase_invoice).FirstOrDefault();
                             if (_impex_expense != null)
                             {
@@ -47,11 +40,9 @@ namespace entity.Class
                             {
                                 totalExpense += 0;
                             }
-
-
-
                         }
-                        entity.Class.Impex_ItemDetail ImpexImportDetails = new entity.Class.Impex_ItemDetail();
+
+                        Impex_ItemDetail ImpexImportDetails = new Impex_ItemDetail();
                         ImpexImportDetails.number = _purchase_invoice_detail.purchase_invoice.number;
                         ImpexImportDetails.id_item = (int)_purchase_invoice_detail.id_item;
                         ImpexImportDetails.item_code = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().code;
@@ -83,20 +74,14 @@ namespace entity.Class
 
                 }
             }
-
-
-
-
-
-
-
             return Impex_ItemDetailLIST;
         }
+
         public DataTable ImportDatatable(purchase_invoice PurchaseInvoice)
         {
-
             return ToDataTable<Impex_ItemDetail>(GetExpensesForAllIncoterm(PurchaseInvoice));
         }
+
         public static DataTable ToDataTable<T>(List<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
@@ -110,6 +95,7 @@ namespace entity.Class
                 //Setting column names as Property names
                 dataTable.Columns.Add(prop.Name, type);
             }
+
             foreach (T item in items)
             {
                 var values = new object[Props.Length];
@@ -123,6 +109,5 @@ namespace entity.Class
             //put a breakpoint here and check datatable
             return dataTable;
         }
-
     }
 }

@@ -95,7 +95,7 @@ namespace cntrl.Curd
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && (a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account)).LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.app_account.Local.Count == 0)

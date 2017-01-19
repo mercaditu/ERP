@@ -33,7 +33,8 @@ namespace entity
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_branch { get; set; }
-         public int? id_range
+        public int? id_item_asset { get; set; }
+        public int? id_range
         {
             get
             {
@@ -98,7 +99,8 @@ namespace entity
         contact _contact;
 
         public virtual app_branch app_branch { get; set; }
-       
+        public virtual item_asset item_asset { get; set; }
+
 
         [NotMapped]
         public bool selected { get; set; }

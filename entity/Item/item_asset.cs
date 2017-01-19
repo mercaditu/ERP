@@ -15,6 +15,9 @@ namespace entity
 
             is_head = true;
             item_asset_maintainance = new List<item_asset_maintainance>();
+            sales_packing = new List<sales_packing>();
+            purchase_packing = new List<purchase_packing>();
+            item_transfer = new List<item_transfer>();
         }
 
         public enum DeActiveTypes
@@ -54,5 +57,8 @@ namespace entity
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
         public virtual ICollection<item_asset_maintainance> item_asset_maintainance { get; set; }
+        public virtual ICollection<sales_packing> sales_packing { get; set; }
+        public virtual ICollection<purchase_packing> purchase_packing { get; set; }
+        public virtual ICollection<item_transfer> item_transfer { get; set; }
     }
 }

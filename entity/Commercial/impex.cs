@@ -60,7 +60,9 @@ namespace entity
         public DateTime etd { get; set; }
         public DateTime eta { get; set; }
         public bool is_active { get; set; }
-        
+        public int id_currency { get; set; }
+        public decimal fx_rate { get; set; }
+
         public DateTime? est_shipping_date { get; set; }
         public DateTime? real_shipping_date { get; set; }
         public DateTime? est_landed_date { get; set; }

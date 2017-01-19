@@ -9,6 +9,7 @@ using System.Data;
 using entity;
 using System.Data.Entity.Validation;
 using System.Windows.Input;
+using entity.BrilloQuery;
 
 namespace cntrl.Panels
 {
@@ -35,9 +36,19 @@ namespace cntrl.Panels
         {
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            ProductMovementDB.item_movement.Where(a =>a.id_item_product== id_item_product && a.id_company == CurrentSession.Id_Company && a.code!=null && a.expire_date!=null && (a.credit - (a.child.Count() > 0 ? a.child.Sum(y => y.debit) : 0) )> 0).Load();
-            item_movementViewSource.Source = ProductMovementDB.item_movement.Local;
-            
+            string query = @"select l.id_location, b.id_branch, i.code, i.name, im.code, im.expire_date, im.credit, sum(child.debit), im.credit - sum(child.debit) as Balance
+                                from item_movement as im
+                                left join item_movement as child on im.id_movement = child.parent_id_movement
+                                inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                inner join items as i on ip.id_item = i.id_item
+                                inner join app_location as l on im.id_location = l.id_location
+                                inner join app_branch as b on l.id_branch = b.id_branch
+                                where im.credit - sum(child.debit) > 0 and ip.can_expire = true and l.id_branch = @BranchID and l.id_company = @CompanyID
+                                group by im.id_movement
+                                order by im.expire_date";
+            query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@BranchID", CurrentSession.Id_Branch.ToString());
+            item_movementViewSource.Source = QueryExecutor.DT(query);
         }
        
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)

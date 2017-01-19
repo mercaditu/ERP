@@ -20,7 +20,11 @@ namespace entity.Class
         public decimal prorated_cost { get { return _prorated_cost; } set { _prorated_cost = value; RaisePropertyChanged("prorated_cost"); } }
         private decimal _prorated_cost;
         public string incoterm { get; set; }
-      
+        public decimal fx_rate { get; set; }
+        public decimal unit_costfx { get;  set; }
+        public decimal sub_totalfx { get;  set; }
+        public decimal unit_Importcostfx { get;  set; }
+        public decimal prorated_costfx { get;  set; }
 
         public void RaisePropertyChanged(string propertyName)
         {

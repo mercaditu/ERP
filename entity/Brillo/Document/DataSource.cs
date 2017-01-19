@@ -651,8 +651,8 @@ namespace entity.Brillo.Document
             {
                 if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
                 {
-                    Class.ImportCostReport ImportCostReport = new Class.ImportCostReport();
-                    List<Impex_ItemDetail> impex_expenseList = ImportCostReport.GetExpensesForAllIncoterm(impex.impex_expense.FirstOrDefault().purchase_invoice);
+                    Brillo.ImportCostReport ImportCostReport = new Brillo.ImportCostReport();
+                    List<Impex_ItemDetail> impex_expenseList = ImportCostReport.GetExpensesForAllIncoterm(impex);
 
                     reportDataSource.Value = impex_expenseList
                         .Select(g => new

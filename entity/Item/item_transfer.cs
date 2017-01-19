@@ -118,8 +118,8 @@ namespace entity
 		public string comment { get; set; }
 		public DateTime trans_date { get; set; }
 		public Transfer_type transfer_type { get; set; }
-
-		[Required]
+        public int? id_item_asset { get; set; }
+        [Required]
 		[CustomValidation(typeof(Class.EntityValidation), "CheckId")]
 		public int id_branch { get; set; }
 		#region Branch => Navigation
@@ -140,8 +140,9 @@ namespace entity
 		public virtual app_location app_location_destination { get; set; }
 		public virtual app_branch app_branch_origin { get; set; }
         public virtual app_branch app_branch_destination { get; set; }
-		
-		public virtual contact employee { get; set; }
+        public virtual item_asset item_asset { get; set; }
+
+        public virtual contact employee { get; set; }
 		public virtual security_user user_requested { get; set; }
 		public virtual security_user user_given { get; set; }
 

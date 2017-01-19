@@ -235,6 +235,7 @@ namespace Cognitivo.Sales
 
             int Id_Account = CurrentSession.Id_Account;
             app_account app_account = await SalesInvoiceDB.app_account.FindAsync(CurrentSession.Id_Account);
+
             if (app_account != null)
             {
                 if (app_account.is_active == false)

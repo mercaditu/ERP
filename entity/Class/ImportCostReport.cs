@@ -22,9 +22,6 @@ namespace entity.Class
        
             foreach (impex_incoterm Incoterm in impex_incotermList)
             {
-
-
-
                 List<impex_incoterm_detail> IncotermDetail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == Incoterm.id_incoterm && i.buyer == true).ToList();
                 decimal totalExpense = 0;
 
@@ -77,19 +74,13 @@ namespace entity.Class
                 }
             }
 
-
-
-
-
-
-
             return Impex_ItemDetailLIST;
         }
         public DataTable ImportDatatable(purchase_invoice PurchaseInvoice)
         {
-
             return ToDataTable<Impex_ItemDetail>(GetExpensesForAllIncoterm(PurchaseInvoice));
         }
+
         public static DataTable ToDataTable<T>(List<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);

@@ -24,11 +24,17 @@
                    Text="Please take a few seconds to explain your steps, and if you check the email option at the botton, we will try to get this fixed by the next update." TextAlignment="Justify"/>
             <TextBox VerticalAlignment="Top" x:Name="tbxUserMessage" TextWrapping="Wrap" Margin="5" MinHeight="64"/>
         </StackPanel>
+        <Border Background="WhiteSmoke" CornerRadius="4" Margin="4" VerticalAlignment="Top">
+            <StackPanel Margin="4">
+                <TextBlock Text="Warning Message" Style="{StaticResource text_Instructions}"/>
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding errMessage, Mode=OneWay, ElementName=_ExceptionBox, FallbackValue=---}"/>
+            </StackPanel>
+        </Border>
         <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource text_Instructions}" Text="Since this is unchartered territory, we recomend you restart since we don't know what went wrong." TextAlignment="Justify"/>
         <StackPanel VerticalAlignment="Top">
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button Content="Continue" IsDefault="True" Margin="5,0" Style="{StaticResource btn_green}" Background="WhiteSmoke" Click="btnContinue_Click"/>
+                    <Button Content="Continue" IsDefault="True" Margin="5,0" Style="{StaticResource btn_green}" Click="btnContinue_Click"/>
                     <Button Content="Restart" Margin="5,0" Style="{StaticResource btn_green}" Background="Crimson" Foreground="White" Click="btnRestart_Click"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -42,10 +48,6 @@
             </Grid>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Visibility="{Binding ElementName=btnShowErrors, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Label Content="Message" Style="{StaticResource input_label}"/>
-                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
-                        <TextBlock TextWrapping="Wrap" Text="{Binding errMessage, Mode=OneWay, ElementName=_ExceptionBox, FallbackValue=---}"/>
-                    </Border>
                     <Label Content="Inner Exception" Style="{StaticResource input_label}"/>
                     <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
                         <TextBlock TextWrapping="Wrap" Text="{Binding errInner, Mode=OneWay, ElementName=_ExceptionBox, FallbackValue=---}"/>

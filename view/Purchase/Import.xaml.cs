@@ -485,14 +485,11 @@ namespace Cognitivo.Purchase
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            if (impex!=null && impex.impex_expense.FirstOrDefault() != null)
+            if (impex!=null)
             {
-                if (impex.impex_expense.FirstOrDefault()!=null && impex.impex_expense.FirstOrDefault().purchase_invoice!=null)
-                {
-                    Class.ImportCostReport ImportCostReport = new Class.ImportCostReport();
-                    ImportCostReport.GetExpensesForAllIncoterm(impex.impex_expense.FirstOrDefault().purchase_invoice);
-                }
-             
+
+                entity.Brillo.Document.Start.Automatic(impex, "Import");
+
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using entity.Class;
 
 namespace entity.Brillo.Document
 {
@@ -98,6 +99,11 @@ namespace entity.Brillo.Document
             {
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
+            }
+            else if (AppName == typeof(impex).ToString() || BaseName == typeof(impex).ToString())
+            {
+                impex impex = (impex)Document;
+                return Impex(impex);
             }
 
             return null;
@@ -634,6 +640,39 @@ namespace entity.Brillo.Document
                     request_date = g.item_request.request_date,
                     trans_date = g.item_request.timestamp
                 }).ToList();
+
+            return reportDataSource;
+        }
+
+        public ReportDataSource Impex(impex impex)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            if (impex != null && impex.impex_expense.FirstOrDefault() != null)
+            {
+                if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
+                {
+                    Class.ImportCostReport ImportCostReport = new Class.ImportCostReport();
+                    List<Impex_ItemDetail> impex_expenseList = ImportCostReport.GetExpensesForAllIncoterm(impex.impex_expense.FirstOrDefault().purchase_invoice);
+
+                    reportDataSource.Value = impex_expenseList
+                        .Select(g => new
+                        {
+                            number=g.number,
+                            incoterm = g.incoterm,
+                            item = g.item,
+                            code = g.item_code,
+                            quantity = g.quantity,
+                            unit_cost=g.unit_cost,
+                            unit_Importcost=g.unit_Importcost,
+                            cost = g.cost,
+                            prorated_cost = g.prorated_cost,
+                            sub_total = g.sub_total,
+                          
+                        }).ToList();
+                }
+
+            }
+
 
             return reportDataSource;
         }

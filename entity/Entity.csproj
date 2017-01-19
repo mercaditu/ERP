@@ -193,6 +193,7 @@
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsImpex.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
+    <Compile Include="Class\ImportCostReport.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
     <Compile Include="BrilloQuery\Sales.cs" />
     <Compile Include="Commercial\loyalty_member_detail.cs" />

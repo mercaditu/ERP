@@ -19,6 +19,8 @@ namespace entity.Class
         private decimal _sub_total = 0;
         public decimal prorated_cost { get { return _prorated_cost; } set { _prorated_cost = value; RaisePropertyChanged("prorated_cost"); } }
         private decimal _prorated_cost;
+        public string incoterm { get; set; }
+      
 
         public void RaisePropertyChanged(string propertyName)
         {

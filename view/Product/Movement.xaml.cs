@@ -445,6 +445,9 @@ namespace Cognitivo.Product
                     if (pnl_ItemMovementExpiry.item_movement != null)
                     {
 
+                        item_transfer_detail.batch_code = pnl_ItemMovementExpiry.item_movement.code;
+                        item_transfer_detail.expire_date = pnl_ItemMovementExpiry.item_movement.expire_date;
+
                         item_transfer_detail.movement_id = (int)pnl_ItemMovementExpiry.item_movement.id_movement;
                     }
 

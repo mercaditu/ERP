@@ -18,5 +18,13 @@
                 Normal Normal = new Normal(Document, Range, Normal.PrintStyles.Automatic);
             }
         }
+        public static void Automatic(object Document,string DocumentName)
+        {
+
+            if (DocumentName != "")
+            {
+                Normal Normal = new Normal(Document, DocumentName);
+            }
+        }
     }
 }

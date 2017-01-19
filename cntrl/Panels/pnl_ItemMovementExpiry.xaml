@@ -47,7 +47,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding expire_date, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
-                          
+                            <DataGridTextColumn Binding="{Binding avlquantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Stock}" Width="100" IsReadOnly="True"/>
                         </DataGrid.Columns>
                 
                     </DataGrid>

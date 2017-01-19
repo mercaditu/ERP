@@ -221,7 +221,6 @@ namespace entity
                     RaisePropertyChanged("UnitCost_Vat");
                     update_UnitPrice_WithoutVAT();
                 }
-                //update_SubTotalVAT();
             }
         }
         private decimal _UnitCost_Vat;

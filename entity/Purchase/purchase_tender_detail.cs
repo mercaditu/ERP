@@ -122,17 +122,9 @@ namespace entity
             {
                 if (_UnitCost_Vat != value)
                 {
-                    if (_UnitCost_Vat == 0)
-                    {
-                        _UnitCost_Vat = value;
-                        RaisePropertyChanged("UnitCost_Vat");
-                    }
-                    else
-                    {
-                        _UnitCost_Vat = value;
-                        RaisePropertyChanged("UnitCost_Vat");
-                        update_UnitPrice_WithoutVAT();
-                    }
+                    _UnitCost_Vat = value;
+                    RaisePropertyChanged("UnitCost_Vat");
+                    update_UnitPrice_WithoutVAT();
                 }
                 update_SubTotalVAT();
             }

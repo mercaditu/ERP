@@ -447,7 +447,7 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85417in</Width>
+              <Width>0.75in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -1506,7 +1506,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Sum(Fields!TotalIn.Value)-Sum(Fields!TotalOut.Value)</Value>
                               <Style>
                                 <FontFamily>courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1533,6 +1533,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -3120,7 +3121,6 @@
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
-                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
@@ -3143,7 +3143,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.36458in</Height>
-        <Width>15.85417in</Width>
+        <Width>15.75in</Width>
         <Style>
           <Border>
             <Style>None</Style>

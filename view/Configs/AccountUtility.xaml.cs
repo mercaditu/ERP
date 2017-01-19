@@ -73,31 +73,34 @@ namespace Cognitivo.Configs
         private void app_accountDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Account detail.
-            app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
-            int SessionID = objAccount.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
+            app_account objAccount = app_accountDataGrid.SelectedItem as app_account;
 
-
-            app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
-                .Where(x => x.id_session == SessionID)
-                .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
-                .Select(s => new
-                {
-                    cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-                    payType = s.Max(ad => ad.payment_type.name),
-                    amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
-                }).ToList();
-
-            CurrentSession.Id_Account = objAccount.id_account;
-
-            if (frmActive.Children.Count>0)
+            if (objAccount != null)
             {
-                frmActive.Children.RemoveAt(0);
-            }
+                int SessionID = objAccount.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
 
-            Configs.AccountActive AccountActive = new AccountActive();
-            AccountActive.db = db;
-            AccountActive.app_accountViewSource = app_accountViewSource;
-            frmActive.Children.Add(AccountActive);
+                app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
+                    .Where(x => x.id_session == SessionID)
+                    .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
+                    .Select(s => new
+                    {
+                        cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                        payType = s.Max(ad => ad.payment_type.name),
+                        amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                    }).ToList();
+
+                CurrentSession.Id_Account = objAccount.id_account;
+
+                if (frmActive.Children.Count > 0)
+                {
+                    frmActive.Children.RemoveAt(0);
+                }
+
+                Configs.AccountActive AccountActive = new AccountActive();
+                AccountActive.db = db;
+                AccountActive.app_accountViewSource = app_accountViewSource;
+                frmActive.Children.Add(AccountActive);
+            }
         }
         #endregion
 

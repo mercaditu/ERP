@@ -327,8 +327,7 @@ namespace Cognitivo.Sales
                     if (item_product != null && item_product.can_expire)
                     {
                         crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
-                        pnl_ItemMovementExpiry.id_item_product = item.item_product.FirstOrDefault().id_item_product;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_order.id_branch, null, item_product.id_item_product);
                         crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                     }
                     else

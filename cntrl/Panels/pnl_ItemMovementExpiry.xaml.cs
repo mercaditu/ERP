@@ -15,6 +15,7 @@ namespace cntrl.Panels
 
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
         CollectionViewSource BatchCodeViewSource;
+        public item_movement item_movement { get; set; }
 
         public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
         {
@@ -37,7 +38,7 @@ namespace cntrl.Panels
                 LocationWhere = "and l.id_location = " + LocationID;
             }
 
-            string query = @"select l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
+            string query = @"select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
                                 im.code as BatchCode, im.expire_date as ExpiryDate, 
                                 (im.credit - sum(child.debit)) as Balance
                                 from item_movement as im
@@ -66,9 +67,15 @@ namespace cntrl.Panels
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            item_movement = item_movementViewSource.View.CurrentItem as item_movement;
+            ExpiryInStock ExpiryInStock = BatchCodeViewSource.View.CurrentItem as ExpiryInStock;
+
+            using (db db = new db())
+            {
+                item_movement = await db.item_movement.FindAsync(ExpiryInStock.MovementID);
+            }
+
             Grid parentGrid = (Grid)Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
@@ -81,11 +88,12 @@ namespace cntrl.Panels
             foreach (DataRow DataRow in dt.Rows)
             {
                 ExpiryInStock ExpiryInStock = new ExpiryInStock();
-                ExpiryInStock.Location = Convert.ToString(DataRow["Location"]); ;
-                ExpiryInStock.Branch = Convert.ToString(DataRow["Branch"]); ;
-                ExpiryInStock.Code = Convert.ToString(DataRow["Code"]); ;
-                ExpiryInStock.Items = Convert.ToString(DataRow["Items"]); ;
-                ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]); ;
+                ExpiryInStock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
+                ExpiryInStock.Location = Convert.ToString(DataRow["Location"]);
+                ExpiryInStock.Branch = Convert.ToString(DataRow["Branch"]);
+                ExpiryInStock.Code = Convert.ToString(DataRow["Code"]);
+                ExpiryInStock.Items = Convert.ToString(DataRow["Items"]);
+                ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]);
                 ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
                 ExpiryInStock.Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"]);
 
@@ -98,6 +106,7 @@ namespace cntrl.Panels
 
     public class ExpiryInStock
     {
+        public int MovementID { get; set; }
         public string Location { get; set; }
         public string Branch { get; set; }
         public string Code { get; set; }

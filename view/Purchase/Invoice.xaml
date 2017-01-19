@@ -452,7 +452,7 @@
                                     <Image x:Name="imageViewer" Margin="4"/>
                                 </Grid>
                                 <StackPanel>
-                                    <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                    <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" Width="100"/>
                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
                                 </StackPanel>
                                 <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >

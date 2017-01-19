@@ -271,8 +271,8 @@ namespace Cognitivo.Purchase
             await Dispatcher.BeginInvoke((Action)(() =>
          {
              purchase_returnpurchase_return_detailViewSource.View.Refresh();
-            //calculate_total(sender, e);
-            calculate_vat(null, null);
+             //calculate_total(sender, e);
+             calculate_vat(null, null);
          }));
         }
         private async void item_Select(object sender, EventArgs e)
@@ -293,12 +293,12 @@ namespace Cognitivo.Purchase
                     }
                     else
                     {
-                       
+
                         Task Thread = Task.Factory.StartNew(() => select_Item(purchase_return, item, sbxContact.ContactID, null));
                     }
-                   
-                  
-                  
+
+
+
                 }
                 else
                 {
@@ -472,6 +472,8 @@ namespace Cognitivo.Purchase
                     purchase_return_detail.id_vat_group = _purchase_invoice_detail.id_vat_group;
                     purchase_return_detail.unit_cost = _purchase_invoice_detail.unit_cost;
                     purchase_return_detail.CurrencyFX_ID = _purchase_return.id_currencyfx;
+                    purchase_return_detail.lot_number = _purchase_invoice_detail.lot_number;
+                    purchase_return_detail.expiration_date = _purchase_invoice_detail.expiration_date;
                     _purchase_return.purchase_return_detail.Add(purchase_return_detail);
 
                     dbContext.Entry(_purchase_return).Entity.State = EntityState.Added;

@@ -248,13 +248,13 @@ namespace entity
             }
         }
 
-        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem)
+        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement)
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
                 if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
                 {
-                    return AddDetail(ref sales_invoice, item, QuantityInStock);
+                    return AddDetail(ref sales_invoice, item, QuantityInStock, item_movement);
                 }
                 else
                 {
@@ -266,7 +266,7 @@ namespace entity
             return null;
         }
 
-        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock)
+        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, item_movement item_movement)
         {
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
@@ -293,6 +293,14 @@ namespace entity
                     sales_invoice_detail.unit_price = sales_invoice_detail.unit_price * (1 + surcharge);
                 }
             }
+
+            if (item_movement != null)
+            {
+                sales_invoice_detail.batch_code = item_movement.code;
+                sales_invoice_detail.expire_date = item_movement.expire_date;
+                sales_invoice_detail.movement_id = (int)item_movement.id_movement;
+            }
+
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);

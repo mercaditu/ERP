@@ -655,6 +655,8 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_vat_group = detail.id_vat_group;
                     purchase_invoice_detail.quantity = detail.quantity - detail.purchase_invoice_detail.Sum(x => x.quantity);
                     purchase_invoice_detail.unit_cost = detail.unit_cost;
+                    purchase_invoice_detail.lot_number = detail.batch_code;
+                    purchase_invoice_detail.expiration_date = detail.expiration_date;
                     purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                 }
 

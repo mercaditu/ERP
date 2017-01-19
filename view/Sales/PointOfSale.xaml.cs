@@ -173,10 +173,9 @@ namespace Cognitivo.Sales
                     item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
                     decimal QuantityInStock = sbxItem.QuantityInStock;
 
-                    sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false);
+                    sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false,null);
 
-                   // btnPromotion_Click(sender, e);
-
+                
                     sales_invoiceViewSource.View.Refresh();
                     CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();

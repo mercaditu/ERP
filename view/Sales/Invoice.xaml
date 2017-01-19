@@ -37,7 +37,8 @@
 		<CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}"/>
 		<CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"/>
 	</Page.Resources>
-	<Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
+   
+    <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="67*"/>
 			<ColumnDefinition Width="733*"/>
@@ -46,7 +47,9 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<TabControl Grid.Row="0" Margin="-3,28,-3,-3" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
+        <TabControl Grid.Row="0" Margin="-3,28,-3,-3" Grid.ColumnSpan="2" Grid.RowSpan="2">
 			<TabItem Padding="0" IsSelected="{Binding ElementName=toolBar, Path=IsSelected_GridView, FallbackValue=False, UpdateSourceTrigger=PropertyChanged}">
 				<Grid>
 					<Grid.ColumnDefinitions>

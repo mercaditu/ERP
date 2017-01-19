@@ -135,8 +135,8 @@ namespace Cognitivo.Product
                     {
                         if (item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault() == null)
                         {
-                           
-                            if (item.item_product.FirstOrDefault()!=null && item.item_product.FirstOrDefault().can_expire)
+
+                            if (item.item_product.FirstOrDefault() != null && item.item_product.FirstOrDefault().can_expire)
                             {
                                 crud_modalExpire.Visibility = Visibility.Visible;
                                 pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry();
@@ -160,7 +160,7 @@ namespace Cognitivo.Product
                                 item_transfer_detail.RaisePropertyChanged("item_product");
                                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
                             }
-                          
+
                         }
                         else
                         {
@@ -406,7 +406,7 @@ namespace Cognitivo.Product
                         item_transfer_detail.batch_code = pnl_ItemMovementExpiry.item_movement.code;
                         item_transfer_detail.expire_date = pnl_ItemMovementExpiry.item_movement.expire_date;
                     }
-                                 
+
 
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;
@@ -426,4 +426,4 @@ namespace Cognitivo.Product
         }
     }
 }
-}
+

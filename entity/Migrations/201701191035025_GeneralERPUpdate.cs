@@ -246,8 +246,6 @@ namespace entity.Migrations
             AddColumn("purchase_order_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("purchase_order_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_rep", "monthly_goal", c => c.Decimal(nullable: false, precision: 20, scale: 9));
-            AddColumn("purchase_return_detail", "expire_date", c => c.DateTime(precision: 0));
-            AddColumn("purchase_return_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("purchase_return_detail", "movement_id", c => c.Int());
             AddColumn("sales_budget_detail", "movement_id", c => c.Int());
             AddColumn("sales_budget_detail", "expire_date", c => c.DateTime(precision: 0));
@@ -422,8 +420,6 @@ namespace entity.Migrations
             DropColumn("sales_budget_detail", "expire_date");
             DropColumn("sales_budget_detail", "movement_id");
             DropColumn("purchase_return_detail", "movement_id");
-            DropColumn("purchase_return_detail", "batch_code");
-            DropColumn("purchase_return_detail", "expire_date");
             DropColumn("sales_rep", "monthly_goal");
             DropColumn("purchase_order_detail", "batch_code");
             DropColumn("purchase_order_detail", "expire_date");

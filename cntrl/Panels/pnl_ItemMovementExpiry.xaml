@@ -13,7 +13,7 @@
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:local="clr-namespace:cntrl.Panels" 
-             mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" Width="360" 
              BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -37,11 +37,11 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource BatchCodeViewSource}">
+            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource ExpiryInStockViewSource}">
                 <StackPanel x:Name="stpDisplay">
                     <Label Content="{Binding items.name}" Style="{StaticResource input_label}"/>
-                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340"
-                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource BatchCodeViewSource}}"
+                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340" CanUserAddRows="False"
+                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource ExpiryInStockViewSource}}"
                               EnableRowVirtualization="True"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>

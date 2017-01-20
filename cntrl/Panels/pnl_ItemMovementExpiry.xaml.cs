@@ -14,7 +14,7 @@ namespace cntrl.Panels
     {
 
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
-        CollectionViewSource BatchCodeViewSource;
+        CollectionViewSource ExpiryInStockViewSource;
         public item_movement item_movement { get; set; }
 
         public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
@@ -25,7 +25,7 @@ namespace cntrl.Panels
 
         private void UserControl_Loaded(int? BranchID, int? LocationID, int ProductID)
         {
-            BatchCodeViewSource = ((CollectionViewSource)(FindResource("BatchCodeViewSource")));
+            ExpiryInStockViewSource = ((CollectionViewSource)(FindResource("ExpiryInStockViewSource")));
 
             //We are not certain if we should search by Location or Branch. This helps in choosing only Branch if is selected.
             string LocationWhere = "";
@@ -38,7 +38,7 @@ namespace cntrl.Panels
                 LocationWhere = "and l.id_location = " + LocationID;
             }
 
-            string query = @"select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
+            string query = @"select * from(select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
                                 im.code as BatchCode, im.expire_date as ExpiryDate, 
                                 (im.credit - sum(child.debit)) as Balance
                                 from item_movement as im
@@ -47,16 +47,16 @@ namespace cntrl.Panels
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                where im.credit - sum(child.debit) > 0 and ip.can_expire = true 
+                                where ip.can_expire = true 
                                       @LocationWhere and l.id_company = @CompanyID
                                       and im.id_item_product = @ProductID
                                 group by im.id_movement
-                                order by im.expire_date";
+                                order by im.expire_date) as movement where Balance>0";
 
             query = query.Replace("@LocationWhere", LocationWhere);
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@ProductID", ProductID.ToString());
-            BatchCodeViewSource.Source = BatchCodeLoader(QueryExecutor.DT(query));
+            ExpiryInStockViewSource.Source = BatchCodeLoader(QueryExecutor.DT(query));
         }
        
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
@@ -69,7 +69,7 @@ namespace cntrl.Panels
 
         private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            ExpiryInStock ExpiryInStock = BatchCodeViewSource.View.CurrentItem as ExpiryInStock;
+            ExpiryInStock ExpiryInStock = ExpiryInStockViewSource.View.CurrentItem as ExpiryInStock;
 
             using (db db = new db())
             {
@@ -102,6 +102,8 @@ namespace cntrl.Panels
 
             return ListOfStock;
         }
+
+       
     }
 
     public class ExpiryInStock

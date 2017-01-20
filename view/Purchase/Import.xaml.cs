@@ -50,6 +50,8 @@ namespace Cognitivo.Purchase
                 //incotermconditionViewSource
                 CollectionViewSource incotermconditionViewSource = FindResource("incotermconditionViewSource") as CollectionViewSource;
                 incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
+
+               
             }
             catch (Exception ex)
             {
@@ -155,6 +157,11 @@ namespace Cognitivo.Purchase
             if (impexDataGrid.SelectedItem != null)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
+               
+                if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
+                {
+                    impex.Currencyfx = impex.impex_expense.FirstOrDefault().purchase_invoice.app_currencyfx;
+                }
                 GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
                 foreach (impex_import impex_import in impex.impex_import)
                 {
@@ -453,13 +460,15 @@ namespace Cognitivo.Purchase
         {
             if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
             {
+             
+
                 if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact != null)
                 {
                     contact contact = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact;
 
                     impex impex = (impex)impexViewSource.View.CurrentItem;
                     impex.contact = contact;
-
+                    impex.Currencyfx = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().app_currencyfx;
                     sbxContact.Text = contact.name;
 
                     foreach (purchase_invoice purchase_invoice in pnlPurchaseInvoice.selected_purchase_invoice)

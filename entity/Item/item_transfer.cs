@@ -118,7 +118,17 @@ namespace entity
 		public string comment { get; set; }
 		public DateTime trans_date { get; set; }
 		public Transfer_type transfer_type { get; set; }
+
+
+
         public int? id_item_asset { get; set; }
+        public DateTime? eta { get; set; }
+        public DateTime? etd { get; set; }
+        public string driver { get; set; }
+        public string licence_no { get; set; }
+        public string avg_distance { get; set; }
+
+
         [Required]
 		[CustomValidation(typeof(Class.EntityValidation), "CheckId")]
 		public int id_branch { get; set; }

@@ -95,7 +95,8 @@ namespace entity.Brillo.Document
 
             DocumentViewr DocumentViewr = new DocumentViewr();
             DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
-            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
+            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
+            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
             DocumentViewr.reportViewer.RefreshReport();
 
             Window window = new Window

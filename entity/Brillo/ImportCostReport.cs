@@ -9,11 +9,13 @@ namespace entity.Brillo
 {
     public class ImportCostReport
     {
-
+        public List<Impex_ItemDetail> Impex_ItemDetailLIST = new List<Impex_ItemDetail>();
+        public List<CostDetail> CostDetailLIST = new List<CostDetail>();
         ImpexDB ImpexDB = new ImpexDB();
-        public List<Impex_ItemDetail> GetExpensesForAllIncoterm(impex impex)
+        public void GetExpensesForAllIncoterm(impex impex)
         {
-            List<Impex_ItemDetail> Impex_ItemDetailLIST = new List<Impex_ItemDetail>();
+            Impex_ItemDetailLIST.Clear();
+            CostDetailLIST.Clear();
             List<impex_incoterm> impex_incotermList = ImpexDB.impex_incoterm.ToList();
             List<Impex_Products> Impex_ProductsLIST = new List<Impex_Products>();
             purchase_invoice PurchaseInvoice = impex.impex_expense.FirstOrDefault().purchase_invoice;
@@ -31,9 +33,31 @@ namespace entity.Brillo
                     {
                         foreach (impex_incoterm_detail item in IncotermDetail)
                         {
-                           impex_expense _impex_expense = ImpexDB.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_purchase_invoice == PurchaseInvoice.id_purchase_invoice).FirstOrDefault();
+                            impex_expense _impex_expense = ImpexDB.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_purchase_invoice == PurchaseInvoice.id_purchase_invoice).FirstOrDefault();
                             if (_impex_expense != null)
                             {
+                                CostDetail CostDetail = new Class.CostDetail();
+                                if (impex.fx_rate > 0)
+                                {
+                                    if (impex.Currencyfx != null)
+                                    {
+                                        if (impex.Currencyfx.is_reverse)
+                                        {
+                                            CostDetail.Costfx = (decimal)_impex_expense.value / impex.fx_rate;
+                                        }
+                                        else
+                                        {
+                                            CostDetail.Costfx = (decimal)_impex_expense.value * impex.fx_rate;
+                                        }
+                                    }
+
+                                }
+
+                                CostDetail.Cost = (decimal)_impex_expense.value;
+                                CostDetail.CostName = _impex_expense.impex_incoterm_condition.name;
+
+
+                                CostDetailLIST.Add(CostDetail);
                                 totalExpense += (decimal)_impex_expense.value;
                             }
                             else
@@ -64,21 +88,35 @@ namespace entity.Brillo
                         ImpexImportDetails.incoterm = Incoterm.name;
                         if (impex.fx_rate > 0)
                         {
-                            ImpexImportDetails.unit_costfx = ImpexImportDetails.unit_costfx / impex.fx_rate;
-                            ImpexImportDetails.sub_totalfx = ImpexImportDetails.sub_totalfx / impex.fx_rate;
-                            ImpexImportDetails.unit_Importcostfx = ImpexImportDetails.unit_Importcostfx / impex.fx_rate;
-                            ImpexImportDetails.prorated_costfx = ImpexImportDetails.prorated_costfx / impex.fx_rate;
+                            if (impex.Currencyfx != null)
+                            {
+                                if (impex.Currencyfx.is_reverse)
+                                {
+                                    ImpexImportDetails.unit_costfx = ImpexImportDetails.unit_costfx / impex.fx_rate;
+                                    ImpexImportDetails.sub_totalfx = ImpexImportDetails.sub_totalfx / impex.fx_rate;
+                                    ImpexImportDetails.unit_Importcostfx = ImpexImportDetails.unit_Importcostfx / impex.fx_rate;
+                                    ImpexImportDetails.prorated_costfx = ImpexImportDetails.prorated_costfx / impex.fx_rate;
+                                }
+                                else
+                                {
+                                    ImpexImportDetails.unit_costfx = ImpexImportDetails.unit_costfx * impex.fx_rate;
+                                    ImpexImportDetails.sub_totalfx = ImpexImportDetails.sub_totalfx * impex.fx_rate;
+                                    ImpexImportDetails.unit_Importcostfx = ImpexImportDetails.unit_Importcostfx * impex.fx_rate;
+                                    ImpexImportDetails.prorated_costfx = ImpexImportDetails.prorated_costfx * impex.fx_rate;
+                                }
+
+                            }
                         }
                         Impex_ItemDetailLIST.Add(ImpexImportDetails);
                     }
 
                 }
             }
-            return Impex_ItemDetailLIST;
+
         }
 
-     
 
-        
+
+
     }
 }

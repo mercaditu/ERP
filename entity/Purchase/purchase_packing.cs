@@ -33,8 +33,7 @@ namespace entity
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_branch { get; set; }
-        public int? id_item_asset { get; set; }
-        public int? id_range
+         public int? id_range
         {
             get
             {
@@ -61,7 +60,14 @@ namespace entity
             }
         }
         private int? _id_range;
-     
+
+        public int? id_item_asset { get; set; }
+        public DateTime? eta { get; set; }
+        public DateTime? etd { get; set; }
+        public string driver { get; set; }
+        public string licence_no { get; set; }
+        public string avg_distance { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -87,7 +93,7 @@ namespace entity
         //TimeCapsule
         public ICollection<purchase_packing> older { get; set; }
         public purchase_packing newer { get; set; }
-
+   
         public virtual ICollection<purchase_packing_detail> purchase_packing_detail { get; set; }
         public virtual ICollection<purchase_packing_relation> purchase_packing_relation { get; set; }
 

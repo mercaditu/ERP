@@ -14,9 +14,9 @@ namespace entity
         public sales_packing()
         {
             is_head = true;
-            
+
             sales_packing_detail = new List<sales_packing_detail>();
-            
+
             trans_date = DateTime.Now;
 
             id_company = CurrentSession.Id_Company;
@@ -25,8 +25,8 @@ namespace entity
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
 
             status = Status.Documents_General.Pending;
-          
-            
+
+
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -41,7 +41,7 @@ namespace entity
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_terminal { get; set; }
-        public int? id_item_asset { get; set; }
+
         public int? id_range
         {
             get
@@ -74,8 +74,14 @@ namespace entity
                 }
             }
         }
-        private int? _id_range; 
+        private int? _id_range;
         public string number { get; set; }
+        public int? id_item_asset { get; set; }
+        public DateTime? eta { get; set; }
+        public DateTime? etd { get; set; }
+        public string driver { get; set; }
+        public string licence_no { get; set; }
+        public string avg_distance { get; set; }
 
         /// <summary>
         /// 
@@ -89,9 +95,11 @@ namespace entity
         public Status.Documents_General status
         {
             get { return _status; }
-            set { 
-                _status = value; 
-                RaisePropertyChanged("status"); }
+            set
+            {
+                _status = value;
+                RaisePropertyChanged("status");
+            }
         }
         Status.Documents_General _status;
 
@@ -102,13 +110,14 @@ namespace entity
         public sales_packing newer { get; set; }
 
         public virtual ICollection<sales_packing_detail> sales_packing_detail { get; set; }
-      
+
         public virtual contact contact
         {
             get { return _contact; }
             set { _contact = value; RaisePropertyChanged("Contact"); }
         }
         contact _contact;
+
 
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual app_document_range app_document_range { get; set; }

@@ -63,7 +63,11 @@ namespace entity
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
-        
+
+        public decimal? gross_weight { get; set; }
+        public decimal? net_weight { get; set; }
+        public decimal? volume { get; set; }
+
         [NotMapped]
         public int id_branch { get; set; }
 
@@ -71,6 +75,8 @@ namespace entity
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item item { get; set; }
+        public virtual app_measurement measurement_weight { get; set; }
+        public virtual app_measurement measurement_volume { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<purchase_packing_dimension> purchase_packing_dimension { get; set; }
 

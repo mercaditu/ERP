@@ -68,6 +68,9 @@ namespace entity
         public DateTime? est_landed_date { get; set; }
         public DateTime? real_landed_date { get; set; }
         public DateTime? real_arrival_date { get; set; }
+
+        [NotMapped]
+        public app_currencyfx Currencyfx { get; set; }
         public virtual impex_incoterm impex_incoterm { get; set; }
         public virtual contact contact { get; set; }
         public virtual ICollection<impex_expense> impex_expense { get; set; }

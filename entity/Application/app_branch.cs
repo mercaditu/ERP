@@ -22,6 +22,8 @@ namespace entity
         [Required]
         public string code { get; set; }
 
+        public string address { get; set; }
+
         public decimal? area { get; set; }
         public int? id_measurement { get; set; }
 

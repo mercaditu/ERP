@@ -100,11 +100,7 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
-            else if (AppName == typeof(impex).ToString() || BaseName == typeof(impex).ToString())
-            {
-                impex impex = (impex)Document;
-                return Impex(impex);
-            }
+          
 
             return null;
         }
@@ -644,17 +640,21 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource Impex(impex impex)
+        public List<ReportDataSource> Impex(impex impex)
         {
+            List<ReportDataSource> ReportDataSourceList = new List<Microsoft.Reporting.WinForms.ReportDataSource>();
+            ReportDataSource reportDataSourceCost = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            reportDataSourceCost.Name = "DataSet2";
             if (impex != null && impex.impex_expense.FirstOrDefault() != null)
             {
                 if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
                 {
                     Brillo.ImportCostReport ImportCostReport = new Brillo.ImportCostReport();
-                    List<Impex_ItemDetail> impex_expenseList = ImportCostReport.GetExpensesForAllIncoterm(impex);
+                    ImportCostReport.GetExpensesForAllIncoterm(impex);
+                    List<Impex_ItemDetail> impex_expenseList = ImportCostReport.Impex_ItemDetailLIST;
 
-                    reportDataSource.Value = impex_expenseList
+                    reportDataSource.Value = ImportCostReport.Impex_ItemDetailLIST
                         .Select(g => new
                         {
                             number=g.number,
@@ -669,12 +669,49 @@ namespace entity.Brillo.Document
                             sub_total = g.sub_total,
                           
                         }).ToList();
+                    reportDataSourceCost.Value = ImportCostReport.CostDetailLIST.GroupBy(x=>x.CostName)
+                       .Select(g => new
+                       {
+                           Cost = g.Sum(x=>x.Cost),
+                           Costfx = g.Sum(x => x.Costfx),
+                           CostName = g.Key
+                       }).ToList();
+                    ReportDataSourceList.Add(reportDataSource);
+                    ReportDataSourceList.Add(reportDataSourceCost);
+                }
+                else
+                {
+                    Brillo.ImportCostReport ImportCostReport = new Brillo.ImportCostReport();
+                       reportDataSource.Value = ImportCostReport.Impex_ItemDetailLIST
+                        .Select(g => new
+                        {
+                            number = g.number,
+                            incoterm = g.incoterm,
+                            item = g.item,
+                            code = g.item_code,
+                            quantity = g.quantity,
+                            unit_cost = g.unit_cost,
+                            unit_Importcost = g.unit_Importcost,
+                            cost = g.cost,
+                            prorated_cost = g.prorated_cost,
+                            sub_total = g.sub_total,
+
+                        }).ToList();
+                    reportDataSourceCost.Value = ImportCostReport.CostDetailLIST.GroupBy(x => x.CostName)
+                       .Select(g => new
+                       {
+                           Cost = g.Sum(x => x.Cost),
+                           Costfx = g.Sum(x => x.Costfx),
+                           CostName = g.Key
+                       }).ToList();
+                    ReportDataSourceList.Add(reportDataSource);
+                    ReportDataSourceList.Add(reportDataSourceCost);
                 }
 
             }
 
 
-            return reportDataSource;
+            return ReportDataSourceList;
         }
 
         public ReportDataSource PaymentDetail_Print(payment_detail payment_detail)

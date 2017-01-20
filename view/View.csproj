@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\panke\Desktop\11.06\</PublishUrl>
+    <PublishUrl>C:\Users\panke\Desktop\11.08\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ApplicationRevision>33</ApplicationRevision>
     <ApplicationVersion>2.1.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1024,6 +1024,7 @@
       <LastGenOutput>Costing.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\entity.Class.CostDetail.datasource" />
     <None Include="Properties\DataSources\entity.Class.Impex_ItemDetail.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

@@ -90,12 +90,8 @@
                     <Label Content="" Style="{StaticResource btn_Label}"/>
                     <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}"/></Hyperlink></TextBlock>
                 </StackPanel>
-                <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding est_shipping_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
-                <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding est_landed_date, Mode=TwoWay, NotifyOnValidationError=true, 
-                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                Style="{StaticResource input_datepicker}"/>
+               
+             
 
 
                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
@@ -111,12 +107,42 @@
                             </Hyperlink>
                     </TextBlock>
                 </StackPanel>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="{Binding Currency.name,Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Currency}" 
+                              />
+                    <TextBox Text="{Binding fx_rate,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+                </StackPanel>
              
             </StackPanel>
 
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch"/>
 
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True" SelectionChanged="TabControl_SelectionChanged">
+                <TabItem Header="{lex:Loc Impex}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding est_shipping_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
+                            <Label Content="{lex:Loc LandedDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker SelectedDate="{Binding est_landed_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
+                        </StackPanel>
+                        <StackPanel  Grid.Column="1">
+                            <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding est_landed_date, Mode=TwoWay,  
+                                 UpdateSourceTrigger=PropertyChanged}" 
+                                Style="{StaticResource input_datepicker}"/>
+                            <Label Content="{lex:Loc LandedArrivalDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker SelectedDate="{Binding real_landed_date, Mode=TwoWay,  
+                              UpdateSourceTrigger=PropertyChanged}" 
+                                Style="{StaticResource input_datepicker}"/>
+                        </StackPanel>
+
+                    </Grid>
+                    </TabItem>
                 <TabItem Header="{lex:Loc Purchase}">
                     <Grid>
                         <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"

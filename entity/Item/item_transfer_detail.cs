@@ -26,6 +26,9 @@ namespace entity
         public int? id_project_task { get; set; }
         public int id_item_product { get; set; }
         public int? movement_id { get; set; }
+        public decimal? gross_weight { get; set; }
+        public decimal? net_weight { get; set; }
+        public decimal? volume { get; set; }
 
         public decimal quantity_origin 
         {
@@ -86,6 +89,8 @@ namespace entity
         public virtual item_transfer item_transfer { get; set; }
         public virtual item_product item_product { get; set; }
         public virtual project_task project_task { get; set; }
+        public virtual app_measurement measurement_weight { get; set; }
+        public virtual app_measurement measurement_volume { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<item_transfer_dimension> item_transfer_dimension { get; set; }
 

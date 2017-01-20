@@ -45,9 +45,11 @@
                               EnableRowVirtualization="True"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding expire_date, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding avlquantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Stock}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Balance, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Stock}" Width="100" IsReadOnly="True"/>
                         </DataGrid.Columns>
                 
                     </DataGrid>

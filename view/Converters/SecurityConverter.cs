@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
@@ -12,7 +9,7 @@ namespace Cognitivo.Converters
         {
             entity.App.Names appname = (entity.App.Names)value;
             entity.Brillo.Security security = new entity.Brillo.Security(appname);
-            entity.Privilage.Privilages Privilages=(entity.Privilage.Privilages)parameter;
+            entity.Privilage.Privilages Privilages = (entity.Privilage.Privilages)parameter;
             if (security.SpecialSecurity_ReturnsBoolean(Privilages))
                 return true;
             else

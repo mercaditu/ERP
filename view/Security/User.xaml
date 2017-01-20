@@ -42,7 +42,7 @@
                  ItemsSource="{Binding Source={StaticResource security_userViewSource}, IsAsync=True}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding id_user}" 
+                    <cntrl:navList recordCode="{Binding user_role.name}" 
                                    recordSecondaryName="{Binding name_full}"
                                    recordName="{Binding name}" 
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

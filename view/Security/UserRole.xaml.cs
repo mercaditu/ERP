@@ -19,7 +19,6 @@ namespace Cognitivo.Security
         CollectionViewSource
             security_rolesecurity_curdViewSource,
             security_roleViewSource,
-            security_privilageViewSource,
             security_rolesecurity_role_privilageViewSource;
 
         entity.CurrentSession.Versions CurrentVersion;
@@ -35,15 +34,12 @@ namespace Cognitivo.Security
 
             await UserRoleDB.security_role.Where(a =>
                                             a.id_company == CurrentSession.Id_Company)
-                                            .OrderBy(a => a.name)
+                                            .OrderBy(a => a.name).Include(y => y.app_department)
                                             .LoadAsync();
             security_roleViewSource.Source = UserRoleDB.security_role.Local;
 
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
-
-            security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
-            security_privilageViewSource.Source = await UserRoleDB.security_privilage.OrderBy(a => a.name).ToListAsync();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
             app_departmentViewSource.Source = await UserRoleDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
@@ -54,7 +50,32 @@ namespace Cognitivo.Security
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-
+            try
+            {
+                if (!string.IsNullOrEmpty(query))
+                {
+                    security_roleViewSource.View.Filter = i =>
+                    {
+                        security_role security_role = i as security_role;
+                        if (security_role.name.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    security_roleViewSource.View.Filter = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgWarning(ex.Message);
+            }
         }
 
         private void Save_Click(object sender)

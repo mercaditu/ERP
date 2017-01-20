@@ -8,7 +8,7 @@
 			 lex:LocalizeDictionary.DesignCulture="en-US" 
 			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 			 lex:ResxLocalizationProvider.DefaultDictionary="local"
-			 Height="40" MinWidth="500" Loaded="UserControl_Loaded">
+			 Height="40" MinWidth="600" Loaded="UserControl_Loaded">
 	<UserControl.Resources>
 		<Storyboard x:Key="FormClick">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
@@ -56,7 +56,9 @@
 						 metro:TextBoxHelper.SelectAllOnFocus="True"
 						 metro:ControlsHelper.MouseOverBorderBrush="Transparent"
 						 metro:ControlsHelper.FocusBorderBrush="Transparent"
-						 metro:TextBoxHelper.ClearTextButton="True"/>
+						 metro:TextBoxHelper.ClearTextButton="True"
+                         CaretBrush="RoyalBlue"/>
+                
 				<TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo"
 						   FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
 					<TextBlock.Foreground>
@@ -78,13 +80,13 @@
 					Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
             <StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
-                <Label x:Name="lblForm" Foreground="AliceBlue" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-                <Label Content="FORM" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+                <Label x:Name="lblForm" Foreground="OrangeRed" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+                <Label Content="FORM" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
             </StackPanel>
 
             <StackPanel x:Name="borderGrid" Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
-                <Label x:Name="lblGrid" Foreground="AliceBlue" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
-                <Label Content="GRID" Style="{StaticResource input_label}" Foreground="AliceBlue" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
+                <Label x:Name="lblGrid" Foreground="Gold" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0"/>
+                <Label Content="GRID" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

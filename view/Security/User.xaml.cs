@@ -22,7 +22,7 @@ namespace Cognitivo.Security
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             security_user_view_source = FindResource("security_userViewSource") as CollectionViewSource;
-            await UserDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
+            await UserDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Include(x => x.security_role).LoadAsync();
             security_user_view_source.Source = UserDB.security_user.Local;
 
             security_role_view_source = FindResource("securityRoleViewSource") as CollectionViewSource;
@@ -74,14 +74,14 @@ namespace Cognitivo.Security
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
                  
-                    if (Licence.CompanyLicence!= null)
-                    {
+                    //if (Licence.CompanyLicence!= null)
+                    //{
                         
-                    }
-                    else
-                    {
+                    //}
+                    //else
+                    //{
                         
-                    }
+                    //}
                     if (UserDB.SaveChanges() > 0)
                     {
                         toolBar.msgSaved(1);

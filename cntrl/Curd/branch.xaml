@@ -12,7 +12,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:entity="clr-namespace:entity;assembly=entity" 
             mc:Ignorable="d" BorderBrush="#0099ff" BorderThickness="2"
-            Width="320" Loaded="UserControl_Loaded">
+            Width="320" Loaded="UserControl_Loaded" MaxHeight="512">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="app_vatViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat}, CreateList=True}"/>
@@ -49,7 +49,9 @@
                 <Rectangle Height="1" Margin="3" Fill="Silver"/>
                 <Label Content="{lex:Loc Shop}" HorizontalAlignment="Center" FontSize="14"
                        Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
-
+                <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                <TextBox Style="{StaticResource input_textbox}" Height="64"
+                        Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                 <cntrl:SmartBox_Geography x:Name="sbxGeography" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 

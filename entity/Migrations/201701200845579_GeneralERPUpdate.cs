@@ -236,6 +236,7 @@ namespace entity.Migrations
             AddColumn("app_bank", "intermediary_country", c => c.String(unicode: false));
             AddColumn("app_bank", "intermediary_swift", c => c.String(unicode: false));
             AddColumn("hr_position", "id_contact", c => c.Int());
+            AddColumn("item_movement", "id_purchase_packing_detail", c => c.Int());
             AddColumn("app_contract", "is_purchase", c => c.Boolean(nullable: false));
             AddColumn("app_contract", "is_sales", c => c.Boolean(nullable: false));
             AddColumn("production_execution_detail", "id_service_account", c => c.Int());
@@ -285,6 +286,7 @@ namespace entity.Migrations
             AddColumn("purchase_packing_detail", "batch_code", c => c.String(unicode: false));
             CreateIndex("app_account_detail", "id_payment_approve_detail");
             CreateIndex("hr_position", "id_contact");
+            CreateIndex("item_movement", "id_purchase_packing_detail");
             CreateIndex("payment_type_detail", "id_payment_approve_detail");
             CreateIndex("item_transfer", "id_item_asset");
             CreateIndex("purchase_packing", "id_item_asset");
@@ -297,6 +299,7 @@ namespace entity.Migrations
             AddForeignKey("app_account_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
             AddForeignKey("item_transfer", "id_item_asset", "item_asset", "id_item_asset");
             AddForeignKey("purchase_packing", "id_item_asset", "item_asset", "id_item_asset");
+            AddForeignKey("item_movement", "id_purchase_packing_detail", "purchase_packing_detail", "id_purchase_packing_detail");
             AddForeignKey("production_execution_detail", "production_service_account_id_production_service_account", "production_service_account", "id_production_service_account");
             AddForeignKey("sales_return_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
             AddForeignKey("sales_invoice_detail", "id_sales_promotion", "sales_promotion", "id_sales_promotion");
@@ -342,6 +345,7 @@ namespace entity.Migrations
             DropForeignKey("production_service_account", "id_contact", "contacts");
             DropForeignKey("production_service_account", "parent_id_production_service_account", "production_service_account");
             DropForeignKey("production_service_account", "id_company", "app_company");
+            DropForeignKey("item_movement", "id_purchase_packing_detail", "purchase_packing_detail");
             DropForeignKey("purchase_packing", "id_item_asset", "item_asset");
             DropForeignKey("item_transfer", "id_item_asset", "item_asset");
             DropForeignKey("payment_approve", "id_user", "security_user");
@@ -403,6 +407,7 @@ namespace entity.Migrations
             DropIndex("payment_approve_detail", new[] { "id_bank" });
             DropIndex("payment_approve_detail", new[] { "id_payment_approve_detail" });
             DropIndex("payment_type_detail", new[] { "id_payment_approve_detail" });
+            DropIndex("item_movement", new[] { "id_purchase_packing_detail" });
             DropIndex("hr_position", new[] { "id_contact" });
             DropIndex("app_account_detail", new[] { "id_payment_approve_detail" });
             DropColumn("purchase_packing_detail", "batch_code");
@@ -452,6 +457,7 @@ namespace entity.Migrations
             DropColumn("production_execution_detail", "id_service_account");
             DropColumn("app_contract", "is_sales");
             DropColumn("app_contract", "is_purchase");
+            DropColumn("item_movement", "id_purchase_packing_detail");
             DropColumn("hr_position", "id_contact");
             DropColumn("app_bank", "intermediary_swift");
             DropColumn("app_bank", "intermediary_country");

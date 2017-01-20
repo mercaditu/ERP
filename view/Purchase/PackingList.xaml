@@ -56,7 +56,7 @@
                         <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                         <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
                         <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                        <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref" Width="256" HorizontalAlignment="Left"
+                        <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref" Width="256" HorizontalAlignment="Left"
                                                    Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 

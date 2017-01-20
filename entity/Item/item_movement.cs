@@ -67,6 +67,7 @@ namespace entity
         public int? id_sales_return_detail { get; set; }
         public int? id_inventory_detail { get; set; }
         public int? id_sales_packing_detail { get; set; }
+        public int? id_purchase_packing_detail { get; set; } 
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
@@ -141,6 +142,7 @@ namespace entity
 
         public virtual app_location app_location { get; set; }
 
+        public virtual purchase_packing_detail purchase_packing_detail { get; set; }
         public virtual sales_packing_detail sales_packing_detail { get; set; }
         public virtual item_transfer_detail item_transfer_detail { get; set; }
         public virtual production_execution_detail production_execution_detail { get; set; }
@@ -158,6 +160,8 @@ namespace entity
                 _item_product = value;
             }
         }
+
+      
 
         item_product _item_product;
 

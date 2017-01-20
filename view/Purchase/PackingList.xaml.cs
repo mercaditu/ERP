@@ -116,58 +116,58 @@ namespace Cognitivo.Purchase
             popupCustomize.IsOpen = false;
         }
 
-        private void item_Select(object sender, EventArgs e)
-        {
-            app_branch app_branch=null;
-            if (sbxItem.ItemID > 0)
-            {
-                purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+        //private void item_Select(object sender, EventArgs e)
+        //{
+        //    app_branch app_branch=null;
+        //    if (sbxItem.ItemID > 0)
+        //    {
+        //        purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
+        //        item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
               
                
-                if (item != null && item.id_item > 0 && purchase_packing != null)
-                {
+        //        if (item != null && item.id_item > 0 && purchase_packing != null)
+        //        {
                  
-                    if (cbxBranch.SelectedItem != null)
-                    { app_branch = cbxBranch.SelectedItem as app_branch; }
-                    Task Thread = Task.Factory.StartNew(() => select_Item(purchase_packing, item, app_branch));
-                }
-            }
-        }
+        //            if (cbxBranch.SelectedItem != null)
+        //            { app_branch = cbxBranch.SelectedItem as app_branch; }
+        //            Task Thread = Task.Factory.StartNew(() => select_Item(purchase_packing, item, app_branch));
+        //        }
+        //    }
+        //}
 
-        private void select_Item(purchase_packing purchase_packing, item item, app_branch app_branch)
-        {
-            if (purchase_packing.purchase_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
-            {
-                purchase_packing_detail _purchase_packing_detail = new purchase_packing_detail();
-                _purchase_packing_detail.purchase_packing = purchase_packing;
-                _purchase_packing_detail.item = item;
-                _purchase_packing_detail.quantity = 1;
-                _purchase_packing_detail.id_item = item.id_item;
-                if (app_branch != null)
-                {
+        //private void select_Item(purchase_packing purchase_packing, item item, app_branch app_branch)
+        //{
+        //    if (purchase_packing.purchase_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+        //    {
+        //        purchase_packing_detail _purchase_packing_detail = new purchase_packing_detail();
+        //        _purchase_packing_detail.purchase_packing = purchase_packing;
+        //        _purchase_packing_detail.item = item;
+        //        _purchase_packing_detail.quantity = 1;
+        //        _purchase_packing_detail.id_item = item.id_item;
+        //        if (app_branch != null)
+        //        {
                    
-                    _purchase_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
-                    _purchase_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+        //            _purchase_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
+        //            _purchase_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
 
-                }
+        //        }
 
 
-                purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
-            }
-            else
-            {
-                purchase_packing_detail purchase_packing_detail = purchase_packing.purchase_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                purchase_packing_detail.quantity += 1;
-            }
+        //        purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
+        //    }
+        //    else
+        //    {
+        //        purchase_packing_detail purchase_packing_detail = purchase_packing.purchase_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+        //        purchase_packing_detail.quantity += 1;
+        //    }
 
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
+        //    Dispatcher.BeginInvoke((Action)(() =>
+        //    {
 
-                purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+        //        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
 
-            }));
-        }
+        //    }));
+        //}
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {

@@ -71,6 +71,7 @@ namespace entity
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item item { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<purchase_packing_dimension> purchase_packing_dimension { get; set; }
 
         public string Error

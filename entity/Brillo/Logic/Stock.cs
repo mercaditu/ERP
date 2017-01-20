@@ -139,7 +139,7 @@ namespace entity.Brillo.Logic
                     item_movementList.Add(
                          CreditOnly_Movement(
                               Status.Stock.InStock,
-                              App.Names.PurchaseInvoice,
+                              App.Names.PurchasePacking,
                               packing_detail.id_purchase_packing,
                               packing_detail.id_purchase_packing_detail,
                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
@@ -1125,6 +1125,10 @@ namespace entity.Brillo.Logic
                 else if (ApplicationID == App.Names.PackingList)
                 {
                     item_movement.id_sales_packing_detail = TransactionDetailID;
+                }
+                else if (ApplicationID == App.Names.PurchasePacking)
+                {
+                    item_movement.id_purchase_packing_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.Inventory)
                 {

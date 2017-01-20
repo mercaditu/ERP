@@ -775,10 +775,10 @@
                                                 <StackPanel Visibility="{Binding item,Source={StaticResource sales_invoicesales_invoice_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
                                                     <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
                                                     <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding lot_number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                                                     <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expiration_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
 								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                                 </StackPanel>
                                             </StackPanel>

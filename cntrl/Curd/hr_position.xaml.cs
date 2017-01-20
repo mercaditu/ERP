@@ -102,12 +102,14 @@ namespace cntrl
             //    btnSave_Click(sender, e);
             //}
         }
-        private void set_ContactPref(object sender, EventArgs e)
+      
+
+        private void sbxContact_Select(object sender, RoutedEventArgs e)
         {
-            entity.hr_position hr_position=objCollectionViewSource.View.CurrentItem as entity.hr_position;
+            entity.hr_position hr_position = objCollectionViewSource.View.CurrentItem as entity.hr_position;
             if (sbxContact.ContactID > 0)
             {
-                
+
                 if (hr_position != null)
                 {
                     contact contact = entity.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
@@ -115,9 +117,9 @@ namespace cntrl
                     hr_position.contact = contact;
                 }
 
-            
 
-                
+
+
             }
         }
     }

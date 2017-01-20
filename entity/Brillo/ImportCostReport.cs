@@ -31,8 +31,7 @@ namespace entity.Brillo
                     {
                         foreach (impex_incoterm_detail item in IncotermDetail)
                         {
-                            impex_expense impex_expense = new impex_expense();
-                            impex_expense _impex_expense = ImpexDB.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_purchase_invoice == PurchaseInvoice.id_purchase_invoice).FirstOrDefault();
+                           impex_expense _impex_expense = ImpexDB.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_purchase_invoice == PurchaseInvoice.id_purchase_invoice).FirstOrDefault();
                             if (_impex_expense != null)
                             {
                                 totalExpense += (decimal)_impex_expense.value;

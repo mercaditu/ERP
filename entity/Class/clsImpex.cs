@@ -32,6 +32,13 @@ namespace entity.Class
         }
 
     }
+    public class CostDetail
+    {
+        public string CostName { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Costfx { get; set; }
+
+    }
     public class Impex_Products
     {
         public int? id_item { get; set; }

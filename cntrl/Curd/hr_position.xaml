@@ -48,7 +48,7 @@
                                   Style="{StaticResource input_combobox}" SelectedItem="{Binding app_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
             <AdornerDecorator>
-                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
+                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="sbxContact_Select"
 											   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </AdornerDecorator>
         </StackPanel>

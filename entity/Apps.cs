@@ -68,7 +68,7 @@ namespace entity
             PurchaseInvoice = 7,
             [LocalizedDescription("PurchaseReturn")]
             PurchaseReturn = 8,
-            [LocalizedDescription("PackingList")]
+            [LocalizedDescription("PurchasePacking")]
             PurchasePacking = 106,
             [LocalizedDescription("PendingPayables")]
             PendingPayables = 133,

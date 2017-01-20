@@ -40,7 +40,7 @@ namespace cntrl.Panels
 
             string query = @"select * from(select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
                                 im.code as BatchCode, im.expire_date as ExpiryDate, 
-                                (im.credit - sum(child.debit)) as Balance
+                                (im.credit - sum(IFNULL(child.debit,0))) as Balance
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
@@ -94,7 +94,7 @@ namespace cntrl.Panels
                 ExpiryInStock.Code = Convert.ToString(DataRow["Code"]);
                 ExpiryInStock.Items = Convert.ToString(DataRow["Items"]);
                 ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]);
-                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
+                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"] is DBNull?null: DataRow["ExpiryDate"]);
                 ExpiryInStock.Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"]);
 
                 ListOfStock.Add(ExpiryInStock);
@@ -114,7 +114,7 @@ namespace cntrl.Panels
         public string Code { get; set; }
         public string Items { get; set; }
         public string BatchCode { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         public decimal Balance { get; set; }
     }
 

@@ -1052,7 +1052,7 @@ namespace Cognitivo.Purchase
                     purchase_return_detail.id_location = detail.id_location;
                     purchase_return_detail.purchase_invoice_detail = detail;
                     purchase_return_detail.id_vat_group = detail.id_vat_group;
-                    purchase_return_detail.quantity = detail.quantity - detail.purchase_return_detail.Sum(x => x.quantity);
+                    purchase_return_detail.quantity = detail.quantity - (detail.purchase_return_detail!=null?detail.purchase_return_detail.Sum(x => x.quantity):0);
                     purchase_return_detail.unit_cost = detail.unit_cost;
                     purchase_return_detail.lot_number = detail.batch_code;
                     purchase_return_detail.expiration_date = detail.expiration_date;

@@ -45,7 +45,7 @@ namespace Cognitivo.Purchase
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
             }));
             cbxBranch.SelectedIndex = 0;
@@ -190,7 +190,7 @@ namespace Cognitivo.Purchase
 
         private void btnApprove_Click(object sender)
         {
-
+            Cognitivo.Purchase.InvoiceSetting PurchaseSettings = new Cognitivo.Purchase.InvoiceSetting();
             dbContext.Approve(PurchaseSettings.DiscountStock_Packing);
         }
 

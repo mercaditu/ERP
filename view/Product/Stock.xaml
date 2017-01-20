@@ -80,9 +80,9 @@
 											<DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>
 											<DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128"/>
 											<DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
-                                            <DataGridTextColumn Binding="{Binding code}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128"/>
-                                            <DataGridTextColumn Binding="{Binding expire_date, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128"/>
-                                        </DataGrid.Columns>
+											<DataGridTextColumn Binding="{Binding code}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128"/>
+											<DataGridTextColumn Binding="{Binding expire_date, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128"/>
+										</DataGrid.Columns>
 									</DataGrid>
 									</ScrollViewer>
 								</StackPanel>

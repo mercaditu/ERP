@@ -4,7 +4,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	   xmlns:pref="clr-namespace:Cognitivo.Sales"
+	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:Stock="clr-namespace:Cognitivo.Class"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
 	  MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
@@ -73,8 +73,8 @@
 									</StackPanel>
 									<ScrollViewer VerticalScrollBarVisibility="Visible">
 									<DataGrid x:Name="itemmovementDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-										  ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionMode="Single"  Height="200"
-									   IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" RowDetailsVisibilityMode="Visible" >
+										        ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionMode="Single"  Height="200"
+									            IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" RowDetailsVisibilityMode="Visible" >
 										<DataGrid.Columns>
 											<DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
 											<DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>

@@ -39,17 +39,27 @@
             </Grid>
             <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource ExpiryInStockViewSource}">
                 <StackPanel x:Name="stpDisplay">
-                    <Label Content="{Binding items.name}" Style="{StaticResource input_label}"/>
-                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340" CanUserAddRows="False"
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding Code, FallbackValue=Code}"/>
+                        <Label Content="{Binding Items, FallbackValue=Name}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding Location, FallbackValue=/}"/>
+                        <Label Content="{Binding Branch, FallbackValue=Branch}"/>
+                    </StackPanel>
+                    <DataGrid x:Name="item_inventory_detailDataGrid" Width="340" MaxHeight="256" CanUserAddRows="False"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource ExpiryInStockViewSource}}"
-                              EnableRowVirtualization="True"
+                              EnableRowVirtualization="True" CanUserDeleteRows="False"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:BatchCode}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding Balance, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Balance}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat=d, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Balance, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" CellStyle="{StaticResource Number_CellStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="70" IsReadOnly="True"/>
                         </DataGrid.Columns>
                 
                     </DataGrid>

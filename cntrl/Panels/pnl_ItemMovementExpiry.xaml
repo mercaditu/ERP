@@ -46,10 +46,10 @@
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding Balance, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Stock}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:BatchCode}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Balance, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Balance}" Width="100" IsReadOnly="True"/>
                         </DataGrid.Columns>
                 
                     </DataGrid>

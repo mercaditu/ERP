@@ -217,6 +217,7 @@ namespace entity
             {
                 SpiltInvoice(sales_return);
             }
+
             foreach (sales_return sales_return in base.sales_return.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
                 if (sales_return.status != Status.Documents_General.Approved &&
@@ -228,6 +229,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
+
                     sales_return.app_condition = app_condition.Find(sales_return.id_condition);
                     sales_return.app_contract = app_contract.Find(sales_return.id_contract);
                     sales_return.app_currencyfx = app_currencyfx.Find(sales_return.id_currencyfx);
@@ -295,6 +297,7 @@ namespace entity
                         //Automatically Link Return & Sales
                         Linked2Sales(sales_return);
 
+                        sales_return.IsSelected = false;
                         sales_return.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }

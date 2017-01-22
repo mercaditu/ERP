@@ -67,13 +67,13 @@ namespace cntrl.Panels
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        private async void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ExpiryInStock ExpiryInStock = ExpiryInStockViewSource.View.CurrentItem as ExpiryInStock;
 
             using (db db = new db())
             {
-                item_movement = await db.item_movement.FindAsync(ExpiryInStock.MovementID);
+                item_movement = db.item_movement.Find(ExpiryInStock.MovementID);
             }
 
             Grid parentGrid = (Grid)Parent;

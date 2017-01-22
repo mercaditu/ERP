@@ -118,10 +118,10 @@ namespace Cognitivo.Production
             projectViewSource.Source = ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
-            production_lineViewSource.Source = ExecutionDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            production_lineViewSource.Source = ExecutionDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company && x.app_location.id_branch == CurrentSession.Id_Branch).ToList();
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            ExecutionDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Fraction).Load();
+            ExecutionDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Fraction && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).Load();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
             production_order_detaillServiceViewSource = FindResource("production_order_detaillServiceViewSource") as CollectionViewSource;

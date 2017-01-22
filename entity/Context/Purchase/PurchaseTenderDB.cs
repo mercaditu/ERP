@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -87,81 +88,82 @@ namespace entity
                         purchase_order.id_project = purchase_tender.id_project;
 
                         ///Don't approve if there is nothing selected. Sometimes Users make mistakes.
-                  
-
-                        ///Reject all non selected Details.
-                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected == false))
+                        foreach (purchase_tender_item item in purchase_tender.purchase_tender_item_detail)
                         {
-                            purchase_tender_detail.status = Status.Documents_General.Rejected;
-                        }
-
-                        ///Approve all selected Details.
-                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected))
-                        {
-                            purchase_order_detail purchase_order_detail = new purchase_order_detail();
-                            purchase_order_detail.purchase_tender_detail = purchase_tender_detail;
-                            purchase_order_detail.id_purchase_tender_detail = purchase_tender_detail.id_purchase_tender_detail;
-
-                            if (purchase_tender_detail.purchase_tender_item.item != null)
+                            List<purchase_tender_detail> purchase_tender_detailList = purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected && x.id_purchase_tender_item == item.id_purchase_tender_item).ToList();
+                            foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_detailList)
                             {
-                                purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
-                                purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
-                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
-                                app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_product).FirstOrDefault();
-                                if (app_cost_center != null)
+                                purchase_order_detail purchase_order_detail = new purchase_order_detail();
+                                purchase_order_detail.purchase_tender_detail = purchase_tender_detail;
+                                purchase_order_detail.id_purchase_tender_detail = purchase_tender_detail.id_purchase_tender_detail;
+
+                                if (purchase_tender_detail.purchase_tender_item.item != null)
                                 {
-                                    purchase_order_detail.id_cost_center = app_cost_center.id_cost_center;
+                                    purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
+                                    purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
+                                    purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
+                                    app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_product).FirstOrDefault();
+
+                                    if (app_cost_center != null)
+                                    {
+                                        purchase_order_detail.id_cost_center = app_cost_center.id_cost_center;
+                                    }
+                                    else
+                                    {
+                                        app_cost_center = new app_cost_center();
+                                        app_cost_center.name = "Merchandice";
+                                        app_cost_center.is_product = true;
+                                        base.app_cost_center.Add(app_cost_center);
+                                        purchase_order_detail.app_cost_center = app_cost_center;
+                                    }
                                 }
                                 else
                                 {
-                                    app_cost_center = new app_cost_center();
-                                    app_cost_center.name = "Merchandise";
-                                    app_cost_center.is_product = true;
-                                    base.app_cost_center.Add(app_cost_center);
-                                    purchase_order_detail.app_cost_center = app_cost_center;
-                                }
-                            }
-                            else
-                            {
-                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
+                                    purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item_description;
 
-                                app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_administrative).FirstOrDefault();
-                                if (app_cost_center != null)
+                                    app_cost_center app_cost_center = base.app_cost_center.Where(x => x.is_active == true && x.is_administrative).FirstOrDefault();
+                                    if (app_cost_center != null)
+                                    {
+                                        purchase_order_detail.id_cost_center = app_cost_center.id_cost_center;
+                                    }
+                                    else
+                                    {
+                                        app_cost_center = new app_cost_center();
+                                        app_cost_center.name = "Administrative";
+                                        app_cost_center.is_administrative = true;
+                                        base.app_cost_center.Add(app_cost_center);
+                                        purchase_order_detail.app_cost_center = app_cost_center;
+                                    }
+                                }
+
+                                purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
+                                purchase_order_detail.quantity = purchase_tender_detail.quantity;
+                                purchase_order_detail.id_vat_group = purchase_tender_detail.id_vat_group;
+
+                                purchase_tender_detail.status = Status.Documents_General.Approved;
+
+                                foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
                                 {
-                                    purchase_order_detail.id_cost_center = app_cost_center.id_cost_center;
+                                    purchase_order_dimension purchase_order_dimension = new purchase_order_dimension();
+                                    purchase_order_dimension.id_company = CurrentSession.Id_Company;
+
+                                    purchase_order_dimension.id_dimension = purchase_tender_dimension.id_dimension;
+                                    purchase_order_dimension.id_measurement = purchase_tender_dimension.id_measurement;
+                                    purchase_order_dimension.value = purchase_tender_dimension.value;
+                                    purchase_order_detail.purchase_order_dimension.Add(purchase_order_dimension);
                                 }
-                                else
-                                {
-                                    app_cost_center = new app_cost_center();
-                                    app_cost_center.name = "Administrative";
-                                    app_cost_center.is_administrative = true;
-                                    base.app_cost_center.Add(app_cost_center);
-                                    purchase_order_detail.app_cost_center = app_cost_center;
-                                }
+
+                                purchase_order.purchase_order_detail.Add(purchase_order_detail);
+                                purchase_tender_detail.IsSelected = false;
+                                purchase_tender_detail.status = Status.Documents_General.Approved;
                             }
-
-                            purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
-                            purchase_order_detail.quantity = purchase_tender_detail.quantity;
-                            purchase_order_detail.id_vat_group = purchase_tender_detail.id_vat_group;
-
-                            foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
-                            {
-                                purchase_order_dimension purchase_order_dimension = new purchase_order_dimension();
-                                purchase_order_dimension.id_company = CurrentSession.Id_Company;
-
-                                purchase_order_dimension.id_dimension = purchase_tender_dimension.id_dimension;
-                                purchase_order_dimension.id_measurement = purchase_tender_dimension.id_measurement;
-                                purchase_order_dimension.value = purchase_tender_dimension.value;
-                                purchase_order_detail.purchase_order_dimension.Add(purchase_order_dimension);
-                            }
-
-                            purchase_order.purchase_order_detail.Add(purchase_order_detail);
-                            purchase_tender_detail.IsSelected = false;
-                            purchase_tender_detail.status = Status.Documents_General.Approved;
                         }
 
-                        NumberOfRecords += 1;
-                        base.purchase_order.Add(purchase_order);
+                        if (purchase_order.purchase_order_detail.Count() > 0)
+                        {
+                            NumberOfRecords += 1;
+                            base.purchase_order.Add(purchase_order);
+                        }
                     }
 
                     if (purchase_tender.id_range != null || purchase_tender.id_range > 0)
@@ -180,7 +182,9 @@ namespace entity
                             purchase_tender.RaisePropertyChanged("number");
                         }
                     }
-                    purchase_tender.status = Status.Documents_General.Approved;
+
+                    //Block this.
+                    //purchase_tender.status = Status.Documents_General.Approved;
 
                     SaveChanges();
 

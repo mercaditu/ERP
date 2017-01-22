@@ -126,10 +126,15 @@ namespace Cognitivo.Production
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             production_lineViewSource = (CollectionViewSource)FindResource("production_lineViewSource");
-            production_lineViewSource.Source = await OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            production_lineViewSource.Source = await OrderDB.production_line.Where(x => 
+                    x.id_company == CurrentSession.Id_Company && 
+                    x.app_location.id_branch == CurrentSession.Id_Branch).ToListAsync();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            await OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type != production_order.ProductionOrderTypes.Fraction)
+            await OrderDB.production_order.Where(a => 
+                    a.id_company == CurrentSession.Id_Company && 
+                    a.type != production_order.ProductionOrderTypes.Fraction && 
+                    a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
                 .Include(z => z.project)
                 .LoadAsync();
             production_orderViewSource.Source = OrderDB.production_order.Local;

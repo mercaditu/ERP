@@ -23,7 +23,6 @@ namespace Cognitivo.Sales
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
 
         cntrl.PanelAdv.pnlPacking pnlPacking;
@@ -539,13 +538,12 @@ namespace Cognitivo.Sales
                         int BranchID = (int)cbxBranch.SelectedValue;
 
                         item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
-
                         item_product item_product = item.item_product.FirstOrDefault();
 
                         if (item_product != null && item_product.can_expire)
                         {
                             crud_modalExpire.Visibility = Visibility.Visible;
-                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_invoice.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
+                            cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_invoice.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
                             crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                         }
                         else
@@ -1043,26 +1041,33 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-                item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
+                item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
 
+                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modal.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
+                
                 if (item != null && item.id_item > 0 && sales_invoice != null)
                 {
                     Settings SalesSettings = new Settings();
+
                     if (pnl_ItemMovementExpiry.item_movement != null)
                     {
                         SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, pnl_ItemMovementExpiry.item_movement);
-                        
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                        sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
                     else
                     {
-                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, pnl_ItemMovementExpiry.item_movement);
+                        toolBar.msgWarning("Batch not selected correctly.");
                     }
                 }
+
+                //Cleans for reuse.
+                crud_modalExpire.Children.Clear();
             }
 
         }

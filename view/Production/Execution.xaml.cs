@@ -42,7 +42,10 @@ namespace Cognitivo.Production
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            await ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.type != production_order.ProductionOrderTypes.Fraction).LoadAsync();
+            await ExecutionDB.production_order.Where(x => 
+                x.id_company == CurrentSession.Id_Company && 
+                x.type != production_order.ProductionOrderTypes.Fraction &&
+                x.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x => x.project).LoadAsync();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
@@ -61,7 +64,6 @@ namespace Cognitivo.Production
             dtpendtime.Text = DateTime.Now.ToString();
 
             filter_task();
-           // RefreshData();
         }
 
         private void toolBar_btnSave_Click(object sender)

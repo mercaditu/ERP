@@ -29,7 +29,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnApprove_Click(object sender)
         {
             PurchaseTenderDB.Approve();
-             purchase_tenderViewSource.View.Refresh();
+            purchase_tenderViewSource.View.Refresh();
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -212,6 +212,9 @@ namespace Cognitivo.Purchase
                     return;
                 }
 
+                //This is required to generate the ID needed for the Item-Detail relationship.
+                PurchaseTenderDB.SaveChanges();
+
                 if (purchase_tenderViewSource.View != null)
                 {
                     purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
@@ -222,15 +225,16 @@ namespace Cognitivo.Purchase
                         purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
                         purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
 
-                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Where(x => x.id_contract == purchase_tender_contact.id_contract).FirstOrDefault();
-                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Where(x => x.id_condition == purchase_tender_contact.id_condition).FirstOrDefault(); ;
+                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Find(purchase_tender_contact.id_contract);
+                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Find(purchase_tender_contact.id_condition);
                     }
                     else if (contact.app_contract != null)
                     {
                         purchase_tender_contact.id_contract = (int)contact.id_contract;
                         purchase_tender_contact.id_condition = contact.app_contract.id_condition;
-                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Where(x => x.id_contract == purchase_tender_contact.id_contract).FirstOrDefault();
-                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Where(x => x.id_condition == purchase_tender_contact.id_condition).FirstOrDefault();
+
+                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Find(purchase_tender_contact.id_contract);
+                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Find(purchase_tender_contact.id_condition);
                     }
                     else
                     {
@@ -277,9 +281,11 @@ namespace Cognitivo.Purchase
 
                                     purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
                                     purchase_tender_detail.purchase_tender_item = purchase_tender_item;
+
                                     purchase_tender_detail.quantity = purchase_tender_item.quantity;
                                     purchase_tender_detail.unit_cost = 0;
                                     purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+
                                     foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_item.purchase_tender_dimension)
                                     {
                                         purchase_tender_detail_dimension purchase_tender_detail_dimension = new purchase_tender_detail_dimension();
@@ -291,6 +297,8 @@ namespace Cognitivo.Purchase
                                         purchase_tender_detail_dimension.value = purchase_tender_dimension.value;
                                         purchase_tender_detail.purchase_tender_detail_dimension.Add(purchase_tender_detail_dimension);
                                     }
+                                    
+                                    //purchase_tender_item.purchase_tender_detail.Add(purchase_tender_detail);
                                     purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                                 }
                                 else
@@ -321,8 +329,8 @@ namespace Cognitivo.Purchase
                                 }
                             }
                         }
-
                     }
+
                     purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
 
                     purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();

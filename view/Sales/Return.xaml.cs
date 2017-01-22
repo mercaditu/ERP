@@ -20,7 +20,7 @@ namespace Cognitivo.Sales
 
         CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
         public Return()
         {
             InitializeComponent();
@@ -304,10 +304,7 @@ namespace Cognitivo.Sales
             SalesReturnDB.Approve();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             cbxDocument.SelectedIndex = 0;
-            foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
-            {
-                sales_return.IsSelected = false;
-            }
+
             load_PrimaryDataThread();
         }
 

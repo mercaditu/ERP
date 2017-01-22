@@ -85,7 +85,7 @@ namespace entity
         public item _item;
 
         public virtual purchase_tender purchase_tender { get; set; }
-        public virtual IEnumerable<purchase_tender_detail> purchase_tender_detail { get; set; }
+        public virtual ICollection<purchase_tender_detail> purchase_tender_detail { get; set; }
         public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
         public virtual project_task project_task { get; set; }
 

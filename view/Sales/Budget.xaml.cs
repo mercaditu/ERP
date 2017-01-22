@@ -485,19 +485,12 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_budget != null)
                 {
-                    Settings SalesSettings = new Settings();
-                    if (pnl_ItemMovementExpiry.item_movement != null)
-                    {
+                    item_movement item_movement = SalesBudgetDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, pnl_ItemMovementExpiry.item_movement));
-                    }
-                    else
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
-                    }
+                    Settings SalesSettings = new Settings();
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement));
                 }
             }
-          
         }
     }
 }

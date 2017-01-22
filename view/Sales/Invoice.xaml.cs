@@ -1048,15 +1048,17 @@ namespace Cognitivo.Sales
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
 
-                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modal.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
+                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
                 
                 if (item != null && item.id_item > 0 && sales_invoice != null)
                 {
                     Settings SalesSettings = new Settings();
 
-                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    if (pnl_ItemMovementExpiry.MovementID > 0)
                     {
-                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, pnl_ItemMovementExpiry.item_movement);
+                        item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+
+                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement);
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }

@@ -402,19 +402,11 @@ namespace Cognitivo.Sales
                 {
                     if (cbxBranch.SelectedItem != null)
                     { app_branch = cbxBranch.SelectedItem as app_branch; }
-                    if (pnl_ItemMovementExpiry.item_movement != null)
-                    {
-                        Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, pnl_ItemMovementExpiry.item_movement));
-                    }
-                    else
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null));
-                    }
+
+                    item_movement item_movement = dbContext.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement));
                 }
             }
         }
-
-
     }
 }

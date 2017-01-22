@@ -494,10 +494,10 @@ namespace Cognitivo.Purchase
 
                 if (item != null && item.id_item > 0 && _purchase_return != null)
                 {
-                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    if (pnl_ItemMovementExpiry.MovementID != null)
                     {
 
-                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, (int)pnl_ItemMovementExpiry.item_movement.id_movement));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, (int)pnl_ItemMovementExpiry.MovementID.id_movement));
                     }
                     else
                     {

@@ -15,12 +15,13 @@ namespace cntrl.Panels
 
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
         CollectionViewSource ExpiryInStockViewSource;
-        public item_movement item_movement { get; set; }
+        public int MovementID { get; set; }
 
         public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
         {
             InitializeComponent();
             UserControl_Loaded(BranchID, LocationID, ProductID);
+            btnSave.Focus();
         }
 
         private void UserControl_Loaded(int? BranchID, int? LocationID, int ProductID)
@@ -63,22 +64,19 @@ namespace cntrl.Panels
         {
             item_inventory_detailDataGrid.CancelEdit();
             Grid parentGrid = (Grid)Parent;
-            parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
+            parentGrid.Children.Clear();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ExpiryInStock ExpiryInStock = ExpiryInStockViewSource.View.CurrentItem as ExpiryInStock;
 
-            using (db db = new db())
-            {
-                item_movement = db.item_movement.Find(ExpiryInStock.MovementID);
-            }
+            MovementID = ExpiryInStock.MovementID;
 
             Grid parentGrid = (Grid)Parent;
-            parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
+            parentGrid.Children.Clear();
         }
 
         private List<ExpiryInStock> BatchCodeLoader(DataTable dt)

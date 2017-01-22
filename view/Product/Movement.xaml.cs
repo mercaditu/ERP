@@ -426,6 +426,7 @@ namespace Cognitivo.Product
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
                 item item = ProductTransferDB.items.Find(sbxItem.ItemID);
                 item_product item_product = item.item_product.FirstOrDefault();
+
                 if (item != null && item.id_item > 0 && item_transfer != null)
                 {
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
@@ -434,14 +435,14 @@ namespace Cognitivo.Product
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
 
+                    item_movement item_movement = ProductTransferDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                    if (pnl_ItemMovementExpiry.item_movement != null)
+                    if (item_movement != null)
                     {
+                        item_transfer_detail.batch_code = item_movement.code;
+                        item_transfer_detail.expire_date = item_movement.expire_date;
 
-                        item_transfer_detail.batch_code = pnl_ItemMovementExpiry.item_movement.code;
-                        item_transfer_detail.expire_date = pnl_ItemMovementExpiry.item_movement.expire_date;
-
-                        item_transfer_detail.movement_id = (int)pnl_ItemMovementExpiry.item_movement.id_movement;
+                        item_transfer_detail.movement_id = (int)item_movement.id_movement;
                     }
 
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);

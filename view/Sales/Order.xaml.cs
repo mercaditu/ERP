@@ -645,10 +645,11 @@ namespace Cognitivo.Sales
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
                     Settings SalesSettings = new Settings();
-                    if (pnl_ItemMovementExpiry.item_movement != null)
-                    {
+                    item_movement item_movement = SalesOrderDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, pnl_ItemMovementExpiry.item_movement));
+                    if (item_movement != null)
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement));
                     }
                     else
                     {

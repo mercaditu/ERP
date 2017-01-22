@@ -278,18 +278,17 @@ namespace Cognitivo.Product
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
             item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
+
             if (item_inventory_detail != null)
             {
 
-                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                crud_modal.Visibility = Visibility.Visible;
                 objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
 
                 foreach (item_inventory_detail _item_inventory_detail in item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList())
                 {
                     if (_item_inventory_detail.item_inventory_dimension.Count() == 0)
                     {
-
-
                         if (InventoryDB.item_dimension.Where(x => x.id_item == _item_inventory_detail.item_product.id_item).ToList() != null)
                         {
                             List<item_dimension> item_dimensionList = InventoryDB.item_dimension.Where(x => x.id_item == _item_inventory_detail.item_product.id_item).ToList();
@@ -301,8 +300,6 @@ namespace Cognitivo.Product
                                 //  item_inventory_dimension.id_measurement = item_dimension.id_measurement;
                                 item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                             }
-
-
                         }
                     }
                     _item_inventory_detail.IsSelected = true;

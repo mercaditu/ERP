@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,9 +41,11 @@ namespace cntrl.Controls
         {
             using (db db = new db())
             {
-                if (db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault() != null)
+                app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault();
+
+                if (app_currencyfx != null)
                 {
-                    cbCurrency.SelectedValue = db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault().app_currency.id_currency;
+                    cbCurrency.SelectedValue = app_currencyfx.app_currency.id_currency;
                 }
             }
         }

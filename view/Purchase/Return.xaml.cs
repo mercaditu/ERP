@@ -207,9 +207,12 @@ namespace Cognitivo.Purchase
                 }));
             }
         }
-        private async void select_Item(purchase_return purchase_return, item item, int id_contact, int? movement_id)
+        private async void select_Item(purchase_return purchase_return, item item, int id_contact, item_movement item_movement)
         {
-            purchase_return_detail purchase_return_detail = purchase_return.purchase_return_detail.Where(a => a.id_item == sbxItem.ItemID).FirstOrDefault();
+            purchase_return_detail purchase_return_detail = purchase_return.purchase_return_detail
+                .Where(a => a.id_item == sbxItem.ItemID && a.movement_id == item_movement.id_movement).FirstOrDefault();
+
+
             if (purchase_return_detail == null)
             {
                 int id_cost_center = 0;
@@ -256,6 +259,13 @@ namespace Cognitivo.Purchase
                 {
                     _purchase_return_detail.id_vat_group = dbContext.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
                 }
+
+                if (item_movement != null)
+                {
+                    _purchase_return_detail.expiration_date = item_movement.expire_date;
+                    _purchase_return_detail.movement_id = (int)item_movement.id_movement;
+                }
+
                 _purchase_return_detail.purchase_return = purchase_return;
                 _purchase_return_detail.item = item;
                 _purchase_return_detail.id_item = sbxItem.ItemID;
@@ -271,7 +281,6 @@ namespace Cognitivo.Purchase
             await Dispatcher.BeginInvoke((Action)(() =>
          {
              purchase_returnpurchase_return_detailViewSource.View.Refresh();
-             //calculate_total(sender, e);
              calculate_vat(null, null);
          }));
         }
@@ -494,15 +503,9 @@ namespace Cognitivo.Purchase
 
                 if (item != null && item.id_item > 0 && _purchase_return != null)
                 {
-                    if (pnl_ItemMovementExpiry.MovementID != null)
-                    {
+                    item_movement item_movement = dbContext.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, (int)pnl_ItemMovementExpiry.MovementID.id_movement));
-                    }
-                    else
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, null));
-                    }
+                    Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, item_movement));
                 }
             }
         }

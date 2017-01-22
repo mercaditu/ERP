@@ -89,7 +89,7 @@
 					
 					<Grid>
 						<Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" IsEnabled="False">
 							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
 									Content="+" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue"/>
 							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
@@ -123,8 +123,8 @@
 									   ContentStringFormat="N2" Style="{StaticResource H2}"/>
 							</StackPanel>
 						</StackPanel>
-                        <StackPanel x:Name="stppaymentdetail" 
-                                    IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}, Source={StaticResource paymentpayment_detailViewSource}}">
+                        <StackPanel x:Name="stppaymentdetail"
+                                    IsEnabled="False">
 							<Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
 							<ComboBox x:Name="cbxPamentType"
 									  DisplayMemberPath="name" SelectedValuePath="id_payment_type"

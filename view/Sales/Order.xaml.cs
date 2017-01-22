@@ -646,20 +646,9 @@ namespace Cognitivo.Sales
                 {
                     Settings SalesSettings = new Settings();
                     item_movement item_movement = SalesOrderDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-
-                    if (item_movement != null)
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement));
-                    }
-                    else
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
-                    }
-
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement));
                 }
             }
         }
-
-       
     }
 }

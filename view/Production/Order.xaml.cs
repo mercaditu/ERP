@@ -62,7 +62,8 @@ namespace Cognitivo.Production
 
         private void toolBar_btnNew_Click(object sender)
         {
-            production_order production_order = OrderDB.New("", production_order.ProductionOrderTypes.Production, 0);
+            int LineID = OrderDB.production_line.Local.Select(x => x.id_production_line).FirstOrDefault();
+            production_order production_order = OrderDB.New("", production_order.ProductionOrderTypes.Production, LineID);
             production_order.State = EntityState.Added;
             OrderDB.production_order.Add(production_order);
 

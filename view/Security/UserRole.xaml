@@ -146,7 +146,7 @@
 							<DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Allow}" Binding="{Binding has_privilage}" 
 													ElementStyle="{StaticResource input_checkbox}" Width="SizeToHeader"/>
 							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Privilege}" Width="*" IsReadOnly="True"
-												Binding="{Binding name}"/>
+												Binding="{Binding security_privilage.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Value}" Width="128" CellStyle="{StaticResource Number_CellStyle}"
 												Binding="{Binding value_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 						</DataGrid.Columns>

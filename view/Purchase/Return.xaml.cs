@@ -209,8 +209,9 @@ namespace Cognitivo.Purchase
         }
         private async void select_Item(purchase_return purchase_return, item item, int id_contact, item_movement item_movement)
         {
+            long id_movement = item_movement != null ? item_movement.id_movement : 0;
             purchase_return_detail purchase_return_detail = purchase_return.purchase_return_detail
-                .Where(a => a.id_item == sbxItem.ItemID && a.movement_id == item_movement.id_movement).FirstOrDefault();
+                .Where(a => a.id_item == sbxItem.ItemID && a.movement_id == id_movement).FirstOrDefault();
 
 
             if (purchase_return_detail == null)
@@ -262,6 +263,7 @@ namespace Cognitivo.Purchase
 
                 if (item_movement != null)
                 {
+                    _purchase_return_detail.lot_number = item_movement.code;
                     _purchase_return_detail.expiration_date = item_movement.expire_date;
                     _purchase_return_detail.movement_id = (int)item_movement.id_movement;
                 }

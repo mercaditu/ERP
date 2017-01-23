@@ -238,7 +238,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem,item_movement item_movement)
         {
-            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
+            long id_movement = item_movement != null ? item_movement.id_movement : 0;
+            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.State = EntityState.Added;

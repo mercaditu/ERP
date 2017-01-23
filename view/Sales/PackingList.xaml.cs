@@ -118,7 +118,8 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                
+                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID ).FirstOrDefault();
               
                
                 if (item != null && item.id_item > 0 && sales_packing != null)
@@ -148,7 +149,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_packing sales_packing, item item,app_branch app_branch,item_movement item_movement)
         {
-            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+            long id_movement = item_movement != null ? item_movement.id_movement : 0;
+            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement==id_movement ).FirstOrDefault() == null)
             {
                 sales_packing_detail _sales_packing_detail = new sales_packing_detail();
                 _sales_packing_detail.sales_packing = sales_packing;

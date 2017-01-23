@@ -252,7 +252,8 @@ namespace entity
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-                if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false).FirstOrDefault() == null || AllowDuplicateItem)
+                long id_movement = item_movement != null ? item_movement.id_movement : 0;
+                if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
                 {
                     return AddDetail(ref sales_invoice, item, QuantityInStock, item_movement);
                 }

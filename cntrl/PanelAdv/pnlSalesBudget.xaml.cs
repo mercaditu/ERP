@@ -112,6 +112,11 @@ namespace cntrl.PanelAdv
                         sales_order_detail.unit_price = sales_budget_detail.unit_price;
                         sales_order_detail.id_project_task = sales_budget_detail.id_project_task;
                         sales_order_detail.movement_id = sales_budget_detail.movement_id;
+                        if (sales_budget_detail.expire_date != null || !string.IsNullOrEmpty(sales_budget_detail.batch_code))
+                        {
+                            sales_order_detail.expire_date = sales_budget_detail.expire_date;
+                            sales_order_detail.batch_code = sales_budget_detail.batch_code;
+                        }
                         decimal quantity = 0;
 
                         quantity = db.sales_order_detail

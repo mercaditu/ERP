@@ -800,10 +800,10 @@ namespace Cognitivo.Sales
                     sales_invoice_detail.id_vat_group = _sales_order_detail.id_vat_group;
                     sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
                     sales_invoice_detail.movement_id = _sales_order_detail.movement_id;
-                    if (sales_invoice_detail.expire_date != null || !string.IsNullOrEmpty(sales_invoice_detail.batch_code))
+                    if (_sales_order_detail.expire_date != null || !string.IsNullOrEmpty(_sales_order_detail.batch_code))
                     {
-                        sales_invoice_detail.expire_date = sales_invoice_detail.expire_date;
-                        sales_invoice_detail.batch_code = sales_invoice_detail.batch_code;
+                        sales_invoice_detail.expire_date = _sales_order_detail.expire_date;
+                        sales_invoice_detail.batch_code = _sales_order_detail.batch_code;
                     }
                     if (sales_invoice_detail.quantity > 0)
                     {
@@ -1011,10 +1011,10 @@ namespace Cognitivo.Sales
                     sales_return_detail.unit_cost = sales_invoice_detail.unit_cost;
                     sales_return_detail.unit_price = sales_invoice_detail.unit_price;
                     sales_return_detail.movement_id = sales_invoice_detail.movement_id;
-                    if (sales_return_detail.expire_date != null || !string.IsNullOrEmpty(sales_return_detail.batch_code))
+                    if (sales_invoice_detail.expire_date != null || !string.IsNullOrEmpty(sales_invoice_detail.batch_code))
                     {
-                        sales_return_detail.expire_date = sales_return_detail.expire_date;
-                        sales_return_detail.batch_code = sales_return_detail.batch_code;
+                        sales_return_detail.expire_date = sales_invoice_detail.expire_date;
+                        sales_return_detail.batch_code = sales_invoice_detail.batch_code;
                     }
                     sales_return.sales_return_detail.Add(sales_return_detail);
                 }

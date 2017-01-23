@@ -1,24 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using WPFLocalizeExtension;
 
 namespace Cognitivo.Configs
 {
@@ -37,10 +20,10 @@ namespace Cognitivo.Configs
                 RadioButton selectedLanguage = sender as RadioButton;
                 string lang = selectedLanguage.Name.ToString();
                 lang = lang.Replace("_", "-");
-                Cognitivo.Properties.Settings.Default.language_ISO = lang;
-                Cognitivo.Properties.Settings.Default.Save();
+                Properties.Settings.Default.language_ISO = lang;
+                Properties.Settings.Default.Save();
 
-                CultureInfo ci = new CultureInfo(Cognitivo.Properties.Settings.Default.language_ISO);
+                CultureInfo ci = new CultureInfo(Properties.Settings.Default.language_ISO);
                 NumberFormatInfo LocalFormat =
         (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
                              

@@ -14,7 +14,19 @@
         <converter:Text2Collapsed x:Key="Text2Collapsed" />
         <converter:IsActive2ColorConverter x:Key="IsActive2ColorConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <Storyboard x:Key="AnimateButton">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)" Storyboard.TargetName="button">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="32"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Page.Resources>
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="button">
+            <BeginStoryboard x:Name="AnimateButton_BeginStoryboard" Storyboard="{StaticResource AnimateButton}"/>
+        </EventTrigger>
+    </Page.Triggers>
     <Grid Style="{StaticResource ThemeBackGround}">
         <StackPanel Margin="0">
             <Grid Margin="0,10">
@@ -26,22 +38,26 @@
         <Frame x:Name="frameConfig" Margin="0,86,0,0"
                NavigationUIVisibility="Hidden"/>
         <Grid Visibility="{Binding ElementName=frameConfig, Path=Content, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Text2Collapsed}}"
-              Margin="0,90,0,0">
+              Margin="0,90,0,0" MaxWidth="1024">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.ColumnSpan="3" Margin="128,96,128,0"
-                       Fill="PaleGreen" Height="5" VerticalAlignment="Top">
-                    <Rectangle.Effect>
-                    <DropShadowEffect ShadowDepth="0" Color="PaleGreen"/>
-                    </Rectangle.Effect>
-                </Rectangle>
+            <Rectangle Grid.ColumnSpan="3" Margin="164,96,164,0"
+                       Fill="White" Height="5" VerticalAlignment="Top">
+                <Rectangle.Effect>
+                    <DropShadowEffect ShadowDepth="0" Color="White"/>
+                </Rectangle.Effect>
+            </Rectangle>
             <StackPanel Margin="40,0" Grid.Column="0">
                 <Label Content="Step #1: Server" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
 
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="128" Height="128" Padding="16" Background="White">
+                <Button x:Name="button" Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="4" BorderBrush="Purple"
+                        Width="128" Height="128" Padding="16" Background="WhiteSmoke">
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="Purple"/>
+                    </Button.Effect>
                     <Image Source="/Cognitivo;component/Images/Application/128/Network.png"/>
                 </Button>
 
@@ -70,7 +86,8 @@
             </StackPanel>
             <StackPanel Margin="40,0" Grid.Column="1">
                 <Label Content="Step #2: Database" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="128" Height="128" Padding="16" Background="White">
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="4" BorderBrush="Purple"
+                        Width="128" Height="128" Padding="16" Background="WhiteSmoke">
                     <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/ProductionExecution.png"/>
                 </Button>
                 <Button Content="Generate the Database" Padding="10,0" Click="createDB_Click"
@@ -85,10 +102,11 @@
             </StackPanel>
             <StackPanel Margin="40,0" Grid.Column="2">
                 <Label Content="Step #3: Company" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="128" Height="128" Padding="16" Background="White">
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="4"
+                        Width="128" Height="128" Padding="16" Background="White">
                     <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/HomeCompany.png"/>
                 </Button>
-                
+
                 <Button Content="Setup a New Company" Padding="10,0" Click="createCompany_Click"
                         HorizontalAlignment="Center" Background="PaleGreen"/>
                 <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
@@ -100,14 +118,13 @@
                 </TextBlock>
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <Label Content="Utilities" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/Status.png" Width="64"/>
                 <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" 
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
                         <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch"/>
                         <Label Content="Parent / Child Rel" FontSize="10" HorizontalContentAlignment="Center"/>
                     </Grid>
-            
+
                 </Button>
                 <Button IsDefault="True" Click="Button_Click" Background="Transparent" 
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
@@ -115,7 +132,6 @@
                         <ProgressBar x:Name="progBarunitcost" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch"/>
                         <Label Content="Update Unit Cost" FontSize="10" HorizontalContentAlignment="Center"/>
                     </Grid>
-
                 </Button>
             </StackPanel>
         </Grid>

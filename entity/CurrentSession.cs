@@ -288,6 +288,8 @@ namespace entity
 
                 //Privilage
                 Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role).ToList();
+                Allow_UpdateSalesDetail = Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserUpdatePrice).Count() > 0;
+
             }
         }
 
@@ -348,6 +350,8 @@ namespace entity
         public static app_currency Currency_Default { get; set; }
         public static List<app_currencyfx> CurrencyFX_ActiveRates { get; set; }
 
+        public static bool Allow_UpdateSalesDetail { get; set; }
+        
         public static app_currencyfx Get_Currency_Default_Rate()
         {
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();

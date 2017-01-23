@@ -852,8 +852,8 @@ namespace Cognitivo.Purchase
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
                                                                     .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
-                        purchase_invoice_detail.lot_number = _purchase_order_detail.batch_code;
-                        purchase_invoice_detail.expiration_date = _purchase_order_detail.expiration_date;
+                        purchase_invoice_detail.batch_code = _purchase_order_detail.batch_code;
+                        purchase_invoice_detail.expire_date = _purchase_order_detail.expire_date;
                         foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
                         {
                             purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
@@ -1054,8 +1054,8 @@ namespace Cognitivo.Purchase
                     purchase_return_detail.id_vat_group = detail.id_vat_group;
                     purchase_return_detail.quantity = detail.quantity - (detail.purchase_return_detail!=null?detail.purchase_return_detail.Sum(x => x.quantity):0);
                     purchase_return_detail.unit_cost = detail.unit_cost;
-                    purchase_return_detail.lot_number = detail.lot_number;
-                    purchase_return_detail.expiration_date = detail.expire_date;
+                    purchase_return_detail.batch_code = detail.batch_code;
+                    purchase_return_detail.expire_date = detail.expire_date;
                     purchase_return.purchase_return_detail.Add(purchase_return_detail);
                 }
 

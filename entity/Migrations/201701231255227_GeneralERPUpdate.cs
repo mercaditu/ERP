@@ -243,12 +243,14 @@ namespace entity.Migrations
             AddColumn("production_execution_detail", "id_service_account", c => c.Int());
             AddColumn("production_execution_detail", "production_service_account_id_production_service_account", c => c.Int());
             AddColumn("payment_type_detail", "id_payment_approve_detail", c => c.Int());
-            AddColumn("purchase_invoice_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("purchase_invoice_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("purchase_invoice_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("purchase_order_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("purchase_order_detail", "batch_code", c => c.String(unicode: false));
             AddColumn("sales_rep", "monthly_goal", c => c.Decimal(nullable: false, precision: 20, scale: 9));
             AddColumn("purchase_return_detail", "movement_id", c => c.Int());
+            AddColumn("purchase_return_detail", "batch_code", c => c.String(unicode: false));
+            AddColumn("purchase_return_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("sales_budget_detail", "movement_id", c => c.Int());
             AddColumn("sales_budget_detail", "expire_date", c => c.DateTime(precision: 0));
             AddColumn("sales_budget_detail", "batch_code", c => c.String(unicode: false));
@@ -351,10 +353,22 @@ namespace entity.Migrations
             AddForeignKey("sales_packing", "id_item_asset", "item_asset", "id_item_asset");
             AddForeignKey("payment_type_detail", "id_payment_approve_detail", "payment_approve_detail", "id_payment_approve_detail");
             AddForeignKey("hr_position", "id_contact", "contacts", "id_contact");
+            DropColumn("purchase_invoice_detail", "lot_number");
+            DropColumn("purchase_invoice_detail", "expiration_date");
+            DropColumn("purchase_order_detail", "lot_number");
+            DropColumn("purchase_order_detail", "expiration_date");
+            DropColumn("purchase_return_detail", "lot_number");
+            DropColumn("purchase_return_detail", "expiration_date");
         }
         
         public override void Down()
         {
+            AddColumn("purchase_return_detail", "expiration_date", c => c.DateTime(precision: 0));
+            AddColumn("purchase_return_detail", "lot_number", c => c.String(unicode: false));
+            AddColumn("purchase_order_detail", "expiration_date", c => c.DateTime(precision: 0));
+            AddColumn("purchase_order_detail", "lot_number", c => c.String(unicode: false));
+            AddColumn("purchase_invoice_detail", "expiration_date", c => c.DateTime(precision: 0));
+            AddColumn("purchase_invoice_detail", "lot_number", c => c.String(unicode: false));
             DropForeignKey("loyalty_tier", "id_user", "security_user");
             DropForeignKey("loyalty_member", "id_tier", "loyalty_tier");
             DropForeignKey("loyalty_tier", "id_company", "app_company");
@@ -531,12 +545,14 @@ namespace entity.Migrations
             DropColumn("sales_budget_detail", "batch_code");
             DropColumn("sales_budget_detail", "expire_date");
             DropColumn("sales_budget_detail", "movement_id");
+            DropColumn("purchase_return_detail", "expire_date");
+            DropColumn("purchase_return_detail", "batch_code");
             DropColumn("purchase_return_detail", "movement_id");
             DropColumn("sales_rep", "monthly_goal");
             DropColumn("purchase_order_detail", "batch_code");
             DropColumn("purchase_order_detail", "expire_date");
-            DropColumn("purchase_invoice_detail", "batch_code");
             DropColumn("purchase_invoice_detail", "expire_date");
+            DropColumn("purchase_invoice_detail", "batch_code");
             DropColumn("payment_type_detail", "id_payment_approve_detail");
             DropColumn("production_execution_detail", "production_service_account_id_production_service_account");
             DropColumn("production_execution_detail", "id_service_account");

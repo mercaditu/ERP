@@ -294,7 +294,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.id_item =(int)_purchase_order_detail.id_item;
                         purchase_packing_detail.item = _purchase_order_detail.item;
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
-                        purchase_packing_detail.expire_date = _purchase_order_detail.expiration_date;
+                        purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                         purchase_packing_detail.quantity = _purchase_order_detail.quantity;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
                     }

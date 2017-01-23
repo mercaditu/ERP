@@ -127,12 +127,12 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        public string lot_number { get; set; }
+        public string batch_code { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTime? expiration_date { get; set; }
+        public DateTime? expire_date { get; set; }
 
         /// <summary>
         /// 

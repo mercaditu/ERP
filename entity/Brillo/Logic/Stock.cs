@@ -395,7 +395,7 @@ namespace entity.Brillo.Logic
                         purchase_invoice.trans_date,
                         purchase_invoice_detail.unit_cost,
                         comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST,
-                        purchase_invoice_detail.expiration_date, purchase_invoice_detail.lot_number
+                        purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
                 ));
                 }
 
@@ -1102,8 +1102,8 @@ namespace entity.Brillo.Logic
                             {
                                 if (detail.item.item_product.FirstOrDefault() != null)
                                 {
-                                    item_movement.expire_date = detail.expiration_date;
-                                    item_movement.code = detail.lot_number;
+                                    item_movement.expire_date = detail.expire_date;
+                                    item_movement.code = detail.batch_code;
                                 }
                             }
                         }

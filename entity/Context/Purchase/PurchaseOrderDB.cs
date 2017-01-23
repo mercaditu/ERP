@@ -150,7 +150,7 @@ namespace entity
                                 production_service_account.unit_cost = purchase_order_detail.unit_cost;
                                 production_service_account.debit = 0;
                                 production_service_account.credit = purchase_order_detail.quantity;
-                                production_service_account.exp_date = purchase_order_detail.expiration_date;
+                                production_service_account.exp_date = purchase_order_detail.expire_date;
                                 base.production_service_account.Add(production_service_account);
                             }
                         }

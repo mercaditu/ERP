@@ -567,7 +567,7 @@ namespace entity.Brillo.Logic
                                             sales_return.trans_date,
                                              unit_cost,
                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
-                                            null, null, null
+                                            null,sales_return_detail.expire_date,sales_return_detail.batch_code                                           
                                             ));
             }
             //Return List so we can save into context.

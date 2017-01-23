@@ -379,10 +379,15 @@ namespace Cognitivo.Sales
                         {
                             sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
                             sales_return_detail.item_description = _sales_invoice_detail.item_description;
-
+                            sales_return_detail.movement_id = _sales_invoice_detail.movement_id;
+                            sales_return_detail.batch_code = _sales_invoice_detail.batch_code;
+                            sales_return_detail.expire_date = _sales_invoice_detail.expire_date;
                             //Automatically Checks Products to go back in Stock. This is most likely scenario.
                             if (sales_return_detail.item.item_product.Count() > 0)
                             {
+                               
+                                    
+                              
                                 sales_return_detail.IsSelected = true;
                             }
                         }

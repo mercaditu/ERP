@@ -530,6 +530,11 @@ namespace Cognitivo.Sales
                 detail.CurrencyFX_ID = sales_order.id_currencyfx;
                 detail.item = await SalesOrderDB.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
                 detail.app_vat_group = await SalesOrderDB.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
+                if (detail.expire_date != null || !string.IsNullOrEmpty(detail.batch_code))
+                {
+                    detail.expire_date = detail.expire_date;
+                    detail.batch_code = detail.batch_code;
+                }
             }
 
             cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
@@ -651,5 +656,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
+     
     }
 }

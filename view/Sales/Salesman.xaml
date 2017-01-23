@@ -41,23 +41,31 @@
                     <ComboBox x:Name="cbxSalesRepType" Style="{StaticResource input_combobox}" 
 						SelectedValue="{Binding enum_type, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxSalesRepType_SelectionChanged"/>
                 </StackPanel>
-                <StackPanel x:Name="stackContact" Background="White">
+                <StackPanel x:Name="stackContact">
                     <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                    <StackPanel Orientation="Horizontal">
-
-                        <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" 
-															   Select="set_ContactPref"
-															   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-    </StackPanel>
+                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" 
+											Select="set_ContactPref"
+											Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel x:Name="stackExisting">
                     <Label Content="{lex:Loc CommisionBase}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commision_baseTextBox" Style="{StaticResource input_textbox}"
 						Text="{Binding commision_base, Mode=TwoWay, StringFormat={}{0:N0}, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
-                    <Label Content="{lex:Loc Goal}" Style="{StaticResource input_label}"/>
-                    <TextBox Style="{StaticResource input_textbox}"
-						Text="{Binding monthly_goal, Mode=TwoWay, NotifyOnValidationError=true, 
-                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <Label Content="{lex:Loc MonthlyGoal}" Style="{StaticResource input_label}"/>
+                            <TextBox Style="{StaticResource input_textbox}" Width="124"
+						            Text="{Binding monthly_goal, Mode=TwoWay, NotifyOnValidationError=true, 
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="{lex:Loc DailyGoal}" Style="{StaticResource input_label}"/>
+                            <TextBox Style="{StaticResource input_textbox}" Width="124"
+						            Text="{Binding daily_goal, Mode=TwoWay, NotifyOnValidationError=true, 
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
                     <Label Content="{lex:Loc CommisionTemplate}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commision_calculationTextBox" Style="{StaticResource input_textbox}"
 						Text="{Binding commision_calculation, Mode=TwoWay, NotifyOnValidationError=true, 
@@ -92,8 +100,6 @@
                     <DataGridTextColumn x:Name="commision_baseColumn" Binding="{Binding commision_base, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="commision base" Width="SizeToHeader"/>
                 </DataGrid.Columns>
             </DataGrid>
-            
-            
         </ScrollViewer>-->
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">

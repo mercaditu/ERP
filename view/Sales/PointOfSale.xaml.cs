@@ -238,7 +238,7 @@ namespace Cognitivo.Sales
 
             if (app_account != null)
             {
-                if (app_account.is_active == false)
+                if (app_account.app_account_detail.Where(x=>x.tran_type==app_account_detail.tran_types.Close).Count()>0)
                 {
                     btnAccount_Click(sender, e);
                     frmaccount.Refresh();

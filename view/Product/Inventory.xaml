@@ -16,7 +16,8 @@
 	  d:DesignHeight="400" d:DesignWidth="800" Loaded="Page_Loaded">
 	<Page.Resources>
 		<converter:TrueToFalseConverter x:Key="TrueToFalse"/>
-		<CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
 		<CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
 		<CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}"/>
@@ -39,8 +40,8 @@
 		<!-- toolBar -->
 		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
 			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
-        <!--<Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>-->
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
 					   btnEdit_Click="toolBar_btnEdit_Click" 
 					   btnSave_Click="toolBar_btnSave_Click"
@@ -172,7 +173,30 @@
 															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
 						<DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto"/>
 					</DataGrid.Columns>
-				</DataGrid>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                                    <StackPanel>
+                                        <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
+                                        <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
+                                        <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
+                                        <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                        <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                                        <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
 			</Grid>
 		</Grid>
 		<!--Right Hand Side Part - End-->

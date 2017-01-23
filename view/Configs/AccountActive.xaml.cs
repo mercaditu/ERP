@@ -200,7 +200,7 @@ namespace Cognitivo.Configs
                         app_account_session.is_active = false;
 
                         db.app_account_detail.Add(app_account_detail);
-                        app_account.is_active = false;
+                        //app_account.is_active = false;
                         //Save Changes
                         db.SaveChanges();
 
@@ -246,7 +246,7 @@ namespace Cognitivo.Configs
                         db.app_account_session.Add(app_account_session);
                     }
 
-                    app_account.is_active = true;
+                  //  app_account.is_active = true;
                     //Save Changes
                     db.SaveChanges();
 

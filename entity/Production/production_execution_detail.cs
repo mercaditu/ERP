@@ -115,7 +115,7 @@ namespace entity
         public DateTime trans_date { get; set; }
 
         public string batch { get; set; }
-        public DateTime expiry_date { get; set; }
+        public DateTime? expiry_date { get; set; }
 
         //Heirarchy
         public virtual production_execution_detail parent { get; set; }

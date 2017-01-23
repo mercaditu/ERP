@@ -11,9 +11,9 @@ namespace Cognitivo.Converters
             entity.Brillo.Security security = new entity.Brillo.Security(appname);
             entity.Privilage.Privilages Privilages = (entity.Privilage.Privilages)parameter;
             if (security.SpecialSecurity_ReturnsBoolean(Privilages))
-                return true;
-            else
                 return false;
+            else
+                return true;
             //throw new NotImplementedException();
         }
 

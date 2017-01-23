@@ -317,6 +317,7 @@ namespace entity.Migrations
             AddColumn("purchase_packing_detail", "volume", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("purchase_packing_detail", "measurement_volume_id_measurement", c => c.Int());
             AddColumn("purchase_packing_detail", "measurement_weight_id_measurement", c => c.Int());
+            AlterColumn("production_execution_detail", "expiry_date", c => c.DateTime(precision: 0));
             CreateIndex("app_account_detail", "id_payment_approve_detail");
             CreateIndex("hr_position", "id_contact");
             CreateIndex("item_movement", "id_purchase_packing_detail");
@@ -479,6 +480,7 @@ namespace entity.Migrations
             DropIndex("item_movement", new[] { "id_purchase_packing_detail" });
             DropIndex("hr_position", new[] { "id_contact" });
             DropIndex("app_account_detail", new[] { "id_payment_approve_detail" });
+            AlterColumn("production_execution_detail", "expiry_date", c => c.DateTime(nullable: false, precision: 0));
             DropColumn("purchase_packing_detail", "measurement_weight_id_measurement");
             DropColumn("purchase_packing_detail", "measurement_volume_id_measurement");
             DropColumn("purchase_packing_detail", "volume");

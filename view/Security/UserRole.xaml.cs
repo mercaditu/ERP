@@ -149,7 +149,7 @@ namespace Cognitivo.Security
 
                 security_roleViewSource.View.Refresh();
                 security_roleViewSource.View.MoveCurrentToLast();
-            }
+             }
         }
 
         private void toolBar_btnEdit_Click(object sender)

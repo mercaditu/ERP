@@ -143,7 +143,7 @@
 											UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
 							  RowDetailsVisibilityMode="VisibleWhenSelected">
 						<DataGrid.Columns>
-							<DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Allow}" Binding="{Binding has_privilage}" 
+							<DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Allow}" Binding="{Binding has_privilage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
 													ElementStyle="{StaticResource input_checkbox}" Width="SizeToHeader"/>
 							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Privilege}" Width="*" IsReadOnly="True"
 												Binding="{Binding security_privilage.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>

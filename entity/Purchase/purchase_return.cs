@@ -51,6 +51,27 @@ namespace entity
         
         public int? id_purchase_invoice { get; set; }
 
+        [NotMapped]
+        public bool AllowUpdateReturn
+        {
+            get
+            {
+                if (id_purchase_invoice>0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            set
+            {
+                _AllowUpdateReturn = value;
+            }
+        }
+        public bool _AllowUpdateReturn;
+
         public Status.ReturnTypes return_type { get; set; }
 
         [Required]

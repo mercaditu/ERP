@@ -34,7 +34,7 @@ namespace Cognitivo.Security
 
             await UserRoleDB.security_role.Where(a =>
                                             a.id_company == CurrentSession.Id_Company)
-                                            .OrderBy(a => a.name).Include(y => y.app_department)
+                                            .OrderBy(a => a.name).Include(y => y.app_department).Include(y=>y.security_role_privilage)
                                             .LoadAsync();
             security_roleViewSource.Source = UserRoleDB.security_role.Local;
 
@@ -181,7 +181,7 @@ namespace Cognitivo.Security
                 {
                     foreach (Privilage.Privilages Privilage in Privilages)
                     {
-                        if (UserRoleDB.security_privilage.Where(x => x.name == Privilage).Count() == 0)
+                        if (UserRoleDB.security_privilage.Where(x => x.name == Privilage ).Count() == 0)
                         {
                             if ((int)Privilage >= 3)
                             {
@@ -207,15 +207,13 @@ namespace Cognitivo.Security
             List<entity.App.Names> PreferenceList = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<security_privilage> security_privilageList = UserRoleDB.security_privilage.ToList();
 
-            List<security_role_privilage> security_role_privilage = new List<security_role_privilage>();
-            security_role_privilage = UserRoleDB.security_role_privilage.Where(x => x.id_role == security_role.id_role).ToList();
 
             foreach (security_privilage security_privilage in security_privilageList)
             {
                 if (security_privilage.id_application == entity.App.Names.SalesInvoice ||
                     security_privilage.id_application == entity.App.Names.ProductionExecution)
                 {
-                    if (security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage).Count() == 0)
+                    if (UserRoleDB.security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage && x.id_role== security_role.id_role).Count() == 0)
                     {
                         security_role_privilage _security_role_privilage = new security_role_privilage();
                         _security_role_privilage.id_privilage = security_privilage.id_privilage;

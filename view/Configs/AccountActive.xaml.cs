@@ -44,8 +44,18 @@ namespace Cognitivo.Configs
             {
                 ///Gets the Current
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-                is_active = app_account.is_active;
-                RaisePropertyChanged("is_active");
+                if (db.app_account_session.Where(x => x.id_account == app_account.id_account).FirstOrDefault()!=null)
+                {
+                    is_active = db.app_account_session.Where(x => x.id_account == app_account.id_account).FirstOrDefault().is_active;
+                    RaisePropertyChanged("is_active");
+                }
+                else
+                {
+                    is_active = false;
+                    RaisePropertyChanged("is_active");
+
+                }
+                
 
                 ///Assign a Session ID for this block of code.
                 int id_session = 0;
@@ -196,6 +206,7 @@ namespace Cognitivo.Configs
 
                         //CHECK
                         app_account_detail.id_session = app_account_session.id_session;
+                        app_account_detail.app_account_session = app_account_session;
                         app_account_session.cl_date = DateTime.Now;
                         app_account_session.is_active = false;
 
@@ -241,7 +252,7 @@ namespace Cognitivo.Configs
                         app_account_detail.comment = "Opening Balance";
                         app_account_detail.tran_type = app_account_detail.tran_types.Open;
                         app_account_detail.trans_date = DateTime.Now;
-
+                        app_account_detail.app_account_session = app_account_session;
                         app_account_session.app_account_detail.Add(app_account_detail);
                         db.app_account_session.Add(app_account_session);
                     }

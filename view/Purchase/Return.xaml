@@ -165,7 +165,7 @@
 												SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64" IsReadOnly="True"
+                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"  IsReadOnly="{Binding AllowUpdateReturn,Source={StaticResource purchase_returnViewSource}, Converter={StaticResource TrueToFalse}}"
 											ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
 											DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
 											SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
@@ -173,7 +173,7 @@
 							<DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
 						<!-- UnitPrice -->
 						<DataGridTextColumn Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
-										Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
+										Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="{Binding AllowUpdateReturn,Source={StaticResource purchase_returnViewSource}, Converter={StaticResource TrueToFalse}}"
 										Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 						<DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 										Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
@@ -181,7 +181,7 @@
 
 						<!-- UnitPrice_Vat -->
 						<DataGridTextColumn Binding="{Binding UnitCost_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
-										Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
+										Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="{Binding AllowUpdateReturn,Source={StaticResource purchase_returnViewSource}, Converter={StaticResource TrueToFalse}}"
 										Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 						<DataGridTextColumn Binding="{Binding DiscountVat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 										Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
@@ -225,10 +225,10 @@
                                     <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
                                         <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
                                         <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding lot_number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                         <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                                         <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expiration_date, Mode=TwoWay, NotifyOnValidationError=true, 
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
 								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     </StackPanel>
                                 </StackPanel>

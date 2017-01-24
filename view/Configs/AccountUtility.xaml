@@ -11,7 +11,7 @@
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  lex:LocalizeDictionary.DesignCulture="en-US" 
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
+	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Name="this"
 	  MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
 	<Page.Resources>
 		<local:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
@@ -63,8 +63,8 @@
 					<Label Content="{Binding app_terminal.name}" FontSize="16"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="125,85,0,0">
-					<Label Content="{Binding is_active, Converter={StaticResource BoolToActive}}" 
-						   Foreground="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" 
+                    <Label Content="{Binding     AccountActive.is_active,ElementName=this,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToActive}}" 
+						   Foreground="{Binding  app_account_session.is_active,Source={StaticResource app_accountapp_account_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ActiveValueConverter}}" 
 						   FontSize="16" Margin="0"/>
 					<Label Content="{lex:Loc LastUsed}" Margin="6,0,0,0" FontSize="16"/>
 					<Label Content=":" FontSize="16"/>

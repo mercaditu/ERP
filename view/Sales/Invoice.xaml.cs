@@ -143,6 +143,8 @@ namespace Cognitivo.Sales
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
             sales_invoiceViewSource.View.MoveCurrentToLast();
+            sbxContact.Text = "";
+            sbxItem.Text = "";
         }
 
         private void toolBar_btnEdit_Click(object sender)

@@ -130,7 +130,7 @@ namespace cntrl.Controls
             {
                 return;
             }
-
+            Exclude_OutOfStock = true;
             LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));

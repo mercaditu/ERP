@@ -65,7 +65,7 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; Fill(); Button_Click_1(null, null); }
+            set { _StartDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
@@ -83,7 +83,7 @@ namespace cntrl
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; Fill(); Button_Click_1(null, null); }
+            set { _EndDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 

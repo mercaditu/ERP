@@ -89,7 +89,7 @@
 					
 					<Grid>
 						<Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" IsEnabled="False">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
 							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
 									Content="+" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue"/>
 							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"

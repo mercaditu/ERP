@@ -420,6 +420,7 @@ namespace Cognitivo.Sales
                     //Currency
 
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
+                    sbxItem.Focus();
                 }));
             }
         }
@@ -558,7 +559,8 @@ namespace Cognitivo.Sales
                        
                     }
                 }
-            }
+                
+             }
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -1020,7 +1022,7 @@ namespace Cognitivo.Sales
                     }
                     sales_return.sales_return_detail.Add(sales_return_detail);
                 }
-
+                
                 SalesInvoiceDB.sales_return.Add(sales_return);
                 crm_opportunity crm_opportunity = sales_invoice.crm_opportunity;
                 crm_opportunity.sales_return.Add(sales_return);

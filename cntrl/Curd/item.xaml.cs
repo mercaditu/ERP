@@ -35,7 +35,7 @@ namespace cntrl.Curd
                     List<app_vat_group> app_vat_groupList = new List<app_vat_group>();
                     List<app_currency> app_currencyList = new List<app_currency>();
                     List<item_price_list> item_price_listList = new List<item_price_list>();
-                    
+                    List<entity.item_brand> item_brandList = new List<entity.item_brand>();
                     using (db _db = new db())
                     {
                         _db.Configuration.AutoDetectChangesEnabled = false;
@@ -59,6 +59,13 @@ namespace cntrl.Curd
                         {
                             CollectionViewSource item_price_listViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_price_listViewSource")));
                             item_price_listViewSource.Source = item_price_listList;
+                        }
+
+                        item_brandList = _db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+                        if (item_brandList.Count > 0)
+                        {
+                            CollectionViewSource item_brandViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_brandViewSource")));
+                            item_brandViewSource.Source = item_brandList;
                         }
                     }
 

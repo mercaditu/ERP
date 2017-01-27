@@ -1085,7 +1085,19 @@ namespace Cognitivo.Sales
             }
 
         }
+        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chbx = sender as CheckBox;
+            if ((bool)chbx.IsChecked)
+            {
+                dgvSalesDetail.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                dgvSalesDetail.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            }
+        }
 
-       
+
     }
 }

@@ -75,18 +75,20 @@ namespace entity
             }
 
             ///Purchase
-            List<purchase_invoice> purchaseLIST = purchase_invoice
-                .Where(x =>
-                    x.id_company == CurrentSession.Id_Company &&
-                    x.status == Status.Documents_General.Approved
-                    )
-                    .OrderBy(y => y.trans_date)
-                    .ToList();
-
-            foreach (purchase_invoice purchase in purchaseLIST)
+          
+            using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
             {
-                using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
+                List<purchase_invoice> purchaseLIST = PurchaseDB.purchase_invoice
+              .Where(x =>
+                  x.id_company == CurrentSession.Id_Company &&
+                  x.status == Status.Documents_General.Approved
+                  )
+                  .OrderBy(y => y.trans_date)
+                  .ToList();
+
+                foreach (purchase_invoice purchase in purchaseLIST)
                 {
+
                     try
                     {
                         purchase.IsSelected = true;
@@ -143,9 +145,9 @@ namespace entity
                     ///Inventory
                     using (InventoryDB InventoryDB = new InventoryDB())
                     {
-                        List<item_inventory> item_inventoryLIST = 
+                        List<item_inventory> item_inventoryLIST =
                             InventoryDB.item_inventory
-                                .Where (x => IntArray.Contains(x.id_inventory) )
+                                .Where(x => IntArray.Contains(x.id_inventory))
                                 .OrderBy(y => y.trans_date)
                                 .ToList();
 
@@ -177,11 +179,11 @@ namespace entity
 
                     ///Transfers & Movement
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
-                    { 
-                          List<item_transfer> TrasnferList=ProductTransferDB.item_transfer
-                            .Where (x => IntArray.Contains(x.id_transfer) )
-                            .OrderBy(y => y.trans_date)
-                            .ToList();
+                    {
+                        List<item_transfer> TrasnferList = ProductTransferDB.item_transfer
+                          .Where(x => IntArray.Contains(x.id_transfer))
+                          .OrderBy(y => y.trans_date)
+                          .ToList();
 
                         foreach (item_transfer transfer in TrasnferList)
                         {
@@ -196,14 +198,14 @@ namespace entity
                             {
                                 ProductTransferDB.SaveChanges();
 
-                                ProductTransferDB.ApproveOrigin(transfer,false);
-                                ProductTransferDB.ApproveDestination(transfer,false);
+                                ProductTransferDB.ApproveOrigin(transfer, false);
+                                ProductTransferDB.ApproveDestination(transfer, false);
                             }
                             catch (Exception e)
                             {
                                 ErrorMsg += string.Format("/n Transfer: {0}, {1}, Error Msg: {2}", transfer.number, transfer.trans_date, e.Message);
                             }
-                            
+
                             transfer.IsSelected = false;
                         }
                     }

@@ -130,7 +130,11 @@ namespace cntrl.Controls
             {
                 return;
             }
-            Exclude_OutOfStock = true;
+            if (item_types==entity.item.item_type.Product || item_types==entity.item.item_type.RawMaterial)
+            {
+                Exclude_OutOfStock = true;
+            }
+        
             LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));

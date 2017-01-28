@@ -51,7 +51,7 @@
                        Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
                 <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
                 <TextBox Style="{StaticResource input_textbox}" Height="64"
-                        Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        Text="{Binding address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                 <cntrl:SmartBox_Geography x:Name="sbxGeography" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 

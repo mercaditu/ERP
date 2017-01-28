@@ -148,7 +148,16 @@
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
 						<DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto"/>
 						<DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto"/>
-						<DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding batch_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    IsReadOnly="{Binding !item_product.can_expire, Converter={StaticResource TrueToFalse}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:BatchCode}" MinWidth="128" MaxWidth="256" Width="Auto"/>
+                        <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                       
+                        <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
 							<DataGridTextColumn.Header>
 								<TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>
 							</DataGridTextColumn.Header>
@@ -173,29 +182,7 @@
 															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
 						<DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto"/>
 					</DataGrid.Columns>
-                    <DataGrid.RowDetailsTemplate>
-                        <DataTemplate>
-                            <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-
-                                    <StackPanel>
-                                        <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
-                                        <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
-                                    </StackPanel>
-                                    <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}" >
-                                        <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}"/>
-                                        <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                        <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                                        <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, 
-								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    </StackPanel>
-                                </StackPanel>
-
-                            </Grid>
-                        </DataTemplate>
-                    </DataGrid.RowDetailsTemplate>
+                  
                 </DataGrid>
 			</Grid>
 		</Grid>

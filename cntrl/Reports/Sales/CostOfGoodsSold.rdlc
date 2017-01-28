@@ -1072,7 +1072,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Items.Value</Value>
+                              <Value>=Fields!Items.Value + "-" + Fields!Code.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>

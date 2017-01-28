@@ -148,7 +148,7 @@
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
 						<DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto"/>
 						<DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto"/>
-                        <DataGridTextColumn Binding="{Binding batch_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    IsReadOnly="{Binding !item_product.can_expire, Converter={StaticResource TrueToFalse}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:BatchCode}" MinWidth="128" MaxWidth="256" Width="Auto"/>
+                        <DataGridTextColumn Binding="{Binding batch_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    Header="{lex:Loc Cognitivo:local:BatchCode}" MinWidth="128" MaxWidth="256" Width="Auto"/>
                         <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

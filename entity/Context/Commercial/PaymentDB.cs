@@ -282,12 +282,12 @@ namespace entity
                             if (IsRecievable == false)
                             {
                                 ///If PaymentDetail Value is Negative.
-                                app_account_detail.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
+                                app_account_detail.debit = Math.Abs(Convert.ToDecimal(child_schedual.debit));
                             }
                             else
                             {
                                 ///If PaymentDetail Value is Positive.
-                                app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
+                                app_account_detail.credit = Convert.ToDecimal(child_schedual.credit);
                             }
 
                             ///Comment with Module Name and Contact.

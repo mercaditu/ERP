@@ -54,17 +54,17 @@ namespace cntrl.Curd
 
             foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail != null)
                 .GroupBy(x => new
-                                                                        {
-                                                                            payment_type = x.payment_approve_detail.id_payment_type,
-                                                                            Account = x.payment_approve_detail.id_account,
-                                                                            Currency = x.payment_approve_detail.id_currency
-                                                                        }).Select(x => new { x.Key.payment_type, x.Key.Account, x.Key.Currency }))
+                {
+                    payment_type = x.payment_approve_detail.id_payment_type,
+                    Account = x.payment_approve_detail.id_account,
+                    Currency = x.payment_approve_detail.id_currency
+                }).Select(x => new { x.Key.payment_type, x.Key.Account, x.Key.Currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.Currency, id.payment_type, id.Account);
             }
 
-            foreach (var id in payment_schedualList.Where(x=>x.payment_approve_detail==null).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail == null).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.id_currency, null, null);
@@ -95,7 +95,7 @@ namespace cntrl.Curd
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company && 
+            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
             (a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account)).LoadAsync();
 
             //Fix if Payment Type not inserted.
@@ -152,7 +152,7 @@ namespace cntrl.Curd
             foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 Decimal TotalPayable = 0;
-                if (Mode==Modes.Recievable)
+                if (Mode == Modes.Recievable)
                 {
 
                     TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountReceivableBalance);
@@ -175,7 +175,7 @@ namespace cntrl.Curd
                 }
             }
 
-                foreach (payment_detail payment_detail in payment.payment_detail.ToList())
+            foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
                 bool IsRecievable = Mode == Modes.Recievable ? true : false;
                 bool IsPrintable = Mode == Modes.Recievable ? true : false;
@@ -294,8 +294,8 @@ namespace cntrl.Curd
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
-            payment_detail payment_detail=paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            if (payment_detail!=null)
+            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+            if (payment_detail != null)
             {
                 Add_PaymentDetail(payment_detail.app_currencyfx.id_currency, null, null);
             }
@@ -309,7 +309,7 @@ namespace cntrl.Curd
             {
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
-                 //Get current Active Rate of selected Currency.
+                //Get current Active Rate of selected Currency.
                 app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
 
                 if (app_currencyfx != null)
@@ -340,7 +340,7 @@ namespace cntrl.Curd
                     //Over wright Detail Value with Approved Value
                     payment_detail.value = payment_schedualList
                         .Where(x => x.payment_approve_detail != null &&
-                                    x.payment_approve_detail.id_currency == CurrencyID && 
+                                    x.payment_approve_detail.id_currency == CurrencyID &&
                                     x.payment_approve_detail.id_account == (int)AccountID &&
                                     x.payment_approve_detail.id_payment_type == PaymentTypeID)
                         .Sum(x => x.payment_approve_detail.value);

@@ -70,7 +70,7 @@ namespace entity.Brillo
             {
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 string jsondata = reader.ReadToEnd();
-               CompanyLicence =  JsonConvert.DeserializeObject<licence>(jsondata);
+               CompanyLicence = JsonConvert.DeserializeObject<licence>(jsondata);
             }
         }
      

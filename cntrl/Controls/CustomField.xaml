@@ -1,17 +1,21 @@
-﻿<UserControl x:Class="cntrl.Controls.CustomField" x:Name="_CustomField"
+﻿<UserControl x:Class="cntrl.Controls.CustomField" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:local="clr-namespace:cntrl.Controls"
-             mc:Ignorable="d" 
-             Width="256" Loaded="CustomField_Loaded">
+             mc:Ignorable="d" xmlns:entity="clr-namespace:entity;assembly=entity"
+             MinWidth="256">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
+    </UserControl.Resources>
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <ComboBox x:Name="cbxFieldType" Margin="0,4,4,4" FontWeight="Bold"
+        <ComboBox Margin="0,4,4,4" FontWeight="Bold" ItemsSource="{Binding ElementName=this, Path=app_fieldViewSource}"
 					SelectedValuePath="id_field" VerticalAlignment="Center" Width="100"
-                      Background="Transparent" BorderBrush="Transparent"
-                      HorizontalContentAlignment="Right"
-					DisplayMemberPath="name" SelectionChanged="cbxFieldType_SelectionChanged"
+                    Background="Transparent" BorderBrush="Transparent"
+                    HorizontalContentAlignment="Right"
+					DisplayMemberPath="name"
 					SelectedValue="{Binding ElementName=_CustomField, Path=FieldID, Mode=TwoWay, 
                     NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
@@ -22,9 +26,9 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <TextBox VerticalAlignment="Center" Width="132"
-				     Text="{Binding ElementName=_CustomField, Path=FieldValue, Mode=TwoWay, 
+				     Text="{Binding ElementName=this, Path=FieldValue, Mode=TwoWay, 
                      ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Content="d" PreviewMouseUp="Add_field" Style="{StaticResource btn_Label}" 
+        <Label Content="d" PreviewMouseUp="Delete_This" Style="{StaticResource btn_Label}" Visibility="{Binding ElementName=this, Path=IsEnabled, Converter={StaticResource Bool2Visi}}"
                Foreground="Crimson" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo"/>
     </StackPanel>
 </UserControl>

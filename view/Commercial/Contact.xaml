@@ -151,8 +151,12 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Telephone"/>
-                                        <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <cntrls:CustomField 
+                                            FieldID="{Binding id_field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            FieldName="{Binding app_field.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            appFieldTypes="Telephone"
+                                            />
+                                        <TextBox Text="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -167,15 +171,15 @@
                         <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueemailViewSource}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel/>
+                                    <StackPanel Orientation="Horizontal"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
-                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Email"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                                            FieldName="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" appFieldTypes="Email"/>
                                         <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

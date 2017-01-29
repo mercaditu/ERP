@@ -508,22 +508,22 @@ namespace Cognitivo.Commercial
         private void Add_fieldEmail(object sender, MouseButtonEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
+
             if (contact != null)
             {
                 app_field app_field = app_fieldemailViewSource.View.CurrentItem as app_field;
+
                 if (app_field == null)
                 {
                     app_field = new app_field();
                     app_field.field_type = entity.app_field.field_types.Email;
-                    app_field.name = "EMail";
+                    app_field.name = "Work";
                     ContactDB.app_field.Add(app_field);
 
                     app_fieldViewSource.View.Refresh();
                     app_fieldViewSource.View.MoveCurrentToLast();
                 }
-
-                //}
-
+                
                 contact_field_value contact_field_value = new contact_field_value();
                 contact_field_value.app_field = app_field;
                 contact.contact_field_value.Add(contact_field_value);
@@ -545,7 +545,7 @@ namespace Cognitivo.Commercial
                 {
                     app_field = new app_field();
                     app_field.field_type = entity.app_field.field_types.Telephone;
-                    app_field.name = "Telephone";
+                    app_field.name = "Work";
                     ContactDB.app_field.Add(app_field);
 
                     app_fieldphoneViewSource.View.Refresh();

@@ -5,25 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Controls"
              mc:Ignorable="d" 
-            Height="80" Width="250" Loaded="CustomField_Loaded">
-    <Grid>
-        <StackPanel   HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label Content="+"  PreviewMouseUp="Add_field" 
-								   Style="{StaticResource btn_Label}"/>
-            <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}" Width="250"
-												  SelectedValuePath="id_field"
-												  DisplayMemberPath="name" SelectionChanged="cbxFieldType_SelectionChanged"
-												  SelectedValue="{Binding ElementName=_CustomField,Path=FieldID, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+             Width="256" Loaded="CustomField_Loaded">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <ComboBox x:Name="cbxFieldType" Margin="0,4,4,4" FontWeight="Bold"
+					SelectedValuePath="id_field" VerticalAlignment="Center" Width="100"
+                      Background="Transparent" BorderBrush="Transparent"
+                      HorizontalContentAlignment="Right"
+					DisplayMemberPath="name" SelectionChanged="cbxFieldType_SelectionChanged"
+					SelectedValue="{Binding ElementName=_CustomField, Path=FieldID, Mode=TwoWay, 
+                    NotifyOnValidationError=True, ValidatesOnExceptions=True, 
+                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
-            <TextBox Style="{StaticResource TextboxToLabelStyle}"
-								 Text="{Binding ElementName=_CustomField,Path=FieldName, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" Width="250" />
-        </StackPanel>
-       
-       
-    </Grid>
+            <TextBox VerticalAlignment="Center" Width="132"
+				     Text="{Binding ElementName=_CustomField, Path=FieldValue, Mode=TwoWay, 
+                     ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="d" PreviewMouseUp="Add_field" Style="{StaticResource btn_Label}" 
+               Foreground="Crimson" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+    </StackPanel>
 </UserControl>

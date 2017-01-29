@@ -73,6 +73,5 @@ namespace entity.Brillo
                CompanyLicence = JsonConvert.DeserializeObject<licence>(jsondata);
             }
         }
-     
     }
 }

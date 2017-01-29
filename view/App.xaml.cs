@@ -18,34 +18,6 @@ namespace Cognitivo
                 Cognitivo.Properties.Settings.Default.Upgrade();
                 Cognitivo.Properties.Settings.Default.UpgradeSettings = false;
             }
-
-            //string localAppData =
-            //  Environment.GetFolderPath(
-            //  Environment.SpecialFolder.LocalApplicationData);
-            //string userFilePath
-            //  = Path.Combine(localAppData, "MyCompany");
-
-            //if (!Directory.Exists(userFilePath))
-            //    Directory.CreateDirectory(userFilePath);
-
-            ////if it's not already there, 
-            ////copy the file from the deployment location to the folder
-            //string sourceFilePath = Path.Combine(
-            //  System.Windows.Forms.Application.StartupPath, "MyFile.txt");
-            //string destFilePath = Path.Combine(userFilePath, "MyFile.txt");
-            //if (!File.Exists(destFilePath))
-            //    File.Copy(sourceFilePath, destFilePath);
-
-            //var CmdSaveAll = new CommandBinding(Class.CustomCommands.SaveAll, HotkeyPressed);
-            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdSaveAll);
-            //var CmdNewAll = new CommandBinding(Class.CustomCommands.NewAll, HotkeyPressed);
-            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdNewAll);
-            //var CmdDeleteAll = new CommandBinding(Class.CustomCommands.DeleteAll, HotkeyPressed);
-            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdDeleteAll);
-            //var CmdCancelAll = new CommandBinding(Class.CustomCommands.CancelAll, HotkeyPressed);
-            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdCancelAll);
-            //var CmdEditAll = new CommandBinding(Class.CustomCommands.EditAll, HotkeyPressed);
-            //CommandManager.RegisterClassCommandBinding(typeof(Window), CmdEditAll);
         }
 
         private void HotkeyPressed(object sender, ExecutedRoutedEventArgs e)

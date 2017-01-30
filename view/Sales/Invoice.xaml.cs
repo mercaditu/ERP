@@ -397,6 +397,10 @@ namespace Cognitivo.Sales
                     ///Start Thread to get Data.
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
                 }
+                if (cbxCondition.SelectedItem!=null && cbxContract.SelectedItem!=null && cbxCurrency.SelectedValue>0)
+                {
+                    sbxItem.Focus();
+                }
             }
         }
 
@@ -420,7 +424,7 @@ namespace Cognitivo.Sales
                     //Currency
 
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
-                    sbxItem.Focus();
+                   
                 }));
             }
         }

@@ -64,7 +64,7 @@ namespace Cognitivo.Menu
             if (Settings.Default.wallpaper_Image == "")
             {
                 string img = String.Format("https://source.unsplash.com/user/cognitivo/likes/{0}x{1}", width, height);
-                Settings.Default.wallpaper_Image =  img;
+                Settings.Default.wallpaper_Image = img;
                 Settings.Default.Save();
             }
 
@@ -182,38 +182,38 @@ namespace Cognitivo.Menu
 
         private async void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            entity.Properties.Settings.Default.Save();
-            entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
+            ////entity.Properties.Settings.Default.Save();
+            ////entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
 
-            using (entity.db db = new entity.db())
-            {
-                cbxTerminal.ItemsSource = await db.app_terminal.Where(x =>
-                    x.id_company == entity.CurrentSession.Id_Company &&
-                    x.is_active &&
-                    x.id_branch == entity.CurrentSession.Id_Branch)
-                    .ToListAsync();
-            }
+            //using (entity.db db = new entity.db())
+            //{
+            //    cbxTerminal.ItemsSource = await db.app_terminal.Where(x =>
+            //        x.id_company == entity.CurrentSession.Id_Company &&
+            //        x.is_active &&
+            //        x.id_branch == entity.CurrentSession.Id_Branch)
+            //        .ToListAsync();
+            //}
         }
 
         private async void cbxTerminal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            entity.Properties.Settings.Default.Save();
-            entity.CurrentSession.Id_Terminal = entity.Properties.Settings.Default.terminal_ID;
+            //entity.Properties.Settings.Default.Save();
+            //entity.CurrentSession.Id_Terminal = entity.Properties.Settings.Default.terminal_ID;
 
-            using (entity.db db = new entity.db())
-            {
-                cbxAccount.ItemsSource = await db.app_account.Where(x =>
-                    x.id_company == entity.CurrentSession.Id_Company &&
-                    x.is_active &&
-                    (x.id_account_type == entity.app_account.app_account_type.Bank || x.id_terminal == entity.CurrentSession.Id_Terminal))
-                    .ToListAsync();
-            }
+            //using (entity.db db = new entity.db())
+            //{
+            //    cbxAccount.ItemsSource = await db.app_account.Where(x =>
+            //        x.id_company == entity.CurrentSession.Id_Company &&
+            //        x.is_active &&
+            //        (x.id_account_type == entity.app_account.app_account_type.Bank || x.id_terminal == entity.CurrentSession.Id_Terminal))
+            //        .ToListAsync();
+            //}
         }
 
         private void cbxAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            entity.Properties.Settings.Default.Save();
-            entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
+            //    entity.Properties.Settings.Default.Save();
+            //    entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)

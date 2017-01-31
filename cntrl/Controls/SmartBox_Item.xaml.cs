@@ -294,5 +294,10 @@ namespace cntrl.Controls
         {
             LoadData();
         }
+
+        private void SmartBoxItem_Focus(object sender, RoutedEventArgs e)
+        {
+            tbxSearch.Focus();
+        }
     }
 }

@@ -4,21 +4,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:crud="clr-namespace:cntrl.Curd"
-                 xmlns:Converter="clr-namespace:cntrl.Converters"
-                xmlns:pref="clr-namespace:cntrl.Controls"
+             xmlns:Converter="clr-namespace:cntrl.Converters"
+             xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
-             MinWidth="128"
+             MinWidth="128" GotFocus="SmartBoxItem_Focus"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <Converter:sbxItem_CheckType x:Key="sbxItem_CheckType"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <Storyboard x:Key="ShowIcons">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="toggleButton1">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="toggleButton">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="HideIcons">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="toggleButton1">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="toggleButton">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="UIElement.MouseEnter">
+            <BeginStoryboard x:Name="ShowIcons_BeginStoryboard" Storyboard="{StaticResource ShowIcons}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeave">
+            <BeginStoryboard x:Name="HideIcons_BeginStoryboard" Storyboard="{StaticResource HideIcons}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
             <StackPanel x:Name="ContactPopUp"/>
@@ -38,25 +82,32 @@
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Border Background="{StaticResource AccentColor_Introvert}" CornerRadius="5,0,0,5"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1">
+        <Border x:Name="border" Background="{StaticResource AccentColor_Introvert}" CornerRadius="5,0,0,5"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1" RenderTransformOrigin="0.5,0.5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding}">
-                <ToggleButton Width="28" Height="28" Content="" ToolTip="In Stock Search" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
-                              Style="{DynamicResource MetroCircleToggleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                <Button x:Name="button" Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="Black" Background="Coral" BorderBrush="Black" BorderThickness="1"
+                        Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"
+                        PreviewMouseUp="Refresh_PreviewMouseUp" Visibility="Collapsed">
+                    <Button.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                    </Button.Effect>
+                </Button>
+                <ToggleButton x:Name="toggleButton" Width="28" Height="28" Content="" ToolTip="In Stock Search" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}"  Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
                               IsChecked="{Binding Exclude_OutOfStock, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </ToggleButton.Effect>
                 </ToggleButton>
-                <ToggleButton Width="28" Height="28" Content="" ToolTip="Exact Code Search" Foreground="Black" Background="Gold" BorderBrush="Black"
-                              Style="{DynamicResource MetroCircleToggleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                <ToggleButton x:Name="toggleButton1" Width="28" Height="28" Content="" ToolTip="Exact Code Search" Foreground="Black" Background="Gold" BorderBrush="Black"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}" Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
                               IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=ExactSearch, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </ToggleButton.Effect>
                 </ToggleButton>
-                <StackPanel Orientation="Horizontal">
-                    <ToggleButton Width="28" Height="28" Content="A" ToolTip="{lex:Loc Configuration}" Foreground="DimGray" Background="Silver" BorderBrush="DimGray" BorderThickness="1"
+                <StackPanel x:Name="stackPanel" Orientation="Horizontal">
+                    <ToggleButton Width="28" Height="28" Content="A"  Visibility="Collapsed" ToolTip="{lex:Loc Configuration}" Foreground="DimGray" Background="Silver" BorderBrush="DimGray" BorderThickness="1"
                                   Style="{DynamicResource MetroCircleToggleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo">
                         <ToggleButton.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
@@ -79,14 +130,7 @@
                         </Border>
                     </Popup>
                 </StackPanel>
-                <Button Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="Black" Background="Coral" BorderBrush="Black" BorderThickness="1"
-                        Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"
-                        PreviewMouseUp="Refresh_PreviewMouseUp">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
-                    </Button.Effect>
-                </Button>
-                <Button Width="28" Height="28" Content="+" ToolTip="{lex:Loc New}" Foreground="Black" Background="PaleGreen" BorderBrush="Black" BorderThickness="1"
+                <Button x:Name="button1" Width="28" Height="28" Content="+" ToolTip="{lex:Loc New}" Foreground="Black" Background="PaleGreen" BorderBrush="Black" BorderThickness="1"
                         Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"
                         PreviewMouseUp="Add_PreviewMouseUp"
                         Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
@@ -97,10 +141,10 @@
             </StackPanel>
         </Border>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="-26,0">
+        <StackPanel Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Right" Margin="-26,0">
             <TextBox MinWidth="26" Text="34.2"/>
         </StackPanel>
-        
+
         <Popup x:Name="ItemPopUp" IsOpen="False" StaysOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}">
                 <Border.Effect>
@@ -117,6 +161,5 @@
                 </DataGrid>
             </Border>
         </Popup>
-        
     </Grid>
 </UserControl>

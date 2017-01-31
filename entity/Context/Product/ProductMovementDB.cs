@@ -121,7 +121,7 @@ namespace entity
                 }
             }
 
-            DateTime StartDate = DateTime.Now.AddMonths(-7);
+            DateTime StartDate = DateTime.Now.AddMonths(-12);
             DateTime EndDate = DateTime.Now;
 
             base.Configuration.LazyLoadingEnabled = false;
@@ -129,11 +129,13 @@ namespace entity
 
             List<item_inventory> item_inventoryList = new List<entity.item_inventory>();
             List<item_transfer> item_transferList = new List<entity.item_transfer>();
+            List<sales_invoice> sales_invoiceLIST = new List<entity.sales_invoice>();
 
             using (db db = new db())
             {
                 item_inventoryList = db.item_inventory.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents.Issued).ToList();
                 item_transferList = db.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).AsNoTracking().ToList();
+                sales_invoiceLIST = base.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
             }
 
             foreach (DateTime day in EachDay(StartDate, EndDate))
@@ -210,27 +212,24 @@ namespace entity
                         }
                     }
                 }
-            }
 
-
-            List<sales_invoice> sales_invoiceLIST = base.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
-
-            foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
-            {
-                ///Sales
-                using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
+                foreach (sales_invoice sales in sales_invoiceLIST.Where(z => z.trans_date.Date == day.Date))
                 {
-                    sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Find(sales.id_sales_invoice);
-                    if (sales_invoice != null)
+                    ///Sales
+                    using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
                     {
-                        try
+                        sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Find(sales.id_sales_invoice);
+                        if (sales_invoice != null)
                         {
-                            SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
-                            SalesInvoiceDB.SaveChanges();
-                        }
-                        catch (Exception e)
-                        {
-                            ErrorMsg += string.Format("/n SalesInvoice: {0}, {1}, Error Msg: {2}", sales.number, sales.trans_date, e.Message);
+                            try
+                            {
+                                SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
+                                SalesInvoiceDB.SaveChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorMsg += string.Format("/n SalesInvoice: {0}, {1}, Error Msg: {2}", sales.number, sales.trans_date, e.Message);
+                            }
                         }
                     }
                 }

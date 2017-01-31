@@ -222,8 +222,6 @@ namespace Cognitivo.Sales
                         if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdatePaymentReApprove.Update_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-
                         }
                     }
 
@@ -234,8 +232,6 @@ namespace Cognitivo.Sales
                         if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdatePaymentReApprove.Update_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-
                         }
                     }
 
@@ -246,8 +242,6 @@ namespace Cognitivo.Sales
                         if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             UpdatePaymentReApprove.Update_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-
                         }
                     }
 
@@ -424,7 +418,8 @@ namespace Cognitivo.Sales
                     //Currency
 
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
-                   
+                    
+                    sbxItem.Focus();
                 }));
             }
         }

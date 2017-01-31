@@ -82,8 +82,8 @@
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Border x:Name="border" Background="{StaticResource AccentColor_Introvert}" CornerRadius="5,0,0,5"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1" RenderTransformOrigin="0.5,0.5">
+        <Border x:Name="border" Background="{StaticResource AccentColor_Brush}" CornerRadius="4"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-1" RenderTransformOrigin="0.5,0.5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding}">
                 <Button x:Name="button" Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="Black" Background="Coral" BorderBrush="Black" BorderThickness="1"
                         Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="/cntrl;component/Resources/#cognitivo"

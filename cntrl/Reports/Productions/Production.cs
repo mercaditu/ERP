@@ -15,7 +15,6 @@
 										pod.parent_id_order_detail as ParentID,
 										pod.status as Status,
 										pod.is_input as Input,
-										
 										pod.code as Code,
 										pod.name as Item, 
 										pod.quantity as QuantityOrdered,

@@ -15,8 +15,8 @@ namespace cntrl.Reports.Finances
             Conditions.name as Conditions, 
             curr.name as Currency, 
             fx.buy_value as SalesRate,
-            ps.debit as Debit, 
-            ps.credit as Credit, 
+            sum(ps.debit) as Debit, 
+            sum(ps.credit) as Credit, 
             sr.number as SalesReturn,
             p.number as Payment,
             pt.name as Type, 
@@ -40,7 +40,8 @@ namespace cntrl.Reports.Finances
             left join sales_return as sr on pd.id_sales_return = sr.id_sales_return
             left join app_currencyfx as fx2 on pd.id_currencyfx = fx2.id_currencyfx
             left join app_currency as curr2 on fx2.id_currency = curr2.id_currency
-            where si.trans_date between '2016-01-01' and '2017-01-01'
+            where si.trans_date between @StartDate and @EndDate
+            group by ps.id_sales_invoice 
             order by ps.id_payment_schedual";
     }
 }

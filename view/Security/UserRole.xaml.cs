@@ -89,33 +89,48 @@ namespace Cognitivo.Security
         {
             try
             {
-         
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 if (security_role != null)
                 {
-                    CurrentSession.Versions version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                    security_role.Version = version;
-                    List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.version == version.ToString()).ToList();
-                    int LocalUser = 0;
-                    if (security_roleList.Count() > 0)
-                    {
-                        LocalUser = UserRoleDB.security_role.Where(x => x.version == version.ToString()).Sum(x => x.security_user.Count);
-                    }
+                    CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                    security_role.Version = Version;
 
-                    int serverUser = 0;
+                    //List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.version == version.ToString()).ToList();
+
+                    int UserCount = 0;
+                    UserCount = UserRoleDB.security_role.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
+                    
+                    int UserLimit = 0;
                     if (Licence.CompanyLicence != null)
                     {
-                        entity.Brillo.versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)version).FirstOrDefault();
-                        if (versions != null)
-                        {
-                            serverUser = versions.user_number;
-                        }
-                        if (LocalUser > serverUser)
-                        {
-                            security_role.Version = CurrentSession.Versions.Lite;
-                        }
+                        versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)Version).FirstOrDefault();
 
+                        if (versions != null)
+                        { //Exists = Yes.
+                            UserLimit = versions.user_number;
+
+                            if (UserLimit < UserCount)
+                            { //No space Avaiable
+                                MessageBox.Show("You have surpassed your User Limit of " + UserLimit + " for " + security_role.Version.ToString() + " Plan. /n" +
+                                    "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
+                                    , "Cognitivo");
+                                security_role.Version = CurrentSession.Versions.Lite;
+                            }
+                        }
+                        else
+                        {
+                             string key=  Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key,(int)CurrentSession.Versions.Full);
+                            //write code for trial 15 days for this plan.
+                            if (key== Licence.CompanyLicence.license_key)
+                            {
+                                MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
+                                           "You will have 15 days trial period, once finished, you will be diverted to the free account."
+                                           , "Cognitivo");
+                            }
+                           
+                        }
                     }
+
                     UserRoleDB.SaveChanges();
 
                     CurrentSession.Load_Security();

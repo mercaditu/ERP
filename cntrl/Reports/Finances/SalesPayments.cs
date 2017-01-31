@@ -25,7 +25,8 @@ namespace cntrl.Reports.Finances
             ps.expire_date as ExpiryDate,
             pd.trans_date as PaymentDate,  
             fx2.buy_value as PaymentRate, 
-            curr2.name as Currency
+            curr2.name as Currency,
+            ps.parent_id_payment_schedual as Parent
 
             from payment_schedual as ps
 

@@ -21,6 +21,7 @@ namespace entity.Reporting
         public decimal QuantityOrdered { get; set; }
         public decimal QuantityExecuted { get; set; }
         public decimal CostExecuted { get; set; }
+        public decimal CostEstimated { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

@@ -58,7 +58,7 @@ namespace Cognitivo.Menu
                 try
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "");
+                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "",(int)CurrentSession.Versions.Full);
                  
                 }
                 catch (Exception)

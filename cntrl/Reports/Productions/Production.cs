@@ -20,6 +20,7 @@
 										pod.quantity as QuantityOrdered,
 										ped.quantity as QuantityExecuted,
 										ped.unit_cost as CostExecuted,
+                                        pt.unit_cost_est as CostEstimated,
 										pod.start_date_est as StartDate,
 										pod.end_date_est as EndDate
 	
@@ -29,6 +30,7 @@
 										left join contacts as c on p.id_contact = c.id_contact
 										inner join production_line as l on po.id_production_line = l.id_production_line
 										inner join production_order_detail as pod on po.id_production_order = pod.id_production_order
+                                        inner join project_task pt on pt.id_project_task=pod.id_project_task
 										left join production_execution_detail as ped on pod.id_order_detail = ped.id_order_detail
 										where po.id_company = @CompanyID and pod.trans_date between '@StartDate' and '@EndDate'";
 	}

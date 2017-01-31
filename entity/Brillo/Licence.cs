@@ -14,6 +14,7 @@ namespace entity.Brillo
         {
             versions = new List<versions>();
         }
+
         public int id { get; set; }
         public string license_key { get; set; }
         public string first_name { get; set; }
@@ -24,6 +25,7 @@ namespace entity.Brillo
      
         public List<versions> versions { get; set; }
     }
+
     public class versions
     {
         public int id { get; set; }
@@ -32,10 +34,12 @@ namespace entity.Brillo
         public int? version { get; set; }
         public DateTime date_expiry { get; set; }
     }
+
     public class Licence
     {
        public licence CompanyLicence;
-        public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email)
+
+        public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email, int version)
         {
             var webAddr = "http://www.cognitivo.in/LicenceManager/public/Licence";
 
@@ -44,11 +48,29 @@ namespace entity.Brillo
                 Email = "abc@FirstName.com";
             }
 
-            webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email;
+            webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email + "/" + version;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "get";
             
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (Stream stream = httpResponse.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                String responseString = reader.ReadToEnd();
+                return responseString;
+            }
+        }
+        public string CreateLicenceVersion(String LicenceKey, int version)
+        {
+            var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVersion";
+
+       
+            webAddr = webAddr + "/" + LicenceKey + "/" + version;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "get";
+
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (Stream stream = httpResponse.GetResponseStream())
             {

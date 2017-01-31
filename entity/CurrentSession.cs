@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 
 namespace entity
 {
@@ -197,48 +198,17 @@ namespace entity
 
         public static void Start(security_user Sec_User, security_role Role)
         {
-            Security_CurdList = new List<security_crud>();
-            Security_role_privilageList = new List<security_role_privilage>();
-
-            if (Sec_User != null)
+            Brillo.Licence Licence = new Brillo.Licence();
+            try
             {
-                User = Sec_User;
-                Id_User = User.id_user;
-                UserRole = Role;
-                Version = Role.Version;
 
-                if (Id_Branch == 0)
+                string licensekey = "";
+                app_company app_company;
+
+                using (db db = new db())
                 {
-                    using (db db = new db())
-                    {
-                        Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).FirstOrDefault().id_branch;
-                    }
+                    app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
 
-                    Properties.Settings.Default.branch_ID = Id_Branch;
-                    Properties.Settings.Default.Save();
-                }
-
-                Properties.Settings.Default.user_Name = User.name_full;
-                Properties.Settings.Default.Save();
-
-                //Setting Security, once CurrentSession Data is set.
-                Load_Security();
-
-                //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
-                Load_BasicData(null, null);
-                //Load Basic Data into Timer.
-                Timer myTimer = new Timer();
-                myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                myTimer.Interval = 60000;
-                myTimer.Start();
-
-                try
-                {
-                    Brillo.Licence Licence = new Brillo.Licence();
-                    string licensekey = "";
-                    db db = new db();
-
-                    app_company app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
                     if (app_company != null)
                     {
                         if (app_company.version != null || app_company.version == "")
@@ -247,24 +217,74 @@ namespace entity
                         }
                         else
                         {
-                            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "");
+                            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
+                            app_company.version = licensekey;
+                            db.SaveChanges();
                         }
                     }
+                }
 
+                Licence.VerifyCompanyLicence(licensekey);
 
-                    Licence.VerifyCompanyLicence(licensekey);
+                if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
+                {
+                    Version = Versions.Lite;
+                }
 
-                    if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
+                Security_CurdList = new List<security_crud>();
+                Security_role_privilageList = new List<security_role_privilage>();
+
+                if (Sec_User != null)
+                {
+                    User = Sec_User;
+                    Id_User = User.id_user;
+                    UserRole = Role;
+
+                    if (Licence.CompanyLicence.versions.Where(x => x.version == (int)Role.Version).Count() > 0)
+                    {
+                        Version = Role.Version;
+                    }
+                    else
                     {
                         Version = Versions.Lite;
+                        MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
+                                        "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
+                                        , "Cognitivo");
                     }
-                   
+
+
+
+                    if (Id_Branch == 0)
+                    {
+                        using (db db = new db())
+                        {
+                            Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).Select(y => y.id_branch).FirstOrDefault();
+                        }
+
+                        Properties.Settings.Default.branch_ID = Id_Branch;
+                        Properties.Settings.Default.Save();
+                    }
+
+                    Properties.Settings.Default.user_Name = User.name_full;
+                    Properties.Settings.Default.Save();
+
+                    //Setting Security, once CurrentSession Data is set.
+                    Load_Security();
+
+                    //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
+                    Load_BasicData(null, null);
+                    //Load Basic Data into Timer.
+                    Timer myTimer = new Timer();
+                    myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
+                    myTimer.Interval = 60000;
+                    myTimer.Start();
+
+
                 }
-                catch (Exception e)
-                {
-                    System.Windows.Forms.MessageBox.Show(e.ToString());
-                   // Version = Versions.Lite;
-                }
+            }
+            catch (Exception e)
+            {
+                //  System.Windows.Forms.MessageBox.Show(e.ToString());
             }
         }
 
@@ -351,7 +371,7 @@ namespace entity
         public static List<app_currencyfx> CurrencyFX_ActiveRates { get; set; }
 
         public static bool Allow_UpdateSalesDetail { get; set; }
-        
+
         public static app_currencyfx Get_Currency_Default_Rate()
         {
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();

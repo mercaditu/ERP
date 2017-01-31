@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Controls;
 using Microsoft.Maps.MapControl.WPF;
+using System.Collections.Generic;
 
 namespace Cognitivo.Commercial
 {
@@ -31,14 +32,12 @@ namespace Cognitivo.Commercial
             
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
             contactcontact_field_valueemailViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueemailViewSource");
-
             contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
-
 
             //Contact
             ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).Load();
@@ -73,7 +72,7 @@ namespace Cognitivo.Commercial
 
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = CurrentSession.Currencies; //ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            app_currencyViewSource.Source = CurrentSession.Currencies.OrderBy(a => a.name); //ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppBank
             CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
@@ -83,16 +82,19 @@ namespace Cognitivo.Commercial
             app_fieldphoneViewSource = (CollectionViewSource)FindResource("app_fieldphoneViewSource");
             app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
             ContactDB.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
-            app_fieldemailViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Email).ToList();
-            app_fieldphoneViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Telephone).ToList();
-            app_fieldViewSource.Source = ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Account).ToList();
+
+            List<app_field> ListOfFields = await ContactDB.app_field.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+
+            app_fieldemailViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Email).ToList();
+            app_fieldphoneViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Telephone).ToList();
+            app_fieldViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Account).ToList();
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
-            ContactDB.contact_tag
+            await ContactDB.contact_tag
              .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
-             .OrderBy(x => x.name).Load();
+             .OrderBy(x => x.name).LoadAsync();
             CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
             contact_tagViewSource.Source = ContactDB.contact_tag.Local;
 
@@ -184,12 +186,10 @@ namespace Cognitivo.Commercial
                 if (contact_role.can_transact == true)
                 {
                     tabFinance.Visibility = Visibility.Visible;
-                    //tabSubscription.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     tabFinance.Visibility = Visibility.Collapsed;
-                    //tabSubscription.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -516,12 +516,12 @@ namespace Cognitivo.Commercial
                 if (app_field == null)
                 {
                     app_field = new app_field();
-                    app_field.field_type = entity.app_field.field_types.Email;
+                    app_field.field_type = app_field.field_types.Email;
                     app_field.name = "Work";
                     ContactDB.app_field.Add(app_field);
 
-                    app_fieldViewSource.View.Refresh();
-                    app_fieldViewSource.View.MoveCurrentToLast();
+                    app_fieldemailViewSource.View.Refresh();
+                    app_fieldemailViewSource.View.MoveCurrentToLast();
                 }
                 
                 contact_field_value contact_field_value = new contact_field_value();
@@ -538,8 +538,6 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact != null)
             {
-                //using (db db = new db())
-                //{
                 app_field app_field = app_fieldphoneViewSource.View.CurrentItem as app_field;
                 if (app_field == null)
                 {
@@ -552,11 +550,10 @@ namespace Cognitivo.Commercial
                     app_fieldphoneViewSource.View.MoveCurrentToLast();
                 }
 
-                //}
-
                 contact_field_value contact_field_value = new contact_field_value();
                 contact_field_value.app_field = app_field;
                 contact.contact_field_value.Add(contact_field_value);
+
                 contactViewSource.View.Refresh();
                 contactcontact_field_valuephoneViewSource.View.Refresh();
                 contactcontact_field_valuephoneViewSource.View.MoveCurrentToLast();

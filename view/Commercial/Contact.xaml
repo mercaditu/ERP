@@ -151,7 +151,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                         <cntrls:CustomField 
-                                            app_fieldViewSource="{Binding Source={StaticResource app_fieldphoneViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            app_fieldViewSource="{Binding Source={StaticResource app_fieldphoneViewSource}}"
                                             FieldID="{Binding id_field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             FieldValue="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
@@ -172,7 +172,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <cntrls:CustomField app_fieldViewSource="{Binding Source={StaticResource app_fieldemailViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <cntrls:CustomField app_fieldViewSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
                                             FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                                             FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>

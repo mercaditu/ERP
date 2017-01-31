@@ -214,7 +214,7 @@ namespace Cognitivo.Menu
         {
             //    entity.Properties.Settings.Default.Save();
             //    entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
-        }
+         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {

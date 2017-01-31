@@ -22,7 +22,7 @@ namespace Cognitivo.Security
             security_rolesecurity_role_privilageViewSource;
 
         entity.CurrentSession.Versions CurrentVersion;
-
+        entity.Brillo.Licence Licence = new entity.Brillo.Licence();
         public UserRole()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace Cognitivo.Security
 
             await UserRoleDB.security_role.Where(a =>
                                             a.id_company == CurrentSession.Id_Company)
-                                            .OrderBy(a => a.name).Include(y => y.app_department).Include(y=>y.security_role_privilage)
+                                            .OrderBy(a => a.name).Include(y => y.app_department).Include(y => y.security_role_privilage)
                                             .LoadAsync();
             security_roleViewSource.Source = UserRoleDB.security_role.Local;
 
@@ -46,6 +46,13 @@ namespace Cognitivo.Security
 
             add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
+         
+            app_company app_company = UserRoleDB.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+            if (app_company != null)
+            {
+                Licence.VerifyCompanyLicence(app_company.version);
+            }
+
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -82,7 +89,7 @@ namespace Cognitivo.Security
         {
             try
             {
-                Licence Licence = new Licence();
+         
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 if (security_role != null)
                 {
@@ -90,13 +97,13 @@ namespace Cognitivo.Security
                     security_role.Version = version;
                     List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.version == version.ToString()).ToList();
                     int LocalUser = 0;
-                    if (security_roleList.Count()>0)
+                    if (security_roleList.Count() > 0)
                     {
                         LocalUser = UserRoleDB.security_role.Where(x => x.version == version.ToString()).Sum(x => x.security_user.Count);
                     }
-                    
+
                     int serverUser = 0;
-                    if (Licence.CompanyLicence!=null)
+                    if (Licence.CompanyLicence != null)
                     {
                         entity.Brillo.versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)version).FirstOrDefault();
                         if (versions != null)
@@ -149,7 +156,7 @@ namespace Cognitivo.Security
 
                 security_roleViewSource.View.Refresh();
                 security_roleViewSource.View.MoveCurrentToLast();
-             }
+            }
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -181,7 +188,7 @@ namespace Cognitivo.Security
                 {
                     foreach (Privilage.Privilages Privilage in Privilages)
                     {
-                        if (UserRoleDB.security_privilage.Where(x => x.name == Privilage ).Count() == 0)
+                        if (UserRoleDB.security_privilage.Where(x => x.name == Privilage).Count() == 0)
                         {
                             if ((int)Privilage >= 3)
                             {
@@ -213,7 +220,7 @@ namespace Cognitivo.Security
                 if (security_privilage.id_application == entity.App.Names.SalesInvoice ||
                     security_privilage.id_application == entity.App.Names.ProductionExecution)
                 {
-                    if (UserRoleDB.security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage && x.id_role== security_role.id_role).Count() == 0)
+                    if (UserRoleDB.security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage && x.id_role == security_role.id_role).Count() == 0)
                     {
                         security_role_privilage _security_role_privilage = new security_role_privilage();
                         _security_role_privilage.id_privilage = security_privilage.id_privilage;
@@ -373,10 +380,11 @@ namespace Cognitivo.Security
             security_role security_role = security_roleViewSource.View.CurrentItem as security_role;
             if (security_role != null)
             {
-                Activation Activation = new Activation();
-                CurrentSession.Versions version = Activation.VersionDecrypt(security_role);
-                cbxVersion.SelectedItem = version;
-                CurrentVersion = version;
+                cbxVersion.SelectedItem = security_role.Version;
+                CurrentVersion = security_role.Version;
+                lblVersionlocal.Content = UserRoleDB.security_role.Local.Where(x => x.Version == security_role.Version).Sum(x => x.security_user.Count);
+
+                lblVersionInternet.Content = Licence.CompanyLicence.versions.Where(x => x.version == (int)security_role.Version).Sum(x => x.user_number);
             }
         }
     }

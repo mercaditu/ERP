@@ -147,16 +147,7 @@
 												ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
 						<DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto"/>
-						<DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto"/>
-                        <DataGridTextColumn Binding="{Binding batch_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    Header="{lex:Loc Cognitivo:local:BatchCode}" MinWidth="128" MaxWidth="256" Width="Auto"/>
-                        <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                       
+                        <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
 							<DataGridTextColumn.Header>
 								<TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>
@@ -167,7 +158,35 @@
 								<TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" Counted"/></TextBlock>
 							</DataGridTextColumn.Header>
 						</DataGridTextColumn>
-						<DataGridTemplateColumn Width="Auto" Header="">
+                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    
+                                            Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
+                                            <Setter Property="IsEnabled" Value="false"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="Expiry" Width="100">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
+                                            <Setter Property="IsEnabled" Value="false"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto" Header="">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"

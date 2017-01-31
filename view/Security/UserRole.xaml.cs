@@ -398,8 +398,11 @@ namespace Cognitivo.Security
                 cbxVersion.SelectedItem = security_role.Version;
                 CurrentVersion = security_role.Version;
                 lblVersionlocal.Content = UserRoleDB.security_role.Local.Where(x => x.Version == security_role.Version).Sum(x => x.security_user.Count);
-
-                lblVersionInternet.Content = Licence.CompanyLicence.versions.Where(x => x.version == (int)security_role.Version).Sum(x => x.user_number);
+                if (Licence.CompanyLicence!=null)
+                {
+                    lblVersionInternet.Content = Licence.CompanyLicence.versions.Where(x => x.version == (int)security_role.Version).Sum(x => x.user_number);
+                }
+             
             }
         }
     }

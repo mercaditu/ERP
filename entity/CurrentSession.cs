@@ -240,7 +240,7 @@ namespace entity
                     Id_User = User.id_user;
                     UserRole = Role;
 
-                    if (Licence.CompanyLicence.versions.Where(x => x.version == (int)Role.Version).Count() > 0)
+                    if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
                     {
                         Version = Role.Version;
                     }

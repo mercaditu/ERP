@@ -96,7 +96,7 @@ namespace entity
         }
         #endregion
 
-        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable,bool is_print)
+        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable, bool is_print)
         {
             foreach (payment payment in payments.Local.Where(x => x.status != Status.Documents_General.Approved && x.IsSelected))
             {
@@ -106,7 +106,7 @@ namespace entity
                 }
 
                 //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-              
+
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(payment_schedualList, payment, IsRecievable, is_print);
@@ -133,13 +133,13 @@ namespace entity
                     ///If PaymentDetail Value is Negative.
                     ///
                     decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
-                    foreach (payment_schedual parent in payment_schedualList.Where(x=>x.AccountPayableBalance>0))
+                    foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
                         payment_schedual Parent_Schedual = new payment_schedual();
                         payment_schedual child_schedual = new payment_schedual();
                         if (ChildBalance > 0)
                         {
-                            if (Math.Round(ChildBalance,2) >= Math.Round(parent.credit))
+                            if (Math.Round(ChildBalance, 2) >= Math.Round(parent.credit))
                             {
                                 child_schedual.debit = parent.credit;
                                 if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
@@ -160,13 +160,13 @@ namespace entity
                                 }
                                 ChildBalance -= ChildBalance;
                             }
-                         
+
                             number = Parent_Schedual.purchase_invoice.number;
                             if (Parent_Schedual.id_purchase_invoice != null)
                             {
                                 child_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                                 ModuleName = "PurchaseInvoice";
-                               
+
                             }
 
                             ///
@@ -213,7 +213,7 @@ namespace entity
                                 ChildBalance -= ChildBalance;
                             }
 
-                          
+
                             ///
                             number = Parent_Schedual.sales_invoice.number;
                             if (Parent_Schedual.id_sales_invoice != null)
@@ -235,7 +235,7 @@ namespace entity
                                 ModuleName = "SalesOrder";
                             }
 
-                      
+
                         }
                         payment_type _payment_type = await payment_type.FindAsync(payment_detail.id_payment_type);
 
@@ -299,11 +299,30 @@ namespace entity
                             app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                             base.app_account_detail.Add(app_account_detail);
                             schedualList.Add(child_schedual);
+                        }
                     }
-                }
-                //End Mode IF
+                    //End Mode IF
 
-                //Assigns appCurrencyFX ID & Entity
+                    //Assigns appCurrencyFX ID & Entity
+
+
+
+
+
+
+
+                    ///
+
+
+
+                    //Add Balance Payment Schedual into Context. 
+
+
+
+                    ///Code to specify Accounts.
+                    ///
+
+                }
                 if (payment_detail.id_currencyfx == 0)
                 {
                     payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -325,7 +344,7 @@ namespace entity
                 if (payment_detail.id_account == 0 || payment_detail.id_account == null)
                 {
                     payment_detail.id_account = CurrentSession.Id_Account;
-                    payment_detail.app_account = await app_account.Where(x => x.id_account== CurrentSession.Id_Account).FirstOrDefaultAsync();
+                    payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
                 }
 
 
@@ -340,24 +359,6 @@ namespace entity
                     payment_schedual.trans_date = payment_detail.trans_date;
                     payment_schedual.expire_date = Parent_Schedual.expire_date;
                     payment_detail.payment_schedual.Add(payment_schedual);
-                }
-            
-
-              
-
-               
-
-                ///
-         
-
-
-                //Add Balance Payment Schedual into Context. 
-          
-
-
-                ///Code to specify Accounts.
-                ///
-                
                 }
                 //pankeel
             }
@@ -374,7 +375,7 @@ namespace entity
             {
                 base.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }

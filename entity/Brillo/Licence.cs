@@ -22,7 +22,7 @@ namespace entity.Brillo
         public string company_name { get; set; }
         public string company_code { get; set; }
         public DateTime date_created { get; set; }
-     
+
         public List<versions> versions { get; set; }
     }
 
@@ -37,62 +37,83 @@ namespace entity.Brillo
 
     public class Licence
     {
-       public licence CompanyLicence;
+        public licence CompanyLicence;
 
         public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email, int version)
         {
-            var webAddr = "http://www.cognitivo.in/LicenceManager/public/Licence";
-
-            if (Email == "")
+            try
             {
-                Email = "abc@FirstName.com";
+                var webAddr = "http://www.cognitivo.in/LicenceManager/public/Licence";
+
+                if (Email == "")
+                {
+                    Email = "abc@FirstName.com";
+                }
+
+                webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email + "/" + version;
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "get";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (Stream stream = httpResponse.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    String responseString = reader.ReadToEnd();
+                    return responseString;
+                }
             }
-
-            webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email + "/" + version;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "get";
-            
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (Stream stream = httpResponse.GetResponseStream())
+            catch (Exception ex)
             {
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                String responseString = reader.ReadToEnd();
-                return responseString;
+                return "";
             }
         }
         public string CreateLicenceVersion(String LicenceKey, int version)
         {
-            var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVersion";
-
-       
-            webAddr = webAddr + "/" + LicenceKey + "/" + version;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "get";
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (Stream stream = httpResponse.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                String responseString = reader.ReadToEnd();
-                return responseString;
+                var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVersion";
+
+
+                webAddr = webAddr + "/" + LicenceKey + "/" + version;
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "get";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (Stream stream = httpResponse.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    String responseString = reader.ReadToEnd();
+                    return responseString;
+                }
+            }
+            catch (Exception ex)
+            {
+                return "";
             }
         }
         public void VerifyCompanyLicence(String LicenceKey)
         {
-            var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVerify";
-            webAddr = webAddr + "/" + LicenceKey;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "get";
-            
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (Stream stream = httpResponse.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                string jsondata = reader.ReadToEnd();
-               CompanyLicence = JsonConvert.DeserializeObject<licence>(jsondata);
+                var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVerify";
+                webAddr = webAddr + "/" + LicenceKey;
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "get";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (Stream stream = httpResponse.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    string jsondata = reader.ReadToEnd();
+                    CompanyLicence = JsonConvert.DeserializeObject<licence>(jsondata);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

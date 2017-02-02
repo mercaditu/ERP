@@ -312,6 +312,7 @@ namespace entity.Brillo.Promotion
                 if (Promo.reference == SalesInvoice.app_currencyfx.id_currency)
                 {
 
+
                     if (Promo.quantity_step <= Invoice.GrandTotal)
                     {
 
@@ -332,15 +333,28 @@ namespace entity.Brillo.Promotion
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
             {
+                if (SalesInvoice.sales_invoice_detail.Where(x=>x.IsPromo).Count()>0)
+                {
+                    SalesInvoice.DiscountPercentage = 0;
+
+                    foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
+                    {
+                        _Detail_.IsPromo = false;
+
+                    }
+                }
+               
                 if (SalesInvoice.contact.contact_tag_detail.Where(x=>x.id_tag==Promo.reference).Count()>0)
                 {
-
+                    
                      SalesInvoice.DiscountPercentage = Promo.result_value;
-
-
-                  
+                                      
                 }
-
+                foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
+                {
+                    _Detail_.IsPromo = true;
+                   
+                }
 
 
 

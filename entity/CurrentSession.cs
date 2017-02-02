@@ -239,17 +239,30 @@ namespace entity
                     User = Sec_User;
                     Id_User = User.id_user;
                     UserRole = Role;
+                    using (db db = new db())
+                    {
+                        security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
 
-                    if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
-                    {
-                        Version = Role.Version;
-                    }
-                    else
-                    {
-                        Version = Versions.Lite;
-                        MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
-                                        "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
-                                        , "Cognitivo");
+                        if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
+                        {
+                            if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
+                            {
+                                security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
+                                Version = Role.Version;
+                            }
+
+
+                        }
+                        else
+                        {
+                            security_role.Version = Versions.Lite;
+                            Version = Versions.Lite;
+                            MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
+                                            "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
+                                            , "Cognitivo");
+                        }
+                        db.SaveChanges();
+
                     }
 
 

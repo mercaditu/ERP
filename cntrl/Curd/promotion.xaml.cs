@@ -12,7 +12,7 @@ namespace cntrl
 {
     public partial class promotion : UserControl
     {
-        CollectionViewSource  item_tagViewSource, item_tagBonusViewSource, app_currencyViewSource;
+        CollectionViewSource  item_tagViewSource, item_tagBonusViewSource, app_currencyViewSource, contact_tagViewSource;
         CollectionViewSource _sales_promotionViewSource = null;
         public CollectionViewSource sales_promotionViewSource { get { return _sales_promotionViewSource; } set { _sales_promotionViewSource = value; } }
 
@@ -34,6 +34,11 @@ namespace cntrl
 
                 entity.db.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).Load();
                 item_tagViewSource.Source = entity.db.item_tag.Local;
+
+                contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
+
+                entity.db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+                contact_tagViewSource.Source = entity.db.contact_tag.Local;
 
                 app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
                 entity.db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).Load();
@@ -130,7 +135,7 @@ namespace cntrl
                 Item_Bonus.Visibility = Visibility.Visible;
                 Discount.Visibility = Visibility.Collapsed;
                 QuntityStep.Visibility = Visibility.Visible;
-
+                ContactTag_Parameter.Visibility = Visibility.Collapsed;
                 item input = entity.db.items.Find(sales_promotion.reference);
                 if (input != null)
                 {
@@ -153,8 +158,8 @@ namespace cntrl
                 Item_Bonus.Visibility = Visibility.Visible;
                 Discount.Visibility = Visibility.Collapsed;
                 QuntityStep.Visibility = Visibility.Visible;
+                ContactTag_Parameter.Visibility = Visibility.Collapsed;
 
-              
                 item output = entity.db.items.Find(sales_promotion.reference_bonus);
 
                 if (output != null)
@@ -171,7 +176,7 @@ namespace cntrl
                 Item_Parameter.Visibility = Visibility.Visible;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
-
+                ContactTag_Parameter.Visibility = Visibility.Collapsed;
                 item input = entity.db.items.Find(sales_promotion.reference);
                 if (input != null)
                 {
@@ -188,6 +193,7 @@ namespace cntrl
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Visible;
+                ContactTag_Parameter.Visibility = Visibility.Collapsed;
             }
             else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
             {
@@ -197,6 +203,16 @@ namespace cntrl
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
                 QuntityStep.Visibility = Visibility.Collapsed;
+            }
+            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
+            {
+                Total_Parameter.Visibility = Visibility.Collapsed;
+                Tag_Parameter.Visibility = Visibility.Collapsed;
+                Item_Parameter.Visibility = Visibility.Collapsed;
+                Item_Bonus.Visibility = Visibility.Collapsed;
+                Discount.Visibility = Visibility.Visible;
+                QuntityStep.Visibility = Visibility.Collapsed;
+                ContactTag_Parameter.Visibility = Visibility.Visible;
             }
         }
     }

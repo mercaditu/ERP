@@ -43,15 +43,22 @@ namespace entity.Brillo.Promotion
                 Invoice.Details.Add(Detail);
             }
 
-
-
-            foreach (var Promo in SalesPromotionLIST)
+            var promo = SalesPromotionLIST.Where(x => x.type == sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
+            if (promo != null)
             {
+                Discount_onCustomerType(promo, Invoice, SalesInvoice);
+            }
+            else
+            {
+                foreach (var Promo in SalesPromotionLIST)
+                {
 
-                BuyThis_GetThat(Promo, Invoice, SalesInvoice);
-                Discount_onItem(Promo, Invoice, SalesInvoice);
-                Discount_onTag(Promo, Invoice, SalesInvoice);
-                Discount_onGrandTotal(Promo, Invoice, SalesInvoice);
+                    BuyThis_GetThat(Promo, Invoice, SalesInvoice);
+                    Discount_onItem(Promo, Invoice, SalesInvoice);
+                    Discount_onTag(Promo, Invoice, SalesInvoice);
+                    Discount_onGrandTotal(Promo, Invoice, SalesInvoice);
+
+                }
             }
         }
 
@@ -313,6 +320,25 @@ namespace entity.Brillo.Promotion
 
 
                     }
+                }
+
+
+
+
+
+            }
+        }
+        private void Discount_onCustomerType(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        {
+            if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
+            {
+                if (SalesInvoice.contact.contact_tag_detail.Where(x=>x.id_tag==Promo.reference).Count()>0)
+                {
+
+                     SalesInvoice.DiscountPercentage = Promo.result_value;
+
+
+                  
                 }
 
 

@@ -15,7 +15,8 @@ namespace entity
             //Discount_onBrand = 5,
             Discount_onItem = 6,
             BuyThis_GetThat = 7,
-            BuyTag_GetThat = 8
+            BuyTag_GetThat = 8,
+            Discount_onCustomerType = 10
             //BuyThis_Discount_OnSecond = 9
         }
 

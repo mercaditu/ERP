@@ -95,10 +95,10 @@ namespace Cognitivo.Security
                     CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
                     security_role.Version = Version;
 
-                    //List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.version == version.ToString()).ToList();
+                    List<security_role> security_roleList = UserRoleDB.security_role.ToList();
 
                     int UserCount = 0;
-                    UserCount = UserRoleDB.security_role.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
+                    UserCount = security_roleList.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
                     
                     int UserLimit = 0;
                     if (Licence.CompanyLicence != null)
@@ -121,7 +121,7 @@ namespace Cognitivo.Security
                         {
                              string key=  Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key,(int)CurrentSession.Versions.Full);
                             //write code for trial 15 days for this plan.
-                            if (key== Licence.CompanyLicence.license_key)
+                            if (key== Licence.CompanyLicence.license_key && security_role.Version !=CurrentSession.Versions.Lite)
                             {
                                 MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
                                            "You will have 15 days trial period, once finished, you will be diverted to the free account."

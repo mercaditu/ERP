@@ -201,6 +201,7 @@ namespace entity
             Brillo.Licence Licence = new Brillo.Licence();
             try
             {
+                CurrentSession.UserRole = Role;
 
                 string licensekey = "";
                 app_company app_company;
@@ -213,7 +214,13 @@ namespace entity
                     {
                         if (app_company.version != null || app_company.version == "")
                         {
-                            licensekey = app_company.version;
+                            Licence.VerifyCompanyLicence(licensekey);
+                            if (Licence.CompanyLicence.versions.Count()==0)
+                            {
+                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
+                                app_company.version = licensekey;
+                                db.SaveChanges();
+                            }
                         }
                         else
                         {

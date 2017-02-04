@@ -83,7 +83,7 @@ namespace entity.Brillo
           
 
             string _Passkey = "^%*@$^$";
-            int id_role = CurrentSession.UserRole.id_role;
+          
 
          
             if (security_role != null)

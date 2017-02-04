@@ -126,6 +126,13 @@
                     </Grid>
 
                 </Button>
+                <Button IsDefault="True" Click="Button_Click_1" Background="Transparent" 
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
+                       <Label Content="Convert To Testing" FontSize="10" HorizontalContentAlignment="Center"/>
+                    </Grid>
+
+                </Button>
                 <Button IsDefault="True" Click="Button_Click" Background="Transparent" 
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">

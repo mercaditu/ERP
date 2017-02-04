@@ -271,5 +271,26 @@ namespace Cognitivo.Menu
                 db.SaveChanges();
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");
+            if (PASsWORD == "DOCOMO")
+            {
+               string licensekey = "Cognitivo5895b2d3b0ab96.82490138";
+                using (db db = new db())
+                {
+                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+
+                    if (app_company != null)
+                    {
+
+                        app_company.version = licensekey;
+
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

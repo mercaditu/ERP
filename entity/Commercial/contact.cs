@@ -153,8 +153,28 @@ namespace entity
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
 
-        public bool is_customer { get; set; }
-        public bool is_supplier { get; set; }
+        public bool is_customer
+        {
+            get { return _is_customer; }
+            set
+            {
+                _is_customer = _is_customer != value ? value : _is_customer;
+                RaisePropertyChanged("is_customer");
+            }
+        }
+        private bool _is_customer;
+
+        public bool is_supplier
+        {
+            get { return _is_supplier; }
+            set
+            {
+                _is_supplier = _is_supplier != value ? value : _is_supplier;
+                RaisePropertyChanged("is_supplier");
+            }
+        }
+        private bool _is_supplier;
+
         public bool is_employee { get; set; }
 
         public bool is_sales_rep { get; set; }

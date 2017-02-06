@@ -29,7 +29,7 @@
 			<SolidColorBrush x:Key="Label_ImportantColor" Color="#FF0066"/>
 			<SolidColorBrush x:Key="Modal_BackgroundColor" Color="Black" Opacity="0.64"/>
 
-			<Style x:Key="main_Datagrid" BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid">
+			<!--<Style x:Key="main_Datagrid" BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid">
 				<Setter Property="Background" Value="WhiteSmoke"/>
 				<Setter Property="FontSize" Value="12"/>
 				<Setter Property="IsReadOnly" Value="True"/>
@@ -44,7 +44,7 @@
 						<Setter Property="Foreground" Value="Black"/>
 					</Trigger>
 				</Style.Triggers>
-			</Style>
+			</Style>-->
 
 			<Style x:Key="Number_CellStyle" BasedOn="{StaticResource MetroDataGridCell}" TargetType="DataGridCell">
 				<Setter Property="HorizontalContentAlignment" Value="Right"/>
@@ -220,58 +220,58 @@
 				</Setter>
 			</Style>
 
-			<Style x:Key="TextboxToLabelStyle" TargetType="{x:Type TextBox}">
-				<Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-				<Setter Property="Background" Value="Transparent"/>
-				<Setter Property="HorizontalContentAlignment" Value="Left"/>
-				<Setter Property="VerticalContentAlignment" Value="Top"/>
-				<Setter Property="Height" Value="26"/>
-				<Setter Property="Width" Value="256"/>
-				<Setter Property="Margin" Value="4,0,4,4"/>
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="{x:Type TextBox}">
-							<Grid>
-								<TextBox Name="txt" Grid.ZIndex="2"
+            <Style x:Key="TextboxToLabelStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Margin" Value="4,0,4,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Grid>
+                                <TextBox Name="txt" Grid.ZIndex="2"
 										 FontSize="11"
 										 Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 										 Opacity="1"/>
-								<Label Name="label" IsTabStop="False"
+                                <Label Name="label" IsTabStop="False"
 										 Grid.ZIndex="1"
 										 FontSize="11"
 										 Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 										 Opacity="0"/>
-							</Grid>
-							<ControlTemplate.Triggers>
-								<Trigger Property="IsEnabled" Value="False">
-									<Setter TargetName="label" Property="Opacity" Value="1"/>
-									<Setter TargetName="txt" Property="Opacity" Value="0"/>
-								</Trigger>
-							</ControlTemplate.Triggers>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Style>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="label" Property="Opacity" Value="1"/>
+                                    <Setter TargetName="txt" Property="Opacity" Value="0"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-			<Style x:Key="input_textbox"
-									  BasedOn="{StaticResource MetroTextBox}"
+            <!--<Style TargetType="{x:Type FrameworkElement}" x:Key="baseStyle" BasedOn="{StaticResource TextElement}">
+                <Setter Property="TextElement.FontSize" Value="11" />
+            </Style>-->
+
+            <Style x:Key="input_textbox" BasedOn="{StaticResource MetroTextBox}"
 				   TargetType="{x:Type TextBox}" >
 				<Setter Property="HorizontalAlignment" Value="Left"/>
 				<Setter Property="VerticalAlignment" Value="Top" />
 				<Setter Property="Margin" Value="4,0,4,4" />
-				<Setter Property="FontSize" Value="11" />
 				<Setter Property="Width" Value="256"/>
 				<Setter Property="Height" Value="26"/>
 				<Setter Property="BorderBrush" Value="Silver"/>
 			</Style>
-			
-			<Style x:Key="input_password" 
-				   BasedOn="{StaticResource MetroPasswordBox}" 
+
+            <Style x:Key="input_password" BasedOn="{StaticResource MetroPasswordBox}" 
 				   TargetType="{x:Type PasswordBox}">
 				<Setter Property="HorizontalAlignment" Value="Left"/>
 				<Setter Property="VerticalAlignment" Value="Top" />
 				<Setter Property="Margin" Value="4,0,4,4" />
-				<Setter Property="FontSize" Value="11" />
 				<Setter Property="Width" Value="256"/>
 				<Setter Property="Height" Value="26"/>
 				<Setter Property="BorderBrush" Value="Silver"/>  
@@ -283,15 +283,13 @@
 				<Setter Property="HorizontalAlignment" Value="Left"/>
 				<Setter Property="VerticalAlignment" Value="Top" />
 				<Setter Property="Margin" Value="4,0,4,4" />
-				<Setter Property="FontSize" Value="11" />
 				<Setter Property="Width" Value="256"/>
 				<Setter Property="Height" Value="26"/>
 				<Setter Property="BorderBrush" Value="Red"/>
 			</Style>
 
-			<Style x:Key="text_Instructions" TargetType="TextBlock">
+            <Style x:Key="text_Instructions" TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
 				<Setter Property="Margin" Value="5"/>
-				<Setter Property="FontSize" Value="10"/>
 				<Setter Property="FontStyle" Value="Italic"/>
 				<Setter Property="TextWrapping" Value="Wrap"/>
 				<Setter Property="Foreground" Value="DimGray"/>
@@ -431,7 +429,7 @@
 			</Style>
 
 			<Style x:Key="input_checkbox"
-									  BasedOn="{StaticResource MetroCheckBox}"
+				   BasedOn="{StaticResource MetroCheckBox}"
 				   TargetType="{x:Type CheckBox}">
 				<Setter Property="HorizontalAlignment" Value="Left" />
 				<Setter Property="VerticalAlignment" Value="Top" />

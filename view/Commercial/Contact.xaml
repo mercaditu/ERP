@@ -102,7 +102,9 @@
 					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
 							   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 						<Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
-						<Label Content="{lex:Loc Name}" 
+                        <CheckBox Content="{lex:Loc Customer}" Margin="3" IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <CheckBox Content="{lex:Loc Supplier}" Margin="3" IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <Label Content="{lex:Loc Name}" 
 							   Style="{StaticResource input_label}"/>
 						<TextBox Style="{StaticResource input_textbox}" 
 								 Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
@@ -295,9 +297,9 @@
 							<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="3" 
 											DataContext="{StaticResource contactViewSource}">
 								<CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" Margin="3" 
-								  IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+								          IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 								<CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" Margin="3" 
-							IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+							              IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 							</StackPanel>
 						</StackPanel>
 						<Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>

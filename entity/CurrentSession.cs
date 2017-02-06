@@ -214,7 +214,7 @@ namespace entity
                     {
                         if (app_company.version != null || app_company.version == "")
                         {
-                            Licence.VerifyCompanyLicence(licensekey);
+                            Licence.VerifyCompanyLicence(app_company.version);
                             if (Licence.CompanyLicence.versions.Count()==0)
                             {
                                 licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);

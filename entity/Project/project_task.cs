@@ -129,6 +129,30 @@ namespace entity
         public decimal quantity_exe
         { get; set; }
 
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    if (this.items != null)
+                    {
+                           _quantity_est = Brillo.ConversionFactor.Factor_Quantity_Back(this.items, Quantity_Factored, GetDimensionValue());
+                            RaisePropertyChanged("value_counted");
+                      
+
+                    }
+
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
+
         public decimal? unit_cost_est
         {
             get { return _unit_cost_est; }
@@ -488,6 +512,21 @@ namespace entity
                   
                 }
             }
+        }
+
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            if (project_task_dimension != null)
+            {
+
+
+                foreach (project_task_dimension project_task_dimension in project_task_dimension)
+                {
+                    Dimension = Dimension * project_task_dimension.value;
+                }
+            }
+            return Dimension;
         }
         #endregion
     }

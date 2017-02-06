@@ -15,6 +15,7 @@ namespace cntrl.Reports.Project
 											   contacts.code as ContactCode,
 											   contacts.gov_code as GovermentId,
 											task.quantity_est as QuantityEst, 
+                                            task.quantity_est *item_conversion_factor.value * coalesce(project_task_dimension.value)  as ConversionQuantity, 
 											exe.Quantity as QuantityReal, 
 											task.unit_cost_est as CostEst,
 											 exe.unit_cost as CostReal, 
@@ -27,11 +28,13 @@ namespace cntrl.Reports.Project
 																		sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 												 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional
 											from project_task as task 
-
+                                            left join  project_task_dimension on project_task_dimension.id_project_task =task.id_project_task
 											 inner join projects  as proj on proj.id_project = task.id_project 
 											  inner join contacts   on proj.id_contact = contacts.id_contact 
 
 											 inner join items as item on task.id_item = item.id_item
+                                              left join  item_product on item_product.id_item=item.id_item
+                                             left join item_conversion_factor on item_conversion_factor.id_item_product=item_product.id_item_product
 											 left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task 
 											  left join sales_budget as sb on proj.id_project = sb.id_project
 																		left join sales_budget_detail as sbd on sb.id_sales_budget = sbd.id_sales_budget

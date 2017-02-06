@@ -43,7 +43,7 @@ namespace entity.Brillo.Promotion
                 Invoice.Details.Add(Detail);
             }
 
-            var promo = SalesPromotionLIST.Where(x => x.type == sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
+            sales_promotion promo = SalesPromotionLIST.Where(x => x.type ==sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
             if (promo != null)
             {
                 Discount_onCustomerType(promo, Invoice, SalesInvoice);

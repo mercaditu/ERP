@@ -128,6 +128,30 @@ namespace entity
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
 
+                if (payment_detail.id_currencyfx == 0)
+                {
+                    payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                }
+
+                ///Assigns appCurrencyFX Entity which is needed for Printing.
+                if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
+                {
+                    payment_detail.app_currencyfx = await app_currencyfx.FindAsync(payment_detail.id_currencyfx);
+                }
+
+                ///If by chance Payment Type is Blank, will get Default Payment Type.
+                if (payment_detail.id_payment_type == 0)
+                {
+                    payment_detail.id_payment_type = await payment_type.Where(x => x.is_default).Select(x => x.id_payment_type).FirstOrDefaultAsync();
+                }
+
+                ///Checks if Account ID is set.
+                if (payment_detail.id_account == 0 || payment_detail.id_account == null)
+                {
+                    payment_detail.id_account = CurrentSession.Id_Account;
+                    payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
+                }
+
                 if (IsRecievable == false)
                 {
                     ///If PaymentDetail Value is Negative.
@@ -189,6 +213,8 @@ namespace entity
                 else
                 {
                     ///If PaymentDetail Value is Positive.
+                 
+
 
                     decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
@@ -323,30 +349,7 @@ namespace entity
                     ///
 
                 }
-                if (payment_detail.id_currencyfx == 0)
-                {
-                    payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
-                }
-
-                ///Assigns appCurrencyFX Entity which is needed for Printing.
-                if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
-                {
-                    payment_detail.app_currencyfx = await app_currencyfx.FindAsync(payment_detail.id_currencyfx);
-                }
-
-                ///If by chance Payment Type is Blank, will get Default Payment Type.
-                if (payment_detail.id_payment_type == 0)
-                {
-                    payment_detail.id_payment_type = await payment_type.Where(x => x.is_default).Select(x => x.id_payment_type).FirstOrDefaultAsync();
-                }
-
-                ///Checks if Account ID is set.
-                if (payment_detail.id_account == 0 || payment_detail.id_account == null)
-                {
-                    payment_detail.id_account = CurrentSession.Id_Account;
-                    payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
-                }
-
+               
 
                 ///Logic for Value in Balance Payment Schedual.
 

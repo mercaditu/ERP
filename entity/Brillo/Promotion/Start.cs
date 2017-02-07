@@ -79,8 +79,6 @@ namespace entity.Brillo.Promotion
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
-
-                    
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
                         if (Promo.quantity_step > 0)
@@ -104,12 +102,12 @@ namespace entity.Brillo.Promotion
                                 using (db db = new db())
                                 {
                                     item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+
                                     if (item != null)
                                     {
                                         sales_invoice_detail.id_vat_group = item.id_vat_group;
                                         sales_invoice_detail.id_item = item.id_item;
                                         sales_invoice_detail.item_description = item.name;
-                                        //sales_invoice_detail.item = item;
                                     }
 
                                     item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();

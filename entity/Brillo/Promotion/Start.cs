@@ -66,6 +66,9 @@ namespace entity.Brillo.Promotion
                     detail.Discount = best.Discount;
                     detail.DiscountVAT = best.DiscountVAT;
                     detail.PromotionID = best.PromotionID;
+
+                    //Assign to Sales Detail...
+
                 }
             }
         }

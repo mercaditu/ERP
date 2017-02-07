@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace entity.Brillo.Promotion
@@ -10,7 +8,7 @@ namespace entity.Brillo.Promotion
     public class Start
     {
         public List<sales_promotion> SalesPromotionLIST = new List<sales_promotion>();
-        public List<Invoice> SalesLIST = new List<Invoice>();
+        public List<Detail> DetailLIST = new List<Detail>();
 
         public Start(bool Run)
         {
@@ -53,17 +51,26 @@ namespace entity.Brillo.Promotion
             {
                 foreach (var Promo in SalesPromotionLIST)
                 {
+                    BuyThis_GetThat(Promo, Invoice);
+                    Discount_onItem(Promo, Invoice);
+                    Discount_onTag(Promo, Invoice);
+                    Discount_onGrandTotal(Promo, Invoice);
+                }
 
-                    BuyThis_GetThat(Promo, Invoice, SalesInvoice);
-                    Discount_onItem(Promo, Invoice, SalesInvoice);
-                    Discount_onTag(Promo, Invoice, SalesInvoice);
-                    Discount_onGrandTotal(Promo, Invoice, SalesInvoice);
-
+                //Logic to see which promotion is best.
+                foreach (Detail detail in Invoice.Details)
+                {
+                    //for each row or item, see which has best discount.
+                    Detail best = DetailLIST.Where(x => x.DetailID == detail.DetailID && x.Discount == DetailLIST.Max(y => y.Discount)).FirstOrDefault();
+                    detail.is_promo = true;
+                    detail.Discount = best.Discount;
+                    detail.DiscountVAT = best.DiscountVAT;
+                    detail.PromotionID = best.PromotionID;
                 }
             }
         }
 
-        private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.BuyThis_GetThat)
             {
@@ -71,9 +78,9 @@ namespace entity.Brillo.Promotion
                 {
 
                     Invoice PromotionInvoice = new Invoice();
-                    PromotionInvoice.Contact = SalesInvoice.contact;
-                    PromotionInvoice.Date = SalesInvoice.trans_date;
-                    PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
+                    PromotionInvoice.Contact = Invoice.Contact;
+                    PromotionInvoice.Date = Invoice.Date;
+                    PromotionInvoice.GrandTotal = Invoice.GrandTotal;
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
                         if (Promo.quantity_step > 0)
@@ -84,13 +91,11 @@ namespace entity.Brillo.Promotion
 
                             _Detail.Promos.Add(_Promo);
 
-
                             List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
                             //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+
                             if (sid.Count == 0)
                             {
-
-
                                 sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
                                 //Needed to calculate the discounts and unit prices further on.
@@ -135,7 +140,11 @@ namespace entity.Brillo.Promotion
 
                         }
                     }
-                    SalesLIST.Add(PromotionInvoice);
+
+                    if (PromotionInvoice.Details.Count() > 0)
+                    {
+                        SalesLIST.Add(PromotionInvoice);
+                    }
                 }
             }
         }
@@ -574,6 +583,7 @@ namespace entity.Brillo.Promotion
         public int DetailID { get; set; }
         public decimal Quantity { get; set; }
         public bool is_promo { get; set; }
+        public int PromotionID { get; set; }
         public decimal Price { get; set; }
         public decimal PriceVAT { get; set; }
         public decimal Discount { get; set; }

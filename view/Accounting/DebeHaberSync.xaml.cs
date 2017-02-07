@@ -153,7 +153,7 @@ namespace Cognitivo.Accounting
 
             DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
-            Sales_Sync(Transaction);
+            Sales_Sync();
             Purchase_Sync(Transaction);
             SalesReturn_Sync(Transaction);
             PurchaseReturn_Sync(Transaction);
@@ -181,8 +181,13 @@ namespace Cognitivo.Accounting
             }
         }
 
-        private void Sales_Sync(DebeHaber.Transaction Transaction)
+        private void Sales_Sync()
         {
+            DebeHaber.Integration Integration = new DebeHaber.Integration();
+            Integration.Key = RelationshipHash;
+
+            DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+
             List<sales_invoice> SalesList = db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
@@ -218,9 +223,30 @@ namespace Cognitivo.Accounting
                 }
 
                 Transaction.Commercial_Invoices.Add(Sales);
-                
-                sales_invoice.IsSelected = false;
-                sales_invoice.is_accounted = true;
+
+                try
+                {
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                    Send2API(Sales_Json);
+                    db.SaveChanges();
+
+                    sales_invoice.IsSelected = false;
+                    sales_invoice.is_accounted = true;
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show("Error. Would you like to Save the file for analsys?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    {
+                        MessageBox.Show(ex.Message, "Error Message");
+                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                    }
+
+                    sales_invoice.is_accounted = true;
+                }
+                finally
+                {
+                    fill();
+                }
             }
         }
 

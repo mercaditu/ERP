@@ -15,7 +15,7 @@ namespace cntrl.Reports.Project
 											   contacts.code as ContactCode,
 											   contacts.gov_code as GovermentId,
 											task.quantity_est as QuantityEst, 
-                                            task.quantity_est *item_conversion_factor.value * coalesce(project_task_dimension.value)  as ConversionQuantity, 
+                                            task.quantity_est *item_conversion_factor.value *  (select ROUND(EXP(SUM(LOG(`value`))),4) from project_task_dimension where id_project_task = task.id_project_task)  as ConversionQuantity, 
 											exe.Quantity as QuantityReal, 
 											task.unit_cost_est as CostEst,
 											 exe.unit_cost as CostReal, 
@@ -28,8 +28,7 @@ namespace cntrl.Reports.Project
 																		sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 												 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional
 											from project_task as task 
-                                            left join  project_task_dimension on project_task_dimension.id_project_task =task.id_project_task
-											 inner join projects  as proj on proj.id_project = task.id_project 
+                                         											 inner join projects  as proj on proj.id_project = task.id_project 
 											  inner join contacts   on proj.id_contact = contacts.id_contact 
 
 											 inner join items as item on task.id_item = item.id_item

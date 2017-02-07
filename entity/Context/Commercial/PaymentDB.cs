@@ -127,7 +127,12 @@ namespace entity
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
+                payment_schedual Parent_Schedual = new payment_schedual();
+                payment_schedual child_schedual = new payment_schedual();
 
+                //Assigns appCurrencyFX ID & Entity
+
+                            
                 if (payment_detail.id_currencyfx == 0)
                 {
                     payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -151,7 +156,7 @@ namespace entity
                     payment_detail.id_account = CurrentSession.Id_Account;
                     payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
                 }
-
+                ///
                 if (IsRecievable == false)
                 {
                     ///If PaymentDetail Value is Negative.
@@ -159,8 +164,6 @@ namespace entity
                     decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
-                        payment_schedual Parent_Schedual = new payment_schedual();
-                        payment_schedual child_schedual = new payment_schedual();
                         if (ChildBalance > 0)
                         {
                             if (Math.Round(ChildBalance, 2) >= Math.Round(parent.credit))
@@ -213,14 +216,13 @@ namespace entity
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-                 
+
 
 
                     decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
-                        payment_schedual Parent_Schedual = new payment_schedual();
-                        payment_schedual child_schedual = new payment_schedual();
+                       
                         if (ChildBalance > 0)
                         {
                             //Payment Detail is greater or equal to Schedual
@@ -263,104 +265,98 @@ namespace entity
 
 
                         }
-                        payment_type _payment_type = await payment_type.FindAsync(payment_detail.id_payment_type);
+                  
+                        schedualList.Add(child_schedual);
 
-                        if (_payment_type.payment_behavior == entity.payment_type.payment_behaviours.Normal)
-                        {
-                            ///Creates new Account Detail for each Payment Detail.
-                            app_account_detail app_account_detail = new app_account_detail();
-
-                            app_account_detail.id_account = (int)payment_detail.id_account;
-                            app_account_detail.app_account = payment_detail.app_account;
-                            app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
-                            app_account_detail.id_payment_type = payment_detail.id_payment_type;
-                            app_account_detail.payment_detail = payment_detail;
-                            //     app_account_detail.id_payment_detail = payment_detail.id_payment_detail;
-                            app_account_detail.trans_date = payment_detail.trans_date;
-
-                            if (_payment_type.is_direct)
-                            {
-                                app_account_detail.status = Status.Documents_General.Approved;
-                            }
-                            else
-                            {
-                                app_account_detail.status = Status.Documents_General.Pending;
-                            }
-
-
-                            if (payment_detail.id_range > 0)
-                            {
-                                app_document_range detail_document_range = await base.app_document_range.FindAsync(payment_detail.id_range);
-                                payment_detail.payment_type_number = Brillo.Logic.Range.calc_Range(detail_document_range, true);
-                                payment.RaisePropertyChanged("payment_type_number");
-                            }
-
-
-                            ///Gets the Session ID necesary for cashier movement.
-                            int id_account_session = await base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).Select(y => y.id_session).FirstOrDefaultAsync();
-
-                            if (id_account_session > 0)
-                            {
-                                app_account_detail.id_session = id_account_session;
-                            }
-
-                            //Logic for Account Detail based on Payment Detail Logic.
-                            if (IsRecievable == false)
-                            {
-                                ///If PaymentDetail Value is Negative.
-                                app_account_detail.debit = Math.Abs(Convert.ToDecimal(child_schedual.debit));
-                            }
-                            else
-                            {
-                                ///If PaymentDetail Value is Positive.
-                                app_account_detail.credit = Convert.ToDecimal(child_schedual.credit);
-                            }
-
-                            ///Comment with Module Name and Contact.
-                            ///Insert AccountDetail into Context.
-                            ///
-
-
-                            app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
-                            app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
-                            base.app_account_detail.Add(app_account_detail);
-                            schedualList.Add(child_schedual);
-                        }
                     }
                     //End Mode IF
 
-                    //Assigns appCurrencyFX ID & Entity
 
 
 
+              
 
 
 
-
-                    ///
-
-
-
-                    //Add Balance Payment Schedual into Context. 
-
-
-
-                    ///Code to specify Accounts.
-                    ///
+                    
 
                 }
-               
+
+                ///Code to specify Accounts.
+                ///
+                payment_type _payment_type = await payment_type.FindAsync(payment_detail.id_payment_type);
+                if (_payment_type.payment_behavior == entity.payment_type.payment_behaviours.Normal)
+                {
+                    ///Creates new Account Detail for each Payment Detail.
+                    app_account_detail app_account_detail = new app_account_detail();
+
+                    app_account_detail.id_account = (int)payment_detail.id_account;
+                    app_account_detail.app_account = payment_detail.app_account;
+                    app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
+                    app_account_detail.id_payment_type = payment_detail.id_payment_type;
+                    app_account_detail.payment_detail = payment_detail;
+                    //     app_account_detail.id_payment_detail = payment_detail.id_payment_detail;
+                    app_account_detail.trans_date = payment_detail.trans_date;
+
+                    if (_payment_type.is_direct)
+                    {
+                        app_account_detail.status = Status.Documents_General.Approved;
+                    }
+                    else
+                    {
+                        app_account_detail.status = Status.Documents_General.Pending;
+                    }
+
+
+                    if (payment_detail.id_range > 0)
+                    {
+                        app_document_range detail_document_range = await base.app_document_range.FindAsync(payment_detail.id_range);
+                        payment_detail.payment_type_number = Brillo.Logic.Range.calc_Range(detail_document_range, true);
+                        payment.RaisePropertyChanged("payment_type_number");
+                    }
+
+
+                    ///Gets the Session ID necesary for cashier movement.
+                    int id_account_session = await base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).Select(y => y.id_session).FirstOrDefaultAsync();
+
+                    if (id_account_session > 0)
+                    {
+                        app_account_detail.id_session = id_account_session;
+                    }
+
+                    //Logic for Account Detail based on Payment Detail Logic.
+                    if (IsRecievable == false)
+                    {
+                        ///If PaymentDetail Value is Negative.
+                        app_account_detail.debit = Math.Abs(Convert.ToDecimal(child_schedual.debit));
+                    }
+                    else
+                    {
+                        ///If PaymentDetail Value is Positive.
+                        app_account_detail.credit = Convert.ToDecimal(child_schedual.credit);
+                    }
+
+                    ///Comment with Module Name and Contact.
+                    ///Insert AccountDetail into Context.
+                    ///
+
+
+                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
+                    app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
+                    base.app_account_detail.Add(app_account_detail);
+
+                }
 
                 ///Logic for Value in Balance Payment Schedual.
 
                 foreach (payment_schedual payment_schedual in schedualList)
                 {
-                    payment_schedual Parent_Schedual = payment_schedual.parent;
+                    payment_schedual _Parent_Schedual = payment_schedual.parent;
                     payment_schedual.status = Status.Documents_General.Approved;
-                    payment_schedual.id_contact = Parent_Schedual.id_contact;
-                    payment_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
+                    payment_schedual.id_contact = _Parent_Schedual.id_contact;
+                    payment_schedual.id_currencyfx = _Parent_Schedual.id_currencyfx;
                     payment_schedual.trans_date = payment_detail.trans_date;
-                    payment_schedual.expire_date = Parent_Schedual.expire_date;
+                    payment_schedual.expire_date = _Parent_Schedual.expire_date;
                     payment_detail.payment_schedual.Add(payment_schedual);
                 }
                 //pankeel

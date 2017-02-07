@@ -26,7 +26,7 @@ namespace entity
         {
             CanUserDiscountByPercent = 1,
             CanUserDiscountByValue = 2,
-            CanUserUpdatePrice = 3,
+            CanUserNotUpdatePrice = 3,
             CanDisplayProduct = 4,
             CanDisplayRawMaterial = 5,
             CanDisplayService = 6,

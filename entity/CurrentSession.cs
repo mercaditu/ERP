@@ -328,7 +328,7 @@ namespace entity
 
                 //Privilage
                 Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role).ToList();
-                Allow_UpdateSalesDetail = Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserUpdatePrice).Count() > 0;
+                Allow_UpdateSalesDetail = Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice).Count() > 0;
 
             }
         }

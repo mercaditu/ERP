@@ -723,7 +723,7 @@
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" 
 														ElementStyle="{StaticResource RightAlignStyle}" 
 														Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                        IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}"
+                                                        IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}}"
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
 									<DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

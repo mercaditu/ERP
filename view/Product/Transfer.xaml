@@ -35,7 +35,8 @@
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
         <CollectionViewSource x:Key="branch_destViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="branch_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
-        
+        <CollectionViewSource x:Key="app_measurevolume" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measureweight" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
     </Page.Resources>
 
     <Grid DataContext="{StaticResource item_transferViewSource}">
@@ -208,6 +209,16 @@
                                                     Header="{lex:Loc Cognitivo:local:Stock}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
                                                     Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64"/>
+                                <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                    Header="{lex:Loc Cognitivo:local:GrossWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Binding="{Binding net_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                    Header="{lex:Loc Cognitivo:local:NetWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridComboBoxColumn  Header="{lex:Loc Cognitivo:local:WeightMeasure}" ItemsSource="{Binding Source={StaticResource app_measureweight}}" SelectedItemBinding="{Binding measurement_weight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                       DisplayMemberPath="name"  SelectedValuePath="app_measurement"/>
+                                <DataGridTextColumn Binding="{Binding volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                    Header="{lex:Loc Cognitivo:local:Volume}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridComboBoxColumn  Header="{lex:Loc Cognitivo:local:VolumeMeasure}" ItemsSource="{Binding Source={StaticResource app_measurevolume}}" SelectedItemBinding="{Binding measurement_volume,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                       DisplayMemberPath="name"   SelectedValuePath="app_measurement"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

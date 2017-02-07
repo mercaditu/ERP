@@ -38,6 +38,11 @@ namespace Cognitivo.Sales
 
             CollectionViewSource app_terminalViewSource = FindResource("app_terminalViewSource") as CollectionViewSource;
             app_terminalViewSource.Source = dbContext.app_terminal.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            dbContext.app_measurement.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            CollectionViewSource app_measurevolume = FindResource("app_measurevolume") as CollectionViewSource;
+            CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
+            app_measurevolume.Source = dbContext.app_measurement.Local;
+            app_measureweight.Source = dbContext.app_measurement.Local;
 
             sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
             sales_orderViewSource.Source = dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.status == Status.Documents_General.Approved).Include(a => a.sales_order_detail).ToList();

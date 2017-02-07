@@ -99,6 +99,13 @@ namespace Cognitivo.Product
             await ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             security_userViewSource.Source = ProductTransferDB.security_user.Local;
 
+            ProductTransferDB.app_measurement.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            CollectionViewSource app_measurevolume = FindResource("app_measurevolume") as CollectionViewSource;
+            CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
+            app_measurevolume.Source = ProductTransferDB.app_measurement.Local;
+            app_measureweight.Source = ProductTransferDB.app_measurement.Local;
+
+
             //clsTotalGrid = new List<Class.transfercost>();
             //transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
             //transfercostViewSource.Source = clsTotalGrid;

@@ -55,17 +55,17 @@ namespace cntrl
             if (rbtnYear.IsChecked == true)
             {
                 StartDate = StartDate.AddYears(1);
-                EndDate = EndDate.AddYears(1);
+                EndDate = AbsoluteDate.End(EndDate.AddYears(1));
             }
             else if (rbtnMonth.IsChecked == true)
             {
                 StartDate = StartDate.AddMonths(1);
-                EndDate = EndDate.AddMonths(1);
+                EndDate = AbsoluteDate.End(EndDate.AddMonths(1));
             }
             else
             {
                 StartDate = StartDate.AddDays(1);
-                EndDate = EndDate.AddDays(1);
+                EndDate = AbsoluteDate.End(EndDate.AddDays(1));
             }
 
             lblDateHeader_Changed();
@@ -77,17 +77,17 @@ namespace cntrl
             if (rbtnYear.IsChecked == true)
             {
                 StartDate = StartDate.AddYears(-1);
-                EndDate = EndDate.AddYears(-1);
+                EndDate = AbsoluteDate.End(EndDate.AddYears(-1));
             }
             else if (rbtnMonth.IsChecked == true)
             {
                 StartDate = StartDate.AddMonths(-1);
-                EndDate = EndDate.AddMonths(-1);
+                EndDate = AbsoluteDate.End(EndDate.AddMonths(-1));
             }
             else
             {
                 StartDate = StartDate.AddDays(-1);
-                EndDate = EndDate.AddDays(-1);
+                EndDate = AbsoluteDate.End(EndDate.AddDays(-1));
             }
 
             lblDateHeader_Changed();
@@ -99,7 +99,7 @@ namespace cntrl
             if (rbtnYear.IsChecked == true)
             {
                 StartDate = new DateTime(StartDate.Year, 1, 1);
-                EndDate = StartDate.AddYears(1).AddDays(-1);
+                EndDate = AbsoluteDate.End(StartDate.AddYears(1).AddDays(-1));
 
                 if (StartDate.Year == EndDate.Year)
                 {
@@ -113,7 +113,7 @@ namespace cntrl
             else if (rbtnMonth.IsChecked == true)
             {
                 StartDate = new DateTime(StartDate.Year, StartDate.Month, 1);
-                EndDate = StartDate.AddMonths(1).AddDays(-1);
+                EndDate = AbsoluteDate.End(StartDate.AddMonths(1).AddDays(-1));
 
                 if (StartDate.Month == EndDate.Month)
                 {

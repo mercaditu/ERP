@@ -181,6 +181,31 @@
                               ItemsSource="{Binding Source={StaticResource app_terminalViewSource}}"
                               SelectedValue="{Binding id_terminal, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <TextBlock Text="{lex:Loc eta}" Style="{StaticResource text_Label}"/>
+                            <DatePicker Style="{StaticResource input_datepicker }"
+                            SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <TextBlock Text="{lex:Loc etd}" Style="{StaticResource text_Label}"/>
+                            <DatePicker Style="{StaticResource input_datepicker }"
+                            SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <TextBlock Text="{lex:Loc driver}" Style="{StaticResource text_Label}"/>
+                            <TextBox Style="{StaticResource input_textbox}"
+                    Text="{Binding driver, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="126"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <TextBlock Text="{lex:Loc licence}" Style="{StaticResource text_Label}"/>
+                            <TextBox Style="{StaticResource input_textbox}"
+                    Text="{Binding licence_no, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="118"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <TextBlock Text="{lex:Loc Distance}" Style="{StaticResource text_Label}"/>
+                            <TextBox Style="{StaticResource input_textbox}"
+                    Text="{Binding avg_distance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="108"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

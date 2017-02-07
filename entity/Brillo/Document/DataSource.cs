@@ -341,7 +341,12 @@ namespace entity.Brillo.Document
                               quantity = g.quantity,
                               number = g.sales_packing != null ? g.sales_packing.number : "",
                               sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : "",
-                              packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : ""
+                              packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : "",
+                              eta = g.sales_packing.eta != null ? g.sales_packing.eta.ToString() : "",
+                              etd = g.sales_packing.etd != null ? g.sales_packing.etd.ToString() : "",
+                              driver = g.sales_packing.driver != null ? g.sales_packing.driver.ToString() : "",
+                              licence = g.sales_packing.licence_no != null ? g.sales_packing.licence_no.ToString() : "",
+                              distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance.ToString() : ""
                           }).ToList();
 
             return reportDataSource;
@@ -607,7 +612,13 @@ namespace entity.Brillo.Document
                     trans_date = g.item_transfer.trans_date,
                     timestamp = g.timestamp,
                     status = g.status,
-                    comment = g.item_transfer.comment
+                    comment = g.item_transfer.comment,
+                    Asset=g.item_transfer.item_asset!=null?g.item_transfer.item_asset.item!=null? g.item_transfer.item_asset.item.name:"":"",
+                    eta=g.item_transfer.eta!=null?g.item_transfer.eta.ToString():"",
+                    etd = g.item_transfer.etd != null ? g.item_transfer.etd.ToString() : "",
+                    driver = g.item_transfer.driver != null ? g.item_transfer.driver.ToString() : "",
+                    licence = g.item_transfer.licence_no != null ? g.item_transfer.licence_no.ToString() : "",
+                    distance = g.item_transfer.avg_distance != null ? g.item_transfer.avg_distance.ToString() : ""
                 }).ToList();
 
             return reportDataSource;

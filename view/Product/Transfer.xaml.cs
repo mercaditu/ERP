@@ -389,6 +389,21 @@ namespace Cognitivo.Product
                 item_transferViewSource.View.Filter = null;
             }
         }
+
+       
+
+        private void sbxItemAsset_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxItem.ItemID>0)
+            {
+                item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+                if (item_transfer!=null)
+                {
+                    item_transfer.id_item_asset = sbxItem.ItemID;
+                }
+            }
+        }
+
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)

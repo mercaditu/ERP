@@ -106,6 +106,17 @@ namespace entity
                         {
                             production_execution_detail.project_task.status = Status.Project.Executed;
                         }
+                        else
+                        {
+                            if (production_execution_detail.id_project_task!=null && production_execution_detail.id_project_task>0)
+                            {
+                                project_task project_task = base.project_task.Where(x => x.id_project_task == production_execution_detail.id_project_task).FirstOrDefault();
+                                if (project_task!= null)
+                                {
+                                    project_task.status = Status.Project.Executed;
+                                }
+                            }
+                        }
 
                         NumberOfRecords += 1;
                     }

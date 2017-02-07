@@ -10,6 +10,7 @@ namespace entity.Brillo.Promotion
     public class Start
     {
         public List<sales_promotion> SalesPromotionLIST = new List<sales_promotion>();
+        public List<Invoice> SalesLIST = new List<Invoice>();
 
         public Start(bool Run)
         {
@@ -43,7 +44,7 @@ namespace entity.Brillo.Promotion
                 Invoice.Details.Add(Detail);
             }
 
-            sales_promotion promo = SalesPromotionLIST.Where(x => x.type ==sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
+            sales_promotion promo = SalesPromotionLIST.Where(x => x.type == sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
             if (promo != null)
             {
                 Discount_onCustomerType(promo, Invoice, SalesInvoice);
@@ -68,6 +69,11 @@ namespace entity.Brillo.Promotion
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
+
+                    Invoice PromotionInvoice = new Invoice();
+                    PromotionInvoice.Contact = SalesInvoice.contact;
+                    PromotionInvoice.Date = SalesInvoice.trans_date;
+                    PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
                         if (Promo.quantity_step > 0)
@@ -113,10 +119,23 @@ namespace entity.Brillo.Promotion
 
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                                Detail Detail = new Detail();
+                                Detail.DetailID = sales_invoice_detail.id_sales_invoice_detail;
+                                Detail.Item = sales_invoice_detail.item;
+                                Detail.Quantity = sales_invoice_detail.quantity;
+                                Detail.Price = sales_invoice_detail.unit_price;
+                                Detail.PriceVAT = sales_invoice_detail.UnitPrice_Vat;
+                                Detail.Discount = sales_invoice_detail.discount;
+                                Detail.DiscountVAT = sales_invoice_detail.DiscountVat;
+                                Detail.SubTotal = sales_invoice_detail.SubTotal;
+                                Detail.SubTotalVAT = sales_invoice_detail.SubTotal_Vat;
+                                Detail.is_promo = sales_invoice_detail.IsPromo;
+                                PromotionInvoice.Details.Add(Detail);
                             }
 
                         }
                     }
+                    SalesLIST.Add(PromotionInvoice);
                 }
             }
         }
@@ -183,6 +202,10 @@ namespace entity.Brillo.Promotion
                             List<DetailProduct> DetailProduct = window.ProductList;
                             if (DetailProduct != null)
                             {
+                                Invoice PromotionInvoice = new Invoice();
+                                PromotionInvoice.Contact = SalesInvoice.contact;
+                                PromotionInvoice.Date = SalesInvoice.trans_date;
+                                PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
                                 foreach (DetailProduct _DetailProduct in DetailProduct)
                                 {
                                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -212,7 +235,21 @@ namespace entity.Brillo.Promotion
 
                                     sales_invoice_detail.quantity = _DetailProduct.Quantity;
                                     SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                                    Detail Detail = new Detail();
+                                    Detail.DetailID = sales_invoice_detail.id_sales_invoice_detail;
+                                    Detail.Item = sales_invoice_detail.item;
+                                    Detail.Quantity = sales_invoice_detail.quantity;
+                                    Detail.Price = sales_invoice_detail.unit_price;
+                                    Detail.PriceVAT = sales_invoice_detail.UnitPrice_Vat;
+                                    Detail.Discount = sales_invoice_detail.discount;
+                                    Detail.DiscountVAT = sales_invoice_detail.DiscountVat;
+                                    Detail.SubTotal = sales_invoice_detail.SubTotal;
+                                    Detail.SubTotalVAT = sales_invoice_detail.SubTotal_Vat;
+                                    Detail.is_promo = sales_invoice_detail.IsPromo;
+                                    PromotionInvoice.Details.Add(Detail);
                                 }
+                                SalesLIST.Add(PromotionInvoice);
+
                             }
                         }
 
@@ -231,6 +268,10 @@ namespace entity.Brillo.Promotion
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
+                    Invoice PromotionInvoice = new Invoice();
+                    PromotionInvoice.Contact = SalesInvoice.contact;
+                    PromotionInvoice.Date = SalesInvoice.trans_date;
+                    PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
                         if (Promo.quantity_step > 0)
@@ -252,9 +293,22 @@ namespace entity.Brillo.Promotion
                             {
                                 sales_invoice_detail.IsPromo = true;
                                 sales_invoice_detail.DiscountVat = sales_invoice_detail.UnitPrice_Vat * Promo.result_value;
+                                Detail Detail = new Detail();
+                                Detail.DetailID = sales_invoice_detail.id_sales_invoice_detail;
+                                Detail.Item = sales_invoice_detail.item;
+                                Detail.Quantity = sales_invoice_detail.quantity;
+                                Detail.Price = sales_invoice_detail.unit_price;
+                                Detail.PriceVAT = sales_invoice_detail.UnitPrice_Vat;
+                                Detail.Discount = sales_invoice_detail.discount;
+                                Detail.DiscountVAT = sales_invoice_detail.DiscountVat;
+                                Detail.SubTotal = sales_invoice_detail.SubTotal;
+                                Detail.SubTotalVAT = sales_invoice_detail.SubTotal_Vat;
+                                Detail.is_promo = sales_invoice_detail.IsPromo;
+                                PromotionInvoice.Details.Add(Detail);
                             }
                         }
                     }
+                    SalesLIST.Add(PromotionInvoice);
                 }
             }
         }
@@ -285,9 +339,16 @@ namespace entity.Brillo.Promotion
                     _Detail_.DiscountVat = 0;
                     _Detail_.IsPromo = false;
                 }
+            
+
+             
 
                 if (DetailTagList.Count() > 0 && TotalQuantity >= Promo.quantity_step)
                 {
+                    Invoice PromotionInvoice = new Invoice();
+                    PromotionInvoice.Contact = SalesInvoice.contact;
+                    PromotionInvoice.Date = SalesInvoice.trans_date;
+                    PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
                     foreach (DetailTag _DetailTag in DetailTagList)
                     {
                         Promo _Promo = new Promo();
@@ -296,13 +357,29 @@ namespace entity.Brillo.Promotion
 
                         List<sales_invoice_detail> sidpromo = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.IsPromo == false).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                        foreach (sales_invoice_detail _Detail_ in sidpromo)
+                        foreach (sales_invoice_detail _Detail in sidpromo)
                         {
-                            _Detail_.IsPromo = true;
-                            _Detail_.DiscountVat = _Detail_.UnitPrice_Vat * Promo.result_value;
+                            _Detail.IsPromo = true;
+                            _Detail.DiscountVat = _Detail.UnitPrice_Vat * Promo.result_value;
+
+                            Detail Detail = new Detail();
+                            Detail.DetailID = _Detail.id_sales_invoice_detail;
+                            Detail.Item = _Detail.item;
+                            Detail.Quantity = _Detail.quantity;
+                            Detail.Price = _Detail.unit_price;
+                            Detail.PriceVAT = _Detail.UnitPrice_Vat;
+                            Detail.Discount = _Detail.discount;
+                            Detail.DiscountVAT = _Detail.DiscountVat;
+                            Detail.SubTotal = _Detail.SubTotal;
+                            Detail.SubTotalVAT = _Detail.SubTotal_Vat;
+                            Detail.is_promo = _Detail.IsPromo;
+                            PromotionInvoice.Details.Add(Detail);
                         }
+
                     }
+                    SalesLIST.Add(PromotionInvoice);
                 }
+              
             }
         }
         private void Discount_onGrandTotal(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
@@ -315,9 +392,30 @@ namespace entity.Brillo.Promotion
 
                     if (Promo.quantity_step <= Invoice.GrandTotal)
                     {
-
-
                         SalesInvoice.DiscountPercentage = Promo.result_value;
+
+                        Invoice PromotionInvoice = new Invoice();
+                        PromotionInvoice.Contact = SalesInvoice.contact;
+                        PromotionInvoice.Date = SalesInvoice.trans_date;
+                        PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
+
+                        foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                        {
+                            Detail Detail = new Detail();
+                            Detail.DetailID = _Detail.id_sales_invoice_detail;
+                            Detail.Item = _Detail.item;
+                            Detail.Quantity = _Detail.quantity;
+                            Detail.Price = _Detail.unit_price;
+                            Detail.PriceVAT = _Detail.UnitPrice_Vat;
+                            Detail.Discount = _Detail.discount;
+                            Detail.DiscountVAT = _Detail.DiscountVat;
+                            Detail.SubTotal = _Detail.SubTotal;
+                            Detail.SubTotalVAT = _Detail.SubTotal_Vat;
+                            Detail.is_promo = _Detail.IsPromo;
+                            PromotionInvoice.Details.Add(Detail);
+                        }
+                        SalesLIST.Add(PromotionInvoice);
+
 
 
                     }
@@ -333,7 +431,7 @@ namespace entity.Brillo.Promotion
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
             {
-                if (SalesInvoice.sales_invoice_detail.Where(x=>x.IsPromo).Count()>0)
+                if (SalesInvoice.sales_invoice_detail.Where(x => x.IsPromo).Count() > 0)
                 {
                     SalesInvoice.DiscountPercentage = 0;
 
@@ -343,17 +441,40 @@ namespace entity.Brillo.Promotion
 
                     }
                 }
-               
-                if (SalesInvoice.contact.contact_tag_detail.Where(x=>x.id_tag==Promo.reference).Count()>0)
+
+                if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
                 {
-                    
-                     SalesInvoice.DiscountPercentage = Promo.result_value;
-                                      
+
+                    SalesInvoice.DiscountPercentage = Promo.result_value;
+
+                    Invoice PromotionInvoice = new Invoice();
+                    PromotionInvoice.Contact = SalesInvoice.contact;
+                    PromotionInvoice.Date = SalesInvoice.trans_date;
+                    PromotionInvoice.GrandTotal = SalesInvoice.GrandTotal;
+
+                    foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                    {
+                        Detail Detail = new Detail();
+                        Detail.DetailID = _Detail.id_sales_invoice_detail;
+                        Detail.Item = _Detail.item;
+                        Detail.Quantity = _Detail.quantity;
+                        Detail.Price = _Detail.unit_price;
+                        Detail.PriceVAT = _Detail.UnitPrice_Vat;
+                        Detail.Discount = _Detail.discount;
+                        Detail.DiscountVAT = _Detail.DiscountVat;
+                        Detail.SubTotal = _Detail.SubTotal;
+                        Detail.SubTotalVAT = _Detail.SubTotal_Vat;
+                        Detail.is_promo = _Detail.IsPromo;
+                        PromotionInvoice.Details.Add(Detail);
+                    }
+                    SalesLIST.Add(PromotionInvoice);
+
+
                 }
                 foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
                 {
                     _Detail_.IsPromo = true;
-                   
+
                 }
 
 
@@ -455,7 +576,8 @@ namespace entity.Brillo.Promotion
         public bool is_promo { get; set; }
         public decimal Price { get; set; }
         public decimal PriceVAT { get; set; }
-
+        public decimal Discount { get; set; }
+        public decimal DiscountVAT { get; set; }
         public decimal SubTotal { get; set; }
         public decimal SubTotalVAT { get; set; }
 

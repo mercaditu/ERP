@@ -95,6 +95,25 @@ namespace cntrl
             }
         }
 
+        private void cbxparaContacttag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxparaContacttag.SelectedValue != null)
+            {
+                sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
+                if (sales_promotion != null)
+                {
+                    if (entity.db.Entry(sales_promotion).State == EntityState.Added || entity.db.Entry(sales_promotion).State == EntityState.Modified)
+                    {
+                        if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
+                        {
+                            sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
+                        }
+
+                    }
+                }
+            }
+        }
+
         private void sbxBonusItem_Select(object sender, RoutedEventArgs e)
         {
             if (sbxBonusItem.ItemID > 0)
@@ -117,7 +136,11 @@ namespace cntrl
                 {
                     if (entity.db.Entry(sales_promotion).State == EntityState.Added || entity.db.Entry(sales_promotion).State==EntityState.Modified)
                     {
-                        sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                        if (sales_promotion.type==sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
+                        {
+                            sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                        }
+                      
                     }
                 }
             }

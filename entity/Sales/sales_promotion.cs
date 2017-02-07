@@ -35,8 +35,18 @@ namespace entity
         public int id_sales_promotion { get; set; }
         public salesPromotion type { get; set; }
         public string name { get; set; }
-        public int reference { get; set; }
-
+        public int reference
+        {
+            get
+            {
+                return _refrence;
+            }
+            set
+            {
+                _refrence = value;
+            }
+        }
+        int _refrence;
         public DateTime date_start { get; set; }
         public DateTime date_end { get; set; }
         public decimal quantity_min { get; set; }

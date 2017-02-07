@@ -73,13 +73,13 @@
 					<StackPanel x:Name="Tag_Parameter">
 						<Label Content="ItemTags" />
 						<ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
-							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectedValue="{Binding reference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectionChanged="cbxparatag_SelectionChanged"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" />
 					</StackPanel>
                     <StackPanel x:Name="ContactTag_Parameter">
                         <Label Content="ContactTags" />
                         <ComboBox x:Name="cbxparaContacttag" Style="{StaticResource input_combobox}"
-							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectedValue="{Binding reference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectionChanged="cbxparaContacttag_SelectionChanged"
 							  ItemsSource="{Binding Source={StaticResource contact_tagViewSource}}" />
                     </StackPanel>
                     <StackPanel x:Name="Total_Parameter">

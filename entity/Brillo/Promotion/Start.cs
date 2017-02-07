@@ -43,6 +43,7 @@ namespace entity.Brillo.Promotion
             }
 
             sales_promotion promo = SalesPromotionLIST.Where(x => x.type == sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
+
             if (promo != null)
             {
                 Discount_onCustomerType(promo, Invoice, SalesInvoice);
@@ -101,7 +102,7 @@ namespace entity.Brillo.Promotion
 
                                 using (db db = new db())
                                 {
-                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
                                     if (item != null)
                                     {
@@ -111,6 +112,7 @@ namespace entity.Brillo.Promotion
                                     }
 
                                     item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
+
                                     if (item_price != null)
                                     {
                                         sales_invoice_detail.unit_price = item_price.value;
@@ -122,27 +124,17 @@ namespace entity.Brillo.Promotion
 
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
-                            
                             }
-
                         }
                     }
-
-                
                 }
             }
         }
 
         private void BuyTag_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
-
-
             if (Promo.type == sales_promotion.salesPromotion.BuyTag_GetThat)
             {
-
-
-
-
                 decimal TotalQuantity = 0;
 
                 List<Detail> DetailList = new List<Detail>();
@@ -151,6 +143,7 @@ namespace entity.Brillo.Promotion
                 using (db db = new db())
                 {
                     DetailList = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.is_promo == false).ToList();
+
                     if (DetailList.Count() > 0)
                     {
                         DetailTag DetailTag = new DetailTag();
@@ -158,8 +151,8 @@ namespace entity.Brillo.Promotion
                         DetailTag.Quantity = DetailList.Sum(x => x.Quantity);
                         DetailTagList.Add(DetailTag);
                     }
-                    TotalQuantity = DetailList.Sum(x => x.Quantity);
 
+                    TotalQuantity = DetailList.Sum(x => x.Quantity);
                 }
 
 
@@ -171,15 +164,10 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.salesPromotion.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-
-
                         List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference_bonus) && x.IsPromo).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
                         if (sid.Count == 0)
                         {
-
-
-
                             PromotionProduct window = new PromotionProduct()
                             {
                                 Title = "Modal Dialog",
@@ -246,7 +234,6 @@ namespace entity.Brillo.Promotion
             {
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
-                 
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
                     {
                         if (Promo.quantity_step > 0)
@@ -256,6 +243,7 @@ namespace entity.Brillo.Promotion
                             _Promo.Shared = true;
 
                             _Detail.Promos.Add(_Promo);
+
                             foreach (Detail _Detail_ in Invoice.Details.Where(x => x.Item.id_item == Promo.reference_bonus && x.is_promo))
                             {
                                 _Detail_.DiscountVAT = 0;
@@ -299,18 +287,15 @@ namespace entity.Brillo.Promotion
                     }
                     TotalQuantity = DetailList.Sum(x => x.Quantity);
                 }
+
                 foreach (Detail _Detail_ in Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference_bonus) && x.is_promo))
                 {
                     _Detail_.DiscountVAT = 0;
                     _Detail_.is_promo = false;
                 }
-            
-
-             
 
                 if (DetailTagList.Count() > 0 && TotalQuantity >= Promo.quantity_step)
                 {
-                  
                     foreach (DetailTag _DetailTag in DetailTagList)
                     {
                         Promo _Promo = new Promo();
@@ -319,6 +304,7 @@ namespace entity.Brillo.Promotion
 
                         List<Detail> sidpromo = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.is_promo == false).ToList();
                         //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+
                         foreach (Detail _Detail in sidpromo)
                         {
                             _Detail.is_promo = true;
@@ -326,13 +312,11 @@ namespace entity.Brillo.Promotion
 
                             DetailLIST.Add(_Detail);
                         }
-
                     }
-                 
                 }
-              
             }
         }
+
         private void Discount_onGrandTotal(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
@@ -375,6 +359,7 @@ namespace entity.Brillo.Promotion
 
             }
         }
+
         private void Discount_onCustomerType(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
@@ -386,16 +371,13 @@ namespace entity.Brillo.Promotion
                     foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
                     {
                         _Detail_.IsPromo = false;
-
                     }
                 }
 
                 if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
                 {
-
                     SalesInvoice.DiscountPercentage = Promo.result_value;
 
-                 
                     foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
                     {
                         Detail Detail = new Detail();
@@ -411,19 +393,12 @@ namespace entity.Brillo.Promotion
                         Detail.is_promo = _Detail.IsPromo;
                         DetailLIST.Add(Detail);
                     }
-             
-
-
                 }
+
                 foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
                 {
                     _Detail_.IsPromo = true;
-
                 }
-
-
-
-
             }
         }
 

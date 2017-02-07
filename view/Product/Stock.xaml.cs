@@ -145,7 +145,9 @@ namespace Cognitivo.Product
                         inventoryViewSource.View.Filter = i =>
                         {
                             dynamic TmpInventory = (dynamic)i;
-                            if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                            if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) || 
+                                TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                                TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
                                 return true;
                             else
                                 return false;

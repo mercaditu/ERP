@@ -101,14 +101,25 @@
 					<Label Content="{lex:Loc User}"/>
 					<Label Content="{Binding security_user.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Source={StaticResource item_inventoryViewSource}}" 
 						   Style="{StaticResource input_label}"/>
+                    <Border CornerRadius="4" Background="{StaticResource appConfig}" 
+                            AllowDrop="True" Drop="Excel_Drop">
+                        <Button Click="Excel_Create">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Style="{StaticResource ico_Label}" Content="" Width="auto"
+                                           FontSize="18" HorizontalContentAlignment="Center"/>
+                                    <TextBlock Text="Excel" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Border>
 				</StackPanel>
 			</Grid>
 
 			<Grid Grid.Row="1">
 				<ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Margin="2"
 						  DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
-						  SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}" 
-						  SelectionChanged="CbxBranch_SelectionChanged"/>
+						  SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}"/>
 				
 				<ListBox x:Name="location_ListBox" Background="{DynamicResource AccentColor_Introvert}" Margin="2,32,2,2"
 						 ScrollViewer.VerticalScrollBarVisibility="Auto"

@@ -15,7 +15,9 @@ namespace Cognitivo.Product
         InventoryDB InventoryDB = new InventoryDB();
         CollectionViewSource item_inventoryViewSource,
             item_inventoryitem_inventory_detailViewSource,
-            app_branchapp_locationViewSource, app_branchViewSource;
+            app_branchapp_locationViewSource, 
+            app_branchViewSource;
+
         cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
         int CurrencyID = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -49,6 +51,7 @@ namespace Cognitivo.Product
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+
             if (app_location != null)
             {
                 if (item_inventoryitem_inventory_detailViewSource != null)
@@ -66,8 +69,6 @@ namespace Cognitivo.Product
                     }
                 }
             }
-
-            // TextBox_TextChanged(null, null);
         }
 
         private void BindItemMovement()
@@ -207,11 +208,6 @@ namespace Cognitivo.Product
             }
         }
 
-        private void CbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void location_ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (item_inventoryDataGrid.SelectedItem != null)
@@ -228,7 +224,6 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
             if (crud_modal.IsVisible == false)
             {
                 item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
@@ -272,6 +267,39 @@ namespace Cognitivo.Product
             }
         }
 
+        private void Excel_Drop(object sender, DragEventArgs e)
+        {
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (Inv2Excel.Read(file.FirstOrDefault(), item_inventory))
+                {
+                    toolBar.msgSaved(1);
+
+                    item_inventoryViewSource.View.Refresh();
+                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                    item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
+                }
+            }
+        }
+
+        private void Excel_Create(object sender, RoutedEventArgs e)
+        {
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
+
+            if (Inv2Excel.Create(item_inventory))
+            {
+                toolBar.msgSaved(1);
+            }
+            
+        }
+
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             crud_modal.Children.Clear();
@@ -281,10 +309,6 @@ namespace Cognitivo.Product
 
             if (item_inventory_detail != null)
             {
-
-             
-
-
                 if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                 {
                     
@@ -333,19 +357,16 @@ namespace Cognitivo.Product
                     if (app_branchapp_locationViewSource.View != null)
                     {
                         filetr_detail();
-                        // Task thread_SecondaryData = Task.Factory.StartNew(() => BindItemMovement());
                     }
                 }
             }
         }
-
 
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 item_inventory_detail item_inventory_detail = (item_inventory_detail)item_inventoryitem_inventory_detailViewSource.View.CurrentItem;
-         
 
                 if (item_inventory_detail != null )
                 {

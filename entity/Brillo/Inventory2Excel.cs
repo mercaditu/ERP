@@ -60,7 +60,7 @@ namespace entity.Brillo
 
                     //Save File
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    wb.SaveAs(path + "/Inventory " + DateTime.Now.ToLongDateString() + ".xlsx");
+                    wb.SaveAs(path + "/Inventory " + item_inventory.app_branch.name + " " + DateTime.Now.ToLongDateString() + ".xlsx");
                     return true;
                 }
             }

@@ -21,6 +21,7 @@ namespace entity.BrilloQuery
 								 item.is_active as IsActive,
 								 item.id_item_type,
 								 loc.name as Location,
+                                 loc.id_location as LocationID
 								 branch.name as Branch,
 								 (sum(mov.credit) - sum(mov.debit)) as Quantity
 
@@ -68,13 +69,82 @@ namespace entity.BrilloQuery
 					Item.Code = Convert.ToString(DataRow["Code"]);
 					Item.Brand = Convert.ToString(DataRow["Brand"]);
 					Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ?0:DataRow["Quantity"]);
+                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"]); ;
 
-					Items.Add(Item);
+                    Items.Add(Item);
 				}
 			}
 		}
+        public List<Item> GetItemsByLocation()
+        {
+            List<Item> ItemsLocation = new List<Item>();
+            string query = @"SET sql_mode = '';
+							select 
+								 item.id_item as ID, 
+								 item.code as Code, 
+								 item.name as Name,
+								 brand.name as Brand,
+								 item.id_company as CompanyID,
+								 item.is_active as IsActive,
+								 item.id_item_type,
+								 loc.name as Location,
+                                 loc.id_location as LocationID
+								 branch.name as Branch,
+								 (sum(mov.credit) - sum(mov.debit)) as Quantity
 
-		public void Dispose()
+								 from items as item
+	 
+								 left outer join item_product as prod on prod.id_item = item.id_item
+								 left outer join item_brand as brand on brand.id_brand = item.id_brand
+								 left outer join item_movement as mov on mov.id_item_product = prod.id_item_product  
+								 left outer join app_location as loc on mov.id_location = loc.id_location
+								 left outer join app_branch as branch on loc.id_branch = branch.id_branch
+
+								 where (item.id_company = {0} or item.id_company is null) 
+									and (loc.id_branch = {1} or loc.id_branch is null)
+									and item.is_active = 1
+							  
+								 group by item.id_item,loc.id_location
+								 order by item.name";
+
+            query = string.Format(query, CurrentSession.Id_Company, CurrentSession.Id_Branch);
+
+            using (DataTable dt = QueryExecutor.DT(query))
+            {
+                foreach (DataRow DataRow in dt.Rows)
+                {
+                    bool Is_Product = false;
+
+                    //Item Type will determine if it can stock (Is Product) or not.
+                    int type = Convert.ToInt16(DataRow["id_item_type"]);
+                    if (type == 1 || type == 2 || type == 6)
+                    {
+                        Is_Product = true;
+                    }
+
+                    Item Item = new Item();
+                    Item.ID = Convert.ToInt16(DataRow["ID"]);
+                    Item.Type = (item.item_type)type;
+                    Item.IsProduct = Is_Product;
+                    Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                    if (!(DataRow["CompanyID"] is DBNull))
+                    {
+                        Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
+                    }
+
+                    Item.Name = Convert.ToString(DataRow["Name"]);
+                    Item.Code = Convert.ToString(DataRow["Code"]);
+                    Item.Brand = Convert.ToString(DataRow["Brand"]);
+                    Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ? 0 : DataRow["Quantity"]);
+                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"]); ;
+
+                    ItemsLocation.Add(Item);
+                }
+            }
+            return ItemsLocation;
+        }
+
+        public void Dispose()
 		{
 			// Dispose(true);
 			GC.SuppressFinalize(this);
@@ -103,11 +173,14 @@ namespace entity.BrilloQuery
 		public bool IsProduct { get; set; }
 
 		public decimal Location { get; set; }
-		public decimal InStock { get; set; }
+        public int LocationID { get; set; }
+        public decimal InStock { get; set; }
 		public decimal Cost { get; set; }
 
 		ICollection<Tag> Tags { get; set; }
-		public Item()
+     
+
+        public Item()
 		{
 			Tags = new List<Tag>();
 		}

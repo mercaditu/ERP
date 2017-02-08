@@ -184,7 +184,7 @@ namespace cntrl
 
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@StartDate", StartDate.ToString("yyyy-MM-dd"));
-            query = query.Replace("@EndDate", EndDate.ToString("yyyy-MM-dd"));
+            query = query.Replace("@EndDate", EndDate.AddDays(1).ToString("yyyy-MM-dd"));
             query = query.Replace("@ProjectID", ProjectID.ToString());
             dt = QueryExecutor.DT(query);
 

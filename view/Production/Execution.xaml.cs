@@ -554,9 +554,11 @@ namespace Cognitivo.Production
                         {
                             decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity) + Quantity;
                             decimal avlqty = 0;
+                            int location = production_order_detail.production_order.production_line.id_location;
                             using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
                             {
-                                entity.BrilloQuery.Item Item = Execute.Items.Where(x => x.ID == production_order_detail.id_item).FirstOrDefault();
+                               List<entity.BrilloQuery.Item> Items = Execute.GetItemsByLocation();
+                               entity.BrilloQuery.Item Item = Items.Where(x => x.ID == production_order_detail.id_item && x.LocationID==location).FirstOrDefault();
 
                                 if (Item != null)
                                 {
@@ -754,6 +756,8 @@ namespace Cognitivo.Production
 
             }
         }
+
+     
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

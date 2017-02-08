@@ -32,19 +32,30 @@ namespace entity.Brillo.Promotion
                 Discount_onGrandTotal(Promo, SalesInvoice);
             }
 
-            //Logic to see which promotion is best.
-            foreach (sales_invoice_detail detail in SalesInvoice.sales_invoice_detail)
+            foreach (Detail Best_Promotion in DetailLIST.Where(x => x.DiscountVAT == DetailLIST.Max(y => y.DiscountVAT)).GroupBy(x => x.sales_invoice_detail))
             {
-                //for each row or item, see which has best discount.
-                Detail best = DetailLIST.Where(x => x.sales_invoice_detail == detail && x.DiscountVAT == DetailLIST.Max(y => y.DiscountVAT)).FirstOrDefault();
-                if (best!=null)
+                if (Detail.is_promo == false && Best_Promotion.sales_invoice_detail != null)
                 {
-                    detail.DiscountVat = best.DiscountVAT;
-                    detail.id_sales_promotion = best.Promotion.id_sales_promotion;
-                    detail.sales_promotion = best.Promotion;
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
+                    sales_invoice_detail.DiscountVat = Best_Promotion.DiscountVAT;
+                    sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
+                    sales_invoice_detail.sales_promotion = Best_Promotion.Promotion;
                 }
-           
+                else
+                {
+                    ///Logic to add new Items from GetThat Promotions...
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                    sales_invoice_detail.item = Best_Promotion.Item;
+                    sales_invoice_detail.quantity = Best_Promotion.Quantity;
+                    sales_invoice_detail.unit_price = Best_Promotion.Price;
+                    sales_invoice_detail.discount = Best_Promotion.Discount;
+
+                    SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                }
             }
+
+            //Logic to see which promotion is best...
         }
 
         private void BuyThis_GetThat(sales_promotion Promo, sales_invoice SalesInvoice)
@@ -83,13 +94,13 @@ namespace entity.Brillo.Promotion
                             _Detail.Promos.Add(_Promo);
 
                             Detail Detail = new Detail();
+
                             using (db db = new db())
                             {
                                 item item = db.items.Where(x => x.id_item == Promo.reference_bonus && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
                                 if (item != null)
                                 {
-
                                     Detail.Item = item;
                                 }
 
@@ -108,7 +119,6 @@ namespace entity.Brillo.Promotion
                             Detail.Quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
                         
                             DetailLIST.Add(Detail);
-
                         }
                     }
                 }
@@ -253,8 +263,7 @@ namespace entity.Brillo.Promotion
                     Detail.is_promo = _Detail.IsPromo;
                     Invoice.Details.Add(Detail);
                 }
-
-
+                
                 if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step && x.is_promo == false).Count() > 0)
                 {
                     foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
@@ -264,9 +273,7 @@ namespace entity.Brillo.Promotion
                             Promo _Promo = new Promo();
                             _Promo.Type = sales_promotion.salesPromotion.Discount_onItem;
                             _Promo.Shared = true;
-
                             _Detail.Promos.Add(_Promo);
-
 
                             Detail Detail = Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.is_promo == false).FirstOrDefault();
 
@@ -281,7 +288,6 @@ namespace entity.Brillo.Promotion
                             }
                         }
                     }
-
                 }
             }
         }

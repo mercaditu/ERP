@@ -109,13 +109,29 @@ namespace entity
             }
         }
         private decimal _Quantity_Factored;
-        public string comment { get; set; }
-        public int id_currencyfx { get; set; }
-        public decimal unit_value { get; set; }
+        public string comment
+        {
+            get { return _comment; }
+            set { _comment = value; RaisePropertyChanged("comment"); }
+        }
+        private string _comment;
 
+        public int id_currencyfx { get; set; }
+        public decimal unit_value
+        {
+            get { return _unit_value; }
+            set { _unit_value = value; RaisePropertyChanged("unit_value"); }
+        }
+        private decimal _unit_value;
 
         public DateTime? expire_date { get; set; }
-        public string batch_code { get; set; }
+
+        public string batch_code
+        {
+            get { return _batch_code; }
+            set { _batch_code = value; RaisePropertyChanged("batch_code"); }
+        }
+        private string _batch_code;
 
         public virtual item_inventory item_inventory { get; set; }
         public virtual app_location app_location { get; set; }

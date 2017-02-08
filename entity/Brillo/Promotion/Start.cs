@@ -23,11 +23,9 @@ namespace entity.Brillo.Promotion
 
         public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice)
         {
-            sales_promotion promo = SalesPromotionLIST.Where(x => x.type == sales_promotion.salesPromotion.Discount_onCustomerType).FirstOrDefault();
-
             foreach (var Promo in SalesPromotionLIST)
             {
-                Discount_onCustomerType(promo, SalesInvoice);
+                Discount_onCustomerType(Promo, SalesInvoice);
                 BuyThis_GetThat(Promo, SalesInvoice);
                 Discount_onItem(Promo, SalesInvoice);
                 Discount_onTag(Promo, SalesInvoice);
@@ -483,43 +481,6 @@ namespace entity.Brillo.Promotion
         {
             foreach (var Promo in SalesPromotionLIST)
             {
-                //if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
-                //{
-                //    if (Promo.quantity_max >= Invoice.GrandTotal && Promo.quantity_min <= Invoice.GrandTotal)
-                //    {
-                //        Promo _Promo = new Promo();
-                //        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
-                //        _Promo.Shared = true;
-                //        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? Promo.result_value : (Invoice.GrandTotal * (Promo.result_value)));
-                //        Invoice.Promos.Add(_Promo);
-                //    }
-                //    else if (Math.Floor(Invoice.GrandTotal / Promo.quantity_step) >= 1)
-                //    {
-                //        int Step = (int)Math.Floor(Invoice.GrandTotal / Promo.quantity_step);
-
-                //        Promo _Promo = new Promo();
-                //        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
-                //        _Promo.Shared = true;
-                //        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? (Promo.result_value * Step) : (Invoice.GrandTotal * (Promo.result_value * Step)));
-                //        Invoice.Promos.Add(_Promo);
-                //    }
-                //}
-
-                //if (Promo.types == sales_promotion.Type.Discount_onBrand)
-                //{
-                //    if (Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference).Count() > 0)
-                //    {
-                //        foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference))
-                //        {
-                //            Promo _Promo = new Promo();
-                //            _Promo.Type = sales_promotion.Type.Discount_onBrand;
-                //            _Promo.Shared = true;
-                //            _Promo.DiscountValue = _Detail.PriceVAT - (Promo.is_percentage == false ? Promo.result_value : (_Detail.PriceVAT * (Promo.result_value)));
-                //            _Detail.Promos.Add(_Promo);
-                //        }
-                //    }
-                //}
-
                 if (Promo.type == sales_promotion.salesPromotion.BuyThis_GetThat)
                 {
                     if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
@@ -543,6 +504,8 @@ namespace entity.Brillo.Promotion
         }
     }
 
+    #region Sales-Object
+
     public class Invoice
     {
         public Invoice()
@@ -565,6 +528,7 @@ namespace entity.Brillo.Promotion
         {
             Promos = new List<Promo>();
         }
+
         public item Item { get; set; }
         public int DetailID { get; set; }
         public decimal Quantity { get; set; }
@@ -579,11 +543,13 @@ namespace entity.Brillo.Promotion
 
         public virtual ICollection<Promo> Promos { get; set; }
     }
+
     public class DetailTag
     {
         public int Tag { get; set; }
         public decimal Quantity { get; set; }
     }
+
     public class DetailProduct
     {
         public int ProductId { get; set; }
@@ -598,4 +564,6 @@ namespace entity.Brillo.Promotion
         public decimal DiscountValue { get; set; }
         public bool Shared { get; set; }
     }
+
+    #endregion
 }

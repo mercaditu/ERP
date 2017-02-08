@@ -75,44 +75,33 @@ namespace entity.Brillo.Promotion
                             Promo _Promo = new Promo();
                             _Promo.Type = sales_promotion.salesPromotion.BuyThis_GetThat;
                             _Promo.Shared = true;
-
                             _Detail.Promos.Add(_Promo);
 
-                            List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
-                            //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-
-                            if (sid.Count == 0)
+                            Detail Detail = new Detail();
+                            using (db db = new db())
                             {
-                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                                item item = db.items.Where(x => x.id_item == Promo.reference_bonus && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
-                                //Needed to calculate the discounts and unit prices further on.
-                                sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
-
-                                using (db db = new db())
+                                if (item != null)
                                 {
-                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
-                                    if (item != null)
-                                    {
-                                        sales_invoice_detail.id_vat_group = item.id_vat_group;
-                                        sales_invoice_detail.id_item = item.id_item;
-                                        sales_invoice_detail.item_description = item.name;
-                                    }
-
-                                    item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
-
-                                    if (item_price != null)
-                                    {
-                                        sales_invoice_detail.unit_price = item_price.value;
-                                        sales_invoice_detail.discount = item_price.value;
-                                    }
+                                    Detail.Item = item;
                                 }
 
-                                sales_invoice_detail.IsPromo = true;
+                                item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
 
-                                sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                                SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                                if (item_price != null)
+                                {
+                                    Detail.Price = item_price.value;
+                                    Detail.Discount = item_price.value;
+                                }
                             }
+
+                            Detail.is_promo = true;
+
+                            Detail.Quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
+                            DetailLIST.Add(Detail);
+
                         }
                     }
                 }
@@ -148,20 +137,19 @@ namespace entity.Brillo.Promotion
                 List<Detail> DetailList = new List<Detail>();
                 List<DetailTag> DetailTagList = new List<DetailTag>();
 
-                using (db db = new db())
+
+                DetailList = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.is_promo == false).ToList();
+
+                if (DetailList.Count() > 0)
                 {
-                    DetailList = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.is_promo == false).ToList();
-
-                    if (DetailList.Count() > 0)
-                    {
-                        DetailTag DetailTag = new DetailTag();
-                        DetailTag.Tag = Promo.reference;
-                        DetailTag.Quantity = DetailList.Sum(x => x.Quantity);
-                        DetailTagList.Add(DetailTag);
-                    }
-
-                    TotalQuantity = DetailList.Sum(x => x.Quantity);
+                    DetailTag DetailTag = new DetailTag();
+                    DetailTag.Tag = Promo.reference;
+                    DetailTag.Quantity = DetailList.Sum(x => x.Quantity);
+                    DetailTagList.Add(DetailTag);
                 }
+
+                TotalQuantity = DetailList.Sum(x => x.Quantity);
+
 
 
                 if (DetailTagList.Count() > 0 && TotalQuantity >= Promo.quantity_step)
@@ -172,59 +160,56 @@ namespace entity.Brillo.Promotion
                         _Promo.Type = sales_promotion.salesPromotion.BuyTag_GetThat;
                         _Promo.Shared = true;
 
-                        List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.item.item_tag_detail.Any(y => y.id_tag == Promo.reference_bonus) && x.IsPromo).ToList();
-                        //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                        if (sid.Count == 0)
+
+                        PromotionProduct window = new PromotionProduct()
                         {
-                            PromotionProduct window = new PromotionProduct()
-                            {
-                                Title = "Modal Dialog",
-                                ShowInTaskbar = false,               // don't show the dialog on the taskbar
-                                Topmost = true,                      // ensure we're Always On Top
-                                ResizeMode = ResizeMode.NoResize,    // remove excess caption bar buttons
-                                TagID = Promo.reference_bonus,
-                                TotalQuantity = Math.Floor(_DetailTag.Quantity / Promo.quantity_step),
-                            };
+                            Title = "Modal Dialog",
+                            ShowInTaskbar = false,               // don't show the dialog on the taskbar
+                            Topmost = true,                      // ensure we're Always On Top
+                            ResizeMode = ResizeMode.NoResize,    // remove excess caption bar buttons
+                            TagID = Promo.reference_bonus,
+                            TotalQuantity = Math.Floor(_DetailTag.Quantity / Promo.quantity_step),
+                        };
 
-                            window.ShowDialog();
+                        window.ShowDialog();
 
-                            List<DetailProduct> DetailProduct = window.ProductList;
-                            if (DetailProduct != null)
+                        List<DetailProduct> DetailProduct = window.ProductList;
+                        if (DetailProduct != null)
+                        {
+                            foreach (DetailProduct _DetailProduct in DetailProduct)
                             {
-                                foreach (DetailProduct _DetailProduct in DetailProduct)
+                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
+                                //Needed to calculate the discounts and unit prices further on.
+                                Detail Detail = new Detail();
+
+                                using (db db = new db())
                                 {
-                                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-
-                                    //Needed to calculate the discounts and unit prices further on.
-                                    sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
-
-                                    using (db db = new db())
+                                    item item = db.items.Where(x => x.id_item == _DetailProduct.ProductId).FirstOrDefault();
+                                    if (item != null)
                                     {
-                                        item item = db.items.Where(x => x.id_item == _DetailProduct.ProductId).FirstOrDefault();
-                                        if (item != null)
-                                        {
-                                            sales_invoice_detail.id_vat_group = item.id_vat_group;
-                                            sales_invoice_detail.id_item = item.id_item;
-                                            sales_invoice_detail.item_description = item.name;
-                                        }
 
-                                        item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
-                                        if (item_price != null)
-                                        {
-                                            sales_invoice_detail.unit_price = item_price.value;
-                                            sales_invoice_detail.discount = item_price.value;
-                                        }
+                                        Detail.Item = item;
                                     }
 
-                                    sales_invoice_detail.IsPromo = true;
+                                    item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
 
-                                    sales_invoice_detail.quantity = _DetailProduct.Quantity;
-                                    SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
-                                 
+                                    if (item_price != null)
+                                    {
+                                        Detail.Price = item_price.value;
+                                        Detail.Discount = item_price.value;
+                                    }
                                 }
-                           
+
+                                Detail.is_promo = true;
+
+                                Detail.Quantity = _DetailProduct.Quantity;
+                                DetailLIST.Add(Detail);
 
                             }
+
+
+
                         }
 
 
@@ -272,11 +257,6 @@ namespace entity.Brillo.Promotion
 
                             _Detail.Promos.Add(_Promo);
 
-                            foreach (Detail _Detail_ in Invoice.Details.Where(x => x.Item.id_item == Promo.reference_bonus && x.is_promo))
-                            {
-                                _Detail_.DiscountVAT = 0;
-                                _Detail_.is_promo = false;
-                            }
 
                             Detail Detail = Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.is_promo == false).FirstOrDefault();
 
@@ -284,12 +264,12 @@ namespace entity.Brillo.Promotion
                             {
                                 Detail.is_promo = true;
                                 Detail.DiscountVAT = Detail.PriceVAT * Promo.result_value;
-                          
+
                                 DetailLIST.Add(Detail);
                             }
                         }
                     }
-                   
+
                 }
             }
         }
@@ -439,15 +419,7 @@ namespace entity.Brillo.Promotion
                 }
 
 
-                if (SalesInvoice.sales_invoice_detail.Where(x => x.IsPromo).Count() > 0)
-                {
-                    SalesInvoice.DiscountPercentage = 0;
-
-                    foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
-                    {
-                        _Detail_.IsPromo = false;
-                    }
-                }
+            
 
                 if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
                 {
@@ -470,10 +442,6 @@ namespace entity.Brillo.Promotion
                     }
                 }
 
-                foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail)
-                {
-                    _Detail_.IsPromo = true;
-                }
             }
         }
 

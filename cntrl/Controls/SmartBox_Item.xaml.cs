@@ -33,21 +33,6 @@ namespace cntrl.Controls
         }
         bool _Exclude_OutOfStock;
 
-        public bool Exclude_OutOfStockLocation
-        {
-            get { return _Exclude_OutOfStockLocation; }
-            set
-            {
-                if (_Exclude_OutOfStockLocation != value)
-                {
-                    _Exclude_OutOfStockLocation = value;
-                    RaisePropertyChanged("Exclude_OutOfStockLocation");
-                }
-            }
-        }
-        bool _Exclude_OutOfStockLocation;
-
-
         public bool can_New
         {
             get { return _can_new; }
@@ -128,12 +113,6 @@ namespace cntrl.Controls
 
         public int ItemID { get; set; }
         public entity.item.item_type? item_types { get; set; }
-        public static readonly DependencyProperty LocationIDProperty = DependencyProperty.Register("LocationID", typeof(Int32), typeof(SmartBox_Item));
-        public Int32 LocationID
-        {
-            get { return (Int32)GetValue(LocationIDProperty); }
-            set { SetValue(LocationIDProperty, value); }
-        }
 
         public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
 
@@ -154,7 +133,6 @@ namespace cntrl.Controls
             if (item_types==entity.item.item_type.Product || item_types==entity.item.item_type.RawMaterial)
             {
                 Exclude_OutOfStock = true;
-                Exclude_OutOfStockLocation = true;
             }
         
             LoadData();
@@ -269,14 +247,6 @@ namespace cntrl.Controls
                 if (Exclude_OutOfStock == true)
                 {
                     predicate = predicate.And(x => x.InStock > 0);
-                }
-                if (Exclude_OutOfStockLocation == true)
-                {
-                    if (LocationID>0)
-                    {
-                        predicate = predicate.And(x =>x.LocationID ==LocationID && x.InStock > 0);
-                    }
-                
                 }
 
             }

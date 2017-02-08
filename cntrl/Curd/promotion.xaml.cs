@@ -12,7 +12,7 @@ namespace cntrl
 {
     public partial class promotion : UserControl
     {
-        CollectionViewSource  item_tagViewSource, item_tagBonusViewSource, app_currencyViewSource, contact_tagViewSource;
+        CollectionViewSource  item_tagViewSource, app_currencyViewSource, contact_tagViewSource;
         CollectionViewSource _sales_promotionViewSource = null;
         public CollectionViewSource sales_promotionViewSource { get { return _sales_promotionViewSource; } set { _sales_promotionViewSource = value; } }
 

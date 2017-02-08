@@ -21,8 +21,7 @@ namespace entity.BrilloQuery
 								 item.is_active as IsActive,
 								 item.id_item_type,
 								 loc.name as Location,
-                                 loc.id_location as LocationID
-								 branch.name as Branch,
+                                 branch.name as Branch,
 								 (sum(mov.credit) - sum(mov.debit)) as Quantity
 
 								 from items as item
@@ -69,7 +68,7 @@ namespace entity.BrilloQuery
 					Item.Code = Convert.ToString(DataRow["Code"]);
 					Item.Brand = Convert.ToString(DataRow["Brand"]);
 					Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ?0:DataRow["Quantity"]);
-                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"]); ;
+            
 
                     Items.Add(Item);
 				}
@@ -88,7 +87,7 @@ namespace entity.BrilloQuery
 								 item.is_active as IsActive,
 								 item.id_item_type,
 								 loc.name as Location,
-                                 loc.id_location as LocationID
+                                 loc.id_location as LocationID,
 								 branch.name as Branch,
 								 (sum(mov.credit) - sum(mov.debit)) as Quantity
 

@@ -52,10 +52,10 @@ namespace entity.Brillo.Promotion
             {
                 foreach (var Promo in SalesPromotionLIST)
                 {
-                    BuyThis_GetThat(Promo, Invoice, SalesInvoice);
-                    Discount_onItem(Promo, Invoice);
-                    Discount_onTag(Promo, Invoice);
-                    Discount_onGrandTotal(Promo,Invoice, SalesInvoice);
+                    BuyThis_GetThat(Promo, SalesInvoice);
+                    Discount_onItem(Promo, SalesInvoice);
+                    Discount_onTag(Promo, SalesInvoice);
+                    Discount_onGrandTotal(Promo, SalesInvoice);
                 }
 
                 //Logic to see which promotion is best.
@@ -67,14 +67,11 @@ namespace entity.Brillo.Promotion
                     detail.Discount = best.Discount;
                     detail.DiscountVAT = best.DiscountVAT;
                     detail.PromotionID = best.PromotionID;
-
-                    //Assign to Sales Detail...
-
                 }
             }
         }
 
-        private void BuyThis_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        private void BuyThis_GetThat(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.BuyThis_GetThat)
             {
@@ -131,7 +128,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        private void BuyTag_GetThat(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        private void BuyTag_GetThat(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.BuyTag_GetThat)
             {
@@ -228,7 +225,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        private void Discount_onItem(sales_promotion Promo, Invoice Invoice)
+        private void Discount_onItem(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onItem)
             {
@@ -266,7 +263,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        private void Discount_onTag(sales_promotion Promo, Invoice Invoice)
+        private void Discount_onTag(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onTag)
             {
@@ -317,7 +314,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        private void Discount_onGrandTotal(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        private void Discount_onGrandTotal(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
             {
@@ -360,7 +357,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        private void Discount_onCustomerType(sales_promotion Promo, Invoice Invoice, sales_invoice SalesInvoice)
+        private void Discount_onCustomerType(sales_promotion Promo, sales_invoice SalesInvoice)
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
             {
@@ -401,7 +398,6 @@ namespace entity.Brillo.Promotion
                 }
             }
         }
-
 
         private void Calculate(ref Invoice Invoice)
         {

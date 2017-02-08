@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>会计</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>账户余额</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>占</value>
   </data>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>定制</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>每日目标</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>数据库</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>日期</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>入住日期</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>出生日期</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>天</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>DebeHaber整合</value>
@@ -555,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>折扣</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>距离</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>整除</value>
   </data>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>停机时间</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>司机</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>重复</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>错误</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>预计到达日期</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>预计起飞日期</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>预计到达时间</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>预计出发时间</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>事件管理</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>花费</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>截止日期</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>出口</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>负债</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>执照</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>线</value>
   </data>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>生产日期</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>余量</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>婚姻状况</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>标记</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>面具</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>测量类型</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>商品与积分</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>商品与借记</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>迁移类型</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>销售移动点</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>模</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>每月目标</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>运动</value>
@@ -941,6 +998,9 @@
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>打包清单</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>参数</value>
   </data>
   <data name="Parent" xml:space="preserve">
     <value>亲</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>打印机价值观</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>打印支票</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>印刷机</value>
   </data>
@@ -1061,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>生产现状</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>利润</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>项目</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>重印</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>要求</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>请求管理</value>
   </data>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>销售</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>销售分析</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>销售预算</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>销售预算摘要</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>由销售分公司</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>通过销售品牌</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>销售由客户</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>销售按日期</value>
@@ -1316,6 +1394,9 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>性别</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>分享</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>店</value>
@@ -1423,13 +1504,16 @@
     <value>交易日期</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
-    <value>交易号码</value>
+    <value>交易号</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>交易</value>
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>转让</value>
+  </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>仓库之间转移</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>工作类型</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>年</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>

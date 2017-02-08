@@ -100,8 +100,8 @@ namespace entity
             Bank = 47,
             [LocalizedDescription("PromissoryNote")]
             PromissoryNote = 85,
-            [LocalizedDescription("Reconciliation")]
-            Reconciliation = 125,
+            [LocalizedDescription("BankReconciliation")]
+            BankReconciliation = 125,
 
 
             //Stock

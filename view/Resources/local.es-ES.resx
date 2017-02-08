@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>Contador</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>Saldo De La Cuenta</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>Contabilizado</value>
   </data>
@@ -438,11 +441,17 @@
   <data name="Customize" xml:space="preserve">
     <value>Perzonalizar</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>Meta Diaria</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Base De Datos</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Fecha</value>
+  </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>Fecha De Llegada</value>
   </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>Fecha De Nacimiento</value>
@@ -558,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>Descuento</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distancia</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>Divisible</value>
   </data>
@@ -569,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>Tiempo De Inactividad</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Conductor</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Duplicar</value>
@@ -609,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>Fecha De Llegada Estimada</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>Fecha Estimada De Salida</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>Hora Estimada De Llegada</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>Hora Estimada De Partida</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>Gestión De Eventos</value>
   </data>
@@ -617,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>Gastos</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Fecha De Caducidad</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>Exportar</value>
@@ -685,7 +715,7 @@
     <value>Geografía</value>
   </data>
   <data name="GetDetails" xml:space="preserve">
-    <value>Obtener Detalles</value>
+    <value>Obtén Detalles</value>
   </data>
   <data name="Gift" xml:space="preserve">
     <value>Regalo</value>
@@ -846,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>Pasivo</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>Licencia</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>Línea</value>
   </data>
@@ -888,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>Fecha De Fabricación</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>Margen</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>Estado Civil</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>Margen</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>Máscara</value>
@@ -912,11 +951,17 @@
   <data name="MigrationType" xml:space="preserve">
     <value>Tipo De Migración</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>Punto De Venta Móvil</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>Módulo</value>
   </data>
   <data name="Month" xml:space="preserve">
     <value>Mes</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>Meta Mensual</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>Movimiento</value>
@@ -1044,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>Los Valores De La Impresora</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>Impresión De Cheques</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Imprenta</value>
   </data>
@@ -1076,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>Estado De Producción</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Lucro</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>Proyecto</value>
@@ -1233,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>Ventas</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>Análisis De Ventas</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>Presupuesto De Ventas</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>Resumen Del Presupuesto De Ventas</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>Las Ventas De La Rama</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Ventas Por Marca</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>Ventas Por Cliente</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>Ventas Por Fecha</value>
@@ -1451,6 +1511,9 @@
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>Transferir</value>
+  </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>La Transferencia Entre Almacenes</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>

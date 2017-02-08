@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>Бухгалтер</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>Баланс</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>Учитывается</value>
   </data>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>Настроить</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>Ежедневно Гол</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>База данных</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>Дата прибытия</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>Дата рождения</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>День</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>Интеграция DebeHaber</value>
@@ -555,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>скидка</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Расстояние</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>делимый</value>
   </data>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>Время простоя</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Водитель</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>дублировать</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>ошибка</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>Предполагаемая дата прибытия</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>Предполагаемая дата вылета</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>Примерное время прибытия</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>Ожидаемое время отправления</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>Управление событиями</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>Затраты</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Срок годности</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>экспорт</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>обязательства</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>Лицензия</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>Линия</value>
   </data>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>Дата производства</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>Поле</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>Семейное положение</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>наценка</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>маска</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>Тип измерения</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>Товар с Кредитом</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>Товар с дебета</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>Тип миграции</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>Мобильная точка продаж</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>модуль</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Месяц</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>Ежемесячная цель</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>движение</value>
@@ -941,6 +998,9 @@
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>Товарная накладная</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>параметры</value>
   </data>
   <data name="Parent" xml:space="preserve">
     <value>родитель</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>Значения принтера</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>Печать Чеки</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Печатный станок</value>
   </data>
@@ -1061,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>Производство Статус</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>прибыль</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>проект</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>переиздание</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>запрошенный</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>Запрос управления</value>
   </data>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>Продажи</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>анализ сбыта</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>смета по реализации</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>Продажи Резюме Бюджета</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>Продажи по отраслям</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Продажи бренда</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>Продажи Клиентом</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>Продажи по дате</value>
@@ -1316,6 +1394,9 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>секс</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Поделиться</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>Магазин</value>
@@ -1431,6 +1512,9 @@
   <data name="Transfer" xml:space="preserve">
     <value>Перевод</value>
   </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>Переход между Warehouse</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Тип</value>
   </data>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>Тип работы</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Год</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>да</value>

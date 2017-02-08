@@ -21,7 +21,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name = entity.Brillo.Localize.StringText("SalesDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetail") :"SalesDetail",
+                Name = entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
                 Path = "cntrl.Reports.Sales.SalesDetail.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -29,7 +29,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name =entity.Brillo.Localize.StringText("SalesOrderDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesOrderDetail") :"SalesOrderDetail",
+                Name =entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
                 Path = "cntrl.Reports.Sales.SalesDetail.rdlc",
                 Query =  Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -39,7 +39,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name =entity.Brillo.Localize.StringText("SalesBudgetDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBudgetDetail") :"SalesBudgetDetail",
+                Name =entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
                 Path = "cntrl.Reports.Sales.SalesDetail.rdlc",
                 Query=  Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -49,7 +49,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.SalesReturn,
-                Name =entity.Brillo.Localize.StringText("SalesReturnDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesReturnDetail") :"SalesReturnDetail",
+                Name =entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
                 Path = "cntrl.Reports.Sales.SalesDetail.rdlc",
                 Query=  Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -61,7 +61,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name =entity.Brillo.Localize.StringText("SalesBudgetByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesOrderDetail") :"SalesOrderDetail",
+                Name =entity.Brillo.Localize.StringText("SalesByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesByItem") :"SalesByItem",
                 Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -71,7 +71,7 @@ namespace cntrl.Class
                 new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name =entity.Brillo.Localize.StringText("SalesOrderByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesOrderByItem") :"SalesOrderByItem",
+                Name =entity.Brillo.Localize.StringText("SalesByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesByItem") :"SalesByItem",
                 Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -81,7 +81,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name =entity.Brillo.Localize.StringText("SalesInvoiceByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesInvoiceByItem") :"SalesInvoiceByItem",
+                Name =entity.Brillo.Localize.StringText("SalesByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesByItem") :"SalesByItem",
                 Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -89,7 +89,7 @@ namespace cntrl.Class
                         new Report
             {
                 Application = entity.App.Names.SalesReturn,
-                Name =entity.Brillo.Localize.StringText("SalesReturnByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesReturnByItem") :"SalesReturnByItem",
+                Name =entity.Brillo.Localize.StringText("SalesByItem")!= string.Empty ? entity.Brillo.Localize.StringText("SalesByItem") :"SalesByItem",
                 Path = "cntrl.Reports.Sales.SalesByItem.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -183,7 +183,7 @@ namespace cntrl.Class
                     new Report
             {
                 Application = entity.App.Names.SalesInvoice,
-                Name =entity.Brillo.Localize.StringText("SalesBySalesRep")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBySalesRep") :"SalesBySalesRep",
+                Name =entity.Brillo.Localize.StringText("SalesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBySalesman") :"SalesBySalesman",
                 Path = "cntrl.Reports.Sales.SalesBySalesRep.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
@@ -191,7 +191,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.SalesOrder,
-                Name =entity.Brillo.Localize.StringText("SalesOrderBySalesRep")!= string.Empty ? entity.Brillo.Localize.StringText("SalesOrderBySalesRep") :"SalesOrderBySalesRep",
+                Name =entity.Brillo.Localize.StringText("SalesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBySalesman") :"SalesBySalesman",
                 Path = "cntrl.Reports.Sales.SalesBySalesRep.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -201,7 +201,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
-                Name =entity.Brillo.Localize.StringText("SalesBudgetBySalesRep")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBudgetBySalesRep") :"SalesBudgetBySalesRep",
+                Name =entity.Brillo.Localize.StringText("SalesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBySalesman") :"SalesBySalesman",
                 Path = "cntrl.Reports.Sales.SalesBySalesRep.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -212,7 +212,7 @@ namespace cntrl.Class
                new Report
             {
                 Application = entity.App.Names.SalesReturn,
-                Name =entity.Brillo.Localize.StringText("SalesReturnBySalesRep")!= string.Empty ? entity.Brillo.Localize.StringText("SalesReturnBySalesRep") :"SalesReturnBySalesRep",
+                Name =entity.Brillo.Localize.StringText("SalesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("SalesBySalesman") :"SalesBySalesman",
                 Path = "cntrl.Reports.Sales.SalesBySalesRep.rdlc",
                 Query=  Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -244,7 +244,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseOrder,
-                Name =entity.Brillo.Localize.StringText("PurchaseOrderDetail")!= string.Empty ? entity.Brillo.Localize.StringText("PurchaseOrderDetail") :"PurchaseOrderDetail",
+                Name =entity.Brillo.Localize.StringText("PurchaseDetail")!= string.Empty ? entity.Brillo.Localize.StringText("PurchaseDetail") :"PurchaseDetail",
                 Path = "cntrl.Reports.Purchases.PurchaseDetail.rdlc",
                 Query = Reports.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -254,7 +254,7 @@ namespace cntrl.Class
               new Report
             {
                 Application = entity.App.Names.PurchaseReturn,
-                Name =entity.Brillo.Localize.StringText("PurchaseReturnDetail")!= string.Empty ? entity.Brillo.Localize.StringText("PurchaseReturnDetail") :"PurchaseReturnDetail",
+                Name =entity.Brillo.Localize.StringText("PurchaseDetail")!= string.Empty ? entity.Brillo.Localize.StringText("PurchaseDetail") :"PurchaseDetail",
                 Path = "cntrl.Reports.Purchases.PurchaseDetail.rdlc",
                 Query = Reports.Purchase.Purchase.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -503,8 +503,6 @@ namespace cntrl.Class
             }
 
             };
-
-
         }
     }
 

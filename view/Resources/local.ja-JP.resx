@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>会計士</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>勘定残高</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>会計処理</value>
   </data>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>カスタマイズ</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>デイリーゴール</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>データベース</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>日付</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>到着日</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>生年月日</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>日</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>DebeHaber統合</value>
@@ -547,13 +559,16 @@
     <value>日付の差</value>
   </data>
   <data name="Dimension" xml:space="preserve">
-    <value>次元</value>
+    <value>寸法</value>
   </data>
   <data name="DirectCost" xml:space="preserve">
     <value>直接費</value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>ディスカウント</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>距離</value>
   </data>
   <data name="Divisible" xml:space="preserve">
     <value>割り切れます</value>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>ダウンタイム</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>ドライバ</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>複製</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>エラー</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>到着予定日</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>出発予定日</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>到着予定時刻</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>出発予定時刻</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>イベント管理</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>経費</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>有効期限</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>輸出する</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>負債</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>ライセンス</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>ライン</value>
   </data>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>製造日付</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>マージン</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>配偶者の有無</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>値上げ</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>マスク</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>測定タイプ</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>クレジット付き商品</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>借方と商品</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>移行タイプ</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>販売のモバイルポイント</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>モジュール</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>月間目標</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>移動</value>
@@ -941,6 +998,9 @@
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>包装内容明細書</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>パラメーター</value>
   </data>
   <data name="Parent" xml:space="preserve">
     <value>親</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>プリンタの値</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>印刷小切手</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>印刷機</value>
   </data>
@@ -1061,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>生産状況</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>利益</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>プロジェクト</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>リプリント</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>要求されました</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>リクエスト管理</value>
   </data>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>セールス</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>販売分析</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>販売予算</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>販売予算の概要</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>支店別売上高</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>ブランド別売上高</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>顧客別売上高</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>日別売上高</value>
@@ -1316,6 +1394,9 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>セックス</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>シェア</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>ショップ</value>
@@ -1429,7 +1510,10 @@
     <value>取引</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>移転</value>
+    <value>転送</value>
+  </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>倉庫間の転送</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>タイプ</value>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>仕事の種類</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>年</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>はい</value>

@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>Comptable</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>Solde Du Compte</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>Comptabilisé</value>
   </data>
@@ -208,7 +211,7 @@
     <value>Les Atouts</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>Vérification</value>
+    <value>Audit</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
     <value>Comptabilité Automatique</value>
@@ -412,7 +415,7 @@
     <value>Devise</value>
   </data>
   <data name="Current" xml:space="preserve">
-    <value>Courant</value>
+    <value>Actuel</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
     <value>Compte Courant Client</value>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>Personnaliser</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>Objectif Quotidien</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Base De Données</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Rendez-Vous Amoureux</value>
+  </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>Date D'Arrivée</value>
   </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>Date De Naissance</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Journée</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>Intégration Debehaber</value>
@@ -555,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>Remise</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>Divisible</value>
   </data>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>Down Time</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Chauffeur</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Dupliquer</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>Erreur</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>Date D'Arrivée Estimée</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>Date Estimée De Départ</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>Heure D'Arrivée Estimée</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>Heure De Départ Prévue</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>Gestion D'Événements</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>Dépenses</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Date D'Expiration</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>Exportation</value>
@@ -631,7 +664,7 @@
     <value>Facteur</value>
   </data>
   <data name="Family" xml:space="preserve">
-    <value>La Famille</value>
+    <value>Famille</value>
   </data>
   <data name="Favorite" xml:space="preserve">
     <value>Préféré</value>
@@ -658,7 +691,7 @@
     <value>Groupe Des Immobilisations</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
-    <value>Actifs Immobilisés</value>
+    <value>Immobilisations</value>
   </data>
   <data name="FootTraffic" xml:space="preserve">
     <value>Foot Traffic</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>Passifs</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>Licence</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>Ligne</value>
   </data>
@@ -865,7 +901,7 @@
     <value>Logistique</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>Se Déconnecter</value>
+    <value>Connectez - Out</value>
   </data>
   <data name="Longitud" xml:space="preserve">
     <value>Longitud</value>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>Date De Fabrication</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>Marge</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>État Civil</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>Markup</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>Masque</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>Type De Mesure</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>Marchandise Avec Crédits</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>Marchandise Avec Débits</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>Type De Migration</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>Point De Vente Mobile</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>Module</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>Objectif Mensuel</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>Mouvement</value>
@@ -941,6 +998,9 @@
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>Liste De Colisage</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Paramètres</value>
   </data>
   <data name="Parent" xml:space="preserve">
     <value>Parent</value>
@@ -991,7 +1051,7 @@
     <value>Pourcentage</value>
   </data>
   <data name="Person" xml:space="preserve">
-    <value>Personne</value>
+    <value>La Personne</value>
   </data>
   <data name="Personal" xml:space="preserve">
     <value>Personnel</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>Imprimante Valeurs</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>Impression De Chèques</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Presse D'Imprimerie</value>
   </data>
@@ -1061,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>Statut De Production</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Profit</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>Projet</value>
@@ -1108,7 +1174,7 @@
     <value>Achetez Récapitulatif De Facture</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
-    <value>Ordre D'Achat</value>
+    <value>Bon De Commande</value>
   </data>
   <data name="PurchaseOrderSummary" xml:space="preserve">
     <value>Bon De Commande Résumé</value>
@@ -1183,7 +1249,7 @@
     <value>Relate À Facturer</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-    <value>Relation Amoureuse</value>
+    <value>Relation</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Souviens-Toi De Moi</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>Réimpression</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>Demandé</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>Gestion Des Demandes</value>
   </data>
@@ -1204,7 +1273,7 @@
     <value>Demande De Ressources</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Obligatoire</value>
+    <value>Champs Obligatoires</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Numéro De Retour</value>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>Ventes</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>Analyse Des Ventes</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>Budget Des Ventes</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>Résumé Du Budget Des Ventes</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>Chiffre D'Affaires Par La Direction Générale</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Chiffre D'Affaires Par Marque</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>Chiffre D'Affaires Par Client</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>Chiffre D'Affaires Par Date</value>
@@ -1285,10 +1363,10 @@
     <value>Chercher</value>
   </data>
   <data name="SeatsAvailable" xml:space="preserve">
-    <value>Places Disponibles</value>
+    <value>Sièges Disponibles</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>La Sécurité</value>
+    <value>Sécurité</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
     <value>Réponse De Sécurité</value>
@@ -1316,6 +1394,9 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>Sexe</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Partager</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>Boutique</value>
@@ -1369,7 +1450,7 @@
     <value>Abonnement</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
-    <value>Sous-Total</value>
+    <value>Total</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
     <value>Subtotal Tva</value>
@@ -1431,6 +1512,9 @@
   <data name="Transfer" xml:space="preserve">
     <value>Transfert</value>
   </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>Transfert Entre Entrepôt</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
@@ -1444,7 +1528,7 @@
     <value>Utilisateur</value>
   </data>
   <data name="UserRole" xml:space="preserve">
-    <value>Rôle De L'Utilisateur</value>
+    <value>Rôle D'Utilisateur</value>
   </data>
   <data name="ValidUntil" xml:space="preserve">
     <value>Valable Jusque</value>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>Type De Travail</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>An</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Oui</value>

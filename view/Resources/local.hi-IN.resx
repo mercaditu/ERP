@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>मुनीम</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>खाते में शेष</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>जिम्मेदार</value>
   </data>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>अनुकूलित करें</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>दैनिक लक्ष्य</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>डेटाबेस</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>तारीख</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>आगमन की तारीख</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>जन्म की तारीख</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>दिन</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>DebeHaber एकता</value>
@@ -555,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>छूट</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>दूरी</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>भाज्य</value>
   </data>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>नीचे समय</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>चालक</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>नक़ल</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>त्रुटि</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>आगमन की अनुमानित तिथि</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>प्रस्थान की अनुमानित तारीख</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>आगमन का अनुमानित समय</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>प्रस्थान का अनुमानित समय</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>इवेंट मैनेजमेंट</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>व्यय</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>समाप्ति तिथि</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>निर्यात</value>
@@ -691,7 +724,7 @@
     <value>सरकारी पहचान पत्र</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>ग्रिड</value>
+    <value>जाल</value>
   </data>
   <data name="Guest" xml:space="preserve">
     <value>अतिथि</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>देयताएं</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>लाइसेंस</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>लाइन</value>
   </data>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>निर्माण की तारीख</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>हाशिया</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>वैवाहिक स्थिति</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>मार्कअप</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>मुखौटा</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>मापन के प्रकार</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>क्रेडिट के साथ पण्य</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>डेबिट के साथ पण्य</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>माइग्रेशन प्रकार</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>बिक्री के मोबाइल प्वाइंट</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>मॉड्यूल</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>महीना</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>मासिक लक्ष्य</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>आंदोलन</value>
@@ -941,6 +998,9 @@
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>पैकिंग सूची</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>पैरामीटर्स</value>
   </data>
   <data name="Parent" xml:space="preserve">
     <value>माता-पिता</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>प्रिंटर मान</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>मुद्रण चैक</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>छापाखाना</value>
   </data>
@@ -1062,11 +1125,14 @@
   <data name="ProductionStatus" xml:space="preserve">
     <value>उत्पादन स्थिति</value>
   </data>
+  <data name="Profit" xml:space="preserve">
+    <value>फायदा</value>
+  </data>
   <data name="Project" xml:space="preserve">
     <value>परियोजना</value>
   </data>
   <data name="ProjectExecution" xml:space="preserve">
-    <value>परियोजना निष्पादन</value>
+    <value>परियोजना क्रियान्वयन</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
     <value>परियोजना वित्त</value>
@@ -1129,7 +1195,7 @@
     <value>मात्रा</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>सवाल</value>
+    <value>प्रश्न</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
     <value>परिवर्तनों को रद्द! क्या आपको यकीन है?</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>पुनर्मुद्रण</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>का अनुरोध किया</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>अनुरोध प्रबंधन</value>
   </data>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>बिक्री</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>बिक्री विश्लेषण</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>बिक्री बजट</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>बिक्री बजट सारांश</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>शाखा द्वारा बिक्री</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>ब्रांड द्वारा बिक्री</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>ग्राहक द्वारा बिक्री</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>दिनांक द्वारा बिक्री</value>
@@ -1317,6 +1395,9 @@
   <data name="Sex" xml:space="preserve">
     <value>लिंग</value>
   </data>
+  <data name="Share" xml:space="preserve">
+    <value>शेयर</value>
+  </data>
   <data name="Shop" xml:space="preserve">
     <value>दुकान</value>
   </data>
@@ -1351,7 +1432,7 @@
     <value>स्थिति</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>भण्डार</value>
+    <value>स्टॉक</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
     <value>स्टॉक अधिकतम</value>
@@ -1431,6 +1512,9 @@
   <data name="Transfer" xml:space="preserve">
     <value>हस्तांतरण</value>
   </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>गोदाम के बीच स्थानांतरण</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>प्रकार</value>
   </data>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>कार्य प्रकार</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>साल</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>हाँ</value>

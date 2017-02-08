@@ -123,6 +123,9 @@
   <data name="Accountant" xml:space="preserve">
     <value>רואת חשבון</value>
   </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>יתרת חשבון</value>
+  </data>
   <data name="Accounted" xml:space="preserve">
     <value>המטופלות</value>
   </data>
@@ -438,14 +441,23 @@
   <data name="Customize" xml:space="preserve">
     <value>התאמה אישית</value>
   </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>יעד יומי</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>מאגר מידע</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>תַאֲרִיך</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>תאריך הגעה</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>תאריך לידה</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>יְוֹם</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>אינטגרציה DebeHaber</value>
@@ -469,7 +481,7 @@
     <value>תאריך עזיבה</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>תיאור</value>
+    <value>תאור</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
     <value>חשבונות לעקוב אחר כל התהליכים הפיננסיים</value>
@@ -555,6 +567,9 @@
   <data name="Discount" xml:space="preserve">
     <value>הנחה</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>מֶרְחָק</value>
+  </data>
   <data name="Divisible" xml:space="preserve">
     <value>מִתחַלֵק</value>
   </data>
@@ -566,6 +581,9 @@
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>לאורך זמן</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>נהג</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>לְשַׁכְפֵּל</value>
@@ -595,7 +613,7 @@
     <value>סִיוּם</value>
   </data>
   <data name="EndingDate" xml:space="preserve">
-    <value>שהסתיימה באותו תאריך</value>
+    <value>תאריך סיום</value>
   </data>
   <data name="Enter" xml:space="preserve">
     <value>להיכנס</value>
@@ -606,6 +624,18 @@
   <data name="Error" xml:space="preserve">
     <value>שְׁגִיאָה</value>
   </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>תאריך הגעה משוער</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>תאריך משוער של הגעה</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>זמן הגעה משוער</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>זמן יציאה משוער</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>ניהול אירועים</value>
   </data>
@@ -614,6 +644,9 @@
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>הוצאות</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>תאריך תפוגה</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>יְצוּא</value>
@@ -843,6 +876,9 @@
   <data name="Liabilities" xml:space="preserve">
     <value>התחייבויות</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>רישיון</value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>קַו</value>
   </data>
@@ -859,7 +895,7 @@
     <value>מקום</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>התחבר</value>
+    <value>התחברות</value>
   </data>
   <data name="Logistics" xml:space="preserve">
     <value>לוֹגִיסטִיקָה</value>
@@ -885,8 +921,14 @@
   <data name="ManufacturingDate" xml:space="preserve">
     <value>תאריך יצור</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>שולים</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>מצב אישי</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>Markup</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>מסכה</value>
@@ -900,11 +942,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>סוג מדידה</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>סחורה עם קרדיטים</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>סחורה עם חיובים</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>סוג העברה</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>Point of Sale נייד</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>מודול</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>חוֹדֶשׁ</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>מטרה חודשית</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>תְנוּעָה</value>
@@ -942,6 +999,9 @@
   <data name="PackingList" xml:space="preserve">
     <value>רשימת דברים לארוז</value>
   </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>פרמטרים</value>
+  </data>
   <data name="Parent" xml:space="preserve">
     <value>הוֹרֶה</value>
   </data>
@@ -961,7 +1021,7 @@
     <value>טופס תשלום</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
-    <value>את התשלום</value>
+    <value>שולם</value>
   </data>
   <data name="PaymentReceipt" xml:space="preserve">
     <value>קבלת תשלום</value>
@@ -1029,6 +1089,9 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>ערכי מדפסת</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>מחאות הדפסה</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>דפוס</value>
   </data>
@@ -1061,6 +1124,9 @@
   </data>
   <data name="ProductionStatus" xml:space="preserve">
     <value>מצב הפקה</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>רווח</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>פּרוֹיֶקט</value>
@@ -1197,6 +1263,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>הֶדפֵּס</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>מגיש הבקשה</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>לבקש מההנהלה</value>
   </data>
@@ -1215,14 +1284,23 @@
   <data name="Sales" xml:space="preserve">
     <value>מכירות</value>
   </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>ניתוח מכירות</value>
+  </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>תקציב מכירות</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>סיכום תקציב מכירות</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>מכירות לפי ענף</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>מכירות לפי מותג</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>מכירות לפי לקוחות</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>מכירות לפי תאריך</value>
@@ -1282,7 +1360,7 @@
     <value>נשמר</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>לחפש</value>
+    <value>חפש</value>
   </data>
   <data name="SeatsAvailable" xml:space="preserve">
     <value>מקומות פנויים</value>
@@ -1316,6 +1394,9 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>מִין</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>לַחֲלוֹק</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>לִקְנוֹת</value>
@@ -1431,6 +1512,9 @@
   <data name="Transfer" xml:space="preserve">
     <value>לְהַעֲבִיר</value>
   </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>העברה בין המחסן</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>סוּג</value>
   </data>
@@ -1499,6 +1583,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>סוג העבודה</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>שָׁנָה</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>כן</value>

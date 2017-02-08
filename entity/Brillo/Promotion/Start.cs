@@ -23,6 +23,7 @@ namespace entity.Brillo.Promotion
 
         public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice)
         {
+            DetailLIST.Clear();
             foreach (var Promo in SalesPromotionLIST)
             {
                 Discount_onCustomerType(Promo, SalesInvoice);
@@ -32,27 +33,35 @@ namespace entity.Brillo.Promotion
                 Discount_onGrandTotal(Promo, SalesInvoice);
             }
 
-            foreach (Detail Best_Promotion in DetailLIST.Where(x => x.DiscountVAT == DetailLIST.Max(y => y.DiscountVAT)).GroupBy(x => x.sales_invoice_detail))
+            foreach (var data in DetailLIST.GroupBy(x => x.sales_invoice_detail).Select( x=> new { sales_invoice_detail= x.Key,discountvat=x.Max(y=>y.DiscountVAT) }))
             {
-                if (Best_Promotion.is_promo == false && Best_Promotion.sales_invoice_detail != null)
-                {
-                    sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x == Best_Promotion.sales_invoice_detail).FirstOrDefault();
+                sales_invoice_detail _sales_invoice_detail = data.sales_invoice_detail;
+                Detail Best_Promotion = DetailLIST.Where(x => x.sales_invoice_detail == _sales_invoice_detail).FirstOrDefault();
 
-                    sales_invoice_detail.DiscountVat = Best_Promotion.DiscountVAT;
-                    sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
-                    sales_invoice_detail.sales_promotion = Best_Promotion.Promotion;
-                }
-                else
+                if (Best_Promotion != null)
                 {
-                    ///Logic to add new Items from GetThat Promotions...
-                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                    sales_invoice_detail.id_item = Best_Promotion.Item.id_item;
-                    sales_invoice_detail.item_description = Best_Promotion.Item.name;
-                    sales_invoice_detail.quantity = Best_Promotion.Quantity;
-                    sales_invoice_detail.unit_price = Best_Promotion.Price;
-                    sales_invoice_detail.discount = Best_Promotion.Discount;
 
-                    SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+
+                    if (Best_Promotion.is_promo == false && Best_Promotion.sales_invoice_detail != null)
+                    {
+
+
+                        _sales_invoice_detail.DiscountVat = data.discountvat;
+                        _sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
+                        //_sales_invoice_detail.sales_promotion = Best_Promotion.Promotion;
+                    }
+                    else
+                    {
+                        ///Logic to add new Items from GetThat Promotions...
+                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                        sales_invoice_detail.id_item = Best_Promotion.Item.id_item;
+                        sales_invoice_detail.item_description = Best_Promotion.Item.name;
+                        sales_invoice_detail.quantity = Best_Promotion.Quantity;
+                        sales_invoice_detail.unit_price = Best_Promotion.Price;
+                        sales_invoice_detail.discount = Best_Promotion.Discount;
+
+                        SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    }
                 }
             }
         }
@@ -278,7 +287,7 @@ namespace entity.Brillo.Promotion
 
                             if (Detail != null)
                             {
-                                Detail.is_promo = true;
+                                Detail.is_promo = false;
                                 Detail.DiscountVAT = Detail.PriceVAT * Promo.result_value;
                                 Detail.Promotion = Promo;
                                 Detail.PromotionID = Promo.id_sales_promotion;
@@ -349,7 +358,7 @@ namespace entity.Brillo.Promotion
 
                         foreach (Detail _Detail in sidpromo)
                         {
-                            _Detail.is_promo = true;
+                            _Detail.is_promo = false;
                             _Detail.DiscountVAT = _Detail.PriceVAT * Promo.result_value;
                             _Detail.Promotion = Promo;
                             _Detail.PromotionID = Promo.id_sales_promotion;
@@ -404,7 +413,7 @@ namespace entity.Brillo.Promotion
                             Detail.DiscountVAT = _Detail.DiscountVat;
                             Detail.SubTotal = _Detail.SubTotal;
                             Detail.SubTotalVAT = _Detail.SubTotal_Vat;
-                            Detail.is_promo = _Detail.IsPromo;
+                            Detail.is_promo = false;
                             Detail.Promotion = Promo;
                             Detail.PromotionID = Promo.id_sales_promotion;
                             Detail.sales_invoice_detail = _Detail;
@@ -458,7 +467,7 @@ namespace entity.Brillo.Promotion
                         Detail.DiscountVAT = _Detail.DiscountVat;
                         Detail.SubTotal = _Detail.SubTotal;
                         Detail.SubTotalVAT = _Detail.SubTotal_Vat;
-                        Detail.is_promo = _Detail.IsPromo;
+                        Detail.is_promo = false;
                         Detail.Promotion = Promo;
                         Detail.PromotionID = Promo.id_sales_promotion;
                         Detail.sales_invoice_detail = _Detail;

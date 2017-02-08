@@ -34,9 +34,9 @@ namespace entity.Brillo.Promotion
 
             foreach (Detail Best_Promotion in DetailLIST.Where(x => x.DiscountVAT == DetailLIST.Max(y => y.DiscountVAT)).GroupBy(x => x.sales_invoice_detail))
             {
-                if (Detail.is_promo == false && Best_Promotion.sales_invoice_detail != null)
+                if (Best_Promotion.is_promo == false && Best_Promotion.sales_invoice_detail != null)
                 {
-                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                    sales_invoice_detail sales_invoice_detail = SalesInvoice.sales_invoice_detail.Where(x => x == Best_Promotion.sales_invoice_detail).FirstOrDefault();
 
                     sales_invoice_detail.DiscountVat = Best_Promotion.DiscountVAT;
                     sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
@@ -46,7 +46,8 @@ namespace entity.Brillo.Promotion
                 {
                     ///Logic to add new Items from GetThat Promotions...
                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                    sales_invoice_detail.item = Best_Promotion.Item;
+                    sales_invoice_detail.id_item = Best_Promotion.Item.id_item;
+                    sales_invoice_detail.item_description = Best_Promotion.Item.name;
                     sales_invoice_detail.quantity = Best_Promotion.Quantity;
                     sales_invoice_detail.unit_price = Best_Promotion.Price;
                     sales_invoice_detail.discount = Best_Promotion.Discount;
@@ -54,8 +55,6 @@ namespace entity.Brillo.Promotion
                     SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
             }
-
-            //Logic to see which promotion is best...
         }
 
         private void BuyThis_GetThat(sales_promotion Promo, sales_invoice SalesInvoice)

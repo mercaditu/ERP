@@ -117,6 +117,7 @@ namespace entity
         private string _comment;
 
         public int id_currencyfx { get; set; }
+
         public decimal unit_value
         {
             get { return _unit_value; }

@@ -137,7 +137,14 @@ namespace entity
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
-                    SaveChanges();
+                    try
+                    {
+                        SaveChanges();
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
 
                 invoice.app_condition = app_condition.Find(invoice.id_condition);

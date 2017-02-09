@@ -134,7 +134,7 @@
                         HorizontalAlignment="Center" Focusable="False"
                         Margin="0,64,0,0"/>
             </ScrollViewer>
-            <Expander Header="{lex:Loc Reports}" VerticalAlignment="Bottom" Height="256" ExpandDirection="Up">
+            <!--<Expander Header="{lex:Loc Reports}" VerticalAlignment="Bottom" Height="256" ExpandDirection="Up">
                 <Grid Margin="-4">
                     <Grid.Background>
                         <SolidColorBrush Color="White" Opacity="0.64"/>
@@ -143,7 +143,7 @@
                         <chart:AccountReceivableControl Width="250"/>
                     </StackPanel>
                 </Grid>
-            </Expander>
+            </Expander>-->
         </Grid>
     </Grid>
 </Page>

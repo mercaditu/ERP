@@ -19,6 +19,7 @@ namespace cntrl.Controls
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
+        //Settings that if Marked True will show Quantity Popup.
         public static readonly DependencyProperty QuantityIntegrationProperty = DependencyProperty.Register("QuantityIntegration", typeof(bool), typeof(SmartBox_Item));
         public bool QuantityIntegration
         {
@@ -26,7 +27,8 @@ namespace cntrl.Controls
             set { SetValue(QuantityIntegrationProperty, value); }
         }
 
-        public bool Quantity
+        //Quantity of the Popup control if used.
+        public decimal Quantity
         {
             get { return _Quantity; }
             set
@@ -35,8 +37,9 @@ namespace cntrl.Controls
                 RaisePropertyChanged("Quantity");
             }
         }
-        private bool _Quantity;
+        private decimal _Quantity;
 
+        //Setting that if Marked true, will exclude Out Of Stock.
         public bool Exclude_OutOfStock
         {
             get { return _Exclude_OutOfStock; }
@@ -119,6 +122,7 @@ namespace cntrl.Controls
                     else
                     {
                         ItemID = 0;
+                        Quantity = 0;
                         Text = tbxSearch.Text;
                     }
 
@@ -188,11 +192,33 @@ namespace cntrl.Controls
             }
         }
 
+        private void Quantity_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (QuantityIntegration)
+                {
+                    popQuantity.IsOpen = false;
+                    ItemGrid_MouseDoubleClick(sender, e);
+                    FocusManager.SetFocusedElement(tbxSearch.Parent, tbxSearch);
+                }
+            }
+        }
+
         private void StartSearch(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                ItemGrid_MouseDoubleClick(sender, e);
+                if (QuantityIntegration)
+                {
+                    popQuantity.IsOpen = true;
+                    popQuantity.Focus();
+                    //FocusManager.SetFocusedElement(popQuantity, tbxQuantity);
+                }
+                else
+                {
+                    ItemGrid_MouseDoubleClick(sender, e);
+                }
             }
 
             else if (e.Key == Key.Up)

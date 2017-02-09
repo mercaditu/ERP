@@ -170,9 +170,7 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
-                    
-                                 
+                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);       
                     item_product item_product = item.item_product.FirstOrDefault();
 
                     if (item_product != null && item_product.can_expire)
@@ -183,14 +181,10 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-
                         decimal QuantityInStock = sbxItem.QuantityInStock;
-
                         sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null);
                     }
-               
 
-                
                     sales_invoiceViewSource.View.Refresh();
                     CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
@@ -205,37 +199,37 @@ namespace Cognitivo.Sales
         {
             //This code helps protect wrong Terminal and Branch PC from making same invoice.
             tabPOS.IsSelected = true;
-            if (CurrentSession.Id_Branch == 0)
+            if (CurrentSession.Id_Branch > 0)
+            {
+                // Branch Exist, check if Terminal Exists.
+                if (CurrentSession.Id_Terminal > 0)
+                {
+                    //app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).Include(y => y.app_terminal).FirstOrDefault();
+                    //if (app_branch != null)
+                    //{
+                    //    if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count() == 0)
+                    //    {
+                    //        cbxTerminal.ItemsSource = app_branch.app_terminal.Where(x => x.is_active).ToList();
+                    //        tabTerminal.IsSelected = true;
+                    //    }
+                    //}
+                }
+                else
+                {
+                    //Branch Exist, but Terminal Doesn't.
+                    cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
+                    tabTerminal.IsSelected = true;
+                }
+
+                stackBranch.Visibility = Visibility.Hidden;
+            }
+            else
             {
                 tabTerminal.IsSelected = true;
                 cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
                 stackBranch.Visibility = Visibility.Visible;
             }
-            else
-            {
 
-                if (CurrentSession.Id_Terminal > 0)
-                {
-                    app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-                    if (app_branch != null)
-                    {
-                        if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count() == 0)
-                        {
-                            cbxTerminal.ItemsSource = app_branch.app_terminal.Where(x => x.is_active).ToList();
-                            tabTerminal.IsSelected = true;
-                        }
-                    }
-                }
-                else
-                {
-                    cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
-                    tabTerminal.IsSelected = true;
-                }
-                stackBranch.Visibility = Visibility.Hidden;
-            }
-
-           
-            
             New_Sale_Payment();
 
             //PAYMENT TYPE
@@ -253,7 +247,7 @@ namespace Cognitivo.Sales
 
             if (app_account != null)
             {
-                if (app_account.app_account_detail.Where(x=>x.tran_type==app_account_detail.tran_types.Close).Count()>0)
+                if (app_account.app_account_session.Where(x => x.cl_date == null).Any() == false)
                 {
                     btnAccount_Click(sender, e);
                     frmaccount.Refresh();

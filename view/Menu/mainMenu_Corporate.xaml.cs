@@ -96,7 +96,6 @@ namespace Cognitivo.Menu
                 {
                     ListApps(_modName, true);
                 }
-
             }
             else
             {

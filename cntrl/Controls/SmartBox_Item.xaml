@@ -144,12 +144,15 @@
         <StackPanel Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Right" Margin="-26,0">
             <TextBox MinWidth="26" Text="34.2"/>
         </StackPanel>
-        <Popup x:Name="popQuantity" HorizontalAlignment="Center" PopupAnimation="Slide" IsOpen="False">
-            <TextBox metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="Quantity"
+        
+        <Popup x:Name="popQuantity" HorizontalAlignment="Center"
+               PopupAnimation="Slide" IsOpen="False">
+            <TextBox x:Name="tbxQuantity" Margin="1" KeyUp="Quantity_TextChanged" metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="Quantity"
                      FontSize="24" HorizontalContentAlignment="Right" 
                      Text="{Binding ElementName=_SmartBox_Item, Path=Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N}" 
                      Width="{Binding ElementName=_SmartBox_Item, Path=ActualWidth}"/>
         </Popup>
+        
         <Popup x:Name="ItemPopUp" IsOpen="False" StaysOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}">
                 <Border.Effect>

@@ -1,23 +1,23 @@
-﻿<UserControl x:Class="cntrl.ReportPanel" x:Name="this"
+﻿<UserControl  x:Class="cntrl.ReportPanel" x:Name="this" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Controls="clr-namespace:cntrl.Controls"
-    
              xmlns:local="clr-namespace:cntrl"
              xmlns:reporting="clr-namespace:cntrl.Class"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" Foreground="White"
-    	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              d:DesignHeight="600" d:DesignWidth="800" Loaded="this_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}"/>
-        
+
         <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}"/>
 
     </UserControl.Resources>
@@ -26,18 +26,26 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
-            <rv:ReportViewer x:Name="reportViewer" />
-        </WindowsFormsHost>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
+            <TabItem Header="{lex:Loc Reports}">
+                <WindowsFormsHost>
+                    <rv:ReportViewer x:Name="reportViewer" />
+                </WindowsFormsHost>
+            </TabItem>
+            <TabItem Header="Data">
+                <!--<syncfusion:SfDataGrid x:Name="dgvData"/>-->
+            </TabItem>
+        </TabControl>
+
         <StackPanel>
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                    <Button Content="&#xE8BC;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}"/>
                     <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 </StackPanel>
-                <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+                <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </Grid>
@@ -48,16 +56,16 @@
                 </ListBox.Background>
             </ListBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                <Button Content="&#xE81D;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}"/>
                 <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-              
+
             </StackPanel>
-            <local:DateRange x:Name="DateRange" StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}" Margin="4"
-                                 EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" Visibility="Collapsed"/>
-            
-            
+            <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}" Margin="4"
+                                 EndDate="{Binding EndDate, ElementName=this, Mode=TwoWay}" Visibility="Collapsed"/>
+
+
             <StackPanel x:Name="stpProject" Visibility="Collapsed" Margin="4">
                 <StackPanel.Background>
                     <SolidColorBrush Color="White" Opacity="0.64"/>
@@ -66,20 +74,20 @@
                 <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           x:Name="ComboProject" Style="{StaticResource input_combobox}"/>
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                <Button Content="&#xE842;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
                         Style="{DynamicResource MetroCircleButtonStyle}"/>
                 <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
-                <Button Content="" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+                <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
                 <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}"/>
             </StackPanel>
-       
+
         </StackPanel>
         <ScrollViewer MaxHeight="256"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Bottom">
             <Grid Margin="8">

@@ -269,6 +269,6 @@
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        Status="{Binding status, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
-                       appName="Transfer"/>
+                       appName="TransferByBranch"/>
     </Grid>
 </Page>

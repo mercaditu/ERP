@@ -19,6 +19,24 @@ namespace cntrl.Controls
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
+        public static readonly DependencyProperty QuantityIntegrationProperty = DependencyProperty.Register("QuantityIntegration", typeof(bool), typeof(SmartBox_Item));
+        public bool QuantityIntegration
+        {
+            get { return (bool)GetValue(QuantityIntegrationProperty); }
+            set { SetValue(QuantityIntegrationProperty, value); }
+        }
+
+        public bool Quantity
+        {
+            get { return _Quantity; }
+            set
+            {
+                _Quantity = value;
+                RaisePropertyChanged("Quantity");
+            }
+        }
+        private bool _Quantity;
+
         public bool Exclude_OutOfStock
         {
             get { return _Exclude_OutOfStock; }
@@ -187,8 +205,6 @@ namespace cntrl.Controls
                         itemViewSource.View.Refresh();
                     }
                 }
-
-
             }
             else if (e.Key == Key.Down)
             {
@@ -200,7 +216,6 @@ namespace cntrl.Controls
                         itemViewSource.View.Refresh();
                     }
                 }
-
             }
             else
             {

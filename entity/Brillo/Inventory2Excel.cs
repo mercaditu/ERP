@@ -93,20 +93,23 @@ namespace entity.Brillo
                             {
                                 //detail.expire_date = row.Cell(8).GetValue<DateTime>();
                             }
+
                             if (row.Cell(5).Value != null)
                             {
+                                string Brand = row.Cell(5).GetValue<string>();
+
                                 using (db db = new db())
                                 {
-                                    string name = row.Cell(5).GetValue<string>();
-                                    if (db.item_brand.Where(x => x.name == name).Count() == 0)
+                                    if (db.item_brand.Where(x => x.name == Brand && x.id_company == CurrentSession.Id_Company).Count() == 0)
                                     {
-                                        item_brand item_brand = new entity.item_brand();
+                                        item_brand item_brand = new item_brand();
                                         item_brand.name = row.Cell(5).GetValue<string>();
                                         db.item_brand.Add(item_brand);
                                         db.SaveChanges();
+
+                                        //Different Context.
                                         detail.item_product.item.id_brand = item_brand.id_brand;
                                     }
-
                                 }
                             }
 

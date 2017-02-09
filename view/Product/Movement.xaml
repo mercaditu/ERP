@@ -185,34 +185,34 @@
                 </StackPanel>
                
             </ScrollViewer>
-    
+
             <Grid Margin="15" Grid.Row="1" Grid.ColumnSpan="3" >
-				<StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
-					<Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
-					<Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"/>
-				</StackPanel>
-				<Grid Grid.Row="1" Margin="0,64,0,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="2*"/>
-						<ColumnDefinition Width="1*"/>
-					</Grid.ColumnDefinitions>
-					<DataGrid x:Name="item_transfer_detailDataGrid" 
+                <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                    <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
+                    <Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"/>
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="0,64,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="item_transfer_detailDataGrid" 
 					  AutoGenerateColumns="False"
 					  EnableRowVirtualization="True" 
 					  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
 					  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" >
-						<DataGrid.Columns>
-							<DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
-							<DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>
-							<DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
-							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>
+                            <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 												Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="64"/>
-						</DataGrid.Columns>
+                        </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
                                 <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    
+
                                         <StackPanel>
                                             <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}"/>
                                             <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
@@ -227,32 +227,29 @@
 								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                         </StackPanel>
                                     </StackPanel>
-                              
+
                                 </Grid>
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
-					<Rectangle Width="1" Margin="6" Fill="Silver" Grid.Column="1"/>
-					<DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" Grid.Column="1"
+                    <Rectangle Width="1" Margin="6" Fill="Silver" Grid.Column="1"/>
+                    <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" Grid.Column="1"
 							  EnableRowVirtualization="True" IsReadOnly="True" CanUserAddRows="False"
 							  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailitem_transfer_dimensionViewSource}}" 
 							  RowDetailsVisibilityMode="VisibleWhenSelected">
-						<DataGrid.Columns>
-							<DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
 																		Header="{lex:Loc Cognitivo:local:Dimension}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto"/>
-							<DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
 																		Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto"/>
 
-						</DataGrid.Columns>
-					</DataGrid>
-				</Grid>
-			</Grid>
-
-
-
-		</Grid>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
 		<cntrl:toolBar Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
 					   btnNew_Click="toolBar_btnNew_Click" 
 					   btnSave_Click="toolBar_btnSave_Click" 

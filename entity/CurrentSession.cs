@@ -266,11 +266,9 @@ namespace entity
                                             "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
                                             , "Cognitivo");
                         }
+
                         db.SaveChanges();
-
                     }
-
-
 
                     if (Id_Branch == 0)
                     {
@@ -296,8 +294,6 @@ namespace entity
                     myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
                     myTimer.Interval = 60000;
                     myTimer.Start();
-
-
                 }
             }
             catch

@@ -233,10 +233,10 @@ namespace entity
 
                 Licence.VerifyCompanyLicence(licensekey);
 
-                if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
-                {
-                    Version = Versions.Lite;
-                }
+                //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
+                //{
+                //    Version = Versions.Lite;
+                //}
 
                 Security_CurdList = new List<security_crud>();
                 Security_role_privilageList = new List<security_role_privilage>();
@@ -257,8 +257,6 @@ namespace entity
                                 security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
                                 Version = Role.Version;
                             }
-
-
                         }
                         else
                         {
@@ -302,7 +300,7 @@ namespace entity
 
                 }
             }
-            catch (Exception e)
+            catch
             {
                 //  System.Windows.Forms.MessageBox.Show(e.ToString());
             }
@@ -329,7 +327,6 @@ namespace entity
                 //Privilage
                 Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role).ToList();
                 Allow_UpdateSalesDetail = Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice).Count() > 0;
-
             }
         }
 

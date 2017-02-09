@@ -82,7 +82,7 @@ namespace entity.Brillo
                         int ProductID = row.Cell(3).GetValue<int>();
 
                         item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_location == LocationID && x.id_item_product == ProductID).FirstOrDefault();
-
+                     
                         if (detail != null)
                         {
                             detail.value_counted = row.Cell(11).GetValue<decimal>();
@@ -92,6 +92,22 @@ namespace entity.Brillo
                             if (row.Cell(8).Value != null)
                             {
                                 //detail.expire_date = row.Cell(8).GetValue<DateTime>();
+                            }
+                            if (row.Cell(5).Value != null)
+                            {
+                                using (db db = new db())
+                                {
+                                    string name = row.Cell(5).GetValue<string>();
+                                    if (db.item_brand.Where(x => x.name == name).Count() == 0)
+                                    {
+                                        item_brand item_brand = new entity.item_brand();
+                                        item_brand.name = row.Cell(5).GetValue<string>();
+                                        db.item_brand.Add(item_brand);
+                                        db.SaveChanges();
+                                        detail.item_product.item.id_brand = item_brand.id_brand;
+                                    }
+
+                                }
                             }
 
                             detail.batch_code = row.Cell(9).GetValue<string>();

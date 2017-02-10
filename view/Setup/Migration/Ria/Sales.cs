@@ -105,7 +105,6 @@ namespace Cognitivo.Setup.Migration
 
                     foreach (DataRow InnerRow in dt_sales.Select("CODVENTA > " + FloorValue + " AND CODVENTA < " + RoofValue + ""))
                     {
-                       
                         sales_invoice sales_invoice = new entity.sales_invoice();
                         sales_invoice.State = EntityState.Added;
                         sales_invoice.status = Status.Documents_General.Pending;
@@ -385,7 +384,7 @@ namespace Cognitivo.Setup.Migration
 
 
                 FloorValue = RoofValue;
-                RoofValue += 1000;
+               // RoofValue += 1000;
             }
         }
 

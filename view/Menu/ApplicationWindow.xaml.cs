@@ -44,7 +44,8 @@ namespace Cognitivo.Menu
                     Cursor = Cursors.Arrow;
                 }));
             }
-            catch { }
+            catch (Exception ex) {
+                System.Windows.Forms.MessageBox.Show(ex.ToString()); }
         }
 
         private void mainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)

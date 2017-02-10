@@ -128,7 +128,7 @@ namespace entity
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
                 payment_schedual Parent_Schedual = new payment_schedual();
-                payment_schedual child_schedual = new payment_schedual();
+           
 
                 //Assigns appCurrencyFX ID & Entity
 
@@ -161,9 +161,11 @@ namespace entity
                 {
                     ///If PaymentDetail Value is Negative.
                     ///
+
                     decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
+                        payment_schedual child_schedual = new payment_schedual();
                         if (ChildBalance > 0)
                         {
                             if (Math.Round(ChildBalance, 2) >= Math.Round(parent.credit))
@@ -222,7 +224,7 @@ namespace entity
                     decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
-                       
+                        payment_schedual child_schedual = new payment_schedual();
                         if (ChildBalance > 0)
                         {
                             //Payment Detail is greater or equal to Schedual

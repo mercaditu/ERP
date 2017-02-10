@@ -401,12 +401,12 @@ namespace Cognitivo.Product
 
         private void sbxItemAsset_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxItem.ItemID>0)
+            if (sbxItemAsset.ItemID>0)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
                 if (item_transfer!=null)
                 {
-                    item_transfer.id_item_asset = sbxItem.ItemID;
+                    item_transfer.id_item_asset = sbxItemAsset.ItemID;
                 }
             }
         }

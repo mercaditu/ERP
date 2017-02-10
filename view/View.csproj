@@ -175,10 +175,6 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.Grid.WPF, Version=14.4460.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.GridCommon.Wpf, Version=14.4460.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Linq.Base, Version=14.4460.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Shared.Wpf, Version=14.4460.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -507,6 +503,9 @@
     <Compile Include="Product\FixedAssets.xaml.cs">
       <DependentUpon>FixedAssets.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\MobileBranch.xaml.cs">
+      <DependentUpon>MobileBranch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\ProductBarcode.xaml.cs">
       <DependentUpon>ProductBarcode.xaml</DependentUpon>
     </Compile>
@@ -515,9 +514,6 @@
     </Compile>
     <Compile Include="Product\SuppliesRequest.xaml.cs">
       <DependentUpon>SuppliesRequest.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Product\MobileBranch.xaml.cs">
-      <DependentUpon>MobileBranch.xaml</DependentUpon>
     </Compile>
     <Compile Include="Product\TransferSetting.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1325,6 +1321,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Product\MobileBranch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Product\ProductBarcode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1344,10 +1344,6 @@
     <Page Include="Product\SuppliesRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Product\MobileBranch.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Product\Transfer.xaml">
       <Generator>MSBuild:Compile</Generator>

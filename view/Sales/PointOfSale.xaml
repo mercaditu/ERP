@@ -182,7 +182,7 @@
                     <TabControl x:Name="postab"  Margin="10,150,10,10">
                         <!-- ACCOUNT-->
                         <TabItem x:Name="tabAccount">
-                            <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" Source="/Cognitivo;component/Configs/AccountActive.xaml"/>
+                            <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive"/>
                         </TabItem>
                         <!-- CONTACT -->
                         <TabItem x:Name="tabContact" >

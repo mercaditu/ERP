@@ -44,10 +44,12 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Navigates to ACCOUNT UTILITY Tab
         /// </summary>
-        private void btnAccount_Click(object sender, EventArgs e)
+        private  void btnAccount_Click(object sender, EventArgs e)
         {
-            tabAccount.IsSelected = true;
-            frmaccount.Refresh();
+
+           
+            tabAccount.Focus();
+            frmaccount.Navigate(new Configs.AccountActive());
         }
 
         private void btnSales_Click(object sender, EventArgs e)
@@ -249,8 +251,8 @@ namespace Cognitivo.Sales
             {
                 if (app_account.app_account_session.Where(x => x.cl_date == null).Any() == false)
                 {
-                    btnAccount_Click(sender, e);
-                    frmaccount.Refresh();
+                    btnAccount_Click(sender, null);
+                 
                 }
             }
         }

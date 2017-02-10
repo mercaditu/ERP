@@ -41,8 +41,8 @@ namespace Cognitivo.Setup.Migration
             //sales();
             Task sales_Task = Task.Factory.StartNew(() => sales());
             sales_Task.Wait();
-            Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
-            salesReturn_Task.Wait();
+            //Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
+            //salesReturn_Task.Wait();
 
         }
 
@@ -100,6 +100,11 @@ namespace Cognitivo.Setup.Migration
             app_field.field_type = entity.app_field.field_types.Account;
             dbContext.app_field.Add(app_field);
             dbContext.SaveChanges();
+
+            Properties.Settings ViewSettings = new Properties.Settings();
+            CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
+
+            CurrentSession.Start(dbContext.security_user.FirstOrDefault(), dbContext.security_user.FirstOrDefault().security_role);
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
 

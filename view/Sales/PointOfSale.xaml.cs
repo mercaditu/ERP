@@ -182,7 +182,7 @@ namespace Cognitivo.Sales
                     else
                     {
                         decimal QuantityInStock = sbxItem.QuantityInStock;
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null);
+                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null,sbxItem.Quantity);
                     }
 
                     sales_invoiceViewSource.View.Refresh();
@@ -530,7 +530,7 @@ namespace Cognitivo.Sales
                         item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                         decimal QuantityInStock = sbxItem.QuantityInStock;
 
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement);
+                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement,sbxItem.Quantity);
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
                  

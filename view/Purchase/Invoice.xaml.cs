@@ -513,11 +513,11 @@ namespace Cognitivo.Purchase
                 }
 
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
-                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems));
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems,sbxItem.Quantity));
             }
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate, decimal quantity)
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
@@ -530,7 +530,7 @@ namespace Cognitivo.Purchase
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_invoice_detail _purchase_invoice_detail = detail_withitem;
-                    _purchase_invoice_detail.quantity += 1;
+                    _purchase_invoice_detail.quantity += quantity;
                     //Return because Item exists, and will +1 in Quantity
                     return;
                 }
@@ -540,7 +540,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.item_description = item.name;
-                    purchase_invoice_detail.quantity = 1;
+                    purchase_invoice_detail.quantity = quantity;
 
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
                     purchase_invoice_detail old_PurchaseInvoice = PurchaseInvoiceDB.purchase_invoice_detail

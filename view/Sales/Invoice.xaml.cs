@@ -551,7 +551,7 @@ namespace Cognitivo.Sales
                         else
                         {
                          
-                            sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null);
+                            sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null,sbxItem.Quantity);
                             sales_invoicesales_invoice_detailViewSource.View.Refresh();
                             sales_invoice.RaisePropertyChanged("GrandTotal");
                         }
@@ -1071,7 +1071,7 @@ namespace Cognitivo.Sales
                     {
                         item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement);
+                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement,sbxItem.Quantity);
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }

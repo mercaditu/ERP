@@ -214,5 +214,17 @@ namespace Cognitivo.Sales {
                 this["SpiltInvoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SpiltReturn {
+            get {
+                return ((bool)(this["SpiltReturn"]));
+            }
+            set {
+                this["SpiltReturn"] = value;
+            }
+        }
     }
 }

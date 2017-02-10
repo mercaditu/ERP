@@ -149,7 +149,7 @@ namespace Cognitivo.Purchase
                         purchase_tender_item.item = item;
                         purchase_tender_item.id_item = item.id_item;
                         purchase_tender_item.item_description = item.name;
-                        purchase_tender_item.quantity = 1;
+                        purchase_tender_item.quantity = sbxItem.Quantity;
 
                         foreach (item_dimension item_dimension in item.item_dimension)
                         {
@@ -181,7 +181,7 @@ namespace Cognitivo.Purchase
                     {
                         purchase_tender_item purchase_tender_item = new purchase_tender_item();
                         purchase_tender_item.item_description = sbxItem.Text;
-                        purchase_tender_item.quantity = 1;
+                        purchase_tender_item.quantity = sbxItem.Quantity;
                         purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                     }
                 }

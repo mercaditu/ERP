@@ -417,10 +417,10 @@ namespace Cognitivo.Purchase
                 }
             }
             OrderSetting OrderSetting = new OrderSetting();
-            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems));
+            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems,sbxItem.Quantity));
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate, decimal quantity)
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
@@ -431,7 +431,7 @@ namespace Cognitivo.Purchase
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_order_detail _purchase_order_detail = purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                    _purchase_order_detail.quantity += 1;
+                    _purchase_order_detail.quantity += quantity;
 
                     //Return because Item exists, and will +1 in Quantity
                     return;
@@ -452,7 +452,7 @@ namespace Cognitivo.Purchase
                     purchase_order_detail.item = item;
                     purchase_order_detail.id_item = item.id_item;
                     purchase_order_detail.item_description = item.name;
-                    purchase_order_detail.quantity = 1;
+                    purchase_order_detail.quantity = quantity;
                 }
             }
             else

@@ -43,7 +43,8 @@ namespace entity
             }
             catch (Exception ex)
             {
-                throw ex;
+                return 0;
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
             }
         }
 
@@ -255,7 +256,7 @@ namespace entity
             }
         }
 
-        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement)
+        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement,decimal quantity)
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
@@ -263,19 +264,19 @@ namespace entity
                 long id_movement = item_movement != null ? item_movement.id_movement : 0;
                 if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
                 {
-                    return AddDetail(ref sales_invoice, item, QuantityInStock, item_movement);
+                    return AddDetail(ref sales_invoice, item, QuantityInStock, item_movement, quantity);
                 }
                 else
                 {
                     sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                    sales_invoice_detail.quantity += 1;
+                    sales_invoice_detail.quantity += quantity;
                     return sales_invoice_detail;
                 }
             }
             return null;
         }
 
-        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, item_movement item_movement)
+        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, item_movement item_movement,decimal quantity)
         {
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
@@ -314,7 +315,7 @@ namespace entity
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);
 
-            sales_invoice_detail.quantity += 1;
+            sales_invoice_detail.quantity += quantity;
 
             sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
             return sales_invoice_detail;

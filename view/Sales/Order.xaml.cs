@@ -333,7 +333,7 @@ namespace Cognitivo.Sales
                     else
                     {
                         Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null,sbxItem.Quantity));
                     }
                  
                 }
@@ -341,7 +341,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement)
+        private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
             if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item && a.movement_id==id_movement).FirstOrDefault() == null || AllowDuplicateItem)
@@ -349,6 +349,7 @@ namespace Cognitivo.Sales
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.State = EntityState.Added;
                 _sales_order_detail.sales_order = sales_order;
+                _sales_order_detail.quantity = quantity;
                 _sales_order_detail.Quantity_InStock = QuantityInStock;
                 _sales_order_detail.Contact = sales_order.contact;
                 _sales_order_detail.item_description = item.description;
@@ -367,7 +368,7 @@ namespace Cognitivo.Sales
             else
             {
                 sales_order_detail sales_order_detail = sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_order_detail.quantity += 1;
+                sales_order_detail.quantity += quantity;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -648,7 +649,7 @@ namespace Cognitivo.Sales
                 {
                     Settings SalesSettings = new Settings();
                     item_movement item_movement = SalesOrderDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement));
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement,sbxItem.Quantity));
                 }
             }
         }

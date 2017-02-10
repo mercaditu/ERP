@@ -152,11 +152,11 @@ namespace cntrl.Controls
             {
                 return;
             }
-            if (item_types==entity.item.item_type.Product || item_types==entity.item.item_type.RawMaterial)
+            if (item_types == entity.item.item_type.Product || item_types == entity.item.item_type.RawMaterial)
             {
                 Exclude_OutOfStock = true;
             }
-        
+
             LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
@@ -211,8 +211,10 @@ namespace cntrl.Controls
             {
                 if (QuantityIntegration)
                 {
+                    Quantity = 1;
+                    ItemPopUp.IsOpen = false;
                     popQuantity.IsOpen = true;
-                    popQuantity.Focus();
+                    tbxQuantity.Focus();
                     //FocusManager.SetFocusedElement(popQuantity, tbxQuantity);
                 }
                 else
@@ -338,7 +340,12 @@ namespace cntrl.Controls
 
         private void SmartBoxItem_Focus(object sender, RoutedEventArgs e)
         {
-            tbxSearch.Focus();
+            TextBox txt = e.OriginalSource as TextBox;
+            if (txt.Name != tbxQuantity.Name)
+            {
+                tbxSearch.Focus();
+            }
+
         }
     }
 }

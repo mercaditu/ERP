@@ -145,14 +145,14 @@ namespace Cognitivo.Sales
                     else
                     {
 
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch,null));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch,null,sbxItem.Quantity));
                     }
                    
                 }
             }
         }
 
-        private void select_Item(sales_packing sales_packing, item item,app_branch app_branch,item_movement item_movement)
+        private void select_Item(sales_packing sales_packing, item item,app_branch app_branch,item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
             if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement==id_movement ).FirstOrDefault() == null)
@@ -411,7 +411,7 @@ namespace Cognitivo.Sales
                     { app_branch = cbxBranch.SelectedItem as app_branch; }
 
                     item_movement item_movement = dbContext.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement));
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement,sbxItem.Quantity));
                 }
             }
         }

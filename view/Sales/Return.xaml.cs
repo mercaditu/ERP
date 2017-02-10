@@ -233,14 +233,33 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
+                Settings SalesSettings = new Settings();
                 sales_return sales_return = salesReturnViewSource.View.CurrentItem as sales_return;
                 item item = SalesReturnDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_return != null)
                 {
+                    int LineLimit = 0;
 
+                    if (sales_return.id_range > 0)
+                    {
+                        app_document_range app_document_range = SalesReturnDB.app_document_range.Find(sales_return.id_range);
+                        if (app_document_range.app_document.line_limit != null)
+                        {
+                            LineLimit = (int)app_document_range.app_document.line_limit;
+                        }
 
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item));
+                    }
+                    if (SalesSettings.SpiltReturn == false && LineLimit > 0 && sales_return.sales_return_detail.Count + 1 > LineLimit)
+                    {
+                        toolBar.msgWarning("Your Item Limit is Exceed");
+                    }
+                    else
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item,sbxItem.Quantity));
+                    }
+
+                  
 
 
                 }
@@ -248,7 +267,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void select_Item(sales_return sales_return, item item)
+        private void select_Item(sales_return sales_return, item item, decimal quantity)
         {
             if (sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
             {
@@ -259,13 +278,13 @@ namespace Cognitivo.Sales
                 _sales_return_detail.item_description = item.description;
                 _sales_return_detail.item = item;
                 _sales_return_detail.id_item = item.id_item;
-
+                _sales_return_detail.quantity = quantity;
                 sales_return.sales_return_detail.Add(_sales_return_detail);
             }
             else
             {
                 sales_return_detail sales_return_detail = sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_return_detail.quantity += 1;
+                sales_return_detail.quantity += quantity;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>

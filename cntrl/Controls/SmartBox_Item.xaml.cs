@@ -126,6 +126,7 @@ namespace cntrl.Controls
                         Text = tbxSearch.Text;
                     }
 
+                    tbxSearch.Focus();
                     tbxSearch.SelectAll();
                 }
             }
@@ -222,7 +223,6 @@ namespace cntrl.Controls
                     ItemGrid_MouseDoubleClick(sender, e);
                 }
             }
-
             else if (e.Key == Key.Up)
             {
                 if (itemViewSource != null)

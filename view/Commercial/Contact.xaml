@@ -98,159 +98,158 @@
 		<TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
 					SelectedIndex="0" Margin="0,128,0,0" >
 			<TabItem Header="{lex:Loc Information}">
-				<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="8">
-					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="8">
+                        <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
 							   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
-                        <CheckBox Content="{lex:Loc Customer}" Margin="3" IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <CheckBox Content="{lex:Loc Supplier}" Margin="3" IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <Label Content="{lex:Loc Name}" 
+                            <Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
+                            <CheckBox Content="{lex:Loc Customer}" Margin="3" IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <CheckBox Content="{lex:Loc Supplier}" Margin="3" IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <Label Content="{lex:Loc Name}" 
 							   Style="{StaticResource input_label}"/>
-						<TextBox Style="{StaticResource input_textbox}" 
+                            <TextBox Style="{StaticResource input_textbox}" 
 								 Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-						<Label Content="{lex:Loc Alias}" 
+                            <Label Content="{lex:Loc Alias}" 
 							   Style="{StaticResource input_label}"/>
-						<TextBox Style="{StaticResource input_textbox}" 
+                            <TextBox Style="{StaticResource input_textbox}" 
 								 Text="{Binding alias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-						<Label Content="{lex:Loc GovernmentID}" 
+                            <Label Content="{lex:Loc GovernmentID}" 
 							   Style="{StaticResource input_label}"/>
-						<TextBox x:Name="txtGovId" Style="{StaticResource input_textbox}" 
+                            <TextBox x:Name="txtGovId" Style="{StaticResource input_textbox}" 
 								 Text="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-						<Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-						<TextBox x:Name="txtCode" Style="{StaticResource input_textbox}"
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+                            <TextBox x:Name="txtCode" Style="{StaticResource input_textbox}"
 								 Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-					  
-						<CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
+
+                            <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
 								  IsChecked="{Binding is_person, FallbackValue=False}"/>
-						<StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
-							<Label Content="{lex:Loc Gender}" 
+                            <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
+                                <Label Content="{lex:Loc Gender}" 
 								Style="{StaticResource input_label}"/>
-							<ComboBox Style="{StaticResource input_combobox}" 
+                                <ComboBox Style="{StaticResource input_combobox}" 
 								x:Name="cbxGender"
 								SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-							<Label Content="{lex:Loc DateofBirth}" 
+                                <Label Content="{lex:Loc DateofBirth}" 
 								Style="{StaticResource input_label}"/>
-							<DatePicker  Style="{StaticResource input_datepicker}" 
+                                <DatePicker  Style="{StaticResource input_datepicker}" 
 								SelectedDate="{Binding date_birth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-						</StackPanel>
-					</StackPanel>
-
-					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
-                        <StackPanel Orientation="Horizontal">
-						<Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
-                            <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldTelephone" 
-								   Style="{StaticResource btn_Label}"/>
+                            </StackPanel>
                         </StackPanel>
-                        <TextBox Style="{StaticResource input_textbox}"
+
+                        <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                            <Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldTelephone" 
+								   Style="{StaticResource btn_Label}"/>
+                            </StackPanel>
+                            <TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valuephoneViewSource}}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valuephoneViewSource}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
                                         <cntrls:CustomField 
                                             app_fieldViewSource="{Binding Source={StaticResource app_fieldphoneViewSource}}"
                                             FieldID="{Binding id_field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             FieldValue="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <StackPanel Orientation="Horizontal">
-						<Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
-                            <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldEmail" 
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldEmail" 
 								   Style="{StaticResource btn_Label}"/>
-                        </StackPanel>
-                        <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
+                            </StackPanel>
+                            <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
 								 Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueemailViewSource}}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <cntrls:CustomField app_fieldViewSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
-                                            FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                                            FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
-						<TextBox x:Name="txtAddress"
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueemailViewSource}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <cntrls:CustomField app_fieldViewSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
+                                                        FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                                        FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                            <TextBox x:Name="txtAddress"
 								 Style="{StaticResource input_textbox}"
 								 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-							<Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldAccount" 
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldAccount" 
 								   Style="{StaticResource btn_Label}"/>
-						</StackPanel>
-						<ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
-							<ItemsControl.ItemsPanel>
-								<ItemsPanelTemplate>
-									<StackPanel/>
-								</ItemsPanelTemplate>
-							</ItemsControl.ItemsPanel>
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<StackPanel>
-
-                                        <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                                             FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                     
-                                    </StackPanel>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
-					</StackPanel>
+                                            <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
 
-					<StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
+                        <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
 								IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<Label Content="{lex:Loc Extras}" Style="{StaticResource H2}"/>
-						
-						<Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-						<TextBox TextWrapping="Wrap"
+                            <Label Content="{lex:Loc Extras}" Style="{StaticResource H2}"/>
+
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                            <TextBox TextWrapping="Wrap"
 								 Style="{StaticResource input_textbox}"
 								 Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-						<Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-						<DatePicker Style="{StaticResource input_datepicker}"
+                            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                            <DatePicker Style="{StaticResource input_datepicker}"
 									SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-						<Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-						<cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
+                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                            <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
 												 CollectionViewSource="{StaticResource contact_tagViewSource}"
 												 focusGrid="True" Width="256"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-							<cntrl:SearchableTextbox.Columns>
-								<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                                <cntrl:SearchableTextbox.Columns>
+                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
 														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-							</cntrl:SearchableTextbox.Columns>
-						</cntrl:SearchableTextbox>
-						<DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                </cntrl:SearchableTextbox.Columns>
+                            </cntrl:SearchableTextbox>
+                            <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None"
 									  ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 													IsReadOnly="True" Width="*"/>
-								<DataGridTemplateColumn Width="26" Header="">
-									<DataGridTemplateColumn.CellTemplate>
-										<DataTemplate>
-											<Button Command="customcmd:CustomCommands.Delete"
+                                    <DataGridTemplateColumn Width="26" Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="customcmd:CustomCommands.Delete"
 													Style="{StaticResource btnDeleteChildStyle}"
 													CommandParameter="{Binding}"/>
-										</DataTemplate>
-									</DataGridTemplateColumn.CellTemplate>
-								</DataGridTemplateColumn>
-							</DataGrid.Columns>
-						</DataGrid>
-					</StackPanel>
-
-				</WrapPanel>
-			</TabItem>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </WrapPanel>
+                </ScrollViewer>
+            </TabItem>
 			<TabItem Header="{lex:Loc Geography}">
 				<Grid DataContext="{StaticResource contactViewSource}">
 					<StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="2">

@@ -29,7 +29,6 @@ namespace Cognitivo.Commercial
         public Contact()
         {
            InitializeComponent(); 
-            
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -201,7 +200,6 @@ namespace Cognitivo.Commercial
                 {
                     contactcontact_field_valueViewSource.View.Filter = i =>
                     {
-
                         contact_field_value contact_field_value = (contact_field_value)i;
                         if (contact_field_value != null)
                         {
@@ -209,22 +207,18 @@ namespace Cognitivo.Commercial
                             {
                                 return true;
                             }
-                          
                         }
-                       
                         return false;
-                       
                     };
                 }
-
             }
+
             if (contactcontact_field_valueemailViewSource != null)
             {
                 if (contactcontact_field_valueemailViewSource.View != null)
                 {
                     contactcontact_field_valueemailViewSource.View.Filter = i =>
                     {
-
                         contact_field_value contact_field_value = (contact_field_value)i;
                         if (contact_field_value != null)
                         {
@@ -232,15 +226,12 @@ namespace Cognitivo.Commercial
                             {
                                 return true;
                             }
-
                         }
-
                         return false;
-
                     };
                 }
-
             }
+
             if (contactcontact_field_valuephoneViewSource != null)
             {
                 if (contactcontact_field_valuephoneViewSource.View != null)
@@ -255,16 +246,11 @@ namespace Cognitivo.Commercial
                             {
                                 return true;
                             }
-
                         }
-
                         return false;
-
                     };
                 }
-
             }
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

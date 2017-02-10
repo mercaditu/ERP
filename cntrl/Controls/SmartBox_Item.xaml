@@ -147,7 +147,9 @@
         
         <Popup x:Name="popQuantity" HorizontalAlignment="Center"
                PopupAnimation="Slide" IsOpen="False">
-            <TextBox x:Name="tbxQuantity" Margin="1" KeyUp="Quantity_TextChanged" metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="Quantity"
+            <TextBox x:Name="tbxQuantity" Margin="1" KeyUp="Quantity_TextChanged" 
+                     metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Quantity}"
+                     metro:TextBoxHelper.SelectAllOnFocus="True"
                      FontSize="24" HorizontalContentAlignment="Right" 
                      Text="{Binding ElementName=_SmartBox_Item, Path=Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N}" 
                      Width="{Binding ElementName=_SmartBox_Item, Path=ActualWidth}"/>

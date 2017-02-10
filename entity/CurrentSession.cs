@@ -321,10 +321,18 @@ namespace entity
                 Security_CurdList = cntx.security_curd.Where(x => x.id_role == User.id_role).ToList();
 
                 //Privilage
-                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role).ToList();
-                Allow_UpdateSalesDetail = Security_role_privilageList
-                    .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice && 
-                    x.has_privilage).Count() > 0 ? true : false;
+                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role && x.security_privilage != null).ToList();
+
+                try
+                {
+                    Allow_UpdateSalesDetail = Security_role_privilageList
+                        .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice &&
+                        x.has_privilage).Count() > 0 ? true : false;
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
 

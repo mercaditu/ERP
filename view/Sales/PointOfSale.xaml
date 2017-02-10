@@ -176,7 +176,7 @@
                                 <DropShadowEffect Color="Black" ShadowDepth="0" />
                             </Border.Effect>
                             <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
-					VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                     </StackPanel>
                     <TabControl x:Name="postab"  Margin="10,150,10,10">

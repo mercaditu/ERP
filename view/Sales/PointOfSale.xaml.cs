@@ -44,12 +44,11 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Navigates to ACCOUNT UTILITY Tab
         /// </summary>
-        private  void btnAccount_Click(object sender, EventArgs e)
+        private void btnAccount_Click(object sender, EventArgs e)
         {
-
-           
-            tabAccount.Focus();
             frmaccount.Navigate(new Configs.AccountActive());
+            tabAccount.IsSelected = true;
+            tabAccount.Focus();
         }
 
         private void btnSales_Click(object sender, EventArgs e)
@@ -249,10 +248,10 @@ namespace Cognitivo.Sales
 
             if (app_account != null)
             {
+                //If Account Session has 1 cl_date as null, means Account is still open. If False, means account is closed.
                 if (app_account.app_account_session.Where(x => x.cl_date == null).Any() == false)
                 {
-                    btnAccount_Click(sender, null);
-                 
+                    btnAccount_Click(null, null);
                 }
             }
         }
@@ -410,7 +409,6 @@ namespace Cognitivo.Sales
 
         #endregion
 
-
         private void lblGrandTotalsales_DataContextChanged(object sender, EventArgs e)
         {
             if (sales_invoiceViewSource != null && paymentViewSource != null)
@@ -433,8 +431,6 @@ namespace Cognitivo.Sales
             payment_detail payment_detail = new payment_detail();
             payment.payment_detail.Add(payment_detail);
         }
-
-
 
         private void Clear_MouseDown(object sender, EventArgs e)
         {

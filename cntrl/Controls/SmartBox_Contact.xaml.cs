@@ -79,8 +79,7 @@ namespace cntrl.Controls
 
                     popContact.IsOpen = false;
 
-                    if (Select != null)
-                    { Select(this, new RoutedEventArgs()); }
+                    Select?.Invoke(this, new RoutedEventArgs());
                 }
             }
         }
@@ -113,23 +112,23 @@ namespace cntrl.Controls
 
             LoadData();
 
-            this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
+            IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
 
             if (rbtnCode.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
+                smartBoxContactSetting.Default.SearchFilter.Add("Code");
             }
             if (rbtnName.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
+                smartBoxContactSetting.Default.SearchFilter.Add("Name");
             }
             if (rbtnGov_ID.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+                smartBoxContactSetting.Default.SearchFilter.Add("GovID");
             }
             if (rbtnTel.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+                smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
         }
 
@@ -269,7 +268,6 @@ namespace cntrl.Controls
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
 
@@ -279,26 +277,26 @@ namespace cntrl.Controls
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.IsOpen = true;
-            popupCustomize.Visibility = System.Windows.Visibility.Visible;
+            popupCustomize.Visibility = Visibility.Visible;
         }
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            Controls.smartBoxContactSetting.Default.Save();
+            smartBoxContactSetting.Default.Save();
             popupCustomize.IsOpen = false;
-            popupCustomize.Visibility = System.Windows.Visibility.Collapsed;
+            popupCustomize.Visibility = Visibility.Collapsed;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (Controls.smartBoxContactSetting.Default.SearchFilter != null)
+            if (smartBoxContactSetting.Default.SearchFilter != null)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Clear();
+                smartBoxContactSetting.Default.SearchFilter.Clear();
             }
 
             if (rbtnCode.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
+                smartBoxContactSetting.Default.SearchFilter.Add("Code");
             }
             if (rbtnName.IsChecked == true)
             {

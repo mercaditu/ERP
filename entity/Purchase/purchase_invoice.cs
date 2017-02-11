@@ -249,7 +249,7 @@ namespace entity
         }
         ICollection<purchase_invoice_detail> _purchase_invoice_detail;
         public virtual IEnumerable<purchase_packing_relation> purchase_packing_relation { get; set; }
-
+        public virtual ICollection<impex_import> impex_import { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
         public virtual IEnumerable<impex_expense> impex_expense { get; set; }
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }

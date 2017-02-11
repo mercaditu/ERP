@@ -220,6 +220,7 @@ namespace cntrl.Controls
                 }
                 else
                 {
+                    Quantity = 1;
                     ItemGrid_MouseDoubleClick(sender, e);
                 }
             }

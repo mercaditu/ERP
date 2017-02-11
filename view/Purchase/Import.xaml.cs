@@ -20,6 +20,7 @@ namespace Cognitivo.Purchase
         List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
 
         decimal GrandTotal;
+
         public Import()
         {
             InitializeComponent();
@@ -50,8 +51,6 @@ namespace Cognitivo.Purchase
                 //incotermconditionViewSource
                 CollectionViewSource incotermconditionViewSource = FindResource("incotermconditionViewSource") as CollectionViewSource;
                 incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
-
-               
             }
             catch (Exception ex)
             {
@@ -97,6 +96,7 @@ namespace Cognitivo.Purchase
             purchase_invoiceViewSource.Source = ImpexDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
             impex impex = new impex();
             impex.impex_type = entity.impex._impex_type.Import;
+
             if (ImpexDB.impex_incoterm.Where(x => x.is_priority).FirstOrDefault() != null)
             {
                 impex.id_incoterm = ImpexDB.impex_incoterm.Where(x => x.is_priority).FirstOrDefault().id_incoterm;
@@ -142,6 +142,7 @@ namespace Cognitivo.Purchase
                         getProratedCostCounted(purchase_invoice, true, GrandTotal);
                     }
                 }
+
                 productDataGrid.ItemsSource = null;
                 impex_importDataGrid.ItemsSource = null;
                 impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST;
@@ -157,15 +158,19 @@ namespace Cognitivo.Purchase
             if (impexDataGrid.SelectedItem != null)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
-               
-                if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
+
+                if (impex != null)
                 {
-                    impex.Currencyfx = impex.impex_expense.FirstOrDefault().purchase_invoice.app_currencyfx;
-                }
-                GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
-                foreach (impex_import impex_import in impex.impex_import)
-                {
-                    getProratedCostCounted(impex_import.purchase_invoice, false, GrandTotal);
+                    if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
+                    {
+                        impex.Currencyfx = impex.impex_expense.FirstOrDefault().purchase_invoice.app_currencyfx;
+                    }
+
+                    GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
+                    foreach (impex_import impex_import in impex.impex_import)
+                    {
+                        getProratedCostCounted(impex_import.purchase_invoice, false, GrandTotal);
+                    }
                 }
             }
 
@@ -447,8 +452,13 @@ namespace Cognitivo.Purchase
                 {
                     id_contact = impex.id_contact;
                 }
-                contact contact = ImpexDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
-                pnlPurchaseInvoice._contact = contact;
+
+                contact contact = ImpexDB.contacts.Find(id_contact);
+                if (contact != null)
+                {
+                    pnlPurchaseInvoice._contact = contact;
+                }
+                
                 pnlPurchaseInvoice.IsImpex = true;
             }
 
@@ -496,9 +506,7 @@ namespace Cognitivo.Purchase
             impex impex = impexDataGrid.SelectedItem as impex;
             if (impex!=null)
             {
-
                 entity.Brillo.Document.Start.Automatic(impex, "Import");
-
             }
         }
 

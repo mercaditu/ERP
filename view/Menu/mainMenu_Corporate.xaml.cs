@@ -78,14 +78,13 @@ namespace Cognitivo.Menu
         private void get_Apps(object sender, EventArgs e)
         {
             string _modName;
-
             cntrl.moduleIcon ico = sender as cntrl.moduleIcon;
 
             if (ico != null)
             {
                 _modName = ico.Tag.ToString();
                 //Check to see if other icon (not module) has been clicked.
-                lblModuleName.Content = (sender as cntrl.moduleIcon).ModuleName.ToString();
+                var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + (sender as cntrl.moduleIcon).ModuleName.ToString() + "").SetBinding(lblModuleName, Label.ContentProperty);
 
                 //Get Icons
                 if (ico.Tag.ToString() == "Fav")

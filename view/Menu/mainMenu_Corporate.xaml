@@ -57,39 +57,39 @@
             </Grid.Background>
             <StackPanel x:Name="stackModule" Orientation="Horizontal" HorizontalAlignment="Center">
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFav.png"
-                                  ModuleName="{lex:Loc Favorite}" 
+                                  ModuleName="Favorite" 
                                   MouseUp="get_Apps" IsChecked="True"
                                   Tag="Fav"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modPurchase.png"
-                                  ModuleName="{lex:Loc Purchase}"
+                                  ModuleName="Purchase"
                                   MouseUp="get_Apps"
                                   Tag="Purchase"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modSales.png"
-                                  ModuleName="{lex:Loc Sales}"
+                                  ModuleName="Sales"
                                   MouseUp="get_Apps"
                                   Tag="Sales"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modStock.png"
-                                  ModuleName="{lex:Loc Stock}"
+                                  ModuleName="Stock"
                                   MouseUp="get_Apps"
                                   Tag="Stock"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modImpex.png"
-                                  ModuleName="{lex:Loc InternationalCommerce}"
+                                  ModuleName="InternationalCommerce"
                                   MouseUp="get_Apps"
                                   Tag="InternationalCommerce"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFinance.png"
-                                  ModuleName="{lex:Loc Finance}"
+                                  ModuleName="Finance"
                                   MouseUp="get_Apps"
                                   Tag="Finance"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modHR.png"
-                                  ModuleName="{lex:Loc HumanResources}"
+                                  ModuleName="HumanResources"
                                   MouseUp="get_Apps"
                                   Tag="HumanResources"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject.png"
-                                  ModuleName="{lex:Loc Project}"
+                                  ModuleName="Project"
                                   MouseUp="get_Apps"
                                   Tag="Project_Dev"/>
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProduction.png"
-                                  ModuleName="{lex:Loc Production}"
+                                  ModuleName="Production"
                                   MouseUp="get_Apps"
                                   Tag="Production"/>
             </StackPanel>

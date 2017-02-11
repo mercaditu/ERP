@@ -233,8 +233,8 @@
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" 
+                       btnSearch_Click="toolBar_btnSearch_Click"
                        btnCancel_Click="toolBar_btnCancel_Click_1" 
-                       btnDelete_Click="toolBar_btnDelete_Click_1"
                        btnEdit_Click="toolBar_btnEdit_Click_1" 
                        btnNew_Click="toolBar_btnNew_Click_1" 
                        btnSave_Click="toolBar_btnSave_Click_1" 

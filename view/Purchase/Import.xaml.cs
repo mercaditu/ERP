@@ -34,7 +34,7 @@ namespace Cognitivo.Purchase
 
                 impexViewSource = FindResource("impexViewSource") as CollectionViewSource;
                 await ImpexDB.impex
-                    .Where(x => x.impex_type == impex._impex_type.Import && x.is_active == true && x.id_company == CurrentSession.Id_Company)
+                    .Where(x => x.impex_type == impex._impex_type.Import && x.is_active == true && x.id_company == CurrentSession.Id_Company).Include(y => y.contact)
                     .LoadAsync();
                 impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
@@ -217,7 +217,7 @@ namespace Cognitivo.Purchase
 
             foreach (var item in impex_expense)
             {
-                if ((decimal)item.value != null)
+                if (item.value != null)
                 {
                     totalExpense += (decimal)item.value;
                 }
@@ -502,6 +502,36 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(query) && impexViewSource != null)
+                {
+                    impexViewSource.View.Filter = i =>
+                    {
+                        impex impex = i as impex;
+                        string number = impex.number != null ? impex.number : "";
+                        string contact = impex.contact != null ? impex.contact.name : "";
+                        if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    impexViewSource.View.Filter = null;
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
         private void impeximpex_expenseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             impexDataGrid_SelectionChanged(null, null);
@@ -512,11 +542,10 @@ namespace Cognitivo.Purchase
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             entity.Class.Impex_Products clsProductDetail = productDataGrid.SelectedItem as entity.Class.Impex_Products;
-            if (impeximpex_expenseViewSource != null)
+            if (impeximpex_expenseViewSource != null && clsProductDetail != null)
             {
                 if (impeximpex_expenseViewSource.View != null)
                 {
-
                     impeximpex_expenseViewSource.View.Filter = i =>
                     {
                         impex_expense impex_expense = (impex_expense)i;

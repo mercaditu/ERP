@@ -28,8 +28,17 @@
                     <DropShadowEffect ShadowDepth="0" Color="White"/>
                 </StackPanel.Effect>
                 <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
-                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
-                <Label Content="{lex:Loc Account}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
+                    <Label.Effect>
+                        <DropShadowEffect ShadowDepth="0"/>
+                    </Label.Effect>
+                </Label>
+                <Label Content="{lex:Loc Account}" metro:ControlsHelper.ContentCharacterCasing="Upper" 
+                       Style="{StaticResource H1}" Foreground="White">
+                    <Label.Effect>
+                        <DropShadowEffect ShadowDepth="0"/>
+                    </Label.Effect>
+                </Label>
             </StackPanel>
             <DataGrid x:Name="CashDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
                                       EnableRowVirtualization="True"  Grid.Row="0"
@@ -45,7 +54,7 @@
             </DataGrid>
             <Grid Margin="5">
                 <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally "/>
-                <Button x:Name="btnActivateAccount" Content="{Binding is_active,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
+                <Button x:Name="btnActivateAccount" Content="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
             </Grid>
         </StackPanel>
     </Grid>

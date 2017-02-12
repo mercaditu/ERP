@@ -63,12 +63,12 @@
 					<Label Content="{Binding app_terminal.name}" FontSize="16"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="125,85,0,0">
-                    <Label Content="{Binding     AccountActive.is_active,ElementName=this,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToActive}}" 
-						   Foreground="{Binding  app_account_session.is_active,Source={StaticResource app_accountapp_account_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ActiveValueConverter}}" 
+                    <Label Content="{Binding IsActive, ElementName=this, Mode=OneWay, Converter={StaticResource BoolToActive}}" 
+						   Foreground="{Binding IsActive, ElementName=this, Mode=OneWay, Converter={StaticResource ActiveValueConverter}}" 
 						   FontSize="16" Margin="0"/>
 					<Label Content="{lex:Loc LastUsed}" Margin="6,0,0,0" FontSize="16"/>
 					<Label Content=":" FontSize="16"/>
-					<Label Content="Today" FontSize="16"/>
+                    <Label Content="{Binding LastUsed, ElementName=this, Mode=OneWay, StringFormat=d}" FontSize="16"/>
 				</StackPanel>
 			</Grid>
 			<TabControl x:Name="tabAccount" Margin="0,128,0,0" SelectionChanged="TabControl_SelectionChanged">
@@ -111,7 +111,7 @@
 					</Grid>
 				</TabItem>
 				<TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
-					<StackPanel Background="WhiteSmoke">
+					<StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
 						<Grid Margin="5">
 							<Label Content="{lex:Loc Adjust}"/>
 							<Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
@@ -144,7 +144,7 @@
 					</StackPanel>
 				</TabItem>
 				<TabItem Header="{lex:Loc Transfer}">
-					<StackPanel Background="WhiteSmoke">
+                    <StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
 						<Label Content="transfer from one account to another. will reduce in one and increase in another." Margin="5"/>
 						<Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
 						<Label Content="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource app_accountViewSource}}" Style="{DynamicResource input_label}"/>

@@ -40,28 +40,31 @@ namespace Cognitivo.Configs
                 db = new db();
             }
 
-            if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            app_account app_account = db.app_account.Find(CurrentSession.Id_Account);
+
+            if (app_account != null)
             {
+                //Get the Very Last Session of this Account.
+                app_account_session app_account_session = app_account.app_account_session.LastOrDefault();
+
+                ///Assign a Session ID for this block of code.
+                int id_session = 0;
+
                 ///Gets the Current
-                app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-                if (db.app_account_session.Where(x => x.id_account == app_account.id_account).FirstOrDefault()!=null)
+                if (app_account_session != null)
                 {
-                    is_active = db.app_account_session.Where(x => x.id_account == app_account.id_account).FirstOrDefault().is_active;
+                    is_active = app_account_session.is_active;
                     RaisePropertyChanged("is_active");
+
+                    if (app_account_session.is_active)
+                    {
+                        id_session = app_account_session.id_session;
+                    }
                 }
                 else
                 {
                     is_active = false;
                     RaisePropertyChanged("is_active");
-
-                }
-                
-
-                ///Assign a Session ID for this block of code.
-                int id_session = 0;
-                if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
-                {
-                    id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                 }
 
                 var app_account_detailList = 
@@ -92,7 +95,6 @@ namespace Cognitivo.Configs
 
                 if (app_account_detailFinalList.Count > 0)
                 {
-
                     foreach (dynamic item in app_account_detailFinalList)
                     {
                         Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();

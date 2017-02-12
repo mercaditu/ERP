@@ -6,14 +6,26 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data.Entity;
 using entity;
+using System.ComponentModel;
 
 namespace Cognitivo.Configs
 {
 
-    public partial class AccountUtility
+    public partial class AccountUtility : INotifyPropertyChanged
     {
         #region Load and Initilize
         db db = new db();
+
+        #region NotifyPropertyChange
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+        #endregion
 
         CollectionViewSource app_accountViewSource
             , app_account_listViewSource
@@ -22,6 +34,20 @@ namespace Cognitivo.Configs
             , amount_transferViewSource = null;
         List<Class.clsTransferAmount> listTransferAmt = null;
         
+        public bool IsActive
+        {
+            get { return _IsActive; }
+            set { _IsActive = value; RaisePropertyChanged("IsActive"); }
+        }
+        private bool _IsActive;
+
+        public DateTime LastUsed
+        {
+            get { return _LastUsed; }
+            set { _LastUsed = value;  RaisePropertyChanged("LastUsed"); }
+        }
+        private DateTime _LastUsed;
+
         public AccountUtility()
         {
             InitializeComponent();
@@ -73,13 +99,32 @@ namespace Cognitivo.Configs
         private void app_accountDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Account detail.
-            app_account objAccount = app_accountDataGrid.SelectedItem as app_account;
+            app_account app_account = app_accountDataGrid.SelectedItem as app_account;
 
-            if (objAccount != null)
+            if (app_account != null)
             {
-                int SessionID = objAccount.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
+                //Get the Very Last Session of this Account.
+                app_account_session app_account_session = app_account.app_account_session.LastOrDefault();
+                int SessionID = 0;
 
-                app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
+                ///Gets the Current
+                if (app_account_session != null)
+                {
+                    IsActive = app_account_session.is_active;
+                    LastUsed = app_account_session.app_account_detail.Select(x => x.trans_date).LastOrDefault();
+
+                    //Sets the SessionID.
+                    if (app_account_session.is_active)
+                    {
+                        SessionID = app_account.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    IsActive = false;
+                }
+
+                app_account_detailDataGrid.ItemsSource = app_account.app_account_detail
                     .Where(x => x.id_session == SessionID)
                     .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                     .Select(s => new
@@ -89,7 +134,7 @@ namespace Cognitivo.Configs
                         amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                     }).ToList();
 
-                CurrentSession.Id_Account = objAccount.id_account;
+                CurrentSession.Id_Account = app_account.id_account;
 
                 if (frmActive.Children.Count > 0)
                 {

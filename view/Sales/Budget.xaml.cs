@@ -16,9 +16,9 @@ namespace Cognitivo.Sales
     {
         SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
-        CollectionViewSource sales_budgetViewSource,
-            sales_budgetsales_budget_detailViewSource;
+        CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
         cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
         public Budget()
         {
             InitializeComponent();
@@ -159,18 +159,21 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-            sales_budget.RaisePropertyChanged("GrandTotal");
-            List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
-            dgvvat.ItemsSource = sales_budget_detail
-                 .Join(SalesBudgetDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                      , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
-                      .GroupBy(a => new { a.name, a.id_vat, a.ad })
-               .Select(g => new
-               {
-                   id_vat = g.Key.id_vat,
-                   name = g.Key.name,
-                   value = g.Sum(a => a.value * a.ad.quantity)
-               }).ToList();
+            if (sales_budget != null)
+            {
+                sales_budget.RaisePropertyChanged("GrandTotal");
+                List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
+                dgvvat.ItemsSource = sales_budget_detail
+                     .Join(SalesBudgetDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                          , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
+                          .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                   .Select(g => new
+                   {
+                       id_vat = g.Key.id_vat,
+                       name = g.Key.name,
+                       value = g.Sum(a => a.value * a.ad.quantity)
+                   }).ToList();
+            }
         }
 
         private void sales_budgetDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -208,37 +211,39 @@ namespace Cognitivo.Sales
 
         private async void item_Select(object sender, EventArgs e)
         {
-
             if (sbxItem.ItemID > 0)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
                 item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
 
-                if (item != null && item.id_item > 0 && sales_budget != null)
+                if (sales_budget != null && item != null)
                 {
-                    item_product item_product = item.item_product.FirstOrDefault();
+                    if (item != null && item.id_item > 0 && sales_budget != null)
+                    {
+                        item_product item_product = item.item_product.FirstOrDefault();
 
-                    if (item_product != null && item_product.can_expire)
-                    {
-                        crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_budget.id_branch, null, item_product.id_item_product);
-                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        if (item_product != null && item_product.can_expire)
+                        {
+                            crud_modalExpire.Visibility = Visibility.Visible;
+                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_budget.id_branch, null, item_product.id_item_product);
+                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        }
+                        else
+                        {
+                            Settings SalesSettings = new Settings();
+                            Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        }
                     }
-                    else
-                    {
-                        Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem,null,sbxItem.Quantity));
-                    }
-                   
+
+                    sales_budget.RaisePropertyChanged("GrandTotal");
                 }
-
-                sales_budget.RaisePropertyChanged("GrandTotal");
             }
         }
 
         private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem,item_movement item_movement,decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
+
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();

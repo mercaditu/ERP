@@ -29,24 +29,7 @@ namespace Cognitivo.Purchase
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //}
 
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (PurchaseOrderDB != null)
-        //    {
-        //        if (disposing)
-        //        {
-        //            PurchaseOrderDB.Dispose();
-        //            // Dispose other managed resources.
-        //        }
-        //        //release unmanaged resources.
-        //    }
-        //}
         private void load_PrimaryData()
         {
             load_PrimaryDataThread();
@@ -69,7 +52,7 @@ namespace Cognitivo.Purchase
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                purchase_orderViewSource = ((CollectionViewSource)(FindResource("purchase_orderViewSource")));
+                purchase_orderViewSource = (FindResource("purchase_orderViewSource") as CollectionViewSource);
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
         }
@@ -117,26 +100,33 @@ namespace Cognitivo.Purchase
         {
             OrderSetting _pref_PurchaseOrder = new OrderSetting();
             purchase_order purchase_order = PurchaseOrderDB.New(_pref_PurchaseOrder.TransDate_OffSet);
-
-
-            sbxContact.Text = "";
-            sbxItem.Text = "";
-            purchase_orderViewSource.View.MoveCurrentTo(purchase_order);
-
+            if (purchase_order != null)
+            {
+                sbxContact.Text = "";
+                sbxItem.Text = "";
+                purchase_orderViewSource.View.MoveCurrentTo(purchase_order);
+            }
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            if (purchase_orderDataGrid.SelectedItem != null)
+            if (purchase_orderDataGrid != null)
             {
-                purchase_order purchase_order_old = (purchase_order)purchase_orderDataGrid.SelectedItem;
-                purchase_order_old.IsSelected = true;
-                purchase_order_old.State = EntityState.Modified;
-                PurchaseOrderDB.Entry(purchase_order_old).State = EntityState.Modified;
-            }
-            else
-            {
-                toolBar.msgWarning("Please Select a record");
+                if (purchase_orderDataGrid.SelectedItem != null)
+                {
+                    purchase_order purchase_order_old = purchase_orderDataGrid.SelectedItem as purchase_order;
+
+                    if (purchase_order_old != null)
+                    {
+                        purchase_order_old.IsSelected = true;
+                        purchase_order_old.State = EntityState.Modified;
+                        PurchaseOrderDB.Entry(purchase_order_old).State = EntityState.Modified;
+                    }
+                }
+                else
+                {
+                    toolBar.msgWarning("Please select a record");
+                }
             }
         }
 
@@ -166,7 +156,6 @@ namespace Cognitivo.Purchase
 
                 purchase_orderViewSource.View.Refresh();
             }
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -200,14 +189,19 @@ namespace Cognitivo.Purchase
             if (sbxContact.ContactID > 0)
             {
                 contact contact = await PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefaultAsync();
+
                 if (contact != null)
                 {
                     purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
-                    purchase_order.id_contact = contact.id_contact;
-                    purchase_order.contact = contact;
 
-                    ///Start Thread to get Data.
-                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    if (purchase_order != null)
+                    {
+                        purchase_order.id_contact = contact.id_contact;
+                        purchase_order.contact = contact;
+
+                        ///Start Thread to get Data.
+                        Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    }
                 }
             }
         }
@@ -237,13 +231,16 @@ namespace Cognitivo.Purchase
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = CurrentSession.Contracts.Where(x => x.id_condition == app_condition.id_condition).ToList();
-                //Selects first Item
-                if (purchase_order != null)
+                if (app_condition != null)
                 {
-                    if (purchase_order.id_contract == 0)
+                    cbxContract.ItemsSource = CurrentSession.Contracts.Where(x => x.id_condition == app_condition.id_condition).ToList();
+                    //Selects first Item
+                    if (purchase_order != null)
                     {
-                        cbxContract.SelectedIndex = 0;
+                        if (purchase_order.id_contract == 0)
+                        {
+                            cbxContract.SelectedIndex = 0;
+                        }
                     }
                 }
             }
@@ -254,43 +251,29 @@ namespace Cognitivo.Purchase
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
-            purchase_order.RaisePropertyChanged("GrandTotal");
+
             if (purchase_order != null)
             {
+                purchase_order.RaisePropertyChanged("GrandTotal");
+
                 List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
                 dgvVAT.ItemsSource = purchase_order_detail
-                       .Join(PurchaseOrderDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                           , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
-                           .GroupBy(a => new { a.name, a.id_vat, a.ad })
-                   .Select(g => new
-                   {
-                       id_vat = g.Key.id_vat,
-                       name = g.Key.name,
-                       value = g.Sum(a => a.value * a.ad.quantity)
-                   }).ToList();
+                        .Join(PurchaseOrderDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                            , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
+                            .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                    .Select(g => new
+                    {
+                        id_vat = g.Key.id_vat,
+                        name = g.Key.name,
+                        value = g.Sum(a => a.value * a.ad.quantity)
+                    }).ToList();
             }
         }
 
-        //private void calculate_total(object sender, EventArgs e)
-        //{
-        //    purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
-        //    if (purchase_order != null)
-        //    {
-        //        purchase_order.get_Puchase_Total();
-        //    }
-        //}
-
         private void purchase_invoice_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            purchase_order_detail purchase_order_detail = (purchase_order_detail)purchase_order_detailDataGrid.SelectedItem;
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
-
-        //private void purchase_invoiceDataGrid_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    calculate_total(sender, e);
-        //}
 
         private void purchase_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -300,10 +283,7 @@ namespace Cognitivo.Purchase
                 if (purchase_order != null)
                 {
                     calculate_vat(sender, e);
-
-
                 }
-                //calculate_total(sender, e);
             }
             catch (Exception ex)
             {
@@ -348,7 +328,10 @@ namespace Cognitivo.Purchase
                     purchase_orderViewSource.View.Filter = i =>
                     {
                         purchase_order purchase_order = i as purchase_order;
-                        if (purchase_order.contact.name.ToLower().Contains(query.ToLower()))
+                        string contact = purchase_order.contact != null ? purchase_order.contact.name : "";
+                        string number = purchase_order.number;
+
+                        if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }
@@ -381,16 +364,18 @@ namespace Cognitivo.Purchase
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
-                    //DeleteDetailGridRow
-                    purchase_order_detailDataGrid.CancelEdit();
-                    purchase_order.purchase_order_detail.Remove(e.Parameter as purchase_order_detail);
-                    purchase_orderpurchase_order_detailViewSource.View.Refresh();
-                    // calculate_total(sender, e);
+                    if (purchase_order != null)
+                    {
+                        //DeleteDetailGridRow
+                        purchase_order_detailDataGrid.CancelEdit();
+                        purchase_order.purchase_order_detail.Remove(e.Parameter as purchase_order_detail);
+                        purchase_orderpurchase_order_detailViewSource.View.Refresh();
+                        // calculate_total(sender, e);
+                    }
                 }
             }
             catch (Exception ex)
@@ -398,9 +383,7 @@ namespace Cognitivo.Purchase
                 toolBar.msgError(ex);
             }
         }
-
-
-
+        
         private void item_Select(object sender, EventArgs e)
         {
             purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
@@ -409,15 +392,20 @@ namespace Cognitivo.Purchase
 
             if (sbxItem.ItemID > 0)
             {
-
                 item = PurchaseOrderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                if (sbxContact.ContactID > 0)
+
+                //Sometimes Item can be null, due to Expenses that are not part of the System. This is only applicable in Purchase
+                if (purchase_order != null)
                 {
-                    contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    if (sbxContact.ContactID > 0)
+                    {
+                        contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    }
+
+                    OrderSetting OrderSetting = new OrderSetting();
+                    Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems, sbxItem.Quantity));
                 }
             }
-            OrderSetting OrderSetting = new OrderSetting();
-            Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems,sbxItem.Quantity));
         }
 
         private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate, decimal quantity)
@@ -560,8 +548,6 @@ namespace Cognitivo.Purchase
                 {
                     if (PurchaseOrderDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_order.id_currencyfx).FirstOrDefault() != null)
                     {
-
-
                         purchase_order.app_currencyfx = PurchaseOrderDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_order.id_currencyfx).FirstOrDefault();
                     }
                 }
@@ -575,8 +561,9 @@ namespace Cognitivo.Purchase
         {
             if (cmbdocument.SelectedValue != null)
             {
-                entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
-                app_document_range app_document_range = (app_document_range)cmbdocument.SelectedItem;
+                //entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
+                app_document_range app_document_range = cmbdocument.SelectedItem as app_document_range;
+                
                 _number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
             }
         }
@@ -642,6 +629,7 @@ namespace Cognitivo.Purchase
                 purchase_invoice.id_weather = purchase_order.id_weather;
                 purchase_invoice.is_impex = purchase_order.is_impex;
                 purchase_invoice.purchase_order = purchase_order;
+
                 foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
                 {
                     purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();

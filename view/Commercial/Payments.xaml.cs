@@ -179,7 +179,16 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            PaymentDB.Anull();
+            int Payments2Anull = PaymentDB.payments.Local.Where(x => x.IsSelected).Count();
+
+            if (MessageBox.Show("Are you sure you want to remove " + Payments2Anull + " Payments?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                PaymentDB.Anull();
+
+                toolBar.msgAnnulled(Payments2Anull);
+                payment_detailReceive.View.Refresh();
+                payment_detailMadeViewSource.View.Refresh();
+            }
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

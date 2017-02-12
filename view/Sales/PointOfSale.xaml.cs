@@ -451,7 +451,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void btnPromotion_Click(object sender, EventArgs e)
+        private async void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
@@ -465,16 +465,22 @@ namespace Cognitivo.Sales
                     {
                         SalesInvoiceDB.sales_invoice_detail.Remove(sales_invoice_detail);
                     }
-
                 }
-
             }
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
+
             foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
             {
-                if (sales_invoice_detail.item==null)
+                //Gets the Item into view.
+                if (sales_invoice_detail.item == null)
                 {
-                    sales_invoice_detail.item = SalesInvoiceDB.items.Find(sales_invoice_detail.id_item);
+                    sales_invoice_detail.item = await SalesInvoiceDB.items.FindAsync(sales_invoice_detail.id_item);
+                }
+
+                //Gets the Promotion into view.
+                if (sales_invoice_detail.id_sales_promotion > 0 && sales_invoice_detail.sales_promotion == null)
+                {
+                    sales_invoice_detail.sales_promotion = await SalesInvoiceDB.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
                 }
             }
 

@@ -391,16 +391,11 @@ namespace Cognitivo.Sales
                     ///Start Thread to get Data.
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
                 }
-                if (cbxCondition.SelectedItem!=null && cbxContract.SelectedItem!=null && cbxCurrency.SelectedValue>0)
-                {
-                    sbxItem.Focus();
-                }
             }
         }
 
         private async void set_ContactPref_Thread(contact objContact)
         {
-
             if (objContact != null)
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
@@ -418,8 +413,11 @@ namespace Cognitivo.Sales
                     //Currency
 
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
-                    
-                    sbxItem.Focus();
+
+                    if (cbxCondition.SelectedItem != null && cbxContract.SelectedItem != null && cbxCurrency.SelectedValue > 0)
+                    {
+                        sbxItem.Focus();
+                    }
                 }));
             }
         }
@@ -511,7 +509,6 @@ namespace Cognitivo.Sales
 
         private void item_Select(object sender, EventArgs e)
         {
-
             if (sbxItem.ItemID > 0)
             {
                 Settings SalesSettings = new Settings();
@@ -528,7 +525,6 @@ namespace Cognitivo.Sales
                         {
                             LineLimit = (int)app_document_range.app_document.line_limit;
                         }
-                     
                     }
 
                     if (SalesSettings.SpiltInvoice == false && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
@@ -550,15 +546,12 @@ namespace Cognitivo.Sales
                         }
                         else
                         {
-                         
                             sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null,sbxItem.Quantity);
                             sales_invoicesales_invoice_detailViewSource.View.Refresh();
                             sales_invoice.RaisePropertyChanged("GrandTotal");
                         }
-                       
                     }
                 }
-                
              }
         }
 

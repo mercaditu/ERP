@@ -226,5 +226,17 @@ namespace Cognitivo.Sales {
                 this["SpiltReturn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool QuantityIntegration {
+            get {
+                return ((bool)(this["QuantityIntegration"]));
+            }
+            set {
+                this["QuantityIntegration"] = value;
+            }
+        }
     }
 }

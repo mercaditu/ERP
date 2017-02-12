@@ -40,7 +40,7 @@ namespace entity
         {
             payment_detail payment_detail = new payment_detail();
             payment_detail.State = EntityState.Added;
-            payment_detail.id_payment_type = payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_payment_type;
+            payment_detail.id_payment_type = payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).Select(y => y.id_payment_type).FirstOrDefault();
             payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
             payment.payment_detail.Add(payment_detail);
 
@@ -218,9 +218,6 @@ namespace entity
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-
-
-
                     decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
@@ -264,24 +261,10 @@ namespace entity
                                 child_schedual.id_sales_order = Parent_Schedual.id_sales_order;
                                 ModuleName = "SalesOrder";
                             }
-
-
                         }
-                  
                         schedualList.Add(child_schedual);
-
                     }
                     //End Mode IF
-
-
-
-
-              
-
-
-
-                    
-
                 }
 
                 ///Code to specify Accounts.
@@ -420,6 +403,29 @@ namespace entity
                 }
             }
             base.SaveChanges();
+        }
+
+        public void Anull()
+        {
+            List<payment> PaymentList = base.payments.Local.Where(x => x.IsSelected).ToList();
+            foreach (payment payment in PaymentList)
+            {
+                if (payment.is_accounted == true && CurrentSession.UserRole.is_master == false)
+                {
+                    //If Payment is Accounted and user is not Master, ignore this record.
+                    continue;
+                }
+
+                //Remove Account Detail Information
+                foreach (payment_detail payment_detail in payment.payment_detail)
+                {
+                    base.app_account_detail.RemoveRange(payment_detail.app_account_detail);
+                    base.payment_schedual.RemoveRange(payment_detail.payment_schedual);
+                    payment.status = Status.Documents_General.Annulled;
+                }
+            }
+
+            SaveChanges();
         }
     }
 }

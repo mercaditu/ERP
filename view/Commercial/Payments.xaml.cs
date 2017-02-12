@@ -26,9 +26,6 @@ namespace Cognitivo.Commercial
                 _PaymentDate = value;
                 RaisePropertyChanged("PaymentDate");
 
-                //slider.Maximum = DateTime.DaysInMonth(PaymentDate.Year, _PaymentDate.Month);
-                //slider.Value = PaymentDate.Day;
-
                 FilterPaymentsPaid(0);
                 FilterPaymentsRecieved(0);
             }
@@ -51,9 +48,9 @@ namespace Cognitivo.Commercial
             PaymentDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.name).Load();
             contactViewSource.Source = PaymentDB.contacts.Local;
 
-            payment_detailMadeViewSource = (CollectionViewSource)FindResource("payment_detailMadeViewSource");
-            payment_detailReceive = (CollectionViewSource)FindResource("payment_detailReceive");
-            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
+            payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
+            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
             //Logic to bring Data into view.
 
             payment_detailReceive.Source = PaymentDB.payments.Local;
@@ -61,7 +58,6 @@ namespace Cognitivo.Commercial
 
             FilterPaymentsPaid(0);
             FilterPaymentsRecieved(0);
-
         }
 
         private void FilterPaymentsPaid(int id_contact)
@@ -157,31 +153,33 @@ namespace Cognitivo.Commercial
         {
             FilterPaymentsRecieved(0);
             FilterPaymentsPaid(0);
-
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
             payment payment = payment_detailReceive.View.CurrentItem as payment;
-            payment.State = EntityState.Modified;
-            cntrl.Curd.PaymentEdit PaymentEdit = new cntrl.Curd.PaymentEdit(cntrl.Curd.PaymentEdit.Modes.Recievable, payment, PaymentDB);
+            if (payment != null)
+            {
+                payment.State = EntityState.Modified;
+                cntrl.Curd.PaymentEdit PaymentEdit = new cntrl.Curd.PaymentEdit(cntrl.Curd.PaymentEdit.Modes.Recievable, payment, PaymentDB);
 
-            crud_modal.Visibility = Visibility.Visible;
-            crud_modal.Children.Add(PaymentEdit);
-        }
-
-        private void btnSave_Click(object sender)
-        {
-            payment payment = payment_detailReceive.View.CurrentItem as payment;
-            payment.State = EntityState.Unchanged;
-            PaymentDB.SaveChanges();
+                crud_modal.Visibility = Visibility.Visible;
+                crud_modal.Children.Add(PaymentEdit);
+            }
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
             payment payment = payment_detailReceive.View.CurrentItem as payment;
-            payment.State = EntityState.Unchanged;
+            if (payment != null)
+            {
+                payment.State = EntityState.Unchanged;
+            }
+        }
 
+        private void toolBar_btnAnull_Click(object sender)
+        {
+            PaymentDB.Anull();
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

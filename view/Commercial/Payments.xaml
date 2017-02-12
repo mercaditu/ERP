@@ -10,13 +10,6 @@
           xmlns:entity="clr-namespace:entity;assembly=entity"
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
 	Title="Payments" Loaded="Page_Loaded">
-
-    <!--<Page.CommandBindings>
-        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
-                        CanExecute="EditCommand_CanExecute" 
-                        Executed="EditCommand_Executed"/>
-      
-    </Page.CommandBindings>-->
     <Page.Resources>
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
         <CollectionViewSource x:Key="payment_detailMadeViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
@@ -68,7 +61,7 @@
 
 
                         <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                        Header="{lex:Loc Cognitivo:local:AccountsPayable}" Width="auto" IsReadOnly="True" 
+                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
                         <!--<DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>-->
@@ -79,56 +72,30 @@
                 <DataGrid x:Name="payment_schedualReceiveDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailReceive}}" CanUserAddRows="False" Margin="4,-1,-4,1">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
+                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                        <DataGridTextColumn Binding="{Binding contact.name, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+                        <DataGridTextColumn Binding="{Binding trans_date, Mode=OneTime, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
-
-
-                        <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
+                        <DataGridTextColumn Binding="{Binding number, Mode=OneTime, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+                                        Header="{lex:Loc Cognitivo:local:Number}" Width="auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
-                        <!--<DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>-->
-                        <!--<DataGridTemplateColumn Width="Auto" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.EditAll"
-                                                    Style="{StaticResource btnEditChildStyle}"
-                                                    CommandParameter="{Binding}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <!--<Grid VerticalAlignment="Top" Height="40" Grid.ColumnSpan="2" Background="White">
-            <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding ElementName=PaymentPage, Path=PaymentDate,
-                                      StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                      MouseDown="Today_MouseDown" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"/>
-                --><!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRMonth_MouseDown"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRDay_MouseDown"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-                    <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
-                        Value="{Binding ElementName=PaymentPage, Path=sliderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ValueChanged="slider_ValueChanged" Focusable="False" SmallChange="1"/>
-                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFDay_MouseDown"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFMonth_MouseDown"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-                </StackPanel>--><!--
-            </StackPanel>
-        </Grid>-->
 
-        <cntrl:toolBar x:Name="toolBar" appName="PaymentUtility" btnSearch_Click="toolBar_btnSearch_Click"
-			           btnSave_Click="btnSave_Click" State="{Binding State,Source={StaticResource payment_detailReceive},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+        <cntrl:toolBar x:Name="toolBar" appName="Payment" btnSearch_Click="toolBar_btnSearch_Click"
+			           State="{Binding State, Source={StaticResource payment_detailReceive}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Status="{Binding status, Source={StaticResource payment_detailReceive}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        btnEdit_Click="toolBar_btnEdit_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click"
-			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                       btnAnull_Click="toolBar_btnAnull_Click"/>
     </Grid>
     
 </Page>

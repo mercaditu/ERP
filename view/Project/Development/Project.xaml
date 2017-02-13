@@ -37,8 +37,6 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-
-
         <ListBox x:Name="ProjectDataGrid" Background="{StaticResource AccentColor_Brush}"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -55,7 +53,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0" >

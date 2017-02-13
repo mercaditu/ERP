@@ -27,7 +27,7 @@ namespace Cognitivo.Product
         {
 
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
-            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             item_requestViewSource.Source = dbContext.item_request.Local;
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
@@ -74,16 +74,20 @@ namespace Cognitivo.Product
                 if (result == MessageBoxResult.Yes)
                 {
                     item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
-                    //DeleteDetailGridRow
-                    item_request_detailDataGrid.CancelEdit();
-                    //item_request_detail.item_request_decision.Remove(e.Parameter as item_request_decision);
-                    dbContext.item_request_decision.Remove(e.Parameter as item_request_decision);
-                    item_requestitem_request_detailViewSource.View.Refresh();
-                    item_request_detailitem_request_decisionViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-                    
-                    item_request_detail.item_request.GetTotalDecision();
-                    item_request_detail.RaisePropertyChanged("balance");
+
+                    if (item_request_detail != null)
+                    {
+                        //DeleteDetailGridRow
+                        item_request_detailDataGrid.CancelEdit();
+                        //item_request_detail.item_request_decision.Remove(e.Parameter as item_request_decision);
+                        dbContext.item_request_decision.Remove(e.Parameter as item_request_decision);
+                        item_requestitem_request_detailViewSource.View.Refresh();
+                        item_request_detailitem_request_decisionViewSource.View.Refresh();
+                        //calculate_total(sender, e);
+
+                        item_request_detail.item_request.GetTotalDecision();
+                        item_request_detail.RaisePropertyChanged("balance");
+                    }
                 }
             }
             catch (Exception ex)
@@ -100,8 +104,6 @@ namespace Cognitivo.Product
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (item_request_detail != null)
             {
-
-
                 item _item = dbContext.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
                 var movement =
                         (from items in dbContext.item_movement
@@ -377,10 +379,7 @@ namespace Cognitivo.Product
             public event PropertyChangedEventHandler PropertyChanged;
             public void RaisePropertyChanged(string prop)
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(prop));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             }
             public int id_item { get; set; }
             public string name { get; set; }

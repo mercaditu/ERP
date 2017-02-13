@@ -5,12 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Data.Entity;
 using System.Data;
 using entity;
 using System.Data.Entity.Validation;
-using System.IO;
 using cntrl.Controls;
 
 namespace Cognitivo.Product
@@ -252,23 +250,27 @@ namespace Cognitivo.Product
         #region Toolbar Events
         private void toolBar_btnCancel_Click(object sender)
         {
-            item item = (item)itemDataGrid.SelectedItem;
-            // item_vatDataGrid.CancelEdit();
-            item_priceDataGrid.CancelEdit();
-            //item_dimentionDataGrid.CancelEdit();
-            itemViewSource.View.MoveCurrentToFirst();
+            item item = itemDataGrid.SelectedItem as item;
 
-            if (item.State == EntityState.Added)
+            if (item != null)
             {
-                ItemDB.Entry(item).State = EntityState.Detached;
+                // item_vatDataGrid.CancelEdit();
+                item_priceDataGrid.CancelEdit();
+                //item_dimentionDataGrid.CancelEdit();
+                itemViewSource.View.MoveCurrentToFirst();
+
+                if (item.State == EntityState.Added)
+                {
+                    ItemDB.Entry(item).State = EntityState.Detached;
+                }
+                else
+                {
+                    item.State = EntityState.Unchanged;
+                    ItemDB.Entry(item).State = EntityState.Unchanged;
+                }
+
+                itemViewSource.View.Refresh();
             }
-            else
-            {
-                item.State = EntityState.Unchanged;
-                ItemDB.Entry(item).State = EntityState.Unchanged;
-            }
-            itemViewSource.View.Refresh();
-            //SetIsEnable = false;
         }
 
         private void toolBar_btnDelete_Click(object sender)

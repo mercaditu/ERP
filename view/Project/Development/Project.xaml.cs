@@ -24,7 +24,7 @@ namespace Cognitivo.Project.Development
 
         private void btnNew_Click(object sender)
         {
-            entity.project project =new  entity.project();
+            project project =new  project();
             project.IsSelected = true;
 
             ProjectDB.Entry(project).State = EntityState.Added;
@@ -115,7 +115,7 @@ namespace Cognitivo.Project.Development
         {
 
             ProjectDB.projects.Where(a => a.id_company == CurrentSession.Id_Company
-                                            && (a.is_head == true)).ToList();
+                                            && (a.is_head == true)).Include(y => y.contact).ToList();
 
             ProjectViewSource = ((CollectionViewSource)(FindResource("ProjectViewSource")));
             ProjectViewSource.Source = ProjectDB.projects.Local;
@@ -129,9 +129,7 @@ namespace Cognitivo.Project.Development
 
             Projectproject_tag_detail = ((CollectionViewSource)(FindResource("Projectproject_tag_detail")));
             CollectionViewSource project_tagViewSource = ((CollectionViewSource)(FindResource("project_tagViewSource")));
-            project_tagViewSource.Source = ProjectDB.project_tag.Local;
-           
-            
+            project_tagViewSource.Source = ProjectDB.project_tag.Local;  
         }
 
        
@@ -140,7 +138,6 @@ namespace Cognitivo.Project.Development
         {
             ProjectDB.ActivateProject();
             ProjectViewSource.View.Refresh();
-            
         }
 
         private void DeActivate_Click(object sender, RoutedEventArgs e)
@@ -150,8 +147,6 @@ namespace Cognitivo.Project.Development
         }
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-
-          
             if (e.Parameter as project_tag_detail != null)
             {
                 e.CanExecute = true;
@@ -165,9 +160,6 @@ namespace Cognitivo.Project.Development
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    //DeleteDetailGridRow
-
-
                     if (e.Parameter as project_tag_detail != null)
                     {
                         project_tag_detailDataGrid.CancelEdit();
@@ -187,7 +179,6 @@ namespace Cognitivo.Project.Development
             if (e.Key == Key.Enter)
             {
                 Add_Tag();
-
             }
         }
 
@@ -195,6 +186,7 @@ namespace Cognitivo.Project.Development
         {
             Add_Tag();
         }
+
         void Add_Tag()
         {
             // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
@@ -210,9 +202,8 @@ namespace Cognitivo.Project.Development
                         project_tag_detail.id_tag = ((project_tag)cbxTag.Data).id_tag;
                         project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
                         project.project_tag_detail.Add(project_tag_detail);
-                       CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+                        CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
                         Projectproject_tag_detail.View.Refresh();
-
                     }
                 }
             }

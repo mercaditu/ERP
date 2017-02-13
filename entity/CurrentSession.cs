@@ -352,18 +352,18 @@ namespace entity
                 db.Configuration.LazyLoadingEnabled = false;
 
                 //Default Currency
-                Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Currencies = db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
                 Currency_Default = Currencies.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
                 CurrencyFX_ActiveRates = db.app_currencyfx.Where(x => x.id_company == Id_Company && x.is_active).ToList();
 
-                SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                SalesReps = db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
+                Contracts = db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
+                Conditions = db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
+                PriceLists = db.item_price_list.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
 
-                Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-                Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Branches = db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
+                Locations = db.app_location.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
+                Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
                 AppField = db.app_field.Where(x => x.id_company == Id_Company).ToList();
 
                 if (IsLoaded == false)

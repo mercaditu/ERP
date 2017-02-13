@@ -149,46 +149,45 @@ namespace Cognitivo.Project.Development
 
             filter_task();
         }
+
         private void toolBar_btnApprove_Click(object sender)
         {
-
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-                app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
-                string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-                foreach (project_task project_task in _project_task)
+
+                if (_project_task != null)
                 {
-                    project_task.project.code = Project_TaskApprove.code;
-                    if (Project_TaskApprove.id_range != null)
+                    _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
+                    app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                    string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                    foreach (project_task project_task in _project_task)
                     {
-                        project_task.id_range = Project_TaskApprove.id_range;
-                        // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
-                        if (app_document_range != null)
+                        project_task.project.code = Project_TaskApprove.code;
+                        if (Project_TaskApprove.id_range != null)
                         {
-                            project_task.app_document_range = app_document_range;
-                            project_task.number = number;
+                            project_task.id_range = Project_TaskApprove.id_range;
+                            // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                            if (app_document_range != null)
+                            {
+                                project_task.app_document_range = app_document_range;
+                                project_task.number = number;
+                            }
                         }
+                        // project_task.number = number;
 
-
-                    }
-                    // project_task.number = number;
-
-                    if (project_task.status == Status.Project.Management_Approved)
-                    {
-
-                        project_task.status = Status.Project.Approved;
+                        if (project_task.status == Status.Project.Management_Approved)
+                        {
+                            project_task.status = Status.Project.Approved;
+                        }
+                        project_task.IsSelected = false;
                     }
 
-
-
-                    project_task.IsSelected = false;
+                    ProjectTaskDB.SaveChanges();
+                    entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
+                    filter_task();
                 }
-                ProjectTaskDB.SaveChanges();
-                entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
-                filter_task();
             }
         }
 
@@ -199,24 +198,27 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.Filter = null;
 
                 List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
-
-                foreach (project_task project_task in project_taskLIST)
+                if (project_taskLIST != null)
                 {
-                    if (project_task.items.id_item_type != item.item_type.Task)
+                    project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+
+                    foreach (project_task project_task in project_taskLIST)
                     {
-                        project_task.status = Status.Project.Rejected;
+                        if (project_task.items.id_item_type != item.item_type.Task)
+                        {
+                            project_task.status = Status.Project.Rejected;
+                        }
+                        project_task.IsSelected = false;
                     }
-                    project_task.IsSelected = false;
-                }
 
-                //Saving Changes
-                if (ProjectTaskDB.SaveChanges() > 0)
-                {
-                    toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
-                }
+                    //Saving Changes
+                    if (ProjectTaskDB.SaveChanges() > 0)
+                    {
+                        toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
+                    }
 
-                filter_task();
+                    filter_task();
+                }
             }
         }
 
@@ -266,42 +268,44 @@ namespace Cognitivo.Project.Development
             project project = projectViewSource.View.CurrentItem as project;
             project_task project_task = treeProject.SelectedItem_ as project_task;
 
-            if (project_task != null && project_task.items.item_recepie.Count() == 0)
+            if (project != null)
             {
-                //Adding a Child Item.
-                if (project_task.items != null)
+                if (project_task != null && project_task.items.item_recepie.Count() == 0)
                 {
-                    if (project_task.items.id_item_type == entity.item.item_type.Task)
+                    //Adding a Child Item.
+                    if (project_task.items != null)
                     {
-                        project_task n_project_task = new project_task();
-                        n_project_task.id_project = project.id_project;
-                        n_project_task.status = entity.Status.Project.Pending;
-                        n_project_task.quantity_est = 0;
-                        n_project_task.parent = project_task;
-                        n_project_task.State = EntityState.Added;
-                        project_task.child.Add(n_project_task);
-                        ProjectTaskDB.project_task.Add(n_project_task);
-                        project_taskViewSource.View.Refresh();
-                        project_taskViewSource.View.MoveCurrentTo(n_project_task);
+                        if (project_task.items.id_item_type == item.item_type.Task)
+                        {
+                            project_task n_project_task = new project_task();
+                            n_project_task.id_project = project.id_project;
+                            n_project_task.status = entity.Status.Project.Pending;
+                            n_project_task.quantity_est = 0;
+                            n_project_task.parent = project_task;
+                            n_project_task.State = EntityState.Added;
+                            project_task.child.Add(n_project_task);
+                            ProjectTaskDB.project_task.Add(n_project_task);
+                            project_taskViewSource.View.Refresh();
+                            project_taskViewSource.View.MoveCurrentTo(n_project_task);
 
-                        treeProject.SelectedItem_ = n_project_task;
+                            treeProject.SelectedItem_ = n_project_task;
+                        }
                     }
                 }
-            }
-            else
-            {
-                project_task n_project_task = new project_task();
-                n_project_task.id_project = project.id_project;
-                n_project_task.status = entity.Status.Project.Pending;
-                n_project_task.State = EntityState.Added;
-                ProjectTaskDB.project_task.Add(n_project_task);
+                else
+                {
+                    project_task n_project_task = new project_task();
+                    n_project_task.id_project = project.id_project;
+                    n_project_task.status = entity.Status.Project.Pending;
+                    n_project_task.State = EntityState.Added;
+                    ProjectTaskDB.project_task.Add(n_project_task);
 
-                project_taskViewSource.View.Filter = null;
-                project_taskViewSource.View.MoveCurrentTo(n_project_task);
-                treeProject.SelectedItem_ = n_project_task;
-                filter_task();
+                    project_taskViewSource.View.Filter = null;
+                    project_taskViewSource.View.MoveCurrentTo(n_project_task);
+                    treeProject.SelectedItem_ = n_project_task;
+                    filter_task();
+                }
             }
-
         }
 
         private void btnAddParentTask_Click(object sender)
@@ -385,14 +389,13 @@ namespace Cognitivo.Project.Development
                         toolBar_btnAnull_Click(sender);
                     }
                 }
+
                 ProjectTaskDB = new ProjectTaskDB();
                 ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
                 projectViewSource.Source = ProjectTaskDB.projects.Local;
                 project_taskViewSource.View.Filter = null;
                 project_taskViewSource.View.Refresh();
                 filter_task();
-
-                //treeProject.UpdateLayout();
             }
         }
 
@@ -476,6 +479,7 @@ namespace Cognitivo.Project.Development
         {
             ComboBox cbxItemType = (ComboBox)sender;
             project_task project_task = (project_task)treeProject.SelectedItem_;
+
             if (cbxItemType.SelectedItem != null)
             {
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
@@ -483,7 +487,6 @@ namespace Cognitivo.Project.Development
 
                 if (Item_Type == item.item_type.Task)
                 {
-                   
                     stpdate.Visibility = Visibility.Visible;
                     stpdate.IsEnabled = true;
                     stpitem.Visibility = Visibility.Collapsed;
@@ -497,13 +500,13 @@ namespace Cognitivo.Project.Development
                     stpitem.IsEnabled = true;
                 }
 
-                if (Item_Type == entity.item.item_type.Service)
+                if (Item_Type == item.item_type.Service)
                 {
-                    project_task_dimensionDataGrid.Visibility = System.Windows.Visibility.Hidden;
+                    project_task_dimensionDataGrid.Visibility = Visibility.Hidden;
                 }
                 else
                 {
-                    project_task_dimensionDataGrid.Visibility = System.Windows.Visibility.Visible;
+                    project_task_dimensionDataGrid.Visibility = Visibility.Visible;
                 }
 
             }
@@ -516,7 +519,7 @@ namespace Cognitivo.Project.Development
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modal.Visibility == System.Windows.Visibility.Hidden)
+            if (crud_modal.Visibility == Visibility.Hidden)
             {
                 projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
                 ProjectTaskDB.Database.Initialize(true);
@@ -531,28 +534,31 @@ namespace Cognitivo.Project.Development
             if (treeProject.SelectedItem_ != null)
             {
                 project_task project_task = (project_task)treeProject.SelectedItem_;
-                project_taskViewSource.View.MoveCurrentTo(project_task);
-                try
+                if (project_task != null)
                 {
-                    if (project_task_dimensionViewSource != null)
+                    project_taskViewSource.View.MoveCurrentTo(project_task);
+                    try
                     {
-                        if (project_task_dimensionViewSource.View != null)
+                        if (project_task_dimensionViewSource != null)
                         {
-                            project_task_dimensionViewSource.View.Filter = i =>
+                            if (project_task_dimensionViewSource.View != null)
                             {
-                                project_task_dimension _project_task_dimension = (project_task_dimension)i;
-                                if (_project_task_dimension.id_project_task == project_task.id_project_task)
-                                    return true;
-                                else
-                                    return false;
-                            };
-                        }
+                                project_task_dimensionViewSource.View.Filter = i =>
+                                {
+                                    project_task_dimension _project_task_dimension = (project_task_dimension)i;
+                                    if (_project_task_dimension.id_project_task == project_task.id_project_task)
+                                        return true;
+                                    else
+                                        return false;
+                                };
+                            }
 
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    toolBar.msgError(ex);
+                    catch (Exception ex)
+                    {
+                        toolBar.msgError(ex);
+                    }
                 }
             }
         }
@@ -563,7 +569,6 @@ namespace Cognitivo.Project.Development
             Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
             Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
             crud_modal.Children.Add(Project_TaskApprove);
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -584,14 +589,13 @@ namespace Cognitivo.Project.Development
             if (sbxItem.ItemID > 0)
             {
                 item item = ProjectTaskDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-
-
                 project_task project_task_output = treeProject.SelectedItem_ as project_task;
+
                 if (project_task_output.parent != null)
                 {
                     if (project_task_output.parent.items.is_autorecepie)
                     {
-                        MessageBox.Show("can't add becuse item is auto receipe");
+                        MessageBox.Show("Can't add becuse item is Auto-Recipe");
                     }
                 }
 
@@ -654,6 +658,7 @@ namespace Cognitivo.Project.Development
                     }
                 }
                 project_task_output.CalcSalePrice_TimerTaks();
+
                 try
                 {
                     if (project_task_dimensionViewSource != null)
@@ -688,19 +693,15 @@ namespace Cognitivo.Project.Development
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
         {
             if (ToggleQuantity.IsChecked == true)
             {
-
-                stpexcustion.Visibility = System.Windows.Visibility.Visible;
-                stpestimate.Visibility = System.Windows.Visibility.Collapsed;
+                stpexcustion.Visibility = Visibility.Visible;
+                stpestimate.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -708,9 +709,8 @@ namespace Cognitivo.Project.Development
         {
             if (ToggleQuantity.IsChecked == false)
             {
-
-                stpestimate.Visibility = System.Windows.Visibility.Visible;
-                stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
+                stpestimate.Visibility = Visibility.Visible;
+                stpexcustion.Visibility = Visibility.Collapsed;
             }
         }
 

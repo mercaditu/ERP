@@ -30,12 +30,12 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).LoadAsync();
+            await ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Include(x => x.item_asset).LoadAsync();
             itemViewSource.Source = ItemDB.items.Local;
 
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
 
-            cbxBranch.ItemsSource = CurrentSession.Branches.OrderBy(b => b.name).ToList();
+            cbxBranch.ItemsSource = CurrentSession.Branches.ToList();
 
             cbxassetGroup.ItemsSource = await ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));
@@ -47,8 +47,9 @@ namespace Cognitivo.Product
             ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
             item_brandViewSource.Source = ItemDB.item_brand.Local;
 
-            CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
-            contactViewSource.Source = await ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToListAsync();
+            //CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+            //contactViewSource.Source = await ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToListAsync();
+
             cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
@@ -134,10 +135,7 @@ namespace Cognitivo.Product
         {
             item item = ItemDB.New();
             item.id_item_type = entity.item.item_type.FixedAssets;
-        
-
-            using (db db = new db())
-            { item.id_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group; }
+            item.id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group;
 
             item_asset item_asset = new item_asset();
 
@@ -174,7 +172,6 @@ namespace Cognitivo.Product
             {
                 item item = (item)itemDataGrid.SelectedItem;
                 item.is_active = false;
-                //mycntrl._item =item;
                 itemViewSource.View.Filter = i =>
                 {
                     entity.item objitem = (item)i;
@@ -224,11 +221,13 @@ namespace Cognitivo.Product
             {
                 contact contact = ItemDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
                 item_asset item_asset = itemitem_capitalViewSource.View.CurrentItem as item_asset;
-                item_asset.id_contact = contact.id_contact;
-                item_asset.contact = contact;
-                
-            }
 
+                if (contact != null && item_asset != null)
+                {
+                    item_asset.id_contact = contact.id_contact;
+                    item_asset.contact = contact;
+                }
+            }
         }
 
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)

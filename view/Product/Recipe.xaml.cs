@@ -10,9 +10,6 @@ using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {
-    /// <summary>
-    /// Interaction logic for ItemRecipe.xaml
-    /// </summary>
     public partial class Recipe : Page
     {
         ProductRecipeDB ProductRecipeDB = new ProductRecipeDB();
@@ -65,12 +62,12 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ProductRecipeDB.item_recepie.Where(a => a.id_company == CurrentSession.Id_Company
-                                                       && (a.is_head == true)).ToList();
+                                                       && (a.is_head == true)).Include(b => b.item).OrderBy(x => x.item.name).ToList();
 
-            item_recepieViewSource = ((CollectionViewSource)(FindResource("item_recepieViewSource")));
+            item_recepieViewSource = FindResource("item_recepieViewSource") as CollectionViewSource;
             item_recepieViewSource.Source = ProductRecipeDB.item_recepie.Local;
 
-            item_recepieitem_recepie_detailViewSource = ((CollectionViewSource)(FindResource("item_recepieitem_recepie_detailViewSource")));
+            item_recepieitem_recepie_detailViewSource = (FindResource("item_recepieitem_recepie_detailViewSource") as CollectionViewSource;
 
         }
 
@@ -114,9 +111,13 @@ namespace Cognitivo.Product
             if (item_receipeDataGrid.SelectedItem != null)
             {
                 item_recepie item_recepie_old = (item_recepie)item_receipeDataGrid.SelectedItem;
-                item_recepie_old.IsSelected = true;
-                item_recepie_old.State = EntityState.Modified;
-                ProductRecipeDB.Entry(item_recepie_old).State = EntityState.Modified;
+
+                if (item_recepie_old != null)
+                {
+                    item_recepie_old.IsSelected = true;
+                    item_recepie_old.State = EntityState.Modified;
+                    ProductRecipeDB.Entry(item_recepie_old).State = EntityState.Modified;
+                }
             }
             else
             {

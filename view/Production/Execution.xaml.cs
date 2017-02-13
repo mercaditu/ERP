@@ -188,7 +188,7 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            if (ExecutionDB.Approve(entity.production_order.ProductionOrderTypes.Production) > 0)
+            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production) > 0)
             {
                 toolBar.msgApproved(1);
             }
@@ -279,7 +279,6 @@ namespace Cognitivo.Production
                                 }
                             };
                         }
-
                     }
                 }
             }
@@ -314,7 +313,6 @@ namespace Cognitivo.Production
                     }
                 }
             }
-
         }
 
         private void dgRaw_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -342,7 +340,6 @@ namespace Cognitivo.Production
                                 }
                             };
                         }
-
                     }
                 }
             }
@@ -756,8 +753,6 @@ namespace Cognitivo.Production
 
             }
         }
-
-     
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

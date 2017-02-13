@@ -29,7 +29,7 @@ namespace Cognitivo.Sales
         private async void load_PrimaryDataThread()
         {
             salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head==true).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
         }
 
@@ -325,6 +325,7 @@ namespace Cognitivo.Sales
             cbxDocument.SelectedIndex = 0;
 
             load_PrimaryDataThread();
+            salesReturnViewSource.View.Refresh();
         }
 
         private void toolBar_btnAnull_Click(object sender)

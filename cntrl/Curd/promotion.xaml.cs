@@ -47,6 +47,9 @@ namespace cntrl
 
                 cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.salesPromotion)).OfType<sales_promotion.salesPromotion>().ToList();
 
+                cbxparaContacttag.SelectedIndex = -1;
+                cbxcurrency.SelectedIndex = -1;
+                cbxparatag.SelectedIndex = -1;
             }
         }
 
@@ -102,14 +105,21 @@ namespace cntrl
                 sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
                 if (sales_promotion != null)
                 {
-                    if (entity.db.Entry(sales_promotion).State == EntityState.Added || entity.db.Entry(sales_promotion).State == EntityState.Modified)
-                    {
+                  
                         if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
                         {
-                            sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
+                            if (cbxparaContacttag.SelectionBoxItem.ToString()=="")
+                            {
+                                cbxparaContacttag.SelectedValue= sales_promotion.reference;
+                            }
+                            else
+                            {
+                                sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
+                            }
+                        
                         }
 
-                    }
+                    
                 }
             }
         }
@@ -134,14 +144,21 @@ namespace cntrl
                 sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
                 if (sales_promotion != null)
                 {
-                    if (entity.db.Entry(sales_promotion).State == EntityState.Added || entity.db.Entry(sales_promotion).State==EntityState.Modified)
-                    {
+                  
                         if (sales_promotion.type==sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                         {
-                            sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                            if (cbxparatag.SelectionBoxItem.ToString() == "")
+                            {
+                                cbxparatag.SelectedValue = sales_promotion.reference;
+                            }
+                            else
+                            {
+                                sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
+                            }
+                         
                         }
                       
-                    }
+                    
                 }
             }
         }

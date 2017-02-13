@@ -72,13 +72,13 @@
 					</StackPanel>
 					<StackPanel x:Name="Tag_Parameter">
 						<Label Content="ItemTags" />
-						<ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}"
+                        <ComboBox x:Name="cbxparatag" Style="{StaticResource input_combobox}" 
 							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectionChanged="cbxparatag_SelectionChanged"
 							  ItemsSource="{Binding Source={StaticResource item_tagViewSource}}" />
 					</StackPanel>
                     <StackPanel x:Name="ContactTag_Parameter">
                         <Label Content="ContactTags" />
-                        <ComboBox x:Name="cbxparaContacttag" Style="{StaticResource input_combobox}"
+                        <ComboBox x:Name="cbxparaContacttag" Style="{StaticResource input_combobox}" 
 							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectionChanged="cbxparaContacttag_SelectionChanged"
 							  ItemsSource="{Binding Source={StaticResource contact_tagViewSource}}" />
                     </StackPanel>
@@ -86,7 +86,7 @@
 						<Label Content="Total" />
 						<TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
 						<Label Content="Currency"/>
-						<ComboBox x:Name="cbxcurrency"
+                        <ComboBox x:Name="cbxcurrency" 
 									ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"  
 									DisplayMemberPath="name" SelectedValuePath="id_currency"/>
 					</StackPanel>

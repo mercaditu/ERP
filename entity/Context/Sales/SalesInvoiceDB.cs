@@ -313,6 +313,7 @@ namespace entity
 
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
+            sales_invoice_detail.id_vat_group = VatGroupID;
             sales_invoice_detail.app_vat_group = app_vat_group.Find(VatGroupID);
 
             sales_invoice_detail.quantity += quantity;

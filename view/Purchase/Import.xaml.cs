@@ -504,9 +504,13 @@ namespace Cognitivo.Purchase
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            if (impex!=null)
+            if (impex!=null && impex.status==Status.Documents_General.Approved)
             {
                 entity.Brillo.Document.Start.Automatic(impex, "Import");
+            }
+            else
+            {
+                toolBar.msgWarning("Please Approve Your Document..");
             }
         }
 

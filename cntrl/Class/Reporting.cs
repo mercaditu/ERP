@@ -455,6 +455,13 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Projects.Project.rdlc",
                 Query =  Reports.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project}
+            }, new Report
+                {
+                Application = entity.App.Names.ActivityPlan,
+                Name =entity.Brillo.Localize.StringText("TechnicalReport")!= string.Empty ? entity.Brillo.Localize.StringText("TechnicalReport") :"TechnicalReport",
+                Path = "cntrl.Reports.Projects.Technical.rdlc",
+                Query = Reports.Project.Project.query,
+                Parameters = new List<Report.Types> { Report.Types.Project }
             },
                new Report
             {
@@ -469,13 +476,6 @@ namespace cntrl.Class
                 Name =entity.Brillo.Localize.StringText("ProjectFinance")!= string.Empty ? entity.Brillo.Localize.StringText("ProjectFinance") :"ProjectFinance",
                 Path = "cntrl.Reports.Projects.ProjectFinance.rdlc",
                 Query =Reports.Project.ProjectFinance.query,
-                Parameters = new List<Report.Types> { Report.Types.Project }
-            }, new Report
-                {
-                Application = entity.App.Names.ActivityPlan,
-                Name =entity.Brillo.Localize.StringText("TechnicalReport")!= string.Empty ? entity.Brillo.Localize.StringText("TechnicalReport") :"TechnicalReport",
-                Path = "cntrl.Reports.Projects.Technical.rdlc",
-                Query = Reports.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.Project }
             }
             , new Report

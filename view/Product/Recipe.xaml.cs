@@ -67,7 +67,7 @@ namespace Cognitivo.Product
             item_recepieViewSource = FindResource("item_recepieViewSource") as CollectionViewSource;
             item_recepieViewSource.Source = ProductRecipeDB.item_recepie.Local;
 
-            item_recepieitem_recepie_detailViewSource = (FindResource("item_recepieitem_recepie_detailViewSource") as CollectionViewSource;
+            item_recepieitem_recepie_detailViewSource = (FindResource("item_recepieitem_recepie_detailViewSource")) as CollectionViewSource;
 
         }
 

@@ -55,6 +55,8 @@ namespace entity
         public string code { get; set; }
         public decimal? initial_amount { get; set; }
         public bool is_active { get; set; }
+        public decimal credit_line { get; set; }
+
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
         public virtual ICollection<app_account_session> app_account_session { get; set; }
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }

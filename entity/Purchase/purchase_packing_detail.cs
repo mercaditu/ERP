@@ -68,9 +68,22 @@ namespace entity
         public decimal? net_weight { get; set; }
         public decimal? volume { get; set; }
 
-        [NotMapped]
         public int id_branch { get; set; }
 
+        public bool user_verified
+        {
+            get { return _user_verified; }
+            set { _user_verified = value; RaisePropertyChanged("user_verified"); }
+        }
+        private bool _user_verified;
+
+        public decimal? user_quantity
+        {
+            get { return _user_quantity; }
+            set { _user_quantity = value; RaisePropertyChanged("user_quantity"); }
+        }
+        private decimal? _user_quantity;
+        
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }

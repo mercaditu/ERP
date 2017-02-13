@@ -102,9 +102,15 @@ namespace entity
             }
         }
         string _name;
+
         [Required]
-        public string code { get { return _code; } set { _code = value; RaisePropertyChanged("code"); } }
+        public string code
+        {
+            get { return _code; }
+            set { _code = value; RaisePropertyChanged("code"); }
+        }
         string _code;
+
         public string variation { get; set; }
         public string description { get; set; }
         public decimal? unit_cost { get; set; }
@@ -117,6 +123,30 @@ namespace entity
         private bool _is_autorecepie;
 
         public bool is_active { get; set; }
+
+        public string supplier_name
+        {
+            get { return _supplier_name; }
+            set { _supplier_name = value; RaisePropertyChanged("supplier_name"); }
+        }
+        private string _supplier_name;
+
+        public string supplier_code
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_supplier_code))
+                {
+                    _supplier_code = code;
+                }
+
+                return _supplier_code;
+            }
+            set { _supplier_code = value; RaisePropertyChanged("supplier_code"); }
+        }
+        private string _supplier_code;
+
+        public string sku { get; set; }
 
         [NotMapped]
         public bool is_shared

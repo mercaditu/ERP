@@ -39,7 +39,6 @@ namespace entity
                     RaisePropertyChanged("unit_price");
                     RaisePropertyChanged("unit_cost");
                 }
-
             }
         }
         private int _id_item;

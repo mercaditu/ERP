@@ -9,7 +9,7 @@ namespace entity.Brillo
     public class Stock
     {
 
-        public List<StockList> List(int BranchID, int LocationID, int ProductID)
+        public List<StockList> List(int BranchID, int? LocationID, int ProductID)
         {
             string query = @"select 
                                 loc.id_location as LocationID,
@@ -29,7 +29,7 @@ namespace entity.Brillo
             string WhereQuery = "";
 
             //This determins if we should bring cost of entire block of
-            if (LocationID > 0)
+            if (LocationID > 0 || LocationID !=null)
             {
                 WhereQuery = string.Format("parent.id_location = {0}", LocationID);
             }

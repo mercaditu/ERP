@@ -41,11 +41,12 @@ namespace entity.Brillo
                 using (db db = new db())
                 {
                     //Pankeel. Check Stock Level within this Branch and Return correct Location.
-                    List<item_movement> item_movementList = db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product && x.app_location.id_branch == app_branch.id_branch).ToList();
-                    item_movement item_movement = item_movementList.Where(x => x.avlquantity > 0).FirstOrDefault();
+                    item_movement item_movement = db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product && x.app_location.id_branch == app_branch.id_branch).FirstOrDefault();
                     if (item_movement != null)
                     {
-                        id_location = Convert.ToInt16(item_movement.id_location);
+                        id_location = Convert.ToInt16(db.item_movement.Where(x => x.item_product.id_item_product == item_product.id_item_product
+                                        && x.app_location.id_branch == app_branch.id_branch).Select(y => y.id_location)
+                                        .FirstOrDefault());
                     }
                     else
                     {

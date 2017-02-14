@@ -154,7 +154,8 @@ namespace entity.Brillo
                     {
                         Stock.ExpirationDate =Convert.ToDateTime(DataRow["expire_date"]);
                     }
-                 
+                    Stock.Location = Convert.ToString(DataRow["Location"]);
+                    Stock.LocationID = Convert.ToInt32(DataRow["LocationID"]);
                     Stock.code = Convert.ToString(DataRow["code"]);
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
@@ -170,7 +171,8 @@ namespace entity.Brillo
     public class StockList
     {
 
-
+        public int LocationID { get; set; }
+        public string Location { get; set; }
         public int MovementID { get; set; }
         public DateTime TranDate { get; set; }
         public DateTime? ExpirationDate { get; set; }

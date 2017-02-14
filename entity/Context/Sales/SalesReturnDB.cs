@@ -206,7 +206,7 @@ namespace entity
                 }
             }
         }
-        public void Approve()
+        public void Approve(bool is_stock=true)
         {
           
           
@@ -266,31 +266,35 @@ namespace entity
                             payment_schedual.AddRange(payment_schedualList);
                         }
 
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.SalesReturn_Approve(this, sales_return);
-
-                        if (item_movementList.Count() > 0)
+                        if (is_stock)
                         {
-                            item_movement.AddRange(item_movementList);
+                            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                            List<item_movement> item_movementList = new List<item_movement>();
+                            item_movementList = _Stock.SalesReturn_Approve(this, sales_return);
 
-                            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null))
+                            if (item_movementList.Count() > 0)
                             {
-                                if (sales_return_detail.item_movement.FirstOrDefault() != null)
+                                item_movement.AddRange(item_movementList);
+
+                                foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null))
                                 {
-                                    if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                                    if (sales_return_detail.item_movement.FirstOrDefault() != null)
                                     {
-                                        sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                                        sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                                        sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
+                                        if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                                        {
+                                            sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                                            sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                                            sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
+                                        }
                                     }
                                 }
                             }
+                            if (item_movementList != null && item_movementList.Count > 0)
+                            {
+                                item_movement.AddRange(item_movementList);
+                            }
                         }
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            item_movement.AddRange(item_movementList);
-                        }
+                        
 
                         SaveChanges();
 

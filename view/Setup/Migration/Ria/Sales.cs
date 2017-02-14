@@ -75,8 +75,8 @@ namespace Cognitivo.Setup.Migration
             int FloorValue = 0;
 
             //Run a Foreach Lap
-            for (int i = FloorValue; i < RoofValue; i++)
-            {
+            //for (int i = FloorValue; i < RoofValue; i++)
+            //{
                 using (SalesInvoiceDB db = new SalesInvoiceDB())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
@@ -103,7 +103,7 @@ namespace Cognitivo.Setup.Migration
                     app_vat_group app_vat_group0 = VATGroupList.Where(x => x.name.Contains("0")).FirstOrDefault();
 
 
-                    foreach (DataRow InnerRow in dt_sales.Select("CODVENTA > " + FloorValue + " AND CODVENTA < " + RoofValue + ""))
+                    foreach (DataRow InnerRow in dt_sales.Rows)
                     {
                         sales_invoice sales_invoice = new entity.sales_invoice();
                         sales_invoice.State = EntityState.Added;
@@ -378,13 +378,15 @@ namespace Cognitivo.Setup.Migration
                         Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
 
+                        
 
                     }
-                }
+                //    FloorValue = RoofValue;
+                //    RoofValue += 1000;
+                //}
 
 
-                FloorValue = RoofValue;
-               // RoofValue += 1000;
+               
             }
         }
 

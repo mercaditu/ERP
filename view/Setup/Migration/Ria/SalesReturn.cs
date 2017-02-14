@@ -77,8 +77,11 @@ namespace Cognitivo.Setup.Migration
             {
                 using (SalesReturnDB db = new SalesReturnDB())
                 {
+                    if (value==3)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Test");
+                    }
 
-               
                     db.Configuration.AutoDetectChangesEnabled = false;
 
                     sales_return sales_return = db.New();
@@ -135,7 +138,7 @@ namespace Cognitivo.Setup.Migration
 
 
 
-                    int id_location = 0;
+                    int? id_location = null;
                     app_location app_location = null;
 
                     //Branch
@@ -145,10 +148,15 @@ namespace Cognitivo.Setup.Migration
                         string _branch = reader["DESSUCURSAL"].ToString();
                         app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         sales_return.id_branch = app_branch.id_branch;
-
+                        
                         //Location
-                        id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
                         app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
+                        if (app_location != null)
+                        {
+                            id_location = app_location.id_location;
+                        
+                        }
+
                         //Terminal
                         sales_return.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
@@ -156,9 +164,9 @@ namespace Cognitivo.Setup.Migration
                     if (!(reader["NUMVENTA"] is DBNull))
                     {
                         string _salesNumber = reader["NUMVENTA"].ToString();
-                        sales_invoice sales_invoice = db.sales_invoice.Where(x => x.number == _salesNumber ).FirstOrDefault();
+                        sales_invoice sales_invoice = db.sales_invoice.Where(x => x.number == _salesNumber).FirstOrDefault();
                         sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
-                     //   sales_return.sales_invoice = sales_invoice;
+                        //   sales_return.sales_invoice = sales_invoice;
                     }
 
                     string _desMoneda = string.Empty;
@@ -188,11 +196,11 @@ namespace Cognitivo.Setup.Migration
 
                         string _prod_Name = row["DESPRODUCTO"].ToString();
                         item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
-                        if (item!=null)
+                        if (item != null)
                         {
-                                 sales_return_detail.id_item = item.id_item;
-                            
-                               
+                            sales_return_detail.id_item = item.id_item;
+
+
 
                         }
                         else
@@ -207,8 +215,8 @@ namespace Cognitivo.Setup.Migration
 
                         sales_return_detail.id_location = id_location;
                         sales_return_detail.app_location = app_location;
-
-                        string _iva = row["IVA"].ToString();
+                        sales_return_detail.id_vat_group = null;
+                        string _iva = Math.Round(Convert.ToDecimal(row["IVA"]), 2).ToString();
                         if (_iva == "10.00")
                         {
                             sales_return_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
@@ -230,12 +238,12 @@ namespace Cognitivo.Setup.Migration
                         sales_return_detail.unit_price = (Convert.ToDecimal(row["PRECIONETO"]) / sales_return_detail.quantity) / cotiz1;
                         if (!(row["COSTOPROMEDIO"] is DBNull))
                         { sales_return_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]); }
-                      
+
 
                         //Commit Sales Invoice Detail
                         sales_return.sales_return_detail.Add(sales_return_detail);
 
-                      
+
                     }
                     sales_return.return_type = Status.ReturnTypes.Bonus;
 
@@ -246,8 +254,15 @@ namespace Cognitivo.Setup.Migration
                         sales_return.IsSelected = true;
                         db.sales_return.Add(sales_return);
 
-                        db.SaveChanges();
-                   
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                      catch(Exception ex)
+                        {
+                            System.Windows.Forms.MessageBox.Show(ex.ToString());
+                        }
+
                         if (!(reader["ESTADO"] is DBNull))
                         {
                             int status = Convert.ToInt32(reader["ESTADO"]);
@@ -267,7 +282,14 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_return.comment = reader[11].ToString();
                                 }
-                                db.Approve();
+                                if (sales_return.app_branch.can_stock)
+                                {
+                                    db.Approve(true);
+                                }
+                                else
+                                {
+                                    db.Approve(false);
+                                }
                             }
                             else if (status == 2)
                             {
@@ -276,7 +298,14 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_return.comment = reader[11].ToString();
                                 }
-                                db.Approve();
+                                if (sales_return.app_branch.can_stock)
+                                {
+                                    db.Approve(true);
+                                }
+                                else
+                                {
+                                    db.Approve(false);
+                                }
                                 db.Anull();
                             }
 

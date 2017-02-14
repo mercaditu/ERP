@@ -276,9 +276,9 @@
     <Compile Include="Migrations\201701231331109_GeneralERPUpdate.Designer.cs">
       <DependentUpon>201701231331109_GeneralERPUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702131110554_ItemSupplier_Name_and_Code.cs" />
-    <Compile Include="Migrations\201702131110554_ItemSupplier_Name_and_Code.Designer.cs">
-      <DependentUpon>201702131110554_ItemSupplier_Name_and_Code.cs</DependentUpon>
+    <Compile Include="Migrations\201702131313179_ItemSupplier_Name_and_Code.cs" />
+    <Compile Include="Migrations\201702131313179_ItemSupplier_Name_and_Code.Designer.cs">
+      <DependentUpon>201702131313179_ItemSupplier_Name_and_Code.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account_.cs" />
@@ -367,6 +367,7 @@
     </Compile>
     <Compile Include="Reporting\ContactSubscription.cs" />
     <Compile Include="Reporting\Inventory.cs" />
+    <Compile Include="Reporting\PaymentsReceivable.cs" />
     <Compile Include="Reporting\PriceList.cs" />
     <Compile Include="Reporting\Merchandise.cs" />
     <Compile Include="Reporting\InventoryValue.cs" />
@@ -728,8 +729,8 @@
     <EmbeddedResource Include="Migrations\201701231331109_GeneralERPUpdate.resx">
       <DependentUpon>201701231331109_GeneralERPUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702131110554_ItemSupplier_Name_and_Code.resx">
-      <DependentUpon>201702131110554_ItemSupplier_Name_and_Code.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702131313179_ItemSupplier_Name_and_Code.resx">
+      <DependentUpon>201702131313179_ItemSupplier_Name_and_Code.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

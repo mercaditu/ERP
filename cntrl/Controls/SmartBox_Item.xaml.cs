@@ -341,7 +341,15 @@ namespace cntrl.Controls
 
         private void SmartBoxItem_Focus(object sender, RoutedEventArgs e)
         {
-            tbxSearch.Focus();
+
+            TextBox txt = e.OriginalSource as TextBox;
+            if (txt != null)
+            {
+                if (txt.Name != tbxQuantity.Name)
+                {
+                    tbxSearch.Focus();
+                }
+            }
         }
     }
 }

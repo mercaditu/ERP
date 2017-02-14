@@ -68,7 +68,7 @@ namespace entity
         public decimal? net_weight { get; set; }
         public decimal? volume { get; set; }
 
-        public int id_branch { get; set; }
+        public int? id_branch { get; set; }
 
         public bool user_verified
         {

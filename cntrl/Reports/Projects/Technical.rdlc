@@ -850,7 +850,6 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
           <Height>0.15972in</Height>
           <Width>0.16471in</Width>
           <Style>
@@ -885,7 +884,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
           <Left>0.19249in</Left>
           <Height>0.15972in</Height>
           <Width>2.81445in</Width>
@@ -1036,6 +1034,10 @@
   <ReportParameters>
     <ReportParameter Name="Parameters">
       <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ParameterCost">
+      <DataType>Boolean</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

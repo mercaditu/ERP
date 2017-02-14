@@ -93,7 +93,7 @@
 												Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128"/>
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" 
 												Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256"/>
-                                <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N8}}" 
 												Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>

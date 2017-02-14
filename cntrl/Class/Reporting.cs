@@ -446,6 +446,15 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
 
             },
+                         new Report
+            {
+                Application = entity.App.Names.AccountsReceivable,
+                Name =entity.Brillo.Localize.StringText("ReceivePayment")!= string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
+                Path = "cntrl.Reports.Finances.PaymentReceivable.rdlc",
+                Query = Reports.Finance.PaymentRecievables.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
             
              //projects and Production
                           new Report

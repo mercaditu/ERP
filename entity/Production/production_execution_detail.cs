@@ -93,7 +93,7 @@ namespace entity
         private DateTime _end_date = DateTime.Now;
 
         public decimal unit_cost { get; set; }
-
+        public bool is_accounted { get; set; }
         [NotMapped]
         public decimal hours
         {

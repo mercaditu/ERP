@@ -1035,6 +1035,10 @@ Sum(Fields!Sales.Value) / DateDiff(DateInterval.Day, Min(Fields!Date.Value), Dat
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="ParameterCost">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>03a90243-d1e6-4364-80e4-85e06cb1a282</rd:ReportID>

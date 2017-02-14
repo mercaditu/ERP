@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d"
              Width="360" Loaded="UserControl_Loaded"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity"
+               xmlns:cntrl="clr-namespace:cntrl"
+             	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              VerticalAlignment="Center"
             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -17,7 +20,12 @@
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
+    </UserControl.CommandBindings>
     <StackPanel Background="White" DataContext="{StaticResource contactViewSource}">
         <Grid Background="Gold">
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" FontSize="25" 
@@ -28,7 +36,7 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Contacts can be used in Sales or Purchases depending on how you set it up." Style="{StaticResource text_Instructions}"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="500">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="600">
             <StackPanel x:Name="stackContact" HorizontalAlignment="Center">
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="txtName" 
@@ -93,6 +101,33 @@
                 <ComboBox x:Name="cbxRole" Style="{StaticResource input_combobox}"
                           DisplayMemberPath="name" SelectedValuePath="id_contact_role" 
                           SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center"
+												 CollectionViewSource="{StaticResource contact_tagViewSource}"
+												 focusGrid="True" Width="256"
+												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                    <cntrl:SearchableTextbox.Columns>
+                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                    </cntrl:SearchableTextbox.Columns>
+                </cntrl:SearchableTextbox>
+                <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+									  HeadersVisibility="None"
+									  ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+													IsReadOnly="True" Width="*"/>
+                        <DataGridTemplateColumn Width="26" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Delete"
+													Style="{StaticResource btnDeleteChildStyle}"
+													CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </ScrollViewer>
         <Grid Background="WhiteSmoke">

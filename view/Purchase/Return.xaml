@@ -165,6 +165,10 @@
 												SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="SupplierCode" Width="*" MinWidth="128"
+										Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="SupplierName" Width="*" MinWidth="128"
+										Binding="{Binding item.supplier_name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"  IsReadOnly="{Binding AllowUpdateReturn,Source={StaticResource purchase_returnViewSource}, Converter={StaticResource TrueToFalse}}"
 											ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
 											DisplayMemberPath="name" SelectedValuePath="id_vat_group" 

@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace cntrl.Curd
 {
@@ -74,9 +75,9 @@ namespace cntrl.Curd
                 LoadContact_Click();
             }
         }
-    
 
-    public event btnSave_ClickedEventHandler btnSave_Click;
+
+        public event btnSave_ClickedEventHandler btnSave_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {
@@ -94,7 +95,7 @@ namespace cntrl.Curd
                 btnSave_Click?.Invoke(sender);
                 //Reloads all Data.
                 CurrentSession.Load_BasicData(null, null);
-           
+
             }
 
             btnCancel_MouseDown(null, null);
@@ -117,7 +118,11 @@ namespace cntrl.Curd
                     ///Get Role List.
                     cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
                     contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-
+                    ContactDB.contact_tag
+            .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+            .OrderBy(x => x.name).Load();
+                    CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+                    contact_tagViewSource.Source = ContactDB.contact_tag.Local;
                     ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
                     if (ContactID > 0)
                     {
@@ -161,6 +166,78 @@ namespace cntrl.Curd
                     ///Bring only InMemoria Data.
                     contactViewSource.Source = ContactDB.contacts.Local;
                     contactViewSource.View.MoveCurrentTo(_contact);
+                }
+            }
+        }
+
+
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+            if (e.Parameter as contact_tag_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+
+                    if (e.Parameter as contact_tag_detail != null)
+                    {
+                        contact_tag_detailDataGrid.CancelEdit();
+                        ContactDB.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
+
+                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
+                        contactcontact_tag_detailViewSource.View.Refresh();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
+
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Add_Tag();
+
+            }
+        }
+
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+
+        void Add_Tag()
+        {
+            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+                    entity.contact contact = contactViewSource.View.CurrentItem as entity.contact;
+                    if (contact != null)
+                    {
+                        contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                        contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
+                        contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
+                        contact.contact_tag_detail.Add(contact_tag_detail);
+                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
+                        contactcontact_tag_detailViewSource.View.Refresh();
+
+                    }
                 }
             }
         }

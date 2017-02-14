@@ -514,7 +514,7 @@ namespace Cognitivo.Purchase
                     //Item DOES NOT Exist in Context
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
-                    purchase_invoice_detail.item_description = item.name;
+                    purchase_invoice_detail.item_description = item.supplier_name;
                     purchase_invoice_detail.quantity = quantity;
 
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.

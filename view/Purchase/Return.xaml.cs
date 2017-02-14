@@ -271,7 +271,7 @@ namespace Cognitivo.Purchase
                 _purchase_return_detail.purchase_return = purchase_return;
                 _purchase_return_detail.item = item;
                 _purchase_return_detail.id_item = sbxItem.ItemID;
-                _purchase_return_detail.item_description = item.name;
+                _purchase_return_detail.item_description = item.supplier_name;
                 _purchase_return_detail.quantity = sbxItem.Quantity;
                 purchase_return.purchase_return_detail.Add(_purchase_return_detail);
             }

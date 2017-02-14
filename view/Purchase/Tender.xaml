@@ -337,7 +337,7 @@
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         Width="32" Header=""/>
-                                <DataGridTextColumn Binding="{Binding purchase_tender_item.item.code, Mode=OneWay}" IsReadOnly="True"
+                                <DataGridTextColumn Binding="{Binding purchase_tender_item.item.supplier_code, Mode=OneWay}" IsReadOnly="True"
                                                     Header="{lex:Loc Cognitivo:local:Code}" Width="*" MinWidth="32"/>
                                 <DataGridTextColumn Binding="{Binding purchase_tender_item.item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128"/>

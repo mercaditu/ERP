@@ -221,11 +221,8 @@
                         <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location"/>
                         <DataGridTextColumn Binding="{Binding id_packinglist_detail, UpdateSourceTrigger=PropertyChanged}" Header="Id" IsReadOnly="True" Width="100" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
-                        <DataGridTextColumn Header="SupplierCode" Width="*" MinWidth="128"
-										Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="SupplierName" Width="*" MinWidth="128"
-										Binding="{Binding item.supplier_name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto"/>
                          <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
                                                     Header="{lex:Loc Cognitivo:local:GrossWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}"/>

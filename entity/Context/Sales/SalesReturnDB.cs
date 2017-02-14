@@ -206,7 +206,7 @@ namespace entity
                 }
             }
         }
-        public void Approve(bool is_stock=true)
+        public void Approve()
         {
           
           
@@ -266,8 +266,6 @@ namespace entity
                             payment_schedual.AddRange(payment_schedualList);
                         }
 
-                        if (is_stock)
-                        {
                             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                             List<item_movement> item_movementList = new List<item_movement>();
                             item_movementList = _Stock.SalesReturn_Approve(this, sales_return);
@@ -293,7 +291,7 @@ namespace entity
                             {
                                 item_movement.AddRange(item_movementList);
                             }
-                        }
+                        
                         
 
                         SaveChanges();

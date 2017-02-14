@@ -22,6 +22,7 @@ namespace Cognitivo.Setup.Migration
 
         public bool _cogent_State { get; set; }
         public string _connString { get; set; }
+        public string _DataBase { get; set; }
         public bool _IsIndeterminate { get; set; }
         public int _customer_Current { get; set; }
         public int _customer_Max { get; set; }
@@ -82,7 +83,7 @@ namespace Cognitivo.Setup.Migration
             builder.Password = tbxPassword.Password;
             builder.IntegratedSecurity = true;
             _connString = builder.ToString();
-            
+           
             string sql =  " SELECT [name] "
                         + " FROM master.dbo.sysdatabases "
                         + " WHERE dbid > 4 ";
@@ -99,7 +100,7 @@ namespace Cognitivo.Setup.Migration
             //builder.Password = tbxPassword.Password;
             builder.InitialCatalog = cbxDataBaseList.Text;
             _connString = builder.ToString();
-
+            _DataBase = cbxDataBaseList.Text;
             DataTable dt = exeDT("SELECT * FROM EMPRESA");
             if (dt.Rows.Count > 0) 
             {

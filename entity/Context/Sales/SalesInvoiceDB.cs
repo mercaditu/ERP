@@ -37,15 +37,9 @@ namespace entity
         public override int SaveChanges()
         {
             validate_Invoice();
-            try
-            {
-                return base.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return 0;
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
-            }
+
+            return base.SaveChanges();
+
         }
 
         public override Task<int> SaveChangesAsync()
@@ -142,7 +136,7 @@ namespace entity
                     {
                         SaveChanges();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         throw ex;
                     }
@@ -256,11 +250,11 @@ namespace entity
             }
         }
 
-        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement,decimal quantity)
+        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-                
+
                 long id_movement = item_movement != null ? item_movement.id_movement : 0;
                 if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
                 {
@@ -276,7 +270,7 @@ namespace entity
             return null;
         }
 
-        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, item_movement item_movement,decimal quantity)
+        public sales_invoice_detail AddDetail(ref sales_invoice sales_invoice, item item, decimal QuantityInStock, item_movement item_movement, decimal quantity)
         {
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 

@@ -77,7 +77,7 @@ namespace Cognitivo.Setup.Migration
             {
                 using (SalesReturnDB db = new SalesReturnDB())
                 {
-                    if (value==3)
+                    if (value == 3)
                     {
                         System.Windows.Forms.MessageBox.Show("Test");
                     }
@@ -148,13 +148,13 @@ namespace Cognitivo.Setup.Migration
                         string _branch = reader["DESSUCURSAL"].ToString();
                         app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         sales_return.id_branch = app_branch.id_branch;
-                        
+
                         //Location
                         app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
                         if (app_location != null)
                         {
                             id_location = app_location.id_location;
-                        
+
                         }
 
                         //Terminal
@@ -258,7 +258,7 @@ namespace Cognitivo.Setup.Migration
                         {
                             db.SaveChanges();
                         }
-                      catch(Exception ex)
+                        catch (Exception ex)
                         {
                             System.Windows.Forms.MessageBox.Show(ex.ToString());
                         }
@@ -282,14 +282,9 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_return.comment = reader[11].ToString();
                                 }
-                                if (sales_return.app_branch.can_stock)
-                                {
-                                    db.Approve(true);
-                                }
-                                else
-                                {
-                                    db.Approve(false);
-                                }
+
+                                db.Approve();
+
                             }
                             else if (status == 2)
                             {
@@ -298,14 +293,9 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_return.comment = reader[11].ToString();
                                 }
-                                if (sales_return.app_branch.can_stock)
-                                {
-                                    db.Approve(true);
-                                }
-                                else
-                                {
-                                    db.Approve(false);
-                                }
+
+                                db.Approve();
+
                                 db.Anull();
                             }
 

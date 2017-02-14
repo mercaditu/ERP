@@ -67,23 +67,6 @@ namespace Cognitivo.Sales
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Expression<Func<sales_invoice, bool>> QueryBuilder()
-        {
-            var predicate = PredicateBuilder.True<sales_invoice>();
-            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
-            predicate = predicate.And(x => x.is_head == true);
-
-            if (start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= start_Range.Date);
-            }
-            if (end_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date <= end_Range.Date);
-            }
-            return predicate;
-        }
-
         #region DataLoad
         private void SalesInvoice_Loaded(object sender, RoutedEventArgs e)
         {
@@ -99,15 +82,26 @@ namespace Cognitivo.Sales
         private async void load_PrimaryDataThread()
         {
             Settings SalesSettings = new Settings();
-            var predicate = QueryBuilder();
+            var predicate = PredicateBuilder.True<sales_invoice>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+            predicate = predicate.And(x => x.is_head == true);
+
+            if (start_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date >= start_Range.Date);
+            }
+            if (end_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date <= end_Range.Date);
+            }
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).OrderBy(x => x.number).LoadAsync();
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).OrderBy(x => x.number).LoadAsync();
             }
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));

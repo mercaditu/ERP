@@ -12,6 +12,8 @@ namespace entity.Brillo
         public List<StockList> List(int BranchID, int LocationID, int ProductID)
         {
             string query = @"select 
+                                loc.id_location as LocationID,
+                                loc.name as Location,
                                 parent.id_movement as MovementID, 
                                 parent.trans_date as TransDate, parent.expire_date,parent.code,
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance, 

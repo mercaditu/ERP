@@ -76,14 +76,12 @@
 				 ItemsSource="{Binding}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
+                    <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
 								   recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
 								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-
-
-				</DataTemplate>
+                </DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
 
@@ -162,15 +160,9 @@
 			<TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" Margin="0,180,0,0">
 				<TabItem Header="{lex:Loc Tags}">
 					<StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-						<Grid>
-							<Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
-							<!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<Label Content="+" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="AddBrand_PreviewMouseUp" />
-								<Label Content="e" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="EditBrand_PreviewMouseUp" />
-							</StackPanel>-->
-						</Grid>
-
-						<ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}" 
+                        
+                        <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
+                        <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}" 
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 									  metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 									  DisplayMemberPath="name" SelectedValuePath="id_brand"
@@ -371,7 +363,6 @@
 				<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
 					<Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
 					<metro:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-					<metro:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
 				</StackPanel>
 				<Rectangle Height="1" Fill="Silver" Margin="16,4"/>
 				<Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>

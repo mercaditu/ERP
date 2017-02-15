@@ -515,13 +515,13 @@ namespace Cognitivo.Sales
                     if (sales_invoice.id_range > 0)
                     {
                         app_document_range app_document_range = SalesInvoiceDB.app_document_range.Find(sales_invoice.id_range);
-                        if (app_document_range.app_document.line_limit!=null)
+                        if (app_document_range.app_document.line_limit != null)
                         {
                             LineLimit = (int)app_document_range.app_document.line_limit;
                         }
                     }
 
-                    if (SalesSettings.SpiltInvoice == false && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
+                    if (SalesSettings.SpiltInvoice == true && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
                     {
                         toolBar.msgWarning("Your Item Limit is Exceed");
                     }

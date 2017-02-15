@@ -208,8 +208,6 @@ namespace entity
         }
         public void Approve()
         {
-          
-          
             List<sales_return> SalesReturnList = base.sales_return.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved 
                                                         && x.IsSelected && x.Error == null).ToList();

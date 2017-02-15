@@ -370,6 +370,15 @@ namespace entity.Brillo.Document
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
 
+            if (sales_return_detail.Count < sales_return.app_document_range.app_document.line_limit)
+            {
+                for (int i = sales_return_detail.Count; i < sales_return.app_document_range.app_document.line_limit; i++)
+                {
+                    sales_return_detail sales_return_detail = new entity.sales_return_detail();
+                    sales_return_detail.Add(sales_return_detail);
+                }
+            }
+
             reportDataSource.Value = sales_return_detail
                           .Select(g => new
                           {

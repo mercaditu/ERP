@@ -206,24 +206,12 @@ namespace Cognitivo.Sales {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SpiltInvoice {
+        public bool BlockAceesItem {
             get {
-                return ((bool)(this["SpiltInvoice"]));
+                return ((bool)(this["BlockAceesItem"]));
             }
             set {
-                this["SpiltInvoice"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SpiltReturn {
-            get {
-                return ((bool)(this["SpiltReturn"]));
-            }
-            set {
-                this["SpiltReturn"] = value;
+                this["BlockAceesItem"] = value;
             }
         }
         

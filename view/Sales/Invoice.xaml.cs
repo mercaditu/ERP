@@ -521,7 +521,7 @@ namespace Cognitivo.Sales
                         }
                     }
 
-                    if (SalesSettings.SpiltInvoice == true && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
+                    if (SalesSettings.BlockExcessItem == true && LineLimit > 0 && sales_invoice.sales_invoice_detail.Count + 1 > LineLimit)
                     {
                         toolBar.msgWarning("Your Item Limit is Exceed");
                     }

@@ -251,7 +251,7 @@ namespace Cognitivo.Sales
                         }
 
                     }
-                    if (SalesSettings.SpiltReturn == false && LineLimit > 0 && sales_return.sales_return_detail.Count + 1 > LineLimit)
+                    if (SalesSettings.BlockExcessItem == true && LineLimit > 0 && sales_return.sales_return_detail.Count + 1 > LineLimit)
                     {
                         toolBar.msgWarning("Your Item Limit is Exceed");
                     }

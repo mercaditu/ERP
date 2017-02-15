@@ -374,8 +374,8 @@ namespace entity.Brillo.Document
             {
                 for (int i = sales_return_detail.Count; i < sales_return.app_document_range.app_document.line_limit; i++)
                 {
-                    sales_return_detail sales_return_detail = new entity.sales_return_detail();
-                    sales_return_detail.Add(sales_return_detail);
+                    sales_return_detail _sales_return_detail = new entity.sales_return_detail();
+                    sales_return_detail.Add(_sales_return_detail);
                 }
             }
 

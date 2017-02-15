@@ -142,33 +142,27 @@ namespace entity
                                 /// We need to check the quantity ordered is not greater than quantity required from this supplier.
                                 /// If so, then use Order Quantity, which is a partial amount.
                                 /// If not, then get out of this code, and go for the next loop.
-                                 
-                                if (purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity) < purchase_tender_detail.quantity)
+
+                                decimal OrderedQuantity = purchase_tender_detail.purchase_order_detail.Where(x => x.purchase_order.status != Status.Documents_General.Annulled).Sum(x => x.quantity);
+
+                                if (OrderedQuantity < purchase_tender_detail.quantity)
                                 {
-                                    purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
+                                    //Gets balance of remaining amount. Balance can never be 0?
+                                    decimal Balance = OrderedQuantity - purchase_tender_detail.quantity;
+
+                                    if (Balance > purchase_tender_detail.OrderQuantity)
+                                    { //If balance is greater than Order Quantity. Order the OrderQuantity only.
+                                        purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
+                                    }
+                                    else
+                                    { //If balance is smaller than OrdeRQuantity, Order the Balance only.
+                                        purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity - Balance;
+                                    }
                                 }
                                 else
                                 {
                                     continue;
                                 }
-
-                                //if (purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity) < purchase_tender_detail.quantity)
-                                //{
-                                //    if ((purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity) + item.quantity <= purchase_tender_detail.quantity))
-                                //    {
-                                //        purchase_tender_detail.status = Status.Documents_General.Approved;
-                                //        purchase_order_detail.quantity = item.quantity;
-                                //    }
-                                //    else
-                                //    {
-                                //        purchase_order_detail.quantity = purchase_tender_detail.quantity - purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity);
-                                //    }
-                                //}
-                                //else
-                                //{
-                                //    //If Tender Detail Quantity is equal to or less than Order Detail, skip this item.
-                                //    continue;
-                                //}
 
                                 foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
                                 {

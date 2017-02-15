@@ -448,7 +448,7 @@ namespace entity.Brillo.Logic
                                 }
 
                                 List<StockList> Items_InStockLIST = null;
-                                
+
                                 if (detail.movement_id != null && detail.movement_id > 0)
                                 {
                                     Brillo.Stock stockBrillo = new Brillo.Stock();
@@ -484,7 +484,7 @@ namespace entity.Brillo.Logic
                         if (detail.id_location == null)
                         {
                             LocationID = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
-                           // detail.app_location = db.app_location.Find(detail.id_location);
+                            // detail.app_location = db.app_location.Find(detail.id_location);
                         }
                         else
                         {
@@ -502,7 +502,7 @@ namespace entity.Brillo.Logic
                             Brillo.Stock stock = new Brillo.Stock();
                             Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, detail.id_location, item_product.id_item_product);
                         }
-                        
+
                         item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.SalesInvoice,
                                                     detail.id_sales_invoice,
@@ -870,6 +870,24 @@ namespace entity.Brillo.Logic
                         {
                             Unitcost = Unit_Value;
                         }
+
+                        item_inventory_detail detail = db.item_inventory_detail.Find(TransactionDetailID);
+
+                        if (detail != null)
+                        {
+
+                            if (detail.item_product != null)
+                            {
+                                if (detail.item_product.can_expire)
+                                {
+                                    item_movement.expire_date = detail.expire_date;
+                                    item_movement.code = detail.batch_code;
+                                }
+
+                            }
+
+                        }
+
                     }
 
                     item_movement.trans_date = TransDate;

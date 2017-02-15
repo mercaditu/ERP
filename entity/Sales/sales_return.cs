@@ -16,6 +16,7 @@ namespace entity
         public sales_return()
         {
             is_head = true;
+            is_issued = false;
             trans_date = DateTime.Now;
 
             id_company = CurrentSession.Id_Company;

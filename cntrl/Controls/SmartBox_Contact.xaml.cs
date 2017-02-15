@@ -63,7 +63,7 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_edit; 
+        bool _can_edit;
 
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
@@ -91,6 +91,7 @@ namespace cntrl.Controls
         public bool Get_Suppliers { get; set; }
         public bool Get_Employees { get; set; }
         public bool Get_Users { get; set; }
+        public bool ExactSearch { get; set; }
 
         Task taskSearch;
         CancellationTokenSource tokenSource;
@@ -130,6 +131,7 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
+           
         }
 
         public void LoadData()
@@ -155,7 +157,7 @@ namespace cntrl.Controls
             {
                 Dispatcher.BeginInvoke(
                 DispatcherPriority.ContextIdle,
-                new Action(delegate()
+                new Action(delegate ()
                 {
                     tbxSearch.Focus();
                 }));
@@ -193,7 +195,14 @@ namespace cntrl.Controls
             else
             {
                 string SearchText = tbxSearch.Text;
-
+                if (rbtnExactCode.IsChecked == true)
+                {
+                    ExactSearch = true;
+                }
+                else
+                {
+                    ExactSearch = false;
+                }
                 if (SearchText.Count() >= 1)
                 {
                     if (taskSearch != null)
@@ -221,7 +230,7 @@ namespace cntrl.Controls
                 predicate = (x => x.IsCustomer == true && x.IsActive);
             }
 
-            if(Get_Suppliers)
+            if (Get_Suppliers)
             {
                 predicate = (x => x.IsSupplier == true && x.IsActive);
             }
@@ -230,31 +239,45 @@ namespace cntrl.Controls
             {
                 predicate = (x => x.IsEmployee == true && x.IsActive);
             }
-           
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
-            var param = smartBoxContactSetting.Default.SearchFilter;
-
-            predicateOR = (x => x.Name.ToUpper().Contains(SearchText));
-
-            if (param.Contains("Code"))
+            if (ExactSearch)
             {
-                predicateOR = predicateOR.Or(x => x.Code.ToUpper().Contains(SearchText));
+
+                predicateOR = (x => x.Code.ToUpper().Equals(SearchText));
+                predicate = predicate.And
+              (
+                  predicateOR
+              );
+            }
+            else
+            {
+
+                var param = smartBoxContactSetting.Default.SearchFilter;
+
+                predicateOR = (x => x.Name.ToUpper().Contains(SearchText));
+
+                if (param.Contains("Code"))
+                {
+                    predicateOR = predicateOR.Or(x => x.Code.ToUpper().Contains(SearchText));
+                }
+
+                if (param.Contains("GovID"))
+                {
+                    predicateOR = predicateOR.Or(x => x.Gov_Code.ToUpper().Contains(SearchText));
+                }
+
+                if (param.Contains("Tel"))
+                {
+                    predicateOR = predicateOR.Or(x => x.Telephone.ToUpper().Contains(SearchText));
+                }
+
+                predicate = predicate.And
+                (
+                    predicateOR
+                );
             }
 
-            if (param.Contains("GovID"))
-            {
-                predicateOR = predicateOR.Or(x => x.Gov_Code.ToUpper().Contains(SearchText));
-            }
 
-            if (param.Contains("Tel"))
-            {
-                predicateOR = predicateOR.Or(x => x.Telephone.ToUpper().Contains(SearchText));
-            }
-
-            predicate = predicate.And
-            (
-                predicateOR
-            );
 
             Dispatcher.InvokeAsync(new Action(() =>
             {

@@ -47,7 +47,7 @@
     <Setting Name="DiscountStock_Packing" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="BlockAceesItem" Type="System.Boolean" Scope="User">
+    <Setting Name="BlockExcessItem" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="QuantityIntegration" Type="System.Boolean" Scope="User">

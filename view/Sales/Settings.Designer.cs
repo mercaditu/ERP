@@ -206,12 +206,12 @@ namespace Cognitivo.Sales {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool BlockAceesItem {
+        public bool BlockExcessItem {
             get {
-                return ((bool)(this["BlockAceesItem"]));
+                return ((bool)(this["BlockExcessItem"]));
             }
             set {
-                this["BlockAceesItem"] = value;
+                this["BlockExcessItem"] = value;
             }
         }
         

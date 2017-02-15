@@ -20,7 +20,6 @@ namespace cntrl.PanelAdv
         public db db { get; set; }
         List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
         List<item_movement> item_movementList = new List<item_movement>();
-        CollectionViewSource payment_schedualViewSource, item_movementViewSource;
 
         public ActionPanelAnull()
         {
@@ -161,8 +160,7 @@ namespace cntrl.PanelAdv
                 }
 
             }
-
-
+            
             db.SaveChanges();
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();

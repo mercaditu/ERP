@@ -467,6 +467,7 @@
 					   btnEdit_Click="toolBar_btnEdit_Click" 
 					   btnApprove_Click="btnApprove_Click" 
 					   btnAnull_Click="toolBar_btnAnull_Click" 
+                       btnSync_Click="Page_Loaded"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Grid.ColumnSpan="2"/>

@@ -15,8 +15,8 @@ namespace Cognitivo.Accounting
     {
         public string UserName { get; set; }
 
-        string Company_RUC = string.Empty;
-        string Company_Name = string.Empty;
+        private string Company_RUC = string.Empty;
+        private string Company_Name = string.Empty;
 
         public class DebeHaberCompany
         {
@@ -53,7 +53,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        List<DebeHaberCompany> _DebeHaberCompanyList = new List<DebeHaberCompany>();
+        private List<DebeHaberCompany> _DebeHaberCompanyList = new List<DebeHaberCompany>();
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -82,7 +82,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        static async Task<string> DownloadPage(string url)
+        private static async Task<string> DownloadPage(string url)
         {
             using (var client = new HttpClient())
             {

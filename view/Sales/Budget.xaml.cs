@@ -24,17 +24,17 @@ namespace Cognitivo.Sales
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             Settings SalesSettings = new Settings();
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
             else
             {
-                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
 
             sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));

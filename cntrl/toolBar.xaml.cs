@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using System.Threading.Tasks;
 
 namespace cntrl
 {  
@@ -268,10 +269,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnNew_Click != null)
-            {
-                btnNew_Click(this);
-            }
+            btnNew_Click?.Invoke(this);
         }
 
         //EDIT
@@ -284,10 +282,7 @@ namespace cntrl
                 toolIcon _toolicon = (toolIcon)sender;
                 _toolicon.Focus();
             }
-            if (btnEdit_Click != null)
-            {
-                btnEdit_Click(sender);
-            }
+            btnEdit_Click?.Invoke(sender);
         }
 
         //DELETE
@@ -301,10 +296,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnDelete_Click != null)
-            {
-                btnDelete_Click(sender);
-            }
+            btnDelete_Click?.Invoke(sender);
         }
 
         //SAVE
@@ -318,10 +310,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnSave_Click != null)
-            {
-                btnSave_Click(sender);
-            }
+            btnSave_Click?.Invoke(sender);
         }
 
         //CANCEL
@@ -335,10 +324,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnCancel_Click != null)
-            {
-                btnCancel_Click(sender);
-            }
+            btnCancel_Click?.Invoke(sender);
         }
 
         //APPROVE
@@ -348,10 +334,7 @@ namespace cntrl
         {
             toolIcon _toolicon = (toolIcon)sender;
             _toolicon.Focus();
-            if (btnApprove_Click != null)
-            {
-                btnApprove_Click(this);
-            }
+            btnApprove_Click?.Invoke(this);
         }
 
         //ANULL
@@ -361,10 +344,7 @@ namespace cntrl
         {
             toolIcon _toolicon = (toolIcon)sender;
             _toolicon.Focus();
-            if (btnAnull_Click != null)
-            {
-                btnAnull_Click(this);
-            }
+            btnAnull_Click?.Invoke(this);
         }
 
         //SEARCH - Filtering Entity Framework as DataView
@@ -372,8 +352,18 @@ namespace cntrl
         public delegate void btnSearch_ClickedEventHandler(object sender, string query);
         private void tbxSearchTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (btnSearch_Click != null)
-                btnSearch_Click(sender, tbxSearch.Text.Trim());
+            btnSearch_Click?.Invoke(sender, tbxSearch.Text.Trim());
+        }
+
+        //Sync Data (Brings new data into view.)
+        public event btnSync_ClickedEventHandler btnSync_Click;
+        public delegate void btnSync_ClickedEventHandler(object sender, EventArgs e);
+        public void btnSync_MouseUp(object sender, EventArgs e)
+        {
+            btnSync_Click?.Invoke(this, null);
+            //MessageBox.Show("Finished");
+            Storyboard s = (Storyboard)TryFindResource("SyncSpin");
+            s.Pause();
         }
         #endregion
 

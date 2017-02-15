@@ -9,73 +9,118 @@
 			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 			 lex:ResxLocalizationProvider.DefaultDictionary="local"
 			 Height="40" MinWidth="600" Loaded="UserControl_Loaded">
-	<UserControl.Resources>
-		<Storyboard x:Key="FormClick">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="GridClick">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-	</UserControl.Resources>
-	<UserControl.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
-			<BeginStoryboard x:Name="FormClick_BeginStoryboard" Storyboard="{StaticResource FormClick}"/>
-		</EventTrigger>
-	</UserControl.Triggers>
+    <UserControl.Resources>
+        <Storyboard x:Key="FormClick">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="GridClick">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <Storyboard x:Key="SyncActivate">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="btnSync">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="SyncDeactivate">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="btnSync">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="SyncSpin">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="btnSync">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="359">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard x:Name="FormClick_BeginStoryboard" Storyboard="{StaticResource FormClick}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="btnSync">
+            <BeginStoryboard x:Name="SyncDeactivate_BeginStoryboard" Storyboard="{StaticResource SyncDeactivate}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="btnSync">
+            <BeginStoryboard x:Name="SyncActivate_BeginStoryboard" Storyboard="{StaticResource SyncActivate}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseUp" SourceName="btnSync">
+            <BeginStoryboard x:Name="SyncSpin_BeginStoryboard" Storyboard="{StaticResource SyncSpin}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid x:Name="gridButtons">
         <Grid Background="White">
-			<!--<Grid.Effect>
+            <!--<Grid.Effect>
 				<DropShadowEffect ShadowDepth="2" Color="#232f3c" Direction="270" Opacity="0.32" BlurRadius="4"/>
 			</Grid.Effect>-->
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"/>
-				<ColumnDefinition Width="3*"/>
-			</Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
             <Grid Background="{StaticResource AccentColor_Brush}" Margin="0,-30,0,0"/>
 
             <Grid x:Name="gridSearch" Grid.Column="0" Background="{StaticResource AccentColor_Brush}">
-				<TextBox x:Name="tbxSearch" Padding="24,0,0,0" TextChanged="tbxSearchTextChanged"
+                <TextBox x:Name="tbxSearch" Padding="24,0,0,0" TextChanged="tbxSearchTextChanged"
 						 BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
 						 FontSize="16" Foreground="{StaticResource winBackground}" Margin="4"
 						 metro:TextBoxHelper.Watermark="{lex:Loc Search}"
 						 metro:TextBoxHelper.SelectAllOnFocus="True"
 						 metro:ControlsHelper.MouseOverBorderBrush="Transparent"
 						 metro:ControlsHelper.FocusBorderBrush="Transparent"
-						 metro:TextBoxHelper.ClearTextButton="True"
+						 
                          CaretBrush="RoyalBlue"/>
-                
-				<TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo"
-						   FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
-					<TextBlock.Foreground>
-						<SolidColorBrush Color="White" Opacity="0.75"/>
-					</TextBlock.Foreground>
-				</TextBlock>
-			</Grid>
 
-			<Grid Grid.Column="1" >
-				<StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
-				<StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" />
-			</Grid>
+                <TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="White" Opacity="0.75"/>
+                    </TextBlock.Foreground>
+                </TextBlock>
 
-			<Popup HorizontalAlignment="Right" x:Name="popMessages" AllowsTransparency="True">
-				<StackPanel x:Name="stackMessages" Margin="0,5" Width="{Binding ActualWidth, ElementName=gridButtons, Mode=OneWay}"/>
-			</Popup>
-		</Grid>
+                <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" 
+                           MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                           Margin="8" Foreground="White" Opacity="0.1" RenderTransformOrigin="0.5,0.5"
+                           ToolTip="{lex:Loc Refresh}">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+
+            </Grid>
+
+            <Grid Grid.Column="1" >
+                <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
+                <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" />
+            </Grid>
+
+            <Popup HorizontalAlignment="Right" x:Name="popMessages" AllowsTransparency="True">
+                <StackPanel x:Name="stackMessages" Margin="0,5" Width="{Binding ActualWidth, ElementName=gridButtons, Mode=OneWay}"/>
+            </Popup>
+        </Grid>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" 
 					Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">

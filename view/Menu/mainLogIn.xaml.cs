@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using entity;
 using System.Deployment.Application;
 using System.Reflection;
+using InteractivePreGeneratedViews;
 
 namespace Cognitivo.Menu
 {
@@ -35,9 +36,25 @@ namespace Cognitivo.Menu
         {
             InitializeComponent();
 
+
+
             try
             {
+                //using (var ctx = new db())
+                //{
+                //    InteractiveViews
+                //    .SetViewCacheFactory(
+                //        ctx,
+                //        new FileViewCacheFactory(Environment.));
+                //    //InteractiveViews
+                //    //    .SetViewCacheFactory(
+                //    //        ctx,
+                //    //        new FileViewCacheFactory(@"C:\CognitivoERPS.xml")); // Environment.SpecialFolder.ApplicationData) + @"\Cognitivo\EFCache\"));
+                //}
+
                 lblVersion.Content = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+
+
             }
             catch
             {

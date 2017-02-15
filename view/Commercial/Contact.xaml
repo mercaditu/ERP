@@ -398,6 +398,7 @@
 					   btnSave_Click="toolBar_btnSave_Click" 
 					   btnCancel_Click="toolBar_btnCancel_Click" 
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                       btnSync_Click="Page_Loaded"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 	</Grid>
 </Page>

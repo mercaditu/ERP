@@ -54,7 +54,7 @@ namespace Cognitivo.Product
             itemitem_conversion_factorViewSource = FindResource("itemitem_conversion_factorViewSource") as CollectionViewSource;
         }
 
-        private void load_PrimaryData()
+        private void load_PrimaryData(object sender, EventArgs e)
         {
             ItemDB = new ItemDB();
             load_PrimaryDataThread();
@@ -201,7 +201,7 @@ namespace Cognitivo.Product
         private void Item_Loaded(object sender, RoutedEventArgs e)
         {
             //Loads Primary and Secondary Data
-            load_PrimaryData();
+            load_PrimaryData(null, null);
 
             cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x => x != item.item_type.FixedAssets).ToList();
         }

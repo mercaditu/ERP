@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Controls;
 using Microsoft.Maps.MapControl.WPF;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 
 namespace Cognitivo.Commercial
 {
@@ -31,7 +32,7 @@ namespace Cognitivo.Commercial
            InitializeComponent(); 
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
@@ -39,7 +40,8 @@ namespace Cognitivo.Commercial
             contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
 
             //Contact
-            ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).Load();
+            await ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;

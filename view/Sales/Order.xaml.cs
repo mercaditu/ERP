@@ -32,11 +32,6 @@ namespace Cognitivo.Sales
         }
 
         #region DataLoad
-        private void load_PrimaryData()
-        {
-            load_PrimaryDataThread();
-            load_SecondaryDataThread();
-        }
 
         private async void load_PrimaryDataThread()
         {
@@ -45,19 +40,13 @@ namespace Cognitivo.Sales
             {
                 await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
                                             && (
-                                             //a.trans_date >= navPagination.start_Date
-                                             // && a.trans_date <= navPagination.end_Date 
-                                             // && 
-                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).ToListAsync();
             }
             else
             {
                 await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (
-                                             //a.trans_date >= navPagination.start_Date
-                                             // && a.trans_date <= navPagination.end_Date 
-                                             // && 
-                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).ToListAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -78,9 +67,10 @@ namespace Cognitivo.Sales
 
         #endregion
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, EventArgs e)
         {
-            load_PrimaryData();
+            load_PrimaryDataThread();
+            load_SecondaryDataThread();
         }
 
         #region toolbar Events

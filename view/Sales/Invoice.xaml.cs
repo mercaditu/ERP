@@ -1,32 +1,32 @@
-﻿using System;
+﻿using cntrl.Class;
+using cntrl.Controls;
+using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Documents;
-using cntrl.Controls;
-using System.Linq.Expressions;
-using cntrl.Class;
+using System.Windows.Input;
 
 namespace Cognitivo.Sales
 {
     public partial class Invoice : INotifyPropertyChanged
     {
         //Global Variables
-        CollectionViewSource sales_invoiceViewSource;
-        CollectionViewSource sales_invoicesales_invoice_detailViewSource;
-        CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
-        SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+        private CollectionViewSource sales_invoiceViewSource;
 
-        cntrl.PanelAdv.pnlPacking pnlPacking;
-        cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
+        private CollectionViewSource sales_invoicesales_invoice_detailViewSource;
+        private CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
+        private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+
+        private cntrl.PanelAdv.pnlPacking pnlPacking;
+        private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
         public DateTime start_Range
         {
@@ -39,8 +39,8 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private DateTime _start_Range = DateTime.Now.AddDays(-7);
 
+        private DateTime _start_Range = DateTime.Now.AddDays(-7);
 
         public DateTime end_Range
         {
@@ -53,8 +53,8 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private DateTime _end_Range = DateTime.Now.AddDays(+1);
 
+        private DateTime _end_Range = DateTime.Now.AddDays(+1);
 
         public Invoice()
         {
@@ -62,24 +62,26 @@ namespace Cognitivo.Sales
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region DataLoad
-        private void SalesInvoice_Loaded(object sender, RoutedEventArgs e)
+
+        private void SalesInvoice_Loaded(object sender, EventArgs e)
         {
-            SalesInvoiceDB = new SalesInvoiceDB();
+            //SalesInvoiceDB = new SalesInvoiceDB();
 
             sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = (CollectionViewSource)FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource");
             sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
 
-            load_PrimaryDataThread();
+            load_PrimaryDataThread(null, null);
             load_SecondaryDataThread();
         }
 
-        private async void load_PrimaryDataThread()
+        private async void load_PrimaryDataThread(object sender, EventArgs e)
         {
             Settings SalesSettings = new Settings();
             var predicate = PredicateBuilder.True<sales_invoice>();
@@ -106,9 +108,9 @@ namespace Cognitivo.Sales
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-            if (SalesInvoiceDB.sales_invoice.Local.Count()>0)
+            if (SalesInvoiceDB.sales_invoice.Local.Count() > 0)
             {
-                if (sales_invoicesales_invoice_detailViewSource.View!=null)
+                if (sales_invoicesales_invoice_detailViewSource.View != null)
                 {
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 }
@@ -124,7 +126,8 @@ namespace Cognitivo.Sales
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
         }
-        #endregion
+
+        #endregion DataLoad
 
         #region "Action Events"
 
@@ -180,7 +183,6 @@ namespace Cognitivo.Sales
 
             if (sales_invoice.status == Status.Documents_General.Approved)
             {
-
                 if (sales_invoice != null)
                 {
                     UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
@@ -291,7 +293,6 @@ namespace Cognitivo.Sales
                             UpdateMovementReApprove.DeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                         }
                     }
-
                 }
                 //SalesInvoiceDB.ReApprove(sales_invoice);
                 sales_invoiceViewSource.View.Refresh();
@@ -346,7 +347,8 @@ namespace Cognitivo.Sales
             {
                 toolBar.msgWarning("Please check Customer's Credit");
             }
-            load_PrimaryDataThread();
+
+            load_PrimaryDataThread(null, null);
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -361,10 +363,10 @@ namespace Cognitivo.Sales
                 ActionPanelAnull.Application = entity.App.Names.SalesInvoice;
                 ActionPanelAnull.db = SalesInvoiceDB;
                 crud_modalAnull.Children.Add(ActionPanelAnull);
-
             }
         }
-        #endregion
+
+        #endregion "Action Events"
 
         #region Filter Data
 
@@ -435,7 +437,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        #endregion
+        #endregion Filter Data
 
         private void calculate_vat(object sender, EventArgs e)
         {
@@ -474,6 +476,7 @@ namespace Cognitivo.Sales
         }
 
         #region PrefSettings
+
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -491,7 +494,8 @@ namespace Cognitivo.Sales
             SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
         }
-        #endregion
+
+        #endregion PrefSettings
 
         private void sales_invoice_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
@@ -540,13 +544,13 @@ namespace Cognitivo.Sales
                         }
                         else
                         {
-                            sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null,sbxItem.Quantity);
+                            sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity);
                             sales_invoicesales_invoice_detailViewSource.View.Refresh();
                             sales_invoice.RaisePropertyChanged("GrandTotal");
                         }
                     }
                 }
-             }
+            }
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -555,7 +559,6 @@ namespace Cognitivo.Sales
             {
                 sales_invoiceViewSource.View.Filter = i =>
                 {
-
                     sales_invoice sales_invoice = i as sales_invoice;
                     contact contact = sales_invoice.contact != null ? sales_invoice.contact : null;
 
@@ -581,8 +584,6 @@ namespace Cognitivo.Sales
                             {
                                 cust_gov_code = contact.gov_code.ToLower();
                             }
-
-
                         }
 
                         if (customer.Contains(query.ToLower())
@@ -599,14 +600,11 @@ namespace Cognitivo.Sales
                         {
                             return false;
                         }
-
                     }
                     else
                     {
                         return false;
                     }
-
-
                 };
             }
             else
@@ -696,7 +694,6 @@ namespace Cognitivo.Sales
 
                 foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
                 {
-
                     if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -718,7 +715,6 @@ namespace Cognitivo.Sales
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
-
             }
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
@@ -728,12 +724,10 @@ namespace Cognitivo.Sales
             else
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
-
             }
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Collapsed;
             _sales_invoice.RaisePropertyChanged("GrandTotal");
-
         }
 
         private void btnSalesOrder_Click(object sender, RoutedEventArgs e)
@@ -828,7 +822,6 @@ namespace Cognitivo.Sales
             {
                 entity.Brillo.Document.Start.Automatic(sales_packing, sales_packing.app_document_range);
             }
-
         }
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
@@ -844,26 +837,20 @@ namespace Cognitivo.Sales
             }
         }
 
-        private  void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-           
+
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
             {
-
-           
-                if (sales_invoice!=null)
+                if (sales_invoice != null)
                 {
                     sales_invoice.RaisePropertyChanged("GrandTotal");
                     int id_sales_invoice = sales_invoice.id_sales_invoice;
                     sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == id_sales_invoice).ToList();
                 }
-             
-
-
-
             }
             else
             {
@@ -908,7 +895,7 @@ namespace Cognitivo.Sales
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
         {
-            load_PrimaryDataThread();
+            load_PrimaryDataThread(null, null);
         }
 
         private void btnTotalClean_Click(object sender)
@@ -969,7 +956,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnReturn_Click(object sender, MouseButtonEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved && sales_invoice.sales_return.Count()==0)
+            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved && sales_invoice.sales_return.Count() == 0)
             {
                 sales_return sales_return = new sales_return();
                 sales_return.barcode = sales_invoice.barcode;
@@ -1008,7 +995,7 @@ namespace Cognitivo.Sales
                     }
                     sales_return.sales_return_detail.Add(sales_return_detail);
                 }
-                
+
                 SalesInvoiceDB.sales_return.Add(sales_return);
                 crm_opportunity crm_opportunity = sales_invoice.crm_opportunity;
                 crm_opportunity.sales_return.Add(sales_return);
@@ -1023,7 +1010,6 @@ namespace Cognitivo.Sales
 
         private void Refinance_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
             if (sales_invoice != null)
             {
@@ -1041,6 +1027,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
@@ -1049,7 +1036,7 @@ namespace Cognitivo.Sales
                 item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
-                
+
                 if (item != null && item.id_item > 0 && sales_invoice != null)
                 {
                     Settings SalesSettings = new Settings();
@@ -1058,7 +1045,7 @@ namespace Cognitivo.Sales
                     {
                         item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement,sbxItem.Quantity);
+                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement, sbxItem.Quantity);
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
@@ -1071,8 +1058,8 @@ namespace Cognitivo.Sales
                 //Cleans for reuse.
                 crud_modalExpire.Children.Clear();
             }
-
         }
+
         private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chbx = sender as CheckBox;
@@ -1085,7 +1072,5 @@ namespace Cognitivo.Sales
                 dgvSalesDetail.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
         }
-
-
     }
 }

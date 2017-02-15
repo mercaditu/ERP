@@ -431,6 +431,7 @@
 					   btnCancel_Click="toolBar_btnCancel_Click" 
 					   btnEdit_Click="toolBar_btnEdit_Click" 
 					   btnNew_Click="toolBar_btnNew_Click" 
+                       btnSync_Click="load_PrimaryData"
 					   btnSearch_Click="toolBar_btnSearch_Click" IsEnabled="False"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

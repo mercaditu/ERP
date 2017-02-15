@@ -43,12 +43,7 @@ namespace entity
         public override int SaveChanges()
         {
             validate_Contact();
-            try { return base.SaveChanges(); }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-           
+            return base.SaveChanges();           
         }
 
         public override Task<int> SaveChangesAsync()

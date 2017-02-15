@@ -1,12 +1,12 @@
 ﻿namespace entity
 {
+    using InteractivePreGeneratedViews;
     using System.Data.Entity;
 
     public class db : DbContext
     {
         public db() : base("name=Cognitivo.Properties.Settings.MySQLconnString")
         {
-          
             Configuration.LazyLoadingEnabled = true;
         }
 
@@ -14,7 +14,7 @@
         {
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 9));
         }
-        
+
         public virtual DbSet<app_account> app_account { get; set; }
         public virtual DbSet<app_account_detail> app_account_detail { get; set; }
         public virtual DbSet<app_account_session> app_account_session { get; set; }
@@ -23,7 +23,7 @@
         public virtual DbSet<app_branch> app_branch { get; set; }
         public virtual DbSet<app_branch_walkins> app_branch_walkins { get; set; }
         public virtual DbSet<app_company> app_company { get; set; }
-        public  virtual DbSet<app_company_interest> app_company_interest { get; set; }
+        public virtual DbSet<app_company_interest> app_company_interest { get; set; }
         public virtual DbSet<app_condition> app_condition { get; set; }
         public virtual DbSet<app_contract> app_contract { get; set; }
         public virtual DbSet<app_contract_detail> app_contract_detail { get; set; }

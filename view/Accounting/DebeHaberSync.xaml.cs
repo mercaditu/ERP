@@ -1,37 +1,38 @@
-﻿using System;
+﻿using cntrl;
+using entity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Web.Script.Serialization;
-using System.IO;
-using System.Net;
-using System.Data.Entity;
-using entity;
-using System.Collections.Generic;
-using cntrl;
 
 namespace Cognitivo.Accounting
 {
     public partial class DebeHaberSync : Page, IDisposable
     {
-        CollectionViewSource sales_invoiceViewSource;
-        CollectionViewSource sales_returnViewSource;
-        CollectionViewSource purchase_invoiceViewSource;
-        CollectionViewSource purchase_returnViewSource;
-        CollectionViewSource payment_detailViewSource;
-        CollectionViewSource item_assetViewSource;
+        private CollectionViewSource sales_invoiceViewSource;
+        private CollectionViewSource sales_returnViewSource;
+        private CollectionViewSource purchase_invoiceViewSource;
+        private CollectionViewSource purchase_returnViewSource;
+        private CollectionViewSource payment_detailViewSource;
+        private CollectionViewSource item_assetViewSource;
 
-        db db = new db();
+        private db db = new db();
 
-        string RelationshipHash = string.Empty;
+        private string RelationshipHash = string.Empty;
 
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
             set { _StartDate = value; fill(); }
         }
+
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
         public DateTime EndDate
@@ -39,6 +40,7 @@ namespace Cognitivo.Accounting
             get { return AbsoluteDate.End(_EndDate); }
             set { _EndDate = value; fill(); }
         }
+
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
         public DebeHaberSync()
@@ -86,6 +88,7 @@ namespace Cognitivo.Accounting
         }
 
         #region LoadData
+
         public async void Get_SalesInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
@@ -144,7 +147,7 @@ namespace Cognitivo.Accounting
             item_assetViewSource.Source = db.item_asset.Local;
         }
 
-        #endregion
+        #endregion LoadData
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
         {
@@ -157,6 +160,7 @@ namespace Cognitivo.Accounting
         }
 
         #region Sales Sync
+
         private void Sales_Sync()
         {
             List<sales_invoice> SalesList = db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
@@ -170,7 +174,7 @@ namespace Cognitivo.Accounting
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
                 DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
-                
+
                 //Loads Data from Sales
                 Sales.Fill_BySales(sales_invoice);
 
@@ -232,13 +236,15 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        #endregion
+
+        #endregion Sales Sync
 
         #region Purchase Sync
+
         private void Purchase_Sync()
         {
             //Loop through
-            List<purchase_invoice>PurchaseList = db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
+            List<purchase_invoice> PurchaseList = db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
 
             foreach (purchase_invoice purchase_invoice in PurchaseList)
             {
@@ -309,9 +315,11 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        #endregion
+
+        #endregion Purchase Sync
 
         #region SalesReturn Sync
+
         private void SalesReturn_Sync()
         {
             List<sales_return> SalesReturnList = db.sales_return.Local.Where(x => x.IsSelected).ToList();
@@ -387,9 +395,11 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        #endregion
+
+        #endregion SalesReturn Sync
 
         #region PurchaseReturn Sync
+
         private void PurchaseReturn_Sync()
         {
             List<purchase_return> PurchaseReturnList = db.purchase_return.Local.Where(x => x.IsSelected).ToList();
@@ -426,7 +436,7 @@ namespace Cognitivo.Accounting
                         PurchaseReturn.Payments.Add(Payments);
                     }
                 }
-                
+
                 Transaction.Commercial_Invoices.Add(PurchaseReturn);
                 Integration.Transactions.Add(Transaction);
 
@@ -448,7 +458,6 @@ namespace Cognitivo.Accounting
                             schedual.payment_detail.payment.is_accounted = true;
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -467,9 +476,11 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        #endregion
+
+        #endregion PurchaseReturn Sync
 
         #region Payment Sync
+
         private void PaymentSync()
         {
             List<payment_detail> PaymentList = db.payment_detail.Local.Where(x => x.IsSelected && x.payment.is_accounted == false).ToList();
@@ -516,7 +527,8 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        #endregion
+
+        #endregion Payment Sync
 
         private void FixedAsset(DebeHaber.Transaction Transaction)
         {
@@ -549,6 +561,7 @@ namespace Cognitivo.Accounting
         }
 
         #region CheckBox Check/UnCheck Methods
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (sales_invoiceViewSource.View != null)
@@ -559,7 +572,6 @@ namespace Cognitivo.Accounting
                 }
                 sales_invoiceViewSource.View.Refresh();
             }
-
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -572,7 +584,6 @@ namespace Cognitivo.Accounting
                 }
                 sales_invoiceViewSource.View.Refresh();
             }
-
         }
 
         private void SalesReturn_Checked(object sender, RoutedEventArgs e)
@@ -633,7 +644,6 @@ namespace Cognitivo.Accounting
                 }
                 purchase_returnViewSource.View.Refresh();
             }
-
         }
 
         private void PurchaseReturn_Unchecked(object sender, RoutedEventArgs e)
@@ -671,7 +681,8 @@ namespace Cognitivo.Accounting
                 payment_detailViewSource.View.Refresh();
             }
         }
-        #endregion
+
+        #endregion CheckBox Check/UnCheck Methods
 
         private void Send2API(object Json)
         {
@@ -700,6 +711,7 @@ namespace Cognitivo.Accounting
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -732,6 +744,7 @@ namespace Cognitivo.Accounting
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

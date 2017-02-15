@@ -28,7 +28,11 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            PurchaseTenderDB.Approve();
+            purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
+            if (purchase_tender_old != null)
+            {
+                purchase_tender_old.status = Status.Documents_General.Approved;
+            }
             purchase_tenderViewSource.View.Refresh();
         }
 
@@ -555,6 +559,11 @@ namespace Cognitivo.Purchase
             }
             catch (Exception)
             { }
+        }
+
+        private void toolBar_Mini_btnApprove_Click(object sender)
+        {
+            PurchaseTenderDB.Approve();
         }
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)

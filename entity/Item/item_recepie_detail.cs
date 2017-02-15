@@ -5,13 +5,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class item_recepie_detail : Audit, IDataErrorInfo
     {
         public item_recepie_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
         }
@@ -24,7 +24,52 @@ namespace entity
         [Required]
         public decimal id_item { get; set; }
         [Required]
-        public decimal quantity { get; set; }
+        public decimal quantity
+        {
+            get
+            {
+                return _quantity;
+            }
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+
+                    if (item != null)
+                    {
+
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, Convert.ToDecimal(quantity), 1);
+                        RaisePropertyChanged("_Quantity_Factored");
+
+
+                    }
+
+                }
+            }
+        }
+        decimal _quantity;
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+
+                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, 1);
+                    RaisePropertyChanged("value_counted");
+
+
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
         [Required]
         public bool is_active { get; set; }
 
@@ -33,14 +78,14 @@ namespace entity
         private decimal _est_cost;
 
         public virtual item_recepie item_recepie { get; set; }
-        public virtual item item{ get; set; }
-
+        public virtual item item { get; set; }
+      
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -64,7 +109,7 @@ namespace entity
                     if (quantity == 0)
                         return "Value needs to be filled";
                 }
-               
+
                 return "";
             }
         }

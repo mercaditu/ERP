@@ -137,10 +137,24 @@ namespace entity
                                 }
 
                                 purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
-                                purchase_order_detail.quantity = purchase_tender_detail.quantity;
+
                                 purchase_order_detail.id_vat_group = purchase_tender_detail.id_vat_group;
 
-                                purchase_tender_detail.status = Status.Documents_General.Approved;
+                                if (purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity) < purchase_tender_detail.quantity)
+                                {
+                                    if ((purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity) + item.quantity <= purchase_tender_detail.quantity))
+                                    {
+                                        purchase_tender_detail.status = Status.Documents_General.Approved;
+                                        purchase_order_detail.quantity = item.quantity;
+                                    }
+                                    else
+                                    {
+                                        purchase_order_detail.quantity = purchase_tender_detail.quantity - purchase_tender_detail.purchase_order_detail.Sum(x => x.quantity);
+                                    }
+
+                                }
+
+
 
                                 foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
                                 {
@@ -210,7 +224,7 @@ namespace entity
                                 if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
                                 {
                                     //   base.purchase_order.RemoveRange(purchase_order);
-                                    if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.purchase_invoice==null)
+                                    if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.purchase_invoice == null)
                                     {
                                         purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status = Status.Documents_General.Annulled;
                                     }

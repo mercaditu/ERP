@@ -95,6 +95,9 @@
 												Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N8}}" 
 												Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+										 Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+										/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

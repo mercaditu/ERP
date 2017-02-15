@@ -29,7 +29,7 @@
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
       <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
-        <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tender_detail_dimensionViewSource" Source="{Binding purchase_tender_detail_dimension, Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}"/>
@@ -283,7 +283,7 @@
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Contact}"/>
                             <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True" VerticalAlignment="Top" />
                         </StackPanel>
-                     
+                    
                         <DataGrid x:Name="purchase_tender_contact_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" Margin="4,35,4,0"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_contact_detailDataGrid_SelectionChanged" 
@@ -327,6 +327,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <cntrl:toolBar_Mini btnApprove_Click="toolBar_Mini_btnApprove_Click" Status="{Binding status,Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" 
                                   RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"

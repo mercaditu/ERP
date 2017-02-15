@@ -97,11 +97,11 @@ namespace Cognitivo.Sales
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).OrderBy(x => x.number).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).OrderBy(x => x.number).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));

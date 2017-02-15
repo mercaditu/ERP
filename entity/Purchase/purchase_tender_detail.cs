@@ -72,6 +72,32 @@ namespace entity
         }
         private decimal _Quantity_Factored;
 
+        [NotMapped]
+        public decimal OrderQuantity
+        {
+            get
+            {
+                if (_OrderQuantity == 0)
+                {
+                    _OrderQuantity = quantity;
+                }
+
+                return _OrderQuantity;
+            }
+            set
+            {
+                // this blocks the user from inserting values greater than the quantity required.
+                // In future add an error code on this file to give user visual feedback.
+                if (quantity >= value)
+                {
+                    _OrderQuantity = value;
+                }
+                
+                RaisePropertyChanged("OrderQuantity");
+            }
+        }
+        private decimal _OrderQuantity;
+
         /// <summary>
         /// 
         /// </summary>
@@ -228,8 +254,6 @@ namespace entity
             decimal Dimension = 1M;
             if (purchase_tender_detail_dimension != null)
             {
-
-
                 foreach (purchase_tender_detail_dimension _purchase_tender_detail_dimension in purchase_tender_detail_dimension)
                 {
                     Dimension = Dimension * _purchase_tender_detail_dimension.value;

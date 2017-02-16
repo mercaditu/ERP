@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using entity;
+﻿using entity;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace cntrl.Class
 {
@@ -43,9 +43,8 @@ namespace cntrl.Class
                 costlists.Add(CostList);
             }
             return costlists;
-
-
         }
+
         public List<CostList> CalculateOrderCostReceipe(List<item_recepie_detail> Listitem_recepie_detail)
         {
             db db = new db();
@@ -82,9 +81,8 @@ namespace cntrl.Class
                 costlists.Add(CostList);
             }
             return costlists;
-
-
         }
+
         public List<OutputList> CalculateOutputOrder(List<production_order_detail> Listproduction_order_detail, List<production_order_detail> Listinputproduction_order_detail)
         {
             db db = new db();
@@ -105,6 +103,7 @@ namespace cntrl.Class
             }
             return OutputLists;
         }
+
         public List<OutputList> CalculateOutputOrderRecipe(List<item_recepie> Listitem_recepie)
         {
             db db = new db();
@@ -124,7 +123,6 @@ namespace cntrl.Class
 
                 OutputLists.Add(OutputList);
             }
-          
 
             return OutputLists;
         }
@@ -132,7 +130,6 @@ namespace cntrl.Class
 
     public class CostList
     {
-
         public string Name { get; set; }
 
         public decimal Quantity { get; set; }
@@ -148,9 +145,11 @@ namespace cntrl.Class
         {
             Costs = new List<CostList>();
         }
+
         public int id_order_detail { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+
         public decimal GrandTotalCost
         {
             get
@@ -166,7 +165,9 @@ namespace cntrl.Class
                 RaisePropertyChanged("GrandTotal");
             }
         }
-        decimal _GrandTotalCost;
+
+        private decimal _GrandTotalCost;
+
         public decimal GrandTotalSubTotal
         {
             get
@@ -182,9 +183,12 @@ namespace cntrl.Class
                 RaisePropertyChanged("_GrandTotalSubTotal");
             }
         }
-        decimal _GrandTotalSubTotal;
+
+        private decimal _GrandTotalSubTotal;
         public ICollection<CostList> Costs { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

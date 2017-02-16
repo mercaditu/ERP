@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
-using System.Data.Entity;
-using System.ComponentModel;
 
 namespace cntrl.Curd
 {
     public partial class Refinance : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -23,10 +23,10 @@ namespace cntrl.Curd
         }
 
         public enum Mode
-	    {
+        {
             AccountReceivable,
             AccountPayable
-	    }
+        }
 
         public Mode WindowsMode
         {
@@ -36,51 +36,47 @@ namespace cntrl.Curd
             }
             set
             {
-               
-                    _WinMode = value;
-                    if (_WinMode == Mode.AccountPayable)
-                    {
-                        Payable = true;
-                        RaisePropertyChanged("Payable");
-                        Recievable = false;
-                        RaisePropertyChanged("Recievable");
-                    }
-                    else
-                    {
-                        Payable = false;
-                        RaisePropertyChanged("Payable");
-                        Recievable = true;
-                        RaisePropertyChanged("Recievable");
-                    }
-               
+                _WinMode = value;
+                if (_WinMode == Mode.AccountPayable)
+                {
+                    Payable = true;
+                    RaisePropertyChanged("Payable");
+                    Recievable = false;
+                    RaisePropertyChanged("Recievable");
+                }
+                else
+                {
+                    Payable = false;
+                    RaisePropertyChanged("Payable");
+                    Recievable = true;
+                    RaisePropertyChanged("Recievable");
+                }
             }
         }
+
         private Mode _WinMode;
 
-        public bool Payable { get { return _Payable; } set { _Payable=value; } }
-        bool _Payable;
+        public bool Payable { get { return _Payable; } set { _Payable = value; } }
+        private bool _Payable;
         public bool Recievable { get { return _Recievable; } set { _Recievable = value; } }
-        bool _Recievable;
-        List<payment_schedual> _payment_schedualList = null;
+        private bool _Recievable;
+        private List<payment_schedual> _payment_schedualList = null;
         public List<payment_schedual> payment_schedualList { get { return _payment_schedualList; } set { _payment_schedualList = value; } }
 
         private PaymentDB _entity = null;
         public PaymentDB objEntity { get { return _entity; } set { _entity = value; } }
         public int id_contact { get; set; }
         public int id_currency { get; set; }
-        decimal total = 0;
-       
+        private decimal total = 0;
 
         public Refinance(Mode Mode)
         {
             WindowsMode = Mode;
             InitializeComponent();
-          
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 try
@@ -90,25 +86,23 @@ namespace cntrl.Curd
                     app_currencyViewSource.Source = objEntity.app_currency.Local;
 
                     lbldiff.Content = 0;
-                  
+
                     stackMain.DataContext = payment_schedualList;
                     decimal amount = 0;
-                 
+
                     if (WindowsMode == Mode.AccountPayable)
                     {
                         amount = payment_schedualList.Sum(x => x.credit);
-                             total  = payment_schedualList.Sum(x => x.credit);
+                        total = payment_schedualList.Sum(x => x.credit);
                     }
                     else
                     {
-
                         amount = payment_schedualList.Sum(x => x.debit);
                         total = payment_schedualList.Sum(x => x.debit);
                     }
                     lblBalance.Content = amount;
-               
-                    // payment
 
+                    // payment
                 }
                 catch (Exception ex)
                 {
@@ -118,7 +112,9 @@ namespace cntrl.Curd
         }
 
         public event btnSave_ClickedEventHandler btnSave_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (btnSave_Click != null && Convert.ToDecimal(lbldiff.Content) == 0)
@@ -132,7 +128,7 @@ namespace cntrl.Curd
             try
             {
                 objEntity.CancelAllChanges();
-               
+
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Collapsed;
@@ -149,7 +145,7 @@ namespace cntrl.Curd
             if (payment_schedual.id_payment_schedual == 0)
             {
                 payment_schedual Firstpayment_schedual = payment_schedualList.FirstOrDefault() as payment_schedual;
-                
+
                 if (WindowsMode == Mode.AccountPayable)
                 {
                     payment_schedual.credit = payment_schedual.credit;
@@ -182,9 +178,9 @@ namespace cntrl.Curd
                     payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
                     payment_schedual.id_currencyfx = Firstpayment_schedual.id_currencyfx;
                     payment_schedual.id_contact = Firstpayment_schedual.sales_invoice.id_contact;
-                    payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact; 
+                    payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact;
                 }
-             
+
                 payment_schedual.RaisePropertyChanged("contact");
             }
 
@@ -193,14 +189,14 @@ namespace cntrl.Curd
                 lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualList.Sum(x => x.credit);
             }
             else
-            { 
-                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualList.Sum(x => x.debit); 
+            {
+                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualList.Sum(x => x.debit);
             }
         }
 
         private void cbxCurrency_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            id_currency=(int)cbxCurrency.SelectedValue;
+            id_currency = (int)cbxCurrency.SelectedValue;
 
             //payment_schedualViewSource.View.Filter = i =>
             //{
@@ -215,8 +211,5 @@ namespace cntrl.Curd
             //    }
             //};
         }
-
-
     }
-
 }

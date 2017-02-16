@@ -1,11 +1,9 @@
-﻿using System;
+﻿using entity;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
 
 namespace cntrl.PanelAdv
 {
@@ -14,11 +12,9 @@ namespace cntrl.PanelAdv
     /// </summary>
     public partial class ActionPanel : UserControl
     {
-      
-      
-       public List<item_movement> item_movementOldList { get; set; }
+        public List<item_movement> item_movementOldList { get; set; }
         public List<item_movement> item_movementList { get; set; }
-        CollectionViewSource item_movementOldViewSource, item_movementViewSource;
+        private CollectionViewSource item_movementOldViewSource, item_movementViewSource;
 
         public ActionPanel()
         {
@@ -42,10 +38,6 @@ namespace cntrl.PanelAdv
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-           
-
         }
-
-
     }
 }

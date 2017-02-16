@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Media;
-
 
 namespace Cognitivo.Converters
 {
@@ -12,15 +10,15 @@ namespace Cognitivo.Converters
         {
             entity.payment_schedual.ActionsStatus ActionsStatus = (entity.payment_schedual.ActionsStatus)value;
 
-            if (ActionsStatus==entity.payment_schedual.ActionsStatus.Red)
+            if (ActionsStatus == entity.payment_schedual.ActionsStatus.Red)
             {
                 return new SolidColorBrush(Colors.Red);
             }
-           
+
             return new SolidColorBrush(Colors.Green);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

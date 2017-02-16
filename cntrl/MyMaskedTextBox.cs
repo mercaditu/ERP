@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace cntrl
@@ -9,6 +9,7 @@ namespace cntrl
     {
         //For Masking
         private MaskedTextProvider _mprovider = null;
+
         public string Mask
         {
             get
@@ -26,6 +27,7 @@ namespace cntrl
 
         //Some credentials
         private bool _ignoreSpace = true;
+
         public bool IgnoreSpace
         {
             get { return _ignoreSpace; }
@@ -56,7 +58,9 @@ namespace cntrl
             eInsertBack.RoutedEvent = KeyDownEvent;
             InputManager.Current.ProcessInput(eInsertBack);
         }
+
         private bool _InsertIsON = false;
+
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
@@ -69,11 +73,13 @@ namespace cntrl
 
         //inserted text will be valid/invalid
         private bool _NewTextIsOk = false;
+
         public bool NewTextIsOk
         {
             get { return _NewTextIsOk; }
             set { _NewTextIsOk = value; }
         }
+
         protected override void OnPreviewTextInput(TextCompositionEventArgs e)
         {
             System.ComponentModel.MaskedTextResultHint hint;
@@ -96,7 +102,6 @@ namespace cntrl
                 base.OnTextInput(e);
                 if (_mprovider.VerifyString(this.Text) == false) this.Text = PreviousText;
                 while (!_mprovider.IsEditPosition(this.CaretIndex) && _mprovider.Length > this.CaretIndex) this.CaretIndex++;
-
             }
             else
                 e.Handled = true;
@@ -104,11 +109,13 @@ namespace cntrl
 
         //prevent the control from losing the focus until the mask is full with valid data
         private bool _stayInFocusUntilValid = false;
+
         public bool StayInFocusUntilValid
         {
             get { return _stayInFocusUntilValid; }
             set { _stayInFocusUntilValid = value; }
         }
+
         protected override void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
             if (StayInFocusUntilValid)

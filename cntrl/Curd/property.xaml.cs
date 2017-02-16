@@ -14,11 +14,11 @@ namespace cntrl.Curd
     /// </summary>
     public partial class property : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
 
         public object curObject { get; set; }
@@ -28,7 +28,7 @@ namespace cntrl.Curd
         private entity.app_property _objapp_property = null;
         public entity.app_property objapp_property { get { return _objapp_property; } set { _objapp_property = value; } }
 
-        CollectionViewSource _app_propertyViewSource = null;
+        private CollectionViewSource _app_propertyViewSource = null;
         public CollectionViewSource app_propertyViewSource { get { return _app_propertyViewSource; } set { _app_propertyViewSource = value; } }
 
         private entity.dbContext objentity = null;

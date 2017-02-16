@@ -1,30 +1,29 @@
-﻿
-namespace cntrl.Reports.Finances
+﻿namespace cntrl.Reports.Finances
 {
     public static class SalesPayments
     {
         public static string query = @"
-            select 
+            select
             ps.id_payment_schedual as SchedualID,
-            c.name as Contact, 
-            c.code as Code, 
+            c.name as Contact,
+            c.code as Code,
             c.telephone as Telephone,
             c.address as Address,
-            c.gov_code as GovID, 
+            c.gov_code as GovID,
             si.number as Number,
             si.trans_date as Date,
-            contract.name as Contract, 
-            Conditions.name as Conditions, 
-            curr.name as Currency, 
+            contract.name as Contract,
+            Conditions.name as Conditions,
+            curr.name as Currency,
             fx.buy_value as CurrencyRate,
-            sum(ps.debit) as Debit, 
-            sum(ps.credit) as Credit, 
+            sum(ps.debit) as Debit,
+            sum(ps.credit) as Credit,
             sr.number as SalesReturn,
             p.number as Payment,
             pt.name as Type,
             ps.expire_date as ExpiryDate,
-            pd.trans_date as PaymentDate,  
-            fx2.buy_value as PaymentRate, 
+            pd.trans_date as PaymentDate,
+            fx2.buy_value as PaymentRate,
             curr2.name as Currency,
             ps.parent_id_payment_schedual as Parent
 
@@ -44,7 +43,7 @@ namespace cntrl.Reports.Finances
             left join app_currencyfx as fx2 on pd.id_currencyfx = fx2.id_currencyfx
             left join app_currency as curr2 on fx2.id_currency = curr2.id_currency
             where si.trans_date between @StartDate and @EndDate
-            group by ps.id_sales_invoice 
+            group by ps.id_sales_invoice
             order by ps.id_payment_schedual";
     }
 }

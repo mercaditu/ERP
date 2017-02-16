@@ -3,14 +3,14 @@
     public static class TransferSummary
 
     {
-        public static string query = @" select 
-                              it.trans_date as  Date, 
+        public static string query = @" select
+                              it.trans_date as  Date,
                               Origin.name as OriginL,
                               Destination.name as DestinationL,
                                Origin.name as OriginB,
                               Destination.name as DestinationB,
                               it.number as Transfer, it.comment as Comment, u.name as UserName, r.name as RequestedName,
-                              i.name as ItemName, i.code as ItemCode, 
+                              i.name as ItemName, i.code as ItemCode,
                               itd.quantity_destination as Quantity_D, itd.quantity_origin as Quantity_O,
 	                          (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag,
                               p.name as Project
@@ -29,15 +29,3 @@
                               order by it.trans_date";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

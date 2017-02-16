@@ -1,20 +1,19 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using entity;
-using System.Windows.Input;
+﻿using entity;
 using entity.BrilloQuery;
-using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace cntrl.Panels
 {
     public partial class pnl_ItemMovementExpiry : UserControl
     {
-
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
-        CollectionViewSource ExpiryInStockViewSource;
+        private CollectionViewSource ExpiryInStockViewSource;
         public int MovementID { get; set; }
 
         public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
@@ -39,8 +38,8 @@ namespace cntrl.Panels
                 LocationWhere = "and l.id_location = " + LocationID;
             }
 
-            string query = @"select * from(select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items, 
-                                im.code as BatchCode, im.expire_date as ExpiryDate, 
+            string query = @"select * from(select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items,
+                                im.code as BatchCode, im.expire_date as ExpiryDate,
                                 (im.credit - sum(IFNULL(child.debit,0))) as Balance
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
@@ -48,7 +47,7 @@ namespace cntrl.Panels
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                where ip.can_expire = true 
+                                where ip.can_expire = true
                                       @LocationWhere and l.id_company = @CompanyID
                                       and im.id_item_product = @ProductID
                                 group by im.id_movement
@@ -59,7 +58,7 @@ namespace cntrl.Panels
             query = query.Replace("@ProductID", ProductID.ToString());
             ExpiryInStockViewSource.Source = BatchCodeLoader(QueryExecutor.DT(query));
         }
-       
+
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             item_inventory_detailDataGrid.CancelEdit();
@@ -92,7 +91,7 @@ namespace cntrl.Panels
                 ExpiryInStock.Code = Convert.ToString(DataRow["Code"]);
                 ExpiryInStock.Items = Convert.ToString(DataRow["Items"]);
                 ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]);
-                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"] is DBNull?null: DataRow["ExpiryDate"]);
+                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"] is DBNull ? null : DataRow["ExpiryDate"]);
                 ExpiryInStock.Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"]);
 
                 ListOfStock.Add(ExpiryInStock);
@@ -100,8 +99,6 @@ namespace cntrl.Panels
 
             return ListOfStock;
         }
-
-       
     }
 
     public class ExpiryInStock
@@ -115,5 +112,4 @@ namespace cntrl.Panels
         public DateTime? ExpiryDate { get; set; }
         public decimal Balance { get; set; }
     }
-
 }

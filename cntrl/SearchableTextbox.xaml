@@ -1,15 +1,15 @@
 ﻿<UserControl x:Class="cntrl.SearchableTextbox" x:Name="SmartBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:cntrl"
              Loaded="UserControl_Loaded" PreviewKeyDown="SmartBox_PreviewKeyDown"
-             mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visi"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visi" />
     </UserControl.Resources>
     <Grid x:Name="MainGrid">
         <TextBox x:Name="TxtSearched" TextChanged="TextBoxTextChanged"
@@ -18,31 +18,31 @@
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
-                 Text="{Binding Text, Mode=TwoWay, 
-                                ElementName=SmartBox, 
-                                NotifyOnSourceUpdated=True, 
-                                NotifyOnTargetUpdated=True, 
-                                UpdateSourceTrigger=PropertyChanged}" Margin="0,1,0,-1"/>
-        <ToggleButton Width="24" Height="24" HorizontalAlignment="Right" BorderThickness="0" 
+                 Text="{Binding Text, Mode=TwoWay,
+                                ElementName=SmartBox,
+                                NotifyOnSourceUpdated=True,
+                                NotifyOnTargetUpdated=True,
+                                UpdateSourceTrigger=PropertyChanged}" Margin="0,1,0,-1" />
+        <ToggleButton Width="24" Height="24" HorizontalAlignment="Right" BorderThickness="0"
                       IsChecked="{Binding ElementName=DisplayPopup, Path=IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" Background="Gray"
                       Style="{StaticResource MetroCircleToggleButtonStyle}">
-            <TextBlock Text="L" VerticalAlignment="Top"/>
+            <TextBlock Text="L" VerticalAlignment="Top" />
         </ToggleButton>
         <Popup x:Name="DisplayPopup" IsOpen="False" Placement="Bottom" StaysOpen="False">
             <Border BorderThickness="4">
                 <Border.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFA3F4FF" Offset="0"/>
-                        <GradientStop Color="#FF0491CC" Offset="1"/>
+                        <GradientStop Color="#FFA3F4FF" Offset="0" />
+                        <GradientStop Color="#FF0491CC" Offset="1" />
                     </LinearGradientBrush>
                 </Border.BorderBrush>
                 <DataGrid x:Name="Grid" ItemsSource="{Binding}" IsReadOnly="True" EnableRowVirtualization="True" EnableColumnVirtualization="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
                             VirtualizingStackPanel.IsVirtualizing="True"
                               MaxHeight="300" MinWidth="128" AutoGenerateColumns="False"
-                              HorizontalAlignment="Stretch" CanUserAddRows="False" TabIndex="1" 
-                              MouseDoubleClick="Grid_MouseDoubleClick" >
-                    <DataGrid.Columns/>
+                              HorizontalAlignment="Stretch" CanUserAddRows="False" TabIndex="1"
+                              MouseDoubleClick="Grid_MouseDoubleClick">
+                    <DataGrid.Columns />
                 </DataGrid>
             </Border>
         </Popup>

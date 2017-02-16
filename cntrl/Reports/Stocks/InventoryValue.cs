@@ -1,15 +1,15 @@
 ﻿namespace cntrl.Reports.Stock
 {
-	public static class InventoryValue
-	{
-		public static string query = @" 	
+    public static class InventoryValue
+    {
+        public static string query = @"
 						select branch.name as Branch,
-								item.code as Code, 
+								item.code as Code,
 								item.name as Item,
-								inv.credit as Credit, 
-								inv.DebitChild, 
+								inv.credit as Credit,
+								inv.DebitChild,
 								inv.credit - inv.DebitChild as Balance,
-								UnitCost, 
+								UnitCost,
 								(UnitCost * (inv.credit - if(inv.DebitChild is null, 0, inv.DebitChild))) as TotalCost,
 								inv.trans_date as TransDate, (select max(value)
 										from item_price as price
@@ -21,15 +21,15 @@
 
 								from (
 								select item_movement.*, sum(val.unit_value) as UnitCost,
-								(select if(sum(debit) is null, 0, sum(debit)) 
-									from item_movement as mov 
+								(select if(sum(debit) is null, 0, sum(debit))
+									from item_movement as mov
 									where mov.parent_id_movement = item_movement.id_movement
-								  
+
 									) as DebitChild
 
-								from item_movement 
+								from item_movement
 								left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
-								where item_movement.id_company = @CompanyID and   item_movement.trans_date between '@StartDate' and '@EndDate' 
+								where item_movement.id_company = @CompanyID and   item_movement.trans_date between '@StartDate' and '@EndDate'
 								group by item_movement.id_movement
 								) as inv
 
@@ -39,14 +39,5 @@
 								inner join app_branch as branch on loc.id_branch = branch.id_branch
 								where inv.credit > 0
 								group by inv.id_movement";
-	}
+    }
 }
-
-
-
- 
-
-
- 
-
-

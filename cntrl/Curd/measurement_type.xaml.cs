@@ -13,7 +13,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class measurement_type : UserControl
     {
-        CollectionViewSource _app_measurement_typeViewSource = null;
+        private CollectionViewSource _app_measurement_typeViewSource = null;
         public CollectionViewSource app_measurement_typeViewSource { get { return _app_measurement_typeViewSource; } set { _app_measurement_typeViewSource = value; } }
 
         private entity.dbContext objentity = null;

@@ -1,18 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.ComponentModel;
-using System.Data.Entity.Validation;
+
 namespace cntrl.Curd
 {
     public partial class receive_payment : UserControl, INotifyPropertyChanged
     {
-        dbContext dbContext = new dbContext();
+        private dbContext dbContext = new dbContext();
 
         public sales_invoice sales_invoice { get; set; }
         public purchase_invoice purchase_invoice { get; set; }
@@ -20,6 +21,7 @@ namespace cntrl.Curd
         public string currency { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -63,7 +65,7 @@ namespace cntrl.Curd
                                                                         .Where(x => x.id_payment_detail == null
                                                                             && x.id_sales_invoice == sales_invoice.id_sales_invoice && (x.trans_date >= start_date && x.trans_date <= end_date)
                                                                             && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0).ToList();
-                    
+
                 if (payment_sceduallist.Count > 0)
                 {
                     invoice_total = payment_sceduallist.FirstOrDefault().AccountReceivableBalance;
@@ -97,7 +99,7 @@ namespace cntrl.Curd
                 if (dbContext.db.payment_schedual.Where(a => a.id_purchase_invoice == purchase_invoice.id_purchase_invoice && a.id_contact == purchase_invoice.id_contact).FirstOrDefault() != null)
                 {
                     payment_schedual payment_schedual = dbContext.db.payment_schedual.Where(a => a.id_purchase_invoice == purchase_invoice.id_purchase_invoice && a.id_contact == purchase_invoice.id_contact).FirstOrDefault();
-                    
+
                     if (invoice_total > 0)
                     {
                         payment_detail payment_detail = new payment_detail();
@@ -119,7 +121,6 @@ namespace cntrl.Curd
                                 MessageBox.Show("Please insert paymnent Type");
                                 return;
                             }
-
                         }
 
                         payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
@@ -177,7 +178,7 @@ namespace cntrl.Curd
                 if (PaymentDB.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault() != null)
                 {
                     payment_schedual payment_schedual = PaymentDB.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault();
-              
+
                     if (invoice_total > 0)
                     {
                         payment_detail payment_detail = new payment_detail();
@@ -198,7 +199,6 @@ namespace cntrl.Curd
                                 MessageBox.Show("Please insert paymnent Type");
                                 return;
                             }
-
                         }
 
                         payment_detail.IsSelected = true;
@@ -235,9 +235,8 @@ namespace cntrl.Curd
                         PaymentDB.payments.Add(payment);
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         payment_schedualList.Add(payment_schedual);
-                        PaymentDB.MakePayment(payment_schedualList, payment,true,true);
+                        PaymentDB.MakePayment(payment_schedualList, payment, true, true);
                         imgCancel_MouseDown(null, null);
-                   
                     }
                 }
                 else
@@ -249,8 +248,6 @@ namespace cntrl.Curd
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
-
         }
     }
 }
-

@@ -3,68 +3,67 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Cognitivo.Converters"
         xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-    
-        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
-        lex:LocalizeDictionary.DesignCulture="en-US" 
+        lex:LocalizeDictionary.DesignCulture="en-US"
         VerticalAlignment="Center"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.terminal"
         Width="300" Loaded="UserControl_Loaded"
     BorderBrush="#660099" BorderThickness="2">
     <UserControl.Resources>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <local:InitialsConverter x:Key="InitialsConverter"/>
-        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <local:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <local:InitialsConverter x:Key="InitialsConverter" />
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
         <Grid Background="#660099">
-            <Image Source="/cntrl;component/Images/Outline_White/workstation_filled-100.png" HorizontalAlignment="Left" 
-                   Margin="8,0" Height="32" Opacity="0.9"/>
-            <Label x:Name="lblTitle" Content="{lex:Loc Terminal}" FontSize="25" Foreground="White" Margin="50,0,0,0"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Image Source="/cntrl;component/Images/Outline_White/workstation_filled-100.png" HorizontalAlignment="Left"
+                   Margin="8,0" Height="32" Opacity="0.9" />
+            <Label x:Name="lblTitle" Content="{lex:Loc Terminal}" FontSize="25" Foreground="White" Margin="50,0,0,0" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <TextBlock Text="Terminals are located within a Branch used to invoice and emit documents." 
-                   Style="{StaticResource text_Instructions}"/>
-        
+        <TextBlock Text="Terminals are located within a Branch used to invoice and emit documents."
+                   Style="{StaticResource text_Instructions}" />
+
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{lex:Loc Terminal}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Terminal}" Style="{StaticResource input_label}" />
             <TextBox Style="{StaticResource input_textbox}" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
-                     metro:TextBoxHelper.SelectAllOnFocus="True"/>
+                     metro:TextBoxHelper.SelectAllOnFocus="True" />
 
-            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-            <TextBox Style="{StaticResource input_textbox}" 
+            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+            <TextBox Style="{StaticResource input_textbox}"
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                     Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
-            <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_branch" 
+            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
+            <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_branch"
                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                       metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                      ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" 
-                      SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
+                      ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
+                      SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
             <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
 </UserControl>

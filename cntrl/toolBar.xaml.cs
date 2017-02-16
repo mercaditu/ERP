@@ -1,23 +1,24 @@
-﻿using System.Data;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using entity;
 using System;
-using WPFLocalizeExtension.Extensions;
-using entity;
+using System.ComponentModel;
+using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.ComponentModel;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Threading.Tasks;
+using WPFLocalizeExtension.Extensions;
 
 namespace cntrl
-{  
+{
     public enum toolBarIcons { Basic, Filter, Admin, Impex, Project, Production }
+
     public partial class toolBarData
     {
-        DataTable dtIconList = new DataTable();
+        private DataTable dtIconList = new DataTable();
         public DataTable dtIconList_property { get { return dtIconList; } set { dtIconList = value; } }
+
         public toolBarData()
         {
             //create Columns to fill
@@ -34,7 +35,7 @@ namespace cntrl
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Save", "s");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Cancel", "c");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Delete", "d");
-            
+
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Approve", "j");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Annul", "k");
         }
@@ -45,12 +46,13 @@ namespace cntrl
         #region NotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        #endregion
+        #endregion NotifyPropertyChanged
 
         #region Window Style Tab Properites
 
@@ -69,6 +71,7 @@ namespace cntrl
                 }
             }
         }
+
         private bool _MultipleStyleForm = false;
 
         public bool IsSelected_GridView
@@ -85,6 +88,7 @@ namespace cntrl
                 }
             }
         }
+
         private bool _IsSelected_GridView = false;
 
         public bool IsSelected_FormView
@@ -101,21 +105,23 @@ namespace cntrl
                 }
             }
         }
+
         private bool _IsSelected_FormView = true;
 
+        #endregion Window Style Tab Properites
 
-        #endregion
-
-        private static readonly DependencyProperty IsEditabledProperty 
+        private static readonly DependencyProperty IsEditabledProperty
             = DependencyProperty.Register("IsEditable", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+
         public bool IsEditable
         {
             get { return (bool)GetValue(IsEditabledProperty); }
             set { SetValue(IsEditabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Delete_IsEnabledProperty 
+        private static readonly DependencyProperty Delete_IsEnabledProperty
             = DependencyProperty.Register("Delete_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+
         public bool Delete_IsEnabled
         {
             get { return (bool)GetValue(Delete_IsEnabledProperty); }
@@ -124,22 +130,25 @@ namespace cntrl
 
         private static readonly DependencyProperty Edit_IsEnabledProperty
             = DependencyProperty.Register("Edit_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
+
         public bool Edit_IsEnabled
         {
             get { return (bool)GetValue(Edit_IsEnabledProperty); }
             set { SetValue(Edit_IsEnabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Approve_IsEnabledProperty 
+        private static readonly DependencyProperty Approve_IsEnabledProperty
             = DependencyProperty.Register("Approve_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+
         public bool Approve_IsEnabled
         {
             get { return (bool)GetValue(Approve_IsEnabledProperty); }
             set { SetValue(Approve_IsEnabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Annul_IsEnabledProperty 
+        private static readonly DependencyProperty Annul_IsEnabledProperty
             = DependencyProperty.Register("Annul_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+
         public bool Annul_IsEnabled
         {
             get { return (bool)GetValue(Annul_IsEnabledProperty); }
@@ -147,8 +156,9 @@ namespace cntrl
         }
 
         #region "Status Properties & Events"
-        public static readonly DependencyProperty StatusProperty 
-            = DependencyProperty.Register("Status", typeof(string), typeof(toolBar), 
+
+        public static readonly DependencyProperty StatusProperty
+            = DependencyProperty.Register("Status", typeof(string), typeof(toolBar),
             new PropertyMetadata(OnStatusChangeCallBack));
 
         public string Status
@@ -177,7 +187,7 @@ namespace cntrl
             else if (Status == "Approved" || Status == "Issued" || Status == "Done")
             {
                 IsEditable = false;
-                if (appName==App.Names.Imports)
+                if (appName == App.Names.Imports)
                 {
                     Edit_IsEnabled = false;
                 }
@@ -185,7 +195,7 @@ namespace cntrl
                 {
                     Edit_IsEnabled = true;
                 }
-              
+
                 Delete_IsEnabled = false;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = true;
@@ -199,11 +209,14 @@ namespace cntrl
                 Annul_IsEnabled = false;
             }
         }
-        #endregion
+
+        #endregion "Status Properties & Events"
 
         #region "State Properties & Events"
-        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(toolBar), 
+
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(toolBar),
             new PropertyMetadata(OnStateChangeCallBack));
+
         public System.Data.Entity.EntityState State
         {
             get { return (System.Data.Entity.EntityState)GetValue(StateProperty); }
@@ -230,9 +243,11 @@ namespace cntrl
                 Edit_IsEnabled = true;
             }
         }
-        #endregion
+
+        #endregion "State Properties & Events"
 
         #region "Progress Bar Properties"
+
         public bool IsIndeterminate { get; set; }
         public int Maximum { get; set; }
         public int Value { get; set; }
@@ -251,8 +266,10 @@ namespace cntrl
                 }
             }
         }
+
         private Visibility _ProgressBar = Visibility.Collapsed;
-        #endregion
+
+        #endregion "Progress Bar Properties"
 
         public App.Names appName { get; set; }
 
@@ -260,7 +277,9 @@ namespace cntrl
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;
+
         public delegate void btnNew_ClickedEventHandler(object sender);
+
         public void btnNew_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -274,7 +293,9 @@ namespace cntrl
 
         //EDIT
         public event btnEdit_ClickedEventHandler btnEdit_Click;
+
         public delegate void btnEdit_ClickedEventHandler(object sender);
+
         public void btnEdit_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -287,7 +308,9 @@ namespace cntrl
 
         //DELETE
         public event btnDelete_ClickedEventHandler btnDelete_Click;
+
         public delegate void btnDelete_ClickedEventHandler(object sender);
+
         public void btnDelete_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -301,7 +324,9 @@ namespace cntrl
 
         //SAVE
         public event btnSave_ClickedEventHandler btnSave_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -315,7 +340,9 @@ namespace cntrl
 
         //CANCEL
         public event btnCancel_ClickedEventHandler btnCancel_Click;
+
         public delegate void btnCancel_ClickedEventHandler(object sender);
+
         public void btnCancel_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -329,7 +356,9 @@ namespace cntrl
 
         //APPROVE
         public event btnApprove_ClickedEventHandler btnApprove_Click;
+
         public delegate void btnApprove_ClickedEventHandler(object sender);
+
         private void btnApprove_MouseUp(object sender, EventArgs e)
         {
             toolIcon _toolicon = (toolIcon)sender;
@@ -339,7 +368,9 @@ namespace cntrl
 
         //ANULL
         public event btnAnull_ClickedEventHandler btnAnull_Click;
+
         public delegate void btnAnull_ClickedEventHandler(object sender);
+
         private void btnAnull_MouseUp(object sender, EventArgs e)
         {
             toolIcon _toolicon = (toolIcon)sender;
@@ -349,7 +380,9 @@ namespace cntrl
 
         //SEARCH - Filtering Entity Framework as DataView
         public event btnSearch_ClickedEventHandler btnSearch_Click;
+
         public delegate void btnSearch_ClickedEventHandler(object sender, string query);
+
         private void tbxSearchTextChanged(object sender, TextChangedEventArgs e)
         {
             btnSearch_Click?.Invoke(sender, tbxSearch.Text.Trim());
@@ -357,7 +390,9 @@ namespace cntrl
 
         //Sync Data (Brings new data into view.)
         public event btnSync_ClickedEventHandler btnSync_Click;
+
         public delegate void btnSync_ClickedEventHandler(object sender, EventArgs e);
+
         public void btnSync_MouseUp(object sender, EventArgs e)
         {
             btnSync_Click?.Invoke(this, null);
@@ -365,7 +400,8 @@ namespace cntrl
             Storyboard s = (Storyboard)TryFindResource("SyncSpin");
             s.Pause();
         }
-        #endregion
+
+        #endregion "Events"
 
         public toolBar()
         {
@@ -381,7 +417,7 @@ namespace cntrl
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
             }
         }
-        
+
         private void get_Icons(string mod_name, ref entity.Brillo.Security security)
         {
             toolBarData t = new toolBarData();
@@ -396,8 +432,8 @@ namespace cntrl
                 ico = check_Icons(ico, _toolTip, ref security);
 
                 if (ico != null && row["placement"].ToString() == "m")
-                { 
-                    if(_toolTip == "Delete")
+                {
+                    if (_toolTip == "Delete")
                     {
                         System.Windows.Shapes.Rectangle rect;
                         rect = new System.Windows.Shapes.Rectangle();
@@ -491,8 +527,8 @@ namespace cntrl
         }
 
         /// <summary>
-        /// Error messages are used when you have a Fatal Error Message for the user. 
-        /// Examples such as Conexion Timeout, . 
+        /// Error messages are used when you have a Fatal Error Message for the user.
+        /// Examples such as Conexion Timeout, .
         /// </summary>
         /// <param name="err">System Error Message</param>
         /// <remarks>Further Action should not be taken, until Error is resolved.</remarks>
@@ -506,7 +542,7 @@ namespace cntrl
         }
 
         /// <summary>
-        /// Question that needs User Input before code can continue. 
+        /// Question that needs User Input before code can continue.
         /// Simple Yes / No Buttons will appear.
         /// </summary>
         /// <param name="question">Question to be Asked.</param>
@@ -547,8 +583,8 @@ namespace cntrl
         }
 
         /// <summary>
-        /// Warning messages are used when you have a non-fatal message for the user. 
-        /// Examples such as Validation, Out of Stock Messages, etc. 
+        /// Warning messages are used when you have a non-fatal message for the user.
+        /// Examples such as Validation, Out of Stock Messages, etc.
         /// </summary>
         /// <param name="msg">Warning Message</param>
         /// <remarks>Further Action should not be taken, until Warning is resolved.</remarks>
@@ -573,7 +609,6 @@ namespace cntrl
         {
             stackMessages.Children.Remove(toolMessage);
         }
-
 
         /// <summary>
         /// Updates the IsSelected_GridView = True, this is used by the forms to update tab control.

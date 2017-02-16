@@ -1,19 +1,19 @@
 ﻿namespace cntrl.Reports.Purchase
 {
-   public static class PurchaseTender
+    public static class PurchaseTender
     {
-        public static string query = @" select pt.id_purchase_tender as TenderID, 
+        public static string query = @" select pt.id_purchase_tender as TenderID,
 pt.status,
-pt.name as Tender, 
+pt.name as Tender,
 pt.number AS Number,
 projects.name AS Project,
 app_currency.name as Currency,
  c.name as Supplier,
-condi.name as 'Condition', 
+condi.name as 'Condition',
 contract.name as Contract,
  pti.item_description as Items,
 ptd.unit_cost as Cost,
- pti.quantity as Quantity, 
+ pti.quantity as Quantity,
 pod.quantity as Ordered,
 pt.trans_date as Date
  from purchase_tender pt

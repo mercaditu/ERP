@@ -1,84 +1,83 @@
 ﻿<UserControl x:Class="cntrl.Curd.Geography"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Control="clr-namespace:cntrl.Controls"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
-             lex:LocalizeDictionary.DesignCulture="en-US" 
+             lex:LocalizeDictionary.DesignCulture="en-US"
              VerticalAlignment="Center"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              Width="360" Loaded="UserControl_Loaded"
              BorderBrush="RoyalBlue" BorderThickness="2">
     <UserControl.Resources>
-        <convert:InitialsConverter x:Key="InitialsConverter"/>
-        <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="app_geographyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
+        <convert:InitialsConverter x:Key="InitialsConverter" />
+        <convert:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <CollectionViewSource x:Key="app_geographyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
         <Grid Background="RoyalBlue">
-            <Image Source="/cntrl;component/Images/Outline_White/flag2_filled-100.png" 
-                       Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0"/>
-            <Label Content="{lex:Loc Geography}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Image Source="/cntrl;component/Images/Outline_White/flag2_filled-100.png"
+                       Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0" />
+            <Label Content="{lex:Loc Geography}" FontSize="25" Margin="50,0,0,0" Foreground="White" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <TextBlock Text="Define Geography" Style="{StaticResource text_Instructions}"/>
+        <TextBlock Text="Define Geography" Style="{StaticResource text_Instructions}" />
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-            <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}" 
-                      SelectedValue="{Binding type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                      SelectionChanged="cbxType_SelectionChanged"/>
-            <Label Content="{lex:Loc BelongsTo}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
+            <ComboBox x:Name="cbxType" Style="{StaticResource input_combobox}"
+                      SelectedValue="{Binding type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      SelectionChanged="cbxType_SelectionChanged" />
+            <Label Content="{lex:Loc BelongsTo}" Style="{StaticResource input_label}" />
 
             <Control:SmartBox_Geography x:Name="sbxGeo" Text="{Binding parent.name, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
-            
-            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+
+            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
             <TextBox Style="{StaticResource input_textbox}"
                         metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                         metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                         metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                         metro:TextBoxHelper.SelectAllOnFocus="True"
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
-                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,
+                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-            <Rectangle Fill="Silver" Margin="32,0" Height="1"/>
+            <Rectangle Fill="Silver" Margin="32,0" Height="1" />
             <StackPanel Orientation="Horizontal" Margin="8">
-                <Label Content="Longitud" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+                <Label Content="Longitud" Style="{StaticResource input_label}" VerticalAlignment="Center" />
                 <TextBox Style="{StaticResource input_textbox}" Width="64"
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
                         Text="{Binding geo_lang, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, StringFormat={}{0:N4},
-                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalAlignment="Center"/>
-                <Label Content="Latitud" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalAlignment="Center" />
+                <Label Content="Latitud" Style="{StaticResource input_label}" VerticalAlignment="Center" />
                 <TextBox Style="{StaticResource input_textbox}" Width="64"
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue" VerticalAlignment="Center"
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding geo_lat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, StringFormat={}{0:N4},
-                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             </StackPanel>
         </StackPanel>
 
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
+            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
 </UserControl>

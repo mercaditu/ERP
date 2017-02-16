@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class Decimal2Visibility : IValueConverter
+    internal class Decimal2Visibility : IValueConverter
     {
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -21,13 +19,13 @@ namespace Cognitivo.Converters
             {
                 try
                 {
-                    value= new string(number.Where(c => char.IsDigit(c)).ToArray());
+                    value = new string(number.Where(c => char.IsDigit(c)).ToArray());
                     decimal Amount = System.Convert.ToDecimal(value);
                     if (Amount > 0)
                     { return Visibility.Visible; }
                 }
-                catch(Exception ex)
-                { System.Windows.Forms.MessageBox.Show(ex.ToString());}
+                catch (Exception ex)
+                { System.Windows.Forms.MessageBox.Show(ex.ToString()); }
             }
             return Visibility.Collapsed;
         }

@@ -1,18 +1,17 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Linq;
-using System.Data.Entity;
-using System.Timers;
-using System.Collections.Generic;
 
 namespace cntrl.Chart
 {
     public partial class AccountReceivableControl : UserControl //, INotifyPropertyChanged
     {
-        CollectionViewSource payment_schedualViewSource;
-
+        private CollectionViewSource payment_schedualViewSource;
 
         public AccountReceivableControl()
         {
@@ -30,7 +29,7 @@ namespace cntrl.Chart
         }
 
         public void Load_BasicData(object sender, ElapsedEventArgs e)
-        {            
+        {
             using (db db = new db())
             {
                 List<payment_schedual> payment_schedualList = new List<payment_schedual>();
@@ -46,10 +45,8 @@ namespace cntrl.Chart
                     payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
                     if (payment_schedualViewSource != null)
                     { payment_schedualViewSource.Source = payment_schedualList; }
-
                 }));
             }
         }
     }
 }
-

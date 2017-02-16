@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using entity;
 
 namespace cntrl.Class
 {
@@ -36,10 +36,10 @@ namespace cntrl.Class
 
         public static security_crud getUserSecurityValues(int UserId, App.Names Application)
         {
-            using(db db = new db())
+            using (db db = new db())
             {
                 security_user security_user = db.security_user.Where(x => x.id_user == UserId).FirstOrDefault();
-                if(security_user != null)
+                if (security_user != null)
                 {
                     int id_role = security_user.id_role;
                     return db.security_curd.Where(x => x.id_role == id_role && x.id_application == Application).FirstOrDefault();

@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class terminal : UserControl
     {
-      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
-        CollectionViewSource _app_terminalViewSource = null;
+        private CollectionViewSource _app_terminalViewSource = null;
         public CollectionViewSource app_terminalViewSource { get { return _app_terminalViewSource; } set { _app_terminalViewSource = value; } }
 
         private entity.dbContext objentity = null;

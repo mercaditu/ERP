@@ -1,9 +1,9 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using entity;
-using System.ComponentModel;
 
 namespace cntrl.Controls
 {
@@ -13,6 +13,7 @@ namespace cntrl.Controls
         public decimal Rate_Current { get; set; }
         public int id_currency { get; set; }
         public App.Names appName { get; set; }
+
         public int SelectedValue
         {
             get
@@ -28,6 +29,7 @@ namespace cntrl.Controls
         public static DependencyProperty SelectedValueProperty = DependencyProperty.Register("SelectedValue", typeof(int), typeof(CurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
 
         #region "INotifyPropertyChanged"
+
         private static void OnCurrencyChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             CurrencyBox c = sender as CurrencyBox;
@@ -49,7 +51,8 @@ namespace cntrl.Controls
                 }
             }
         }
-        #endregion
+
+        #endregion "INotifyPropertyChanged"
 
         public CurrencyBox()
         {
@@ -79,12 +82,10 @@ namespace cntrl.Controls
             }
             else
             { Rate_Current = 0.0M; }
-
         }
 
         private async void lblExchangeValue_LostFocus(object sender, RoutedEventArgs e)
         {
-
             if (SelectedValue > 0)
             {
                 using (db db = new db())
@@ -110,7 +111,6 @@ namespace cntrl.Controls
                         }
                     }
                 }
-
             }
         }
 
@@ -172,6 +172,7 @@ namespace cntrl.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

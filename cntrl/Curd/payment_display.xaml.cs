@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using entity;
+using System;
 using System.Data.Entity;
-using entity;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace cntrl.Curd
 {
     public partial class payment_display : UserControl
     {
-        PaymentDB PaymentDB = new PaymentDB();
+        private PaymentDB PaymentDB = new PaymentDB();
 
         public enum Modes
         {
@@ -21,10 +20,10 @@ namespace cntrl.Curd
         }
 
         private Modes Mode;
-        CollectionViewSource paymentpayment_detailViewSource;
-        CollectionViewSource paymentViewSource;
+        private CollectionViewSource paymentpayment_detailViewSource;
+        private CollectionViewSource paymentViewSource;
 
-        //public int id_payment_schedual { get; set; } 
+        //public int id_payment_schedual { get; set; }
         public int _id_payment_detail { get; set; }
 
         public payment_display(Modes App_Mode, int? ContactID, int id_payment, int id_payment_detail)
@@ -39,24 +38,16 @@ namespace cntrl.Curd
             PaymentDB.payments.Where(x => x.id_payment == id_payment).Load();
             paymentViewSource.Source = PaymentDB.payments.Local;
 
-
-
-
-
-
-
-
             paymentViewSource.View.MoveCurrentToLast();
             filter_payment_detail();
-
         }
-        void filter_payment_detail()
+
+        private void filter_payment_detail()
         {
             if (paymentpayment_detailViewSource != null)
             {
                 if (paymentpayment_detailViewSource.View != null)
                 {
-
                     paymentpayment_detailViewSource.View.Filter = i =>
                     {
                         payment_detail payment_detail = (payment_detail)i;
@@ -66,7 +57,6 @@ namespace cntrl.Curd
                             return false;
                     };
                 }
-
             }
         }
 
@@ -88,8 +78,6 @@ namespace cntrl.Curd
 
         #region Events
 
-
-
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
@@ -97,7 +85,7 @@ namespace cntrl.Curd
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        #endregion
+        #endregion Events
 
         private void SaveChanges()
         {
@@ -105,10 +93,7 @@ namespace cntrl.Curd
             payment payment = paymentViewSource.View.CurrentItem as payment;
             //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
 
-
             PaymentDB.SaveChanges();
-
-
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,7 +116,7 @@ namespace cntrl.Curd
                         //If payment behaviour is Credit Note, then hide Account.
                         stpaccount.Visibility = Visibility.Collapsed;
 
-                        //Check Mode. 
+                        //Check Mode.
                         if (Mode == Modes.Payable)
                         {
                             //If Payable, then Hide->Sales and Show->Payment
@@ -214,7 +199,6 @@ namespace cntrl.Curd
         {
             try
             {
-
                 if (salesreturnComboBox.Data != null)
                 {
                     CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
@@ -226,7 +210,6 @@ namespace cntrl.Curd
 
                     if (payment_detail.value > return_value)
                     {
-
                         payment_detail.value = return_value;
                         payment_detail.RaisePropertyChanged("value");
                     }
@@ -243,16 +226,12 @@ namespace cntrl.Curd
             }
         }
 
-        #endregion
+        #endregion Purchase and Sales Returns
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SaveChanges();
             lblCancel_MouseDown(sender, null);
         }
-
-
-
-
     }
 }

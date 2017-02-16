@@ -11,11 +11,11 @@ namespace cntrl.Curd
 {
     public partial class Geography : UserControl
     {
-        CollectionViewSource _objCollectionViewSource = null;
+        private CollectionViewSource _objCollectionViewSource = null;
         //CollectionViewSource app_geographyViewSource = null;
 
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
-        
+
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
 

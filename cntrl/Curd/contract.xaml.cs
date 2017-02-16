@@ -1,25 +1,24 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class contract : UserControl
     {
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
         public object curObject { get; set; }
         public Class.clsCommon.Mode operationMode { get; set; }
 
-        CollectionViewSource _app_contractViewSource = null;
+        private CollectionViewSource _app_contractViewSource = null;
         public CollectionViewSource app_contractViewSource { get { return _app_contractViewSource; } set { _app_contractViewSource = value; } }
 
         private entity.dbContext _entity = null;
@@ -63,7 +62,6 @@ namespace cntrl
                 //        stackMain.DataContext = app_contractViewSource;
                 //    }
                 //}
-
             }
         }
 
@@ -74,11 +72,10 @@ namespace cntrl
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
-
                     app_contract app_contract = app_contractViewSource.View.CurrentItem as app_contract;
 
                     //Coefficient must always equal 1.
-                    if (app_contract.app_contract_detail.Sum(x=> x.coefficient) != 1)
+                    if (app_contract.app_contract_detail.Sum(x => x.coefficient) != 1)
                     {
                         //Play Animation
                         return;
@@ -103,6 +100,7 @@ namespace cntrl
                 throw ex;
             }
         }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             try

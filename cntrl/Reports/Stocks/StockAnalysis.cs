@@ -1,19 +1,19 @@
 ﻿namespace cntrl.Reports.Stock
 {
-	public static class StockAnalysis
+    public static class StockAnalysis
 
-	{
-		public static string query = @" 
-		select 
+    {
+        public static string query = @"
+		select
 		b.name as Brand,
-		bc.name as Branch, 
+		bc.name as Branch,
 		c.name as Supplier,
 		c.lead_time as LeadTime,
-		i.code as Code, 
+		i.code as Code,
 		i.name as Items,
 		ip.can_expire as CanExpire,
 		ip.stock_max as MaxStock,
-		ip.stock_min as SafetyStock, 
+		ip.stock_min as SafetyStock,
 		im.credit as Credit,
 		im.debit as Debit,
 		im.id_movement,
@@ -27,7 +27,7 @@
 		inner join item_product as ip on im.id_item_product = ip.id_item_product
 		inner join items as i on ip.id_item = i.id_item
 		left join (
-		select price.value, price.id_item, curr.name as Currency from item_price as price 
+		select price.value, price.id_item, curr.name as Currency from item_price as price
 		inner join item_price_list as plist on price.id_price_list = plist.id_price_list
 		inner join app_currency as curr on price.id_currency = curr.id_currency
 		where curr.is_priority
@@ -35,15 +35,5 @@
 		left join item_brand as b on i.id_brand = b.id_brand
 		left join contacts as c on b.id_contact = c.id_contact
 		where im.trans_date < '@EndDate'";
-	}
+    }
 }
-
-
-
- 
-
-
- 
-
-
-

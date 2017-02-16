@@ -1,17 +1,17 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class bank : UserControl
     {
-        CollectionViewSource _app_bankViewSource = null;
+        private CollectionViewSource _app_bankViewSource = null;
         public CollectionViewSource app_bankViewSource { get { return _app_bankViewSource; } set { _app_bankViewSource = value; } }
 
         private entity.dbContext objentity = null;

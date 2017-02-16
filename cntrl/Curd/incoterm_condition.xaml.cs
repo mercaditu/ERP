@@ -13,7 +13,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class incoterm_condition : UserControl
     {
-        CollectionViewSource _conditionViewSource = null;
+        private CollectionViewSource _conditionViewSource = null;
         public CollectionViewSource conditionViewSource { get { return _conditionViewSource; } set { _conditionViewSource = value; } }
 
         private entity.dbContext _entity = null;

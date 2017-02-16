@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace cntrl
@@ -13,7 +9,6 @@ namespace cntrl
         // We keep a static list of timers because if we only declare the timers
         // in the scope of the method, they might be garbage collected prematurely.
         private static IList<DispatcherTimer> timers = new List<DispatcherTimer>();
-
 
         public static void DelayedExecute(Action action, int delay = 2)
         {

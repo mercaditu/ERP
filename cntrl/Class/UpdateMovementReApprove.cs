@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using entity;
+﻿using entity;
 using entity.Brillo;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace cntrl.Class
 {
     public class UpdateMovementReApprove
     {
-
         /// <summary>
         /// Changes in Value of Item Movement Value.
         /// </summary>
@@ -65,9 +64,9 @@ namespace cntrl.Class
                                 }
                                 else
                                 {
-                                    if (Diff>0)
+                                    if (Diff > 0)
                                     {
-                                        //if   parent balance qunatity is greater then the diffrence then change the quantity     
+                                        //if   parent balance qunatity is greater then the diffrence then change the quantity
                                         if ((item_movement.parent.credit - item_movement.parent.child.Sum(x => x.debit)) > Diff)
                                         {
                                             item_movement.debit = LocalDetail.quantity;
@@ -94,9 +93,6 @@ namespace cntrl.Class
                                             Diff = 0;
                                         }
                                     }
-                                   
-
-
                                 }
                             }
                         }
@@ -110,7 +106,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
 
                     purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
                     foreach (purchase_invoice_detail purchase_invoice_detail in Local_purchase_invoice.purchase_invoice_detail)
@@ -130,7 +125,6 @@ namespace cntrl.Class
             }
         }
 
-
         public void QuantityDown(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
@@ -140,7 +134,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
 
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
                     foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
@@ -177,20 +170,16 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
                     foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurchaseInvoice.purchase_invoice_detail)
                     {
                         purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
                         if (Oldpurchase_invoice_detail != null)
                         {
-
                             decimal Diff = Oldpurchase_invoice_detail.quantity - purchase_invoice_detail.quantity;
 
                             if (Diff > 0)
                             {
-
-
                                 List<item_movement> MovementList = purchase_invoice_detail.item_movement.ToList();
 
                                 foreach (item_movement item_movement in MovementList)
@@ -198,13 +187,11 @@ namespace cntrl.Class
                                     if ((item_movement.credit - item_movement.child.Sum(x => x.debit)) > Diff)
                                     {
                                         item_movement.credit = purchase_invoice_detail.quantity;
-
                                     }
                                     else
                                     {
                                         foreach (var item in item_movement.child)
                                         {
-
                                             List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit > 0).ToList();
                                             foreach (item_movement _item_movement in item_movementList)
                                             {
@@ -217,21 +204,15 @@ namespace cntrl.Class
                                                     item.parent = null;
                                                 }
                                             }
-
                                         }
                                     }
-
-
                                 }
                             }
-
                         }
                     }
                 }
             }
         }
-
-
 
         public void DateChange(db db, int ID, App.Names Application)
         {
@@ -247,7 +228,6 @@ namespace cntrl.Class
                     }
                 }
             }
-
             else if (Application == App.Names.PurchaseInvoice)
             {
                 purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
@@ -290,7 +270,7 @@ namespace cntrl.Class
                             {
                                 sales_invoice_detail.app_location = db.app_location.Find(sales_invoice_detail.id_location);
                             }
-                        
+
                             List<StockList> Items_InStockLIST = stock.List(sales_invoice_detail.app_location.id_branch, (int)sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product);
 
                             db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -351,14 +331,12 @@ namespace cntrl.Class
                        purchase_invoice_detail.unit_cost,
                         "Purcahse Invoice Fix", item_movement_dimensionLIST,
                        purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code));
-
-
                         }
                     }
                 }
             }
-
         }
+
         public void DeleteMovement(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
@@ -375,7 +353,7 @@ namespace cntrl.Class
                         sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                         Oldsales_invoice_detail.IsSelected = true;
                     }
-                    foreach (sales_invoice_detail sales_invoice_detail in OriginalSalesInvoice.sales_invoice_detail.Where(x=>x.IsSelected==false))
+                    foreach (sales_invoice_detail sales_invoice_detail in OriginalSalesInvoice.sales_invoice_detail.Where(x => x.IsSelected == false))
                     {
                         db.item_movement.RemoveRange(db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail));
                     }
@@ -383,7 +361,6 @@ namespace cntrl.Class
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-
                 sales_invoice OriginalSalesInvoice;
 
                 using (db temp = new db())
@@ -401,16 +378,14 @@ namespace cntrl.Class
                         List<item_movement> ListItemMovement = db.item_movement.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).ToList();
                         foreach (item_movement item_movement in ListItemMovement)
                         {
-                            if (item_movement.child.Count()==0)
+                            if (item_movement.child.Count() == 0)
                             {
-
                                 db.item_movement.Remove(item_movement);
                             }
                             else
                             {
                                 foreach (var item in item_movement.child)
                                 {
-
                                     List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit > 0).ToList();
                                     foreach (item_movement _item_movement in item_movementList)
                                     {
@@ -423,17 +398,13 @@ namespace cntrl.Class
                                             item.parent = null;
                                         }
                                     }
-
                                 }
                                 db.item_movement.Remove(item_movement);
                             }
                         }
-                       
                     }
                 }
             }
-
         }
     }
 }
-

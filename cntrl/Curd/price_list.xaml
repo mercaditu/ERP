@@ -1,53 +1,53 @@
 ﻿<UserControl x:Class="cntrl.Curd.price_list"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             mc:Ignorable="d" 
-             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             mc:Ignorable="d"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
-             lex:LocalizeDictionary.DesignCulture="en-US" 
+             lex:LocalizeDictionary.DesignCulture="en-US"
              VerticalAlignment="Center"
              xmlns:local="clr-namespace:Cognitivo.Converters"
-             xmlns:entity="clr-namespace:entity;assembly=entity" 
+             xmlns:entity="clr-namespace:entity;assembly=entity"
              Width="320" Loaded="UserControl_Loaded"
              BorderBrush="#00cc99" BorderThickness="2">
     <UserControl.Resources>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
+        <local:ActiveValueConverter x:Key="ActiveValueConverter" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
         <Grid Background="#00cc99">
-            <Image Source="/cntrl;component/Images/Outline_White/price_tag_USD_filled-100.png" Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0"/>
-            <Label x:Name="lblTitle" Content="{lex:Loc PriceList}" Foreground="White" FontSize="25" Margin="50,0,0,0"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Image Source="/cntrl;component/Images/Outline_White/price_tag_USD_filled-100.png" Height="32" Opacity="0.9" HorizontalAlignment="Left" Margin="8,0" />
+            <Label x:Name="lblTitle" Content="{lex:Loc PriceList}" Foreground="White" FontSize="25" Margin="50,0,0,0" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <TextBlock Text="Define price lists here, like Retail, Holesale etc..." Style="{StaticResource text_Instructions}"/>
+        <TextBlock Text="Define price lists here, like Retail, Holesale etc..." Style="{StaticResource text_Instructions}" />
         <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
             <StackPanel HorizontalAlignment="Center">
-                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                <TextBox 
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                <TextBox
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
-                    Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
-                <CheckBox Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
+                    Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
+                <CheckBox Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}" />
             </StackPanel>
         </ScrollViewer>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
             <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
 </UserControl>

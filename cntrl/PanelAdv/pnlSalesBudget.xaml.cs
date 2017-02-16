@@ -1,20 +1,21 @@
-﻿using System.Linq;
+﻿using entity;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System;
 
 namespace cntrl.PanelAdv
 {
     public partial class pnlSalesBudget : UserControl
     {
-        CollectionViewSource sales_budgetViewSource;
+        private CollectionViewSource sales_budgetViewSource;
         public contact _contact { get; set; }
 
         public sales_order sales_order { get; set; }
         public db db { get; set; }
+
         public pnlSalesBudget()
         {
             InitializeComponent();
@@ -32,15 +33,14 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-
                 if (_contact != null)
                 {
                     load_SalesBudget(_contact.id_contact);
                 }
                 filter_sales();
-
             }
         }
+
         private void load_SalesBudget(int id_contact)
         {
             var salesBudget = (from sales_budget_detail in db.sales_budget_detail
@@ -54,20 +54,20 @@ namespace cntrl.PanelAdv
                                    sales_budget_detail = sales_budget_detail,
                                }
                                    into grouped
-                                   select new
-                                   {
-                                       id = grouped.Key.sales_budget_detail.id_sales_budget,
-                                       item = grouped.Key.sales_budget_detail.item_description,
-                                       quantity = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0,
-                                       balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
-                                   }).ToList()
-                 
+                               select new
+                               {
+                                   id = grouped.Key.sales_budget_detail.id_sales_budget,
+                                   item = grouped.Key.sales_budget_detail.item_description,
+                                   quantity = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0,
+                                   balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
+                               }).ToList()
+
                   .Select(x => x.id);
             sales_budgetViewSource = (CollectionViewSource)Resources["sales_budgetViewSource"];
             sales_budgetViewSource.Source = db.sales_budget.Where(x => salesBudget.Contains(x.id_sales_budget)).ToList();
-
         }
-        void filter_sales()
+
+        private void filter_sales()
         {
             if (sales_budgetViewSource != null)
             {
@@ -87,8 +87,11 @@ namespace cntrl.PanelAdv
                 }
             }
         }
+
         public event btnSave_ClickedEventHandler SalesBudget_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (SalesBudget_Click != null)
@@ -131,26 +134,19 @@ namespace cntrl.PanelAdv
                             continue;
                         }
 
-
                         sales_order.sales_order_detail.Add(sales_order_detail);
                     }
                 }
 
-
-
                 SalesBudget_Click(sender);
             }
-
         }
-
-
 
         private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
             sales_budget _sales_budget = ((DataGrid)sender).SelectedItem as sales_budget;
             int id_sales_budget = _sales_budget.id_sales_budget;
             DataGrid RowDataGrid = e.DetailsElement as DataGrid;
-
 
             var salesBudget = (from sales_budget_detail in db.sales_budget_detail
                                where sales_budget_detail.id_sales_budget == id_sales_budget
@@ -161,21 +157,17 @@ namespace cntrl.PanelAdv
                                group list by new
                                {
                                    sales_budget_detail = sales_budget_detail,
-
                                }
                                    into grouped
-                                   select new
-                                   {
-                                       item = grouped.Key.sales_budget_detail.item_description,
-                                       unitprice = grouped.Key.sales_budget_detail.unit_price > 0 ? grouped.Key.sales_budget_detail.unit_price : 0,
-                                       balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
-
-                                   }).ToList();
+                               select new
+                               {
+                                   item = grouped.Key.sales_budget_detail.item_description,
+                                   unitprice = grouped.Key.sales_budget_detail.unit_price > 0 ? grouped.Key.sales_budget_detail.unit_price : 0,
+                                   balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
+                               }).ToList();
 
             RowDataGrid.ItemsSource = salesBudget;
-
         }
-
 
         private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
         {
@@ -194,7 +186,5 @@ namespace cntrl.PanelAdv
                 contactComboBox.Text = sales_budget.number;
             }
         }
-
-
     }
 }

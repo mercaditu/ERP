@@ -1,12 +1,12 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace cntrl
 {
@@ -15,11 +15,11 @@ namespace cntrl
     /// </summary>
     public partial class hr_position : UserControl
     {
-        CollectionViewSource _objCollectionViewSource = null;
+        private CollectionViewSource _objCollectionViewSource = null;
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
 
         public dbContext entity { get; set; }
-      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         private entity.hr_position _hr_positionobj = null;
         public entity.hr_position hr_positionobject { get { return _hr_positionobj; } set { _hr_positionobj = value; } }
@@ -83,7 +83,7 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
-                    btnCancel_Click(sender,e);
+                    btnCancel_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -102,24 +102,18 @@ namespace cntrl
             //    btnSave_Click(sender, e);
             //}
         }
-      
 
         private void sbxContact_Select(object sender, RoutedEventArgs e)
         {
             entity.hr_position hr_position = objCollectionViewSource.View.CurrentItem as entity.hr_position;
             if (sbxContact.ContactID > 0)
             {
-
                 if (hr_position != null)
                 {
                     contact contact = entity.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     hr_position.id_contact = contact.id_contact;
                     hr_position.contact = contact;
                 }
-
-
-
-
             }
         }
     }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
@@ -15,17 +15,16 @@ namespace cntrl.Curd
     public partial class projecttemplate : UserControl
     {
         public bool isValid { get; set; }
-        CollectionViewSource _projecttemplateViewSource = null;
+        private CollectionViewSource _projecttemplateViewSource = null;
         public CollectionViewSource projecttemplateViewSource { get { return _projecttemplateViewSource; } set { _projecttemplateViewSource = value; } }
 
-        CollectionViewSource _projecttemplatedetailViewSource = null;
+        private CollectionViewSource _projecttemplatedetailViewSource = null;
         public CollectionViewSource projecttemplatedetailViewSource { get { return _projecttemplatedetailViewSource; } set { _projecttemplatedetailViewSource = value; } }
 
-       // entity.Properties.Settings _settings = new entity.Properties.Settings();
+        // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         private Class.clsCommon.Mode _operationMode = 0;
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
-
 
         private entity.project_template _projecttemplateobject = null;
         public entity.project_template projecttemplateobject { get { return _projecttemplateobject; } set { _projecttemplateobject = value; } }
@@ -47,6 +46,7 @@ namespace cntrl.Curd
         {
             InitializeComponent();
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (EnterMode == Mode.Edit)
@@ -62,18 +62,17 @@ namespace cntrl.Curd
                 stpDisplay.IsEnabled = true;
                 btnSave.IsEnabled = true;
             }
-            
+
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.project project = new entity.project();
 
-              
                 if (operationMode == Class.clsCommon.Mode.Add)
                 {
-                   // entity.project_template newItem = new entity.project_template();
-                   // newItem.IsSelected = true;
-                   ////  newItem.status = Status.Documents_General.Approved;
-                   // _entity.project_template.Add(newItem);
+                    // entity.project_template newItem = new entity.project_template();
+                    // newItem.IsSelected = true;
+                    ////  newItem.status = Status.Documents_General.Approved;
+                    // _entity.project_template.Add(newItem);
                     _projecttemplateViewSource.View.MoveCurrentTo(projecttemplateobject);
                 }
                 else
@@ -101,19 +100,17 @@ namespace cntrl.Curd
                     //    entity.project_template_detail.Add(n_project_template);
                     //    entity.SaveChanges();
                     //}
-                    
-                       // projecttemplatedetailViewSource.View.Filter = null;
 
-                        filter_task();
-                        
-                    
-                 
-                   // btnCancel_Click(sender, e);
+                    // projecttemplatedetailViewSource.View.Filter = null;
+
+                    filter_task();
+
+                    // btnCancel_Click(sender, e);
                     Grid parentGrid = (Grid)Parent;
                     parentGrid.Children.Clear();
                     parentGrid.Visibility = Visibility.Hidden;
                     projecttemplateViewSource.View.Refresh();
-                   // projecttemplatedetailViewSource.View.Refresh();
+                    // projecttemplatedetailViewSource.View.Refresh();
                 }
             }
             catch (Exception ex)
@@ -121,6 +118,7 @@ namespace cntrl.Curd
                 throw ex;
             }
         }
+
         public void filter_task()
         {
             if (projecttemplatedetailViewSource.View != null)
@@ -135,6 +133,7 @@ namespace cntrl.Curd
                 };
             }
         }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             entity.CancelAllChanges();

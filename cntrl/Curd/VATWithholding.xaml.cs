@@ -1,24 +1,25 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class VATWithholding : UserControl
     {
-        List<object> _invoiceList = null;
+        private List<object> _invoiceList = null;
         public List<object> invoiceList { get { return _invoiceList; } set { _invoiceList = value; } }
 
         public PaymentDB PaymentDB { get; set; }
 
         //Change to List. We will need to add multiple payment scheduals.
         public payment_schedual payment_schedual { get; set; }
+
         public decimal percentage { get; set; }
+
         public enum Mode
         {
             Add,
@@ -85,7 +86,6 @@ namespace cntrl
                 payment_withholding_tax.trans_date = (DateTime)DtpTransdate.SelectedDate;
                 payment_withholding_tax.expire_date = (DateTime)DtpTransdate.SelectedDate;
 
-
                 payment_withholding_detail payment_withholding_details = new payment_withholding_detail();
                 if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice) || _invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
                 {
@@ -96,7 +96,6 @@ namespace cntrl
                 {
                     purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
                     payment_withholding_details.id_purchase_invoice = purchase_invoice.id_purchase_invoice;
-
                 }
 
                 payment_withholding_tax.payment_withholding_detail.Add(payment_withholding_details);
@@ -158,14 +157,11 @@ namespace cntrl
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
             if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
             {
                 sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
                 if (sales_invoice.GrandTotal > 0)
                 {
-
-
                     if (sales_invoice.vatwithholdingpercentage > 0)
                     {
                         percentage = sales_invoice.vatwithholdingpercentage;
@@ -175,14 +171,12 @@ namespace cntrl
                             {
                                 lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)) * percentage, 4);
                             }
-
                         }
                         else
                         {
                             MessageBox.Show("not Exceed to Hundred %");
                             lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
                         }
-
                     }
                     else
                     {
@@ -192,17 +186,12 @@ namespace cntrl
             }
             else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
             {
-
-
                 purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
                 if (purchase_invoice.GrandTotal > 0)
                 {
                     lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
                 }
-
             }
         }
-
-
     }
 }

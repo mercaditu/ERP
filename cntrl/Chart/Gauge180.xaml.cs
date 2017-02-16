@@ -17,8 +17,8 @@ namespace cntrl.Chart
                 //OnPropertyChanged("Value");
             }
         }
-        private double _value;
 
+        private double _value;
 
         public Func<double, string> Formatter { get; set; }
 
@@ -34,7 +34,6 @@ namespace cntrl.Chart
 
         private void MoveOnClick(object sender, System.Windows.RoutedEventArgs e)
         {
-
         }
     }
 }

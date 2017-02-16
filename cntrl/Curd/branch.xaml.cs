@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class branch : UserControl
     {
-        CollectionViewSource _branchViewSource = null;
+        private CollectionViewSource _branchViewSource = null;
         public CollectionViewSource app_branchViewSource { get { return _branchViewSource; } set { _branchViewSource = value; } }
 
         private entity.dbContext _entity = null;
@@ -31,7 +29,6 @@ namespace cntrl
 
                 CollectionViewSource app_vatViewSource = ((CollectionViewSource)(this.FindResource("app_vatViewSource")));
                 app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-              
             }
         }
 
@@ -44,7 +41,7 @@ namespace cntrl
             {
                 CurrentSession.Id_Branch = entity.db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_branch;
             }
-                 
+
             btnCancel_Click(sender, e);
         }
 

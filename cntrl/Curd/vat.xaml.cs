@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class vat : UserControl
     {
-        CollectionViewSource _app_vatViewSource = null;
+        private CollectionViewSource _app_vatViewSource = null;
         public CollectionViewSource app_vatViewSource { get { return _app_vatViewSource; } set { _app_vatViewSource = value; } }
 
         private entity.dbContext objentity = null;

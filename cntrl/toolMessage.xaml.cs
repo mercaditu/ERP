@@ -1,19 +1,18 @@
-﻿using WPFLocalizeExtension.Extensions;
-using System;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Controls;
-using System.Windows;
+﻿using System;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
-using System.Threading.Tasks;
+using WPFLocalizeExtension.Extensions;
 
 namespace cntrl
 {
     public partial class toolMessage : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -32,45 +31,47 @@ namespace cntrl
             msgWarning,
             msgDeleted
         }
-        public enum msgAnswer 
-        { 
-            Yes, 
-            No, 
-            Cancel 
+
+        public enum msgAnswer
+        {
+            Yes,
+            No,
+            Cancel
         }
 
-        public msgType _msgType { get;  set; }
+        public msgType _msgType { get; set; }
         public msgAnswer _msgAnswer { get; set; }
         public Exception _ex { get; set; }
 
-        public string shortMessage 
+        public string shortMessage
         {
-            get 
-            { 
+            get
+            {
                 return _shortMessage;
             }
             set
             {
                 _shortMessage = LocalizeDictionary.Instance.GetLocalizedObject(value, null, LocalizeDictionary.Instance.Culture).ToString();
                 RaisePropertyChanged("shortMessage");
-            } 
+            }
         }
+
         private string _shortMessage;
 
-        public string longMessage 
+        public string longMessage
         {
             get
             {
                 return _longMessage;
             }
-            set 
+            set
             {
                 _longMessage = value;
                 RaisePropertyChanged("longMessage");
             }
-        } 
-        private string _longMessage;
+        }
 
+        private string _longMessage;
 
         public toolMessage(msgType _msgType)
         {
@@ -170,9 +171,10 @@ namespace cntrl
             }
         }
 
-
         public event btnHelp_ClickedEventHandler btnHelp_Click;
+
         public delegate void btnHelp_ClickedEventHandler(object sender);
+
         private void btnHelp_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (btnHelp_Click != null)
@@ -182,7 +184,9 @@ namespace cntrl
         }
 
         public event btnYes_ClickedEventHandler btnYes_Click;
+
         public delegate void btnYes_ClickedEventHandler(object sender);
+
         private void btnYes_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (btnYes_Click != null)
@@ -192,7 +196,9 @@ namespace cntrl
         }
 
         public event btnNo_ClickedEventHandler btnNo_Click;
+
         public delegate void btnNo_ClickedEventHandler(object sender);
+
         private void btnNo_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (btnNo_Click != null)
@@ -202,7 +208,9 @@ namespace cntrl
         }
 
         public event btnClose_ClickedEventHandler btnClose_Click;
+
         public delegate void btnClose_ClickedEventHandler(object sender, EventArgs e);
+
         private void btnClose_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (btnClose_Click != null)
@@ -214,7 +222,7 @@ namespace cntrl
         //private async void OnClose_MsgBox()
         //{
         //    await Task.Delay(TimeSpan.FromSeconds(5));
-            
+
         //    //Storyboard animate = (Storyboard)FindResource("OnClose");
         //    //animate.Begin();
         //    closeMsgBox(null, null);
@@ -224,7 +232,7 @@ namespace cntrl
         {
             StackPanel stackMessages = Parent as StackPanel;
             int i = stackMessages.Children.IndexOf(this);
-            if(i >= 0)
+            if (i >= 0)
             {
                 stackMessages.Children.RemoveAt(i);
             }

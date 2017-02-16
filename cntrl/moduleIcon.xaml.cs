@@ -13,6 +13,7 @@ namespace cntrl
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty imgSourceProperty =
             DependencyProperty.Register("imgSource", typeof(ImageSource), typeof(moduleIcon));
+
         public ImageSource imgSource
         {
             get { return (ImageSource)GetValue(imgSourceProperty); }
@@ -23,20 +24,22 @@ namespace cntrl
         public static readonly DependencyProperty ModuleNameProperty =
             DependencyProperty.Register("ModuleName", typeof(string), typeof(moduleIcon),
             new FrameworkPropertyMetadata(string.Empty));
+
         public string ModuleName
         {
             get { return Convert.ToString(GetValue(ModuleNameProperty)); }
             set { SetValue(ModuleNameProperty, value); }
         }
 
-        bool _IsChecked = false;
+        private bool _IsChecked = false;
+
         public bool IsChecked
         {
-            get 
-            { 
+            get
+            {
                 return _IsChecked;
-            } 
-            set 
+            }
+            set
             {
                 _IsChecked = value;
                 OnPropertyChanged("IsChecked");
@@ -44,12 +47,13 @@ namespace cntrl
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        #endregion
+        #endregion "Properties"
 
         public moduleIcon()
         {
@@ -64,6 +68,6 @@ namespace cntrl
                 module.IsChecked = false;
             }
             IsChecked = true;
-        }      
+        }
     }
 }

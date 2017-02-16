@@ -2,17 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace cntrl.Controls
 {
@@ -34,9 +29,10 @@ namespace cntrl.Controls
             areaViewSource = ((CollectionViewSource)(FindResource("areaViewSource")));
         }
 
-        entity.db db = new entity.db();
+        private entity.db db = new entity.db();
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Geography));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -45,14 +41,15 @@ namespace cntrl.Controls
 
         public int GeographyID { get; set; }
 
-        int company_ID = CurrentSession.Id_Company;
-        Task taskSearch;
-        CancellationTokenSource tokenSource;
-        CancellationToken token;
+        private int company_ID = CurrentSession.Id_Company;
+        private Task taskSearch;
+        private CancellationTokenSource tokenSource;
+        private CancellationToken token;
 
-        CollectionViewSource continentViewSource, countryViewSource, stateViewSource, cityViewSource, areaViewSource;
+        private CollectionViewSource continentViewSource, countryViewSource, stateViewSource, cityViewSource, areaViewSource;
 
         public event RoutedEventHandler Select;
+
         private void GeographyGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGrid GeoDGV = (DataGrid)sender;
@@ -126,8 +123,8 @@ namespace cntrl.Controls
         {
             FocusNavigationDirection focusDirecction = new FocusNavigationDirection();
 
-            DataGrid DataGrid = (DataGrid) sender;
-            entity.app_geography app_geography = (entity.app_geography) DataGrid.SelectedItem;
+            DataGrid DataGrid = (DataGrid)sender;
+            entity.app_geography app_geography = (entity.app_geography)DataGrid.SelectedItem;
 
             if (e.Key == Key.Right)
             {

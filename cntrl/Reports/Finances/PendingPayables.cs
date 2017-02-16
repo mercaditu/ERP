@@ -1,5 +1,4 @@
-﻿
-namespace cntrl.Reports.Finance
+﻿namespace cntrl.Reports.Finance
 {
     public static class PendingPayables
     {
@@ -14,15 +13,15 @@ namespace cntrl.Reports.Finance
 								DATE_FORMAT(schedual.expire_date,'%d %b %y') as ExpiryDate,
 								curr.name as CurrencyName,
 								fx.buy_value as Rate,
-								schedual.credit as Value, 
-								schedual.DebitChild as Paid, 
+								schedual.credit as Value,
+								schedual.DebitChild as Paid,
 								(schedual.credit - schedual.DebitChild) as Balance,
 								schedual.trans_date as TransDate
 
 								from(
 								select
 									parent.*,
-									( select if(sum(debit) is null, 0, sum(debit)) 
+									( select if(sum(debit) is null, 0, sum(debit))
 									from payment_schedual as child where child.parent_id_payment_schedual = parent.id_payment_schedual
 									) as DebitChild
 								from payment_schedual as parent
@@ -42,5 +41,3 @@ namespace cntrl.Reports.Finance
 								order by schedual.expire_date";
     }
 }
-
-

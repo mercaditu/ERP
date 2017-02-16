@@ -1,22 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
-using System.Data.Entity;
 
 namespace cntrl
 {
     public partial class measurement : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
 
         public object curObject { get; set; }
@@ -26,7 +26,7 @@ namespace cntrl
         private entity.app_measurement _objapp_measurement = null;
         public entity.app_measurement objapp_measurement { get { return _objapp_measurement; } set { _objapp_measurement = value; } }
 
-        CollectionViewSource _app_measurementViewSource = null;
+        private CollectionViewSource _app_measurementViewSource = null;
         public CollectionViewSource app_measurementViewSource { get { return _app_measurementViewSource; } set { _app_measurementViewSource = value; } }
 
         private entity.dbContext objentity = null;

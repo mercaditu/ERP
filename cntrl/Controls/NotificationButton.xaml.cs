@@ -10,6 +10,7 @@ namespace cntrl.Controls
         /// </summary>
         private static readonly DependencyProperty NumberProperty
             = DependencyProperty.Register("Number", typeof(int), typeof(NotificationButton), new PropertyMetadata());
+
         public int Number
         {
             get { return (int)GetValue(NumberProperty); }
@@ -21,18 +22,19 @@ namespace cntrl.Controls
         /// </summary>
         private static readonly DependencyProperty TextProperty
             = DependencyProperty.Register("Text", typeof(string), typeof(NotificationButton), new PropertyMetadata());
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(NumberProperty, value); }
         }
 
-
         /// <summary>
         /// Sets the Icon for the Button. Based on Cognitivo Font.
         /// </summary>
         private static readonly DependencyProperty IconProperty
             = DependencyProperty.Register("Icon", typeof(string), typeof(NotificationButton), new PropertyMetadata());
+
         public string Icon
         {
             get { return (string)GetValue(IconProperty); }
@@ -40,6 +42,7 @@ namespace cntrl.Controls
         }
 
         public event RoutedEventHandler Click;
+
         private void NotificationIcon_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)

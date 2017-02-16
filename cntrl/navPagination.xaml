@@ -1,26 +1,26 @@
 ﻿<UserControl x:Class="cntrl.navPagination" x:Name="navPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en-US"
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
              mc:Ignorable="d" d:DesignHeight="32" d:DesignWidth="128">
     <Grid Background="{DynamicResource AccentColor_Brush}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="False" Grid.ColumnSpan="2" Margin="3">
             <Label Content=""  Cursor="Hand" Opacity="0.64" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="Black"
-                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnFirstPage_Click"/>
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnFirstPage_Click" />
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1" Cursor="Hand" FontFamily="/cntrl;component/Resources/#cognitivo"
-                   Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnPreviousPage_Click"/>
-            <Label Name="lblPageIndex" Content="{Binding ElementName=root, Path=PageIndex, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
-            <Label Content="-"/>
-            <Label Name="lblNumberOfPages" Content="{Binding ElementName=root, Path=NumberOfPages, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                   Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnPreviousPage_Click" />
+            <Label Name="lblPageIndex" Content="{Binding ElementName=root, Path=PageIndex, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
+            <Label Content="-" />
+            <Label Name="lblNumberOfPages" Content="{Binding ElementName=root, Path=NumberOfPages, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1"  Cursor="Hand" Foreground="Black" FontFamily="/cntrl;component/Resources/#cognitivo"
-                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnNextPage_Click"/>
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnNextPage_Click" />
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="0.64"  Cursor="Hand" Foreground="Black" MouseUp="btnLastPage_Click" FontFamily="/cntrl;component/Resources/#cognitivo"
-                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"/>
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" />
         </StackPanel>
     </Grid>
 </UserControl>

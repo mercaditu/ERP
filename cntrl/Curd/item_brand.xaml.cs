@@ -5,22 +5,21 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
 
 namespace cntrl.Curd
 {
     public partial class item_brand : UserControl
     {
-        entity.db db = new entity.db();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.db db = new entity.db();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
         public object curObject { get; set; }
         public Class.clsCommon.Mode operationMode { get; set; }
 
-        CollectionViewSource _item_brandViewSource;
+        private CollectionViewSource _item_brandViewSource;
         public CollectionViewSource item_brandViewSource { get { return _item_brandViewSource; } set { _item_brandViewSource = value; } }
 
         private entity.dbContext objentity = null;
@@ -38,7 +37,6 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-
                 entity.item_brand _item_brand = null;
 
                 if (!isExternalCall)
@@ -65,7 +63,6 @@ namespace cntrl.Curd
                         stackMain.DataContext = item_brandViewSource;
                         _item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
                     }
-                  
                 }
 
                 if (_item_brand.contact != null)
@@ -76,10 +73,9 @@ namespace cntrl.Curd
                 {
                     using (entity.db _db = new entity.db())
                     {
-                        sbxContact.Text = _db.contacts.Where( x => x.id_contact == _item_brand.id_contact).Select(y => y.name).FirstOrDefault();
+                        sbxContact.Text = _db.contacts.Where(x => x.id_contact == _item_brand.id_contact).Select(y => y.name).FirstOrDefault();
                     }
                 }
-
             }
         }
 
@@ -154,7 +150,7 @@ namespace cntrl.Curd
                 entity.contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 if (contact != null && item_brand != null)
                 {
-                    item_brand.id_contact = contact.id_contact;   
+                    item_brand.id_contact = contact.id_contact;
                 }
                 else
                 {

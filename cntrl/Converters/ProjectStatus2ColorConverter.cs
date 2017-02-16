@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Media;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Cognitivo.Converters
 {
@@ -14,7 +14,7 @@ namespace Cognitivo.Converters
             {
                 return Brushes.PaleGreen;
             }
-            else if(status == entity.Status.Project.Approved)
+            else if (status == entity.Status.Project.Approved)
             {
                 return Brushes.LimeGreen;
             }
@@ -36,7 +36,7 @@ namespace Cognitivo.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

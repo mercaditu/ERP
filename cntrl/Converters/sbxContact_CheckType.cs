@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 
 namespace cntrl.Converters
 {
-    class sbxContact_CheckType : IValueConverter
+    internal class sbxContact_CheckType : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             //string val = (string)value;
-
 
             //if (val.Contains("Code") && (int)parameter == 1)
             //{
@@ -33,8 +28,6 @@ namespace cntrl.Converters
             //{
             //    return true;
             //}
-
-     
 
             return false;
         }

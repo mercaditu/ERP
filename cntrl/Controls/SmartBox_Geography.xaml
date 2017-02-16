@@ -1,21 +1,21 @@
 ﻿<UserControl x:Class="cntrl.Controls.SmartBox_Geography" x:Name="_SmartBox_Geography"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                 xmlns:entity="clr-namespace:entity;assembly=entity"
-                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+                xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
-                lex:LocalizeDictionary.DesignCulture="en-US" 
+                lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="continentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
-        <CollectionViewSource x:Key="countryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
-        <CollectionViewSource x:Key="stateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
-        <CollectionViewSource x:Key="cityViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
-        <CollectionViewSource x:Key="areaViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}"/>
+        <CollectionViewSource x:Key="continentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
+        <CollectionViewSource x:Key="countryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
+        <CollectionViewSource x:Key="stateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
+        <CollectionViewSource x:Key="cityViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
+        <CollectionViewSource x:Key="areaViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_geography}, CreateList=True}" />
     </UserControl.Resources>
     <Grid>
         <!-- TextBox for Searching -->
@@ -24,53 +24,53 @@
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
-                 metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
-                 KeyUp="StartSearch"/>
+                 metro:TextBoxHelper.Watermark="{lex:Loc Search}"
+                 KeyUp="StartSearch" />
 
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
-                            Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
+                            Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False" />
         <!-- Search Icon -->
-        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
-               HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0"
+               HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}" />
 
-        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" VerticalAlignment="Center" Margin="0" 
-               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" VerticalAlignment="Center" Margin="0"
+               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}" />
 
         <Popup x:Name="ContactPopUp" IsOpen="False">
             <Border Background="White">
                 <Border.Effect>
-                    <DropShadowEffect ShadowDepth="1" Direction="270" Opacity="0.8"/>
+                    <DropShadowEffect ShadowDepth="1" Direction="270" Opacity="0.8" />
                 </Border.Effect>
                 <StackPanel Orientation="Horizontal">
-                    <DataGrid x:Name="DgContinent" Width="89" ItemsSource="{Binding Source={StaticResource continentViewSource}}" 
+                    <DataGrid x:Name="DgContinent" Width="89" ItemsSource="{Binding Source={StaticResource continentViewSource}}"
                               AutoGenerateColumns="False" CanUserAddRows="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Continent" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Continent" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="DgCountry" Width="89" ItemsSource="{Binding Source={StaticResource countryViewSource}}" 
+                    <DataGrid x:Name="DgCountry" Width="89" ItemsSource="{Binding Source={StaticResource countryViewSource}}"
                               AutoGenerateColumns="False" CanUserAddRows="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Country" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Country" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="DgState" Width="89" ItemsSource="{Binding Source={StaticResource stateViewSource}}" 
+                    <DataGrid x:Name="DgState" Width="89" ItemsSource="{Binding Source={StaticResource stateViewSource}}"
                               AutoGenerateColumns="False" CanUserAddRows="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="State" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="State" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid  x:Name="DgCity" Width="89" ItemsSource="{Binding Source={StaticResource cityViewSource}}" 
+                    <DataGrid  x:Name="DgCity" Width="89" ItemsSource="{Binding Source={StaticResource cityViewSource}}"
                                AutoGenerateColumns="False" CanUserAddRows="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="City" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="DgArea" Width="89" ItemsSource="{Binding Source={StaticResource areaViewSource}}" 
+                    <DataGrid x:Name="DgArea" Width="89" ItemsSource="{Binding Source={StaticResource areaViewSource}}"
                               AutoGenerateColumns="False" CanUserAddRows="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Area" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Area" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

@@ -14,7 +14,7 @@ namespace cntrl.Curd
     /// </summary>
     public partial class department : UserControl
     {
-        CollectionViewSource _app_departmentViewSource = null;
+        private CollectionViewSource _app_departmentViewSource = null;
         public CollectionViewSource app_departmentViewSource { get { return _app_departmentViewSource; } set { _app_departmentViewSource = value; } }
 
         private entity.dbContext objentity = null;
@@ -27,10 +27,10 @@ namespace cntrl.Curd
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-             {
-                 stackMain.DataContext = app_departmentViewSource;
-             }
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                stackMain.DataContext = app_departmentViewSource;
+            }
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)

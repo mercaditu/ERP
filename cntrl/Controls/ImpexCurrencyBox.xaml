@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             
+
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             Margin="4,0,4,4" mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" 
+             Margin="4,0,4,4" mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256"
              Loaded="CurrencyBox_Loaded">
     <Grid x:Name="MainGrid">
-        <ComboBox x:Name="cbCurrency" 
+        <ComboBox x:Name="cbCurrency"
                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                  SelectedValuePath="id_currency" DisplayMemberPath="name" 
-                  SelectedValue="{Binding id_currency, ElementName=ucCurrency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=False,ValidatesOnNotifyDataErrors=False, ValidatesOnDataErrors=False}" SelectionChanged="cbCurrency_SelectionChanged"/>
+                  SelectedValuePath="id_currency" DisplayMemberPath="name"
+                  SelectedValue="{Binding id_currency, ElementName=ucCurrency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=False,ValidatesOnNotifyDataErrors=False, ValidatesOnDataErrors=False}" SelectionChanged="cbCurrency_SelectionChanged" />
         <TextBox Name="lblExchangeValue" Style="{StaticResource TextToLabelStyle}"
                  VerticalAlignment="Center" LostFocus="lblExchangeValue_LostFocus" Margin="0,0,26,0"
-                 Text="{Binding Rate_Current, ElementName=ucCurrency, Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}"/>
+                 Text="{Binding Rate_Current, ElementName=ucCurrency, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" />
     </Grid>
 </UserControl>

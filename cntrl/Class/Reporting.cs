@@ -57,7 +57,6 @@ namespace cntrl.Class
                 ReplaceWithString="sales_return"
             },
 
-
             new Report
             {
                 Application = entity.App.Names.SalesBudget,
@@ -167,7 +166,6 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
                  ReplaceString="sales_invoice",
                 ReplaceWithString="sales_budget"
-
             },
                new Report
             {
@@ -207,7 +205,6 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
                  ReplaceString="sales_invoice",
                 ReplaceWithString="sales_budget"
-
             },
                new Report
             {
@@ -220,7 +217,6 @@ namespace cntrl.Class
                 ReplaceWithString="sales_return"
             },
 
-
                new Report
             {
                 Application = entity.App.Names.SalesInvoice,
@@ -228,9 +224,7 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Sales.SalesAnalysis.rdlc",
                 Query = Reports.Sales.SalesAnalysis.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
-               
 
             //purchase
               new Report
@@ -326,7 +320,6 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
 
-
                 //stock
 
                 new Report
@@ -344,7 +337,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Stocks.StockMovement.rdlc",
                 Query = Reports.Stock.Stock.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-             
             },
             new Report
             {
@@ -361,7 +353,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Stocks.StockFlow.rdlc",
                 Query = Reports.Stock.Stock.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                  new Report
             {
@@ -370,7 +361,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Stocks.StockValue.rdlc",
                 Query = Reports.Stock.InventoryValue.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                   new Report
             {
@@ -379,7 +369,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Stocks.Inventory.rdlc",
                 Query = Reports.Stock.InventorySummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                     new Report
             {
@@ -406,7 +395,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Commercials.ContactsByBank.rdlc",
                 Query = Reports.Commercial.Customer.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
             new Report
             {
@@ -415,7 +403,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Commercials.ContactsByGeography.rdlc",
                 Query = Reports.Commercial.Customer.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                new Report
             {
@@ -424,7 +411,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Commercials.ContactsByTag.rdlc",
                 Query = Reports.Commercial.Customer.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
 
              //Finance
@@ -435,7 +421,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Finances.AccountBalance.rdlc",
                 Query = Reports.Finance.PendingPayables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                       new Report
             {
@@ -444,7 +429,6 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Finances.AccountBalance.rdlc",
                 Query = Reports.Finance.PendingReceivables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
                          new Report
             {
@@ -453,9 +437,8 @@ namespace cntrl.Class
                 Path = "cntrl.Reports.Finances.PaymentReceivable.rdlc",
                 Query = Reports.Finance.PaymentRecievables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-
             },
-            
+
              //projects and Production
                           new Report
             {
@@ -510,12 +493,9 @@ namespace cntrl.Class
                 Query =Reports.Production.EmployeesInProduction.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
-
             };
         }
     }
-
-
 
     public class Report
     {
@@ -524,6 +504,7 @@ namespace cntrl.Class
             StartDate, EndDate,
             Project
         }
+
         public entity.App.Names Application { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }

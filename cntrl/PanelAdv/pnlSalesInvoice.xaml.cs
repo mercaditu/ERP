@@ -1,18 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
+
 namespace cntrl.PanelAdv
 {
     public partial class pnlSalesInvoice : UserControl
     {
-        CollectionViewSource sales_invoiceViewSource;
+        private CollectionViewSource sales_invoiceViewSource;
 
         private List<sales_invoice> _selected_sales_invoice;
+
         public List<sales_invoice> selected_sales_invoice
         {
             get { return _selected_sales_invoice; }
@@ -50,7 +52,9 @@ namespace cntrl.PanelAdv
         }
 
         public event btnSave_ClickedEventHandler SalesInvoice_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (sales_invocieDatagrid.ItemsSource != null)
@@ -61,15 +65,16 @@ namespace cntrl.PanelAdv
                 SalesInvoice_Click?.Invoke(sender);
             }
         }
-      private void LoadInvoice()
+
+        private void LoadInvoice()
         {
             sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
             List<sales_invoice_detail> sales_invoice_detail = ImpexDB.sales_invoice_detail
                 .Where(x =>
                 x.sales_invoice.id_contact == _contact.id_contact &&
-                x.sales_invoice.status == Status.Documents_General.Approved 
+                x.sales_invoice.status == Status.Documents_General.Approved
                 ).ToList();
-            sales_invoiceViewSource.Source = sales_invoice_detail.Where(x=>x.Balance>0).Select(x => x.sales_invoice);
+            sales_invoiceViewSource.Source = sales_invoice_detail.Where(x => x.Balance > 0).Select(x => x.sales_invoice);
         }
 
         private void sales_invocieDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
@@ -79,7 +84,6 @@ namespace cntrl.PanelAdv
                 sales_invoice _sales_invoice = ((DataGrid)sender).SelectedItem as sales_invoice;
                 if (_sales_invoice != null)
                 {
-
                     DataGrid RowDataGrid = e.DetailsElement as DataGrid;
                     var salesInvoice = _sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0);
                     RowDataGrid.ItemsSource = salesInvoice;
@@ -94,6 +98,5 @@ namespace cntrl.PanelAdv
                 _contact = ImpexDB.contacts.Find(sbxContact.ContactID);
             }
         }
-
     }
 }

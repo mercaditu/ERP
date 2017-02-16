@@ -1,19 +1,18 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity.Validation;
-
 
 namespace cntrl
 {
     public partial class account : UserControl
     {
-        CollectionViewSource accountsViewSource = null;
+        private CollectionViewSource accountsViewSource = null;
         //public CollectionViewSource objCollectionViewSource { get { return ItemsSource; } set { ItemsSource = value; } }
 
         private dbContext entity = new dbContext();
@@ -25,32 +24,31 @@ namespace cntrl
         private Class.clsCommon.Mode _operationMode = 0;
         public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
 
-
-      //  entity.Properties.Settings _settings = new entity.Properties.Settings();
+        //  entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public account()
         {
             InitializeComponent();
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-               // 
- 
+                //
+
                 accountsViewSource = (CollectionViewSource)FindResource("accountsViewSource");
                 entity.db.app_account.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).ToList();
                 accountsViewSource.Source = entity.db.app_account.Local;
-          
-             
+
                 cbxAccountType.ItemsSource = Enum.GetValues(typeof(app_account.app_account_type));
 
                 CollectionViewSource app_bankViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_bankViewSource");
                 app_bankViewSource.Source = entity.db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_terminalViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_terminalViewSource");
-                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true && a.id_company==CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_currencyViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_currencyViewSource");
                 app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
@@ -58,9 +56,9 @@ namespace cntrl
                 {
                     app_account app_account = new app_account();
                     app_account.name = "account";
-                    app_account.is_active =true;
+                    app_account.is_active = true;
                     entity.db.app_account.Add(app_account);
-                  //  entity.db.SaveChanges();
+                    //  entity.db.SaveChanges();
 
                     accountsViewSource.View.Refresh();
                     accountsViewSource.View.MoveCurrentToLast();
@@ -77,7 +75,6 @@ namespace cntrl
         {
             try
             {
-
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
@@ -130,7 +127,5 @@ namespace cntrl
                 }
             }
         }
-
-     
     }
 }

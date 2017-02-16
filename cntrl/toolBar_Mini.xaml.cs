@@ -1,36 +1,39 @@
-﻿using System.Data;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using entity;
 using System;
-using WPFLocalizeExtension.Extensions;
-using entity;
+using System.ComponentModel;
+using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.ComponentModel;
+using System.Windows.Media;
+using WPFLocalizeExtension.Extensions;
 
 namespace cntrl
-{  
+{
     public partial class toolBar_Mini : UserControl
     {
-        
-        private static readonly DependencyProperty IsEditabledProperty 
+        private static readonly DependencyProperty IsEditabledProperty
             = DependencyProperty.Register("IsEditable", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+
         public bool IsEditable
         {
             get { return (bool)GetValue(IsEditabledProperty); }
             set { SetValue(IsEditabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Delete_IsEnabledProperty 
+        private static readonly DependencyProperty Delete_IsEnabledProperty
             = DependencyProperty.Register("Delete_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+
         public bool Delete_IsEnabled
         {
             get { return (bool)GetValue(Delete_IsEnabledProperty); }
             set { SetValue(Delete_IsEnabledProperty, value); }
         }
+
         private static readonly DependencyProperty Save_IsEnabledProperty
          = DependencyProperty.Register("Save_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+
         public bool Save_IsEnabled
         {
             get { return (bool)GetValue(Save_IsEnabledProperty); }
@@ -39,22 +42,25 @@ namespace cntrl
 
         private static readonly DependencyProperty Edit_IsEnabledProperty
             = DependencyProperty.Register("Edit_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(true));
+
         public bool Edit_IsEnabled
         {
             get { return (bool)GetValue(Edit_IsEnabledProperty); }
             set { SetValue(Edit_IsEnabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Approve_IsEnabledProperty 
+        private static readonly DependencyProperty Approve_IsEnabledProperty
             = DependencyProperty.Register("Approve_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+
         public bool Approve_IsEnabled
         {
             get { return (bool)GetValue(Approve_IsEnabledProperty); }
             set { SetValue(Approve_IsEnabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Annul_IsEnabledProperty 
+        private static readonly DependencyProperty Annul_IsEnabledProperty
             = DependencyProperty.Register("Annul_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+
         public bool Annul_IsEnabled
         {
             get { return (bool)GetValue(Annul_IsEnabledProperty); }
@@ -62,8 +68,9 @@ namespace cntrl
         }
 
         #region "Status Properties & Events"
-        public static readonly DependencyProperty StatusProperty 
-            = DependencyProperty.Register("Status", typeof(string), typeof(toolBar_Mini), 
+
+        public static readonly DependencyProperty StatusProperty
+            = DependencyProperty.Register("Status", typeof(string), typeof(toolBar_Mini),
             new PropertyMetadata(OnStatusChangeCallBack));
 
         public string Status
@@ -74,7 +81,7 @@ namespace cntrl
 
         private static void OnStatusChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            string s = (string) e.NewValue;
+            string s = (string)e.NewValue;
             toolBar_Mini toolBar_Mini = sender as toolBar_Mini;
             toolBar_Mini.OnStatusPropertyChanged(s);
         }
@@ -99,7 +106,7 @@ namespace cntrl
                     Approve_IsEnabled = false;
                     Annul_IsEnabled = true;
                 }
-                else if (Status.Contains("InProcess") )
+                else if (Status.Contains("InProcess"))
                 {
                     IsEditable = false;
                     Edit_IsEnabled = false;
@@ -118,12 +125,14 @@ namespace cntrl
                 }
             }
         }
-        #endregion
+
+        #endregion "Status Properties & Events"
 
         #region "State Properties & Events"
 
-        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(toolBar_Mini), 
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(toolBar_Mini),
             new PropertyMetadata(OnStateChangeCallBack));
+
         public System.Data.Entity.EntityState State
         {
             get { return (System.Data.Entity.EntityState)GetValue(StateProperty); }
@@ -143,23 +152,25 @@ namespace cntrl
             {
                 IsEditable = true;
                 Edit_IsEnabled = false;
-              
             }
             else
             {
                 IsEditable = false;
                 Edit_IsEnabled = true;
-                
             }
         }
-        #endregion
+
+        #endregion "State Properties & Events"
 
         public App.Names appName { get; set; }
 
         #region "Events"
+
         //Parent
         public event btnParent_ClickedEventHandler btnParent_Click;
+
         public delegate void btnParent_ClickedEventHandler(object sender);
+
         public void btnParent_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -176,7 +187,9 @@ namespace cntrl
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;
+
         public delegate void btnNew_ClickedEventHandler(object sender);
+
         public void btnNew_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -193,7 +206,9 @@ namespace cntrl
 
         //EDIT
         public event btnEdit_ClickedEventHandler btnEdit_Click;
+
         public delegate void btnEdit_ClickedEventHandler(object sender);
+
         public void btnEdit_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -209,7 +224,9 @@ namespace cntrl
 
         //DELETE
         public event btnDelete_ClickedEventHandler btnDelete_Click;
+
         public delegate void btnDelete_ClickedEventHandler(object sender);
+
         public void btnDelete_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -226,7 +243,9 @@ namespace cntrl
 
         //SAVE
         public event btnSave_ClickedEventHandler btnSave_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -243,7 +262,9 @@ namespace cntrl
 
         //CANCEL
         public event btnCancel_ClickedEventHandler btnCancel_Click;
+
         public delegate void btnCancel_ClickedEventHandler(object sender);
+
         public void btnCancel_MouseUp(object sender, EventArgs e)
         {
             if (sender != null)
@@ -260,7 +281,9 @@ namespace cntrl
 
         //APPROVE
         public event btnApprove_ClickedEventHandler btnApprove_Click;
+
         public delegate void btnApprove_ClickedEventHandler(object sender);
+
         private void btnApprove_MouseUp(object sender, EventArgs e)
         {
             toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
@@ -273,7 +296,9 @@ namespace cntrl
 
         //ANULL
         public event btnAnull_ClickedEventHandler btnAnull_Click;
+
         public delegate void btnAnull_ClickedEventHandler(object sender);
+
         private void btnAnull_MouseUp(object sender, EventArgs e)
         {
             toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
@@ -283,14 +308,15 @@ namespace cntrl
                 btnAnull_Click(this);
             }
         }
-        #endregion
+
+        #endregion "Events"
 
         public toolBar_Mini()
         {
             InitializeComponent();
         }
 
-        bool HasLoaded = false;
+        private bool HasLoaded = false;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -299,12 +325,12 @@ namespace cntrl
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
 
-                ///Loaded prevents the Parent Tab Controls from rendering the code twice. 
+                ///Loaded prevents the Parent Tab Controls from rendering the code twice.
                 ///The enclosing If function checks for this to be True to Skip.
                 HasLoaded = true;
             }
         }
-        
+
         private void get_Icons(string mod_name, ref entity.Brillo.Security security)
         {
             toolBarData t = new toolBarData();
@@ -321,8 +347,8 @@ namespace cntrl
                 ico = check_Icons(ico, _toolTip, ref security);
 
                 if (ico != null && row["placement"].ToString() == "m")
-                { 
-                    if(_toolTip == "Delete")
+                {
+                    if (_toolTip == "Delete")
                     {
                         ico.btnColor = Brushes.Silver;
                         ico.iColor = Brushes.Black;
@@ -413,10 +439,9 @@ namespace cntrl
                 toolIcon_Mini.iColor = Brushes.Crimson;
                 toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Annul_IsEnabled", false);
             }
-            else if (btnParent_Click != null & iconName == "Parent" )
+            else if (btnParent_Click != null & iconName == "Parent")
             {
                 toolIcon_Mini.Click += btnParent_MouseUp;
-                
             }
             else
             {

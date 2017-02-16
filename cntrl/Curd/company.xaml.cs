@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class company : UserControl
     {
-        CollectionViewSource _app_companyViewSource = null;
+        private CollectionViewSource _app_companyViewSource = null;
         public CollectionViewSource app_companyViewSource { get { return _app_companyViewSource; } set { _app_companyViewSource = value; } }
-     
+
         private dbContext _entity = null;
         public dbContext objEntity { get { return _entity; } set { _entity = value; } }
 
@@ -53,7 +53,7 @@ namespace cntrl
                 try
                 {
                     stackMain.DataContext = app_companyViewSource;
-                  
+
                     //CollectionViewSource geo_countryViewSource = this.FindResource("geo_countryViewSource") as CollectionViewSource;
                     //geo_countryViewSource.Source = objEntity.db.geo_country.ToList();
                 }
@@ -74,16 +74,14 @@ namespace cntrl
                 {
                     objEntity.SaveChanges();
 
-                    if (app_company!=null)
+                    if (app_company != null)
                     {
                         CurrentSession.Id_Company = app_company.id_company;
                     }
-                 
+
                     entity.Properties.Settings.Default.company_ID = objEntity.db.app_company.FirstOrDefault().id_company;
                     entity.Properties.Settings.Default.company_Name = objEntity.db.app_company.FirstOrDefault().alias;
                     entity.Properties.Settings.Default.Save();
-                   
-
                 }
             }
             catch (Exception ex)
@@ -128,23 +126,19 @@ namespace cntrl
 
         private void cbxInterest_Checked(object sender, RoutedEventArgs e)
         {
-            if (cbxInterest.IsChecked==true)
+            if (cbxInterest.IsChecked == true)
             {
                 app_company _app_company = app_companyViewSource.View.CurrentItem as entity.app_company;
-                if (_app_company!=null)
+                if (_app_company != null)
                 {
-                    if (_app_company.app_company_interest==null)
+                    if (_app_company.app_company_interest == null)
                     {
                         app_company_interest app_company_interest = new app_company_interest();
                         app_company_interest.app_company = _app_company;
                         _app_company.app_company_interest = app_company_interest;
                         app_companyViewSource.View.Refresh();
                     }
-                 
                 }
-             
-              
-             
             }
         }
     }

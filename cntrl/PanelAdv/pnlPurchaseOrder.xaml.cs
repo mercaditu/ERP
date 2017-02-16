@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System;
-using System.Threading.Tasks;
 
 namespace cntrl.PanelAdv
 {
     public partial class pnlPurchaseOrder : UserControl
     {
-        CollectionViewSource purchase_orderViewSource;
+        private CollectionViewSource purchase_orderViewSource;
+
         public enum module
         {
             sales_invoice,
             packing_list
         }
+
         public module mode { get; set; }
         private List<purchase_order> _selected_purchase_order = null;
         public List<purchase_order> selected_purchase_order { get { return _selected_purchase_order; } set { _selected_purchase_order = value; } }
-  
+
         public db _entity { get; set; }
         public contact _contact { get; set; }
+
         public pnlPurchaseOrder()
         {
             InitializeComponent();
@@ -41,7 +44,6 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-
                 if (_contact != null)
                 {
                     sbxContact.Text = _contact.name;
@@ -50,9 +52,10 @@ namespace cntrl.PanelAdv
             }
         }
 
-      
         public event btnSave_ClickedEventHandler PurchaseOrder_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (purchase_orderDatagrid.ItemsSource != null)
@@ -68,7 +71,6 @@ namespace cntrl.PanelAdv
                     }
                 }
 
-
                 PurchaseOrder_Click?.Invoke(sender);
             }
         }
@@ -81,25 +83,22 @@ namespace cntrl.PanelAdv
                 Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(_purchase_order, e));
             }
         }
+
         private void LoadOrderDetail(purchase_order purchase_order, DataGridRowDetailsEventArgs e)
         {
             if (_entity.purchase_order_detail.Count() > 0)
             {
-
-
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    
                     DataGrid RowDataGrid = e.DetailsElement as DataGrid;
-                    if (RowDataGrid!=null)
+                    if (RowDataGrid != null)
                     {
                         RowDataGrid.ItemsSource = purchase_order.purchase_order_detail;
                     }
-                   
                 }));
             }
         }
-     
+
         private void ContactPref(object sender, RoutedEventArgs e)
         {
             if (sbxContact.ContactID > 0)
@@ -107,7 +106,6 @@ namespace cntrl.PanelAdv
                 contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
                 load_PurchaseOrder(contact.id_contact);
-                
             }
         }
 
@@ -121,22 +119,22 @@ namespace cntrl.PanelAdv
                          group list by new
                          {
                              purchase_order_detail = purchase_order_detail,
-
                          }
                              into grouped
-                             select new
-                             {
-                                 id_purchase_order = grouped.Key.purchase_order_detail.purchase_order.id_purchase_order,
-                                 purchaseOrder = grouped.Key.purchase_order_detail.purchase_order,
-                                 balance = grouped.Key.purchase_order_detail != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity)
-                             }).ToList().Select(x => x.id_purchase_order);
+                         select new
+                         {
+                             id_purchase_order = grouped.Key.purchase_order_detail.purchase_order.id_purchase_order,
+                             purchaseOrder = grouped.Key.purchase_order_detail.purchase_order,
+                             balance = grouped.Key.purchase_order_detail != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity)
+                         }).ToList().Select(x => x.id_purchase_order);
 
             purchase_orderViewSource = (CollectionViewSource)Resources["purchase_orderViewSource"];
 
             purchase_orderViewSource.Source = _entity.purchase_order.Where(x => order.Contains(x.id_purchase_order)).ToList();
             filter_sales();
         }
-        void filter_sales()
+
+        private void filter_sales()
         {
             if (purchase_orderViewSource != null)
             {
@@ -156,6 +154,5 @@ namespace cntrl.PanelAdv
                 }
             }
         }
-
     }
 }

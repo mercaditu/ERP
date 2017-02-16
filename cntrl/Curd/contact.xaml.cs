@@ -1,13 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace cntrl.Curd
@@ -15,11 +13,12 @@ namespace cntrl.Curd
     public partial class contact : UserControl, INotifyPropertyChanged
     {
         private entity.ContactDB ContactDB { get; set; }
-        CollectionViewSource contactViewSource;
+        private CollectionViewSource contactViewSource;
 
         #region NotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -28,9 +27,9 @@ namespace cntrl.Curd
             }
         }
 
-        #endregion
+        #endregion NotifyPropertyChanged
 
-        entity.contact _contact = null;
+        private entity.contact _contact = null;
 
         #region Properties
 
@@ -40,13 +39,13 @@ namespace cntrl.Curd
 
         public int ContactID { get; set; }
         public string ContactName { get; set; }
-        #endregion
+
+        #endregion Properties
 
         #region Events
 
         private void btnCancel_MouseDown(object sender, EventArgs e)
         {
-
             if (this.Parent as StackPanel != null)
             {
                 StackPanel parentGrid = this.Parent as StackPanel;
@@ -65,20 +64,21 @@ namespace cntrl.Curd
         }
 
         public event btnLoad_ClickedEventHandler LoadContact_Click;
+
         public delegate void btnLoad_ClickedEventHandler();
+
         public void btnLoad_MouseUp(object sender, EventArgs e)
         {
-
-
             if (LoadContact_Click != null)
             {
                 LoadContact_Click();
             }
         }
 
-
         public event btnSave_ClickedEventHandler btnSave_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {
             entity.contact contact = contactViewSource.View.CurrentItem as entity.contact;
@@ -95,13 +95,12 @@ namespace cntrl.Curd
                 btnSave_Click?.Invoke(sender);
                 //Reloads all Data.
                 CurrentSession.Load_BasicData(null, null);
-
             }
 
             btnCancel_MouseDown(null, null);
         }
 
-        #endregion
+        #endregion Events
 
         public contact()
         {
@@ -170,10 +169,8 @@ namespace cntrl.Curd
             }
         }
 
-
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-
             if (e.Parameter as contact_tag_detail != null)
             {
                 e.CanExecute = true;
@@ -184,11 +181,9 @@ namespace cntrl.Curd
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-
                     if (e.Parameter as contact_tag_detail != null)
                     {
                         contact_tag_detailDataGrid.CancelEdit();
@@ -210,7 +205,6 @@ namespace cntrl.Curd
             if (e.Key == Key.Enter)
             {
                 Add_Tag();
-
             }
         }
 
@@ -219,7 +213,7 @@ namespace cntrl.Curd
             Add_Tag();
         }
 
-        void Add_Tag()
+        private void Add_Tag()
         {
             // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
@@ -236,7 +230,6 @@ namespace cntrl.Curd
                         contact.contact_tag_detail.Add(contact_tag_detail);
                         CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
                         contactcontact_tag_detailViewSource.View.Refresh();
-
                     }
                 }
             }

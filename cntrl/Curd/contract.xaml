@@ -3,79 +3,79 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:convert="clr-namespace:Cognitivo.Converters"
 		xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-		xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+		xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
-		lex:LocalizeDictionary.DesignCulture="en-US" 
+		lex:LocalizeDictionary.DesignCulture="en-US"
 		VerticalAlignment="Center"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-		xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
 			 BorderBrush="#0099ff" BorderThickness="2"
 		Width="360" Loaded="UserControl_Loaded">
-	<UserControl.Resources>
-		<convert:InitialsConverter x:Key="InitialsConverter"/>
-		<convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
-		<CollectionViewSource x:Key="app_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
-	</UserControl.Resources>
-	<UserControl.Effect>
-		<DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
-	</UserControl.Effect>
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
-		<StackPanel x:Name="stackMain" Background="White">
-			<Grid Background="#0099ff">
-				<Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Foreground="White"
-					   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4"/>
-				<Label x:Name="lblTitle" Content="{lex:Loc Contract}" Foreground="White" FontSize="25" Margin="32,0,0,0"/>
-				<Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+    <UserControl.Resources>
+        <convert:InitialsConverter x:Key="InitialsConverter" />
+        <convert:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <CollectionViewSource x:Key="app_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}" />
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
+    </UserControl.Effect>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel x:Name="stackMain" Background="White">
+            <Grid Background="#0099ff">
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Foreground="White"
+					   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4" />
+                <Label x:Name="lblTitle" Content="{lex:Loc Contract}" Foreground="White" FontSize="25" Margin="32,0,0,0" />
+                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
 					   HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
-					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-				<Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-						 Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-			</Grid>
-			<TextBlock Text="Conditions under which a Transaction takes place" Style="{StaticResource text_Instructions}"/>
-			<StackPanel HorizontalAlignment="Center">
-				<Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
-				<ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}"
+					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+						 Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
+            </Grid>
+            <TextBlock Text="Conditions under which a Transaction takes place" Style="{StaticResource text_Instructions}" />
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+                <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}"
 					  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 					  metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-					  DisplayMemberPath="name" SelectedValuePath="id_condition" 
-					  ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}" 
-					  SelectedValue="{Binding id_condition, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-				<Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
-				<TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
+					  DisplayMemberPath="name" SelectedValuePath="id_condition"
+					  ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"
+					  SelectedValue="{Binding id_condition, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
+                <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
 					 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 					 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 					 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
 					 metro:TextBoxHelper.SelectAllOnFocus="True"
-					 Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-				<Label Content="{lex:Loc Surcharge}" Style="{StaticResource input_label}"/>
-				<TextBox Style="{StaticResource input_textbox}"
+					 Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <Label Content="{lex:Loc Surcharge}" Style="{StaticResource input_label}" />
+                <TextBox Style="{StaticResource input_textbox}"
 					 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 					 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 					 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
 					 metro:TextBoxHelper.SelectAllOnFocus="True"
-					 Text="{Binding surcharge, StringFormat=p, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
-				<CheckBox Content="{lex:Loc Default}" 
-						  IsChecked="{Binding is_default, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-				<CheckBox Content="{lex:Loc PromissoryNote}" IsChecked="{Binding is_promissory, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-			</StackPanel>
-			<Rectangle Style="{StaticResource line_Bar}"/>
-			<TextBlock Text="Controls payment intervals based on following credentials"
-				 Style="{StaticResource text_Instructions}"/>
-			<DataGrid HorizontalScrollBarVisibility="Disabled" x:Name="dgvContractDetail" Width="256" Margin="0,0,0,8"
+					 Text="{Binding surcharge, StringFormat=p, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                <CheckBox Content="{lex:Loc Default}"
+						  IsChecked="{Binding is_default, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3" />
+                <CheckBox Content="{lex:Loc PromissoryNote}" IsChecked="{Binding is_promissory, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3" />
+            </StackPanel>
+            <Rectangle Style="{StaticResource line_Bar}" />
+            <TextBlock Text="Controls payment intervals based on following credentials"
+				 Style="{StaticResource text_Instructions}" />
+            <DataGrid HorizontalScrollBarVisibility="Disabled" x:Name="dgvContractDetail" Width="256" Margin="0,0,0,8"
 					  ItemsSource="{Binding app_contract_detail}" AutoGenerateColumns="False" InitializingNewItem="dgvContractDetail_InitializingNewItem">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
-					<DataGridTextColumn Header="OffSet" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-			<Grid Background="WhiteSmoke">
-				<Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-					FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-				<CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-						  IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-			</Grid>
-		</StackPanel>
-	</ScrollViewer>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                    <DataGridTextColumn Header="OffSet" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Background="WhiteSmoke">
+                <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
+					FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
+                <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+						  IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

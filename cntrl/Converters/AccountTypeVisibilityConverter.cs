@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace cntrl.Converters
 {
-    class BankAccountTypeVisibilityConverter : IValueConverter
+    internal class BankAccountTypeVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -28,7 +25,8 @@ namespace cntrl.Converters
             throw new NotImplementedException();
         }
     }
-    class TerminalAccountTypeVisibilityConverter : IValueConverter
+
+    internal class TerminalAccountTypeVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

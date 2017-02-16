@@ -1,5 +1,4 @@
-﻿using cntrl.Controls;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -15,12 +14,15 @@ namespace cntrl.Controls
     public partial class SmartBox_SalesReturn : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_SalesReturn));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+
         public static readonly DependencyProperty ContactIDProperty = DependencyProperty.Register("ContactID", typeof(int), typeof(SmartBox_SalesReturn));
+
         public int ContactID
         {
             get { return Convert.ToInt32(GetValue(ContactIDProperty)); }
@@ -30,12 +32,14 @@ namespace cntrl.Controls
         public decimal Balance { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         public event RoutedEventHandler Select;
+
         private void ReturnGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             if (returnViewSource.View != null)
@@ -52,15 +56,15 @@ namespace cntrl.Controls
                 }
             }
         }
+
         public int ReturnID { get; set; }
         public IQueryable<entity.BrilloQuery.Return> ReturnList { get; set; }
 
+        private Task taskSearch;
+        private CancellationTokenSource tokenSource;
+        private CancellationToken token;
 
-        Task taskSearch;
-        CancellationTokenSource tokenSource;
-        CancellationToken token;
-
-        CollectionViewSource returnViewSource;
+        private CollectionViewSource returnViewSource;
 
         public SmartBox_SalesReturn()
         {
@@ -105,17 +109,15 @@ namespace cntrl.Controls
                   }
                   progBar.Visibility = Visibility.Collapsed;
               }));
-           
-    
         }
 
-        void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
             {
                 Dispatcher.BeginInvoke(
                 DispatcherPriority.ContextIdle,
-                new Action(delegate()
+                new Action(delegate ()
                 {
                     tbxSearch.Focus();
                 }));
@@ -126,7 +128,7 @@ namespace cntrl.Controls
         {
             if (e.Key == Key.Enter)
             {
-              ReturnGrid_MouseDoubleClick(sender, e);
+                ReturnGrid_MouseDoubleClick(sender, e);
             }
             else if (e.Key == Key.Up)
             {
@@ -176,11 +178,8 @@ namespace cntrl.Controls
             SearchText = SearchText.ToUpper();
             var predicate = PredicateBuilder.True<entity.BrilloQuery.Return>();
 
-        
-           
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Return>();
             var param = smartBoxContactSetting.Default.SearchFilter;
-
 
             if (param.Contains("Name"))
             {
@@ -218,13 +217,9 @@ namespace cntrl.Controls
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }));
         }
-
-      
     }
 }

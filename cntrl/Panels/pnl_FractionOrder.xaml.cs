@@ -1,13 +1,11 @@
-﻿using System;
+﻿using entity;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
-using System.Data.Entity.Validation;
 using System.Windows.Input;
 
 namespace cntrl.Panels
@@ -17,10 +15,11 @@ namespace cntrl.Panels
     /// </summary>
     public partial class pnl_FractionOrder : UserControl
     {
-        CollectionViewSource production_order_detailViewSource;
+        private CollectionViewSource production_order_detailViewSource;
         public OrderDB OrderDB { get; set; }
 
         public List<production_order_detail> production_order_detailList { get; set; }
+
         public pnl_FractionOrder()
         {
             InitializeComponent();
@@ -34,7 +33,6 @@ namespace cntrl.Panels
 
         public void add_item(production_order_detail production_order_detail)
         {
-
             production_order_detail.quantity = production_order_detailList.FirstOrDefault().quantity;
             production_order_detail.id_item = production_order_detailList.FirstOrDefault().id_item;
             production_order_detail.item = production_order_detailList.FirstOrDefault().item;
@@ -58,20 +56,16 @@ namespace cntrl.Panels
                             production_order_dimension.value = project_task_dimension.value;
                             production_order_detail.production_order_dimension.Add(production_order_dimension);
                         }
-
-
                     }
                 }
-
             }
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             production_order_detailViewSource = ((CollectionViewSource)(FindResource("production_order_detailViewSource")));
-           // InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            // InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             production_order_detailViewSource.Source = production_order_detailList;
-
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
@@ -88,22 +82,16 @@ namespace cntrl.Panels
             //    add_item(item_inventory_detail);
             //    InventoryDB.item_inventory_detail.Add(item_inventory_detail);
             //}
-         
-
-
-
         }
+
         //public void filter_detail()
         //{
         //    if (id_inventory > 0)
         //    {
-
-
         //        if (item_inventory_detailViewSource != null)
         //        {
         //            if (item_inventory_detailViewSource.View != null)
         //            {
-
         //                item_inventory_detailViewSource.View.Filter = i =>
         //                {
         //                    item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
@@ -133,15 +121,9 @@ namespace cntrl.Panels
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             production_order_detailList = production_order_detailViewSource.View.OfType<production_order_detail>().ToList();
-          //  quantity = item_inventoryList.Sum(y => y.value_counted);
+            //  quantity = item_inventoryList.Sum(y => y.value_counted);
             //ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);
         }
-
-
-
-
-
-
     }
 }

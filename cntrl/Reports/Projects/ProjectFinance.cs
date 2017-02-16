@@ -1,9 +1,8 @@
-﻿
-namespace cntrl.Reports.Project
+﻿namespace cntrl.Reports.Project
 {
     public static class ProjectFinance
     {
-        public static string query = @"select 
+        public static string query = @"select
                             c.name as Contact,
 							c.code as ContactCode,
 							c.gov_code as GovermentId,
@@ -12,7 +11,6 @@ namespace cntrl.Reports.Project
                             sum(sid.quantity * sid.unit_price) as TotalInvoiced,
                             sum(ps.debit) as TotalPaid,
                             sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance
-                         
 
                             from projects as p
                             inner join contacts as c on p.id_contact = c.id_contact
@@ -25,10 +23,3 @@ namespace cntrl.Reports.Project
                             where p.id_company=@CompanyID and p.id_project=@ProjectID";
     }
 }
-
-
-
- 
-
-
- 

@@ -1,9 +1,9 @@
 ﻿namespace cntrl.Reports.Commercial
 {
-	public static class Customer
-	{
-		public static string query = @"
-						select 
+    public static class Customer
+    {
+        public static string query = @"
+						select
 						contacts.is_customer as Customer,
 						contacts.is_supplier as Supplier,
 						contacts.id_contact as ContactID,
@@ -12,7 +12,7 @@
 						contacts.code as Code,
 						contacts.name as Name,
 						contacts.alias as Alias,
-						contacts.gov_code as GovCode, 
+						contacts.gov_code as GovCode,
 						contacts.address as Address,
 						contacts.telephone as Telephone,
 						contacts.email as Email,
@@ -31,11 +31,11 @@
 						curr.name as Currency,
 						cc.name as CostCenter,
 						if(contacts.gender is null, null, if(contacts.gender = 0, 'Male', 'Female')) as Gender
-						
+
 						from contacts
 
-						left join contact_tag_detail on contacts.id_contact= contact_tag_detail.id_contact 
-						left join app_contract on contacts.id_contract=app_contract.id_contract 
+						left join contact_tag_detail on contacts.id_contact= contact_tag_detail.id_contact
+						left join app_contract on contacts.id_contract=app_contract.id_contract
 						left join contact_tag on contact_tag_detail.id_contact_tag_detail= contact_tag.id_tag
 						left join app_geography as geo on contacts.id_geography = geo.id_geography
 						left join sales_rep as rep on contacts.id_sales_rep = rep.id_sales_rep
@@ -46,6 +46,5 @@
 						left join contact_role as role on contacts.id_contact_role = role.id_contact_role
 						where is_employee = 0 and (contacts.id_company = @CompanyID or contacts.id_company is null)
 						order by contacts.name";
-	}
+    }
 }
-

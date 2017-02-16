@@ -1,104 +1,101 @@
 ﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="_SmartBox_Contact"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:crud="clr-namespace:cntrl.Curd"
              xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converter="clr-namespace:cntrl.Converters"
                 xmlns:entity="clr-namespace:entity.BrilloQuery;assembly=entity"
-                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+                xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
-                lex:LocalizeDictionary.DesignCulture="en-US" 
+                lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-        <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType"/>
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Contact}, CreateList=True}"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType" />
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Contact}, CreateList=True}" />
     </UserControl.Resources>
     <Grid Width="256">
-        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible" >
+        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
             <StackPanel x:Name="stackCRUD">
-                
             </StackPanel>
-            <!--<crud:contact x:Name="crudContact"/>-->
+            <!--<crud:contact x:Name="crudContact" />-->
         </Popup>
-        
+
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
                  Text="{Binding Path=Text, Delay=2000, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
-                 metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
+                 metro:TextBoxHelper.Watermark="{lex:Loc Search}"
                  KeyUp="StartSearch" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
             <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                 <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0" 
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0"
                            HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
+                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold" />
                     <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                         <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
                             <StackPanel Orientation="Vertical" Background="White">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L"
-                                       Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center"/>
-                                    <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}"/>
+                                       Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center" />
+                                    <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}" />
                                 </StackPanel>
-                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc ExactCode}" 
-                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=ExactSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    />
-                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
+                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc ExactCode}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=ExactSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=1}"
-                                      Checked="RadioButton_Checked"/>
+                                      Checked="RadioButton_Checked" />
                                 <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
-                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=2}" 
-                                      Checked="RadioButton_Checked"/>
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=2}"
+                                      Checked="RadioButton_Checked" />
                                 <CheckBox x:Name="rbtnGov_ID" Style="{StaticResource input_checkbox}" Content="{lex:Loc GovernmentID}"
-                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=3}" 
-                                      Checked="RadioButton_Checked"/>
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=3}"
+                                      Checked="RadioButton_Checked" />
                                 <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}"
-                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=4}" 
-                                      Checked="RadioButton_Checked"/>
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=4}"
+                                      Checked="RadioButton_Checked" />
                             </StackPanel>
                         </Border>
                     </Popup>
                 </StackPanel>
             </StackPanel>
-            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
+            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0"
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="openContactCRUD" Padding="4" FontWeight="Bold"
-                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
+                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" />
         </StackPanel>
-        
+
         <!-- Progress Ring -->
         <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26" Opacity=".32"
-                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939"/>
-
+                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939" />
 
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
-               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
+               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}" />
 
         <Popup x:Name="popContact" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
                 <Grid MaxHeight="256">
-                    <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}" 
+                    <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}"
                                Style="{StaticResource text_Instructions}" Margin="4,0" />
-                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" Margin="0,16,0,0" AutoGenerateColumns="False" 
-                              HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}" 
+                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" Margin="0,16,0,0" AutoGenerateColumns="False"
+                              HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}"
                               IsReadOnly="True" MouseDoubleClick="ContactGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding Gov_Code}" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" Width="auto" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding Gov_Code}" Width="auto" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

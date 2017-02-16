@@ -1,14 +1,13 @@
-﻿using System;
-using System.Windows;
-using entity;
-using System.Linq;
-using System.Collections.Generic;
+﻿using entity;
 using entity.Brillo.Logic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace cntrl.Class
 {
     public class UpdatePaymentReApprove
     {
-
         public bool Start(db db, int ID, entity.App.Names Application)
         {
             return true;
@@ -20,7 +19,6 @@ namespace cntrl.Class
             {
                 sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
-
                 List<payment_schedual> oldSchedual = Local_SalesInvoice.payment_schedual.ToList();
                 List<payment> oldpayment = new List<payment>();
                 foreach (payment_schedual payment_schedual in oldSchedual)
@@ -29,16 +27,12 @@ namespace cntrl.Class
                     {
                         oldpayment.Add(payment_schedual.payment_detail.payment);
                     }
-
                 }
 
                 //add new schedual
                 List<payment_schedual> payment_schedualList;
                 Payment _Payment = new Payment();
                 payment_schedualList = _Payment.insert_Schedual(Local_SalesInvoice);
-
-
-
 
                 foreach (payment payment in oldpayment)
                 {
@@ -48,61 +42,6 @@ namespace cntrl.Class
                         {
                             db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
                         }
-
-                    }
-                    if (payment.payment_detail!=null)
-                    {
-                        db.payment_detail.RemoveRange(payment.payment_detail);
-                    }
-                 
-                }
-                if (oldpayment != null)
-                {
-                    db.payments.RemoveRange(oldpayment);
-                }
-                if (oldSchedual != null)
-                {
-                    db.payment_schedual.RemoveRange(oldSchedual);
-                }
-                if (payment_schedualList != null)
-                {
-                    db.payment_schedual.AddRange(payment_schedualList);
-                }
-            }
-            else if (Application == App.Names.PurchaseInvoice)
-            {
-                purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
-
-
-                List<payment_schedual> oldSchedual = Local_purchase_invoice.payment_schedual.ToList();
-                List<payment> oldpayment = new List<payment>();
-                foreach (payment_schedual payment_schedual in oldSchedual)
-                {
-                    if (payment_schedual.payment_detail != null)
-                    {
-                        oldpayment.Add(payment_schedual.payment_detail.payment);
-                    }
-
-                }
-
-                //add new schedual
-                List<payment_schedual> payment_schedualList;
-                Payment _Payment = new Payment();
-                payment_schedualList = _Payment.insert_Schedual(Local_purchase_invoice);
-
-
-
-
-                foreach (payment payment in oldpayment)
-                {
-                    foreach (payment_detail payment_detail in payment.payment_detail)
-                    {
-                        if (payment_detail.app_account!=null)
-                        {
-                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
-                        }
-                
-
                     }
                     if (payment.payment_detail != null)
                     {
@@ -122,11 +61,52 @@ namespace cntrl.Class
                     db.payment_schedual.AddRange(payment_schedualList);
                 }
             }
+            else if (Application == App.Names.PurchaseInvoice)
+            {
+                purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
 
+                List<payment_schedual> oldSchedual = Local_purchase_invoice.payment_schedual.ToList();
+                List<payment> oldpayment = new List<payment>();
+                foreach (payment_schedual payment_schedual in oldSchedual)
+                {
+                    if (payment_schedual.payment_detail != null)
+                    {
+                        oldpayment.Add(payment_schedual.payment_detail.payment);
+                    }
+                }
 
+                //add new schedual
+                List<payment_schedual> payment_schedualList;
+                Payment _Payment = new Payment();
+                payment_schedualList = _Payment.insert_Schedual(Local_purchase_invoice);
 
-
-
+                foreach (payment payment in oldpayment)
+                {
+                    foreach (payment_detail payment_detail in payment.payment_detail)
+                    {
+                        if (payment_detail.app_account != null)
+                        {
+                            db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
+                        }
+                    }
+                    if (payment.payment_detail != null)
+                    {
+                        db.payment_detail.RemoveRange(payment.payment_detail);
+                    }
+                }
+                if (oldpayment != null)
+                {
+                    db.payments.RemoveRange(oldpayment);
+                }
+                if (oldSchedual != null)
+                {
+                    db.payment_schedual.RemoveRange(oldSchedual);
+                }
+                if (payment_schedualList != null)
+                {
+                    db.payment_schedual.AddRange(payment_schedualList);
+                }
+            }
         }
 
         public void Update_ValueUP(db db, int ID, entity.App.Names Application)
@@ -139,7 +119,6 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
                     decimal Value = 0;
@@ -150,7 +129,6 @@ namespace cntrl.Class
                     if (payment_schedual != null)
                     {
                         payment_schedual.debit = payment_schedual.debit + Value;
-
                     }
                 }
             }
@@ -162,7 +140,6 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
 
                     decimal Value = 0;
@@ -173,11 +150,11 @@ namespace cntrl.Class
                     if (payment_schedual != null)
                     {
                         payment_schedual.credit = payment_schedual.credit + Value;
-
                     }
                 }
             }
         }
+
         public void Update_ValueDown(db db, int ID, entity.App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
@@ -188,7 +165,6 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
                     decimal Value = 0;
 
@@ -197,14 +173,11 @@ namespace cntrl.Class
                     Decimal Balance = OriginalSalesInvoice.payment_schedual.Sum(x => x.AccountReceivableBalance);
                     if (Balance >= Value)
                     {
-
                         payment_schedual payment_schedual = Local_SalesInvoice.payment_schedual.Where(x => x.debit > 0).LastOrDefault();
                         if (payment_schedual != null)
                         {
                             payment_schedual.debit = payment_schedual.debit - Value;
-
                         }
-
                     }
                     else
                     {
@@ -212,7 +185,6 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             payment_schedual.credit = payment_schedual.credit - Value;
-
                         }
                         List<payment_schedual> oldSchedual = Local_SalesInvoice.payment_schedual.ToList();
                         List<payment> oldpayment = new List<payment>();
@@ -221,19 +193,13 @@ namespace cntrl.Class
                             if (_payment_schedual.payment_detail != null)
                             {
                                 oldpayment.Add(_payment_schedual.payment_detail.payment);
-
                             }
-
                         }
                         if (oldpayment != null)
                         {
                             db.payments.RemoveRange(oldpayment);
                         }
-                     
-
-
                     }
-
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
@@ -244,23 +210,19 @@ namespace cntrl.Class
                 {
                     OriginalPurcahseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
                     decimal Value = 0;
 
                     Value = OriginalPurcahseInvoice.payment_schedual.Sum(x => x.credit) - Local_purchase_invoice.GrandTotal;
 
-                    Decimal Balance = OriginalPurcahseInvoice.payment_schedual.Sum(x=>x.AccountPayableBalance);
+                    Decimal Balance = OriginalPurcahseInvoice.payment_schedual.Sum(x => x.AccountPayableBalance);
                     if (Balance >= Value)
                     {
-
                         payment_schedual payment_schedual = Local_purchase_invoice.payment_schedual.Where(x => x.credit > 0).LastOrDefault();
                         if (payment_schedual != null)
                         {
                             payment_schedual.credit = payment_schedual.credit - Value;
-
                         }
-
                     }
                     else
                     {
@@ -268,7 +230,6 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             payment_schedual.credit = payment_schedual.credit - Value;
-
                         }
                         List<payment_schedual> oldSchedual = Local_purchase_invoice.payment_schedual.ToList();
                         List<payment> oldpayment = new List<payment>();
@@ -277,28 +238,22 @@ namespace cntrl.Class
                             if (_payment_schedual.payment_detail != null)
                             {
                                 oldpayment.Add(_payment_schedual.payment_detail.payment);
-
                             }
-
                         }
                         if (oldpayment != null)
                         {
                             db.payments.RemoveRange(oldpayment);
                         }
-
-
                     }
-
                 }
             }
         }
+
         public void Update_CurrencyChange(db db, int ID, entity.App.Names Application)
         {
-
             if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-
 
                 List<payment_schedual> oldSchedual = Local_SalesInvoice.payment_schedual.ToList();
                 List<payment> oldpayment = new List<payment>();
@@ -308,7 +263,6 @@ namespace cntrl.Class
                     {
                         oldpayment.Add(payment_schedual.payment_detail.payment);
                     }
-
                 }
 
                 //add new schedual
@@ -316,19 +270,14 @@ namespace cntrl.Class
                 Payment _Payment = new Payment();
                 payment_schedualList = _Payment.insert_Schedual(Local_SalesInvoice);
 
-
-
-
                 foreach (payment payment in oldpayment)
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
-                        if (payment_detail.app_account!=null)
+                        if (payment_detail.app_account != null)
                         {
                             db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
-
                         }
-
                     }
                     if (payment.payment_detail != null)
                     {
@@ -352,7 +301,6 @@ namespace cntrl.Class
             {
                 purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
 
-
                 List<payment_schedual> oldSchedual = Local_PurchaseInvoice.payment_schedual.ToList();
                 List<payment> oldpayment = new List<payment>();
                 foreach (payment_schedual payment_schedual in oldSchedual)
@@ -361,16 +309,12 @@ namespace cntrl.Class
                     {
                         oldpayment.Add(payment_schedual.payment_detail.payment);
                     }
-
                 }
 
                 //add new schedual
                 List<payment_schedual> payment_schedualList;
                 Payment _Payment = new Payment();
                 payment_schedualList = _Payment.insert_Schedual(Local_PurchaseInvoice);
-
-
-
 
                 foreach (payment payment in oldpayment)
                 {
@@ -380,14 +324,13 @@ namespace cntrl.Class
                         {
                             db.app_account_detail.RemoveRange(payment_detail.app_account.app_account_detail);
                         }
-
                     }
                     if (payment.payment_detail != null)
                     {
                         db.payment_detail.RemoveRange(payment.payment_detail);
                     }
                 }
-                if (oldpayment!=null)
+                if (oldpayment != null)
                 {
                     db.payments.RemoveRange(oldpayment);
                 }
@@ -412,9 +355,7 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-
 
                     List<payment_schedual> oldSchedual = Local_SalesInvoice.payment_schedual.ToList();
                     List<payment> oldpayment = new List<payment>();
@@ -425,8 +366,6 @@ namespace cntrl.Class
                         i = i + 1;
                         payment_schedual payment_schedual = oldSchedual.Skip(i - 1).Take(1).FirstOrDefault();
                         payment_schedual.expire_date = Local_SalesInvoice.trans_date.AddDays(app_contract_detail.interval);
-
-
                     }
                 }
             }
@@ -438,9 +377,7 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
-
 
                     List<payment_schedual> oldSchedual = Local_PurchaseInvoice.payment_schedual.ToList();
                     List<payment> oldpayment = new List<payment>();
@@ -451,13 +388,9 @@ namespace cntrl.Class
                         i = i + 1;
                         payment_schedual payment_schedual = oldSchedual.Skip(i - 1).Take(1).FirstOrDefault();
                         payment_schedual.expire_date = Local_PurchaseInvoice.trans_date.AddDays(app_contract_detail.interval);
-
-
                     }
                 }
             }
         }
-
-
     }
 }

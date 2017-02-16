@@ -1,19 +1,10 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace cntrl.PanelAdv
 {
@@ -26,7 +17,9 @@ namespace cntrl.PanelAdv
         {
             InitializeComponent();
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -34,27 +27,31 @@ namespace cntrl.PanelAdv
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
+
         public int? id_range { get; set; }
         public string number { get; set; }
-        
-         public string code { get; set; }
+
+        public string code { get; set; }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            using(db db= new db())
+            using (db db = new db())
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(db, entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
-                project_task project_task=db.project_task.FirstOrDefault();
-             
-                project_task.id_range=id_range;
+                project_task project_task = db.project_task.FirstOrDefault();
+
+                project_task.id_range = id_range;
                 project_task.CalcRange_TimerTaks();
                 number = project_task.NumberWatermark;
                 RaisePropertyChanged("number");
             }
-          
         }
+
         public event btnSave_ClickedEventHandler Save_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             if (Save_Click != null)
@@ -64,7 +61,6 @@ namespace cntrl.PanelAdv
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
-
         }
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
@@ -78,19 +74,16 @@ namespace cntrl.PanelAdv
         {
             using (db db = new db())
             {
-                if (id_range!=null)
+                if (id_range != null)
                 {
                     project_task project_task = db.project_task.FirstOrDefault();
                     project_task.State = System.Data.Entity.EntityState.Modified;
-                    project_task.id_range =(int)cbxDocument.SelectedValue;
+                    project_task.id_range = (int)cbxDocument.SelectedValue;
                     project_task.CalcRange_TimerTaks();
                     number = project_task.NumberWatermark;
-                    RaisePropertyChanged("number"); 
+                    RaisePropertyChanged("number");
                 }
-              
             }
         }
-
-     
     }
 }

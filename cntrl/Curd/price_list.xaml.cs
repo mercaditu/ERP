@@ -1,12 +1,13 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
-using System.Data.Entity;
+
 namespace cntrl.Curd
 {
     /// <summary>
@@ -14,11 +15,11 @@ namespace cntrl.Curd
     /// </summary>
     public partial class price_list : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
         public object curMainObject { get; set; }
 
@@ -27,7 +28,7 @@ namespace cntrl.Curd
         private entity.item_price_list _price_listobject = null;
         public entity.item_price_list price_listobject { get { return _price_listobject; } set { _price_listobject = value; } }
 
-        CollectionViewSource _item_price_listViewSource = null;
+        private CollectionViewSource _item_price_listViewSource = null;
         public CollectionViewSource item_price_listViewSource { get { return _item_price_listViewSource; } set { _item_price_listViewSource = value; } }
 
         private entity.dbContext objentity = null;
@@ -74,35 +75,35 @@ namespace cntrl.Curd
                 if (!isExternalCall)
                 {
                     IEnumerable<DbEntityValidationResult> validationresult = _entity.db.GetValidationErrors();
-                        if (validationresult.Count() == 0)
+                    if (validationresult.Count() == 0)
+                    {
+                        _entity.SaveChanges();
+                        btnCancel_Click(sender, e);
+                    }
+                }
+                else
+                {
+                    IEnumerable<DbEntityValidationResult> validationresult = mydb.db.GetValidationErrors();
+                    if (validationresult.Count() == 0)
+                    {
+                        if (operationMode == Class.clsCommon.Mode.Add)
                         {
-                            _entity.SaveChanges();
+                            mydb.SaveChanges();
+                            entity.item_price_list item_price_list = myViewSource.View.CurrentItem as entity.item_price_list;
+                            mydb.db.Entry(item_price_list).State = EntityState.Detached;
+                            _entity.db.item_price_list.Attach(item_price_list);
+                            item_price_listViewSource.View.Refresh();
+                            item_price_listViewSource.View.MoveCurrentTo(item_price_list);
+                            MainViewSource.View.Refresh();
+                            MainViewSource.View.MoveCurrentTo(curMainObject);
+                            btnCancel_Click(sender, e);
+                        }
+                        else if (operationMode == Class.clsCommon.Mode.Edit)
+                        {
                             btnCancel_Click(sender, e);
                         }
                     }
-                    else
-                    {
-                        IEnumerable<DbEntityValidationResult> validationresult = mydb.db.GetValidationErrors();
-                        if (validationresult.Count() == 0)
-                        {
-                            if (operationMode == Class.clsCommon.Mode.Add)
-                            {
-                                mydb.SaveChanges();
-                                entity.item_price_list item_price_list = myViewSource.View.CurrentItem as entity.item_price_list;
-                                mydb.db.Entry(item_price_list).State = EntityState.Detached;
-                                _entity.db.item_price_list.Attach(item_price_list);
-                                item_price_listViewSource.View.Refresh();
-                                item_price_listViewSource.View.MoveCurrentTo(item_price_list);
-                                MainViewSource.View.Refresh();
-                                MainViewSource.View.MoveCurrentTo(curMainObject);
-                                btnCancel_Click(sender, e);
-                            }
-                            else if (operationMode == Class.clsCommon.Mode.Edit)
-                            {
-                                btnCancel_Click(sender, e);
-                            }
-                        }
-                    }
+                }
             }
             catch (Exception ex)
             {

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
 
 namespace cntrl
 {
@@ -13,7 +13,6 @@ namespace cntrl
     /// </summary>
     public partial class SalesInvoice : UserControl
     {
-
         public project project
         {
             get { return _project; }
@@ -71,7 +70,6 @@ namespace cntrl
 
                 sales_invoice_detail sales_invoice_detail = null;
 
-
                 sales_invoice_detail = new sales_invoice_detail();
                 sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                 sales_invoice_detail.sales_invoice = sales_invoice;
@@ -79,7 +77,7 @@ namespace cntrl
                 sales_invoice_detail.item = item;
 
                 sales_invoice_detail.id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group;
-                             
+
                 sales_invoice_detail.quantity = 1;
                 sales_invoice_detail.UnitPrice_Vat = Convert.ToDecimal(txtvalue.Text);
 
@@ -105,7 +103,6 @@ namespace cntrl
                 {
                     throw;
                 }
-
             }
         }
 
@@ -133,7 +130,6 @@ namespace cntrl
             {
                 txtvalue.Text = Math.Round(TotalValue, 2).ToString();
             }
-          
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

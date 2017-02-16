@@ -1,20 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class impexcurrency : UserControl
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource app_currencyViewSource, app_currencyapp_currencyfxViewSource;
-        bool isLoadedFirstTime = true;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource app_currencyViewSource, app_currencyapp_currencyfxViewSource;
+        private bool isLoadedFirstTime = true;
         private int Id;
         public int CurrencyId { get { return Id; } set { Id = value; } }
 
@@ -40,13 +40,12 @@ namespace cntrl
             }
         }
 
-        void filter_fx()
+        private void filter_fx()
         {
             if (app_currencyapp_currencyfxViewSource != null)
             {
                 if (app_currencyapp_currencyfxViewSource.View != null)
                 {
-
                     app_currencyapp_currencyfxViewSource.View.Filter = i =>
                         {
                             app_currencyfx app_currencyfx = (app_currencyfx)i;
@@ -55,10 +54,10 @@ namespace cntrl
                             else
                                 return false;
                         };
-
                 }
             }
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -66,7 +65,6 @@ namespace cntrl
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
-
                     _SaveChanges();
                     btnCancel_Click(sender, e);
                 }
@@ -132,7 +130,8 @@ namespace cntrl
             //}
         }
 
-        List<app_currencyfx> listapp_currencyfx = null;
+        private List<app_currencyfx> listapp_currencyfx = null;
+
         private void chkIsPriority_Checked(object sender, RoutedEventArgs e)
         {
             if (!isLoadedFirstTime)
@@ -221,6 +220,7 @@ namespace cntrl
                 //throw;
             }
         }
+
         private void chkIsDivisble_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -252,7 +252,5 @@ namespace cntrl
             app_currencyfx app_currencyfx = app_currencyapp_currencyfxViewSource.View.CurrentItem as app_currencyfx;
             app_currencyfx.type = global::entity.app_currencyfx.CurrencyFXTypes.Impex;
         }
-
-        
     }
 }

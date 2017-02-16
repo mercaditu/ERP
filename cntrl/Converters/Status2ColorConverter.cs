@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -11,8 +10,6 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-
-
                 if (value.ToString() == entity.Status.Documents_General.Approved.ToString() || value.ToString() == entity.Status.Documents.Issued.ToString() || value.ToString() == entity.item_asset_maintainance.Status.Done.ToString())
                 {
                     return new SolidColorBrush(Colors.PaleGreen);
@@ -30,10 +27,9 @@ namespace Cognitivo.Converters
             {
                 return new SolidColorBrush(Colors.Gainsboro);
             }
-
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

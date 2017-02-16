@@ -1,32 +1,32 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
-using System.Data.Entity;
 
 namespace cntrl
 {
     public partial class condition : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
-        
+
         public object curObject { get; set; }
-        
+
         public Class.clsCommon.Mode operationMode { get; set; }
 
         private entity.app_condition _app_conditionobject = null;
         public entity.app_condition app_conditionobject { get { return _app_conditionobject; } set { _app_conditionobject = value; } }
 
-        CollectionViewSource _conditionViewSource = null;
+        private CollectionViewSource _conditionViewSource = null;
         public CollectionViewSource conditionViewSource { get { return _conditionViewSource; } set { _conditionViewSource = value; } }
 
         private entity.dbContext _entity = null;
@@ -36,6 +36,7 @@ namespace cntrl
         {
             InitializeComponent();
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -64,6 +65,7 @@ namespace cntrl
                 }
             }
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -108,6 +110,7 @@ namespace cntrl
 
             CurrentSession.Load_BasicData(null, null);
         }
+
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (!isExternalCall)
@@ -121,6 +124,7 @@ namespace cntrl
                 }
             }
         }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -144,9 +148,5 @@ namespace cntrl
                 throw ex;
             }
         }
-
-        
-
-         
     }
 }

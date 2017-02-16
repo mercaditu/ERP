@@ -1,8 +1,8 @@
-﻿<UserControl x:Name="pnl_Treeview" x:Class="cntrl.Panels.pnl_TreeView" 
+﻿<UserControl x:Name="pnl_Treeview" x:Class="cntrl.Panels.pnl_TreeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:cntrl.Panels"
              xmlns:convert="clr-namespace:cntrl.Converters"
              xmlns:convertView="clr-namespace:Cognitivo.Converters"
@@ -10,9 +10,9 @@
              mc:Ignorable="d" MinWidth="300"
              d:DesignHeight="26">
     <UserControl.Resources>
-        <convert:Bool2Collapsed x:Key="BoolToVisibility"/>
-        <convertView:InitialsConverter x:Key="InitialsConverter"/>
-        <convertView:Decimal2Visibility x:Key="Decimal2Visibility"/>
+        <convert:Bool2Collapsed x:Key="BoolToVisibility" />
+        <convertView:InitialsConverter x:Key="InitialsConverter" />
+        <convertView:Decimal2Visibility x:Key="Decimal2Visibility" />
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
@@ -20,7 +20,7 @@
                 <Label Content="" FontSize="16" FontFamily="/cntrl;component/Resources/#cognitivo"
                        Foreground="{Binding StatusColor, ElementName=pnl_Treeview, FallbackValue=Gainsboro}">
                     <Label.Effect>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="1"/>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="1" />
                     </Label.Effect>
                 </Label>
                 <CheckBox Name="chbxSelected" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -42,33 +42,31 @@
                 </CheckBox>
             </Grid>
             <Label Content="{Binding Code, ElementName=pnl_Treeview}" Style="{StaticResource generic_Label}" />
-            <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}" />
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
-                <TextBlock Text="{Binding Type_Name, Converter={StaticResource InitialsConverter}, ElementName=pnl_Treeview, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                           Margin="4,3" FontSize="8" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Type_Name, Converter={StaticResource InitialsConverter}, ElementName=pnl_Treeview, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Margin="4,3" FontSize="8" VerticalAlignment="Center" />
             </Border>
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblProyectedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="EST" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblProyectedQuantity" Text="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
-                               Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black"/>
+                    <TextBlock Text="EST" Margin="4,1" FontSize="8" VerticalAlignment="Center" />
+                    <TextBlock x:Name="lblProyectedQuantity" Text="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center"
+                               Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
                 </StackPanel>
             </Border>
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblExecutedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblExecutedQuantity" Text="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center" />
+                    <TextBlock x:Name="lblExecutedQuantity" Text="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center"
                                Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
                 </StackPanel>
-                
             </Border>
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblExecutedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblExecutedCost" Text="{Binding UnitCost, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center" />
+                    <TextBlock x:Name="lblExecutedCost" Text="{Binding UnitCost, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center"
                                Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
                 </StackPanel>
-
             </Border>
         </StackPanel>
     </Grid>

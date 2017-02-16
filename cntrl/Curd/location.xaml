@@ -1,63 +1,63 @@
 ﻿<UserControl x:Class="cntrl.location"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Cognitivo.Converters"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
         VerticalAlignment="Center" BorderBrush="#00cc99" BorderThickness="2"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
         Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <local:InitialsConverter x:Key="InitialsConverter"/>
-        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <local:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <local:InitialsConverter x:Key="InitialsConverter" />
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
         <Grid Background="#00cc99">
-            <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png" 
-                       Height="32" HorizontalAlignment="Left" Margin="4,0"/>
-            <Label Content="{lex:Loc Location}" FontSize="25" Foreground="White" Margin="50,0,0,0"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png"
+                       Height="32" HorizontalAlignment="Left" Margin="4,0" />
+            <Label Content="{lex:Loc Location}" FontSize="25" Foreground="White" Margin="50,0,0,0" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
         <TextBlock Text="Multiple locations for one Branch. Holds Stock."
-                   Style="{StaticResource text_Instructions}"/>
+                   Style="{StaticResource text_Instructions}" />
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
             <ComboBox Style="{StaticResource input_combobox}"
                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                       metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                      DisplayMemberPath="name" SelectedValuePath="id_branch" 
-                      ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" 
-                      SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-            <Rectangle Height="1" Margin="3" Fill="Silver"/>
-            <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}"/>
-            <TextBox Style="{StaticResource input_textbox}" 
+                      DisplayMemberPath="name" SelectedValuePath="id_branch"
+                      ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
+                      SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <Rectangle Height="1" Margin="3" Fill="Silver" />
+            <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" />
+            <TextBox Style="{StaticResource input_textbox}"
                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             <CheckBox Content="{lex:Loc Default}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_default, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-            </StackPanel>
+                      IsChecked="{Binding is_default, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        </StackPanel>
 
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
             <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
 </UserControl>

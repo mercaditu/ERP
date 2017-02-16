@@ -14,6 +14,7 @@ namespace cntrl.Controls
     public partial class SmartBox_Item : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
@@ -21,6 +22,7 @@ namespace cntrl.Controls
 
         //Settings that if Marked True will show Quantity Popup.
         public static readonly DependencyProperty QuantityIntegrationProperty = DependencyProperty.Register("QuantityIntegration", typeof(bool), typeof(SmartBox_Item));
+
         public bool QuantityIntegration
         {
             get { return (bool)GetValue(QuantityIntegrationProperty); }
@@ -37,6 +39,7 @@ namespace cntrl.Controls
                 RaisePropertyChanged("Quantity");
             }
         }
+
         private decimal _Quantity;
 
         //Setting that if Marked true, will exclude Out Of Stock.
@@ -52,7 +55,8 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _Exclude_OutOfStock;
+
+        private bool _Exclude_OutOfStock;
 
         public bool can_New
         {
@@ -72,7 +76,8 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_new;
+
+        private bool _can_new;
 
         public bool can_Edit
         {
@@ -92,11 +97,13 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_edit;
+
+        private bool _can_edit;
 
         public decimal QuantityInStock { get; set; }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Item));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -104,6 +111,7 @@ namespace cntrl.Controls
         }
 
         public event RoutedEventHandler Select;
+
         private void ItemGrid_MouseDoubleClick(object sender, EventArgs e)
         {
             if (itemViewSource != null)
@@ -139,11 +147,11 @@ namespace cntrl.Controls
 
         public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
 
-        Task taskSearch;
-        CancellationTokenSource tokenSource;
-        CancellationToken token;
+        private Task taskSearch;
+        private CancellationTokenSource tokenSource;
+        private CancellationToken token;
 
-        CollectionViewSource itemViewSource;
+        private CollectionViewSource itemViewSource;
 
         public SmartBox_Item()
         {
@@ -180,7 +188,7 @@ namespace cntrl.Controls
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
         }
 
-        void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
             {
@@ -292,7 +300,6 @@ namespace cntrl.Controls
                 {
                     predicate = predicate.And(x => x.InStock > 0);
                 }
-
             }
 
             itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
@@ -341,7 +348,6 @@ namespace cntrl.Controls
 
         private void SmartBoxItem_Focus(object sender, RoutedEventArgs e)
         {
-
             TextBox txt = e.OriginalSource as TextBox;
             if (txt != null)
             {

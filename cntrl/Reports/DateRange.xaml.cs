@@ -6,8 +6,8 @@ namespace cntrl
 {
     public partial class DateRange : UserControl
     {
-
         public static DependencyProperty StartDateProperty = DependencyProperty.Register("StartDate", typeof(DateTime), typeof(DateRange));
+
         public DateTime StartDate
         {
             get { return (DateTime)GetValue(StartDateProperty); }
@@ -15,6 +15,7 @@ namespace cntrl
         }
 
         public static DependencyProperty EndDateProperty = DependencyProperty.Register("EndDate", typeof(DateTime), typeof(DateRange));
+
         public DateTime EndDate
         {
             get { return (DateTime)GetValue(EndDateProperty); }
@@ -22,6 +23,7 @@ namespace cntrl
         }
 
         public event RoutedEventHandler DateChanged;
+
         private void DateChanged_Click(object sender, RoutedEventArgs e)
         {
             DateChanged?.Invoke(this, new RoutedEventArgs());

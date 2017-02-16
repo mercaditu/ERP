@@ -1,9 +1,9 @@
 ﻿namespace cntrl.Reports.Finance
 {
-	public static class PendingReceivables
-	{
-		public static string query = @"
-select 
+    public static class PendingReceivables
+    {
+        public static string query = @"
+select
 								contact.code as Code,
 								contact.gov_code as GovID,
 								contact.name as Contact,
@@ -14,14 +14,14 @@ select
 								DATE_FORMAT(schedual.expire_date,'%d %b %y') as ExpiryDate,
 								curr.name as CurrencyName,
 								fx.buy_value as Rate,
-								schedual.debit as Value, 
-								schedual.CreditChild as Paid, 
+								schedual.debit as Value,
+								schedual.CreditChild as Paid,
 								(schedual.debit - schedual.CreditChild) as Balance,
 								schedual.trans_date as TransDate
 								from (
-								select 
+								select
 									parent.*,
-									( select if(sum(credit) is null, 0, sum(credit)) 
+									( select if(sum(credit) is null, 0, sum(credit))
 									from payment_schedual as child where child.parent_id_payment_schedual = parent.id_payment_schedual
 									) as CreditChild
 								from payment_schedual as parent
@@ -38,7 +38,5 @@ select
 								where (schedual.debit - schedual.CreditChild) > 0
 								group by schedual.id_payment_schedual
 								order by schedual.expire_date";
-	}
+    }
 }
-
-

@@ -1,19 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace cntrl.Curd
 {
@@ -24,11 +15,11 @@ namespace cntrl.Curd
     {
         // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
-         CollectionViewSource _item_templateViewSource = null;
-         public CollectionViewSource item_templateViewSource { get { return _item_templateViewSource; } set { _item_templateViewSource = value; } }
+        private CollectionViewSource _item_templateViewSource = null;
+        public CollectionViewSource item_templateViewSource { get { return _item_templateViewSource; } set { _item_templateViewSource = value; } }
 
-         CollectionViewSource _item_templateDetailViewSource = null;
-         public CollectionViewSource item_templateDetailViewSource { get { return _item_templateDetailViewSource; } set { _item_templateDetailViewSource = value; } }
+        private CollectionViewSource _item_templateDetailViewSource = null;
+        public CollectionViewSource item_templateDetailViewSource { get { return _item_templateDetailViewSource; } set { _item_templateDetailViewSource = value; } }
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
 

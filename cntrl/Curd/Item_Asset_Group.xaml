@@ -4,20 +4,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:local="clr-namespace:Cognitivo.Converters"
-             xmlns:converter="clr-namespace:cntrl.Converters"     
-            xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-            lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             xmlns:converter="clr-namespace:cntrl.Converters"
+            xmlns:lex="http://wpflocalizeextension.codeplex.com"
+            lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
             lex:ResxLocalizationProvider.DefaultDictionary="local"
             lex:LocalizeDictionary.DesignCulture="en-US"
-            mc:Ignorable="d" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            mc:Ignorable="d" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             Width="360" VerticalAlignment="Center" Loaded="UserControl_Loaded" KeyUp="UserControl_KeyUp"
             BorderBrush="RoyalBlue" BorderThickness="2">
     <UserControl.Resources>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <converter:BankAccountTypeVisibilityConverter x:Key="BankAcTypeConverter"/>
-        <converter:TerminalAccountTypeVisibilityConverter x:Key="TerminalAcTypeConverter"/>
-        <CollectionViewSource x:Key="item_asset_groupViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}"/>
-    
+        <local:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <converter:BankAccountTypeVisibilityConverter x:Key="BankAcTypeConverter" />
+        <converter:TerminalAccountTypeVisibilityConverter x:Key="TerminalAcTypeConverter" />
+        <CollectionViewSource x:Key="item_asset_groupViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
@@ -25,31 +24,31 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMainAc" Background="White">
             <Grid Background="RoyalBlue">
-                <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
-                       Height="32" Opacity="0.64" HorizontalAlignment="Left" Margin="8,0"/>
-                <Label x:Name="lblTitle" Content="{lex:Loc FixedAssetGroup}" Foreground="White" FontSize="25" Margin="50,0,0,0"/>
-                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ActiveValueConverter}}"/>
+                <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png"
+                       Height="32" Opacity="0.64" HorizontalAlignment="Left" Margin="8,0" />
+                <Label x:Name="lblTitle" Content="{lex:Loc FixedAssetGroup}" Foreground="White" FontSize="25" Margin="50,0,0,0" />
+                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ActiveValueConverter}}" />
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
             </Grid>
-            <TextBlock Style="{StaticResource text_Instructions}" 
-                       Text="description of Item_Asset_Group."/>
+            <TextBlock Style="{StaticResource text_Instructions}"
+                       Text="description of Item_Asset_Group." />
             <StackPanel HorizontalAlignment="Center">
-                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
                 <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Terms}" Style="{StaticResource input_label}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <Label Content="{lex:Loc Terms}" Style="{StaticResource input_label}" />
                 <TextBox Style="{StaticResource input_textbox}"
-                     Text="{Binding depreciation_rate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
-                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=N1}"/>
+                     Text="{Binding depreciation_rate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,
+                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=N1}" />
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                        FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                        FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
                 <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </StackPanel>
     </ScrollViewer>

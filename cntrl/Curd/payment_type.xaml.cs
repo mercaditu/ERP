@@ -14,11 +14,11 @@ namespace cntrl.Curd
     /// </summary>
     public partial class payment_type : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
 
         public object curObject { get; set; }
@@ -28,7 +28,7 @@ namespace cntrl.Curd
         private entity.payment_type _payment_typeObject = null;
         public entity.payment_type payment_typeObject { get { return _payment_typeObject; } set { _payment_typeObject = value; } }
 
-        CollectionViewSource ItemsSource = null;
+        private CollectionViewSource ItemsSource = null;
         public CollectionViewSource objCollectionViewSource { get { return ItemsSource; } set { ItemsSource = value; } }
 
         private entity.dbContext _entity = null;
@@ -42,7 +42,7 @@ namespace cntrl.Curd
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            
+
             {
                 CollectionViewSource app_documentViewSource = ((CollectionViewSource)(FindResource("app_documentViewSource")));
                 app_documentViewSource.Source = entity.db.app_document.Local;
@@ -63,7 +63,7 @@ namespace cntrl.Curd
                         myViewSource.View.Refresh();
                         cbxPrint.IsChecked = false;
                         myViewSource.View.MoveCurrentTo(newPaymentType);
-                        stackFields.DataContext = myViewSource;                     
+                        stackFields.DataContext = myViewSource;
                     }
                     else if (operationMode == Class.clsCommon.Mode.Edit)
                     {

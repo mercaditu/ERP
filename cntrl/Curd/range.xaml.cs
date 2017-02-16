@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class range : UserControl
     {
-        CollectionViewSource _document_rangeViewSource = null;
+        private CollectionViewSource _document_rangeViewSource = null;
         public CollectionViewSource document_rangeViewSource { get { return _document_rangeViewSource; } set { _document_rangeViewSource = value; } }
 
         private dbContext _entity = null;
@@ -74,6 +74,7 @@ namespace cntrl
         }
 
         #region Template
+
         private void Tag_MouseDown(object sender, MouseEventArgs e)
         {
             Label lbl = sender as Label;
@@ -93,9 +94,10 @@ namespace cntrl
             }
         }
 
-        #endregion
+        #endregion Template
 
         #region CURD
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -112,6 +114,7 @@ namespace cntrl
                 throw ex;
             }
         }
+
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -129,6 +132,7 @@ namespace cntrl
                 throw ex;
             }
         }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -144,6 +148,7 @@ namespace cntrl
                 throw ex;
             }
         }
-        #endregion
+
+        #endregion CURD
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace cntrl
 {
@@ -15,11 +15,11 @@ namespace cntrl
     /// </summary>
     public partial class hr_coefficient : UserControl
     {
-        CollectionViewSource _objCollectionViewSource = null;
+        private CollectionViewSource _objCollectionViewSource = null;
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
 
         private dbContext entity = new dbContext();
-      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         private entity.hr_time_coefficient _hr_time_coefficientobject = null;
         public entity.hr_time_coefficient hr_time_coefficientobject { get { return _hr_time_coefficientobject; } set { _hr_time_coefficientobject = value; } }
@@ -36,7 +36,6 @@ namespace cntrl
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-               
                 entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 objCollectionViewSource.Source = entity.db.hr_time_coefficient.Local;
 

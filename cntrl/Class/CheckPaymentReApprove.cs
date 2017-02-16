@@ -1,14 +1,12 @@
-﻿using System;
-using System.Windows;
-using entity;
-using System.Linq;
+﻿using entity;
+using System;
 using System.Collections.Generic;
-using entity.Brillo.Logic;
+using System.Linq;
+
 namespace cntrl.Class
 {
     public class CheckPaymentReApprove
     {
-
         public bool Start(db db, int ID, entity.App.Names Application)
         {
             return true;
@@ -16,14 +14,13 @@ namespace cntrl.Class
 
         public string Check_ContractChanges(db db, int ID, entity.App.Names Application)
         {
-            if (Application==App.Names.SalesInvoice)
+            if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
 
                 using (db temp = new db())
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
 
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
@@ -39,19 +36,15 @@ namespace cntrl.Class
                             {
                                 oldpayment.Add(payment_schedual.payment_detail.payment);
                             }
-
                         }
                         Message += "\n Deleted Payment:";
 
                         foreach (payment payment in oldpayment)
                         {
                             Message += "\n " + payment.GrandTotalDetailValue;
-
                         }
                         Message += "Of Person " + Local_SalesInvoice.contact.name;
                         return Message;
-
-
                     }
                 }
             }
@@ -62,7 +55,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
 
                     purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
 
@@ -78,24 +70,19 @@ namespace cntrl.Class
                             {
                                 oldpayment.Add(payment_schedual.payment_detail.payment);
                             }
-
                         }
                         Message += "\n Deleted Payment:";
 
                         foreach (payment payment in oldpayment)
                         {
                             Message += "\n " + payment.GrandTotalDetailValue;
-
                         }
                         Message += "Of Person " + Local_purchase_invoice.contact.name;
                         return Message;
-
-
                     }
                 }
-
             }
-           
+
             return "";
         }
 
@@ -109,7 +96,6 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
 
                     if (OriginalSalesInvoice.GrandTotal < Local_SalesInvoice.GrandTotal)
@@ -122,7 +108,6 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             Message = "This Payment Schedual change to " + OriginalSalesInvoice.payment_schedual.Sum(x => x.debit) + "-->" + Local_SalesInvoice.GrandTotal;
-
                         }
 
                         return Message;
@@ -136,7 +121,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
 
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
 
@@ -150,7 +134,6 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             Message = "This Payment Schedual change to " + OriginalPurchaseInvoice.payment_schedual.Sum(x => x.debit) + "-->" + Local_PurchaseInvoice.GrandTotal;
-
                         }
 
                         return Message;
@@ -158,11 +141,11 @@ namespace cntrl.Class
                 }
             }
             return "";
-           
         }
+
         public string Check_ValueDown(db db, int ID, entity.App.Names Application)
         {
-            if (Application==App.Names.SalesInvoice)
+            if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
 
@@ -170,12 +153,10 @@ namespace cntrl.Class
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
 
-
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
                     if (OriginalSalesInvoice.GrandTotal > Local_SalesInvoice.GrandTotal)
                     {
                         decimal Value = 0;
-
 
                         Value = Local_SalesInvoice.GrandTotal - OriginalSalesInvoice.payment_schedual.Sum(x => x.debit);
                         String Message = "You Have Changed The Value of the invoice So Following Changes Required..\n";
@@ -183,17 +164,11 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             Message = "This Payment Schedual change to " + OriginalSalesInvoice.payment_schedual.Sum(x => x.debit) + "-->" + Local_SalesInvoice.GrandTotal;
-
                         }
 
-
-
                         return Message;
-
-
                     }
                 }
-
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
@@ -203,12 +178,10 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
                     if (OriginalPurchaseInvoice.GrandTotal > Local_PurchaseInvoice.GrandTotal)
                     {
                         decimal Value = 0;
-
 
                         Value = Local_PurchaseInvoice.GrandTotal - OriginalPurchaseInvoice.payment_schedual.Sum(x => x.debit);
                         String Message = "You Have Changed The Value of the invoice So Following Changes Required..\n";
@@ -216,31 +189,25 @@ namespace cntrl.Class
                         if (payment_schedual != null)
                         {
                             Message = "This Payment Schedual change to " + OriginalPurchaseInvoice.payment_schedual.Sum(x => x.debit) + "-->" + Local_PurchaseInvoice.GrandTotal;
-
                         }
 
-
-
                         return Message;
-
-
                     }
                 }
-               
             }
-      
+
             return "";
         }
+
         public string Check_CurrencyChange(db db, int ID, entity.App.Names Application)
         {
-            if (Application==App.Names.SalesInvoice)
+            if (Application == App.Names.SalesInvoice)
             {
                 sales_invoice OriginalSalesInvoice;
 
                 using (db temp = new db())
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
 
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
                     if (OriginalSalesInvoice.id_currencyfx != Local_SalesInvoice.id_currencyfx)
@@ -265,7 +232,6 @@ namespace cntrl.Class
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
 
-
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
                     if (OriginalPurchaseInvoice.id_currencyfx != Local_PurchaseInvoice.id_currencyfx)
                     {
@@ -281,7 +247,7 @@ namespace cntrl.Class
                     }
                 }
             }
-               
+
             return "";
         }
 
@@ -294,7 +260,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
 
                     sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
                     String Message = "You Have Changed The Date So Following Changes Required..\n";
@@ -311,9 +276,7 @@ namespace cntrl.Class
                             payment_schedual payment_schedual = oldSchedual.Skip(i - 1).Take(1).FirstOrDefault();
                             Message += payment_schedual.expire_date + "-->" + Local_SalesInvoice.trans_date.AddDays(app_contract_detail.interval);
                             return Message;
-
                         }
-
                     }
                 }
             }
@@ -324,7 +287,6 @@ namespace cntrl.Class
                 using (db temp = new db())
                 {
                     OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
 
                     purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
                     String Message = "You Have Changed The Date So Following Changes Required..\n";
@@ -341,9 +303,7 @@ namespace cntrl.Class
                             payment_schedual payment_schedual = oldSchedual.Skip(i - 1).Take(1).FirstOrDefault();
                             Message += payment_schedual.expire_date + "-->" + Local_PurchaseInvoice.trans_date.AddDays(app_contract_detail.interval);
                             return Message;
-
                         }
-
                     }
                 }
             }

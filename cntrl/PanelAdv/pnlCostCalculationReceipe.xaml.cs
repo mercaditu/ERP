@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using entity;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System;
 
 namespace cntrl.PanelAdv
 {
@@ -13,8 +11,9 @@ namespace cntrl.PanelAdv
     {
         public List<item_recepie_detail> Outputitem_recepie_detailList { get; set; }
         public List<item_recepie> Inputitem_recepieList { get; set; }
-        CollectionViewSource inputViewSource;
-        CollectionViewSource outputViewSource;
+        private CollectionViewSource inputViewSource;
+        private CollectionViewSource outputViewSource;
+
         public pnlCostCalculationReceipe()
         {
             InitializeComponent();
@@ -36,12 +35,7 @@ namespace cntrl.PanelAdv
                 inputViewSource = FindResource("inputViewSource") as CollectionViewSource;
                 inputViewSource.Source = CostCalculation.CalculateOutputOrderRecipe(Inputitem_recepieList);
                 outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
-             
-
-
             }
         }
-
-      
     }
 }

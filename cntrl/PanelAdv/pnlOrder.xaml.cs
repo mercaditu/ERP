@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.ComponentModel;
-using System.Data.Entity.Validation;
 
 namespace cntrl.PanelAdv
 {
     public partial class pnlOrder : UserControl
     {
-        CollectionViewSource production_orderViewSource, production_lineViewSource; //, itemViewSource;
+        private CollectionViewSource production_orderViewSource, production_lineViewSource; //, itemViewSource;
         public List<project_task> project_taskLIST { get; set; }
         public dbContext shared_dbContext { get; set; }
         public CollectionViewSource projectViewSource { get; set; }
-        dbContext _dbContext = new dbContext();
+        private dbContext _dbContext = new dbContext();
 
         public pnlOrder()
         {
@@ -54,10 +54,7 @@ namespace cntrl.PanelAdv
                 production_lineViewSource = (CollectionViewSource)this.Resources["production_lineViewSource"];
                 shared_dbContext.db.production_line.Load();
                 production_lineViewSource.Source = shared_dbContext.db.production_line.Local;
-
-         
             }
-
 
             if (project_taskLIST.Count() > 0)
             {
@@ -70,7 +67,6 @@ namespace cntrl.PanelAdv
                     {
                         production_order.project_cost_center = contact.app_cost_center.name;
                     }
-
                 }
                 if (project.id_branch != null)
                 {
@@ -105,7 +101,6 @@ namespace cntrl.PanelAdv
                             production_order_detail.status = Status.Production.Pending;
                         }
                     }
-
 
                     production_order_detail.id_order_detail = _project_task.id_project_task;
                     production_order_detail.name = _project_task.item_description;
@@ -158,14 +153,11 @@ namespace cntrl.PanelAdv
             {
                 project_task _project_task = (project_task)item;
 
-
                 if (_project_task.status == entity.Status.Project.Approved)
                 {
                     _project_task.status = entity.Status.Project.InProcess;
                     _project_task.IsSelected = false;
                 }
-
-
             }
 
             IEnumerable<DbEntityValidationResult> validationresult = _dbContext.db.GetValidationErrors();
@@ -217,6 +209,5 @@ namespace cntrl.PanelAdv
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
         }
-
     }
 }

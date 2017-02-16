@@ -1,23 +1,23 @@
-﻿using System.Data;
+﻿using entity;
+using entity.BrilloQuery;
+using Microsoft.Reporting.WinForms;
+using System;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Reporting.WinForms;
 using System.Windows.Data;
-using entity.BrilloQuery;
-using entity;
-using System.Linq;
 using System.Windows.Media;
-using System;
-using System.IO;
 using System.Xml.Linq;
-using cntrl.Properties;
-using System.Reflection;
 
 namespace cntrl
 {
     public partial class ReportPanel : UserControl
     {
-        bool RefreshPanel = true;
+        private bool RefreshPanel = true;
+
         public bool ShowDateRange
         {
             get { return _ShowDateRange; }
@@ -30,6 +30,7 @@ namespace cntrl
                 }
             }
         }
+
         private bool _ShowDateRange;
 
         public bool ShowProject
@@ -49,12 +50,13 @@ namespace cntrl
                         }
                     }
                 }
-
             }
         }
+
         private bool _ShowProject;
 
         private static readonly DependencyProperty ApplicationNameProperty = DependencyProperty.Register("ApplicationName", typeof(App.Names), typeof(ReportPanel));
+
         public App.Names ApplicationName
         {
             get { return (App.Names)GetValue(ApplicationNameProperty); }
@@ -62,11 +64,13 @@ namespace cntrl
         }
 
         private CollectionViewSource ReportViewSource;
+
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
             set { _StartDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
         }
+
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
         public int ProjectID
@@ -78,6 +82,7 @@ namespace cntrl
                 Fill();
             }
         }
+
         private int _ProjectID;
 
         public DateTime EndDate
@@ -85,6 +90,7 @@ namespace cntrl
             get { return AbsoluteDate.End(_EndDate); }
             set { _EndDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
         }
+
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
         public DataTable ReportDt
@@ -155,7 +161,6 @@ namespace cntrl
                     }
                 }
             }
-
         }
 
         public void Fill()
@@ -204,13 +209,13 @@ namespace cntrl
 
             ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
             ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
-              
+
             reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
-       
+
         public void Filter()
         {
             this.reportViewer.Reset();
@@ -261,7 +266,6 @@ namespace cntrl
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
             RefreshPanel = false;
             string filter = "";
 
@@ -269,11 +273,8 @@ namespace cntrl
 
             foreach (object Control in stpFilter.Children)
             {
-
-
                 if (Control.GetType() == typeof(ComboBox))
                 {
-
                     ComboBox comboobox = Control as ComboBox;
                     if (comboobox.SelectedValue != null)
                     {
@@ -284,12 +285,9 @@ namespace cntrl
                         filter += comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
                         IsFirst = false;
                     }
-
-
                 }
                 else if (Control.GetType() == typeof(CheckBox))
                 {
-
                     CheckBox CheckBox = Control as CheckBox;
 
                     if (CheckBox.IsChecked == true)
@@ -301,7 +299,6 @@ namespace cntrl
                         filter += CheckBox.Tag + " = True";
                         IsFirst = false;
                     }
-
                 }
             }
 
@@ -321,8 +318,6 @@ namespace cntrl
             RefreshPanel = true;
 
             Fill();
-          
-           
         }
     }
 

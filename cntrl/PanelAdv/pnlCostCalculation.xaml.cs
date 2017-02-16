@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using entity;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System;
 
 namespace cntrl.PanelAdv
 {
@@ -13,8 +11,9 @@ namespace cntrl.PanelAdv
     {
         public List<production_order_detail> Inputproduction_order_detailList { get; set; }
         public List<production_order_detail> Outputproduction_order_detailList { get; set; }
-        CollectionViewSource inputViewSource;
-        CollectionViewSource outputViewSource;
+        private CollectionViewSource inputViewSource;
+        private CollectionViewSource outputViewSource;
+
         public pnlCostCalculation()
         {
             InitializeComponent();
@@ -36,12 +35,8 @@ namespace cntrl.PanelAdv
                 inputViewSource = FindResource("inputViewSource") as CollectionViewSource;
 
                 outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
-                outputViewSource.Source = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList,Inputproduction_order_detailList);
-
-
+                outputViewSource.Source = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList, Inputproduction_order_detailList);
             }
         }
-
-      
     }
 }

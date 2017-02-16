@@ -1,12 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using entity;
 
 namespace cntrl.Curd
 {
@@ -18,12 +17,11 @@ namespace cntrl.Curd
         public entity.item itemobject { get { return _itemobject; } set { _itemobject = value; } }
         //public List<entity.item> itemList { get; set; }
 
-        CollectionViewSource itemViewSource;
+        private CollectionViewSource itemViewSource;
 
         public item()
         {
             InitializeComponent();
-            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

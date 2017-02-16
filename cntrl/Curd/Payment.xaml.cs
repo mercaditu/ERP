@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Data.Entity;
-using entity;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Data;
+﻿using entity;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace cntrl.Curd
 {
     public partial class Payment : UserControl
     {
-
         public PaymentDB PaymentDB { get; set; }
+
         public enum Modes
         {
             Recievable,
@@ -21,8 +21,8 @@ namespace cntrl.Curd
         }
 
         private Modes Mode;
-        CollectionViewSource paymentpayment_detailViewSource;
-        CollectionViewSource paymentViewSource;
+        private CollectionViewSource paymentpayment_detailViewSource;
+        private CollectionViewSource paymentViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
 
         public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList, ref PaymentDB PaymentDB)
@@ -137,6 +137,7 @@ namespace cntrl.Curd
         }
 
         #region Events
+
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
@@ -144,7 +145,7 @@ namespace cntrl.Curd
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        #endregion
+        #endregion Events
 
         private void SaveChanges(object sender, EventArgs e)
         {
@@ -155,7 +156,6 @@ namespace cntrl.Curd
                 Decimal TotalPayable = 0;
                 if (Mode == Modes.Recievable)
                 {
-
                     TotalPayable = payment_schedualList.Where(x => x.app_currencyfx.id_currency == id.id_currency).Sum(x => x.AccountReceivableBalance);
                 }
                 else
@@ -206,7 +206,7 @@ namespace cntrl.Curd
                         //If payment behaviour is Credit Note, then hide Account.
                         stpaccount.Visibility = Visibility.Collapsed;
 
-                        //Check Mode. 
+                        //Check Mode.
                         if (Mode == Modes.Payable)
                         {
                             //If Payable, then Hide->Sales and Show->Payment
@@ -256,6 +256,7 @@ namespace cntrl.Curd
         }
 
         #region Purchase and Sales Returns
+
         private void sbxPurchaseReturn_Select(object sender, RoutedEventArgs e)
         {
             if (sbxPurchaseReturn.ReturnID > 0)
@@ -269,8 +270,8 @@ namespace cntrl.Curd
                 payment_detail.Max_Value = return_value;
                 sbxPurchaseReturn.Text = purchase_return.number + "-" + purchase_return.trans_date; ;
             }
-
         }
+
         private void sbxReturn_Select(object sender, RoutedEventArgs e)
         {
             if (sbxReturn.ReturnID > 0)
@@ -288,10 +289,9 @@ namespace cntrl.Curd
                     sbxReturn.RaisePropertyChanged("Text");
                 }
             }
-
         }
 
-        #endregion
+        #endregion Purchase and Sales Returns
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
@@ -370,7 +370,6 @@ namespace cntrl.Curd
 
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

@@ -1,19 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class location : UserControl
     {
         //public db db { get; set; }
-       // entity.Properties.Settings _setting = new entity.Properties.Settings();
-        CollectionViewSource _app_locationViewSource = null;
+        // entity.Properties.Settings _setting = new entity.Properties.Settings();
+        private CollectionViewSource _app_locationViewSource = null;
+
         public CollectionViewSource app_locationViewSource { get { return _app_locationViewSource; } set { _app_locationViewSource = value; } }
 
         private entity.dbContext objentity = null;

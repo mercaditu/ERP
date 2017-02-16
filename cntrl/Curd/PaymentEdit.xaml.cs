@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using entity;
+using System;
 using System.Data.Entity;
-using entity;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace cntrl.Curd
 {
@@ -21,8 +20,8 @@ namespace cntrl.Curd
         }
 
         private Modes Mode;
-        CollectionViewSource paymentpayment_detailViewSource;
-        CollectionViewSource paymentViewSource;
+        private CollectionViewSource paymentpayment_detailViewSource;
+        private CollectionViewSource paymentViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
@@ -36,15 +35,12 @@ namespace cntrl.Curd
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
-
             paymentViewSource.Source = PaymentDB.payments.Local;
-
 
             if (paymentViewSource != null)
             {
                 if (paymentViewSource.View != null)
                 {
-
                     paymentViewSource.View.Filter = i =>
                     {
                         int id_payment = _payment.id_payment;
@@ -54,13 +50,8 @@ namespace cntrl.Curd
                         else
                             return false;
                     };
-
                 }
             }
-
-
-
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -77,13 +68,9 @@ namespace cntrl.Curd
 
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
-
-
         }
 
         #region Events
-
-
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -92,7 +79,7 @@ namespace cntrl.Curd
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        #endregion
+        #endregion Events
 
         private void SaveChanges()
         {
@@ -101,7 +88,7 @@ namespace cntrl.Curd
             {
                 if (PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault() != null)
                 {
-                    payment_schedual payment_schedual=PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                    payment_schedual payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
                     if (payment_detail.value != payment_schedual.credit)
                     {
                         payment_schedual.credit = payment_detail.value;
@@ -118,8 +105,6 @@ namespace cntrl.Curd
             }
 
             lblCancel_MouseDown(null, null);
-
-
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,7 +127,7 @@ namespace cntrl.Curd
                         //If payment behaviour is Credit Note, then hide Account.
                         stpaccount.Visibility = Visibility.Collapsed;
 
-                        //Check Mode. 
+                        //Check Mode.
                         if (Mode == Modes.Payable)
                         {
                             //If Payable, then Hide->Sales and Show->Payment
@@ -203,7 +188,6 @@ namespace cntrl.Curd
             {
                 try
                 {
-
                     if (purchasereturnComboBox.Data != null)
                     {
                         CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
@@ -215,7 +199,6 @@ namespace cntrl.Curd
 
                         if (payment_detail.value > return_value)
                         {
-
                             payment_detail.value = return_value;
                             payment_detail.RaisePropertyChanged("value");
                         }
@@ -230,7 +213,6 @@ namespace cntrl.Curd
                 {
                     throw ex;
                 }
-
             }
             catch (Exception ex)
             {
@@ -250,7 +232,6 @@ namespace cntrl.Curd
         {
             try
             {
-
                 if (salesreturnComboBox.Data != null)
                 {
                     CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
@@ -262,7 +243,6 @@ namespace cntrl.Curd
 
                     if (payment_detail.value > return_value)
                     {
-
                         payment_detail.value = return_value;
                         payment_detail.RaisePropertyChanged("value");
                     }
@@ -279,15 +259,12 @@ namespace cntrl.Curd
             }
         }
 
-        #endregion
+        #endregion Purchase and Sales Returns
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SaveChanges();
-
         }
-
-
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
@@ -296,7 +273,6 @@ namespace cntrl.Curd
             payment_detail payment_detail = new payment_detail();
             payment_detail.payment = payment;
             payment_detail.value = 0;
-
 
             int id_currencyfx = payment_detailold.payment_schedual.FirstOrDefault().id_currencyfx;
             if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
@@ -309,7 +285,6 @@ namespace cntrl.Curd
             {
                 payment_schedual _payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
                 payment_detail.payment_schedual.Add(_payment_schedual);
-
             }
 
             payment.payment_detail.Add(payment_detail);
@@ -324,8 +299,6 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
         }
 
-
-
         private void cbxPaymentSchedual_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
@@ -336,12 +309,10 @@ namespace cntrl.Curd
             //        payment_detail.payment_schedual.Add(cbxPaymentSchedual.SelectedItem as payment_schedual);
             //    }
             //}
-
         }
 
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -350,9 +321,5 @@ namespace cntrl.Curd
 
             paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
-
-
-
-
     }
 }

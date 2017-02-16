@@ -1,5 +1,4 @@
-﻿
-namespace cntrl.Reports.Project
+﻿namespace cntrl.Reports.Project
 {
     public static class Project
     {
@@ -14,11 +13,11 @@ namespace cntrl.Reports.Project
                                                 contacts.name as Contact,
 											   contacts.code as ContactCode,
 											   contacts.gov_code as GovermentId,
-											task.quantity_est as QuantityEst, 
-                                            task.quantity_est *item_conversion_factor.value *  (select ROUND(EXP(SUM(LOG(`value`))),4) from project_task_dimension where id_project_task = task.id_project_task)  as ConversionQuantity, 
-											exe.Quantity as QuantityReal, 
+											task.quantity_est as QuantityEst,
+                                            task.quantity_est *item_conversion_factor.value *  (select ROUND(EXP(SUM(LOG(`value`))),4) from project_task_dimension where id_project_task = task.id_project_task)  as ConversionQuantity,
+											exe.Quantity as QuantityReal,
 											task.unit_cost_est as CostEst,
-											 exe.unit_cost as CostReal, 
+											 exe.unit_cost as CostReal,
 											 task.start_date_est as StartDate,
 											  task.end_date_est as EndDate ,
 
@@ -27,14 +26,14 @@ namespace cntrl.Reports.Project
 																		sum(ps.debit) as TotalPaid,
 																		sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 												 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional
-											from project_task as task 
-                                         											 inner join projects  as proj on proj.id_project = task.id_project 
-											  inner join contacts   on proj.id_contact = contacts.id_contact 
+											from project_task as task
+                                         											 inner join projects  as proj on proj.id_project = task.id_project
+											  inner join contacts   on proj.id_contact = contacts.id_contact
 
 											 inner join items as item on task.id_item = item.id_item
                                               left join  item_product on item_product.id_item=item.id_item
                                              left join item_conversion_factor on item_conversion_factor.id_item_product=item_product.id_item_product
-											 left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task 
+											 left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task
 											  left join sales_budget as sb on proj.id_project = sb.id_project
 																		left join sales_budget_detail as sbd on sb.id_sales_budget = sbd.id_sales_budget
 																		left join sales_invoice as si  on proj.id_project = si.id_project
@@ -42,14 +41,7 @@ namespace cntrl.Reports.Project
 																		left join payment_schedual as ps on ps.id_sales_invoice = si.id_sales_invoice
 
 											  where proj.id_company = @CompanyID and proj.id_project = @ProjectID
- 
+
 											 group by task.id_project_task ";
     }
 }
-
-
-
- 
-
-
- 

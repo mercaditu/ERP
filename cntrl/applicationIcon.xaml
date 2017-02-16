@@ -1,44 +1,44 @@
 ﻿<UserControl x:Class="cntrl.applicationIcon" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
     </UserControl.Resources>
     <Grid>
         <metro:Tile HorizontalContentAlignment="Left" Cursor="Hand" Click="Tile_Click"
                         Width="256" Height="64" Margin="16">
             <metro:Tile.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.64"/>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.64" />
             </metro:Tile.Effect>
             <metro:Tile.Background>
-                <SolidColorBrush Color="White" Opacity="0.95"/>
+                <SolidColorBrush Color="White" Opacity="0.95" />
             </metro:Tile.Background>
             <Grid Height="64">
                 <Border Background="WhiteSmoke" MinWidth="64" HorizontalAlignment="Left" MouseUp="Tile_Click">
                     <Image Source="{Binding imgSource, ElementName=this}" Margin="6">
                         <!--<Image.Effect>
-                            <DropShadowEffect BlurRadius="1" ShadowDepth="0"/>
+                            <DropShadowEffect BlurRadius="1" ShadowDepth="0" />
                         </Image.Effect>-->
                     </Image>
                 </Border>
                 <StackPanel VerticalAlignment="Center" Margin="72,0,0,0" Width="184">
-                    <TextBlock MaxWidth="180" Text="{Binding ApplicationName, ElementName=this}" 
-                               Foreground="Black" FontWeight="Thin" FontSize="18" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock MaxWidth="180" Text="{Binding ApplicationName, ElementName=this}"
+                               Foreground="Black" FontWeight="Thin" FontSize="18" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <metro:Tile Background="#FF73D573" Width="50" Height="64" Margin="0" Visibility="Collapsed">
-                        <Label Content="+" FontSize="23" Foreground="White" 
-                               VerticalAlignment="Center" HorizontalAlignment="Center" 
-                               FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                        <Label Content="+" FontSize="23" Foreground="White"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               FontFamily="/cntrl;component/Resources/#cognitivo" />
                     </metro:Tile>
                     <metro:Tile Background="#FF3C8FFF" Width="44" Height="64" Margin="0" Click="Report_Click"
                                 Visibility="{Binding ElementName=this, Path=HasReport, Converter={StaticResource Bool2Visibility}}">
-                        <Label Content="" FontSize="23" Foreground="White" 
-                               VerticalAlignment="Center" HorizontalAlignment="Center" 
-                               FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                        <Label Content="" FontSize="23" Foreground="White"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               FontFamily="/cntrl;component/Resources/#cognitivo" />
                     </metro:Tile>
                 </StackPanel>
             </Grid>
@@ -46,7 +46,7 @@
                 <ContextMenu>
                     <MenuItem Header="Favorite" Click="applicationIcon_ClickFavorites">
                         <MenuItem.Icon>
-                            <Label Content="F" Style="{StaticResource ico_Label}" Foreground="Crimson"/>
+                            <Label Content="F" Style="{StaticResource ico_Label}" Foreground="Crimson" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

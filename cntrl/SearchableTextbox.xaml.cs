@@ -13,10 +13,11 @@ namespace cntrl
     public partial class SearchableTextbox : UserControl
     {
         public bool _focusgrid = false;
+
         public bool focusGrid
         {
             get { return _focusgrid; }
-            set { _focusgrid=value ;}
+            set { _focusgrid = value; }
         }
 
         public SearchableTextbox()
@@ -26,6 +27,7 @@ namespace cntrl
         }
 
         public static DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns", typeof(SmartBoxColumnCollection), typeof(SearchableTextbox), new PropertyMetadata(null));
+
         public SmartBoxColumnCollection Columns
         {
             get { return (SmartBoxColumnCollection)GetValue(ColumnsProperty); }
@@ -33,6 +35,7 @@ namespace cntrl
         }
 
         public static DependencyProperty CollectionViewSourceProperty = DependencyProperty.Register("CollectionViewSource", typeof(CollectionViewSource), typeof(SearchableTextbox), new PropertyMetadata(null));
+
         public CollectionViewSource CollectionViewSource
         {
             get { return (CollectionViewSource)GetValue(CollectionViewSourceProperty); }
@@ -40,6 +43,7 @@ namespace cntrl
         }
 
         public static DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SearchableTextbox), new PropertyMetadata(null));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -47,6 +51,7 @@ namespace cntrl
         }
 
         public static DependencyProperty IsDisplayedProperty = DependencyProperty.Register("IsDisplayed", typeof(bool), typeof(SearchableTextbox), new PropertyMetadata(null));
+
         public bool IsDisplayed
         {
             get { return (bool)GetValue(IsDisplayedProperty); }
@@ -54,16 +59,16 @@ namespace cntrl
         }
 
         public static DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(SearchableTextbox), new PropertyMetadata(null));
+
         public object Data
         {
             get { return (object)GetValue(DataProperty); }
             set { SetValue(DataProperty, value); }
         }
-      
-        
+
         private void TextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-          List<SmartBoxColumn> Columncollection=Columns.Where(x => x.Hide == false).ToList();
+            List<SmartBoxColumn> Columncollection = Columns.Where(x => x.Hide == false).ToList();
             if (IsDisplayed)
             {
                 if (CollectionViewSource != null)
@@ -75,15 +80,13 @@ namespace cntrl
                             bool filter = false;
                             CollectionViewSource.View.Filter = obj =>
                             {
-                               
                                 filter = false;
-                                                             
+
                                 Type t = obj.GetType();
-                           
-                           
+
                                 foreach (SmartBoxColumn item in Columncollection)
                                 {
-                                    if (t.GetProperty(item.ForProperty)!=null && t.GetProperty(item.ForProperty).GetValue(obj, null)!=null)
+                                    if (t.GetProperty(item.ForProperty) != null && t.GetProperty(item.ForProperty).GetValue(obj, null) != null)
                                     {
                                         if (Convert.ToString(t.GetProperty(item.ForProperty).GetValue(obj, null)).ToLower().Contains(TxtSearched.Text.ToLower()))
                                         {
@@ -94,10 +97,7 @@ namespace cntrl
                                         {
                                             //filter = false;
                                         }
-                                    }           
-                                       
-                                   
-                                 
+                                    }
                                 }
                                 return filter;
                             };
@@ -120,11 +120,10 @@ namespace cntrl
                 else
                 {
                     DisplayPopup.IsOpen = false;
-                   // Data = null;
+                    // Data = null;
                 }
                 IsDisplayed = false;
             }
-           
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -132,18 +131,17 @@ namespace cntrl
             if (CollectionViewSource != null)
             {
                 MainGrid.DataContext = CollectionViewSource;
-              //  db db= new entity.db();
+                //  db db= new entity.db();
 
-               // Grid1.ItemsSource = _CollectionViewSource;
+                // Grid1.ItemsSource = _CollectionViewSource;
                 foreach (SmartBoxColumn item in Columns)
                 {
                     if (!Grid.Columns.Contains(item) && item.Hide != true)
                         Grid.Columns.Add(item);
                 }
-               
-              // TxtSearched.Text =Text;
-            }
 
+                // TxtSearched.Text =Text;
+            }
 
             foreach (var Column in Columns)
             {
@@ -153,7 +151,7 @@ namespace cntrl
                     Column.Header = str;
                 }
             }
-    }
+        }
 
         private void SmartBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -163,6 +161,7 @@ namespace cntrl
                 displaydata();
             }
         }
+
         private void TxtSearched_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Down && Grid.Items.Count > 0)
@@ -184,14 +183,13 @@ namespace cntrl
                 else
                 {
                     Object2View = (dynamic)Grid.SelectedItem;
-                    
+
                     if (Object2View != null)
                     {
                         SetValue(DataProperty, Object2View);
-                      //  SetValue(TextProperty, Object2View.name);
-                       // Text = Object2View.name;
+                        //  SetValue(TextProperty, Object2View.name);
+                        // Text = Object2View.name;
                     }
-                    
                 }
             }
             else if (Grid.Items.Count != 0)
@@ -205,11 +203,11 @@ namespace cntrl
                 if (contact != null)
                 {
                     SetValue(DataProperty, contact);
-                  //  SetValue(TextProperty, contact.name);
-                   // Text = contact.name;
+                    //  SetValue(TextProperty, contact.name);
+                    // Text = contact.name;
                 }
-              
-               // TxtSearched.Text = contact.name;
+
+                // TxtSearched.Text = contact.name;
             }
             //if (_MainCollectionViewSource != null)
             //{
@@ -222,12 +220,11 @@ namespace cntrl
             TxtSearched.SelectAll();
             TxtSearched.Focus();
         }
+
         private void Grid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             IsDisplayed = true;
             displaydata();
         }
-
-      
     }
 }

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity.Validation;
-using System.Data.Entity;
 
 namespace cntrl.Curd
 {
@@ -16,16 +16,16 @@ namespace cntrl.Curd
     /// </summary>
     public partial class vat_group : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
         public object curObject { get; set; }
         public Class.clsCommon.Mode operationMode { get; set; }
 
-        CollectionViewSource _app_vat_groupViewSource, app_vatViewSource = null;
+        private CollectionViewSource _app_vat_groupViewSource, app_vatViewSource = null;
         public CollectionViewSource app_vat_groupViewSource { get { return _app_vat_groupViewSource; } set { _app_vat_groupViewSource = value; } }
 
         private entity.dbContext objentity = null;
@@ -73,7 +73,7 @@ namespace cntrl.Curd
                 }
             }
             catch
-            {}
+            { }
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
@@ -102,7 +102,6 @@ namespace cntrl.Curd
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 if (!isExternalCall)
@@ -143,8 +142,6 @@ namespace cntrl.Curd
                 throw ex;
             }
         }
-
-      
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {

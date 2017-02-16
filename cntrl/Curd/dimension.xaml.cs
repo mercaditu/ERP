@@ -14,11 +14,11 @@ namespace cntrl.Curd
     /// </summary>
     public partial class dimension : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
-        CollectionViewSource myViewSource = new CollectionViewSource();
+        private entity.dbContext mydb = new entity.dbContext();
+        private CollectionViewSource myViewSource = new CollectionViewSource();
         public bool isExternalCall { get; set; }
 
-        CollectionViewSource _MainViewSource = null;
+        private CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
 
         public object curObject { get; set; }
@@ -28,7 +28,7 @@ namespace cntrl.Curd
         private entity.app_dimension _objapp_dimension = null;
         public entity.app_dimension objapp_dimension { get { return _objapp_dimension; } set { _objapp_dimension = value; } }
 
-        CollectionViewSource _app_dimensionViewSource = null;
+        private CollectionViewSource _app_dimensionViewSource = null;
         public CollectionViewSource app_dimensionViewSource { get { return _app_dimensionViewSource; } set { _app_dimensionViewSource = value; } }
 
         private entity.dbContext objentity = null;
@@ -45,7 +45,6 @@ namespace cntrl.Curd
             {
                 if (!isExternalCall)
                 {
-                
                     stackMain.DataContext = app_dimensionViewSource;
                 }
                 else

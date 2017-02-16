@@ -15,7 +15,8 @@ namespace cntrl.Controls
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer),new PropertyMetadata(GetImageCallBack));
+        public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
+
         public int ReferenceID
         {
             get { return (int)GetValue(ReferenceIDProperty); }
@@ -63,16 +64,14 @@ namespace cntrl.Controls
 
                     if (app_attachment != null)
                     {
-
                         using (entity.db db = new entity.db())
                         {
                             entity.app_attachment _app_attachment = db.app_attachment.Where(x => x.id_attachment == app_attachment.id_attachment).FirstOrDefault();
-                            if (_app_attachment!=null)
+                            if (_app_attachment != null)
                             {
                                 db.app_attachment.Remove(_app_attachment);
                                 db.SaveChanges();
                             }
-                       
 
                             GetImage();
                         }
@@ -85,7 +84,6 @@ namespace cntrl.Controls
 
         private void MenuItem_New(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)

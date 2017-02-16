@@ -1,21 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using entity;
-using System.ComponentModel;
 
 namespace cntrl.Controls
 {
     public partial class ImpexCurrencyBox : UserControl, INotifyPropertyChanged
     {
-        List<app_currency> app_currencyList;
+        private List<app_currency> app_currencyList;
 
         public decimal Rate_Previous { get; set; }
         public decimal Rate_Current { get; set; }
         public int id_currency { get; set; }
         public App.Names appName { get; set; }
+
         public int SelectedValue
         {
             get
@@ -32,6 +33,7 @@ namespace cntrl.Controls
             = DependencyProperty.Register("SelectedValue", typeof(int), typeof(ImpexCurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
 
         public static readonly DependencyProperty TransDateProperty = DependencyProperty.Register("TransDate", typeof(DateTime), typeof(ImpexCurrencyBox));
+
         public DateTime TransDate
         {
             get { return (DateTime)GetValue(TransDateProperty); }
@@ -39,6 +41,7 @@ namespace cntrl.Controls
         }
 
         #region "INotifyPropertyChanged"
+
         private static void OnCurrencyChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             ImpexCurrencyBox c = sender as ImpexCurrencyBox;
@@ -56,11 +59,11 @@ namespace cntrl.Controls
                 if (db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault() != null)
                 {
                     cbCurrency.SelectedValue = db.app_currencyfx.Where(x => x.id_currencyfx == newvalue).FirstOrDefault().app_currency.id_currency;
-                   
                 }
             }
         }
-        #endregion
+
+        #endregion "INotifyPropertyChanged"
 
         public ImpexCurrencyBox()
         {
@@ -73,7 +76,7 @@ namespace cntrl.Controls
             {
                 using (db db = new db())
                 {
-                  //  entity.Properties.Settings _setting = new entity.Properties.Settings();
+                    //  entity.Properties.Settings _setting = new entity.Properties.Settings();
                     app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).ToList();
                     cbCurrency.ItemsSource = app_currencyList;
                 }
@@ -86,29 +89,27 @@ namespace cntrl.Controls
             using (db db = new db())
             {
                 app_currencyfx app_currencyfx;
-                List<app_currencyfx> app_currencyfxlist=db.app_currencyfx.ToList();
+                List<app_currencyfx> app_currencyfxlist = db.app_currencyfx.ToList();
                 app_currencyfx = app_currencyfxlist.Where(x => x.id_currency == (int)id_currency && x.type == entity.app_currencyfx.CurrencyFXTypes.Impex && x.timestamp.Date == TransDate.Date).FirstOrDefault();
 
-                    if (app_currencyfx != null)
+                if (app_currencyfx != null)
+                {
+                    Rate_Previous = Rate_Current;
+
+                    if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
                     {
-                        Rate_Previous = Rate_Current;
-
-                    if (appName==App.Names.PurchaseInvoice ||appName==App.Names.PurchaseOrder ||appName==App.Names.PurchaseTender)
-                        {
-                            Rate_Current = app_currencyfx.sell_value;
-                        }
-                        else
-                        {
-                            Rate_Current = app_currencyfx.buy_value;
-                        }
-                    
-
-                        SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
-                        RaisePropertyChanged("Rate_Current");
+                        Rate_Current = app_currencyfx.sell_value;
                     }
                     else
-                    { Rate_Current = 0.0M; }
-              
+                    {
+                        Rate_Current = app_currencyfx.buy_value;
+                    }
+
+                    SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
+                    RaisePropertyChanged("Rate_Current");
+                }
+                else
+                { Rate_Current = 0.0M; }
             }
         }
 
@@ -121,16 +122,16 @@ namespace cntrl.Controls
                     app_currencyfx app_currencyfx = new app_currencyfx();
                     app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == SelectedValue).FirstOrDefault();
 
-                    decimal rate=0;
-                            if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder ||appName==App.Names.PurchaseTender)
-                            {
-                                rate = app_currencyfx.sell_value;
-                            }
-                            else
-                            {
-                                rate = app_currencyfx.buy_value;
-                            }
-                     if (Convert.ToDecimal(Rate_Current) != rate)
+                    decimal rate = 0;
+                    if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
+                    {
+                        rate = app_currencyfx.sell_value;
+                    }
+                    else
+                    {
+                        rate = app_currencyfx.buy_value;
+                    }
+                    if (Convert.ToDecimal(Rate_Current) != rate)
                     {
                         if (cbCurrency.SelectedValue != null)
                         {
@@ -139,7 +140,6 @@ namespace cntrl.Controls
                         }
                     }
                 }
-               
             }
         }
 
@@ -170,8 +170,6 @@ namespace cntrl.Controls
             {
                 if (SelectedValue == 0)
                 {
-
-
                     if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == CurrentSession.Id_Company) != null)
                     {
                         app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active
@@ -204,12 +202,13 @@ namespace cntrl.Controls
             { SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
             else
             {
-                SelectedValue =1;
-               // cbCurrency.SelectedValue = -1;
+                SelectedValue = 1;
+                // cbCurrency.SelectedValue = -1;
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)

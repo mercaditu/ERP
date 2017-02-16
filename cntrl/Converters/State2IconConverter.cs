@@ -5,7 +5,7 @@ namespace Cognitivo.Converters
 {
     public class State2IconConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, 
+        public object Convert(object value, Type targetType, object parameter,
                                             System.Globalization.CultureInfo culture)
         {
             if (value != null && value.ToString() == System.Data.Entity.EntityState.Added.ToString())
@@ -26,7 +26,7 @@ namespace Cognitivo.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

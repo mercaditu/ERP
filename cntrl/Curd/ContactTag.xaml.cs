@@ -1,12 +1,12 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
@@ -17,12 +17,12 @@ namespace cntrl.Curd
     {
         //entity.Properties.Settings _setting = new entity.Properties.Settings();
 
-        CollectionViewSource _contact_tagViewSource = null;
+        private CollectionViewSource _contact_tagViewSource = null;
         public CollectionViewSource contact_tagViewSource { get { return _contact_tagViewSource; } set { _contact_tagViewSource = value; } }
 
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
-        
+
         public ContactTag()
         {
             InitializeComponent();
@@ -92,4 +92,3 @@ namespace cntrl.Curd
         }
     }
 }
-

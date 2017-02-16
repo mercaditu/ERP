@@ -1,11 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
@@ -14,12 +14,12 @@ namespace cntrl.Curd
     /// </summary>
     public partial class cost_center : UserControl
     {
-        CollectionViewSource _app_cost_centerViewSource = null;
+        private CollectionViewSource _app_cost_centerViewSource = null;
         public CollectionViewSource app_cost_centerViewSource { get { return _app_cost_centerViewSource; } set { _app_cost_centerViewSource = value; } }
 
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
-        
+
         public cost_center()
         {
             InitializeComponent();
@@ -80,7 +80,5 @@ namespace cntrl.Curd
                 throw ex;
             }
         }
-
-       
     }
 }

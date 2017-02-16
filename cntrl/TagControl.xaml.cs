@@ -1,16 +1,14 @@
-﻿
+﻿using entity;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
 
 namespace cntrl
 {
-
     /// <summary>
     /// Interaction logic for TagControl.xaml
     /// </summary>
@@ -18,9 +16,10 @@ namespace cntrl
     {
         //entity.Properties.Settings _entity = new entity.Properties.Settings();
         //entity.Properties.Settings _settings_entity = new entity.Properties.Settings();
-        CollectionViewSource item_tagViewSource;
+        private CollectionViewSource item_tagViewSource;
 
         public static DependencyProperty CollectionViewSourceProperty = DependencyProperty.Register("ItemsSource", typeof(CollectionViewSource), typeof(TagControl), new PropertyMetadata(null));
+
         public CollectionViewSource ItemsSource
         {
             get { return (CollectionViewSource)GetValue(CollectionViewSourceProperty); }
@@ -31,6 +30,7 @@ namespace cntrl
         }
 
         public static DependencyProperty itemProperty = DependencyProperty.Register("_item", typeof(item), typeof(TagControl));
+
         public item _item
         {
             get { return (item)GetValue(itemProperty); }
@@ -39,14 +39,12 @@ namespace cntrl
                 SetValue(itemProperty, value);
             }
         }
-      
+
         public entity.db entity { get; set; }
 
         public TagControl()
         {
-
             InitializeComponent();
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -64,6 +62,7 @@ namespace cntrl
                 Main.DataContext = ItemsSource;
             }
         }
+
         public void AddData(SearchableTextbox itemComboBox)
         {
             if (itemComboBox.Data != null)
@@ -71,7 +70,7 @@ namespace cntrl
                 // Data = itemComboBox.Data;
 
                 int id = Convert.ToInt32(((item_tag)itemComboBox.Data).id_tag);
-                
+
                 if (id > 0)
                 {
                     if (_item.item_tag_detail.Count > 0)
@@ -96,21 +95,20 @@ namespace cntrl
                 db db = new db();
                 item_tag item_tag = new item_tag();
                 item_tag.name = itemComboBox.TxtSearched.Text;
-                
+
                 db.item_tag.Add(item_tag);
                 db.SaveChanges();
                 entity.item_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
                 itemComboBox.Data = item_tag;
 
-
                 int id_tag = item_tag.id_tag;
-            
+
                 ((item_tag_detail)ItemsSource.View.CurrentItem).item_tag = entity.item_tag.Where(x => x.id_tag == id_tag).FirstOrDefault();
 
                 ItemsSource.View.Refresh();
-
             }
         }
+
         private void itemComboBox_KeyDown(object sender, KeyEventArgs e)
         {
             SearchableTextbox itemComboBox = (SearchableTextbox)sender;
@@ -156,15 +154,6 @@ namespace cntrl
             {
                 throw ex;
             }
-
         }
-
-       
-
-     
-
-
     }
 }
-
-

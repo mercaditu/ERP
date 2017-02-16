@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace cntrl.Controls
@@ -11,15 +10,15 @@ namespace cntrl.Controls
         {
             InitializeComponent();
         }
-        
+
         private static readonly DependencyProperty NumberProperty
                     = DependencyProperty.Register("Number", typeof(int), typeof(NotificationIcon), new PropertyMetadata(OnTextChangedCallBack));
+
         public int Number
         {
             get { return (int)GetValue(NumberProperty); }
             set { SetValue(NumberProperty, value); }
         }
-
 
         private static void OnTextChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {

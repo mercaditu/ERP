@@ -1,65 +1,65 @@
 ﻿<UserControl x:Class="cntrl.hr_coefficient"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
-             lex:LocalizeDictionary.DesignCulture="en-US" 
+             lex:LocalizeDictionary.DesignCulture="en-US"
              VerticalAlignment="Center"
              mc:Ignorable="d" BorderBrush="#ffcc00" BorderThickness="2"
              Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <convert:InitialsConverter x:Key="InitialsConverter"/>
-        <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
+        <convert:InitialsConverter x:Key="InitialsConverter" />
+        <convert:ActiveValueConverter x:Key="ActiveValueConverter" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <StackPanel Background="White" x:Name="stackFields">
         <Grid Background="#ffcc00">
             <Label />
-            <Label x:Name="lblTitle" Content="{lex:Loc HourCoeficient}" FontSize="25" Margin="50,0"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Label x:Name="lblTitle" Content="{lex:Loc HourCoeficient}" FontSize="25" Margin="50,0" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <TextBlock Text="Define roles and rights here for your contacts." Style="{StaticResource text_Instructions}"/>
+        <TextBlock Text="Define roles and rights here for your contacts." Style="{StaticResource text_Instructions}" />
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
             <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
-                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-            <Label Content="{lex:Loc Coeficient}" Style="{StaticResource input_label}"/>
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,
+                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <Label Content="{lex:Loc Coeficient}" Style="{StaticResource input_label}" />
             <TextBox Style="{StaticResource input_textbox}"
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding coefficient, Mode=TwoWay,
-                                    NotifyOnValidationError=True, 
-                                    ValidatesOnExceptions=True, 
-                                    UpdateSourceTrigger=LostFocus, 
-                                    ValidatesOnDataErrors=True, StringFormat={}{0}%}"/>
-            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
-            <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding start_time,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-            <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding end_time,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Weekend}" IsChecked="{Binding is_weekend, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                    NotifyOnValidationError=True,
+                                    ValidatesOnExceptions=True,
+                                    UpdateSourceTrigger=LostFocus,
+                                    ValidatesOnDataErrors=True, StringFormat={}{0}%}" />
+            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+            <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding start_time,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
+            <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding end_time,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Weekend}" IsChecked="{Binding is_weekend, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
+            <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
 </UserControl>

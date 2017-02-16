@@ -1,19 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using entity;
 
 namespace cntrl.Curd
 {
@@ -22,10 +14,10 @@ namespace cntrl.Curd
     /// </summary>
     public partial class ProjectTag : UserControl
     {
-       //  entity.Properties.Settings _setting = new entity.Properties.Settings();
+        //  entity.Properties.Settings _setting = new entity.Properties.Settings();
 
-         CollectionViewSource _project_tagViewSource = null;
-         public CollectionViewSource project_tagViewSource { get { return _project_tagViewSource; } set { _project_tagViewSource = value; } }
+        private CollectionViewSource _project_tagViewSource = null;
+        public CollectionViewSource project_tagViewSource { get { return _project_tagViewSource; } set { _project_tagViewSource = value; } }
 
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }

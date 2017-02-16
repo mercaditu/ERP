@@ -1,20 +1,20 @@
 ﻿<UserControl x:Class="cntrl.moduleIcon" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              MouseUp="module_MouseUp" Width="54" Cursor="Hand">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
     </UserControl.Resources>
     <Grid>
         <Rectangle VerticalAlignment="Bottom" Height="4" Fill="#A34BA0FF">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=this, Path=IsMouseOver}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -23,11 +23,11 @@
         <Rectangle x:Name="rectStatus" Visibility="{Binding ElementName=this, Path=IsChecked, Converter={StaticResource Bool2Visibility}, FallbackValue=Collapsed}"
                    VerticalAlignment="Bottom" Height="4" Fill="#FF4BA0FF">
             <Rectangle.Effect>
-                <DropShadowEffect Color="#FF4BA0FF" ShadowDepth="2" BlurRadius="8" Direction="270"/>
+                <DropShadowEffect Color="#FF4BA0FF" ShadowDepth="2" BlurRadius="8" Direction="270" />
             </Rectangle.Effect>
         </Rectangle>
         <Image Margin="8,5" Height="32"
                RenderOptions.BitmapScalingMode="HighQuality" UseLayoutRounding="True"
-               Source="{Binding Path=imgSource, ElementName=this}"/>
+               Source="{Binding Path=imgSource, ElementName=this}" />
     </Grid>
 </UserControl>

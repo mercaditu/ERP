@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System;
 
 namespace cntrl.PanelAdv
 {
     public partial class pnlPurchaseInvoice : UserControl
     {
-        CollectionViewSource purchase_invoiceViewSource;
+        private CollectionViewSource purchase_invoiceViewSource;
 
         private List<purchase_invoice> _selected_purchase_invoice = new List<purchase_invoice>();
         public List<purchase_invoice> selected_purchase_invoice { get { return _selected_purchase_invoice; } set { _selected_purchase_invoice = value; } }
-  
+
         public ImpexDB _entity { get; set; }
         public contact _contact { get; set; }
 
@@ -45,7 +45,7 @@ namespace cntrl.PanelAdv
                 }
             }
         }
-      
+
         private void Get_PurchaseInvoice(contact _contact)
         {
             purchase_invoiceViewSource = Resources["purchase_invoiceViewSource"] as CollectionViewSource;
@@ -53,23 +53,25 @@ namespace cntrl.PanelAdv
             if (IsImpex == true)
             {
                 //Only bring Purchase invoice that are Active and that have not been already linked to a previous Impex.
-                List<purchase_invoice> PurchaseList = _entity.purchase_invoice.Where(x => 
-                x.id_contact == _contact.id_contact 
-                && x.is_impex 
-                && x.status == Status.Documents_General.Approved 
+                List<purchase_invoice> PurchaseList = _entity.purchase_invoice.Where(x =>
+                x.id_contact == _contact.id_contact
+                && x.is_impex
+                && x.status == Status.Documents_General.Approved
                 && x.impex_import.Count() == 0
                 ).ToList();
                 purchase_invoiceViewSource.Source = PurchaseList;
             }
             else
             {
-                //Only bring Purchase invoice that are Active 
+                //Only bring Purchase invoice that are Active
                 purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved).ToList();
             }
         }
 
         public event btnSave_ClickedEventHandler PurchaseInvoice_Click;
+
         public delegate void btnSave_ClickedEventHandler(object sender);
+
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             selected_purchase_invoice = null;
@@ -77,7 +79,6 @@ namespace cntrl.PanelAdv
             selected_purchase_invoice = purchase_invoice.Where(x => x.IsSelected == true).ToList();
 
             PurchaseInvoice_Click?.Invoke(sender);
-
         }
 
         private void sales_invoiceDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
@@ -95,7 +96,7 @@ namespace cntrl.PanelAdv
                 }
             }
         }
-  
+
         private void ContactPref(object sender, RoutedEventArgs e)
         {
             if (sbxContact.ContactID > 0)

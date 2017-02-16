@@ -2,122 +2,121 @@
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cntrl="clr-namespace:cntrl.Controls"
-            xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-            lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+            xmlns:lex="http://wpflocalizeextension.codeplex.com"
+            lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
             lex:ResxLocalizationProvider.DefaultDictionary="local"
-            lex:LocalizeDictionary.DesignCulture="en-US" 
+            lex:LocalizeDictionary.DesignCulture="en-US"
             VerticalAlignment="Center"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:local="clr-namespace:Cognitivo.Converters"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-            xmlns:entity="clr-namespace:entity;assembly=entity" 
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:entity="clr-namespace:entity;assembly=entity"
             mc:Ignorable="d" BorderBrush="#0099ff" BorderThickness="2"
             Width="320" Loaded="UserControl_Loaded" MaxHeight="512">
     <UserControl.Resources>
-        <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="app_vatViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat}, CreateList=True}"/>
-        
+        <local:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <CollectionViewSource x:Key="app_vatViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMain">
             <Grid Background="#0099ff">
-                <Image Source="/cntrl;component/Images/Outline_White/shop-50.png" 
-                       Height="32" HorizontalAlignment="Left" Margin="4"/>
-                <Label Content="{lex:Loc Branch}" Foreground="White" FontSize="25" Margin="36,0,0,0"/>
+                <Image Source="/cntrl;component/Images/Outline_White/shop-50.png"
+                       Height="32" HorizontalAlignment="Left" Margin="4" />
+                <Label Content="{lex:Loc Branch}" Foreground="White" FontSize="25" Margin="36,0,0,0" />
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             </Grid>
 
             <TextBlock Style="{StaticResource text_Instructions}" Text="Branches have the ability to hold stock and invoice" />
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="{lex:Loc Branch}" HorizontalAlignment="Center" FontSize="14"
-                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
-              
-                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
+                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}" />
+
+                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
                 <TextBox Style="{StaticResource input_textbox}"
-                             Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+                             Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                 <TextBox Style="{StaticResource input_textbox}"
-                        Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                
-                <Rectangle Height="1" Margin="3" Fill="Silver"/>
+                        Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                <Rectangle Height="1" Margin="3" Fill="Silver" />
                 <Label Content="{lex:Loc Shop}" HorizontalAlignment="Center" FontSize="14"
-                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
-                <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}" />
+                <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}" />
                 <TextBox Style="{StaticResource input_textbox}" Height="64"
-                        Text="{Binding address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
-                <cntrl:SmartBox_Geography x:Name="sbxGeography" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                
+                        Text="{Binding address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
+                <cntrl:SmartBox_Geography x:Name="sbxGeography" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
-                        <Label Content="{lex:Loc Latitude}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc Latitude}" Style="{StaticResource input_label}" />
                         <TextBox Style="{StaticResource input_textbox}" Width="122"
-                                 Text="{Binding geo_lat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                 Text="{Binding geo_lat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                     </StackPanel>
                     <StackPanel>
-                        <Label Content="{lex:Loc Longitud}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc Longitud}" Style="{StaticResource input_label}" />
                         <TextBox Style="{StaticResource input_textbox}" Width="122"
-                                 Text="{Binding geo_long, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                 Text="{Binding geo_long, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                     </StackPanel>
                 </StackPanel>
-                
-                <Rectangle Height="1" Margin="3" Fill="Silver"/>
+
+                <Rectangle Height="1" Margin="3" Fill="Silver" />
                 <Label Content="{lex:Loc Behavior}" HorizontalAlignment="Center" FontSize="14"
-                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}"/>
-                
+                       Style="{StaticResource generic_Label}" Foreground="{StaticResource Label_ImportantColor}" />
+
                 <CheckBox x:Name="cbxStock" Style="{StaticResource input_checkbox}"
-                          IsChecked="{Binding can_stock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                          IsChecked="{Binding can_stock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                           VerticalContentAlignment="Center" Content="{lex:Loc Stock}" />
                 <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=cbxStock}">
-                    <TextBlock Text="Locations hold stock within a Branch" Style="{StaticResource text_Instructions}"/>
+                    <TextBlock Text="Locations hold stock within a Branch" Style="{StaticResource text_Instructions}" />
                     <DataGrid x:Name="app_locationDataGrid" HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding app_location}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Location" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="*"/>
+                            <DataGridTextColumn Header="Location" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="*" />
                             <DataGridTemplateColumn Header="Default" Width="SizeToHeader">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox x:Name="chkIsDefault" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding is_default, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Checked="chkIsDefault_Checked"/>
+                                        <CheckBox x:Name="chkIsDefault" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding is_default, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Checked="chkIsDefault_Checked" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <!--<DataGridCheckBoxColumn Header="Default" Binding="{Binding is_default, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="SizeToHeader"/>-->
+                            <!--<DataGridCheckBoxColumn Header="Default" Binding="{Binding is_default, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="SizeToHeader" />-->
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
                 <CheckBox x:Name="cbxInvoice" Style="{StaticResource input_checkbox}"
-                          IsChecked="{Binding can_invoice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                          VerticalContentAlignment="Center" Content="{lex:Loc Invoice}"/>
-                <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=cbxInvoice}" >
-                    <TextBlock Text="Terminals allow to invoice within a Branch" Style="{StaticResource text_Instructions}"/>
-                    <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding app_terminal}" AutoGenerateColumns="False" >
+                          IsChecked="{Binding can_invoice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          VerticalContentAlignment="Center" Content="{lex:Loc Invoice}" />
+                <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=cbxInvoice}">
+                    <TextBlock Text="Terminals allow to invoice within a Branch" Style="{StaticResource text_Instructions}" />
+                    <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding app_terminal}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Terminal" Width="*" 
+                            <DataGridTextColumn Header="Terminal" Width="*"
                                                 Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                            <DataGridTextColumn Header="Code" Width="80" 
-                                                Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <DataGridTextColumn Header="Code" Width="80"
+                                                Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
 
                 <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=cbxInvoice}">
-                    <Label Content="{lex:Loc VAT}" Style="{StaticResource input_label}"/>
+                    <Label Content="{lex:Loc VAT}" Style="{StaticResource input_label}" />
                     <ComboBox Style="{StaticResource input_combobox}"
-                        DisplayMemberPath="name" SelectedValuePath="id_vat" ItemsSource="{Binding Source={StaticResource app_vatViewSource}}" SelectedValue="{Binding id_vat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        DisplayMemberPath="name" SelectedValuePath="id_vat" ItemsSource="{Binding Source={StaticResource app_vatViewSource}}" SelectedValue="{Binding id_vat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 </StackPanel>
             </StackPanel>
 
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
                 <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
-                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                          IsChecked="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </StackPanel>
     </ScrollViewer>

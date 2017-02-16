@@ -1,20 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl
 {
     public partial class currency : UserControl
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource app_currencyViewSource, app_currencyapp_currencyfxViewSource;
-        bool isLoadedFirstTime = true;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource app_currencyViewSource, app_currencyapp_currencyfxViewSource;
+        private bool isLoadedFirstTime = true;
         private int Id;
         public int CurrencyId { get { return Id; } set { Id = value; } }
 
@@ -47,7 +47,6 @@ namespace cntrl
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
-
                     _SaveChanges();
                     btnCancel_Click(sender, e);
                 }
@@ -73,7 +72,7 @@ namespace cntrl
                 }
             }
 
-            if(_app_currency.app_currencyfx.Any(x => x.is_active) == false && _app_currency.app_currencyfx.Count > 0)
+            if (_app_currency.app_currencyfx.Any(x => x.is_active) == false && _app_currency.app_currencyfx.Count > 0)
             {
                 app_currencyfx app_currencyfx;
                 app_currencyfx = _app_currency.app_currencyfx.OrderBy(x => x.timestamp).FirstOrDefault();
@@ -114,7 +113,8 @@ namespace cntrl
             //}
         }
 
-        List<app_currencyfx> listapp_currencyfx = null;
+        private List<app_currencyfx> listapp_currencyfx = null;
+
         private void chkIsPriority_Checked(object sender, RoutedEventArgs e)
         {
             if (!isLoadedFirstTime)
@@ -202,6 +202,7 @@ namespace cntrl
                 //throw;
             }
         }
+
         private void chkIsDivisble_Checked(object sender, RoutedEventArgs e)
         {
             try

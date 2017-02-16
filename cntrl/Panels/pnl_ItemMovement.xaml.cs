@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
 using System.Windows.Input;
-using System.ComponentModel;
 
 namespace cntrl.Panels
 {
     public partial class pnl_ItemMovement : UserControl
     {
-        CollectionViewSource item_inventory_detailViewSource;
+        private CollectionViewSource item_inventory_detailViewSource;
         public InventoryDB InventoryDB { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
 

@@ -14,6 +14,7 @@ namespace cntrl.Controls
     public partial class SmartBox_Contact : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Contact));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -21,6 +22,7 @@ namespace cntrl.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
@@ -44,7 +46,9 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_new;
+
+        private bool _can_new;
+
         public bool can_Edit
         {
             get { return _can_new; }
@@ -63,9 +67,11 @@ namespace cntrl.Controls
                 }
             }
         }
-        bool _can_edit;
+
+        private bool _can_edit;
 
         public event RoutedEventHandler Select;
+
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             if (contactViewSource.View != null)
@@ -93,11 +99,11 @@ namespace cntrl.Controls
         public bool Get_Users { get; set; }
         public bool ExactSearch { get; set; }
 
-        Task taskSearch;
-        CancellationTokenSource tokenSource;
-        CancellationToken token;
+        private Task taskSearch;
+        private CancellationTokenSource tokenSource;
+        private CancellationToken token;
 
-        CollectionViewSource contactViewSource;
+        private CollectionViewSource contactViewSource;
 
         public SmartBox_Contact()
         {
@@ -131,7 +137,6 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
-           
         }
 
         public void LoadData()
@@ -151,7 +156,7 @@ namespace cntrl.Controls
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
         }
 
-        void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
             {
@@ -242,7 +247,6 @@ namespace cntrl.Controls
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
             if (ExactSearch)
             {
-
                 predicateOR = (x => x.Code.ToUpper().Equals(SearchText));
                 predicate = predicate.And
               (
@@ -251,7 +255,6 @@ namespace cntrl.Controls
             }
             else
             {
-
                 var param = smartBoxContactSetting.Default.SearchFilter;
 
                 predicateOR = (x => x.Name.ToUpper().Contains(SearchText));
@@ -277,8 +280,6 @@ namespace cntrl.Controls
                 );
             }
 
-
-
             Dispatcher.InvokeAsync(new Action(() =>
             {
                 if (popContact.IsOpen == false)
@@ -293,7 +294,6 @@ namespace cntrl.Controls
                 {
                     throw;
                 }
-
             }));
         }
 
@@ -379,6 +379,5 @@ namespace cntrl.Controls
         {
             LoadData();
         }
-
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
@@ -15,14 +15,14 @@ namespace cntrl.Curd
     /// </summary>
     public partial class ItemTag : UserControl
     {
-       // entity.Properties.Settings _setting = new entity.Properties.Settings();
+        // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
-        CollectionViewSource _item_tagViewSource = null;
+        private CollectionViewSource _item_tagViewSource = null;
         public CollectionViewSource item_tagViewSource { get { return _item_tagViewSource; } set { _item_tagViewSource = value; } }
 
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
-        
+
         public ItemTag()
         {
             InitializeComponent();

@@ -1,49 +1,49 @@
 ﻿<UserControl x:Class="cntrl.PanelAdv.pnlSalesOrder"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:cntrl="clr-namespace:cntrl.Controls"
 		xmlns:local="clr-namespace:cntrl.PanelAdv"
-		  xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-		  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+		  xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		  lex:ResxLocalizationProvider.DefaultDictionary="local"
 		  lex:LocalizeDictionary.DesignCulture="en-US"
-		xmlns:entity="clr-namespace:entity;assembly=entity" 
+		xmlns:entity="clr-namespace:entity;assembly=entity"
 		mc:Ignorable="d" Background="White"
 		Height="512" Width="620" Loaded="UserControl_Loaded">
-	<UserControl.Resources>
-		<CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}"/>
-	</UserControl.Resources>
-	<UserControl.Effect>
-		<DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
-	</UserControl.Effect>
-	<StackPanel DataContext="{StaticResource sales_orderViewSource}" Background="WhiteSmoke">
-		<Grid>
-			<StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Brush}">
-				<Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
-				<Label Foreground="White" Content="{lex:Loc SalesOrder}" Style="{StaticResource H3}"/>
-			</StackPanel>
-			<Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
-				HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White" 
-				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-		</Grid>
-		<Grid Margin="8">
-			<cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="256" HorizontalAlignment="Left"/>
-			<Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
-		</Grid>
-		<DataGrid x:Name="sales_orderDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails" Background="Transparent"
-				  EnableRowVirtualization="True" ItemsSource="{Binding}" VerticalScrollBarVisibility="Auto" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" 
-				  Height="407"  >
-			<DataGrid.Columns>
-				<DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}" />
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="16" />
+    </UserControl.Effect>
+    <StackPanel DataContext="{StaticResource sales_orderViewSource}" Background="WhiteSmoke">
+        <Grid>
+            <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Brush}">
+                <Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" />
+                <Label Foreground="White" Content="{lex:Loc SalesOrder}" Style="{StaticResource H3}" />
+            </StackPanel>
+            <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
+				HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
+				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+        </Grid>
+        <Grid Margin="8">
+            <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="256" HorizontalAlignment="Left" />
+            <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp" />
+        </Grid>
+        <DataGrid x:Name="sales_orderDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails" Background="Transparent"
+				  EnableRowVirtualization="True" ItemsSource="{Binding}" VerticalScrollBarVisibility="Auto" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False"
+				  Height="407">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 										ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-										EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-				<DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
-				<DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True"/>
-				<DataGridTextColumn Binding="{Binding GrandTotal, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
-				<DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</StackPanel>
+										EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding GrandTotal, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
 </UserControl>

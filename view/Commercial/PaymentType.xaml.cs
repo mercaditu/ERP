@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Commercial
 {
     public partial class PaymentType : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource payment_type_viewsource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource payment_type_viewsource;
 
         public PaymentType()
         {

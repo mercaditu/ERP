@@ -10,7 +10,7 @@ namespace Cognitivo.HumanResource
 {
     public partial class Employee : Page
     {
-        CollectionViewSource employeeViewSource,
+        private CollectionViewSource employeeViewSource,
             app_departmentViewSource,
             app_locationViewSource,
             contacthr_contractViewSource,
@@ -19,7 +19,7 @@ namespace Cognitivo.HumanResource
             contacthr_talent_detailViewSource,
         contacthr_educationViewSource;
 
-        ContactDB dbContext = new ContactDB();
+        private ContactDB dbContext = new ContactDB();
 
         public Employee()
         {
@@ -60,6 +60,7 @@ namespace Cognitivo.HumanResource
         }
 
         #region Contract Buttons
+
         private void btnNewTask_Click(object sender, EventArgs e)
         {
             contact contact = (contact)employeeViewSource.View.CurrentItem;
@@ -86,10 +87,10 @@ namespace Cognitivo.HumanResource
             {
                 dbContext.hr_contract.Remove((hr_contract)contacthr_contractViewSource.View.CurrentItem);
                 contacthr_contractViewSource.View.MoveCurrentToFirst();
-
             }
         }
-        #endregion
+
+        #endregion Contract Buttons
 
         private void btnNew_Click(object sender)
         {
@@ -140,7 +141,6 @@ namespace Cognitivo.HumanResource
             contact.hr_talent_detail.Add(hr_talent_detail);
             contacthr_talent_detailViewSource.View.Refresh();
             contacthr_talent_detailViewSource.View.MoveCurrentToLast();
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -204,34 +204,28 @@ namespace Cognitivo.HumanResource
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (e.Parameter as hr_family != null)
                     {
-
                         hr_familyDataGrid.CancelEdit();
                         dbContext.hr_family.Remove(e.Parameter as hr_family);
                         contacthr_familyViewSource.View.Refresh();
                     }
                     if (e.Parameter as hr_talent_detail != null)
                     {
-
-
                         hr_talent_detailDataGrid.CancelEdit();
                         dbContext.hr_talent_detail.Remove(e.Parameter as hr_talent_detail);
                         contacthr_talent_detailViewSource.View.Refresh();
                     }
                     if (e.Parameter as hr_education != null)
                     {
-
                         //DeleteDetailGridRow
                         hr_educationDataGrid.CancelEdit();
                         dbContext.hr_education.Remove(e.Parameter as hr_education);
                         contacthr_educationViewSource.View.Refresh();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -239,7 +233,5 @@ namespace Cognitivo.HumanResource
                 toolBar.msgError(ex);
             }
         }
-
-
     }
 }

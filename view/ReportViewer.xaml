@@ -5,8 +5,7 @@
         Title="Cognitivo ERP : Document Viewer" Height="600" Width="800">
     <Grid>
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-           <rv:ReportViewer x:Name="reportViewer" ShowBackButton="False" ShowRefreshButton="False" ShowStopButton="False" />
+            <rv:ReportViewer x:Name="reportViewer" ShowBackButton="False" ShowRefreshButton="False" ShowStopButton="False" />
         </WindowsFormsHost>
     </Grid>
 </Window>
-

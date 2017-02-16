@@ -1,28 +1,30 @@
-﻿using System.Linq;
+﻿using cntrl;
+using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using cntrl;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Account : Page
     {
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource app_accountViewSource;        
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource app_accountViewSource;
 
         public Account()
         {
             InitializeComponent();
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
             entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company).Include("app_account_detail").OrderBy(a => a.name).Load();
             app_accountViewSource.Source = entity.db.app_account.Local;
         }
+
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -42,11 +44,9 @@ namespace Cognitivo.Configs
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            
-                app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-                entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
-                app_accountViewSource.Source = entity.db.app_account.Local;
-            
+            app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
+            entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
+            app_accountViewSource.Source = entity.db.app_account.Local;
         }
     }
 }

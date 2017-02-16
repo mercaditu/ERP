@@ -1,31 +1,33 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.Data.Entity.Validation;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Cognitivo.Sales
 {
     public partial class Order : Page
     {
-        CollectionViewSource sales_orderViewSource;
-        SalesOrderDB SalesOrderDB = new SalesOrderDB();
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private CollectionViewSource sales_orderViewSource;
+        private SalesOrderDB SalesOrderDB = new SalesOrderDB();
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
         public Order()
         {
             InitializeComponent();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
@@ -54,7 +56,6 @@ namespace Cognitivo.Sales
                 sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
                 sales_orderViewSource.Source = SalesOrderDB.sales_order.Local;
             }));
-
         }
 
         private async void load_SecondaryDataThread()
@@ -65,7 +66,7 @@ namespace Cognitivo.Sales
             }));
         }
 
-        #endregion
+        #endregion DataLoad
 
         private void Page_Loaded(object sender, EventArgs e)
         {
@@ -101,6 +102,7 @@ namespace Cognitivo.Sales
                 toolBar.msgWarning("Please Select an Item");
             }
         }
+
         private void toolBar_btnDelete_Click(object sender)
         {
             try
@@ -123,7 +125,6 @@ namespace Cognitivo.Sales
         {
             try
             {
-
                 if (SalesOrderDB.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
@@ -163,7 +164,8 @@ namespace Cognitivo.Sales
                 toolBar.msgAnnulled(SalesOrderDB.NumberOfRecords);
             }
         }
-        #endregion
+
+        #endregion toolbar Events
 
         #region Filter Data
 
@@ -232,7 +234,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        #endregion
+        #endregion Filter Data
 
         private void calculate_vat(object sender, EventArgs e)
         {
@@ -323,9 +325,8 @@ namespace Cognitivo.Sales
                     else
                     {
                         Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null,sbxItem.Quantity));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
                     }
-                 
                 }
                 sales_order.RaisePropertyChanged("GrandTotal");
             }
@@ -334,7 +335,7 @@ namespace Cognitivo.Sales
         private void select_Item(sales_order sales_order, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
-            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item && a.movement_id==id_movement).FirstOrDefault() == null || AllowDuplicateItem)
+            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.State = EntityState.Added;
@@ -413,7 +414,6 @@ namespace Cognitivo.Sales
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -431,6 +431,7 @@ namespace Cognitivo.Sales
                 toolBar.msgError(ex);
             }
         }
+
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
             sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
@@ -440,16 +441,12 @@ namespace Cognitivo.Sales
                 {
                     if (SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault() != null)
                     {
-
-
                         sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault();
                     }
                 }
             }
             calculate_vat(sender, e);
         }
-
-
 
         private void sales_order_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -521,7 +518,6 @@ namespace Cognitivo.Sales
                 detail.CurrencyFX_ID = sales_order.id_currencyfx;
                 detail.item = await SalesOrderDB.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
                 detail.app_vat_group = await SalesOrderDB.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
-              
             }
 
             cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
@@ -556,7 +552,6 @@ namespace Cognitivo.Sales
 
         private void lblCheckCredit(object sender, RoutedEventArgs e)
         {
-
             if (sales_orderViewSource != null)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
@@ -564,7 +559,6 @@ namespace Cognitivo.Sales
                 Class.CreditLimit Limit = new Class.CreditLimit();
                 Limit.Check_CreditAvailability(sales_order);
             }
-
         }
 
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
@@ -628,7 +622,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private  async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
@@ -639,11 +633,9 @@ namespace Cognitivo.Sales
                 {
                     Settings SalesSettings = new Settings();
                     item_movement item_movement = SalesOrderDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement,sbxItem.Quantity));
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement, sbxItem.Quantity));
                 }
             }
         }
-
-     
     }
 }

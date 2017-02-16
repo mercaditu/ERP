@@ -1,7 +1,6 @@
-﻿
-namespace Cognitivo.Class
+﻿namespace Cognitivo.Class
 {
-    class clsLogic
+    internal class clsLogic
     {
         public string NameProperty { get; set; }
     }

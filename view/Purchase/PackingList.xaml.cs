@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Windows.Documents;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
     public partial class PackingList : Page
     {
-        entity.PurchasePackingListDB dbContext = new entity.PurchasePackingListDB();
-        Purchase.InvoiceSetting PurchaseSettings = new InvoiceSetting();
-        CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_orderViewSource;
-        cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
+        private entity.PurchasePackingListDB dbContext = new entity.PurchasePackingListDB();
+        private Purchase.InvoiceSetting PurchaseSettings = new InvoiceSetting();
+        private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_orderViewSource;
+        private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
 
         public PackingList()
         {
@@ -58,10 +54,9 @@ namespace Cognitivo.Purchase
         }
 
         #region Toolbar Events
+
         private void toolBar_btnNew_Click(object sender)
         {
-
-
             purchase_packing purchase_packing = dbContext.New();
             purchase_packing.trans_date = DateTime.Now.AddDays(PurchaseSettings.TransDate_OffSet);
             purchase_packing.State = System.Data.Entity.EntityState.Added;
@@ -84,8 +79,8 @@ namespace Cognitivo.Purchase
             {
                 toolBar.msgWarning("Please Select an Item");
             }
-
         }
+
         private void toolBar_btnDelete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -96,6 +91,7 @@ namespace Cognitivo.Purchase
                 toolBar_btnSave_Click(sender);
             }
         }
+
         private void toolBar_btnSave_Click(object sender)
         {
             if (dbContext.SaveChanges() > 0)
@@ -113,7 +109,8 @@ namespace Cognitivo.Purchase
             if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
                 purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
         }
-        #endregion
+
+        #endregion Toolbar Events
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
@@ -129,11 +126,9 @@ namespace Cognitivo.Purchase
         //    {
         //        purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
         //        item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-              
-               
+
         //        if (item != null && item.id_item > 0 && purchase_packing != null)
         //        {
-                 
         //            if (cbxBranch.SelectedItem != null)
         //            { app_branch = cbxBranch.SelectedItem as app_branch; }
         //            Task Thread = Task.Factory.StartNew(() => select_Item(purchase_packing, item, app_branch));
@@ -152,12 +147,10 @@ namespace Cognitivo.Purchase
         //        _purchase_packing_detail.id_item = item.id_item;
         //        if (app_branch != null)
         //        {
-                   
         //            _purchase_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
         //            _purchase_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
 
         //        }
-
 
         //        purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
         //    }
@@ -169,7 +162,6 @@ namespace Cognitivo.Purchase
 
         //    Dispatcher.BeginInvoke((Action)(() =>
         //    {
-
         //        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
 
         //    }));
@@ -191,7 +183,6 @@ namespace Cognitivo.Purchase
 
         private void purchase_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void btnApprove_Click(object sender)
@@ -202,7 +193,6 @@ namespace Cognitivo.Purchase
 
         private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -242,8 +232,6 @@ namespace Cognitivo.Purchase
             dbContext.Annull();
         }
 
-
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int id_contact = sbxContact.ContactID;
@@ -264,9 +252,7 @@ namespace Cognitivo.Purchase
                     }
                 }
             }
-
         }
-
 
         private void btnpurchaseOrder_Click(object sender, RoutedEventArgs e)
         {
@@ -287,17 +273,15 @@ namespace Cognitivo.Purchase
         {
             purchase_packing purchase_packing = (purchase_packing)purchase_packingViewSource.View.CurrentItem;
 
-
             foreach (purchase_order item in pnlPurchaseOrder.selected_purchase_order)
             {
-
                 foreach (purchase_order_detail _purchase_order_detail in item.purchase_order_detail)
                 {
                     if (purchase_packing.purchase_packing_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
                     {
                         purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
                         purchase_packing_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
-                        purchase_packing_detail.id_item =(int)_purchase_order_detail.id_item;
+                        purchase_packing_detail.id_item = (int)_purchase_order_detail.id_item;
                         purchase_packing_detail.item = _purchase_order_detail.item;
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                         purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
@@ -312,7 +296,9 @@ namespace Cognitivo.Purchase
                 }
             }
         }
+
         #region Filter Data
+
         private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -320,8 +306,6 @@ namespace Cognitivo.Purchase
                 set_ContactPref(sender, e);
             }
         }
-
-
 
         private void set_ContactPref(object sender, EventArgs e)
         {
@@ -333,9 +317,6 @@ namespace Cognitivo.Purchase
                     purchase_packing purchase_packing = (purchase_packing)purchase_packingDataGrid.SelectedItem;
                     purchase_packing.id_contact = contact.id_contact;
                     purchase_packing.contact = contact;
-
-
-
                 }
             }
             catch (Exception ex)
@@ -344,13 +325,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-
-
-
-
-        #endregion
-
-      
+        #endregion Filter Data
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -358,13 +333,7 @@ namespace Cognitivo.Purchase
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();
-
-
             }
         }
-
-       
-
-
     }
 }

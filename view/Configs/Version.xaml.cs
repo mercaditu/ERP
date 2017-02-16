@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -24,7 +24,7 @@ namespace Cognitivo.Configs
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {          
+        {
             entity.Brillo.Activation Activation = new entity.Brillo.Activation();
             Activation.VersionEncrypt(version);
         }

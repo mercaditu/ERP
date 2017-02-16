@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Cognitivo.Project.PrintingPress
 {
@@ -13,7 +9,9 @@ namespace Cognitivo.Project.PrintingPress
         public decimal Consumption { get; set; }
         public decimal Cost { get; set; }
         public decimal Calc_Cost { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -29,8 +27,10 @@ namespace Cognitivo.Project.PrintingPress
         public string Name { get; set; }
         public int Consumption { get; set; }
         public decimal Cost { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
-     public void RaisePropertyChanged(string prop)
+
+        public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
             {
@@ -39,7 +39,7 @@ namespace Cognitivo.Project.PrintingPress
         }
     }
 
-   public class Toner
+    public class Toner
     {
         public int Id { get; set; }
         public string Name { get; set; }

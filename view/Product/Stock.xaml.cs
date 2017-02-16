@@ -1,17 +1,18 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
-using System.ComponentModel;
 
 namespace Cognitivo.Product
 {
     public partial class Stock : Page, INotifyPropertyChanged
     {
-        CollectionViewSource item_movementViewSource, inventoryViewSource;
+        private CollectionViewSource item_movementViewSource, inventoryViewSource;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DateTime InventoryDate
@@ -28,7 +29,8 @@ namespace Cognitivo.Product
                 calc_Inventory();
             }
         }
-        DateTime _InventoryDate = DateTime.Now;
+
+        private DateTime _InventoryDate = DateTime.Now;
 
         public Stock()
         {
@@ -50,7 +52,7 @@ namespace Cognitivo.Product
                 int BranchID = app_branch.id_branch;
 
                 Class.StockCalculations StockCalculations = new Class.StockCalculations();
-                
+
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
                 inventoryViewSource.Source = StockCalculations.ByBranch(BranchID, InventoryDate);
 
@@ -145,7 +147,7 @@ namespace Cognitivo.Product
                         inventoryViewSource.View.Filter = i =>
                         {
                             dynamic TmpInventory = (dynamic)i;
-                            if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) || 
+                            if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                                 TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                                 TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
                                 return true;

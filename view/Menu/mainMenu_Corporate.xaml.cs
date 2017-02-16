@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.Data;
-using WPFLocalizeExtension.Extensions;
-using System.Threading.Tasks;
-using System.Windows.Media.Effects;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
+using System.Windows.Threading;
+using WPFLocalizeExtension.Extensions;
 
 namespace Cognitivo.Menu
 {
     public partial class mainMenu_Corporate : Page
     {
-        AppList appList = new AppList();
-        MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
+        private AppList appList = new AppList();
+        private MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
 
         public bool SearchMode
         {
@@ -26,6 +26,7 @@ namespace Cognitivo.Menu
                 _SearchMode = value;
             }
         }
+
         private bool _SearchMode;
 
         public mainMenu_Corporate()
@@ -195,8 +196,6 @@ namespace Cognitivo.Menu
                             appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
                         }
                         stck.Children.Add(appIcon);
-                       
-                      
                     }
                     else
                     {
@@ -238,7 +237,7 @@ namespace Cognitivo.Menu
             if (Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
-                appWindow.PagePath = name; 
+                appWindow.PagePath = name;
                 appWindow.ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true);
                 appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
                 appWindow.Icon = appName.imgSource;
@@ -259,9 +258,7 @@ namespace Cognitivo.Menu
             if ((entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true) == entity.App.Names.Subscription)
             {
                 name = "Cognitivo.Reporting.Views.Subscription";
-
             }
-           
 
             try
             {

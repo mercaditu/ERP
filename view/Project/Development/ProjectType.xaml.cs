@@ -1,21 +1,21 @@
+using entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Project.Development
 {
     public partial class ProjectType : Page
     {
-        ProjectTemplateDB ProjectTemplateDB = new ProjectTemplateDB();
+        private ProjectTemplateDB ProjectTemplateDB = new ProjectTemplateDB();
 
-        CollectionViewSource projectproject_template_detailViewSource;
-        CollectionViewSource project_templateViewSource;
+        private CollectionViewSource projectproject_template_detailViewSource;
+        private CollectionViewSource project_templateViewSource;
 
         public ProjectType()
         {
@@ -61,6 +61,7 @@ namespace Cognitivo.Project.Development
         }
 
         #region Toolbar Events
+
         private void toolBar_btnNew_Click(object sender)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -74,7 +75,7 @@ namespace Cognitivo.Project.Development
             projecttemplate.projecttemplateViewSource = project_templateViewSource;
             projecttemplate.projecttemplatedetailViewSource = projectproject_template_detailViewSource;
             projecttemplate._entity = ProjectTemplateDB;
-          
+
             crud_modal.Children.Add(projecttemplate);
         }
 
@@ -103,7 +104,7 @@ namespace Cognitivo.Project.Development
             crud_modal.Children.Add(projecttemplate);
         }
 
-        #endregion
+        #endregion Toolbar Events
 
         #region Project Type Events
 
@@ -118,7 +119,6 @@ namespace Cognitivo.Project.Development
             //    else
             //        return false;
             //};
-
 
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
             project_template_detail project_template_detail = treeProject.SelectedItem_ as project_template_detail;
@@ -143,7 +143,6 @@ namespace Cognitivo.Project.Development
                 toolBar.msgWarning("Please Select Task");
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
-            
         }
 
         private void btnAddParentTask_Click(object sender)
@@ -199,7 +198,6 @@ namespace Cognitivo.Project.Development
                         project_template_detail _project_template_detail = db.project_template_detail.Where(x => x.id_template_detail == project_template_detail.id_template_detail).FirstOrDefault();
 
                         db.project_template_detail.Remove(_project_template_detail);
-                       
                     }
                     db.SaveChanges();
                 }
@@ -210,10 +208,9 @@ namespace Cognitivo.Project.Development
                 project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
                 filter_task();
             }
-
         }
 
-        #endregion
+        #endregion Project Type Events
 
         private void btnChild_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -223,7 +220,7 @@ namespace Cognitivo.Project.Development
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxItemType = (ComboBox)sender;
-            if ( cbxItemType.SelectedItem != null)
+            if (cbxItemType.SelectedItem != null)
             {
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
                 sbxItem.item_types = Item_Type;
@@ -249,13 +246,11 @@ namespace Cognitivo.Project.Development
                             {
                                 return false;
                             }
-
                         }
                         else
                         {
                             return false;
                         }
-
                     };
                 }
                 else
@@ -301,10 +296,7 @@ namespace Cognitivo.Project.Development
                 project_template_detail project_template_detail = (project_template_detail)treeProject.SelectedItem_;
                 project_template_detail.id_item = item.id_item;
                 project_template_detail.item = item;
-
-
             }
         }
-
     }
 }

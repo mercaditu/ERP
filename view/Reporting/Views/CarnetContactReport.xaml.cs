@@ -33,9 +33,9 @@ namespace Cognitivo.Reporting.Views
 
             this.reportViewer.RefreshReport();
         }
+
         public void createFile()
         {
-
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
             //If path (CognitivoERP) does not exist, create path.
@@ -63,7 +63,6 @@ namespace Cognitivo.Reporting.Views
                 }
             }
         }
-
     }
 
     public class ContactInfo

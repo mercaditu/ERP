@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Data.Entity;
-using entity;
+﻿using entity;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cognitivo.Contact
 {
     public partial class ContactTag : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource contact_tagViewSource = null;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        private dbContext entity = new dbContext();
+        private CollectionViewSource contact_tagViewSource = null;
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ContactTag()
         {
@@ -47,7 +47,5 @@ namespace Cognitivo.Contact
             _ContactTag.entity = entity;
             crud_modal.Children.Add(_ContactTag);
         }
-
     }
 }
-

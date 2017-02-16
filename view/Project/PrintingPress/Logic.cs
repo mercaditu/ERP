@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cognitivo.Project.PrintingPress
+﻿namespace Cognitivo.Project.PrintingPress
 {
     public class Logic
     {
@@ -18,6 +12,6 @@ namespace Cognitivo.Project.PrintingPress
             Cut
         }
 
-        public Calculation_Type Calculation_Types{ get; set; }
+        public Calculation_Type Calculation_Types { get; set; }
     }
 }

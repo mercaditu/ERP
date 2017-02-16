@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -12,8 +12,9 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class Property : Page
     {
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource app_propertyViewSource;
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource app_propertyViewSource;
+
         public Property()
         {
             InitializeComponent();

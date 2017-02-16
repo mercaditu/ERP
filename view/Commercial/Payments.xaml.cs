@@ -1,20 +1,19 @@
-﻿
+﻿using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
     public partial class Payments : Page, INotifyPropertyChanged
     {
-        CollectionViewSource payment_detailMadeViewSource, payment_detailReceive, contactViewSource;
-        PaymentDB PaymentDB = new PaymentDB();
+        private CollectionViewSource payment_detailMadeViewSource, payment_detailReceive, contactViewSource;
+        private PaymentDB PaymentDB = new PaymentDB();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,7 +29,8 @@ namespace Cognitivo.Commercial
                 FilterPaymentsRecieved(0);
             }
         }
-        DateTime _PaymentDate = DateTime.Now;
+
+        private DateTime _PaymentDate = DateTime.Now;
 
         public void RaisePropertyChanged(string propertyName)
         {
@@ -97,7 +97,6 @@ namespace Cognitivo.Commercial
                 payment_detailMadeViewSource.View.Refresh();
             }
             catch { }
-        
         }
 
         private void FilterPaymentsRecieved(int id_contact)
@@ -112,7 +111,7 @@ namespace Cognitivo.Commercial
                 payment_detailReceive.View.Filter = i =>
                 {
                     payment payment = i as payment;
-                    if ( paymentid.Contains(payment.id_payment)
+                    if (paymentid.Contains(payment.id_payment)
                         )
                     {
                         if (id_contact > 0)
@@ -136,9 +135,8 @@ namespace Cognitivo.Commercial
                 payment_detailReceive.View.Refresh();
             }
             catch { }
-         
         }
-        
+
         private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;

@@ -5,7 +5,6 @@ namespace Cognitivo.Class
 {
     public static class ErrorLog
     {
-
         public static void DebeHaber(string Data)
         {
             CreateFile(entity.App.Names.DebeHaberSync, Data, "txt");

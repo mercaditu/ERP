@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data;
-using System.Globalization;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -24,9 +13,9 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class Bank : Page
     {
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource bankViewSource;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource bankViewSource;
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Bank()
         {
@@ -36,7 +25,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             bankViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_bankViewSource")));
-            entity.db.app_bank.Where(a=>a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
+            entity.db.app_bank.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             bankViewSource.Source = entity.db.app_bank.Local;
         }
 
@@ -60,6 +49,6 @@ namespace Cognitivo.Configs
             objBank.app_bankViewSource = bankViewSource;
             objBank._entity = entity;
             crud_modal.Children.Add(objBank);
-        }        
+        }
     }
 }

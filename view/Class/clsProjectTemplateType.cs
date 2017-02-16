@@ -1,7 +1,6 @@
-﻿
-namespace Cognitivo.Class
+﻿namespace Cognitivo.Class
 {
-    class clsProjectTemplateType
+    internal class clsProjectTemplateType
     {
         public string ProjectTemplateTypeId { get; set; }
         public string ProjectTemplateType { get; set; }

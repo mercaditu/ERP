@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -11,7 +11,7 @@ namespace Cognitivo.Reporting.Views
     {
         public List<ContactInfo> ContactInfoList { get; set; }
 
-        db db = new db();
+        private db db = new db();
         public CollectionViewSource contactViewSource;
 
         public Subscription()
@@ -76,6 +76,5 @@ namespace Cognitivo.Reporting.Views
 
             window.ShowDialog();
         }
-
     }
 }

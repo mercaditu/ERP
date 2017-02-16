@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cognitivo.Setup.Migration
+﻿namespace Cognitivo.Setup.Migration
 {
-    class SetupACME
+    internal class SetupACME
     {
-
         public SetupACME()
         {
-
         }
-
 
         //private ACME_Data()
         //{
@@ -30,6 +18,5 @@ namespace Cognitivo.Setup.Migration
 
         //    server.ConnectionContext.ExecuteNonQuery(script);
         //}
-
     }
 }

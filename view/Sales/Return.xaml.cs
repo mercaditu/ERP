@@ -1,13 +1,13 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Cognitivo.Sales
 {
@@ -16,10 +16,10 @@ namespace Cognitivo.Sales
     /// </summary>
     public partial class Return : Page
     {
-        SalesReturnDB SalesReturnDB = new SalesReturnDB();
+        private SalesReturnDB SalesReturnDB = new SalesReturnDB();
 
-        CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
-        cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
+        private CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
+        private cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
 
         public Return()
         {
@@ -30,7 +30,7 @@ namespace Cognitivo.Sales
         {
             SalesReturnDB = new SalesReturnDB();
             salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head==true).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head == true).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
         }
 
@@ -47,6 +47,7 @@ namespace Cognitivo.Sales
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
             app_branchViewSource.Source = CurrentSession.Branches;
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -54,7 +55,6 @@ namespace Cognitivo.Sales
                 load_PrimaryDataThread();
                 load_SecondaryDataThread();
             }
-
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
@@ -62,6 +62,7 @@ namespace Cognitivo.Sales
         }
 
         #region Toolbar
+
         private void toolBar_btnCancel_Click(object sender)
         {
             sales_return_detailDataGrid.CancelEdit();
@@ -82,7 +83,6 @@ namespace Cognitivo.Sales
                     sbxContact.Text = "";
                 }
             }
-
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
@@ -98,7 +98,6 @@ namespace Cognitivo.Sales
                 sales_return.State = System.Data.Entity.EntityState.Modified;
                 SalesReturnDB.Entry(sales_return).State = EntityState.Modified;
             }
-
             else
             {
                 toolBar.msgWarning("Please Select A Record");
@@ -119,7 +118,7 @@ namespace Cognitivo.Sales
             SalesReturnDB.SaveChanges();
         }
 
-        #endregion
+        #endregion Toolbar
 
         private void calculate_vat(object sender, EventArgs e)
         {
@@ -249,7 +248,6 @@ namespace Cognitivo.Sales
                         {
                             LineLimit = (int)app_document_range.app_document.line_limit;
                         }
-
                     }
                     if (SalesSettings.BlockExcessItem == true && LineLimit > 0 && sales_return.sales_return_detail.Count + 1 > LineLimit)
                     {
@@ -257,12 +255,8 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item,sbxItem.Quantity));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item, sbxItem.Quantity));
                     }
-
-                  
-
-
                 }
                 sales_return.RaisePropertyChanged("GrandTotal");
             }
@@ -290,7 +284,6 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-
                 sales_returnsales_return_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
             }));
@@ -342,8 +335,6 @@ namespace Cognitivo.Sales
         {
             calculate_vat(sender, e);
         }
-
-
 
         private void btnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -406,9 +397,6 @@ namespace Cognitivo.Sales
                             //Automatically Checks Products to go back in Stock. This is most likely scenario.
                             if (sales_return_detail.item.item_product.Count() > 0)
                             {
-                               
-                                    
-                              
                                 sales_return_detail.IsSelected = true;
                             }
                         }
@@ -460,6 +448,5 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
-
     }
 }

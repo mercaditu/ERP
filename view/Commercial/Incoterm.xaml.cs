@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using entity;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 
 namespace Cognitivo.Commercial
 {
@@ -23,8 +14,9 @@ namespace Cognitivo.Commercial
     public partial class Incoterm : Page
     {
         //entity.dbContext entity = new entity.dbContext();
-        IncotermDB dbContext = new IncotermDB();
-        CollectionViewSource impex_incotermViewSource = null;
+        private IncotermDB dbContext = new IncotermDB();
+
+        private CollectionViewSource impex_incotermViewSource = null;
 
         public Incoterm()
         {
@@ -79,7 +71,6 @@ namespace Cognitivo.Commercial
             {
                 toolBar.msgError(ex);
             }
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -112,7 +103,7 @@ namespace Cognitivo.Commercial
             dbContext.Entry(impex_incoterm).State = EntityState.Added;
 
             impex_incotermViewSource.View.MoveCurrentToLast();
-       }
+        }
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -162,9 +153,8 @@ namespace Cognitivo.Commercial
                     impex_incotermViewSource.View.Filter = null;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
-
             }
         }
     }

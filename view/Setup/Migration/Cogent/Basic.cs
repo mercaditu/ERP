@@ -1,21 +1,20 @@
-﻿using System;
+﻿using entity;
 using MySql.Data.MySqlClient;
-using System.Linq;
-using System.Data;
-using entity;
-using System.Windows.Threading;
-using System.Windows;
-using System.Threading.Tasks;
-using System.Data.Entity.Validation;
+using System;
 using System.Collections.Generic;
-
+using System.Data;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace Cognitivo.Setup.Migration.Cogent
 {
     partial class MigrationGUI
     {
-
         public int id_company { get; set; }
+
         public void startTask()
         {
             Task basic_task = Task.Factory.StartNew(() => basic());
@@ -79,6 +78,7 @@ namespace Cognitivo.Setup.Migration.Cogent
             sync_Department();
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
+
         private void sync_Company()
         {
             using (db dbContext = new db())
@@ -109,10 +109,8 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                     try
                     {
-
                         dbContext.app_company.Add(_app_company);
                         dbContext.SaveChanges();
-
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -121,7 +119,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             MessageBox.Show(e.Entry.ToString());
                         }
                     }
-
 
                     id_company = dbContext.app_company.Where(i => i.name == _app_company.name).FirstOrDefault().id_company;
                     Dispatcher.BeginInvoke((Action)(() =>
@@ -132,9 +129,8 @@ namespace Cognitivo.Setup.Migration.Cogent
                     ));
 
                     sync_Users();
-                
-                        CurrentSession.Id_User = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                 
+
+                    CurrentSession.Id_User = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
 
                     foreach (DataRow row_Branch in dt_Branch.Rows)
                     {
@@ -178,11 +174,11 @@ namespace Cognitivo.Setup.Migration.Cogent
                     }
                     //Dispatcher.BeginInvoke((Action)(() =>
                     //{
-                        entity.Properties.Settings.Default.branch_ID = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
-                        entity.Properties.Settings.Default.terminal_ID = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
-                        entity.Properties.Settings.Default.Save();
-//                    }
-//));
+                    entity.Properties.Settings.Default.branch_ID = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
+                    entity.Properties.Settings.Default.terminal_ID = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
+                    entity.Properties.Settings.Default.Save();
+                    //                    }
+                    //));
                     dt_Branch.Clear();
                     dt_Terminal.Clear();
                 }
@@ -423,8 +419,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                     }
                 }
                 dt.Clear();
-
-
             }
         }
 
@@ -445,6 +439,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                 dbContext.SaveChanges();
             }
         }
+
         private void sync_Dimension()
         {
             using (db dbContext = new db())
@@ -460,6 +455,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                 dbContext.SaveChanges();
             }
         }
+
         private void sync_Department()
         {
             using (db dbContext = new db())
@@ -475,6 +471,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                 dbContext.SaveChanges();
             }
         }
+
         private void sync_measure()
         {
             using (db dbContext = new db())
@@ -501,20 +498,16 @@ namespace Cognitivo.Setup.Migration.Cogent
                         if (name != "")
                         {
                             app_measurement.id_measurement_type = dbContext.app_measurement_type.Where(x => x.name == name).FirstOrDefault().id_measurement_type;
-
                         }
                         else
                         {
                             app_measurement.id_measurement_type = dbContext.app_measurement_type.FirstOrDefault().id_measurement_type;
                         }
-
-
                     }
                     else
                     {
                         app_measurement.id_measurement_type = dbContext.app_measurement_type.FirstOrDefault().id_measurement_type;
                     }
-
 
                     dbContext.app_measurement.Add(app_measurement);
                 }
@@ -551,6 +544,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                 dbContext.SaveChanges();
             }
         }
+
         public void items()
         {
             using (db dbContext = new db())
@@ -706,8 +700,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         item.id_vat_group = dbContext.app_vat_group.FirstOrDefault().id_vat_group;
                     }
 
-
-
                     if (item.Error == null)
                     {
                         using (db db = new db())
@@ -738,6 +730,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                 conn.Close();
             }
         }
+
         public void items_dimension()
         {
             MySqlConnection conn = new MySqlConnection(_connString);
@@ -774,7 +767,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                     if (db.items.Where(x => x.name == product).FirstOrDefault() != null)
                     {
                         item_dimension.id_item = db.items.Where(x => x.name == product).FirstOrDefault().id_item;
-
                     }
                     else
                     {
@@ -783,12 +775,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => itemDimensionValue.Text = value.ToString()));
                         continue;
                     }
-
                 }
                 if (row["value"] is DBNull)
                 {
                     item_dimension.value = 0;
-
                 }
                 else
                 {
@@ -866,7 +856,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         continue;
                     }
 
-
                     string product = row["product"].ToString();
                     if (db.items.Where(x => x.name == product).FirstOrDefault() != null)
                     {
@@ -882,7 +871,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             Dispatcher.BeginInvoke((Action)(() => itemConversionValue.Text = value.ToString()));
                             continue;
                         }
-
                     }
                     else
                     {
@@ -891,12 +879,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => itemConversionValue.Text = value.ToString()));
                         continue;
                     }
-
                 }
                 if (row["factor"] is DBNull)
                 {
                     item_conversion_factor.value = 0;
-
                 }
                 else
                 {
@@ -932,6 +918,7 @@ namespace Cognitivo.Setup.Migration.Cogent
             cmd.Dispose();
             conn.Close();
         }
+
         public void items_price()
         {
             MySqlConnection conn = new MySqlConnection(_connString);
@@ -970,7 +957,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         item_price.id_currency = db.app_currency.FirstOrDefault().id_currency;
                     }
 
-
                     string price_list = row["price_list"].ToString();
                     if (price_list != "")
                     {
@@ -984,15 +970,12 @@ namespace Cognitivo.Setup.Migration.Cogent
                         continue;
                     }
 
-
                     string product = row["product"].ToString();
                     if (db.items.Where(x => x.name == product).FirstOrDefault() != null)
                     {
                         int id = db.items.Where(x => x.name == product).FirstOrDefault().id_item;
 
                         item_price.id_item = id;
-
-
                     }
                     else
                     {
@@ -1001,12 +984,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => itemPriceValue.Text = value.ToString()));
                         continue;
                     }
-
                 }
                 if (row["sell_value"] is DBNull)
                 {
                     item_price.value = 0;
-
                 }
                 else
                 {
@@ -1137,7 +1118,6 @@ namespace Cognitivo.Setup.Migration.Cogent
             readercontact.Close();
             cmd.Dispose();
             conn.Close();
-
         }
 
         public void employee()
@@ -1170,7 +1150,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                     contact contact = new contact();
                     contact.id_contact = readeremp.GetInt32("id");
                     contact.id_contact_role = 1;
-                    
+
                     if (!(readeremp["name_full"] is DBNull))
                     {
                         contact.name = readeremp.GetString("name_full");
@@ -1221,7 +1201,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         {
                             contact.gender = contact.Genders.Female;
                         }
-
                     }
 
                     ////Nationality
@@ -1249,14 +1228,13 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => empValue.Text = value.ToString()));
                     }
                 }
-
             }
 
             readeremp.Close();
             cmd.Dispose();
             conn.Close();
-
         }
+
         public void Talent()
         {
             MySqlConnection conn = new MySqlConnection(_connString);
@@ -1326,22 +1304,17 @@ namespace Cognitivo.Setup.Migration.Cogent
                         hr_talent.hr_talent_detail.Add(hr_talent_detail);
                     }
 
-
-
                     db.hr_talent.Add(hr_talent);
                     db.SaveChanges();
                     value += 1;
                     Dispatcher.BeginInvoke((Action)(() => progTalent.Value = value));
                     Dispatcher.BeginInvoke((Action)(() => TalentValue.Text = value.ToString()));
-
                 }
-
             }
 
             readeremp.Close();
             cmd.Dispose();
             conn.Close();
-
         }
 
         public void production()
@@ -1401,8 +1374,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                     production_order production_order = new production_order();
                     if (dtproduction.Rows.Count > 0)
                     {
-
-
                         production_order.id_production_order = Convert.ToInt32(dtproduction.Rows[0]["id"]);
                         production_order.id_project = project;
                         if (_enitity.db.production_line.Count() > 0)
@@ -1425,7 +1396,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 production_order.name = cmdname.ExecuteScalar().ToString();
                             }
                             else { production_order.name = "name"; }
-
                         }
                         else
                         {
@@ -1452,9 +1422,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     production_order.status = Status.Production.Pending;
                                 }
-
                                 else { production_order.status = Status.Production.Pending; }
-
                             }
                         }
                         else
@@ -1462,21 +1430,17 @@ namespace Cognitivo.Setup.Migration.Cogent
                             production_order.status = Status.Production.Pending;
                         }
 
-
                         if (!(dtproduction.Rows[0]["id_project"] is DBNull))
                         {
-
                             string projectname = dtproduction.Rows[0]["project"].ToString();
                             if (db.projects.Where(x => x.name == projectname).FirstOrDefault() != null)
                             {
                                 production_order.id_project = db.projects.Where(x => x.name == projectname).FirstOrDefault().id_project;
-
                             }
                             else
                             {
                                 continue;
                             }
-
                         }
                         else
                         {
@@ -1489,11 +1453,8 @@ namespace Cognitivo.Setup.Migration.Cogent
                             production_order.start_date_est = Convert.ToDateTime(dtproduction.Rows[0]["begin_date"]);
                         }
 
-
-
                         foreach (DataRow _readerproduction in dtproduction.Rows)
                         {
-
                             db.Configuration.AutoDetectChangesEnabled = false;
 
                             production_order_detail production_order_detail = new production_order_detail();
@@ -1537,12 +1498,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                             value += 1;
                             Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
                             Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
-
                         }
                         if (production_order.Error == null)
                         {
                             db.production_order.Add(production_order);
-
                         }
                         dtproduction.Clear();
                         readerproduction.Close();
@@ -1587,13 +1546,12 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                 while (readerproduction.Read())
                 {
-
                     using (db db = new db())
                     {
                         db.Database.CommandTimeout = 5500;
-                      //  production_execution production_execution = new production_execution();
+                        //  production_execution production_execution = new production_execution();
                         int id = Convert.ToInt32(readerproduction["id"]);
-                      //  production_execution.id_production_execution = id;
+                        //  production_execution.id_production_execution = id;
 
                         //if (_enitity.db.production_line.Count() > 0)
                         //{
@@ -1628,15 +1586,12 @@ namespace Cognitivo.Setup.Migration.Cogent
                         cmdproduction_detail.Connection = connproduction_detail;
                         cmdproduction_detail.CommandText = sql_statement;
 
-
                         cmdproduction_detail.CommandType = CommandType.Text;
 
                         //MySqlDataReader readerproduction_detail = cmdproduction_detail.ExecuteReader();
                         DataTable dtproductionexecdetail = exeDTMysql(sql_statement);
                         for (int i = 0; i < dtproductionexecdetail.Rows.Count - 1; i++)
                         {
-
-
                             db.Configuration.AutoDetectChangesEnabled = false;
                             production_execution_detail production_execution_detail = new production_execution_detail();
                             production_execution_detail.id_execution_detail = Convert.ToInt32(dtproductionexecdetail.Rows[i]["id"]);
@@ -1664,8 +1619,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             //    else { continue; }
                             //}
 
-
-
                             production_execution_detail.quantity = Convert.ToInt32(dtproductionexecdetail.Rows[i]["qty"]);
 
                             int id_logi = 0;
@@ -1678,9 +1631,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 }
                                 //else
                                 //{ continue; }
-
                             }
-
 
                             String Task_name = Convert.ToString(dtproductionexecdetail.Rows[i]["task_item"]);
                             String project_name = Convert.ToString(dtproductionexecdetail.Rows[i]["project"]);
@@ -1689,8 +1640,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 production_execution_detail.id_project_task = db.project_task.Where(x => x.item_description == Task_name && x.project.name == project_name).FirstOrDefault().id_project_task;
                             }
                             db.production_execution_detail.Add(production_execution_detail);
-
-
                         }
                         //if (production_execution.Error == null && production_execution.production_execution_detail.Count() > 0)
                         //{
@@ -1708,7 +1657,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => progExec.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => ExecValue.Text = value.ToString()));
                     }
-
                 }
                 readerproduction.Close();
                 cmdproduction.Dispose();
@@ -1760,7 +1708,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         int id = Convert.ToInt32(readerpurchase["id"]);
                         purchase_invoice.id_purchase_invoice = id;
 
-
                         if (!(readerpurchase["deptname"] is DBNull))
                         {
                             string deptname = Convert.ToString(readerpurchase["deptname"]);
@@ -1773,7 +1720,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 purchase_invoice.id_department = db.app_department.FirstOrDefault().id_department;
                             }
-
                         }
                         else
                         {
@@ -1787,8 +1733,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 purchase_invoice.id_contact = contact.id_contact;
                             }
-
-
                         }
                         if (!(readerpurchase["contractname"] is DBNull))
                         {
@@ -1802,7 +1746,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 purchase_invoice.id_contract = db.app_contract.FirstOrDefault().id_contract;
                             }
-
                         }
                         else
                         {
@@ -1820,7 +1763,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 purchase_invoice.id_condition = db.app_condition.FirstOrDefault().id_condition;
                             }
-
                         }
                         else
                         {
@@ -1830,14 +1772,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                         if (!(readerpurchase["purchase_number"] is DBNull))
                         {
                             purchase_invoice.number = Convert.ToString(readerpurchase["purchase_number"]);
-
-
                         }
                         if (!(readerpurchase["purchase_date"] is DBNull))
                         {
                             purchase_invoice.trans_date = Convert.ToDateTime(readerpurchase["purchase_date"]);
-
-
                         }
                         purchase_invoice.id_currencyfx = db.app_currencyfx.FirstOrDefault().id_currencyfx;
 
@@ -1876,7 +1814,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     purchase_invoice_detail.id_location = db.app_location.FirstOrDefault().id_location;
                                 }
-
                             }
                             else
                             {
@@ -1890,25 +1827,18 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     purchase_invoice_detail.id_item = item.id_item;
                                 }
-
                             }
                             if (!(readerpurchasedetail["item_description"] is DBNull))
                             {
                                 purchase_invoice_detail.item_description = Convert.ToString(readerpurchasedetail["item_description"]);
-
-
                             }
                             if (!(readerpurchasedetail["unit_cost"] is DBNull))
                             {
                                 purchase_invoice_detail.unit_cost = Convert.ToDecimal(readerpurchasedetail["unit_cost"]);
-
-
                             }
                             if (!(readerpurchasedetail["order_qty"] is DBNull))
                             {
                                 purchase_invoice_detail.quantity = Convert.ToDecimal(readerpurchasedetail["order_qty"]);
-
-
                             }
                             if (!(readerpurchasedetail["costcentername"] is DBNull))
                             {
@@ -1922,7 +1852,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     purchase_invoice_detail.id_cost_center = db.app_cost_center.FirstOrDefault().id_cost_center;
                                 }
-
                             }
                             else
                             {
@@ -1941,7 +1870,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     purchase_invoice_detail.id_vat_group = db.app_vat_group.FirstOrDefault().id_vat_group;
                                 }
-
                             }
                             else
                             {
@@ -1949,10 +1877,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
 
                             purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
-
-
-
-
                         }
                         readerpurchasedetail.Close();
                         cmdpurchasedetail.Dispose();
@@ -1961,7 +1885,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         if (purchase_invoice.Error == null)
                         {
                             db.purchase_invoice.Add(purchase_invoice);
-
                         }
                         db.SaveChanges();
 
@@ -1973,8 +1896,6 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                     //cmdproduction_detail.Dispose();
                     //connproduction_detail.Close();
-
-
                 }
 
                 dtpurchase.Clear();
@@ -2028,8 +1949,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         int id = Convert.ToInt32(readersales["id"]);
                         sales_invoice.id_sales_invoice = id;
 
-
-
                         if (!(readersales["contactname"] is DBNull))
                         {
                             string contactname = Convert.ToString(readersales["contactname"]);
@@ -2038,8 +1957,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 sales_invoice.id_contact = contact.id_contact;
                             }
-
-
                         }
                         if (!(readersales["contractname"] is DBNull))
                         {
@@ -2053,7 +1970,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 sales_invoice.id_contract = db.app_contract.FirstOrDefault().id_contract;
                             }
-
                         }
                         else
                         {
@@ -2071,7 +1987,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                             {
                                 sales_invoice.id_condition = db.app_condition.FirstOrDefault().id_condition;
                             }
-
                         }
                         else
                         {
@@ -2081,14 +1996,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                         if (!(readersales["purchase_number"] is DBNull))
                         {
                             sales_invoice.number = Convert.ToString(readersales["purchase_number"]);
-
-
                         }
                         if (!(readersales["purchase_date"] is DBNull))
                         {
                             sales_invoice.trans_date = Convert.ToDateTime(readersales["purchase_date"]);
-
-
                         }
                         sales_invoice.id_currencyfx = db.app_currencyfx.FirstOrDefault().id_currencyfx;
 
@@ -2126,7 +2037,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     sales_invoice_detail.id_location = db.app_location.FirstOrDefault().id_location;
                                 }
-
                             }
                             else
                             {
@@ -2140,25 +2050,18 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     sales_invoice_detail.id_item = item.id_item;
                                 }
-
                             }
                             if (!(readersalesdetail["item_description"] is DBNull))
                             {
                                 sales_invoice_detail.item_description = Convert.ToString(readersalesdetail["item_description"]);
-
-
                             }
                             if (!(readersalesdetail["unit_cost"] is DBNull))
                             {
                                 sales_invoice_detail.unit_cost = Convert.ToDecimal(readersalesdetail["unit_cost"]);
-
-
                             }
                             if (!(readersalesdetail["invoice_qty"] is DBNull))
                             {
                                 sales_invoice_detail.quantity = Convert.ToDecimal(readersalesdetail["invoice_qty"]);
-
-
                             }
                             if (!(readersalesdetail["taxname"] is DBNull))
                             {
@@ -2172,18 +2075,13 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 {
                                     sales_invoice_detail.id_vat_group = db.app_vat_group.FirstOrDefault().id_vat_group;
                                 }
-
                             }
                             else
                             {
                                 sales_invoice_detail.id_vat_group = db.app_vat_group.FirstOrDefault().id_vat_group;
                             }
 
-
-
                             sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-
-
                         }
                         readersalesdetail.Close();
                         cmdsalesdetail.Dispose();
@@ -2192,7 +2090,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         if (sales_invoice.Error == null)
                         {
                             db.sales_invoice.Add(sales_invoice);
-
                         }
                         db.SaveChanges();
 
@@ -2204,8 +2101,6 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                     //cmdproduction_detail.Dispose();
                     //connproduction_detail.Close();
-
-
                 }
 
                 dtsales.Clear();
@@ -2218,6 +2113,5 @@ namespace Cognitivo.Setup.Migration.Cogent
                 throw;
             }
         }
-
     }
 }

@@ -1,25 +1,26 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Production
 {
     public partial class Logistics : Page
     {
-        db db = new db();
-        CollectionViewSource project_ViewSource, contractViewSource;
-        List<project_task> Project_task = new List<project_task>();
+        private db db = new db();
+        private CollectionViewSource project_ViewSource, contractViewSource;
+        private List<project_task> Project_task = new List<project_task>();
 
         //SetIsEnableProperty
         public static readonly DependencyProperty SetIsEnableProperty =
             DependencyProperty.Register("SetIsEnable", typeof(bool), typeof(Logistics),
             new FrameworkPropertyMetadata(false));
+
         public Logistics()
         {
             InitializeComponent();
@@ -40,7 +41,6 @@ namespace Cognitivo.Production
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             int _id_project = 0;
 
             _id_project = ((project)project_ViewSource.View.CurrentItem).id_project;
@@ -60,9 +60,7 @@ namespace Cognitivo.Production
                                    _name = last.Max(x => x.items.name),
                                    _avlqtyColumn = last.Key.IO.credit - last.Key.IO.debit,
                                    _ordered_quantity = last.Sum(x => x.quantity_est) - last.Max(x => x.purchase_invoice_detail.Count() != 0 ? x.purchase_invoice_detail.Where(q => q.id_item == x.id_item).Sum(j => j.quantity) : 0)
-
                                }).ToList();
-
 
             productDataGrid.ItemsSource = productlist.Where(x => x._id_project == _id_project).ToList();
 
@@ -80,9 +78,7 @@ namespace Cognitivo.Production
                                    _name = last.Max(x => x.items.name),
                                    _avlqtyColumn = last.Key.IO.credit - last.Key.IO.debit,
                                    _ordered_quantity = last.Sum(x => x.quantity_est) - last.Max(x => x.purchase_invoice_detail.Count() != 0 ? x.purchase_invoice_detail.Where(q => q.id_item == x.id_item).Sum(j => j.quantity) : 0)
-
                                }).ToList();
-
 
             serviceDataGrid.ItemsSource = servicelist.Where(x => x._id_project == _id_project).ToList();
             var rawlist = (from IT in db.project_task
@@ -99,7 +95,6 @@ namespace Cognitivo.Production
                                _name = last.Max(x => x.items.name),
                                _avlqtyColumn = last.Key.IO.credit - last.Key.IO.debit,
                                _ordered_quantity = last.Sum(x => x.quantity_est) - last.Max(x => x.purchase_invoice_detail.Count() != 0 ? x.purchase_invoice_detail.Where(q => q.id_item == x.id_item).Sum(j => j.quantity) : 0)
-
                            }).ToList();
 
             rawmaterialDataGrid.ItemsSource = rawlist.Where(x => x._id_project == _id_project).ToList();
@@ -118,23 +113,18 @@ namespace Cognitivo.Production
                                    _name = last.Max(x => x.items.name),
                                    _avlqtyColumn = last.Key.IO.credit - last.Key.IO.debit,
                                    _ordered_quantity = last.Sum(x => x.quantity_est) - last.Max(x => x.purchase_invoice_detail.Count() != 0 ? x.purchase_invoice_detail.Where(q => q.id_item == x.id_item).Sum(j => j.quantity) : 0)
-
                                }).ToList();
 
-
             assetDataGrid.ItemsSource = capitallist.Where(x => x._id_project == _id_project).ToList();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 project objProject = project_ViewSource.View.CurrentItem as project;
                 if (objProject != null)
                 {
-
                     int idProject = objProject.id_project;
                     purchase_tender purchase_tender = new purchase_tender();
                     if (idProject > 0)
@@ -167,7 +157,7 @@ namespace Cognitivo.Production
                         db.purchase_tender.Add(purchase_tender);
                         db.SaveChanges();
                     }
-                    
+
                     lblCancel_MouseDown(null, null);
                 }
                 else
@@ -190,12 +180,10 @@ namespace Cognitivo.Production
 
             var tasklist = db.project_task.Where(x => x.id_project == _id_project && x.id_item == _id_item).ToList();
 
-
-
-
             taskDataGrid.ItemsSource = tasklist;
         }
-        void AddCart(object sender, RoutedEventArgs e)
+
+        private void AddCart(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
             if (!Project_task.Contains((project_task)btn.Tag))

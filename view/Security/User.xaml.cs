@@ -1,18 +1,18 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Security
 {
     public partial class User : Page
     {
-        UserDB UserDB = new UserDB();
-        CollectionViewSource security_user_view_source, security_role_view_source;
+        private UserDB UserDB = new UserDB();
+        private CollectionViewSource security_user_view_source, security_role_view_source;
 
         public User()
         {
@@ -63,7 +63,6 @@ namespace Cognitivo.Security
 
         private void toolBar_btnSave_Click(object sender)
         {
-
             foreach (security_user security_user in UserDB.security_user.Local.Where(x => x.IsSelected))
             {
                 if (UserDB.security_user.Local.Where(x => x.name == security_user.name && x != security_user).Any() && security_user.State == EntityState.Added)
@@ -73,14 +72,12 @@ namespace Cognitivo.Security
                 else
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                 
+
                     //if (Licence.CompanyLicence!= null)
                     //{
-                        
                     //}
                     //else
                     //{
-                        
                     //}
                     if (UserDB.SaveChanges() > 0)
                     {
@@ -137,7 +134,6 @@ namespace Cognitivo.Security
 
         private void toolBar_btnEdit_Click(object sender)
         {
-
             if (security_userDataGrid.SelectedItem != null)
             {
                 security_user security_user = (security_user)security_userDataGrid.SelectedItem;

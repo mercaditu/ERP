@@ -1,23 +1,24 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
 
 namespace Cognitivo.Sales
 {
     public partial class Salesman : Page
     {
         //dbContextContext entity = new dbContextContext();
-        SalesmanDB dbContext = new SalesmanDB();
-        CollectionViewSource sales_repViewSource, contactViewSource = null;
-        ContactDB ContactdbContext = new ContactDB();
-        contact _contact = new contact();
+        private SalesmanDB dbContext = new SalesmanDB();
+
+        private CollectionViewSource sales_repViewSource, contactViewSource = null;
+        private ContactDB ContactdbContext = new ContactDB();
+        private contact _contact = new contact();
 
         public Salesman()
         {
@@ -148,6 +149,7 @@ namespace Cognitivo.Sales
         }
 
         #region Filter Data
+
         private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -156,9 +158,7 @@ namespace Cognitivo.Sales
             }
         }
 
-      
-
-        #endregion
+        #endregion Filter Data
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -173,7 +173,7 @@ namespace Cognitivo.Sales
                         if (sales_rep != null)
                         {
                             //Protect the code against null values.
-                           
+
                             string name = sales_rep.name;
 
                             if (name.Contains(query))
@@ -184,7 +184,6 @@ namespace Cognitivo.Sales
                             {
                                 return false;
                             }
-
                         }
                         else
                         {
@@ -215,11 +214,10 @@ namespace Cognitivo.Sales
         private void sales_repDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_rep sales_rep_rep = (sales_rep)sales_repDataGrid.SelectedItem;
-            if (sales_rep_rep.id_contact>0)
+            if (sales_rep_rep.id_contact > 0)
             {
                 sbxContact.Text = dbContext.contacts.Find(sales_rep_rep.id_contact).name;
             }
-          
         }
 
         public void Save_Click(object sender)
@@ -230,22 +228,18 @@ namespace Cognitivo.Sales
             }
             _contact.IsSelected = true;
 
-
             IEnumerable<DbEntityValidationResult> validationresult = ContactdbContext.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
-                    ContactdbContext.SaveChanges();
+                ContactdbContext.SaveChanges();
 
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-             
-                
             }
             else
             {
                 MessageBox.Show("error");
             }
-
         }
     }
 }

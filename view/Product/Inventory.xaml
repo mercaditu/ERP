@@ -1,49 +1,48 @@
-﻿<Page x:Class="Cognitivo.Product.Inventory" Title="{lex:Loc Inventory}" 
+﻿<Page x:Class="Cognitivo.Product.Inventory" Title="{lex:Loc Inventory}"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	   xmlns:customcmd="clr-namespace:Cognitivo.Class"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	  xmlns:entity="clr-namespace:entity;assembly=entity" 
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:cls="clr-namespace:Cognitivo.Class"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
-	  mc:Ignorable="d" 
-	  xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+	  mc:Ignorable="d"
+	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
-		lex:LocalizeDictionary.DesignCulture="en-US" 
+		lex:LocalizeDictionary.DesignCulture="en-US"
 	  d:DesignHeight="400" d:DesignWidth="800" Loaded="Page_Loaded">
-	<Page.Resources>
-		<converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+    <Page.Resources>
+        <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
-		<CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
-		<CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
-		<CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}"/>
-	</Page.Resources>
-	<Page.CommandBindings>
-		<CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
-						CanExecute="EditCommand_CanExecute" 
-						Executed="EditCommand_Executed"/>
-
-	</Page.CommandBindings>
-	<Grid DataContext="{StaticResource item_inventoryViewSource}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="3*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
-		<!-- toolBar -->
-		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
-        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged"/>
+        <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />
+        <CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}" />
+    </Page.Resources>
+    <Page.CommandBindings>
+        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll"
+						CanExecute="EditCommand_CanExecute"
+						Executed="EditCommand_Executed" />
+    </Page.CommandBindings>
+    <Grid DataContext="{StaticResource item_inventoryViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- toolBar -->
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged" />
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
-					   btnEdit_Click="toolBar_btnEdit_Click" 
+					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
@@ -52,130 +51,130 @@
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 						Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-					   Margin="0"/>
+					   Margin="0" />
 
-		<!--Left Side Part Start-->
-		<Grid Grid.Row="1" >
-			<ListBox x:Name="item_inventoryDataGrid"
+        <!--Left Side Part Start-->
+        <Grid Grid.Row="1">
+            <ListBox x:Name="item_inventoryDataGrid"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 					 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-					 ItemsSource="{Binding}" >
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<cntrl:navList recordCode="{Binding security_user.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+					 ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordCode="{Binding security_user.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 									   recordSecondaryName="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-									   recordName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+									   recordName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 									   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 									   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-									   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-		</Grid>
-		<!--Left Side Part End-->
+									   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <!--Left Side Part End-->
 
-		<!--Right Hand Side Part - Start-->
-		<Grid Grid.Column="1" Grid.Row="1" DataContext="{StaticResource item_inventoryitem_inventory_detailViewSource}" Background="{StaticResource winBackground}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="125"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"/>
-				<ColumnDefinition Width="2*"/>
-				<ColumnDefinition Width="1*"/>
-			</Grid.ColumnDefinitions>
-			<Grid Grid.ColumnSpan="2" DataContext="{StaticResource item_inventoryViewSource}">
-				<StackPanel Margin="8" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
-					<Label Content="{lex:Loc Date}"/>
-					<DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource item_inventoryViewSource}}"  Style="{StaticResource input_datepicker}"/>
-					<Label Content="{lex:Loc Comment}"/>
-					<TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-				</StackPanel>
-			</Grid>
+        <!--Right Hand Side Part - Start-->
+        <Grid Grid.Column="1" Grid.Row="1" DataContext="{StaticResource item_inventoryitem_inventory_detailViewSource}" Background="{StaticResource winBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="125" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="2" DataContext="{StaticResource item_inventoryViewSource}">
+                <StackPanel Margin="8" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
+                    <Label Content="{lex:Loc Date}" />
+                    <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource item_inventoryViewSource}}"  Style="{StaticResource input_datepicker}" />
+                    <Label Content="{lex:Loc Comment}" />
+                    <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
+                </StackPanel>
+            </Grid>
 
-			<!-- Right Side Panel -->
-			<Grid Grid.Column="2" DataContext="{StaticResource item_inventoryViewSource}">
-				<StackPanel Margin="8">
-					<Label Content="{lex:Loc User}"/>
-					<Label Content="{Binding security_user.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Source={StaticResource item_inventoryViewSource}}" 
-						   Style="{StaticResource input_label}"/>
-                    <Border CornerRadius="4" Background="{StaticResource appConfig}" 
+            <!-- Right Side Panel -->
+            <Grid Grid.Column="2" DataContext="{StaticResource item_inventoryViewSource}">
+                <StackPanel Margin="8">
+                    <Label Content="{lex:Loc User}" />
+                    <Label Content="{Binding security_user.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Source={StaticResource item_inventoryViewSource}}"
+						   Style="{StaticResource input_label}" />
+                    <Border CornerRadius="4" Background="{StaticResource appConfig}"
                             AllowDrop="True" Drop="Excel_Drop">
                         <Button Click="Excel_Create">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Style="{StaticResource ico_Label}" Content="" Width="auto"
-                                           FontSize="18" HorizontalContentAlignment="Center"/>
-                                    <TextBlock Text="Excel" FontSize="16" VerticalAlignment="Center"/>
+                                           FontSize="18" HorizontalContentAlignment="Center" />
+                                    <TextBlock Text="Excel" FontSize="16" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button.Content>
                         </Button>
                     </Border>
-				</StackPanel>
-			</Grid>
+                </StackPanel>
+            </Grid>
 
-			<Grid Grid.Row="1">
-				<ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Margin="2"
+            <Grid Grid.Row="1">
+                <ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Margin="2"
 						  DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
-						  SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}"/>
-				
-				<ListBox x:Name="location_ListBox" Background="{DynamicResource AccentColor_Introvert}" Margin="2,32,2,2"
+						  SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ListBox x:Name="location_ListBox" Background="{DynamicResource AccentColor_Introvert}" Margin="2,32,2,2"
 						 ScrollViewer.VerticalScrollBarVisibility="Auto"
 						 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 						 ItemContainerStyle="{StaticResource nav_ListSelection}"
-						 ItemsSource="{Binding Source={StaticResource app_branchapp_locationViewSource}}" 
+						 ItemsSource="{Binding Source={StaticResource app_branchapp_locationViewSource}}"
 						 SelectionChanged="location_ListBox_SelectionChanged_1">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<cntrl:navList recordCode="{Binding app_branch.name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <cntrl:navList recordCode="{Binding app_branch.name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 								   recordName="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</Grid>
+								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
 
-			<Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
 
-				<Button Style="{StaticResource btn_green}" Content="{lex:Loc Refresh}" Click="location_ListBox_SelectionChanged"
-						VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"/>
+                <Button Style="{StaticResource btn_green}" Content="{lex:Loc Refresh}" Click="location_ListBox_SelectionChanged"
+						VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" />
 
-				<Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2">
-					<TextBox x:Name="txtsearch" Width="256" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" Margin="-71,0,0,0"/>
-					<Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver"/>
-				</Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2">
+                    <TextBox x:Name="txtsearch" Width="256" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" Margin="-71,0,0,0" />
+                    <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver" />
+                </Grid>
 
-				<DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
+                <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 													   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
 						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
-					<DataGrid.Columns>
-						<DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 												ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-						<DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto"/>
-                        <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto"/>
+												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                        <DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
-							<DataGridTextColumn.Header>
-								<TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>
-							</DataGridTextColumn.Header>
-						</DataGridTextColumn>
-						<DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" ElementStyle="{StaticResource RightAlignStyle}">
-							<DataGridTextColumn.Header>
-								<TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" Counted"/></TextBlock>
-							</DataGridTextColumn.Header>
-						</DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    
+                            <DataGridTextColumn.Header>
+                                <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" System" /></TextBlock>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" ElementStyle="{StaticResource RightAlignStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Counted" /></TextBlock>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
-                                            <Setter Property="IsEnabled" Value="false"/>
+                                            <Setter Property="IsEnabled" Value="false" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -186,36 +185,35 @@
                                 <Style TargetType="DataGridCell">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
-                                            <Setter Property="IsEnabled" Value="false"/>
+                                            <Setter Property="IsEnabled" Value="false" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="Auto" Header="">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate>
-									<Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 													Style="{StaticResource btnEditChildStyle}"
-													CommandParameter="{Binding}"/>
-								</DataTemplate>
-							</DataGridTemplateColumn.CellTemplate>
-						</DataGridTemplateColumn>
-						<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
-						<!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
+													CommandParameter="{Binding}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
+                        <!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
 															ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
-						<DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto"/>
-					</DataGrid.Columns>
-                  
+															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
+                        <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto" />
+                    </DataGrid.Columns>
                 </DataGrid>
-			</Grid>
-		</Grid>
-		<!--Right Hand Side Part - End-->
-	</Grid>
+            </Grid>
+        </Grid>
+        <!--Right Hand Side Part - End-->
+    </Grid>
 </Page>

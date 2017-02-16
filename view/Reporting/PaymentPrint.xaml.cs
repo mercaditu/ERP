@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using entity.Brillo.Document;
+using System;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
-using entity.Brillo.Document;
-using System.IO;
 
 namespace Cognitivo.Reporting
 {
     public partial class PaymentPrint : Page
     {
-        CollectionViewSource payment_typeViewSource, payment_detailViewSource;
-        db db = new db();
+        private CollectionViewSource payment_typeViewSource, payment_detailViewSource;
+        private db db = new db();
 
         public PaymentPrint()
         {
@@ -27,7 +27,6 @@ namespace Cognitivo.Reporting
 
             payment_typeViewSource = ((CollectionViewSource)(FindResource("payment_typeViewSource")));
             payment_typeViewSource.Source = db.payment_type.Local;
-
         }
 
         private void dgvPaymnet_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -67,9 +66,7 @@ namespace Cognitivo.Reporting
                 payment_detailViewSource.Source = db.payment_detail.Where(x => x.id_payment_type == payment_type.id_payment_type && x.is_read == Print.IsChecked).ToList();
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(db, payment_type.app_document.id_application, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }
-
         }
-
 
         private void Print_Checked(object sender, RoutedEventArgs e)
         {
@@ -108,7 +105,6 @@ namespace Cognitivo.Reporting
                 payment_detail.RaisePropertyChanged("payment_type_number");
                 payment_detail.is_read = true;
                 Start.Automatic(payment_detail, app_document_range);
-
             }
 
             db.SaveChanges();

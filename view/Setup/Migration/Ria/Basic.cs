@@ -7,7 +7,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Cognitivo.Setup.Migration
 {
@@ -25,8 +24,8 @@ namespace Cognitivo.Setup.Migration
             Task supplier_Task = Task.Factory.StartNew(() => supplier());
             Task product_Task = Task.Factory.StartNew(() => product());
 
-            //////Wait for Related Tables to finish so we can be 
-            //////assured that they are available for us when 
+            //////Wait for Related Tables to finish so we can be
+            //////assured that they are available for us when
             //////we start with sales and purchase.
             customer_Task.Wait();
             supplier_Task.Wait();
@@ -43,7 +42,6 @@ namespace Cognitivo.Setup.Migration
             sales_Task.Wait();
             Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
             salesReturn_Task.Wait();
-
         }
 
         private void basic()
@@ -52,7 +50,7 @@ namespace Cognitivo.Setup.Migration
             //Company, Branch, Terminal, & Location
             sync_Company();
             //Users;
-         
+
             //Contact Role
             sync_ContactRole();
             //CostCenter
@@ -92,7 +90,7 @@ namespace Cognitivo.Setup.Migration
                 else
                 {
                     payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
-                }   
+                }
             }
 
             app_field app_field = new entity.app_field();
@@ -117,7 +115,7 @@ namespace Cognitivo.Setup.Migration
             _app_contract_detail.coefficient = 1;
             _app_contract_detail.app_contract = app_contract;
             _app_contract_detail.interval = (short)interval;
-            _app_contract_detail.is_order =false;
+            _app_contract_detail.is_order = false;
             app_contract.app_contract_detail.Add(_app_contract_detail);
             return app_contract;
         }
@@ -128,8 +126,9 @@ namespace Cognitivo.Setup.Migration
             payment_type.name = "Default";
             payment_type.payment_behavior = entity.payment_type.payment_behaviours.Normal;
             payment_type.is_default = true;
-           return payment_type;
+            return payment_type;
         }
+
         public app_location GenerateDefaultLocation(app_branch app_branch)
         {
             app_location app_location = new app_location();
@@ -142,7 +141,6 @@ namespace Cognitivo.Setup.Migration
 
         public app_account GenerateDefaultApp_Account()
         {
-
             app_account app_account = new app_account();
             app_account.name = "Default";
             app_account.id_account_type = entity.app_account.app_account_type.Terminal;
@@ -200,7 +198,7 @@ namespace Cognitivo.Setup.Migration
                     _app_branch.name = row_Branch["DESSUCURSAL"].ToString();
                     _app_branch.code = row_Branch["SUCURSALTIMBRADO"].ToString();
                     _app_branch.can_invoice = (row_Branch["TIPOSUCURSAL"].ToString().Contains("Factura")) ? true : false;
-                    if(_DataBase.ToLower()=="fiparsa")
+                    if (_DataBase.ToLower() == "fiparsa")
                     {
                         _app_branch.can_stock = true;
                     }
@@ -208,7 +206,6 @@ namespace Cognitivo.Setup.Migration
                     {
                         _app_branch.can_stock = (row_Branch["TIPOSUCURSAL"].ToString().Contains("Stock")) ? true : false;
                     }
-                  
 
                     if (_app_branch.can_stock)
                     {
@@ -220,7 +217,7 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     string id_branchString = row_Branch["CODSUCURSAL"].ToString();
-                    
+
                     foreach (DataRow row_Terminal in dt_Terminal.Select("CODSUCURSAL = " + id_branchString))
                     {
                         app_terminal app_terminal = new app_terminal();
@@ -236,7 +233,7 @@ namespace Cognitivo.Setup.Migration
                         dbContext.SaveChanges();
                     }
                 }
-                id_branch = dbContext.app_branch.Where(i => i.id_company == id_company ).FirstOrDefault().id_branch;
+                id_branch = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
                 id_terminal = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
@@ -251,7 +248,7 @@ namespace Cognitivo.Setup.Migration
             dt_Branch.Clear();
             dt_Terminal.Clear();
         }
-   
+
         private void sync_ContactRole()
         {
             using (db db = new db())
@@ -288,7 +285,6 @@ namespace Cognitivo.Setup.Migration
                         }
                     }
                 }
-
             }
         }
 
@@ -317,15 +313,12 @@ namespace Cognitivo.Setup.Migration
                 app_currency app_currency = new app_currency();
                 if (!(row["DESMONEDA"] is DBNull))
                 {
-
-
                     app_currency.name = (string)row["DESMONEDA"];
                     app_currency.id_company = id_company;
                     app_currency.is_priority = Convert.ToBoolean(row["PRIORIDAD"]);
                     DataTable dtfx = exeDT("SELECT * FROM COTIZACION where CODMONEDA=" + Convert.ToInt32(row["CODMONEDA"]));
                     if (dtfx.Rows.Count > 0)
                     {
-
                         app_currencyfx app_currencyfx = new app_currencyfx();
                         app_currencyfx.buy_value = Convert.ToInt32(dtfx.Rows[0]["FACTORVENTA"]);
                         app_currencyfx.sell_value = Convert.ToInt32(dtfx.Rows[0]["FACTORCOBRO"]);
@@ -581,7 +574,6 @@ namespace Cognitivo.Setup.Migration
             dbContext.SaveChanges();
         }
 
-
         private void sync_state()
         {
             DataTable dt = exeDT("SELECT *,(select DESPAIS from PAIS where PAIS.CODPAIS=DEPARTAMENTO.CODPAIS) as DESPAIS FROM DEPARTAMENTO");
@@ -593,7 +585,7 @@ namespace Cognitivo.Setup.Migration
                 app_geography.type = Status.geo_types.State;
                 string name = (string)row["DESPAIS"];
                 app_geography _app_geography = dbContext.app_geography.Where(x => x.name == name).FirstOrDefault();
-                if (_app_geography!=null)
+                if (_app_geography != null)
                 {
                     app_geography.parent = _app_geography;
                 }
@@ -602,6 +594,7 @@ namespace Cognitivo.Setup.Migration
             dt.Clear();
             dbContext.SaveChanges();
         }
+
         private void sync_city()
         {
             DataTable dt = exeDT("SELECT *,(select DESDEPARTAMENTO from DEPARTAMENTO where DEPARTAMENTO.CODDEPARTAMENTO=CIUDAD.CODDEPARTAMENTO) as DESDEPARTAMENTO,(select DESPAIS from PAIS where PAIS.CODPAIS=CIUDAD.CODPAIS) as DESPAIS FROM CIUDAD");
@@ -622,7 +615,6 @@ namespace Cognitivo.Setup.Migration
                             app_geography.parent = _app_geography;
                         }
                     }
-                 
                 }
                 else
                 {
@@ -633,12 +625,13 @@ namespace Cognitivo.Setup.Migration
                         app_geography.parent = _app_geography;
                     }
                 }
-               
+
                 dbContext.app_geography.Add(app_geography);
             }
             dt.Clear();
             dbContext.SaveChanges();
         }
+
         private void sync_zone()
         {
             DataTable dt = exeDT("SELECT *,(select DESCIUDAD from CIUDAD where CIUDAD.CODCIUDAD=ZONA.CODCIUDAD) as DESCIUDAD FROM ZONA");
@@ -656,10 +649,8 @@ namespace Cognitivo.Setup.Migration
                     {
                         app_geography.parent = _app_geography;
                     }
-
                 }
-                
-               
+
                 dbContext.app_geography.Add(app_geography);
             }
             dt.Clear();
@@ -670,60 +661,59 @@ namespace Cognitivo.Setup.Migration
         {
             try
             {
-            security_role security_role = new security_role();
-            security_role.is_active = true;
-            security_role.name = "Administrador";
-            security_role.id_company = id_company;
-            dbContext.security_role.Add(security_role);
-            dbContext.SaveChanges();
-            DataTable dt = exeDT("SELECT * FROM USUARIO");
-            foreach (DataRow row in dt.Rows)
-            {
-                security_user security_user = new security_user();
-                if (row["DESUSUARIO"].ToString() != "")
+                security_role security_role = new security_role();
+                security_role.is_active = true;
+                security_role.name = "Administrador";
+                security_role.id_company = id_company;
+                dbContext.security_role.Add(security_role);
+                dbContext.SaveChanges();
+                DataTable dt = exeDT("SELECT * FROM USUARIO");
+                foreach (DataRow row in dt.Rows)
                 {
-                    security_user.name = row["DESUSUARIO"].ToString();
-                }
-                else
-                {
-                    security_user.name = "name";
-                }
-                if (row["PASSUSUARIO"].ToString() != "")
-                {
-                    security_user.password = row["PASSUSUARIO"].ToString();
-                }
-                else
-                {
-                    security_user.password = "123";
-                }
-                if (row["NOMBRE"].ToString() != "")
-                {
-                    security_user.name_full = row["NOMBRE"].ToString();
-                }
-                else
-                {
-                    security_user.name_full = "name";
-                }
-                security_user.id_company = id_company;
-                security_user.is_active = true;
-                security_user.id_role = security_role.id_role;
-                security_user.security_role = security_role;
+                    security_user security_user = new security_user();
+                    if (row["DESUSUARIO"].ToString() != "")
+                    {
+                        security_user.name = row["DESUSUARIO"].ToString();
+                    }
+                    else
+                    {
+                        security_user.name = "name";
+                    }
+                    if (row["PASSUSUARIO"].ToString() != "")
+                    {
+                        security_user.password = row["PASSUSUARIO"].ToString();
+                    }
+                    else
+                    {
+                        security_user.password = "123";
+                    }
+                    if (row["NOMBRE"].ToString() != "")
+                    {
+                        security_user.name_full = row["NOMBRE"].ToString();
+                    }
+                    else
+                    {
+                        security_user.name_full = "name";
+                    }
+                    security_user.id_company = id_company;
+                    security_user.is_active = true;
+                    security_user.id_role = security_role.id_role;
+                    security_user.security_role = security_role;
 
-                dbContext.security_user.Add(security_user);
-            }
-            dt.Clear();
-          
+                    dbContext.security_user.Add(security_user);
+                }
+                dt.Clear();
+
                 IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
                     dbContext.SaveChanges();
                 }
             }
-            catch 
+            catch
             {
                 throw;
             }
-
         }
     }
 }

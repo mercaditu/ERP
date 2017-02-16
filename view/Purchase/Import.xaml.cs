@@ -1,25 +1,25 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Purchase
 {
     public partial class Import : Page
     {
-        ImpexDB ImpexDB = new ImpexDB();
-        CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource, incotermViewSource = null;
-        cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
+        private ImpexDB ImpexDB = new ImpexDB();
+        private CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource, incotermViewSource = null;
+        private cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
 
-        List<entity.Class.Impex_ItemDetail> Impex_ItemDetailLIST = new List<entity.Class.Impex_ItemDetail>();
-        List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
+        private List<entity.Class.Impex_ItemDetail> Impex_ItemDetailLIST = new List<entity.Class.Impex_ItemDetail>();
+        private List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
 
-        decimal GrandTotal;
+        private decimal GrandTotal;
 
         public Import()
         {
@@ -123,7 +123,6 @@ namespace Cognitivo.Purchase
                 impex.impex_expense.Remove(impex_expense);
             }
 
-
             if (ImpexDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ImpexDB.NumberOfRecords);
@@ -212,9 +211,7 @@ namespace Cognitivo.Purchase
                     impex_import impex_import = impex.impex_import.First();
                     purchase_invoice = impex_import.purchase_invoice;
                 }
-
             }
-
 
             //Get expences
             List<impex_expense> impex_expense = impex.impex_expense.ToList();
@@ -458,7 +455,7 @@ namespace Cognitivo.Purchase
                 {
                     pnlPurchaseInvoice._contact = contact;
                 }
-                
+
                 pnlPurchaseInvoice.IsImpex = true;
             }
 
@@ -470,8 +467,6 @@ namespace Cognitivo.Purchase
         {
             if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
             {
-             
-
                 if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact != null)
                 {
                     contact contact = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact;
@@ -504,7 +499,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            if (impex!=null && impex.status==Status.Documents_General.Approved)
+            if (impex != null && impex.status == Status.Documents_General.Approved)
             {
                 entity.Brillo.Document.Start.Automatic(impex, "Import");
             }
@@ -549,8 +544,6 @@ namespace Cognitivo.Purchase
             impexDataGrid_SelectionChanged(null, null);
         }
 
-
-
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             entity.Class.Impex_Products clsProductDetail = productDataGrid.SelectedItem as entity.Class.Impex_Products;
@@ -573,7 +566,6 @@ namespace Cognitivo.Purchase
                             return false;
                         }
                     };
-
                 }
             }
         }
@@ -582,16 +574,12 @@ namespace Cognitivo.Purchase
         {
             if (Impex_ItemDetailLIST != null)
             {
-
                 if (txtsearch.Text != "")
                 {
                     impex_importDataGrid.ItemsSource = null;
                     impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST.Where(x => x.item.ToUpper().Contains(txtsearch.Text.ToUpper()));
                 }
-
-
             }
         }
-
     }
 }

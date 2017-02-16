@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class CostCenterCanStockCodeConverter : IValueConverter
+    internal class CostCenterCanStockCodeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -44,7 +42,7 @@ namespace Cognitivo.Converters
         }
     }
 
-    class CostCenterCanStockItemConverter : IValueConverter
+    internal class CostCenterCanStockItemConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

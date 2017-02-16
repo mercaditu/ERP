@@ -10,26 +10,27 @@ namespace Cognitivo.Reporting
     public partial class ReportViewer : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+
         public entity.App.Names appName { get; set; }
+
         public ReportViewer()
         {
             InitializeComponent();
-
         }
 
         private void this_Loaded(object sender, RoutedEventArgs e)
         {
             Cognitivo.Menu.ApplicationWindow win = Window.GetWindow(this) as Cognitivo.Menu.ApplicationWindow;
-            if (win!=null)
+            if (win != null)
             {
                 appName = win.ApplicationName;
                 RaisePropertyChanged("appName");
             }
-
         }
     }
 }

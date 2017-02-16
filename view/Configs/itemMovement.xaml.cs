@@ -8,16 +8,16 @@ using System.Windows.Input;
 
 namespace Cognitivo.Configs
 {
-    public partial class itemMovement: UserControl
+    public partial class itemMovement : UserControl
     {
-        CollectionViewSource item_movementViewSource;
+        private CollectionViewSource item_movementViewSource;
         public db db { get; set; }
         public int id_location { get; set; }
         public int id_item { get; set; }
         public item_movement item_movement { get; set; }
 
+        private CollectionViewSource app_measurementViewSource;
 
-        CollectionViewSource app_measurementViewSource;
         public itemMovement()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace Cognitivo.Configs
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             List<item_movement> Items_InStockLIST = null;
-           
+
             app_dimensionViewSource.Source = db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
             app_measurementViewSource.Source = db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
@@ -63,6 +63,7 @@ namespace Cognitivo.Configs
         }
 
         public event RoutedEventHandler Save;
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Save?.Invoke(this, new RoutedEventArgs());
@@ -70,7 +71,7 @@ namespace Cognitivo.Configs
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Visibility = Visibility.Hidden;
         }
-        
+
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             item_movement = null;

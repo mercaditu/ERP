@@ -12,13 +12,12 @@ namespace View
     /// </summary>
     public partial class ReportViewer : Window
     {
-        List<Cognitivo.Project.PrintingPress.calc_Cost> final_cost = new List<Cognitivo.Project.PrintingPress.calc_Cost>();
+        private List<Cognitivo.Project.PrintingPress.calc_Cost> final_cost = new List<Cognitivo.Project.PrintingPress.calc_Cost>();
 
         public ReportViewer()
         {
             InitializeComponent();
         }
-
 
         public void loadReport(ref TabControl CostTab)
         {
@@ -39,7 +38,6 @@ namespace View
                 }
             }
 
-
             reportDataSource.Value = final_cost;
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -56,7 +54,6 @@ namespace View
             {
                 Directory.CreateDirectory(path + SubFolder);
                 File.Copy("..\\..\\Project\\PrintingPressReport\\PrintingPress.rdlc", path + SubFolder + "\\PrintingPress.rdlc");
-
             }
             else if (!File.Exists(path + SubFolder + "\\Sales_Invoice.rdlc"))
             {

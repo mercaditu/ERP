@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using entity;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
 
 namespace Cognitivo.Project
 {
     public partial class EventType : Page
     {
-        entity.EventManagement.TemplateDB ProjectTemplateDB = new entity.EventManagement.TemplateDB();
-        CollectionViewSource template_designerViewSource, template_designerservices_per_eventViewSource, template_designerproject_event_template_variableViewSource;
+        private entity.EventManagement.TemplateDB ProjectTemplateDB = new entity.EventManagement.TemplateDB();
+        private CollectionViewSource template_designerViewSource, template_designerservices_per_eventViewSource, template_designerproject_event_template_variableViewSource;
 
         public EventType()
         {
@@ -40,6 +40,7 @@ namespace Cognitivo.Project
         }
 
         #region ToolBarEvents
+
         private void toolBar_btnNew_Click(object sender)
         {
             project_event_template project_event_template = new project_event_template();
@@ -84,7 +85,8 @@ namespace Cognitivo.Project
                 toolBar.msgSaved(ProjectTemplateDB.NumberOfRecords);
             }
         }
-        #endregion
+
+        #endregion ToolBarEvents
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

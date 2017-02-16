@@ -1,18 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.ComponentModel;
 
 namespace Cognitivo.Configs
 {
     public partial class AccountActive : UserControl, INotifyPropertyChanged
     {
         #region NotifyPropertyChange
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -20,9 +22,10 @@ namespace Cognitivo.Configs
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-        #endregion
 
-        List<Class.clsTransferAmount> listOpenAmt = null;
+        #endregion NotifyPropertyChange
+
+        private List<Class.clsTransferAmount> listOpenAmt = null;
 
         public db db { get; set; }
         public CollectionViewSource app_accountViewSource { get; set; }
@@ -67,9 +70,9 @@ namespace Cognitivo.Configs
                     RaisePropertyChanged("is_active");
                 }
 
-                var app_account_detailList = 
-                    app_account.app_account_detail.Where(x => 
-                    x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal && 
+                var app_account_detailList =
+                    app_account.app_account_detail.Where(x =>
+                    x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal &&
                     x.id_company == CurrentSession.Id_Company &&
                     x.id_session == id_session)
                      .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
@@ -134,7 +137,6 @@ namespace Cognitivo.Configs
                                     clsTransferAmount.id_payment_type = payment_type.id_payment_type;
                                     clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
                                     listOpenAmt.Add(clsTransferAmount);
-                                    
                                 }
                             }
                         }
@@ -149,14 +151,13 @@ namespace Cognitivo.Configs
                     {
                         foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.id_company == CurrentSession.Id_Company).ToList())
                         {
-
                             Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                             clsTransferAmount.PaymentTypeName = payment_type.name;
-                         
+
                             clsTransferAmount.id_payment_type = payment_type.id_payment_type;
 
-                            clsTransferAmount.amount = app_account.app_account_detail.Where(x => 
-                                x.app_currencyfx.id_currency == app_currency.id_currency 
+                            clsTransferAmount.amount = app_account.app_account_detail.Where(x =>
+                                x.app_currencyfx.id_currency == app_currency.id_currency
                                 && x.id_payment_type == payment_type.id_payment_type)
                                 .Sum(x => x.credit - x.debit);
 
@@ -188,7 +189,7 @@ namespace Cognitivo.Configs
                 if (app_account_session != null && app_account_session.is_active)
                 {
                     ///We need to CLOSE (InActive) the active Session.
-                    ///For this we will need... 
+                    ///For this we will need...
                     ///- Create Account Details for each type of Closing Balance.
                     ///- Close Session.
                     ///- Keep Account Active. (Previously we used to close Account, now Session handles that.)
@@ -259,7 +260,7 @@ namespace Cognitivo.Configs
                         db.app_account_session.Add(app_account_session);
                     }
 
-                  //  app_account.is_active = true;
+                    //  app_account.is_active = true;
                     //Save Changes
                     db.SaveChanges();
 

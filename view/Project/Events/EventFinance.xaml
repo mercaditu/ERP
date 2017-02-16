@@ -3,111 +3,109 @@
 	xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:entity="clr-namespace:entity;assembly=entity"
 	xmlns:local="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
+	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
 	xmlns:converter="clr-namespace:Cognitivo.Converters"
 	xmlns:data="clr-namespace:entity;assembly=entity"
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
-	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
-	lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
+	lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	lex:ResxLocalizationProvider.DefaultDictionary="local"
 	mc:Ignorable="d"
 	MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
-	<Page.Resources>
-		<loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
-		<converter:TrueToFalseConverter x:Key="TrueToFalse"/>
-		<converter:Projectfinance x:Key="Projectfinance"/>
-		<BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-		<converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
-		<converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
-		<converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
-		<converter:salesorderdetailtostatus x:Key="salesorderdetailtostatus"/>
-		<converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable"/>
-		<CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
-		<CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
-		<CollectionViewSource x:Key="sales_invoiceViewSource" Source="{Binding sales_invoice, Source={StaticResource projectViewSource}}" />
-	</Page.Resources>
-   
-	<Grid DataContext="{StaticResource projectViewSource}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="3*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-					   <RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+    <Page.Resources>
+        <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
+        <converter:TrueToFalseConverter x:Key="TrueToFalse" />
+        <converter:Projectfinance x:Key="Projectfinance" />
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color" />
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter" />
+        <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool" />
+        <converter:salesorderdetailtostatus x:Key="salesorderdetailtostatus" />
+        <converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable" />
+        <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
+        <CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
+        <CollectionViewSource x:Key="sales_invoiceViewSource" Source="{Binding sales_invoice, Source={StaticResource projectViewSource}}" />
+    </Page.Resources>
 
-		<Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
-		<ListBox Background="{StaticResource AccentColor_Brush}"
-				 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+    <Grid DataContext="{StaticResource projectViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged" />
+        <ListBox Background="{StaticResource AccentColor_Brush}"
+				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 				 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="3">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}"
 						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-					/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
+						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
 
-			<TabControl>
-				<TabItem Header="{lex:Loc EventManagement}">
-					<Grid>
-						<DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Code}" Width="128" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding quantity_exe, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" CellStyle="{StaticResource Number_CellStyle}"
-													Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding UnitPrice_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" CellStyle="{StaticResource Number_CellStyle}"
-													Header="{lex:Loc Cognitivo:local:Price}" Width="128" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding SubTotal_WithVAT, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"
-													Header="{lex:Loc Cognitivo:local:SubTotal}" CellStyle="{StaticResource Number_CellStyle}" Width="128" IsReadOnly="True"/>
-							</DataGrid.Columns>
-							<!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
-						</DataGrid>
-					</Grid>
-				</TabItem>
-				<TabItem Header="{lex:Loc SalesInvoice}">
-					<Grid>
-						<DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding condition.name, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:Condition}" Width="128" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding number, UpdateSourceTrigger=PropertyChanged}" 
-													Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="64" IsReadOnly="True"/>
-								<DataGridTextColumn Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" 
-													Header="{lex:Loc Cognitivo:local:Total}" Width="128" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
-							</DataGrid.Columns>
-						</DataGrid>
-					</Grid>
-				</TabItem>
-			</TabControl>
-			<Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click"/>
+            <TabControl>
+                <TabItem Header="{lex:Loc EventManagement}">
+                    <Grid>
+                        <DataGrid ItemsSource="{Binding Source={StaticResource project_taskViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}"
+													Header="{lex:Loc Cognitivo:local:Code}" Width="128" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged}"
+													Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding quantity_exe, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" CellStyle="{StaticResource Number_CellStyle}"
+													Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding UnitPrice_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" CellStyle="{StaticResource Number_CellStyle}"
+													Header="{lex:Loc Cognitivo:local:Price}" Width="128" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding SubTotal_WithVAT, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"
+													Header="{lex:Loc Cognitivo:local:SubTotal}" CellStyle="{StaticResource Number_CellStyle}" Width="128" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                            <!--  Add all project tasks here with Selling Price from PriceList Table. Active Only. NonMapped Property SellingPrice in task. -->
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{lex:Loc SalesInvoice}">
+                    <Grid>
+                        <DataGrid ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" AutoGenerateColumns="False" Margin="0,0,0,32">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}"
+													Header="{lex:Loc Cognitivo:local:Name}" Width="256" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding condition.name, UpdateSourceTrigger=PropertyChanged}"
+													Header="{lex:Loc Cognitivo:local:Condition}" Width="128" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding number, UpdateSourceTrigger=PropertyChanged}"
+													Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="64" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"
+													Header="{lex:Loc Cognitivo:local:Total}" Width="128" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <Button Content="Create Invoice" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource btn_green}" Margin="8,11" Click="Button_Click" />
 
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-				<Label x:Name="lblInvoiceTotal" Style="{StaticResource H3}" ContentStringFormat="N2"/>
-				<Label Content="/" Style="{StaticResource H3}"/>
-				<Label x:Name="lblEventTotal" Style="{StaticResource H3}" ContentStringFormat="N2"/>
-			</StackPanel>
-			
-		</Grid>
-		<cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Label x:Name="lblInvoiceTotal" Style="{StaticResource H3}" ContentStringFormat="N2" />
+                <Label Content="/" Style="{StaticResource H3}" />
+                <Label x:Name="lblEventTotal" Style="{StaticResource H3}" ContentStringFormat="N2" />
+            </StackPanel>
+        </Grid>
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"
 					   appName="ProjectFinance" />
-	</Grid>
+    </Grid>
 </Page>

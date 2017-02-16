@@ -1,23 +1,23 @@
-﻿using System;
+﻿using cntrl.Controls;
+using entity;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using System.Data;
-using entity;
-using System.Data.Entity.Validation;
-using cntrl.Controls;
 
 namespace Cognitivo.Product
 {
     public partial class Item : Page, Menu.ApplicationWindow.ICanClose, IDisposable
     {
-        ItemDB ItemDB = null;
+        private ItemDB ItemDB = null;
 
-        CollectionViewSource itemViewSource,
+        private CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
             itemitem_dimentionViewSource,
             item_brandViewSource,
@@ -207,6 +207,7 @@ namespace Cognitivo.Product
         }
 
         #region Implementing Interface For CanClose
+
         public bool CanClose()
         {
             if (ItemDB.ChangeTracker.HasChanges())
@@ -245,9 +246,11 @@ namespace Cognitivo.Product
                 return true;
             }
         }
-        #endregion
+
+        #endregion Implementing Interface For CanClose
 
         #region Toolbar Events
+
         private void toolBar_btnCancel_Click(object sender)
         {
             item item = itemDataGrid.SelectedItem as item;
@@ -421,7 +424,8 @@ namespace Cognitivo.Product
                 itemViewSource.View.Filter = null;
             }
         }
-        #endregion
+
+        #endregion Toolbar Events
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -479,13 +483,11 @@ namespace Cognitivo.Product
             }
             catch
             {
-
             }
         }
 
         private void hrefCost_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
@@ -553,7 +555,7 @@ namespace Cognitivo.Product
             }
         }
 
-        #endregion
+        #endregion Config Add/Edit
 
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)
         {
@@ -568,7 +570,7 @@ namespace Cognitivo.Product
             Add_Tag();
         }
 
-        void Add_Tag()
+        private void Add_Tag()
         {
             if (cbxTag.Data != null)
             {

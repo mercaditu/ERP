@@ -1,17 +1,17 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Company : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource app_companyViewSource, app_companyapp_company_interestViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource app_companyViewSource, app_companyapp_company_interestViewSource;
 
         public Company()
         {
@@ -90,7 +90,5 @@ namespace Cognitivo.Configs
             //    objCompany.candelete = true;
             //}
         }
-
-
     }
 }

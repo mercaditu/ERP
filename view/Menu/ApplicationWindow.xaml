@@ -13,10 +13,10 @@
                    Background="White"
                     Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
     <metro:MetroWindow.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-        <Style x:Key="MyCleanWindowStyle" TargetType="{x:Type metro:MetroWindow}" 
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <Style x:Key="MyCleanWindowStyle" TargetType="{x:Type metro:MetroWindow}"
                BasedOn="{StaticResource CleanWindowStyleKey}" />
     </metro:MetroWindow.Resources>
-    <Frame Name="mainFrame" NavigationUIVisibility="Hidden" 
-           Navigated="mainFrame_Navigated" Source="/Cognitivo;component/Menu/WaitPage.xaml" Focusable="False"/>
+    <Frame Name="mainFrame" NavigationUIVisibility="Hidden"
+           Navigated="mainFrame_Navigated" Source="/Cognitivo;component/Menu/WaitPage.xaml" Focusable="False" />
 </metro:MetroWindow>

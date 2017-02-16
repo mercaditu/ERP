@@ -1,18 +1,18 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
 
 namespace Cognitivo.Commercial
 {
     public partial class Reconciliation : Page
     {
-        CollectionViewSource app_accountViewSource;
-        CollectionViewSource app_accountapp_account_detailViewSource;
-        db db = new db();
+        private CollectionViewSource app_accountViewSource;
+        private CollectionViewSource app_accountapp_account_detailViewSource;
+        private db db = new db();
 
         public Reconciliation()
         {
@@ -53,7 +53,7 @@ namespace Cognitivo.Commercial
         private void toolBar_btnEdit_Click(object sender)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
-            if (app_account!=null)
+            if (app_account != null)
             {
                 app_account.State = EntityState.Modified;
             }
@@ -62,14 +62,13 @@ namespace Cognitivo.Commercial
         private void dgvAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
-            if (app_account!=null)
+            if (app_account != null)
             {
                 app_account.State = EntityState.Modified;
             }
-         
         }
 
-        private void toolBar_btnApprove_Click(object sender,RoutedEventArgs e)
+        private void toolBar_btnApprove_Click(object sender, RoutedEventArgs e)
         {
             app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
 

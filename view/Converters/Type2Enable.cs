@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Media;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
@@ -11,7 +10,7 @@ namespace Cognitivo.Converters
             if (value != null)
             {
                 entity.production_order_detail production_order_detail = (entity.production_order_detail)value;
-                if (production_order_detail.item!=null)
+                if (production_order_detail.item != null)
                 {
                     entity.item.item_type status = production_order_detail.item.id_item_type;
 
@@ -28,7 +27,6 @@ namespace Cognitivo.Converters
                 {
                     return false;
                 }
-
             }
             else { return false; }
         }

@@ -1,23 +1,23 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
     public partial class Order : Page, INotifyPropertyChanged
     {
-        CollectionViewSource purchase_orderViewSource;
-        CollectionViewSource purchase_orderpurchase_order_detailViewSource;
-        PurchaseOrderDB PurchaseOrderDB = new PurchaseOrderDB();
+        private CollectionViewSource purchase_orderViewSource;
+        private CollectionViewSource purchase_orderpurchase_order_detailViewSource;
+        private PurchaseOrderDB PurchaseOrderDB = new PurchaseOrderDB();
 
         public Order()
         {
@@ -25,6 +25,7 @@ namespace Cognitivo.Purchase
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -87,7 +88,6 @@ namespace Cognitivo.Purchase
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
                 app_cost_centerViewSource.Source = PurchaseOrderDB.app_cost_center.Local;
             }));
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -183,7 +183,6 @@ namespace Cognitivo.Purchase
 
         #region Filter Data
 
-
         private async void set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
@@ -245,9 +244,11 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-        #endregion
+
+        #endregion Filter Data
 
         #region Datagrid Events
+
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
@@ -296,7 +297,8 @@ namespace Cognitivo.Purchase
             purchase_order_detail purchase_order_detail = (purchase_order_detail)e.NewItem;
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
         }
-        #endregion
+
+        #endregion Datagrid Events
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -304,6 +306,7 @@ namespace Cognitivo.Purchase
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
+
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -383,7 +386,7 @@ namespace Cognitivo.Purchase
                 toolBar.msgError(ex);
             }
         }
-        
+
         private void item_Select(object sender, EventArgs e)
         {
             purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
@@ -412,7 +415,7 @@ namespace Cognitivo.Purchase
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
-            //ItemLink 
+            //ItemLink
             if (item != null)
             {
                 if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null && AllowDuplicate == false)
@@ -538,7 +541,6 @@ namespace Cognitivo.Purchase
             }));
         }
 
-
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
             purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
@@ -563,7 +565,7 @@ namespace Cognitivo.Purchase
             {
                 //entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
                 app_document_range app_document_range = cmbdocument.SelectedItem as app_document_range;
-                
+
                 _number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
             }
         }
@@ -612,7 +614,7 @@ namespace Cognitivo.Purchase
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
-            if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved && purchase_order.purchase_invoice.Count()==0)
+            if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved && purchase_order.purchase_invoice.Count() == 0)
             {
                 purchase_invoice purchase_invoice = new purchase_invoice();
                 purchase_invoice.barcode = purchase_order.barcode;
@@ -651,7 +653,6 @@ namespace Cognitivo.Purchase
                 PurchaseOrderDB.purchase_invoice.Add(purchase_invoice);
                 PurchaseOrderDB.SaveChanges();
                 MessageBox.Show("Invoice Create Sucessfully");
-              
             }
             else
             {

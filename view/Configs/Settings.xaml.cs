@@ -1,17 +1,17 @@
-﻿using System.Windows;
+﻿using System.Data.Entity;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Settings : Page
     {
-        CollectionViewSource app_companyViewSource;
+        private CollectionViewSource app_companyViewSource;
 
-        Menu.MainWindow mainWindow = App.Current.MainWindow as Menu.MainWindow;
+        private Menu.MainWindow mainWindow = App.Current.MainWindow as Menu.MainWindow;
 
-        entity.db db = new entity.db();
+        private entity.db db = new entity.db();
 
         public Settings()
         {

@@ -1,28 +1,28 @@
-﻿using System;
+﻿using cntrl.Class;
+using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Documents;
-using cntrl.Class;
+using System.Windows.Input;
 
 namespace Cognitivo.Purchase
 {
     public partial class Invoice : Page, IDisposable
     {
-        CollectionViewSource purchase_invoiceViewSource;
-        CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
+        private CollectionViewSource purchase_invoiceViewSource;
+        private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
 
-        PurchaseInvoiceDB PurchaseInvoiceDB = new PurchaseInvoiceDB();
+        private PurchaseInvoiceDB PurchaseInvoiceDB = new PurchaseInvoiceDB();
 
-        cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
+        private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
 
         public Invoice()
         {
@@ -30,6 +30,7 @@ namespace Cognitivo.Purchase
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -104,6 +105,7 @@ namespace Cognitivo.Purchase
         }
 
         #region Toolbar events
+
         private void toolBar_btnNew_Click(object sender)
         {
             InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
@@ -129,6 +131,7 @@ namespace Cognitivo.Purchase
                 toolBar.msgWarning("Please Select an Item");
             }
         }
+
         private void toolBar_btnDelete_Click(object sender)
         {
             try
@@ -209,7 +212,7 @@ namespace Cognitivo.Purchase
                             UpdatePaymentReApprove.Update_DateChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
                         }
                     }
-                    
+
                     Message = "";
                     Message = CheckMovementReApprove.CheckValueChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
 
@@ -315,14 +318,12 @@ namespace Cognitivo.Purchase
                 ActionPanelAnull.Application = entity.App.Names.PurchaseInvoice;
                 ActionPanelAnull.db = PurchaseInvoiceDB;
                 crud_modalAnull.Children.Add(ActionPanelAnull);
-
             }
         }
 
-        #endregion
+        #endregion Toolbar events
 
         #region Filter Data
-
 
         private void set_ContactPref(object sender, EventArgs e)
         {
@@ -395,10 +396,10 @@ namespace Cognitivo.Purchase
             }
         }
 
-
-        #endregion
+        #endregion Filter Data
 
         #region Datagrid Events
+
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
@@ -441,16 +442,16 @@ namespace Cognitivo.Purchase
             }
         }
 
-
-
         private void purchase_invoice_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             purchase_invoice_detail purchase_invoice_detail = (purchase_invoice_detail)e.NewItem;
             purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
         }
-        #endregion
+
+        #endregion Datagrid Events
 
         #region Popup
+
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -467,7 +468,8 @@ namespace Cognitivo.Purchase
             _pref_PurchaseInvoice = InvoiceSetting.Default;
             popupCustomize.IsOpen = false;
         }
-        #endregion
+
+        #endregion Popup
 
         private void item_Select(object sender, EventArgs e)
         {
@@ -488,7 +490,7 @@ namespace Cognitivo.Purchase
                 }
 
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
-                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems,sbxItem.Quantity));
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity));
             }
         }
 
@@ -497,7 +499,7 @@ namespace Cognitivo.Purchase
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
 
-            //ItemLink 
+            //ItemLink
             if (item != null)
             {
                 purchase_invoice_detail detail_withitem = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
@@ -761,7 +763,6 @@ namespace Cognitivo.Purchase
 
         private void btnBurnInvoice_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
         }
 
         /// <summary>
@@ -861,7 +862,6 @@ namespace Cognitivo.Purchase
             if (purchase_order != null)
             {
                 entity.Brillo.Document.Start.Manual(purchase_order, purchase_order.app_document_range);
-
             }
         }
 
@@ -958,7 +958,6 @@ namespace Cognitivo.Purchase
                     app_document_range = new app_document_range();
                     app_document_range.use_default_printer = false;
                     app_document_range.app_document = app_document;
-
                 }
 
                 entity.Brillo.Document.Start.Manual(purchase_invoice, app_document_range);
@@ -1002,7 +1001,7 @@ namespace Cognitivo.Purchase
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
 
-            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.purchase_return.Count()==0)
+            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.purchase_return.Count() == 0)
             {
                 purchase_return purchase_return = new purchase_return();
                 purchase_return.barcode = purchase_invoice.barcode;
@@ -1030,7 +1029,7 @@ namespace Cognitivo.Purchase
                     purchase_return_detail.id_location = detail.id_location;
                     purchase_return_detail.purchase_invoice_detail = detail;
                     purchase_return_detail.id_vat_group = detail.id_vat_group;
-                    purchase_return_detail.quantity = detail.quantity - (detail.purchase_return_detail!=null?detail.purchase_return_detail.Sum(x => x.quantity):0);
+                    purchase_return_detail.quantity = detail.quantity - (detail.purchase_return_detail != null ? detail.purchase_return_detail.Sum(x => x.quantity) : 0);
                     purchase_return_detail.unit_cost = detail.unit_cost;
                     purchase_return_detail.batch_code = detail.batch_code;
                     purchase_return_detail.expire_date = detail.expire_date;
@@ -1045,7 +1044,6 @@ namespace Cognitivo.Purchase
             {
                 MessageBox.Show("Return Already Created Or Status is Not Approved ..");
             }
-
         }
 
         private void Refinance_PreviewMouseUp(object sender, MouseButtonEventArgs e)

@@ -1,22 +1,22 @@
 ﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System;
 using System.Windows.Input;
-using System.ComponentModel;
 
 namespace Cognitivo.Product
 {
     public partial class Request : Page
     {
-        item_requestDB dbContext = new item_requestDB();
-        CollectionViewSource item_requestViewSource;
-        CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
-        Configs.itemMovement itemMovement = new Configs.itemMovement();
+        private item_requestDB dbContext = new item_requestDB();
+        private CollectionViewSource item_requestViewSource;
+        private CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
+        private Configs.itemMovement itemMovement = new Configs.itemMovement();
 
         public Request()
         {
@@ -25,7 +25,6 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
             await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             item_requestViewSource.Source = dbContext.item_request.Local;
@@ -49,8 +48,6 @@ namespace Cognitivo.Product
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
-
-
         private void toolBar_btnApprove_Click(object sender)
         {
             itemMovement = new Configs.itemMovement();
@@ -69,7 +66,6 @@ namespace Cognitivo.Product
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -98,7 +94,7 @@ namespace Cognitivo.Product
 
         private void item_request_detailMovementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // entity.Properties.Settings setting = new entity.Properties.Settings();
+            // entity.Properties.Settings setting = new entity.Properties.Settings();
             int id_branch = CurrentSession.Id_Branch;
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
@@ -112,13 +108,12 @@ namespace Cognitivo.Product
                          && items.app_location.id_branch == id_branch
                          group items by new { items.app_location }
                              into last
-                             select new
-                             {
-                                 id_location = last.Key.app_location.id_location,
-                                 location = last.Key.app_location.name,
-                                 quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                             }).ToList();
-
+                         select new
+                         {
+                             id_location = last.Key.app_location.id_location,
+                             location = last.Key.app_location.name,
+                             quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                         }).ToList();
 
                 List<desion> list_desion = new List<desion>();
                 foreach (dynamic item in movement)
@@ -136,7 +131,6 @@ namespace Cognitivo.Product
                 }
                 item_request_decisionmovementDataGrid.ItemsSource = list_desion;
 
-
                 var transfer =
                 (from items in dbContext.item_movement
                  where items.status == Status.Stock.InStock
@@ -144,13 +138,12 @@ namespace Cognitivo.Product
 
                  group items by new { items.app_location.app_branch }
                      into last
-                     select new
-                     {
-                         id_location = last.Key.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
-                         branch = last.Key.app_branch.name,
-                         quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-
-                     }).ToList();
+                 select new
+                 {
+                     id_location = last.Key.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
+                     branch = last.Key.app_branch.name,
+                     quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                 }).ToList();
                 List<desion> list_desion_transfer = new List<desion>();
                 foreach (dynamic item in transfer)
                 {
@@ -179,7 +172,6 @@ namespace Cognitivo.Product
                 internaldesion.decisionqty = 0;
                 list_desion_internal.Add(internaldesion);
                 item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
-
 
                 List<desion> list_desion_production = new List<desion>();
                 desion productiondesion = new desion();
@@ -230,9 +222,7 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-
                 }
-
             }
 
             item_request_detail.item_request.GetTotalDecision();
@@ -242,7 +232,6 @@ namespace Cognitivo.Product
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
             toolBar_btnEdit_Click(sender);
-
         }
 
         private void toolBar_btnNew_Click(object sender)
@@ -277,7 +266,6 @@ namespace Cognitivo.Product
             {
                 toolBar.msgWarning("Please Select an Item");
             }
-
         }
 
         private void toolBar_btnSave_Click(object sender)
@@ -316,7 +304,6 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-
                         desion.decisionState = state.modified;
                         item_request_decision item_request_decision = new global::entity.item_request_decision();
                         item_request_decision.IsSelected = true;
@@ -377,10 +364,12 @@ namespace Cognitivo.Product
         public class desion : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
+
             public void RaisePropertyChanged(string prop)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             }
+
             public int id_item { get; set; }
             public string name { get; set; }
             public int id_location { get; set; }
@@ -436,7 +425,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
-          //  dbContext.CancelAllChanges();
+            //  dbContext.CancelAllChanges();
             if (item_requestDataGrid.SelectedItem != null)
             {
                 item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
@@ -452,11 +441,10 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //Selecteditem_movement = itemMovement.item_movement; 
+            //Selecteditem_movement = itemMovement.item_movement;
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
-              
                 desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
                 desion.decisionState = state.modified;
                 item_request_decision item_request_decision = new global::entity.item_request_decision();
@@ -466,7 +454,6 @@ namespace Cognitivo.Product
                 item_request_decision.quantity = desion.decisionqty;
                 item_request_decision.decision = global::entity.item_request_decision.Decisions.Movement;
                 item_request_detail.item_request_decision.Add(item_request_decision);
-
 
                 item_request_detail.item_request.GetTotalDecision();
                 item_request_detail.RaisePropertyChanged("balance");
@@ -480,11 +467,10 @@ namespace Cognitivo.Product
 
         private void crud_modalTransfer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-           // Selecteditem_movement = itemMovement.item_movement;
+            // Selecteditem_movement = itemMovement.item_movement;
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
-
                 desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
                 desion.decisionState = state.modified;
                 item_request_decision item_request_decision = new global::entity.item_request_decision();
@@ -494,7 +480,6 @@ namespace Cognitivo.Product
                 item_request_decision.quantity = desion.decisionqty;
                 item_request_decision.decision = global::entity.item_request_decision.Decisions.Transfer;
                 item_request_detail.item_request_decision.Add(item_request_decision);
-
 
                 item_request_detail.item_request.GetTotalDecision();
                 item_request_detail.RaisePropertyChanged("balance");
@@ -523,7 +508,7 @@ namespace Cognitivo.Product
                             string project = item_request.project != null ? item_request.project.name : "";
                             if (
                             (
-                             name.ToLower().Contains(query.ToLower())) || 
+                             name.ToLower().Contains(query.ToLower())) ||
                              number.ToLower().Contains(query.ToLower()) ||
                              project.ToLower().Contains(query.ToLower())
                             )
@@ -534,7 +519,6 @@ namespace Cognitivo.Product
                             {
                                 return false;
                             }
-
                         }
                         else
                         {
@@ -573,7 +557,6 @@ namespace Cognitivo.Product
                     app_document_range = new app_document_range();
                     app_document_range.use_default_printer = false;
                     app_document_range.app_document = app_document;
-
                 }
 
                 entity.Brillo.Document.Start.Manual(item_request, app_document_range);

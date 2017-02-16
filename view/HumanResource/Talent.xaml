@@ -11,25 +11,25 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
-      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
-          xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+          xmlns:lex="http://wpflocalizeextension.codeplex.com"
           lex:LocalizeDictionary.DesignCulture="en-US"
-          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
       MinHeight="300" MinWidth="200" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <CollectionViewSource x:Key="hr_talentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_talent}, CreateList=True}"/>
+        <CollectionViewSource x:Key="hr_talentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_talent}, CreateList=True}" />
     </Page.Resources>
     <Grid DataContext="{StaticResource hr_talentViewSource}" Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="151*"/>
-            <ColumnDefinition Width="349*"/>
+            <ColumnDefinition Width="151*" />
+            <ColumnDefinition Width="349*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <ListBox x:Name="hr_talentDataGrid" Style="{StaticResource nav_List}"
@@ -40,29 +40,29 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                   recordCode="{Binding name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                   recordCode="{Binding name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
         <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Row="1" Grid.Column="1">
-            <Label Content="{lex:Loc name}" Style="{StaticResource input_label}"/>
-            <TextBox Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="{lex:Loc name}" Style="{StaticResource input_label}" />
+            <TextBox Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <cntrl:toolBar x:Name="toolBar"
-			           btnNew_Click="New_Click" 
-			           btnDelete_Click="toolBar_btnDelete_Click" 
-			           btnSave_Click="Save_Click" 
+			           btnNew_Click="New_Click"
+			           btnDelete_Click="toolBar_btnDelete_Click"
+			           btnSave_Click="Save_Click"
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     appName="Talent"
-			           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2"/>
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2" />
     </Grid>
 </Page>

@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Commercial.Contact" Title="{lex:Loc Contacts}" 
+﻿<Page x:Class="Cognitivo.Commercial.Contact" Title="{lex:Loc Contacts}"
 	  x:Name="pageContact"
 	  xmlns:System="clr-namespace:System;assembly=mscorlib"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,11 +6,11 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-	  xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 
-	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
-	  lex:LocalizeDictionary.DesignCulture="en-US" 
+	  lex:LocalizeDictionary.DesignCulture="en-US"
 		  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 		  xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
 		  xmlns:customcmd="clr-namespace:Cognitivo.Class"
@@ -20,227 +20,227 @@
 		  xmlns:entity="clr-namespace:entity;assembly=entity"
 		  mc:Ignorable="d" MinHeight="500" MinWidth="800"
 		  Loaded="Page_Loaded">
-	<Page.Resources>
-		<converter:InitialsConverter x:Key="InitialsConverter"/>
-		<converter:LowerCaseConverter x:Key="LowerCaseConverter"/>
-		<BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    <Page.Resources>
+        <converter:InitialsConverter x:Key="InitialsConverter" />
+        <converter:LowerCaseConverter x:Key="LowerCaseConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-		<CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}"/>
-		<CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactRoleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_role}, CreateList=True}"/>
-		<CollectionViewSource x:Key="appContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
-		<CollectionViewSource x:Key="appCostCenterViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
-		<CollectionViewSource x:Key="itemPriceListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}"/>
-		<CollectionViewSource x:Key="salesRepViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
-		<CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
-		<CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
-		<CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
-		<CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contactcontact_field_valueemailViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
-        <CollectionViewSource x:Key="app_fieldemailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contactcontact_field_valuephoneViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter"/>
-        <CollectionViewSource x:Key="app_fieldphoneViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
-		<CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}"/>
-	</Page.Resources>
-	<Page.CommandBindings>
-		<CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
-	</Page.CommandBindings>
-	<Grid DataContext="{StaticResource contactViewSource}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="3*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+        <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactRoleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_role}, CreateList=True}" />
+        <CollectionViewSource x:Key="appContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}" />
+        <CollectionViewSource x:Key="appCostCenterViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}" />
+        <CollectionViewSource x:Key="itemPriceListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}" />
+        <CollectionViewSource x:Key="salesRepViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}" />
+        <CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}" />
+        <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter" />
+        <CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactcontact_field_valueemailViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter" />
+        <CollectionViewSource x:Key="app_fieldemailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactcontact_field_valuephoneViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Filter" />
+        <CollectionViewSource x:Key="app_fieldphoneViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}" />
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}" />
+    </Page.Resources>
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
+    </Page.CommandBindings>
+    <Grid DataContext="{StaticResource contactViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-		<ListBox x:Name="listContacts"
+        <ListBox x:Name="listContacts"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listContacts_SelectionChanged"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}" >
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList recordCode="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-						recordName="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+				 ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+						recordName="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 						recordSecondaryName="{Binding gov_code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 						State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
 						IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-		<StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
-					Background="White" Orientation="Horizontal" 
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+					Background="White" Orientation="Horizontal"
 					IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-			<cntrls:ImageViewer ReferenceID="{Binding id_contact, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Contact"  AllowDrop="True" 
-                                Margin="16" Height="108" MinWidth="108" MaxWidth="500"/>
+            <cntrls:ImageViewer ReferenceID="{Binding id_contact, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Contact"  AllowDrop="True"
+                                Margin="16" Height="108" MinWidth="108" MaxWidth="500" />
 
-			<StackPanel VerticalAlignment="Top" Margin="0,32">
-				<Label Content="{Binding name}" Style="{StaticResource H1}"/>
-				<Label Content="{Binding alias}" Style="{StaticResource H2}"/>
-			</StackPanel>
-		</StackPanel>
+            <StackPanel VerticalAlignment="Top" Margin="0,32">
+                <Label Content="{Binding name}" Style="{StaticResource H1}" />
+                <Label Content="{Binding alias}" Style="{StaticResource H2}" />
+            </StackPanel>
+        </StackPanel>
 
-		<StackPanel IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Column="1" Grid.Row="1"
+        <StackPanel IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Column="1" Grid.Row="1"
 					HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16">
-			<Label Content="{lex:Loc Properties}" FontWeight="Medium" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
-			<Custom:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-			<Custom:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-		</StackPanel>
+            <Label Content="{lex:Loc Properties}" FontWeight="Medium" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Margin="5" />
+            <Custom:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
+            <Custom:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
 
-		<TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
-					SelectedIndex="0" Margin="0,128,0,0" >
-			<TabItem Header="{lex:Loc Information}">
+        <TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
+					SelectedIndex="0" Margin="0,128,0,0">
+            <TabItem Header="{lex:Loc Information}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="8">
                         <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
 							   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
-                            <CheckBox Content="{lex:Loc Customer}" Margin="3" IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <CheckBox Content="{lex:Loc Supplier}" Margin="3" IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <Label Content="{lex:Loc Name}" 
-							   Style="{StaticResource input_label}"/>
-                            <TextBox Style="{StaticResource input_textbox}" 
+                            <Label Content="{lex:Loc General}" Style="{StaticResource H2}" />
+                            <CheckBox Content="{lex:Loc Customer}" Margin="3" IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                            <CheckBox Content="{lex:Loc Supplier}" Margin="3" IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                            <Label Content="{lex:Loc Name}"
+							   Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                            <Label Content="{lex:Loc Alias}" 
-							   Style="{StaticResource input_label}"/>
-                            <TextBox Style="{StaticResource input_textbox}" 
+                            <Label Content="{lex:Loc Alias}"
+							   Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding alias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                            <Label Content="{lex:Loc GovernmentID}" 
-							   Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="txtGovId" Style="{StaticResource input_textbox}" 
+                            <Label Content="{lex:Loc GovernmentID}"
+							   Style="{StaticResource input_label}" />
+                            <TextBox x:Name="txtGovId" Style="{StaticResource input_textbox}"
 								 Text="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox x:Name="txtCode" Style="{StaticResource input_textbox}"
 								 Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
 
                             <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
-								  IsChecked="{Binding is_person, FallbackValue=False}"/>
+								  IsChecked="{Binding is_person, FallbackValue=False}" />
                             <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
-                                <Label Content="{lex:Loc Gender}" 
-								Style="{StaticResource input_label}"/>
-                                <ComboBox Style="{StaticResource input_combobox}" 
+                                <Label Content="{lex:Loc Gender}"
+								Style="{StaticResource input_label}" />
+                                <ComboBox Style="{StaticResource input_combobox}"
 								x:Name="cbxGender"
-								SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="{lex:Loc DateofBirth}" 
-								Style="{StaticResource input_label}"/>
-                                <DatePicker  Style="{StaticResource input_datepicker}" 
+								SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="{lex:Loc DateofBirth}"
+								Style="{StaticResource input_label}" />
+                                <DatePicker  Style="{StaticResource input_datepicker}"
 								SelectedDate="{Binding date_birth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
                             </StackPanel>
                         </StackPanel>
 
                         <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
+                            <Label Content="{lex:Loc Contact}" Style="{StaticResource H2}" />
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
-                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldTelephone" 
-								   Style="{StaticResource btn_Label}"/>
+                                <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}" />
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldTelephone"
+								   Style="{StaticResource btn_Label}" />
                             </StackPanel>
                             <TextBox Style="{StaticResource input_textbox}"
 								 Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                             <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valuephoneViewSource}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel/>
+                                        <StackPanel />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <cntrls:CustomField 
+                                        <cntrls:CustomField
                                             app_fieldViewSource="{Binding Source={StaticResource app_fieldphoneViewSource}}"
-                                            FieldID="{Binding id_field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            FieldValue="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            FieldID="{Binding id_field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            FieldValue="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
-                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldEmail" 
-								   Style="{StaticResource btn_Label}"/>
+                                <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}" />
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldEmail"
+								   Style="{StaticResource btn_Label}" />
                             </StackPanel>
                             <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
 								 Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                             <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueemailViewSource}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel/>
+                                        <StackPanel />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <cntrls:CustomField app_fieldViewSource="{Binding Source={StaticResource app_fieldemailViewSource}}"
-                                                        FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                                        FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                        FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                        FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}" />
                             <TextBox x:Name="txtAddress"
 								 Style="{StaticResource input_textbox}"
-								 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+								 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldAccount" 
-								   Style="{StaticResource btn_Label}"/>
+                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}" />
+                                <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="Add_fieldAccount"
+								   Style="{StaticResource btn_Label}" />
                             </StackPanel>
                             <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel/>
+                                        <StackPanel />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                                            FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <cntrls:CustomField FieldID="{Binding id_field,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                            FieldValue="{Binding app_field.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox Text="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
 
-                        <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
+                        <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
 								IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Label Content="{lex:Loc Extras}" Style="{StaticResource H2}"/>
+                            <Label Content="{lex:Loc Extras}" Style="{StaticResource H2}" />
 
-                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                             <TextBox TextWrapping="Wrap"
 								 Style="{StaticResource input_textbox}"
-								 Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+								 Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                             <DatePicker Style="{StaticResource input_datepicker}"
-									SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+									SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
                             <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
 												 CollectionViewSource="{StaticResource contact_tagViewSource}"
 												 focusGrid="True" Width="256"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                                 <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
-														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
                                 </cntrl:SearchableTextbox.Columns>
                             </cntrl:SearchableTextbox>
                             <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None"
 									  ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-													IsReadOnly="True" Width="*"/>
+                                    <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+													IsReadOnly="True" Width="*" />
                                     <DataGridTemplateColumn Width="26" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Command="customcmd:CustomCommands.Delete"
 													Style="{StaticResource btnDeleteChildStyle}"
-													CommandParameter="{Binding}"/>
+													CommandParameter="{Binding}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -250,155 +250,155 @@
                     </WrapPanel>
                 </ScrollViewer>
             </TabItem>
-			<TabItem Header="{lex:Loc Geography}">
-				<Grid DataContext="{StaticResource contactViewSource}">
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="2">
-						<cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
-						<Label Content="{lex:Loc Location}"/>
-						<TextBox Text="{Binding /comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="64"/>
-					</StackPanel>
-					<m:Map Margin="0,32,0,0" x:Name="myMap"
-						   CredentialsProvider="Asw032Mj8UBsgfD0LJU4_VILp3lA_8dJcraaYsy6Mdl6KfakTbWObzT7M0agiha2" 
+            <TabItem Header="{lex:Loc Geography}">
+                <Grid DataContext="{StaticResource contactViewSource}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="2">
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
+                        <Label Content="{lex:Loc Location}" />
+                        <TextBox Text="{Binding /comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="64" />
+                    </StackPanel>
+                    <m:Map Margin="0,32,0,0" x:Name="myMap"
+						   CredentialsProvider="Asw032Mj8UBsgfD0LJU4_VILp3lA_8dJcraaYsy6Mdl6KfakTbWObzT7M0agiha2"
 						   ZoomLevel="12" Center="-25.298340,-57.622501" MouseDoubleClick="MapsDropPin_DoubleClick">
-						<m:Pushpin Location="{Binding /comment}"/>
-					</m:Map>
-				</Grid>
-			</TabItem>
-			<TabItem Header="{lex:Loc Relationship}" HorizontalAlignment="Right">
-				<StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
-					<Label Content="{lex:Loc ContactRole}" Style="{StaticResource H2}"/>
-					<Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}"/>
-					<ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
+                        <m:Pushpin Location="{Binding /comment}" />
+                    </m:Map>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{lex:Loc Relationship}" HorizontalAlignment="Right">
+                <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
+                    <Label Content="{lex:Loc ContactRole}" Style="{StaticResource H2}" />
+                    <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" />
+                    <ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_contact_role"
-							  ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}" 
-							  SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
-							  SelectionChanged="cbxContactRole_SelectionChanged"/>
-					<Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}"/>
-					<cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
-											 Text="{Binding parent.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-					<Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}"/>
-					<DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True" 
+							  ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}"
+							  SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+							  SelectionChanged="cbxContactRole_SelectionChanged" />
+                    <Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}" />
+                    <cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
+											 Text="{Binding parent.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}" />
+                    <DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True"
 							  ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">
-						<DataGrid.Columns>
-							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" FontWeight="Medium" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovernmentID}" Width="Auto" Binding="{Binding gov_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-							<DataGridTextColumn Header="{lex:Loc Cognitivo:local:ContactRole}" Width="Auto" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-						</DataGrid.Columns>
-					</DataGrid>
-				</StackPanel>
-			</TabItem>
-			<TabItem x:Name="tabFinance" Header="{lex:Loc Finance}">
-				<ScrollViewer VerticalScrollBarVisibility="Auto">
-					<StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
-						<StackPanel>
-							<Label Content="{lex:Loc Behavior}" Style="{StaticResource H2}"/>
-							<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="3" 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" FontWeight="Medium" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovernmentID}" Width="Auto" Binding="{Binding gov_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ContactRole}" Width="Auto" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="tabFinance" Header="{lex:Loc Finance}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
+                        <StackPanel>
+                            <Label Content="{lex:Loc Behavior}" Style="{StaticResource H2}" />
+                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="3"
 											DataContext="{StaticResource contactViewSource}">
-								<CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" Margin="3" 
-								          IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-								<CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" Margin="3" 
-							              IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-							</StackPanel>
-						</StackPanel>
-						<Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
-								   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"/>
-							<Label x:Name="lblCancelPrice" Content="c" FontSize="12" VerticalAlignment="Center" 
+                                <CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" Margin="3"
+								          IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" Margin="3"
+							              IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
+								   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}" />
+                            <Label x:Name="lblCancelPrice" Content="c" FontSize="12" VerticalAlignment="Center"
 									HorizontalAlignment="Right" MouseUp="lblCancel_MouseUp"   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
-									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-						</StackPanel>
-						<ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}" 
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
+                        <ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}"
 									  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
-									  ItemsSource="{Binding Source={StaticResource itemPriceListViewSource}}" 
-									  DisplayMemberPath="name" SelectedValuePath="id_price_list" 
+									  ItemsSource="{Binding Source={StaticResource itemPriceListViewSource}}"
+									  DisplayMemberPath="name" SelectedValuePath="id_price_list"
 									  SelectedValue="{Binding id_price_list, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-						<StackPanel Orientation="Horizontal">
-							<Label Content="Cost Center" 
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Cost Center"
 								   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
-								   Style="{StaticResource input_label}"/>
-							<Label x:Name="lblCancelCost" Content="c" FontSize="12" VerticalAlignment="Center" 
+								   Style="{StaticResource input_label}" />
+                            <Label x:Name="lblCancelCost" Content="c" FontSize="12" VerticalAlignment="Center"
 									HorizontalAlignment="Right" MouseUp="lblCancelCost_MouseUp" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
-									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-						</StackPanel>
-						<ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
-									  Style="{StaticResource input_combobox}" 
-									  ItemsSource="{Binding Source={StaticResource appCostCenterViewSource}}" 
-									  DisplayMemberPath="name" SelectedValuePath="id_cost_center" 
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
+                        <ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+									  Style="{StaticResource input_combobox}"
+									  ItemsSource="{Binding Source={StaticResource appCostCenterViewSource}}"
+									  DisplayMemberPath="name" SelectedValuePath="id_cost_center"
 									  SelectedValue="{Binding id_cost_center, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
 
-							<Label x:Name="lblCancelContract" Content="c" FontSize="12" VerticalAlignment="Center" 
-							HorizontalAlignment="Right" MouseUp="lblCancelContract_MouseUp"   
-							FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-						</StackPanel>
-						<ComboBox DisplayMemberPath="name" SelectedValuePath="id_contract"
+                            <Label x:Name="lblCancelContract" Content="c" FontSize="12" VerticalAlignment="Center"
+							HorizontalAlignment="Right" MouseUp="lblCancelContract_MouseUp"
+							FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
+                        <ComboBox DisplayMemberPath="name" SelectedValuePath="id_contract"
 									  SelectedValue="{Binding id_contract, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									  ItemsSource="{Binding Source={StaticResource appContractViewSource}}" Style="{StaticResource input_combobox}"/>
-						<Label Content="{lex:Loc CreditLimit}" Style="{StaticResource input_label}"/>
-						<TextBox x:Name="txtCreditLimit" Style="{StaticResource input_textbox}"
-									 Text="{Binding credit_limit, Mode=TwoWay,StringFormat={}{0:N0}, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-							<Label x:Name="lblCancelCurrency" Content="c" FontSize="12" VerticalAlignment="Center" 
-								HorizontalAlignment="Right" MouseUp="lblCancelCurrency_MouseUp"   
-								FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>      
-						</StackPanel>
+									  ItemsSource="{Binding Source={StaticResource appContractViewSource}}" Style="{StaticResource input_combobox}" />
+                        <Label Content="{lex:Loc CreditLimit}" Style="{StaticResource input_label}" />
+                        <TextBox x:Name="txtCreditLimit" Style="{StaticResource input_textbox}"
+									 Text="{Binding credit_limit, Mode=TwoWay,StringFormat={}{0:N0}, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
+                            <Label x:Name="lblCancelCurrency" Content="c" FontSize="12" VerticalAlignment="Center"
+								HorizontalAlignment="Right" MouseUp="lblCancelCurrency_MouseUp"
+								FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
 
-						<ComboBox ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currency"
+                        <ComboBox ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currency"
 								  SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 								  Custom:ComboBoxHelper.CharacterCasing="Normal"
-								  Style="{StaticResource input_combobox}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Salesman}" Style="{StaticResource input_label}"/>
-							<Label x:Name="lblCancelSalesMan" Content="c" FontSize="12" VerticalAlignment="Center" 
-									HorizontalAlignment="Right" MouseUp="lblCancelSalesMan_MouseUp"  
-									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-						</StackPanel>
+								  Style="{StaticResource input_combobox}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Salesman}" Style="{StaticResource input_label}" />
+                            <Label x:Name="lblCancelSalesMan" Content="c" FontSize="12" VerticalAlignment="Center"
+									HorizontalAlignment="Right" MouseUp="lblCancelSalesMan_MouseUp"
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
 
-						<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
+                        <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
 									  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									  Style="{StaticResource input_combobox}"/>
-						<StackPanel Orientation="Horizontal">
-							<Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}"/>
-							<Label x:Name="lblCancelBank" Content="c" FontSize="12" VerticalAlignment="Center" 
-									HorizontalAlignment="Right" MouseUp="lblCancelBank_MouseUp"   
-									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-						</StackPanel>
+									  Style="{StaticResource input_combobox}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}" />
+                            <Label x:Name="lblCancelBank" Content="c" FontSize="12" VerticalAlignment="Center"
+									HorizontalAlignment="Right" MouseUp="lblCancelBank_MouseUp"
+									FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
 
-						<ComboBox ItemsSource="{Binding Source={StaticResource bankViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_bank"
+                        <ComboBox ItemsSource="{Binding Source={StaticResource bankViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_bank"
 									  SelectedValue="{Binding id_bank, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									  Style="{StaticResource input_combobox}"/>
-						<StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}">
-							<Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}"/>
-							<TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
+									  Style="{StaticResource input_combobox}" />
+                        <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}">
+                            <Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}" />
+                            <TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
 									 Text="{Binding trans_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-							<Label Content="{lex:Loc TransCodeExpiry}" Style="{StaticResource input_label}"/>
-							<DatePicker Style="{StaticResource input_datepicker}" 
-										Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						</StackPanel>
+                            <Label Content="{lex:Loc TransCodeExpiry}" Style="{StaticResource input_label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}"
+										Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
 
-						<Label Content="{lex:Loc Payment}" Style="{StaticResource H2}"/>
-						<Label Content="{lex:Loc CollectionAgent}" Style="{StaticResource input_label}"/>
-					  
-						<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
+                        <Label Content="{lex:Loc Payment}" Style="{StaticResource H2}" />
+                        <Label Content="{lex:Loc CollectionAgent}" Style="{StaticResource input_label}" />
+
+                        <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
 									  SelectedValue="{Binding id_collection_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									  Style="{StaticResource input_combobox}"/>
-					</StackPanel>
-				</ScrollViewer>
-			</TabItem>
-		</TabControl>
+									  Style="{StaticResource input_combobox}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
 
-		<cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"
-					   btnNew_Click="toolBar_btnNew_Click" 
+        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"
+					   btnNew_Click="toolBar_btnNew_Click"
 					   btnDelete_Click="toolBar_btnDelete_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click" 
-					   btnSave_Click="toolBar_btnSave_Click" 
-					   btnCancel_Click="toolBar_btnCancel_Click" 
+					   btnEdit_Click="toolBar_btnEdit_Click"
+					   btnSave_Click="toolBar_btnSave_Click"
+					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
                        btnSync_Click="Page_Loaded"
-					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-	</Grid>
+					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+    </Grid>
 </Page>

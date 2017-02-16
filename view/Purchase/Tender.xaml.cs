@@ -1,25 +1,25 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
 using System.Windows.Input;
 
 namespace Cognitivo.Purchase
 {
     public partial class Tender : Page
     {
-        PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
+        private PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
 
-        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, 
+        private CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource,
             purchase_tenderpurchase_tender_itemViewSource,
-            purchase_tenderpurchase_tender_contact_detailViewSource, 
+            purchase_tenderpurchase_tender_contact_detailViewSource,
             app_contractViewSource;
 
-        CollectionViewSource app_measurementViewSource, app_dimensionViewSource;
+        private CollectionViewSource app_measurementViewSource, app_dimensionViewSource;
 
         public Tender()
         {
@@ -136,7 +136,6 @@ namespace Cognitivo.Purchase
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
         }
 
-
         public void Item_Select(object sender, EventArgs e)
         {
             purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
@@ -172,7 +171,7 @@ namespace Cognitivo.Purchase
                             purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
                         }
 
-                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);   
+                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                     }
                     else
                     {
@@ -245,7 +244,7 @@ namespace Cognitivo.Purchase
                         toolBar.msgWarning("Please select Contract...");
                         return;
                     }
-               
+
                     purchase_tender_contact.contact = contact;
                     purchase_tender_contact.id_contact = contact.id_contact;
 
@@ -301,7 +300,7 @@ namespace Cognitivo.Purchase
                                         purchase_tender_detail_dimension.value = purchase_tender_dimension.value;
                                         purchase_tender_detail.purchase_tender_detail_dimension.Add(purchase_tender_detail_dimension);
                                     }
-                                    
+
                                     //purchase_tender_item.purchase_tender_detail.Add(purchase_tender_detail);
                                     purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                                 }
@@ -310,7 +309,6 @@ namespace Cognitivo.Purchase
                                     purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
                                     purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
                                 }
-
                             }
                             else
                             {
@@ -349,9 +347,8 @@ namespace Cognitivo.Purchase
             if (PurchaseTenderDB.SaveChanges() > 0)
             {
                 purchase_tenderViewSource.View.Refresh();
-                toolBar.msgSaved(PurchaseTenderDB.NumberOfRecords);    
+                toolBar.msgSaved(PurchaseTenderDB.NumberOfRecords);
             }
-            
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -364,7 +361,7 @@ namespace Cognitivo.Purchase
                     e.CanExecute = true;
                 }
             }
-            else if (dg.Name=="purchase_tender_itemDataGrid")
+            else if (dg.Name == "purchase_tender_itemDataGrid")
             {
                 if (e.Parameter as purchase_tender_item != null)
                 {
@@ -378,7 +375,6 @@ namespace Cognitivo.Purchase
                     e.CanExecute = true;
                 }
             }
-
         }
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -427,17 +423,11 @@ namespace Cognitivo.Purchase
 
         private void purchase_tender_contact_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
-
-
-
-
-
         }
 
         private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, EventArgs e)
         {
-            if (purchase_tenderpurchase_tender_itemViewSource!=null)
+            if (purchase_tenderpurchase_tender_itemViewSource != null)
             {
                 if (purchase_tenderpurchase_tender_itemViewSource.View != null)
                 {
@@ -450,11 +440,9 @@ namespace Cognitivo.Purchase
                             purchase_tender_dimensionViewSource.Source = purchase_tender_item.purchase_tender_dimension.ToList();
                         }
                     }
-                }   
+                }
             }
-      
         }
-
 
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -466,7 +454,6 @@ namespace Cognitivo.Purchase
                     LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
                 }
             }
-
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -529,7 +516,6 @@ namespace Cognitivo.Purchase
                     }
                 }
             }
-          
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -569,20 +555,17 @@ namespace Cognitivo.Purchase
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabItem _TabItem = TabLogistics.SelectedItem as TabItem;
-            if (_TabItem!=null)
+            if (_TabItem != null)
             {
                 if (_TabItem.Header.ToString() == "Purchase Tender")
                 {
-                    if (PurchaseTenderDB.app_condition.Where(x=>x.is_active).FirstOrDefault()!=null)
+                    if (PurchaseTenderDB.app_condition.Where(x => x.is_active).FirstOrDefault() != null)
                     {
                         cbxCondition.SelectedItem = PurchaseTenderDB.app_condition.Where(x => x.is_active).FirstOrDefault();
                         cbxCondition_SelectionChanged(null, null);
                     }
-                
-
-                } 
+                }
             }
-         
         }
 
         private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -601,6 +584,7 @@ namespace Cognitivo.Purchase
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
+
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             TenderSetting _pref_PurchaseTender = new TenderSetting();

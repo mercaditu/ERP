@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
@@ -26,8 +21,8 @@ namespace Cognitivo.Converters
         public object[] ConvertBack(object value, Type[] targetTypes,
                object parameter, System.Globalization.CultureInfo culture)
         {
-           object[] a= new object[3];
-            a[0]=true;
+            object[] a = new object[3];
+            a[0] = true;
             a[1] = value;
             a[2] = value;
             return a;
@@ -35,4 +30,3 @@ namespace Cognitivo.Converters
         }
     }
 }
-

@@ -1,17 +1,18 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class MeasurementType : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource measurement_typeViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource measurement_typeViewSource;
+
         public MeasurementType()
         {
             InitializeComponent();

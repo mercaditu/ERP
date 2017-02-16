@@ -1,9 +1,9 @@
-﻿using System;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Menu
 {
@@ -22,7 +22,7 @@ namespace Cognitivo.Menu
         {
             if (PagePath.ToString() != string.Empty)
             { Task taskAuth = Task.Factory.StartNew(() => open_PageThread(PagePath.ToString())); }
-            else 
+            else
             { this.Close(); }
         }
 
@@ -44,8 +44,10 @@ namespace Cognitivo.Menu
                     Cursor = Cursors.Arrow;
                 }));
             }
-            catch (Exception ex) {
-                System.Windows.Forms.MessageBox.Show(ex.ToString()); }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+            }
         }
 
         private void mainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -58,6 +60,7 @@ namespace Cognitivo.Menu
         {
             bool CanClose();
         }
+
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ICanClose canClose = mainFrame.Content as ICanClose;

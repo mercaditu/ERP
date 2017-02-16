@@ -1,18 +1,17 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Commercial
 {
-
     public partial class ContactRole : Page
     {
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource contact_roleViewSource = null;
-       // entity.Properties.Settings _setting = new entity.Properties.Settings();
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource contact_roleViewSource = null;
+        // entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         public ContactRole()
         {

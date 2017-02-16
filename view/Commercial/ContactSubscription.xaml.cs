@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Data.Entity;
-using entity;
-using System.Windows.Data;
-using System.Windows.Controls;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cognitivo.Commercial
 {
     public partial class ContactSubscription : Page
     {
-        ContactDB ContactDB = new ContactDB();
-        CollectionViewSource contactViewSource, contact_subscriptionViewSource;
+        private ContactDB ContactDB = new ContactDB();
+        private CollectionViewSource contactViewSource, contact_subscriptionViewSource;
 
         public ContactSubscription()
         {
@@ -135,7 +135,6 @@ namespace Cognitivo.Commercial
             }
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             List<contact> ContactList = contactViewSource.View.OfType<contact>().ToList();
@@ -164,19 +163,18 @@ namespace Cognitivo.Commercial
                         sales_invoice.contact = contact;
 
                         app_contract app_contract = db.app_contract.Find(contact.id_contract);
-                        if (app_contract!=null)
+                        if (app_contract != null)
                         {
                             sales_invoice.id_condition = app_contract.id_condition;
                             sales_invoice.id_contract = app_contract.id_contract;
                         }
                         else
                         {
-                           app_contract = db.app_contract.Where(x =>x.is_default && x.is_active).FirstOrDefault();
+                            app_contract = db.app_contract.Where(x => x.is_default && x.is_active).FirstOrDefault();
                             sales_invoice.id_condition = app_contract.id_condition;
                             sales_invoice.id_contract = app_contract.id_contract;
                         }
-                     
-                     
+
                         sales_invoice.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         sales_invoice.comment = "Subscription";
                         sales_invoice.trans_date = InvoiceDate;

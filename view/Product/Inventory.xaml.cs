@@ -1,26 +1,27 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
-using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {
     public partial class Inventory : Page
     {
-        InventoryDB InventoryDB = new InventoryDB();
-        CollectionViewSource item_inventoryViewSource,
+        private InventoryDB InventoryDB = new InventoryDB();
+
+        private CollectionViewSource item_inventoryViewSource,
             item_inventoryitem_inventory_detailViewSource,
-            app_branchapp_locationViewSource, 
+            app_branchapp_locationViewSource,
             app_branchViewSource;
 
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
-        cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
-        int CurrencyID = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
+        private int CurrencyID = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
 
         public Inventory()
         {
@@ -297,7 +298,6 @@ namespace Cognitivo.Product
             {
                 toolBar.msgSaved(1);
             }
-            
         }
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
@@ -311,11 +311,10 @@ namespace Cognitivo.Product
             {
                 if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                 {
-                    
                     if (InventoryDB.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList() != null)
                     {
                         List<item_dimension> item_dimensionList = InventoryDB.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList();
-                        if (item_dimensionList.Count()>0)
+                        if (item_dimensionList.Count() > 0)
                         {
                             crud_modal.Visibility = Visibility.Visible;
                             objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
@@ -329,14 +328,11 @@ namespace Cognitivo.Product
                             }
                             item_inventory_detail.IsSelected = true;
 
-
                             objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
                             objpnl_ItemMovement.InventoryDB = InventoryDB;
                             crud_modal.Children.Add(objpnl_ItemMovement);
                         }
-                     
                     }
-                   
                 }
                 if (item_inventory_detail.item_product.can_expire)
                 {
@@ -344,7 +340,6 @@ namespace Cognitivo.Product
                     pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
                     crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
-              
             }
         }
 
@@ -368,15 +363,15 @@ namespace Cognitivo.Product
             {
                 item_inventory_detail item_inventory_detail = (item_inventory_detail)item_inventoryitem_inventory_detailViewSource.View.CurrentItem;
 
-                if (item_inventory_detail != null )
+                if (item_inventory_detail != null)
                 {
                     item_movement item_movement = InventoryDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                    if (item_movement!=null)
+                    if (item_movement != null)
                     {
                         item_inventory_detail.batch_code = item_movement.code;
                         item_inventory_detail.expire_date = item_movement.expire_date;
                         item_inventory_detail.movement_id = (int)item_movement.id_movement;
-                    }  
+                    }
                 }
             }
         }

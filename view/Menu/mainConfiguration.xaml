@@ -1,438 +1,435 @@
 <Page x:Class="Cognitivo.Menu.mainConfiguration" Title="{lex:Loc Configuration}"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
-        lex:LocalizeDictionary.DesignCulture="en-US" 
+        lex:LocalizeDictionary.DesignCulture="en-US"
       mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1500">
     <Page.Resources>
-        <converter:Text2Collapsed x:Key="Text2Collapsed"/>
+        <converter:Text2Collapsed x:Key="Text2Collapsed" />
     </Page.Resources>
     <Grid Style="{StaticResource ThemeBackGround}">
         <!--<Frame x:Name="frameConfig" Margin="0,0,0,0"
-               NavigationUIVisibility="Hidden"/>-->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+               NavigationUIVisibility="Hidden" />-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
                       Visibility="{Binding ElementName=frameConfig, Path=Content, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Text2Collapsed}}"
                       HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,0">
             <WrapPanel HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningRatio="1"
                        ScrollViewer.VerticalScrollBarVisibility="Auto" Orientation="Horizontal">
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Preference}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Preference}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Cognitivo-32.png" />
                             <TextBlock Text="Cognitivo ERP" Focusable="True" MouseUp="config_MouseUp" Tag="Version"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Menu/modConfig.png" />
                             <TextBlock Text="{lex:Loc Settings}" Focusable="True" MouseUp="config_MouseUp" Tag="Settings"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Basic details for this PC" 
+                        <TextBlock Text="Basic details for this PC"
                                    Style="{StaticResource text_Instructions}" Foreground="White"
-                                   Margin="28,0,0,0" Width="188"/>
+                                   Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
                             <TextBlock Text="{lex:Loc KeyboardShortcuts}" Focusable="True" MouseUp="config_MouseUp" Tag="KeyGestureSettings"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Customize key combinations that are used in entire system for CRUD operations" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Customize key combinations that are used in entire system for CRUD operations" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Language.png" />
                             <TextBlock Text="{lex:Loc Language}" Focusable="True" MouseUp="config_MouseUp" Tag="Language"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Select the Language you would like to use with Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select the Language you would like to use with Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Wallpaper.png" />
                             <TextBlock Text="{lex:Loc BackgroundImage}" Focusable="True" MouseUp="config_MouseUp" Tag="Wallpaper"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="16,8" Width="270" Height="244">
-                        <Label Content="{lex:Loc Document}" Style="{StaticResource H2}"/>
+                        <Label Content="{lex:Loc Document}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Document.png" />
                                 <TextBlock Text="{lex:Loc Document}" MouseUp="config_MouseUp" Tag="Document"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DocumentRange.png" />
                                 <TextBlock Text="{lex:Loc Range}" MouseUp="config_MouseUp" Tag="DocumentRange"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
-
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Company}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Company}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/HomeCompany.png" />
                             <TextBlock Text="{lex:Loc Company}" MouseUp="config_MouseUp" Tag="Company"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Branch.png" />
                             <TextBlock Text="{lex:Loc Branch}"  MouseUp="config_MouseUp" Tag="Branch"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Terminal.png" />
                             <TextBlock Text="{lex:Loc Terminal}"  MouseUp="config_MouseUp" Tag="Terminal"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Terminal}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                   Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Terminal}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                   Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductPromotion.png" />
                             <TextBlock Text="{lex:Loc VAT}" MouseUp="config_MouseUp" Tag="VAT"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_VAT}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_VAT}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductPromotion.png" />
                             <TextBlock Text="{lex:Loc VATGrouping}" MouseUp="config_MouseUp" Tag="VATGroup"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_VATGroup}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_VATGroup}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
-                    <StackPanel Margin="32,5" >
-                      
+                    <StackPanel Margin="32,5">
+
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Location.png" />
                             <TextBlock Text="{lex:Loc Geography}" MouseUp="config_MouseUp" Focusable="True" Tag="Geography"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
                             <TextBlock Text="{lex:Loc Department}" MouseUp="config_MouseUp" Tag="Department"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Define departments." 
-                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Define departments."
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
                     <StackPanel Margin="16,8" Width="270">
-                        <Label Content="{lex:Loc Sales}" Style="{StaticResource H2}"/>
+                        <Label Content="{lex:Loc Sales}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductPriceList.png" />
                                 <TextBlock Text="{lex:Loc PriceList}" MouseUp="config_MouseUp" Tag="PriceList"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_PriceList}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_PriceList}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/SalesRep.png" />
                                 <TextBlock Text="{lex:Loc Salesman}" MouseUp="config_MouseUp" Tag="Salesman"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="Sales Rep earn commision on sales or payments" 
-                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="Sales Rep earn commision on sales or payments"
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/PaymentType.png" />
                                 <TextBlock Text="{lex:Loc PaymentType}" Focusable="True" MouseUp="config_MouseUp" Tag="PaymentType"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Contact.png" />
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
                                 <TextBlock Text="{lex:Loc ContactTags}" MouseUp="config_MouseUp" Tag="ContactTag"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_contactTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_contactTag}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
-                       
                     </StackPanel>
                     <StackPanel Margin="16,8" Width="270">
-                        <Label Content="{lex:Loc Purchase}" Style="{StaticResource H2}"/>
+                        <Label Content="{lex:Loc Purchase}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/AccountingChart.png" />
                                 <TextBlock Text="{lex:Loc CostCenter}" MouseUp="config_MouseUp" Tag="CostCenter"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Contact.png" />
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                     </StackPanel>
-                 
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Stock}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Stock}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/BranchLocation.png" />
                             <TextBlock Text="{lex:Loc Location}" MouseUp="config_MouseUp" Tag="Location"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Location}" 
-                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Location}"
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
                             <TextBlock Text="{lex:Loc Tags}" MouseUp="config_MouseUp" Tag="ItemTag"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_ItemTag}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
                             <TextBlock Text="{lex:Loc Brand}" MouseUp="config_MouseUp" Tag="ItemBrand"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Measurement.png" />
                             <TextBlock Text="{lex:Loc Type}" MouseUp="config_MouseUp" Tag="MeasurementType"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Define types of measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Define types of measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Measurement.png" />
                             <TextBlock Text="{lex:Loc Measurement}" MouseUp="config_MouseUp" Tag="Measurement"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Measurement.png" />
                             <TextBlock Text="{lex:Loc Dimension}" MouseUp="config_MouseUp" Tag="Dimension"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Specify item dimensions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Specify item dimensions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
                             <TextBlock Text="{lex:Loc Template}" MouseUp="config_MouseUp" Tag="ItemTemplate"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Product.png" />
                             <TextBlock Text="{lex:Loc Property}" MouseUp="config_MouseUp" Tag="Property"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
                             <TextBlock Text="{lex:Loc FixedAssets}" MouseUp="config_MouseUp" Tag="ItemAssetGroup"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Finance}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Finance}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Currency.png" />
                             <TextBlock Text="{lex:Loc Currency}" MouseUp="config_MouseUp" Tag="Currency"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                   Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                   Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <!--<StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Currency.png" />
                             <TextBlock Text="{lex:Loc AccountingCurrency}" MouseUp="config_MouseUp" Tag="AccountingCurrency"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                   Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                   Margin="28,0,0,0" Width="188" />
                     </StackPanel>-->
-                    <StackPanel Margin="32,5" >
+                    <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/BankAccount.png" />
                             <TextBlock Text="{lex:Loc Bank}" MouseUp="config_MouseUp" Tag="Bank"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Bank}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Bank}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/BankAccountTrans.png" />
                             <TextBlock Text="{lex:Loc Account}" MouseUp="config_MouseUp" Tag="Account"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/EntryExit.png" />
                             <TextBlock Text="{lex:Loc HourCoeficient}" MouseUp="config_MouseUp" Tag="Hr_coefficient"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/EntryExit.png" />
                             <TextBlock Text="{lex:Loc Position}" MouseUp="config_MouseUp" Tag="Hr_position"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                
+
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Transaction}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Transaction}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Condition.png" />
                             <TextBlock Text="{lex:Loc Condition}" MouseUp="config_MouseUp" Tag="Condition"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Conditions for a Sale or Purchase, such as Cash or Credit" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Conditions for a Sale or Purchase, such as Cash or Credit" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Contract.png" />
                             <TextBlock Text="{lex:Loc Contract}" MouseUp="config_MouseUp" Tag="Contract"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Contracts help create a structured method of payment for a specific condition" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Contracts help create a structured method of payment for a specific condition" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
                             <TextBlock Text="{lex:Loc IncotermCondition}" MouseUp="config_MouseUp" Tag="IncotermCondition"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Incoterm Conditions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Incoterm Conditions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/IncotermContract.png" />
                             <TextBlock Text="{lex:Loc Incoterm}" MouseUp="config_MouseUp" Tag="Incoterm"
-                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Incoterm" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Incoterm" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
                     <StackPanel Width="270">
-                        <Label Content="{lex:Loc Project}" Style="{StaticResource H2}"/>
+                        <Label Content="{lex:Loc Project}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
                                 <TextBlock Text="{lex:Loc Tags}" MouseUp="config_MouseUp" Tag="ProjectTag"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ProjectTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_ProjectTag}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Contact.png" />
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
-                                       Margin="28,0,0,0" Width="188"/>
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White"
+                                       Margin="28,0,0,0" Width="188" />
                         </StackPanel>
                     </StackPanel>
-                    <Label Content="{lex:Loc Security}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Security}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/UserRole.png" />
                             <TextBlock Text="{lex:Loc UserRole}" MouseUp="config_MouseUp" Tag="UserRole"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Roles help group Users into groups." Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Roles help group Users into groups." Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/User.png" />
                             <TextBlock Text="{lex:Loc User}" MouseUp="config_MouseUp" Tag="User"
-                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <TextBlock Text="Users are linked to Contacts" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Users are linked to Contacts" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Accounting}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Accounting}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/AccountingChart.png" />
                             <TextBlock Text="{lex:Loc DebeHaberIntegration}" MouseUp="config_MouseUp" Tag="DebeHaberSync"
-                                           Style="{StaticResource text_HyperLinks}" 
-                               FontSize="16" Margin="5,0"/>
+                                           Style="{StaticResource text_HyperLinks}"
+                               FontSize="16" Margin="5,0" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

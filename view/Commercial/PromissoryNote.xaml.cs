@@ -9,14 +9,13 @@ namespace Cognitivo.Commercial
 {
     public partial class PromissoryNote : Page
     {
-        PromissoryNoteDB PromissoryNoteDB = new PromissoryNoteDB();
-        CollectionViewSource payment_promissory_noteViewSource;
+        private PromissoryNoteDB PromissoryNoteDB = new PromissoryNoteDB();
+        private CollectionViewSource payment_promissory_noteViewSource;
+
         public PromissoryNote()
         {
             InitializeComponent();
         }
-
-
 
         private void toolBar_btnApprove_Click(object sender)
         {
@@ -34,34 +33,32 @@ namespace Cognitivo.Commercial
         {
             if (!string.IsNullOrEmpty(query) && payment_promissory_noteViewSource != null)
             {
-                    payment_promissory_noteViewSource.View.Filter = i =>
+                payment_promissory_noteViewSource.View.Filter = i =>
+                {
+                    payment_promissory_note payment_promissory_note = i as payment_promissory_note;
+
+                    if (payment_promissory_note != null)
                     {
-                        payment_promissory_note payment_promissory_note = i as payment_promissory_note;
-
-                        if (payment_promissory_note != null)
+                        if ((payment_promissory_note.contact != null ? payment_promissory_note.contact.name.ToLower().Contains(query.ToLower()) : false)
+                            || payment_promissory_note.note_number.Contains(query))
                         {
-                            if ((payment_promissory_note.contact != null ? payment_promissory_note.contact.name.ToLower().Contains(query.ToLower()) : false)
-                                || payment_promissory_note.note_number.Contains(query))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-
+                            return true;
                         }
                         else
                         {
                             return false;
                         }
-                    };
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
             else
             {
                 payment_promissory_noteViewSource.View.Filter = null;
             }
-
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -80,8 +77,6 @@ namespace Cognitivo.Commercial
                 payment_promissory_note payment_promissory_note = (payment_promissory_note)payment_promissory_noteViewSource.View.CurrentItem;
                 payment_promissory_note.id_contact = contact.id_contact;
                 payment_promissory_note.contact = contact;
-
-
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Media;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
@@ -10,8 +9,6 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-
-
                 entity.Status.Project status = (entity.Status.Project)value;
 
                 if (status == entity.Status.Project.Management_Approved)

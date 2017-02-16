@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using entity;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System;
 using System.Windows.Input;
-using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace Cognitivo.Production
 {
@@ -16,13 +16,14 @@ namespace Cognitivo.Production
     {
         public bool ViewAll { get; set; }
 
-        ExecutionDB ExecutionDB = new ExecutionDB();
-        cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
+        private ExecutionDB ExecutionDB = new ExecutionDB();
+        private cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
+
         //Production EXECUTION CollectionViewSource
-        CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
+        private CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
 
         //Production ORDER CollectionViewSource
-        CollectionViewSource
+        private CollectionViewSource
             production_orderViewSource,
             production_order_detaillViewSource,
 
@@ -42,8 +43,8 @@ namespace Cognitivo.Production
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            await ExecutionDB.production_order.Where(x => 
-                x.id_company == CurrentSession.Id_Company && 
+            await ExecutionDB.production_order.Where(x =>
+                x.id_company == CurrentSession.Id_Company &&
                 x.type != production_order.ProductionOrderTypes.Fraction &&
                 x.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x => x.project).LoadAsync();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
@@ -121,7 +122,6 @@ namespace Cognitivo.Production
                         hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
                         if (contract != null)
                         {
-
                             _production_execution_detail.unit_cost = contract.Hourly;
                         }
 
@@ -181,7 +181,6 @@ namespace Cognitivo.Production
         {
             production_order production_order = (production_order)projectDataGrid.SelectedItem;
             production_order.State = EntityState.Unchanged;
-
         }
 
         private void toolBar_btnApprove_Click(object sender)
@@ -236,7 +235,6 @@ namespace Cognitivo.Production
                 {
                     tabService.IsSelected = true;
                     production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
-
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                 {
@@ -249,9 +247,7 @@ namespace Cognitivo.Production
                     tabBlank.IsSelected = true;
                 }
             }
-
         }
-
 
         private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -309,7 +305,6 @@ namespace Cognitivo.Production
                                 }
                             };
                         }
-
                     }
                 }
             }
@@ -370,13 +365,10 @@ namespace Cognitivo.Production
                                 }
                             };
                         }
-
                     }
                 }
             }
         }
-
-
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -407,7 +399,6 @@ namespace Cognitivo.Production
             {
                 toolBar.msgError(ex);
             }
-
         }
 
         private void btnInsert_KeyDown(object sender, KeyEventArgs e)
@@ -554,14 +545,13 @@ namespace Cognitivo.Production
                             int location = production_order_detail.production_order.production_line.id_location;
                             using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
                             {
-                               List<entity.BrilloQuery.Item> Items = Execute.GetItemsByLocation();
-                               entity.BrilloQuery.Item Item = Items.Where(x => x.ID == production_order_detail.id_item && x.LocationID==location).FirstOrDefault();
+                                List<entity.BrilloQuery.Item> Items = Execute.GetItemsByLocation();
+                                entity.BrilloQuery.Item Item = Items.Where(x => x.ID == production_order_detail.id_item && x.LocationID == location).FirstOrDefault();
 
                                 if (Item != null)
                                 {
                                     avlqty = Item.InStock;
                                 }
-
                             }
                             if (avlqty < QuantityExe)
                             {
@@ -599,7 +589,6 @@ namespace Cognitivo.Production
 
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
-
             // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
@@ -628,18 +617,13 @@ namespace Cognitivo.Production
 
             if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
             {
-
                 pnl_ProductionAccount.ExecutionDB = ExecutionDB;
                 pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
                 crud_modalAccount.Visibility = Visibility.Visible;
                 crud_modalAccount.Children.Add(pnl_ProductionAccount);
-
-
-
             }
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
-
 
         private void dgServicecontract_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -686,6 +670,7 @@ namespace Cognitivo.Production
                 }
             }
         }
+
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             crud_modal.Children.Clear();
@@ -748,9 +733,8 @@ namespace Cognitivo.Production
                     production_service_account.debit = 0;
                     production_service_account.credit = production_execution_detail.quantity;
                     ExecutionDB.production_service_account.Add(production_service_account);
-                   // production_execution_detail._production_account = production_account;
+                    // production_execution_detail._production_account = production_account;
                 }
-
             }
         }
 
@@ -761,6 +745,7 @@ namespace Cognitivo.Production
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));

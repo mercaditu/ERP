@@ -1,18 +1,18 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Project
 {
     public partial class ProjectExecution : Page
     {
-        dbContext dbContext = new dbContext();
-        CollectionViewSource project_taskViewSource, projectViewSource;
+        private dbContext dbContext = new dbContext();
+        private CollectionViewSource project_taskViewSource, projectViewSource;
 
         public List<project_task> project_task { get; set; }
         public List<project_task> project_main_task { get; set; }
@@ -38,16 +38,15 @@ namespace Cognitivo.Project
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
-                foreach (project_task project_task in treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved || x.status == Status.Project.InProcess) ))
+                foreach (project_task project_task in treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true && (x.status == Status.Project.Approved || x.status == Status.Project.InProcess)))
                 {
-                    if (project_task.parent!=null)
+                    if (project_task.parent != null)
                     {
                         project_task.parent.Parent_Selection();
                     }
-                
                 }
-                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true ).ToList();
-                
+                project_task = treeProject.ItemsSource.Cast<project_task>().ToList().Where(x => x.IsSelected == true).ToList();
+
                 if (project_task.Count() > 0)
                 {
                     crud_modal.Visibility = Visibility.Visible;
@@ -57,7 +56,7 @@ namespace Cognitivo.Project
                     pnlOrder.projectViewSource = project_taskViewSource;
 
                     pnlOrder.shared_dbContext = dbContext;
-                    crud_modal.Children.Add(pnlOrder);   
+                    crud_modal.Children.Add(pnlOrder);
                 }
                 else
                 {
@@ -72,16 +71,16 @@ namespace Cognitivo.Project
         {
             if (project_taskViewSource != null)
             {
-                if (project_taskViewSource.View!=null)
+                if (project_taskViewSource.View != null)
                 {
                     project_taskViewSource.View.Filter = i =>
                     {
                         project_task _project_task = (project_task)i;
-                        if (_project_task.parent == null )
+                        if (_project_task.parent == null)
                             return true;
                         else
                         {
-                           return false;
+                            return false;
                         }
                     };
                 }
@@ -109,7 +108,7 @@ namespace Cognitivo.Project
                 }
                 else
                 {
-                   // projectViewSource.View.Filter = null;
+                    // projectViewSource.View.Filter = null;
                 }
                 filter_task();
             }
@@ -126,7 +125,6 @@ namespace Cognitivo.Project
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

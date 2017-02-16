@@ -1,22 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.Windows.Controls.Primitives;
 
 namespace Cognitivo.Product
 {
     public partial class MobileBranch : Page
     {
-        ProductTransferDB ProductTransferDB = new ProductTransferDB();
-        Class.StockCalculations StockCalculations = new Class.StockCalculations();
-        CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
-        Configs.itemMovement itemMovement = new Configs.itemMovement();
+        private ProductTransferDB ProductTransferDB = new ProductTransferDB();
+        private Class.StockCalculations StockCalculations = new Class.StockCalculations();
+        private CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
+        private Configs.itemMovement itemMovement = new Configs.itemMovement();
 
         public MobileBranch()
         {
@@ -48,7 +48,6 @@ namespace Cognitivo.Product
 
         private void toolBar_btnDelete_Click(object sender)
         {
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -78,7 +77,7 @@ namespace Cognitivo.Product
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
             await ProductTransferDB.item_transfer.Where(a =>
                     a.id_company == CurrentSession.Id_Company &&
-                    a.transfer_type == item_transfer.Transfer_type.transfer).Include(x=>x.app_branch_destination).Include(y=>y.app_branch_origin).OrderByDescending(x => x.trans_date)
+                    a.transfer_type == item_transfer.Transfer_type.transfer).Include(x => x.app_branch_destination).Include(y => y.app_branch_origin).OrderByDescending(x => x.trans_date)
                     .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
@@ -100,7 +99,6 @@ namespace Cognitivo.Product
 
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
-
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             item item = ProductTransferDB.items.Find(sbxItem.ItemID);
 
@@ -147,7 +145,6 @@ namespace Cognitivo.Product
                             item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
                             item_transfer_detail.quantity_origin += 1;
                         }
-                      
                     }
                     else
                     {
@@ -167,7 +164,7 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 item_transfer.IsSelected = true;
-                ProductTransferDB.ApproveOrigin(item_transfer,true);
+                ProductTransferDB.ApproveOrigin(item_transfer, true);
             }
         }
 
@@ -178,9 +175,8 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 item_transfer.IsSelected = true;
-                ProductTransferDB.ApproveDestination(item_transfer,true);
+                ProductTransferDB.ApproveDestination(item_transfer, true);
             }
-           
         }
 
         //private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
@@ -215,6 +211,7 @@ namespace Cognitivo.Product
                 toolBar.msgWarning("Please select");
             }
         }
+
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as item_transfer_detail != null)
@@ -293,13 +290,11 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
 
             if (crud_modal.Visibility == Visibility.Hidden)
             {
-
                 if (item != null &&
                           item.item_product != null &&
                           item_transfer != null &&

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Windows.Data;
 
-
 namespace Cognitivo.Converters
 {
-    class ChartOfAccountSelectionConverter : IValueConverter
+    internal class ChartOfAccountSelectionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

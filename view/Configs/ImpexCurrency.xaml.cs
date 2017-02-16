@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -20,10 +12,10 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class ImpexCurrency : Page
     {
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource app_currencyViewSource;
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource app_currencyViewSource;
         private int _IdCurrency;
-      //  entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //  entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ImpexCurrency()
         {

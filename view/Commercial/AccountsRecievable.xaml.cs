@@ -1,20 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
-using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
     public partial class AccountsRecievable : Page, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -22,10 +24,11 @@ namespace Cognitivo.Commercial
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-        #endregion
 
-        CollectionViewSource payment_schedualViewSource, contactViewSource;
-        PaymentDB PaymentDB = new PaymentDB();
+        #endregion INotifyPropertyChanged
+
+        private CollectionViewSource payment_schedualViewSource, contactViewSource;
+        private PaymentDB PaymentDB = new PaymentDB();
 
         public AccountsRecievable()
         {
@@ -172,7 +175,6 @@ namespace Cognitivo.Commercial
                 {
                     IntCalculation(app_company, PaymentSchedualList);
                 }
-
             }
 
             if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
@@ -196,8 +198,6 @@ namespace Cognitivo.Commercial
 
         public void IntCalculation(app_company app_company, List<payment_schedual> PaymentSchedualList)
         {
-
-
             foreach (payment_schedual payment_schedual in PaymentSchedualList.Where(x => x.is_interest == false))
             {
                 decimal delta = 0;
@@ -218,7 +218,7 @@ namespace Cognitivo.Commercial
                 else
                 {
                     payment_schedual _payment_schedual = payment_schedual.child.Where(x => x.is_interest).LastOrDefault();
-                    amount = payment_schedual.AccountReceivableBalance + payment_schedual.child.Where(x => x.is_interest).Sum(x=>x.AccountReceivableBalance);
+                    amount = payment_schedual.AccountReceivableBalance + payment_schedual.child.Where(x => x.is_interest).Sum(x => x.AccountReceivableBalance);
 
                     if (_payment_schedual != null)
                     {
@@ -229,7 +229,7 @@ namespace Cognitivo.Commercial
                 if (delta > app_company.app_company_interest.grace_period)
                 {
                     decimal dailyinterstrate = app_company.app_company_interest.InterestDaily;
-                 
+
                     decimal Totaldailyinterest = amount * dailyinterstrate;
 
                     decimal totalint = (Totaldailyinterest * delta);
@@ -245,7 +245,6 @@ namespace Cognitivo.Commercial
                     Intpayment_schedual.is_interest = true;
                     payment_schedual.child.Add(Intpayment_schedual);
                 }
-
             }
         }
 
@@ -316,7 +315,6 @@ namespace Cognitivo.Commercial
             {
                 if (payment_schedualViewSource.View != null)
                 {
-
                     payment_schedualViewSource.View.Filter = i =>
                         {
                             payment_schedual payment_schedual = (payment_schedual)i;
@@ -325,7 +323,6 @@ namespace Cognitivo.Commercial
                             else
                                 return false;
                         };
-
                 }
             }
             payment_schedualViewSource.View.MoveCurrentToLast();
@@ -374,7 +371,6 @@ namespace Cognitivo.Commercial
                 {
                     toolbar.msgWarning("Linked With Vat Holding...");
                 }
-
             }
         }
 
@@ -405,9 +401,7 @@ namespace Cognitivo.Commercial
             app_company app_company = PaymentDB.app_company.Find(CurrentSession.Id_Company);
             if (app_company.app_company_interest != null)
             {
-
                 IntCalculation(app_company, PaymentSchedualList);
-
             }
             PaymentDB.SaveChanges();
         }
@@ -418,4 +412,3 @@ namespace Cognitivo.Commercial
         }
     }
 }
-

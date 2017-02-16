@@ -1,20 +1,21 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
-using entity;
-using System.IO;
-using System.Data.Entity;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Cognitivo.Product
 {
     public partial class FixedAssets : Page
     {
-        ItemDB ItemDB = new ItemDB();
-        CollectionViewSource
+        private ItemDB ItemDB = new ItemDB();
+
+        private CollectionViewSource
             itemViewSource,
             itemitem_capitalViewSource, item_asset_maintainanceViewSource,
             itemitem_tagdetailViewSource;
@@ -42,7 +43,7 @@ namespace Cognitivo.Product
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = await ItemDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToListAsync();
-            
+
             CollectionViewSource item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
             ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
             item_brandViewSource.Source = ItemDB.item_brand.Local;
@@ -61,7 +62,6 @@ namespace Cognitivo.Product
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
             app_currencyViewSource.Source = CurrentSession.Currencies.ToList();
 
-
             await ItemDB.item_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
                 .OrderBy(x => x.name).LoadAsync();
@@ -70,6 +70,7 @@ namespace Cognitivo.Product
         }
 
         #region Mini ToolBar
+
         private void toolBar_Mini_btnSave_Click(object sender)
         {
             ItemDB.SaveChanges();
@@ -104,7 +105,8 @@ namespace Cognitivo.Product
                 }
             }
         }
-        #endregion
+
+        #endregion Mini ToolBar
 
         #region Toolbar
 
@@ -183,7 +185,7 @@ namespace Cognitivo.Product
             }
         }
 
-        #endregion
+        #endregion Toolbar
 
         private void StackPanel_Drop(object sender, DragEventArgs e)
         {
@@ -243,7 +245,7 @@ namespace Cognitivo.Product
             Add_Tag();
         }
 
-        void Add_Tag()
+        private void Add_Tag()
         {
             if (cbxTag.Data != null)
             {
@@ -258,7 +260,6 @@ namespace Cognitivo.Product
                         item_tag_detail.item_tag = ((item_tag)cbxTag.Data);
                         item.item_tag_detail.Add(item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
-
                     }
                 }
             }

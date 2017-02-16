@@ -1,21 +1,23 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
 using System.Windows.Input;
-using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
     public partial class AccountsPayable : Page, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -23,16 +25,17 @@ namespace Cognitivo.Commercial
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-        #endregion
 
-       // List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
-        
-        PaymentDB PaymentDB = new PaymentDB();
+        #endregion INotifyPropertyChanged
 
-        CollectionViewSource contactViewSource;
-        CollectionViewSource payment_schedualViewSource;
+        // List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
 
-        cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
+        private PaymentDB PaymentDB = new PaymentDB();
+
+        private CollectionViewSource contactViewSource;
+        private CollectionViewSource payment_schedualViewSource;
+
+        private cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
 
         public AccountsPayable()
         {
@@ -144,7 +147,7 @@ namespace Cognitivo.Commercial
                 return;
             }
 
-            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList,ref PaymentDB);
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList, ref PaymentDB);
 
             crud_modal.Visibility = Visibility.Visible;
             crud_modal.Children.Add(Payment);
@@ -207,8 +210,8 @@ namespace Cognitivo.Commercial
 
             if (PaymentSchedualList.Count > 0)
             {
-                purchase_invoice purchase_invoice=PaymentSchedualList.FirstOrDefault().purchase_invoice;
-                if (purchase_invoice.payment_withholding_detail.Count()==0)
+                purchase_invoice purchase_invoice = PaymentSchedualList.FirstOrDefault().purchase_invoice;
+                if (purchase_invoice.payment_withholding_detail.Count() == 0)
                 {
                     cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
                     VATWithholding.invoiceList = new List<object>();
@@ -217,7 +220,7 @@ namespace Cognitivo.Commercial
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
                     VATWithholding.percentage = PaymentSetting.Default.vatwithholdingpercent;
                     crud_modal.Visibility = System.Windows.Visibility.Visible;
-                    crud_modal.Children.Add(VATWithholding);                
+                    crud_modal.Children.Add(VATWithholding);
                 }
                 else
                 {
@@ -231,7 +234,7 @@ namespace Cognitivo.Commercial
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
 
             Refinance.objEntity = PaymentDB;
-            Refinance.payment_schedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x=>x.IsSelected).ToList();
+            Refinance.payment_schedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected).ToList();
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
             Refinance.btnSave_Click += SaveRefinance_Click;
@@ -259,6 +262,7 @@ namespace Cognitivo.Commercial
         }
 
         #region PrefSettings
+
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -275,6 +279,7 @@ namespace Cognitivo.Commercial
             _pref_PaymentSetting = Commercial.PaymentSetting.Default;
             popupCustomize.IsOpen = false;
         }
-        #endregion
+
+        #endregion PrefSettings
     }
 }

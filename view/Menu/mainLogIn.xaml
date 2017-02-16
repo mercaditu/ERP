@@ -3,164 +3,164 @@
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	  xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" 
-	  mc:Ignorable="d" x:Class="Cognitivo.Menu.mainLogIn" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+	  mc:Ignorable="d" x:Class="Cognitivo.Menu.mainLogIn"
 
-		xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+		xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
-		lex:LocalizeDictionary.DesignCulture="en-US" 
-	  
+		lex:LocalizeDictionary.DesignCulture="en-US"
+
 	  MinWidth="300" MinHeight="500"
 	  Title="LogIn">
-	<Page.Resources>
-		<Storyboard x:Key="shake">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="border">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="3"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="-3"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="loadAvatar">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:SwirlEffect.TwistAmount)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:BloomEffect.BloomIntensity)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="4.125"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="4.125"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="4.5916666666666668"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="5"/>
-			</DoubleAnimationUsingKeyFrames>
-			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:MagnifyEffect.Center)" Storyboard.TargetName="ellipse">
-				<EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.883333333333333,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.883333333333333,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.945555555555555,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:4.1" Value="1,0.5"/>
-			</PointAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:PixelateEffect.Pixelation)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.75"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.92633333333333334"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.92633333333333334"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.95495555555555556"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.98"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="32.5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="47.166666666666664"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="60"/>
-			</DoubleAnimationUsingKeyFrames>
-			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Center)" Storyboard.TargetName="ellipse">
-				<EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.5,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.5,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.5,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:4.1" Value="0.5,0.5"/>
-			</PointAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Phase)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="6.5"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="8.3666666666666671"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="10"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Magnitude)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.01"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.065"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.083666666666666667"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.1"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.33333333333333337"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0.1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</Page.Resources>
-	<Page.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
-			<BeginStoryboard Storyboard="{StaticResource loadAvatar}"/>
-		</EventTrigger>
-	</Page.Triggers>
-	<Grid>
-		<Grid x:Name="LayoutRoot" Style="{StaticResource ThemeBackGround}">
-			<Border x:Name="border" CornerRadius="15" Width="350" VerticalAlignment="Center" Margin="262,72,262,72"
+    <Page.Resources>
+        <Storyboard x:Key="shake">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="-3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="loadAvatar">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:SwirlEffect.TwistAmount)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:BloomEffect.BloomIntensity)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="4.125" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="4.125" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="4.5916666666666668" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="5" />
+            </DoubleAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:MagnifyEffect.Center)" Storyboard.TargetName="ellipse">
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.883333333333333,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.883333333333333,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.945555555555555,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:4.1" Value="1,0.5" />
+            </PointAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:PixelateEffect.Pixelation)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.75" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.92633333333333334" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.92633333333333334" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.95495555555555556" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.98" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="32.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="47.166666666666664" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="60" />
+            </DoubleAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Center)" Storyboard.TargetName="ellipse">
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="0.5,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:1.1" Value="0.5,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:2.6" Value="0.5,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:3.4" Value="0.5,0.5" />
+                <EasingPointKeyFrame KeyTime="0:0:4.1" Value="0.5,0.5" />
+            </PointAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Phase)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="6.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="8.3666666666666671" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="10" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Magnitude)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.01" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="0.065" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="0.083666666666666667" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="0.1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.33333333333333337" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource loadAvatar}" />
+        </EventTrigger>
+    </Page.Triggers>
+    <Grid>
+        <Grid x:Name="LayoutRoot" Style="{StaticResource ThemeBackGround}">
+            <Border x:Name="border" CornerRadius="15" Width="350" VerticalAlignment="Center" Margin="262,72,262,72"
 				HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-				<Border.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform/>
-						<SkewTransform/>
-						<RotateTransform/>
-						<TranslateTransform/>
-					</TransformGroup>
-				</Border.RenderTransform>
-				<Grid Margin="5">
-					<Ellipse HorizontalAlignment="Center" VerticalAlignment="Top" 
-							 Height="168" Width="168" Fill="WhiteSmoke" 
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid Margin="5">
+                    <Ellipse HorizontalAlignment="Center" VerticalAlignment="Top"
+							 Height="168" Width="168" Fill="WhiteSmoke"
 							 Margin="{Binding Margin, ElementName=ellipse}">
-						<Ellipse.Effect>
-							<DropShadowEffect ShadowDepth="0" Opacity="100" Color="Gainsboro" BlurRadius="4"/>
-						</Ellipse.Effect>
-					</Ellipse>
-					<Ellipse HorizontalAlignment="Center" VerticalAlignment="Top" 
+                        <Ellipse.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="100" Color="Gainsboro" BlurRadius="4" />
+                        </Ellipse.Effect>
+                    </Ellipse>
+                    <Ellipse HorizontalAlignment="Center" VerticalAlignment="Top"
 							 Height="168" Width="168"
 							 Margin="{Binding Margin, ElementName=ellipse}">
-						<Ellipse.Fill>
-							<ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/Avatars/avatar_unkown-512.png"/>
-						</Ellipse.Fill>
-					</Ellipse>
-					<Ellipse x:Name="ellipse" HorizontalAlignment="Center" VerticalAlignment="Top" Height="168" Width="168" Margin="0,-50,0,0">
-						<Ellipse.Effect>
-							<ee:RippleEffect/>
-						</Ellipse.Effect>
-						<Ellipse.Fill>
-							<ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/CognitivoLogo.png"/>
-						</Ellipse.Fill>
-					</Ellipse>
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/Avatars/avatar_unkown-512.png" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse x:Name="ellipse" HorizontalAlignment="Center" VerticalAlignment="Top" Height="168" Width="168" Margin="0,-50,0,0">
+                        <Ellipse.Effect>
+                            <ee:RippleEffect />
+                        </Ellipse.Effect>
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/CognitivoLogo.png" />
+                        </Ellipse.Fill>
+                    </Ellipse>
 
-					<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,120,0,10">
-						<Label Content="{lex:Loc Hello}" HorizontalContentAlignment="Center" FontSize="32" Foreground="Black" Margin="5" />
-						<TextBox x:Name="tbxUser" metro:TextBoxHelper.Watermark="{lex:Loc User}" HorizontalAlignment="center" VerticalAlignment="center" 
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,120,0,10">
+                        <Label Content="{lex:Loc Hello}" HorizontalContentAlignment="Center" FontSize="32" Foreground="Black" Margin="5" />
+                        <TextBox x:Name="tbxUser" metro:TextBoxHelper.Watermark="{lex:Loc User}" HorizontalAlignment="center" VerticalAlignment="center"
 							metro:TextBoxHelper.SelectAllOnFocus="True"
 							Margin="10" Width="256" FontSize="26" TabIndex="0" />
-						<Grid Margin="10,0,10,10">
-							<PasswordBox x:Name="tbxPassword"
+                        <Grid Margin="10,0,10,10">
+                            <PasswordBox x:Name="tbxPassword"
 								metro:TextBoxHelper.SelectAllOnFocus="True"
-								metro:TextBoxHelper.Watermark="{lex:Loc Password}" 
+								metro:TextBoxHelper.Watermark="{lex:Loc Password}"
 								HorizontalAlignment="center" VerticalAlignment="center"
-								Width="256" FontSize="26" TabIndex="1"/>
-						</Grid>
-						<CheckBox x:Name="chbxRemember" Content="{lex:Loc RememberMe}" Width="255" FontSize="14" Margin="42,0,72,10" Foreground="Black"/>
-                        
+								Width="256" FontSize="26" TabIndex="1" />
+                        </Grid>
+                        <CheckBox x:Name="chbxRemember" Content="{lex:Loc RememberMe}" Width="255" FontSize="14" Margin="42,0,72,10" Foreground="Black" />
+
                         <Button IsDefault="True" Width="256" Click="btnLogIn_Click" Background="Transparent" BorderBrush="Transparent" TabIndex="2">
-							<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
-								<ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
-								<Label Content="{lex:LocTextUpper Enter}" FontSize="18" HorizontalContentAlignment="Center"/>
-							</Grid>
-						</Button>
-						<Rectangle Height="1" Fill="Silver" Margin="10"/>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<TextBlock FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"><Hyperlink Click="SetUp_MouseUp"><Run Text="{lex:Loc InitialSetup}"/></Hyperlink></TextBlock>
-							<TextBlock Text=" | "/>
-							<TextBlock FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"><Hyperlink Click="Settings_MouseUp"><Run Text="{lex:Loc Settings}"/></Hyperlink></TextBlock>
-						</StackPanel>
-					</StackPanel>
-				</Grid>
-			</Border>
-			<Label x:Name="lblVersion" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource generic_Label}"/>
-		</Grid>
-	</Grid>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
+                                <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}" />
+                                <Label Content="{lex:LocTextUpper Enter}" FontSize="18" HorizontalContentAlignment="Center" />
+                            </Grid>
+                        </Button>
+                        <Rectangle Height="1" Fill="Silver" Margin="10" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"><Hyperlink Click="SetUp_MouseUp"><Run Text="{lex:Loc InitialSetup}" /></Hyperlink></TextBlock>
+                            <TextBlock Text=" | " />
+                            <TextBlock FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"><Hyperlink Click="Settings_MouseUp"><Run Text="{lex:Loc Settings}" /></Hyperlink></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Label x:Name="lblVersion" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource generic_Label}" />
+        </Grid>
+    </Grid>
 </Page>

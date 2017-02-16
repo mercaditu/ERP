@@ -1,27 +1,18 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using entity;
-using System.Data;
-using System.Reflection;
-using Cognitivo.Project;
 
 namespace Cognitivo.Project.PrintingPress
 {
     public partial class Estimate
     {
-        entity.dbContext entity = new entity.dbContext();
-        List<PrintingPress.calc_Cost> final_cost = new List<PrintingPress.calc_Cost>();
+        private entity.dbContext entity = new entity.dbContext();
+        private List<PrintingPress.calc_Cost> final_cost = new List<PrintingPress.calc_Cost>();
 
         public int _product_Qty { get; set; }
 
@@ -41,7 +32,6 @@ namespace Cognitivo.Project.PrintingPress
             CollectionViewSource app_dimensionsForWidthViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_dimensionsForWidthViewSource");
             app_dimensionsForWidthViewSource.Source = app_dimension;
         }
-
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -101,7 +91,6 @@ namespace Cognitivo.Project.PrintingPress
             }
             _finalcost = decimal.Round(Convert.ToDecimal(final_cost.Sum(x => x.cost)), 2, MidpointRounding.AwayFromZero);
             MessageBox.Show("Total Cost is :- " + _finalcost.ToString());
-
         }
 
         private void TextBlock_MouseUp_2(object sender, MouseButtonEventArgs e)

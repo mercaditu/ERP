@@ -1,11 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Project
 {
@@ -14,22 +14,24 @@ namespace Cognitivo.Project
     /// </summary>
     public partial class PrintingPressCalculationPage : Page
     {
-        entity.dbContext entity = new entity.dbContext();
+        private entity.dbContext entity = new entity.dbContext();
 
         public PrintingPress.calc_Cost _calc_Cost_BestPrinter;
-        List<PrintingPress.calc_Cost> _calc_CostList = new List<PrintingPress.calc_Cost>();
+        private List<PrintingPress.calc_Cost> _calc_CostList = new List<PrintingPress.calc_Cost>();
 
-        List<PrintingPress.Accessory> _accessoryList = new List<PrintingPress.Accessory>();
-        List<PrintingPress.Product> _productList = new List<PrintingPress.Product>();
-        List<PrintingPress.Printer> _printerList = new List<PrintingPress.Printer>();
-        List<PrintingPress.Paper> _paperList = new List<PrintingPress.Paper>();
-        List<PrintingPress.Ink> _inkList = new List<PrintingPress.Ink>();
+        private List<PrintingPress.Accessory> _accessoryList = new List<PrintingPress.Accessory>();
+        private List<PrintingPress.Product> _productList = new List<PrintingPress.Product>();
+        private List<PrintingPress.Printer> _printerList = new List<PrintingPress.Printer>();
+        private List<PrintingPress.Paper> _paperList = new List<PrintingPress.Paper>();
+        private List<PrintingPress.Ink> _inkList = new List<PrintingPress.Ink>();
 
-        int id_project = 0;
+        private int id_project = 0;
         public int _id_project { get { return id_project; } set { id_project = value; project_Changed(); } }
         public string pagename { get; set; }
+
         //Form Variables
         public string _project_Name { get; set; }
+
         public int _project_Type { get; set; }
         public int _change_Qty { get; set; }
         public int _color_Qty { get; set; }
@@ -37,16 +39,17 @@ namespace Cognitivo.Project
         public int _product_Short { get; set; }
         public int _product_Qty { get; set; }
 
-        List<int> ink_Percentage = new List<int>();
+        private List<int> ink_Percentage = new List<int>();
 
-        PrintingPress.Toner _toner = new PrintingPress.Toner();
+        private PrintingPress.Toner _toner = new PrintingPress.Toner();
 
         public int _printerTag { get; set; }
 
         //Preference of Height, Width, and Weight.
-        int id_Long;
-        int id_Short;
-        int id_Weight;
+        private int id_Long;
+
+        private int id_Short;
+        private int id_Weight;
 
         public PrintingPressCalculationPage()
         {
@@ -72,7 +75,7 @@ namespace Cognitivo.Project
                                      where p.id_app_dimension == id_Weight
                                      group p by new { p.value }
                                          into mygroup
-                                         select mygroup.FirstOrDefault()).ToList();
+                                     select mygroup.FirstOrDefault()).ToList();
         }
 
         private void btnCalculate_Click(object sender, EventArgs e)
@@ -204,13 +207,13 @@ namespace Cognitivo.Project
             Printertt.Runs = printer.Runs;
             Printertt.Speed = printer.Speed;
             Printertt.Time = printer.Time;
-            
+
             //True True
             PrintingPress.calc_Cost calc_Cost_TT = new PrintingPress.calc_Cost();
             calc_Cost_TT._printer = Printertt;
             calc_Cost_TT._product = _product;
             calc_Cost_TT._toner = _toner;
-           
+
             calc_Cost_TT._paper = papertt; //_paperList.Where(x => x.IsSelected).FirstOrDefault();
             calc_Cost_TT._page = new PrintingPress.Page();
             calc_Cost_TT._page.Long = _page_Long;
@@ -251,7 +254,7 @@ namespace Cognitivo.Project
             calc_Cost_TF._printer = Printertf;
             calc_Cost_TF._product = _product;
             calc_Cost_TF._toner = _toner;
-         
+
             calc_Cost_TF._paper = papertf; //_paperList.Where(x => x.IsSelected).FirstOrDefault();
             calc_Cost_TF._page = new PrintingPress.Page();
             calc_Cost_TF._page.Long = _page_Long;
@@ -271,7 +274,6 @@ namespace Cognitivo.Project
             paperft.Qty_Fit = _paper.Qty_Fit;
             paperft.Short = _paper.Short;
             paperft.Weight = _paper.Weight;
-
 
             PrintingPress.Printer Printerft = new PrintingPress.Printer();
             Printerft.Color_Limit = printer.Color_Limit;
@@ -293,7 +295,7 @@ namespace Cognitivo.Project
             calc_Cost_FT._printer = Printerft;
             calc_Cost_FT._product = _product;
             calc_Cost_FT._toner = _toner;
-           
+
             calc_Cost_FT._paper = paperft; //_paperList.Where(x => x.IsSelected).FirstOrDefault();
             calc_Cost_FT._page = new PrintingPress.Page();
             calc_Cost_FT._page.Long = _page_Long;
@@ -334,7 +336,7 @@ namespace Cognitivo.Project
             calc_Cost_FF._printer = Printerff;
             calc_Cost_FF._product = _product;
             calc_Cost_FF._toner = _toner;
-            
+
             calc_Cost_FF._paper = paperff; //_paperList.Where(x => x.IsSelected).FirstOrDefault();
             calc_Cost_FF._page = new PrintingPress.Page();
             calc_Cost_FF._page.Long = _page_Long;
@@ -367,7 +369,8 @@ namespace Cognitivo.Project
             decimal result = parent / child;
             return (int)Math.Floor(result);
         }
-        #endregion
+
+        #endregion "Helper Methods"
 
         #region "Events"
 
@@ -562,9 +565,8 @@ namespace Cognitivo.Project
 
             cmbweight.SelectedIndex = -1;
         }
-        #endregion
 
-
+        #endregion "Events"
 
         private void cmbweight_SelectionChanged(object sender, EventArgs e)
         {
@@ -582,7 +584,6 @@ namespace Cognitivo.Project
             {
                 stppaper.ItemsSource = _filterpaper;
             }
-
         }
 
         private void itemaccesories_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -594,8 +595,5 @@ namespace Cognitivo.Project
                 ((PrintingPress.Accessory)itemaccesories.SelectedItem).RaisePropertyChanged("Calc_Cost");
             }
         }
-
-        
     }
 }
-

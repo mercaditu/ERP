@@ -3,7 +3,7 @@
 namespace Cognitivo.Class
 
 {
-    class clsTransferAmount
+    internal class clsTransferAmount
     {
         public int id_payment_type { get; set; }
         public decimal amount { get; set; }

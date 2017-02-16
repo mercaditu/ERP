@@ -1,13 +1,13 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
 
 namespace Cognitivo.Sales
 {
@@ -16,15 +16,17 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Context
         /// </summary>
-        SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
-        PaymentDB PaymentDB = new PaymentDB();
-        entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
+        private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+
+        private PaymentDB PaymentDB = new PaymentDB();
+        private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
         /// <summary>
         /// CollectionViewSource
         /// </summary>
-        CollectionViewSource sales_invoiceViewSource;
-        CollectionViewSource paymentViewSource;
+        private CollectionViewSource sales_invoiceViewSource;
+
+        private CollectionViewSource paymentViewSource;
 
         public PointOfSale()
         {
@@ -67,7 +69,7 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
             /// VALIDATIONS...
-            /// 
+            ///
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
             if (sales_invoice.contact == null)
             {
@@ -85,7 +87,7 @@ namespace Cognitivo.Sales
             /// Validate Payment <= Sales.GrandTotal
             //if (payment.GrandTotal >= payment.GrandTotal_Detail)
             //{
-            if (payment.GrandTotalDetail < Math.Round(sales_invoice.GrandTotal,2))
+            if (payment.GrandTotalDetail < Math.Round(sales_invoice.GrandTotal, 2))
             {
                 tabPayment.Focus();
                 return;
@@ -105,7 +107,7 @@ namespace Cognitivo.Sales
                 SalesInvoiceDB.Approve(true);
 
                 List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
-                PaymentDB.Approve(payment_schedualList,true,(bool)chkreceipt.IsChecked);
+                PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
                 New_Sale_Payment();
@@ -114,7 +116,7 @@ namespace Cognitivo.Sales
 
         private void New_Sale_Payment()
         {
-            ///Creating new SALES INVOICE for upcomming sale. 
+            ///Creating new SALES INVOICE for upcomming sale.
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
             sales_invoice sales_invoice = SalesInvoiceDB.New(0, false);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
@@ -127,7 +129,7 @@ namespace Cognitivo.Sales
             }));
 
             PaymentDB = new PaymentDB();
-            ///Creating new PAYMENT for upcomming sale. 
+            ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;
             PaymentDB.payments.Add(payment);
@@ -143,7 +145,7 @@ namespace Cognitivo.Sales
             }));
         }
 
-        #endregion
+        #endregion ActionButtons
 
         #region SmartBox Selection
 
@@ -171,7 +173,7 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);       
+                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
 
                     if (item_product != null && item_product.can_expire)
@@ -183,7 +185,7 @@ namespace Cognitivo.Sales
                     else
                     {
                         decimal QuantityInStock = sbxItem.QuantityInStock;
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null,sbxItem.Quantity);
+                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null, sbxItem.Quantity);
                     }
 
                     sales_invoiceViewSource.View.Refresh();
@@ -194,7 +196,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        #endregion
+        #endregion SmartBox Selection
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -309,7 +311,7 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
             payment_detail payment_detail = e.NewItem as payment_detail;
-            
+
             payment_detail.State = EntityState.Added;
             payment_detail.IsSelected = true;
             payment_detail.Default_id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -350,8 +352,7 @@ namespace Cognitivo.Sales
                     CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
 
-                   // btnPromotion_Click(sender, e);
-
+                    // btnPromotion_Click(sender, e);
                 }
                 else if (e.Parameter as payment_detail != null)
                 {
@@ -367,7 +368,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        #endregion
+        #endregion Details
 
         #region Discount
 
@@ -381,7 +382,7 @@ namespace Cognitivo.Sales
             popupDiscount.IsOpen = false;
         }
 
-        #endregion
+        #endregion Discount
 
         #region Contact CRUD
 
@@ -407,7 +408,7 @@ namespace Cognitivo.Sales
             sbxContact.LoadData();
         }
 
-        #endregion
+        #endregion Contact CRUD
 
         private void lblGrandTotalsales_DataContextChanged(object sender, EventArgs e)
         {
@@ -454,7 +455,6 @@ namespace Cognitivo.Sales
         private async void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
 
             List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
             if (promoList.Count() > 0)
@@ -505,7 +505,7 @@ namespace Cognitivo.Sales
 
                 tabPOS.IsSelected = true;
                 tabContact.IsSelected = true;
-            }    
+            }
         }
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -516,6 +516,7 @@ namespace Cognitivo.Sales
                 cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == app_branch.id_branch).ToList();
             }
         }
+
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
@@ -534,10 +535,9 @@ namespace Cognitivo.Sales
                         item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                         decimal QuantityInStock = sbxItem.QuantityInStock;
 
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement,sbxItem.Quantity);
+                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement, sbxItem.Quantity);
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
-                 
                 }
                 sales_invoiceViewSource.View.Refresh();
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
@@ -547,9 +547,6 @@ namespace Cognitivo.Sales
                 //Cleans for reuse.
                 crud_modalExpire.Children.Clear();
             }
-
         }
-
-       
     }
 }

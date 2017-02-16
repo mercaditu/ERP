@@ -1,23 +1,23 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Sales
 {
     public partial class Budget : Page
     {
-        SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
+        private SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
-        CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
 
         public Budget()
         {
@@ -59,6 +59,7 @@ namespace Cognitivo.Sales
         }
 
         #region toolbar Events
+
         private void New_Click(object sender)
         {
             sales_budget sales_budget = SalesBudgetDB.New();
@@ -77,7 +78,6 @@ namespace Cognitivo.Sales
                 sales_budget.State = EntityState.Modified;
                 SalesBudgetDB.Entry(sales_budget).State = EntityState.Modified;
             }
-
             else
             {
                 toolBar.msgWarning("Please Select A Record");
@@ -115,8 +115,7 @@ namespace Cognitivo.Sales
                 sales_budgetsales_budget_detailViewSource.View.Refresh();
         }
 
-
-        #endregion
+        #endregion toolbar Events
 
         #region Filter Data
 
@@ -138,7 +137,8 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        #endregion
+
+        #endregion Filter Data
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -146,6 +146,7 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
+
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             Settings SalesSettings = new Settings();
@@ -240,7 +241,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem,item_movement item_movement,decimal quantity)
+        private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
 
@@ -251,7 +252,7 @@ namespace Cognitivo.Sales
                 _sales_budget_detail.sales_budget = sales_budget;
                 _sales_budget_detail.Quantity_InStock = QuantityInStock;
                 _sales_budget_detail.Contact = sales_budget.contact;
-                _sales_budget_detail.quantity= quantity;
+                _sales_budget_detail.quantity = quantity;
                 _sales_budget_detail.item_description = item.description;
                 _sales_budget_detail.item = item;
                 _sales_budget_detail.id_item = item.id_item;
@@ -261,8 +262,7 @@ namespace Cognitivo.Sales
                     _sales_budget_detail.expire_date = item_movement.expire_date;
                     _sales_budget_detail.movement_id = (int)item_movement.id_movement;
                 }
-               
-                
+
                 sales_budget.sales_budget_detail.Add(_sales_budget_detail);
             }
             else
@@ -449,7 +449,7 @@ namespace Cognitivo.Sales
                     sales_order_detail.quantity = sales_budget_detail.quantity - sales_budget_detail.sales_order_detail.Sum(x => x.quantity);
                     sales_order_detail.unit_cost = sales_budget_detail.unit_cost;
                     sales_order_detail.unit_price = sales_budget_detail.unit_price;
-                    sales_order_detail.movement_id=sales_budget_detail.movement_id;
+                    sales_order_detail.movement_id = sales_budget_detail.movement_id;
 
                     if (sales_budget_detail.expire_date != null || !string.IsNullOrEmpty(sales_budget_detail.batch_code))
                     {
@@ -482,9 +482,10 @@ namespace Cognitivo.Sales
                 sales_budget.DiscountWithoutPercentage += TrailingDecimals;
             }
         }
+
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modalExpire.Visibility==Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
+            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
                 item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
@@ -494,7 +495,7 @@ namespace Cognitivo.Sales
                     item_movement item_movement = SalesBudgetDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                     Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement,sbxItem.Quantity));
+                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement, sbxItem.Quantity));
                 }
             }
         }

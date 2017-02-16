@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Product
 {
     public partial class PriceList : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource item_price_listViewSource = null;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource item_price_listViewSource = null;
 
         public PriceList()
         {
@@ -22,7 +22,7 @@ namespace Cognitivo.Product
             try
             {
                 item_price_listViewSource = (CollectionViewSource)this.FindResource("item_price_listViewSource");
-                entity.db.item_price_list.Where(a=>a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
+                entity.db.item_price_list.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 item_price_listViewSource.Source = entity.db.item_price_list.Local;
             }
             catch { }
@@ -39,6 +39,7 @@ namespace Cognitivo.Product
             objPriceList._entity = entity;
             crud_modal.Children.Add(objPriceList);
         }
+
         private void pnl_PriceList_Edit_Click(object sender, int intPriceListId)
         {
             crud_modal.Visibility = Visibility.Visible;

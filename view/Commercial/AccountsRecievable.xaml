@@ -1,130 +1,130 @@
-﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:local="clr-namespace:Cognitivo.Commercial"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	x:Name="_AccountsRecievable"
-	  xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Commercial.AccountsRecievable" 
-        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+	  xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Commercial.AccountsRecievable"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
-	  lex:LocalizeDictionary.DesignCulture="en-US" 
+	  lex:LocalizeDictionary.DesignCulture="en-US"
 	  xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
 	  mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Title="{lex:Loc AccountsReceivable}" Loaded="Page_Loaded">
 
-	<Page.Resources>
-		<converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
-		<CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
-		<CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
-		<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
-	</Page.Resources>
+    <Page.Resources>
+        <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter" />
+        <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" />
+        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+    </Page.Resources>
 
-	<Grid DataContext="{StaticResource payment_schedualViewSource}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+    <Grid DataContext="{StaticResource payment_schedualViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-		<Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
-			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" IsVisibleChanged="crud_modal_IsVisibleChanged" />
 
-		<ListBox SelectionChanged="ListBox_SelectionChanged"
+        <ListBox SelectionChanged="ListBox_SelectionChanged"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource contactViewSource}}"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<cntrl:navList recordCode="{Binding code}" 
-								   recordSecondaryName="{Binding gov_code}" recordName="{Binding name}" 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code}"
+								   recordSecondaryName="{Binding gov_code}" recordName="{Binding name}"
 								   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-					</cntrl:navList>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+                    </cntrl:navList>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-		<Grid Background="White" Grid.Column="1" Grid.Row="1">
-			<DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+        <Grid Background="White" Grid.Column="1" Grid.Row="1">
+            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
 					  RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False">
-				<DataGrid.Columns>
-					<DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-											Header="" Width="32" 
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											Header="" Width="32"
 											ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-											EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-					<DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
-					<DataGridTextColumn Binding="{Binding sales_invoice.number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="{lex:Loc Cognitivo:local:SalesInvoice}" Width="*" MinWidth="64" IsReadOnly="True"/>
-					<DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+											EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                    <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+										Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding sales_invoice.number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+										Header="{lex:Loc Cognitivo:local:SalesInvoice}" Width="*" MinWidth="64" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
 										Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
-						<DataGridTextColumn.ElementStyle>
-							<Style TargetType="{x:Type TextBlock}">
-								<Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}"/>
-							</Style>
-						</DataGridTextColumn.ElementStyle>
-					</DataGridTextColumn>
-					<DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-										Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
-										ElementStyle="{StaticResource RightAlignStyle}"/>
-					<DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-										Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
-				</DataGrid.Columns>
-				<DataGrid.RowDetailsTemplate>
-					<DataTemplate>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+										Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True"
+										ElementStyle="{StaticResource RightAlignStyle}" />
+                    <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+										Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True" />
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
                         <DataGrid Margin="4" MaxHeight="256"
-							ItemsSource="{Binding sales_invoice.sales_invoice_detail}" 
-							CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" 
+							ItemsSource="{Binding sales_invoice.sales_invoice_detail}"
+							CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
 							VirtualizingPanel.VirtualizationMode="Recycling">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
-														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
-								<DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-														Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128"/>
-								<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
-														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"/>
-								<!-- UnitPrice_Vat -->
-								<DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
-								<DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"/>
-							 
-								<DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, Mode=OneWay, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
-														Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
-							</DataGrid.Columns>
-						</DataGrid>
-					</DataTemplate>
-				</DataGrid.RowDetailsTemplate>
-			</DataGrid>
-		</Grid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}"
+														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100" />
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+														Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128" />
+                                <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
+                                <!-- UnitPrice_Vat -->
+                                <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
+                                <DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" />
 
-		<StackPanel Grid.Column="2" Background="WhiteSmoke" Grid.Row="1">
-			<StackPanel Margin="8,0">
-				<Label Content="{lex:Loc Filter}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4"/>
-				<StackPanel x:Name="stckFilter"/>
-				<Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4"/>
-				<Button Content="{lex:Loc ReArrange}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" 
-						Click="Rearrange_Click" Visibility="Collapsed"/>
-				<Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Payment_Click"/>
-                <Button Content="{lex:Loc Interest}" x:Name="BtnInterest" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Interest_Click" Visibility="Collapsed"/>
-				<Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
-				<Rectangle Style="{StaticResource line_Bar}"/>
-				<Button Content="{lex:Loc Refinance}" Background="{StaticResource AccentColor_Introvert}" Style="{StaticResource btn_green}" Margin="0,4" Click="Refince_Click"/>
-			</StackPanel>
-		</StackPanel>
+                                <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, Mode=OneWay, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}"
+														Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+        </Grid>
 
-		<cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3" appName="AccountsReceivable"
-			btnSearch_Click="toolBar_btnSearch_Click"/>
-		<Grid Grid.Column="1" Visibility="Collapsed">
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-				<Label Content="{Binding AccountDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
-			</StackPanel>
-		</Grid>
-	</Grid>
+        <StackPanel Grid.Column="2" Background="WhiteSmoke" Grid.Row="1">
+            <StackPanel Margin="8,0">
+                <Label Content="{lex:Loc Filter}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
+                <StackPanel x:Name="stckFilter" />
+                <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
+                <Button Content="{lex:Loc ReArrange}" Style="{StaticResource btn_green}" Background="White" Margin="0,4"
+						Click="Rearrange_Click" Visibility="Collapsed" />
+                <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Payment_Click" />
+                <Button Content="{lex:Loc Interest}" x:Name="BtnInterest" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Interest_Click" Visibility="Collapsed" />
+                <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click" />
+                <Rectangle Style="{StaticResource line_Bar}" />
+                <Button Content="{lex:Loc Refinance}" Background="{StaticResource AccentColor_Introvert}" Style="{StaticResource btn_green}" Margin="0,4" Click="Refince_Click" />
+            </StackPanel>
+        </StackPanel>
+
+        <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3" appName="AccountsReceivable"
+			btnSearch_Click="toolBar_btnSearch_Click" />
+        <Grid Grid.Column="1" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="{Binding AccountDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>

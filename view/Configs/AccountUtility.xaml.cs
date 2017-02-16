@@ -1,23 +1,25 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.ComponentModel;
 
 namespace Cognitivo.Configs
 {
-
     public partial class AccountUtility : INotifyPropertyChanged
     {
         #region Load and Initilize
-        db db = new db();
+
+        private db db = new db();
 
         #region NotifyPropertyChange
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -25,27 +27,31 @@ namespace Cognitivo.Configs
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-        #endregion
 
-        CollectionViewSource app_accountViewSource
+        #endregion NotifyPropertyChange
+
+        private CollectionViewSource app_accountViewSource
             , app_account_listViewSource
             , app_account_detail_adjustViewSource
             , app_accountapp_account_detailViewSource
             , amount_transferViewSource = null;
-        List<Class.clsTransferAmount> listTransferAmt = null;
-        
+
+        private List<Class.clsTransferAmount> listTransferAmt = null;
+
         public bool IsActive
         {
             get { return _IsActive; }
             set { _IsActive = value; RaisePropertyChanged("IsActive"); }
         }
+
         private bool _IsActive;
 
         public DateTime LastUsed
         {
             get { return _LastUsed; }
-            set { _LastUsed = value;  RaisePropertyChanged("LastUsed"); }
+            set { _LastUsed = value; RaisePropertyChanged("LastUsed"); }
         }
+
         private DateTime _LastUsed;
 
         public AccountUtility()
@@ -56,19 +62,19 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
-            
+
             //Main Account DataGrid.
             app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             app_accountViewSource.Source = db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
-            
+
             app_account_listViewSource = this.FindResource("app_account_listViewSource") as CollectionViewSource;
             app_account_listViewSource.Source = db.app_account.Local.Where(a => a.id_account_type == app_account.app_account_type.Terminal).ToList();
 
             CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
             app_accountDestViewSource.Source = db.app_account.Local;
 
-            //Payment Type 
+            //Payment Type
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
@@ -147,7 +153,8 @@ namespace Cognitivo.Configs
                 frmActive.Children.Add(AccountActive);
             }
         }
-        #endregion
+
+        #endregion Load and Initilize
 
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
@@ -265,12 +272,10 @@ namespace Cognitivo.Configs
             {
                 app_account_listViewSource.Source = db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == CurrentSession.Id_Company).ToList();
                 app_account_listViewSource.View.Refresh();
-             
             }
-            if (app_accountViewSource!=null)
+            if (app_accountViewSource != null)
             {
                 app_accountViewSource.View.Refresh();
-              
             }
             if (app_accountapp_account_detailViewSource != null)
             {

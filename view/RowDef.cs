@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace View
 {
@@ -11,27 +11,32 @@ namespace View
             _cells = new ObservableCollection<string>();
             _children = new List<RowDef>();
         }
+
         public RowDef(RowDef parent)
             : this()
         {
             Parent = parent;
         }
+
         public static event Action<RowDef, EventArgs> RowExpanding;
+
         public static event Action<RowDef, EventArgs> RowCollapsing;
 
         //TODO: Probably should have another class defining Cell, in case you want something more sophisticated than just a string
-        ObservableCollection<string> _cells;
+        private ObservableCollection<string> _cells;
 
         public ObservableCollection<string> Cells
         {
             get { return _cells; }
             internal set { _cells = value; }
         }
-        bool? _isExpanded;
+
+        private bool? _isExpanded;
+
         public bool? IsExpanded
         {
             get { return _isExpanded; }
-            set 
+            set
             {
                 if (_isExpanded != value)
                 {
@@ -49,13 +54,17 @@ namespace View
                 }
             }
         }
-        List<RowDef> _children;
+
+        private List<RowDef> _children;
+
         public List<RowDef> Children
         {
             get { return _children; }
             set { _children = value; }
         }
-        RowDef _parent;
+
+        private RowDef _parent;
+
         public RowDef Parent
         {
             get { return _parent; }
@@ -66,13 +75,17 @@ namespace View
                     _level = _parent.Level + 1;
             }
         }
-        int _level;
+
+        private int _level;
+
         public int Level
         {
             get { return _level; }
             set { _level = value; }
         }
-        bool _isVisible;
+
+        private bool _isVisible;
+
         public bool IsVisible
         {
             get { return _isVisible; }

@@ -3,7 +3,7 @@ using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class SecurityConverter : IValueConverter
+    internal class SecurityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

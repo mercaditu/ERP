@@ -1,20 +1,9 @@
-﻿using System;
+﻿using entity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
-using entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
 
 namespace Cognitivo.Project.PrintingPress
 {
@@ -23,9 +12,9 @@ namespace Cognitivo.Project.PrintingPress
     /// </summary>
     public partial class Template
     {
-        db entity = new db();
-        CollectionViewSource project_templateViewSource = null;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        private db entity = new db();
+        private CollectionViewSource project_templateViewSource = null;
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Template()
         {
@@ -34,7 +23,6 @@ namespace Cognitivo.Project.PrintingPress
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
             try
             {
                 project_templateViewSource = (CollectionViewSource)this.FindResource("project_templateViewSource");
@@ -48,7 +36,7 @@ namespace Cognitivo.Project.PrintingPress
                 item_tagViewSource.Source = entity.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource project_taskViewSource = (CollectionViewSource)this.FindResource("project_taskViewSource");
-                project_taskViewSource.Source = entity.project_task.Where(a=>a.id_company == CurrentSession.Id_Company).OrderBy(a => a.item_description).ToList();
+                project_taskViewSource.Source = entity.project_task.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.item_description).ToList();
 
                 List<Class.clsLogic> list_cls_logic = new List<Class.clsLogic>();
                 Class.clsLogic objpaper = new Class.clsLogic();
@@ -81,7 +69,7 @@ namespace Cognitivo.Project.PrintingPress
                 Class.clsLogic objServicePerEvent = new Class.clsLogic();
                 objServicePerEvent.NameProperty = "Per Event Service";
                 list_cls_logic.Add(objServicePerEvent);
-                
+
                 id_item_logicComboBox.ItemsSource = list_cls_logic.OrderBy(x => x.NameProperty);
 
                 List<Class.clsProjectTemplateType> list_project_template_type = new List<Class.clsProjectTemplateType>();
@@ -104,20 +92,20 @@ namespace Cognitivo.Project.PrintingPress
             catch { }
         }
 
-        #region Toolbar 
+        #region Toolbar
+
         private void ctrlToolBar_btnCancel_Click(object sender)
         {
             project_type_templateDataGrid.CancelEdit();
             project_templateViewSource.View.MoveCurrentToFirst();
-            
+
             stackMain.IsEnabled = false;
             project_type_templateDataGrid.IsReadOnly = true;
         }
 
         private void ctrlToolBar_btnDelete_Click(object sender)
         {
-             
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo,MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 entity.project_template.Remove((project_template)project_templateDataGrid.SelectedItem);
@@ -150,6 +138,7 @@ namespace Cognitivo.Project.PrintingPress
                 ctrlToolBar.msgSaved(1);
             }
         }
-        #endregion
+
+        #endregion Toolbar
     }
 }

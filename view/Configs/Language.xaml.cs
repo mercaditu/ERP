@@ -7,7 +7,6 @@ namespace Cognitivo.Configs
 {
     public partial class Language : Page
     {
-
         public Language()
         {
             InitializeComponent();
@@ -26,11 +25,9 @@ namespace Cognitivo.Configs
                 CultureInfo ci = new CultureInfo(Properties.Settings.Default.language_ISO);
                 NumberFormatInfo LocalFormat =
         (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
-                             
-               WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = ci;
-               // Thread.CurrentThread.CurrentUICulture = ci;
-                
- 
+
+                WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = ci;
+                // Thread.CurrentThread.CurrentUICulture = ci;
             }
             catch (Exception ex)
             {
@@ -38,7 +35,5 @@ namespace Cognitivo.Configs
                 //throw ex;
             }
         }
-
-      
     }
 }

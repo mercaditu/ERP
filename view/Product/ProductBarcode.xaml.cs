@@ -1,20 +1,14 @@
-﻿using System;
+﻿using entity;
+using Microsoft.Reporting.WinForms;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Data.Entity;
-using System.Data;
-using entity;
-using System.Data.Entity.Validation;
-using System.IO;
-using System.Threading.Tasks;
-using cntrl.Controls;
-using Microsoft.Reporting.WinForms;
-
 
 namespace Cognitivo.Product
 {
@@ -23,8 +17,9 @@ namespace Cognitivo.Product
     /// </summary>
     public partial class ProductBarcode : Page
     {
-        ItemDB ItemDB = null;
-        CollectionViewSource itemViewSource;
+        private ItemDB ItemDB = null;
+        private CollectionViewSource itemViewSource;
+
         public ProductBarcode()
         {
             InitializeComponent();
@@ -43,8 +38,8 @@ namespace Cognitivo.Product
             {
                 cmbDocument.Items.Add(file);
             }
-
         }
+
         private void CreateFile()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
@@ -78,11 +73,8 @@ namespace Cognitivo.Product
                         File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\item" + "\\" + file + ".rdlc",
                                path + SubFolder + "\\" + file + ".rdlc");
                     }
-
                 }
             }
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -93,12 +85,12 @@ namespace Cognitivo.Product
                 PrintReport(item);
             }
         }
-        void PrintReport(item item)
-        {
 
+        private void PrintReport(item item)
+        {
         }
 
-        void DisplayReport(item item, string Filename)
+        private void DisplayReport(item item, string Filename)
         {
             string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\item";
             ReportDataSource reportDataSource = new ReportDataSource();

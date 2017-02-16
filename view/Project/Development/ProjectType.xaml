@@ -1,73 +1,72 @@
 ﻿<Page   x:Class="Cognitivo.Project.Development.ProjectType" x:Name="_ProjectType" Title="{lex:Loc Template}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:entity="clr-namespace:entity;assembly=entity"
         xmlns:local="clr-namespace:cntrl;assembly=cntrl"
         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
         xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
         xmlns:converter="clr-namespace:Cognitivo.Converters"
-             xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
+             xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
         xmlns:data="clr-namespace:entity;assembly=entity"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
         mc:Ignorable="d"
         MinHeight="400" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
-        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
-        <converter:ActiveToStatus x:Key="ActiveToStatus"/>
-        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-        <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
-        <CollectionViewSource x:Key="project_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_template}, CreateList=True}"/>
-        <CollectionViewSource x:Key="projectproject_template_detailViewSource" Source="{Binding project_template_detail, Source={StaticResource project_templateViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:project_template_detail}, CreateList=True}"/>    
+        <converter:TrueToFalseConverter x:Key="TrueToFalse" />
+        <converter:ActiveToStatus x:Key="ActiveToStatus" />
+        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color" />
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}" />
+        <CollectionViewSource x:Key="project_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_template}, CreateList=True}" />
+        <CollectionViewSource x:Key="projectproject_template_detailViewSource" Source="{Binding project_template_detail, Source={StaticResource project_templateViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:project_template_detail}, CreateList=True}" />
     </Page.Resources>
     <Grid DataContext="{StaticResource project_templateViewSource}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="crud_modal" Background="{StaticResource winBackground}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid x:Name="crud_modal" Background="{StaticResource winBackground}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
         <Grid Grid.Row="1">
-    
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource nav_List}"
+
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource nav_List}"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}"
 			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <cntrl:navList recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" recordCode="{Binding comment}"
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" recordCode="{Binding comment}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Status="{Binding is_active,Converter={StaticResource ActiveToStatus},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
-                                    />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                                    Status="{Binding is_active,Converter={StaticResource ActiveToStatus},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Background="White">
-            <TextBlock Style="{StaticResource TextAreaH2}" 
-                       Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8"/>
-            
+            <TextBlock Style="{StaticResource TextAreaH2}"
+                       Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" />
+
             <Grid DataContext="{StaticResource projectproject_template_detailViewSource}" Grid.Row="1" Grid.Column="1" Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Grid>
-                    <Grid.Resources >
-                        <HierarchicalDataTemplate DataType="{x:Type data:project_template_detail}" 
+                    <Grid.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type data:project_template_detail}"
                                               ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <Panels:pnl_TreeView 
+                            <Panels:pnl_TreeView
                                                 Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                                 IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
@@ -78,7 +77,7 @@
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                         <TreeView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
+                                <VirtualizingStackPanel />
                             </ItemsPanelTemplate>
                         </TreeView.ItemsPanel>
                         <TreeView.ItemContainerStyle>
@@ -89,38 +88,37 @@
                     </cntrl:ExtendedTreeView>
                 </Grid>
                 <StackPanel Background="WhiteSmoke" Grid.Column="1" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
-                    <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding parent.name, FallbackValue=---}"/>
+                    <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center"
+                       Content="{Binding parent.name, FallbackValue=---}" />
 
                     <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
-                           Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
+                           Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center" />
                     <!--<cntrl:toolBar_Mini
-                        btnNew_Click="toolBar_Mini_btnNew_Click"/>-->
+                        btnNew_Click="toolBar_Mini_btnNew_Click" />-->
                     <cntrl:toolBar_Mini appName="ProjectType" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     btnNew_Click="btnNewTask_Click"
                     btnEdit_Click="btnEditTask_Click"
                     btnSave_Click="btnSaveTask_Click"
                     btnDelete_Click="btnDeleteTask_Click"
-                          btnParent_Click="btnAddParentTask_Click"
-                    />
+                          btnParent_Click="btnAddParentTask_Click" />
                     <!--<Grid>
-                        <Rectangle Margin="6" Height="1" Fill="Gainsboro"/>
+                        <Rectangle Margin="6" Height="1" Fill="Gainsboro" />
                         <Border CornerRadius="10" Background="White" HorizontalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect ShadowDepth="0"/>
+                                <DropShadowEffect ShadowDepth="0" />
                             </Border.Effect>
                             <StackPanel Orientation="Horizontal">
                                 <Label MouseDown="btnAddParentTask_Click" ToolTip="{lex:Loc NewParentTask}"
-                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4" FontSize="15"/>
+                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4" FontSize="15" />
                                 <Label MouseDown="btnNewTask_Click" ToolTip="{lex:Loc New}"
-                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4"/>
+                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4" />
                                 <Label MouseDown="btnEditTask_Click" ToolTip="{lex:Loc Edit}"
-                                   Style="{StaticResource btn_Label}" Content="e" Margin="10,4"/>
+                                   Style="{StaticResource btn_Label}" Content="e" Margin="10,4" />
                                 <Label MouseDown="btnSaveTask_Click" ToolTip="{lex:Loc Save}"
-                                   Style="{StaticResource btn_Label}" Content="s" Margin="10,4"/>
-                                <Rectangle Width="1" Fill="WhiteSmoke" Margin="4"/>
+                                   Style="{StaticResource btn_Label}" Content="s" Margin="10,4" />
+                                <Rectangle Width="1" Fill="WhiteSmoke" Margin="4" />
                                 <Label MouseDown="btnDeleteTask_Click" ToolTip="{lex:Loc Delete}"
-                                   Style="{StaticResource btn_Label}" Content="d" Margin="10,4"/>
+                                   Style="{StaticResource btn_Label}" Content="d" Margin="10,4" />
                             </StackPanel>
                         </Border>
                     </Grid>-->
@@ -128,19 +126,17 @@
                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
 
                         <StackPanel x:Name="stpcode" IsEnabled="False" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
-                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
-                            <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"   SelectedValue="{Binding item.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                SelectionChanged="cbxItemType_SelectionChanged"/>
-                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-                            <TextBox Text="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
+                            <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"   SelectedValue="{Binding item.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                SelectionChanged="cbxItemType_SelectionChanged" />
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                            <TextBox Text="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
                             <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding item.name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                                
-                            <Label Content="{lex:Loc description}" Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                                        
-                        </StackPanel>
 
+                            <Label Content="{lex:Loc description}" Style="{StaticResource input_label}" />
+                            <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -149,13 +145,11 @@
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" appName="ProjectType"
                        VerticalAlignment="Top" HorizontalAlignment="Stretch"
                        btnSearch_Click="toolBar_btnSearch_Click"
-			           btnNew_Click="toolBar_btnNew_Click" 
+			           btnNew_Click="toolBar_btnNew_Click"
                        btnEdit_Click="toolBar_btnEdit_Click"
-                      
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                       />
-        <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,25,0" Click="toolBar_btnApprove_Click"/>
+
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,25,0" Click="toolBar_btnApprove_Click" />
         <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnAnull_Click" />
-      
     </Grid>
 </Page>

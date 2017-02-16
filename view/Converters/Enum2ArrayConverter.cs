@@ -3,7 +3,7 @@ using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class Enum2ArrayConverter : IValueConverter
+    internal class Enum2ArrayConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -11,6 +11,7 @@ namespace Cognitivo.Converters
 
             return Enum.GetValues(value as Type);
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return null;

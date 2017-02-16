@@ -1,13 +1,14 @@
-﻿using MySql.Data.MySqlClient;
+﻿using entity;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using entity;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
+
 namespace Cognitivo.Setup.Migration.Cogent
 {
     /// <summary>
@@ -33,6 +34,7 @@ namespace Cognitivo.Setup.Migration.Cogent
         {
             InitializeComponent();
         }
+
         public DataTable exeDTMysql(string sql)
         {
             DataTable dt = new DataTable();
@@ -76,13 +78,11 @@ namespace Cognitivo.Setup.Migration.Cogent
                 return;
             }
             Task basic_Task = Task.Factory.StartNew(() => start());
-
         }
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             popConnBuilder.IsOpen = true;
-
         }
 
         private void TestConn_Click(object sender, RoutedEventArgs e)
@@ -121,9 +121,9 @@ namespace Cognitivo.Setup.Migration.Cogent
             //           + " from information_schema.tables where TAble_schema='"+ "astilleronew" +"'";
 
             db.Truncates();
-
         }
     }
+
     public static class DbContextExtension
     {
         public static int Truncates(this dbContext db, params string[] tables)

@@ -1,22 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
 
 namespace Cognitivo.Sales
 {
     public partial class Packing : Page
     {
-        PackingListDB dbContext = new PackingListDB();
+        private PackingListDB dbContext = new PackingListDB();
 
-        app_branch app_branch;
+        private app_branch app_branch;
 
-        CollectionViewSource item_movementViewSource;
-        CollectionViewSource inventoryViewSource, sales_packingViewSource;
+        private CollectionViewSource item_movementViewSource;
+        private CollectionViewSource inventoryViewSource, sales_packingViewSource;
 
         public string InvoiceCode
         {
@@ -49,11 +49,11 @@ namespace Cognitivo.Sales
             cbxLocation.ItemsSource = app_branch.app_location.ToList();
         }
 
-        private  void ListProducts(object sender, EventArgs e)
+        private void ListProducts(object sender, EventArgs e)
         {
             if (InvoiceCode != string.Empty)
             {
-                List<sales_invoice_detail> sales_invoice_detailLIST =  dbContext.sales_invoice_detail
+                List<sales_invoice_detail> sales_invoice_detailLIST = dbContext.sales_invoice_detail
                     .Where(x => x.sales_invoice.number.Contains(InvoiceCode) &&
                         //Contado (Cash) + Payment Made
                         (
@@ -66,7 +66,7 @@ namespace Cognitivo.Sales
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
 
-                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product.Count>0))
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product.Count > 0))
                 {
                     item_movement item_movement = new item_movement();
 
@@ -108,7 +108,7 @@ namespace Cognitivo.Sales
 
                 dbContext.item_movement.AddRange(item_movementLIST);
                 item_movementViewSource.Source = item_movementLIST;
-                item_movementViewSource.View.Refresh(); 
+                item_movementViewSource.View.Refresh();
             }
         }
 
@@ -138,17 +138,17 @@ namespace Cognitivo.Sales
                                 && a.app_location.id_branch == CurrentSession.Id_Branch
                                 group a by new { a.item_product, a.app_location }
                                     into last
-                                    select new
-                                    {
-                                        code = last.Key.item_product.item.code,
-                                        name = last.Key.item_product.item.name,
-                                        location = last.Key.app_location.name,
-                                        itemid = last.Key.item_product.item.id_item,
-                                        quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                                        id_item_product = last.Key.item_product.id_item_product,
-                                        measurement = last.Key.item_product.item.app_measurement.code_iso,
-                                        id_location = last.Key.app_location.id_location
-                                    }).ToList().OrderBy(y => y.name);
+                                select new
+                                {
+                                    code = last.Key.item_product.item.code,
+                                    name = last.Key.item_product.item.name,
+                                    location = last.Key.app_location.name,
+                                    itemid = last.Key.item_product.item.id_item,
+                                    quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                                    id_item_product = last.Key.item_product.id_item_product,
+                                    measurement = last.Key.item_product.item.app_measurement.code_iso,
+                                    id_location = last.Key.app_location.id_location
+                                }).ToList().OrderBy(y => y.name);
 
                             inventoryViewSource.Source = movement;
                         }
@@ -164,7 +164,7 @@ namespace Cognitivo.Sales
 
             sales_packing.contact = item_movement.sales_invoice_detail.sales_invoice.contact;
             sales_packing.id_contact = item_movement.sales_invoice_detail.sales_invoice.id_contact;
-            
+
             foreach (item_movement _item_movement in item_movementViewSource.View.OfType<item_movement>().ToList())
             {
                 //Creates a Packing Detail
@@ -203,7 +203,6 @@ namespace Cognitivo.Sales
             }
             dbContext.SaveChanges();
             item_movementViewSource.Source = null;
-
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)

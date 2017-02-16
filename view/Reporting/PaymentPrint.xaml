@@ -1,30 +1,29 @@
 ﻿<Page x:Class="Cognitivo.Reporting.PaymentPrint"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:local="clr-namespace:Cognitivo.Reporting"
 		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 		xmlns:entity="clr-namespace:entity;assembly=entity"
-	  mc:Ignorable="d" 
+	  mc:Ignorable="d"
 		   xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  d:DesignHeight="500" d:DesignWidth="700"
 	  Title="PaymentPrint" Loaded="Page_Loaded">
-	<Page.Resources>
-		<CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
-        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/> 
-		
-	</Page.Resources>
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="1*"/>
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition  Width="2*"/>
-		</Grid.ColumnDefinitions>
+    <Page.Resources>
+        <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
+        <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition  Width="2*" />
+        </Grid.ColumnDefinitions>
         <StackPanel Grid.RowSpan="2" Background="{StaticResource AccentColor_Brush}">
             <ListBox x:Name="PaymentTypeDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="White"
@@ -33,7 +32,7 @@
 							 ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" Grid.Row="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -41,56 +40,52 @@
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="dgvPaymnet_SelectionChanged"
-							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1"  >
-                
+							 ItemsSource="{Binding Source={StaticResource payment_detailViewSource}}" Grid.Row="1">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" recordName="{Binding payment.contact.name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											
-											 
-											/>
+											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+											   recordSecondaryName="{Binding value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
 
         <Grid Grid.Column="1" Background="White" DataContext="{Binding Source={StaticResource payment_detailViewSource}}">
-            <metro:ToggleSwitch x:Name="Print" Width="150" Content="Printed" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" Height="50" VerticalAlignment="Top" Checked="Print_Checked" Unchecked="Print_Checked"/>
+            <metro:ToggleSwitch x:Name="Print" Width="150" Content="Printed" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" Height="50" VerticalAlignment="Top" Checked="Print_Checked" Unchecked="Print_Checked" />
             <StackPanel>
-                <Label Content="Contact" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding payment.contact.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
+                <Label Content="Contact" Style="{StaticResource input_label}" />
+                <Label Content="{Binding payment.contact.name, Mode=OneWay}" Style="{StaticResource generic_Label}" />
 
-                <Label Content="PaymentType" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-                <Label Content="{Binding payment_type.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
+                <Label Content="PaymentType" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left" />
+                <Label Content="{Binding payment_type.name, Mode=OneWay}" Style="{StaticResource generic_Label}" />
 
-                <Label Content="Account" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding app_account.name, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
-                <Label Content="Value" Style="{StaticResource input_label}"/>
+                <Label Content="Account" Style="{StaticResource input_label}" />
+                <Label Content="{Binding app_account.name, Mode=OneWay}" Style="{StaticResource generic_Label}" />
+                <Label Content="Value" Style="{StaticResource input_label}" />
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding value, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="N2" Style="{StaticResource generic_Label}"/>
-                    <Label Content="{Binding app_currencyfx.app_currency.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding value, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="N2" Style="{StaticResource generic_Label}" />
+                    <Label Content="{Binding app_currencyfx.app_currency.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
                 </StackPanel>
-                <Label Content="Document" Style="{StaticResource input_label}"/>
-                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
-											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" 
+                <Label Content="Document" Style="{StaticResource input_label}" />
+                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
+											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver" SelectionChanged="cbxDocument_SelectionChanged"
 											  Style="{StaticResource input_combobox}"  SelectedItem="{Binding app_document_range,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 											  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-                <Label Content="Number" Style="{StaticResource input_label}"/>
+                <Label Content="Number" Style="{StaticResource input_label}" />
                 <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 											 metro:TextBoxHelper.SelectAllOnFocus="True"
 											 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											 metro:ControlsHelper.MouseOverBorderBrush="Silver"
-											 Text="{Binding payment_type_number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
+											 Text="{Binding payment_type_number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             </StackPanel>
-		</Grid>
+        </Grid>
 
-        <Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click"/>
+        <Button HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Height="25" Width="50" Content="Print" VerticalAlignment="Bottom" Click="Print_Click" />
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
-			<rv:ReportViewer x:Name="reportViewer" />
-		</WindowsFormsHost>
-	</Grid>
+            <rv:ReportViewer x:Name="reportViewer" />
+        </WindowsFormsHost>
+    </Grid>
 </Page>

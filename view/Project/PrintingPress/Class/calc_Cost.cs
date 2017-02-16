@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Cognitivo.Project.PrintingPress;
-using entity;
 
 namespace Cognitivo.Project.PrintingPress
 {
@@ -27,9 +24,9 @@ namespace Cognitivo.Project.PrintingPress
         public bool _individual_Change { get; set; }
         public bool _individual_Double { get; set; }
 
-        public void calc_Automatic( ref List<PrintingPress.Ink> _ink, 
+        public void calc_Automatic(ref List<PrintingPress.Ink> _ink,
                                     ref List<PrintingPress.Accessory> _accessory,
-                                    bool individual_Change, bool individual_Double )
+                                    bool individual_Change, bool individual_Double)
         {
             //Storing Values
             _individual_Change = individual_Change;
@@ -52,7 +49,6 @@ namespace Cognitivo.Project.PrintingPress
 
             if (_best_Qty > 0)
             {
-
                 _page.Qty_Fit = _best_Qty;
 
                 SByte _decimal = 1;
@@ -80,7 +76,7 @@ namespace Cognitivo.Project.PrintingPress
                 //Calculates Page Wastage based on 200 pages per Runs.
                 if (individual_Double)
                 {
-                    //Note> Printer Runs + Wastage does not make sense. 
+                    //Note> Printer Runs + Wastage does not make sense.
                     _page.Qty_Waste = _printer.Runs + 200;
                     //Single cost of Paper
                     //Single cost of Toner
@@ -103,7 +99,7 @@ namespace Cognitivo.Project.PrintingPress
 
         public void calc_Paper()
         {
-            if (_page.Qty_Fit != 0) 
+            if (_page.Qty_Fit != 0)
             {
                 //Find out amount of Pages needed for this work.
                 _page.Qty = (int)Math.Ceiling((decimal)_product.Qty / _page.Qty_Fit);
@@ -121,7 +117,9 @@ namespace Cognitivo.Project.PrintingPress
                     if (_paperFit_Straight > _paperFit_Cross)
                     {
                         _paper.Qty_Fit = _paperFit_Straight;
-                    } else {
+                    }
+                    else
+                    {
                         _paper.Qty_Fit = _paperFit_Cross;
                     }
 
@@ -155,9 +153,9 @@ namespace Cognitivo.Project.PrintingPress
         {
             cost_Ink = 0;
 
-            foreach(Ink ink in _ink)
+            foreach (Ink ink in _ink)
             {
-                if(ink.Id != 0 && ink.Consumption != 0 )
+                if (ink.Id != 0 && ink.Consumption != 0)
                 {
                     decimal consumption = (decimal)ink.Consumption / 100;
                     cost_Ink += Convert.ToDecimal(ink.Cost * (_product.Long * _product.Short) * _product.Qty) * (decimal)consumption;
@@ -169,7 +167,7 @@ namespace Cognitivo.Project.PrintingPress
         public void calc_Toner(Toner _toner)
         {
             cost_Toner = 0;
-            if (_toner!=null)
+            if (_toner != null)
             {
                 cost_Toner = Convert.ToDecimal((_toner.Cost * (_product.Long * _product.Short) * _page.Qty_Fit));
                 cost += cost_Toner;
@@ -181,7 +179,7 @@ namespace Cognitivo.Project.PrintingPress
             cost_Accessory = 0;
             foreach (Accessory accessory in _accessory)
             {
-                if(accessory.Id != 0 && accessory.Consumption != 0)
+                if (accessory.Id != 0 && accessory.Consumption != 0)
                 {
                     cost_Accessory += Convert.ToDecimal(accessory.Cost * accessory.Consumption);
                     cost += cost_Accessory;
@@ -201,7 +199,7 @@ namespace Cognitivo.Project.PrintingPress
         /// <returns>Number of Items</returns>
         private int get_Qty(decimal parent_Short, decimal parent_Long,
                             decimal child_Short, decimal child_Long)
-        { 
+        {
             int QtyStraight = (int)(get_Consumption(parent_Short, child_Short) * get_Consumption(parent_Long, child_Long));
             int QtyCross = 0;
 
@@ -230,7 +228,7 @@ namespace Cognitivo.Project.PrintingPress
             decimal result = parent / child;
             return (int)Math.Floor(result);
         }
-        #endregion
 
+        #endregion "Helper Methods"
     }
 }

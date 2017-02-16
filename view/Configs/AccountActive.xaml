@@ -6,55 +6,55 @@
       xmlns:local="clr-namespace:Cognitivo.Converters"
       xmlns:cls="clr-namespace:Cognitivo.Class"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
-      lex:LocalizeDictionary.DesignCulture="en-US" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
+      lex:LocalizeDictionary.DesignCulture="en-US"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
-        <local:BoolToActiveReverseConverter x:Key="BoolToActiveReverse"/>
+        <local:BoolToActiveReverseConverter x:Key="BoolToActiveReverse" />
     </UserControl.Resources>
     <Grid>
         <StackPanel>
             <!--<Grid Margin="5">
-                <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>
-                <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <Label Content="{lex:Loc add all items in cash drawer before activating.}" />
+                <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right" />
             </Grid>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
                 <StackPanel.Effect>
-                    <DropShadowEffect ShadowDepth="0" Color="White"/>
+                    <DropShadowEffect ShadowDepth="0" Color="White" />
                 </StackPanel.Effect>
-                <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
+                <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
                                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
                     <Label.Effect>
-                        <DropShadowEffect ShadowDepth="0"/>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Label.Effect>
                 </Label>
-                <Label Content="{lex:Loc Account}" metro:ControlsHelper.ContentCharacterCasing="Upper" 
+                <Label Content="{lex:Loc Account}" metro:ControlsHelper.ContentCharacterCasing="Upper"
                        Style="{StaticResource H1}" Foreground="White">
                     <Label.Effect>
-                        <DropShadowEffect ShadowDepth="0"/>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Label.Effect>
                 </Label>
             </StackPanel>
             <DataGrid x:Name="CashDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
                                       EnableRowVirtualization="True"  Grid.Row="0"
-                                      Margin="64,26,64,10" Height="Auto" MaxHeight="180" 
+                                      Margin="64,26,64,10" Height="Auto" MaxHeight="180"
                                       RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding PaymentTypeName}" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding amountCounted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
-                                        ElementStyle="{StaticResource RightAlignStyle}" Header="Counted Amount" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding PaymentTypeName}" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding amountCounted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
+                                        ElementStyle="{StaticResource RightAlignStyle}" Header="Counted Amount" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Margin="5">
-                <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally "/>
-                <Button x:Name="btnActivateAccount" Content="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
+                <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally " />
+                <Button x:Name="btnActivateAccount" Content="{Binding is_active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100" />
             </Grid>
         </StackPanel>
     </Grid>

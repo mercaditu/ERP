@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cognitivo.Project.PrintingPress
+﻿namespace Cognitivo.Project.PrintingPress
 {
     /// <summary>
     /// Partially used to select the type of paper, but also partially used to get

@@ -1,27 +1,26 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
 
 namespace Cognitivo.Product
 {
     public partial class Maintainance : Page
     {
-        db dbContext = new db();
-        CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
-        cntrl.Curd.ItemRequest ItemRequest;
+        private db dbContext = new db();
+        private CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
+        private cntrl.Curd.ItemRequest ItemRequest;
 
         public Maintainance()
         {
             InitializeComponent();
         }
-        
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -72,7 +71,6 @@ namespace Cognitivo.Product
             //await dbContext.app_currencyfx.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).LoadAsync();
             //app_currencyfxViewSource.Source = dbContext.app_currencyfx.Local;
         }
-        
 
         private void sbxitem_Select(object sender, RoutedEventArgs e)
         {
@@ -148,7 +146,6 @@ namespace Cognitivo.Product
             }
         }
 
-
         public void item_request_Click(object sender)
         {
             if (dgvMaintainceDetail.ItemsSource != null)
@@ -160,7 +157,6 @@ namespace Cognitivo.Product
                 item_request.name = ItemRequest.name;
                 item_request.comment = ItemRequest.comment;
                 item_request.id_department = ItemRequest.id_department;
-           
 
                 item_request.request_date = DateTime.Now;
 

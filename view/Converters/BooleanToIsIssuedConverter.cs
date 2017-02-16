@@ -1,11 +1,11 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Windows.Data;
 using WPFLocalizeExtension.Extensions;
-using entity;
 
 namespace Cognitivo.Converters
 {
-    class BooleanToIsStatusConverter : IValueConverter
+    internal class BooleanToIsStatusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Data.Entity;
-using entity;
+﻿using entity;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cognitivo.Product
 {
     public partial class ItemTemplate : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource item_templateViewSource = null;
-        CollectionViewSource item_templateitem_template_detailViewSource = null;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource item_templateViewSource = null;
+        private CollectionViewSource item_templateitem_template_detailViewSource = null;
 
         public ItemTemplate()
         {
@@ -37,7 +34,7 @@ namespace Cognitivo.Product
             item_template item_template = new item_template();
             item_template.name = "Template";
             entity.db.item_template.Add(item_template);
-            
+
             item_templateViewSource.View.MoveCurrentToLast();
             _ItemTemplate.item_templateViewSource = item_templateViewSource;
             _ItemTemplate.item_templateDetailViewSource = item_templateitem_template_detailViewSource;
@@ -55,7 +52,5 @@ namespace Cognitivo.Product
             _ItemTemplate.entity = entity;
             crud_modal.Children.Add(_ItemTemplate);
         }
-
     }
 }
-

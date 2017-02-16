@@ -1,6 +1,4 @@
-﻿using System;
-
-using entity;
+﻿using entity;
 
 namespace Cognitivo.Class
 {
@@ -20,7 +18,6 @@ namespace Cognitivo.Class
     {
         //public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         //{
-
         //    ProductDS ProductDS = new ProductDS();
         //    ProductDS.BeginInit();
 
@@ -101,12 +98,9 @@ namespace Cognitivo.Class
         //    decimal i = Convert.ToDecimal(ContactBalance.DefaultBalance_ByCustomer(CustomerID));
 
         //    FinanceDS.EndInit();
-            
+
         //    return i;
         //}
-
-       
-      
 
         //private List<StockList> GenerateList(DataTable dt)
         //{

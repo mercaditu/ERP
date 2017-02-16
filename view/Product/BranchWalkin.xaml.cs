@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using entity;
-using System.Data.Entity;
+
 namespace Cognitivo.Product
 {
     /// <summary>
@@ -21,9 +13,10 @@ namespace Cognitivo.Product
     /// </summary>
     public partial class BranchWalkin : Page
     {
-        BranchWalkinsDB BranchWalkinsDB = new BranchWalkinsDB();
-        int company_ID;
-        CollectionViewSource app_branch_walkinsViewSource;
+        private BranchWalkinsDB BranchWalkinsDB = new BranchWalkinsDB();
+        private int company_ID;
+        private CollectionViewSource app_branch_walkinsViewSource;
+
         public BranchWalkin()
         {
             InitializeComponent();
@@ -32,8 +25,6 @@ namespace Cognitivo.Product
 
         private void btnNew_Click(object sender)
         {
-
-
             entity.app_branch_walkins app_branch_walkins = new entity.app_branch_walkins();
             app_branch_walkins.IsSelected = true;
             app_branch_walkins.State = EntityState.Added;
@@ -64,7 +55,6 @@ namespace Cognitivo.Product
             if (BranchWalkinsDB.SaveChanges() > 0)
             {
                 app_branch_walkinsViewSource.View.Refresh();
-
             }
         }
 
@@ -82,8 +72,6 @@ namespace Cognitivo.Product
             }
         }
 
-
-
         private void toolBar_btnCancel_Click(object sender)
         {
             BranchWalkinsDB.CancelAllChanges();
@@ -91,21 +79,13 @@ namespace Cognitivo.Product
 
         private void Project_Loaded(object sender, RoutedEventArgs e)
         {
-
             BranchWalkinsDB.app_branch_walkins.Where(a => a.id_company == company_ID
                                             ).ToList();
 
             app_branch_walkinsViewSource = ((CollectionViewSource)(FindResource("app_branch_walkinsViewSource")));
             app_branch_walkinsViewSource.Source = BranchWalkinsDB.app_branch_walkins.Local;
 
-
             //cbxBranch.ItemsSource = BranchWalkinsDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
-
-
         }
-
-
-
-
     }
 }

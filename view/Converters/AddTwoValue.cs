@@ -1,25 +1,21 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Windows;
 using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-  public  class AddTwoValue : IMultiValueConverter
+    public class AddTwoValue : IMultiValueConverter
     {
         public object Convert(object[] value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value[0]!=DependencyProperty.UnsetValue && value[1]!=DependencyProperty.UnsetValue && value[0]!=null && value[1]!=null )
+            if (value[0] != DependencyProperty.UnsetValue && value[1] != DependencyProperty.UnsetValue && value[0] != null && value[1] != null)
             {
                 decimal i = (decimal)value[0];
                 int j = (int)value[1];
                 return (i - j).ToString();
             }
             return 0;
-          
+
             //throw new NotImplementedException();
         }
 
@@ -30,4 +26,3 @@ namespace Cognitivo.Converters
         }
     }
 }
-

@@ -1,24 +1,24 @@
+using entity;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Cognitivo.Project.Development
 {
     public partial class TaskView : Page, INotifyPropertyChanged
     {
-        ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
+        private ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
 
-        CollectionViewSource project_taskViewSource;
-        CollectionViewSource projectViewSource;
-        CollectionViewSource project_task_dimensionViewSource;
-        cntrl.PanelAdv.Project_TaskApprove Project_TaskApprove;
+        private CollectionViewSource project_taskViewSource;
+        private CollectionViewSource projectViewSource;
+        private CollectionViewSource project_task_dimensionViewSource;
+        private cntrl.PanelAdv.Project_TaskApprove Project_TaskApprove;
 
         /// <summary>
         /// Property used by Open TreeView Button.
@@ -110,13 +110,13 @@ namespace Cognitivo.Project.Development
                                 return false;
                         };
                     }
-
                 }
             }
             catch { }
         }
 
         #region Toolbar Events
+
         private void toolBar_btnSearch_Click(object sender, string query)
         {
             try
@@ -257,7 +257,7 @@ namespace Cognitivo.Project.Development
             crud_modal.Children.Add(project);
         }
 
-        #endregion
+        #endregion Toolbar Events
 
         #region Project Task Events
 
@@ -411,13 +411,11 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-
-                    if (project_task.status == Status.Project.Pending || project_task.status==null)
+                    if (project_task.status == Status.Project.Pending || project_task.status == null)
                     {
                         project_task.status = Status.Project.Management_Approved;
                         ProjectTaskDB.NumberOfRecords += 1;
                     }
-
 
                     project_task.IsSelected = false;
                 }
@@ -468,7 +466,7 @@ namespace Cognitivo.Project.Development
             }
         }
 
-        #endregion
+        #endregion Project Task Events
 
         private void btnChild_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -508,7 +506,6 @@ namespace Cognitivo.Project.Development
                 {
                     project_task_dimensionDataGrid.Visibility = Visibility.Visible;
                 }
-
             }
         }
 
@@ -552,7 +549,6 @@ namespace Cognitivo.Project.Development
                                         return false;
                                 };
                             }
-
                         }
                     }
                     catch (Exception ex)
@@ -674,7 +670,6 @@ namespace Cognitivo.Project.Development
                                     return false;
                             };
                         }
-
                     }
                 }
                 catch (Exception ex)
@@ -691,6 +686,7 @@ namespace Cognitivo.Project.Development
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

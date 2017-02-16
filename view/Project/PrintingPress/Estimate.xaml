@@ -1,72 +1,68 @@
 ﻿<Page x:Class="Cognitivo.Project.PrintingPress.Estimate" x:Name="_PrintingPress"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:printingpress="clr-namespace:Cognitivo.Project.PrintingPress"
       xmlns:pref="clr-namespace:Cognitivo.Project.PrintingPress"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en-US"
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
 	  Title="PrintingPressCalculation">
     <Page.Resources>
-        <CollectionViewSource x:Key="app_dimensionsForHeightViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_dimensionsForWeightViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_dimensionsForWidthViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_dimensionsForHeightViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_dimensionsForWeightViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_dimensionsForWidthViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
     </Page.Resources>
     <Grid>
         <StackPanel x:Name="stackpnlCustomize" Orientation="Vertical" Margin="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="+" ToolTip="{lex:Loc Add Tab}" Margin="4" 
+                <TextBlock Text="+" ToolTip="{lex:Loc Add Tab}" Margin="4"
                                         Foreground="Black" FontSize="20" Cursor="Hand"  MouseUp="TextBlock_MouseUp"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo" />
                 <TextBlock Text="D" ToolTip="{lex:Loc Remove Tab}" Margin="4"
                                         Foreground="Black" FontSize="20" Cursor="Hand"  MouseUp="TextBlock_MouseUp_2"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                <TextBlock Text="$" ToolTip="{lex:Loc Total Cost}" Margin="4" 
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo" />
+                <TextBlock Text="$" ToolTip="{lex:Loc Total Cost}" Margin="4"
                                         Foreground="Black" FontSize="20" Cursor="Hand"  MouseUp="TextBlock_MouseUp_1"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                <TextBlock Text="p" ToolTip="{lex:Loc Total Cost}" Margin="4" 
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo" />
+                <TextBlock Text="p" ToolTip="{lex:Loc Total Cost}" Margin="4"
                                         Foreground="Black" FontSize="20" Cursor="Hand"  MouseUp="TextBlock_MouseUp_3"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                <TextBlock Text="A" ToolTip="{lex:Loc Configuration}" Margin="4" 
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo" />
+                <TextBlock Text="A" ToolTip="{lex:Loc Configuration}" Margin="4"
                                         Foreground="Black" FontSize="20" Cursor="Hand"  MouseUp="tbCustomize_MouseUp"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-           
-             
-             
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo" />
             </StackPanel>
-
 
             <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <StackPanel Background="WhiteSmoke" Width="180">
-                        <Label Content="{lex:Loc Long}" Style="{StaticResource input_label}"/>
-                        <ComboBox x:Name="cbxLong" ItemsSource="{Binding Source={StaticResource app_dimensionsForWidthViewSource}}" 
-                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension" 
+                        <Label Content="{lex:Loc Long}" Style="{StaticResource input_label}" />
+                        <ComboBox x:Name="cbxLong" ItemsSource="{Binding Source={StaticResource app_dimensionsForWidthViewSource}}"
+                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension"
                                       Style="{StaticResource input_combobox}" Width="150"
-                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Long, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Content="{lex:Loc Short}" Style="{StaticResource input_label}"/>
-                        <ComboBox x:Name="cbxShort" ItemsSource="{Binding Source={StaticResource app_dimensionsForHeightViewSource}}" 
-                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension" 
+                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Long, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Content="{lex:Loc Short}" Style="{StaticResource input_label}" />
+                        <ComboBox x:Name="cbxShort" ItemsSource="{Binding Source={StaticResource app_dimensionsForHeightViewSource}}"
+                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension"
                                       Style="{StaticResource input_combobox}" Width="150"
-                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Short, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Content="{lex:Loc Weight}" Style="{StaticResource input_label}"/>
-                        <ComboBox x:Name="cbxWeight" ItemsSource="{Binding Source={StaticResource app_dimensionsForWeightViewSource}}" 
-                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension" 
+                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Short, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Content="{lex:Loc Weight}" Style="{StaticResource input_label}" />
+                        <ComboBox x:Name="cbxWeight" ItemsSource="{Binding Source={StaticResource app_dimensionsForWeightViewSource}}"
+                                      DisplayMemberPath="name" SelectedValuePath="id_app_dimension"
                                       Style="{StaticResource input_combobox}" Width="150"
-                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                      SelectedValue="{Binding Source={x:Static pref:Costing.Default}, Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </Border>
             </Popup>
@@ -76,33 +72,28 @@
             <TabItem x:Name="ProjectTab" Header="{lex:Loc Project}">
                 <Grid Background="WhiteSmoke">
                     <StackPanel HorizontalAlignment="Center">
-                        <Label Content="Cliente" Style="{StaticResource input_label}"/>
+                        <Label Content="Cliente" Style="{StaticResource input_label}" />
                         <TextBox Grid.Column="1" Text="{Binding ElementName=_PrintingPress, Path=_project_Name, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource input_textbox}"/>
-                        <Label Content="Nombre del Proyecto" Style="{StaticResource input_label}"/>
+                             Style="{StaticResource input_textbox}" />
+                        <Label Content="Nombre del Proyecto" Style="{StaticResource input_label}" />
                         <TextBox Grid.Column="1" Text="{Binding ElementName=_PrintingPress, Path=_project_Name, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource input_textbox}"/>
+                             Style="{StaticResource input_textbox}" />
                         <Label Content="Cantidad" Style="{StaticResource input_label}" />
                         <TextBox Grid.Column="1"
                                  metro:TextBoxHelper.SelectAllOnFocus="True"
                              Text="{Binding FallbackValue=100, ElementName=_PrintingPress, StringFormat={}{0:N},
                                             Path=_product_Qty, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource input_textbox}"/>
-                        <Label Content="Tipo de Trabajo" Style="{StaticResource input_label}"/>
+                             Style="{StaticResource input_textbox}" />
+                        <Label Content="Tipo de Trabajo" Style="{StaticResource input_label}" />
                         <ComboBox x:Name="cmbproject" Grid.Column="1"
-                              Style="{StaticResource input_combobox}"/>
-                        <Rectangle Height="1" Fill="Silver" Margin="16"/>
-                        <Button Content="Agregar Item" Margin="8,0"/>
-                        <Rectangle Height="1" Fill="Silver" Margin="16"/>
-                        <Button Content="Presupuestar" Margin="8,0"/>
-                        
+                              Style="{StaticResource input_combobox}" />
+                        <Rectangle Height="1" Fill="Silver" Margin="16" />
+                        <Button Content="Agregar Item" Margin="8,0" />
+                        <Rectangle Height="1" Fill="Silver" Margin="16" />
+                        <Button Content="Presupuestar" Margin="8,0" />
                     </StackPanel>
-
                 </Grid>
             </TabItem>
         </TabControl>
-
-
-
     </Grid>
 </Page>

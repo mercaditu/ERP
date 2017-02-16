@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Media;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Cognitivo.Converters
 {
@@ -32,7 +32,6 @@ namespace Cognitivo.Converters
                 {
                     return Brushes.Crimson;
                 }
-             
                 else
                 { //Pending
                     return Brushes.WhiteSmoke;
@@ -41,7 +40,7 @@ namespace Cognitivo.Converters
             else { return Brushes.WhiteSmoke; }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

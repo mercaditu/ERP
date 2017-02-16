@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 
 namespace Cognitivo.Setup.Migration
 {
@@ -207,10 +206,8 @@ namespace Cognitivo.Setup.Migration
                                     {
                                         contact_subscription.id_vat_group = db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
                                     }
-
                                 }
                             }
-
                         }
                         else
                         {
@@ -232,7 +229,6 @@ namespace Cognitivo.Setup.Migration
                             string name = reader[37].ToString();
                             if (db.contact_tag.Local.Where(x => x.name == name).FirstOrDefault() == null)
                             {
-
                                 if (reader[37].ToString() != "")
                                 {
                                     contact_tag contact_tag = new contact_tag();
@@ -242,9 +238,7 @@ namespace Cognitivo.Setup.Migration
                                     contact_tag_detail.contact = contacts;
                                     contact_tag_detail.contact_tag = contact_tag;
                                     db.contact_tag_detail.Add(contact_tag_detail);
-
                                 }
-
                             }
                             else
                             {
@@ -254,8 +248,6 @@ namespace Cognitivo.Setup.Migration
                                 db.contact_tag_detail.Add(contact_tag_detail);
                             }
                         }
-
-
                     }
 
                     if (!(reader["DESZONA"] is DBNull))
@@ -320,7 +312,6 @@ namespace Cognitivo.Setup.Migration
                     }
                 }
             }
-
 
             //cmd.Dispose();
             conn.Close();

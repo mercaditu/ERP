@@ -1,17 +1,17 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Linq;
 
 namespace Cognitivo.Production
 {
     public partial class Line : Page
     {
-        LineDB LineDB = new LineDB();
-        CollectionViewSource production_lineViewSource, app_locationViewSource;
+        private LineDB LineDB = new LineDB();
+        private CollectionViewSource production_lineViewSource, app_locationViewSource;
 
         public Line()
         {
@@ -39,7 +39,6 @@ namespace Cognitivo.Production
             app_locationViewSource.Source = LineDB.app_location.Local;
         }
 
-   
         private void toolBar_btnCancel_Click(object sender)
         {
             LineDB.CancelAllChanges();
@@ -96,7 +95,7 @@ namespace Cognitivo.Production
             if (LineDB.SaveChanges() > 0)
             {
                 production_lineViewSource.View.Refresh();
-                toolBar.msgSaved(LineDB.NumberOfRecords);   
+                toolBar.msgSaved(LineDB.NumberOfRecords);
             }
         }
 

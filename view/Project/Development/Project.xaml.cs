@@ -1,12 +1,13 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
+
 namespace Cognitivo.Project.Development
 {
     /// <summary>
@@ -14,8 +15,8 @@ namespace Cognitivo.Project.Development
     /// </summary>
     public partial class Project : Page
     {
-        ProjectDB ProjectDB = new ProjectDB();
-        CollectionViewSource ProjectViewSource, Projectproject_tag_detail;
+        private ProjectDB ProjectDB = new ProjectDB();
+        private CollectionViewSource ProjectViewSource, Projectproject_tag_detail;
 
         public Project()
         {
@@ -24,7 +25,7 @@ namespace Cognitivo.Project.Development
 
         private void btnNew_Click(object sender)
         {
-            project project =new  project();
+            project project = new project();
             project.IsSelected = true;
 
             ProjectDB.Entry(project).State = EntityState.Added;
@@ -54,7 +55,7 @@ namespace Cognitivo.Project.Development
             if (ProjectDB.SaveChanges() > 0)
             {
                 ProjectViewSource.View.Refresh();
-                toolBar.msgSaved(ProjectDB.NumberOfRecords);   
+                toolBar.msgSaved(ProjectDB.NumberOfRecords);
             }
         }
 
@@ -113,7 +114,6 @@ namespace Cognitivo.Project.Development
 
         private async void Project_Loaded(object sender, RoutedEventArgs e)
         {
-
             ProjectDB.projects.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (a.is_head == true)).Include(y => y.contact).ToList();
 
@@ -129,10 +129,8 @@ namespace Cognitivo.Project.Development
 
             Projectproject_tag_detail = ((CollectionViewSource)(FindResource("Projectproject_tag_detail")));
             CollectionViewSource project_tagViewSource = ((CollectionViewSource)(FindResource("project_tagViewSource")));
-            project_tagViewSource.Source = ProjectDB.project_tag.Local;  
+            project_tagViewSource.Source = ProjectDB.project_tag.Local;
         }
-
-       
 
         private void Activate_Click(object sender, RoutedEventArgs e)
         {
@@ -145,6 +143,7 @@ namespace Cognitivo.Project.Development
             ProjectDB.DeActivateProject();
             ProjectViewSource.View.Refresh();
         }
+
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as project_tag_detail != null)
@@ -170,7 +169,6 @@ namespace Cognitivo.Project.Development
             }
             catch
             {
-
             }
         }
 
@@ -187,7 +185,7 @@ namespace Cognitivo.Project.Development
             Add_Tag();
         }
 
-        void Add_Tag()
+        private void Add_Tag()
         {
             // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
@@ -211,7 +209,6 @@ namespace Cognitivo.Project.Development
 
         private void contactComboBox_Select(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

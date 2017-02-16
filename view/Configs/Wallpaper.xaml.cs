@@ -1,15 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.IO;
 
 namespace Cognitivo.Configs
 {
     public partial class Wallpaper : Page
     {
-        string domain = AppDomain.CurrentDomain.BaseDirectory;
+        private string domain = AppDomain.CurrentDomain.BaseDirectory;
 
         public Wallpaper()
         {

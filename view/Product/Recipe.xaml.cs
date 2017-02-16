@@ -1,19 +1,19 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
-using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {
     public partial class Recipe : Page
     {
-        ProductRecipeDB ProductRecipeDB = new ProductRecipeDB();
-        CollectionViewSource item_recepieViewSource, item_recepieitem_recepie_detailViewSource;
+        private ProductRecipeDB ProductRecipeDB = new ProductRecipeDB();
+        private CollectionViewSource item_recepieViewSource, item_recepieitem_recepie_detailViewSource;
 
         public Recipe()
         {
@@ -38,6 +38,7 @@ namespace Cognitivo.Product
                 }
             }
         }
+
         private void item_Select_detail(object sender, EventArgs e)
         {
             if (sbxItemDetail.ItemID > 0)
@@ -45,7 +46,7 @@ namespace Cognitivo.Product
                 item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
                 item item = ProductRecipeDB.items.Where(x => x.id_item == sbxItemDetail.ItemID).FirstOrDefault();
 
-                if (item_recepie!=null)
+                if (item_recepie != null)
                 {
                     item_recepie_detail item_recepie_detail = new item_recepie_detail();
                     item_recepie_detail.id_item = item.id_item;
@@ -55,7 +56,6 @@ namespace Cognitivo.Product
                     item_recepie.item_recepie_detail.Add(item_recepie_detail);
                 }
                 item_recepieitem_recepie_detailViewSource.View.Refresh();
-               
             }
         }
 
@@ -68,7 +68,6 @@ namespace Cognitivo.Product
             item_recepieViewSource.Source = ProductRecipeDB.item_recepie.Local;
 
             item_recepieitem_recepie_detailViewSource = FindResource("item_recepieitem_recepie_detailViewSource") as CollectionViewSource;
-
         }
 
         private void btnNew_Click(object sender)
@@ -94,7 +93,6 @@ namespace Cognitivo.Product
             {
                 toolBar.msgError(ex);
             }
-
         }
 
         private void btnSave_Click(object sender)
@@ -160,7 +158,6 @@ namespace Cognitivo.Product
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void btnCalculateCost_Click(object sender, RoutedEventArgs e)
@@ -169,7 +166,7 @@ namespace Cognitivo.Product
             if (item_recepie != null)
             {
                 List<item_recepie_detail> item_recepie_detailList = item_recepie.item_recepie_detail.ToList();
-             
+
                 if (item_recepie_detailList.Count > 0)
                 {
                     cntrl.PanelAdv.pnlCostCalculationReceipe pnlCostCalculationReceipe = new cntrl.PanelAdv.pnlCostCalculationReceipe();

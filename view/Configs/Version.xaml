@@ -1,72 +1,67 @@
 ﻿<Page x:Class="Cognitivo.Configs.Version" x:Name="this"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="Version">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="127"/>
-            <RowDefinition/>
-            <RowDefinition Height="155"/>
+            <RowDefinition Height="127" />
+            <RowDefinition />
+            <RowDefinition Height="155" />
         </Grid.RowDefinitions>
         <Grid>
             <Grid.Background>
-                <SolidColorBrush Color="White" Opacity="0.32"/>
+                <SolidColorBrush Color="White" Opacity="0.32" />
             </Grid.Background>
-            <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center"/>
+            <Label Content="Version" Style="{StaticResource H1}" FontSize="64" HorizontalAlignment="Center" />
         </Grid>
         <Grid Grid.Row="1" Background="White">
             <TabControl x:Name="TabVersion" TabStripPlacement="Top" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="LITE">
                     <StackPanel>
-                        <Label Content="LITE" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="The Essentials for your Company" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <Label Content="LITE" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+                        <Label Content="The Essentials for your Company" HorizontalAlignment="Center" />
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center" />
                         <StackPanel x:Name="stackLite" Margin="8">
-                            
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="BASIC">
                     <StackPanel>
-                        <Label Content="BASIC" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="For Little Companies with Big Aspirations" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <Label Content="BASIC" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+                        <Label Content="For Little Companies with Big Aspirations" HorizontalAlignment="Center" />
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center" />
                         <StackPanel x:Name="stackBasic" Margin="8">
-
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="PyMES">
                     <StackPanel>
-                        <Label Content="PyMES" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="Perfect for Companies who want to be Perfect" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <Label Content="PyMES" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+                        <Label Content="Perfect for Companies who want to be Perfect" HorizontalAlignment="Center" />
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center" />
                         <StackPanel x:Name="stackPyMES" Margin="8">
-
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="FULL">
                     <StackPanel>
-                        <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <Label Content="FULL" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center" />
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center" />
                         <StackPanel x:Name="stackFULL" Margin="8">
-
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Event">
                     <StackPanel>
-                        <Label Content="Event" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center"/>
-                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
+                        <Label Content="Event" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+                        <Label Content="Designed for Companies who need total control" HorizontalAlignment="Center" />
+                        <Label Content="Features" Style="{StaticResource H3}" HorizontalAlignment="Center" />
                         <StackPanel x:Name="stackEvent" Margin="8">
-
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
@@ -74,12 +69,12 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.Background>
-                <SolidColorBrush Color="White" Opacity="0.32"/>
+                <SolidColorBrush Color="White" Opacity="0.32" />
             </Grid.Background>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Border Background="Silver" CornerRadius="55" Width="88" Height="88" Margin="16">
                     <Border.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0" />
                     </Border.Effect>
                     <Image />
                 </Border>

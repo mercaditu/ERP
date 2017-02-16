@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Promotion : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource sales_promotionViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource sales_promotionViewSource;
 
         public Promotion()
         { InitializeComponent(); }
@@ -18,7 +18,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             sales_promotionViewSource = ((CollectionViewSource)(this.FindResource("sales_promotionViewSource")));
-            entity.db.sales_promotion.Where(a=>a.id_company == CurrentSession.Id_Company).Load();
+            entity.db.sales_promotion.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             sales_promotionViewSource.Source = entity.db.sales_promotion.Local;
         }
 
@@ -40,7 +40,7 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             cntrl.promotion objPromotion = new cntrl.promotion();
             sales_promotion sales_promotion = entity.db.sales_promotion.Where(x => x.id_sales_promotion == intPromotionId).FirstOrDefault();
-            if (sales_promotion!=null)
+            if (sales_promotion != null)
             {
                 sales_promotion.State = EntityState.Modified;
             }

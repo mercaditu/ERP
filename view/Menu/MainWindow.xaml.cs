@@ -1,21 +1,18 @@
-﻿using System;
+﻿using Cognitivo.Properties;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Globalization;
-using Cognitivo.Properties;
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Linq;
-using System.Windows.Data;
-using System.Data.Entity;
 
 namespace Cognitivo.Menu
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        bool _is_LoggedIn = false;
+        private bool _is_LoggedIn = false;
         public List<entity.security_crud> security_curdList { get; set; }
 
         public bool is_LoggedIn
@@ -28,12 +25,11 @@ namespace Cognitivo.Menu
             }
         }
 
-
         public double width = SystemParameters.WorkArea.Width;
         public double height = SystemParameters.WorkArea.Height;
 
-
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -69,11 +65,12 @@ namespace Cognitivo.Menu
             }
 
             mainFrame.Navigate(new mainLogIn());
-
         }
 
         #region "Blur Animations"
-        bool IsBlured = false;
+
+        private bool IsBlured = false;
+
         private void mainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             if (mainFrame.NavigationService.Content != null)
@@ -96,13 +93,15 @@ namespace Cognitivo.Menu
             blur.Begin();
             IsBlured = true;
         }
+
         private void unblur()
         {
             Storyboard unblur = (Storyboard)FindResource("UnBlur");
             unblur.Begin();
             IsBlured = false;
         }
-        #endregion
+
+        #endregion "Blur Animations"
 
         private void btnOpenInWindow_Click(object sender, RoutedEventArgs e)
         {
@@ -214,7 +213,7 @@ namespace Cognitivo.Menu
         {
             //    entity.Properties.Settings.Default.Save();
             //    entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
-         }
+        }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {

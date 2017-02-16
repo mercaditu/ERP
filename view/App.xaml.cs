@@ -1,5 +1,4 @@
-﻿
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -52,7 +51,7 @@ namespace Cognitivo
         {
             if (e.Handled)
             {
-                //Do Nothing 
+                //Do Nothing
             }
             else
             {
@@ -76,6 +75,6 @@ namespace Cognitivo
                 Cognitivo.Properties.Settings.Default.UpgradeRequired = false;
                 Cognitivo.Properties.Settings.Default.Save();
             }
-        } 
+        }
     }
 }

@@ -1,20 +1,20 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Terminal : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource app_terminalViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource app_terminalViewSource;
 
         public Terminal()
-        { 
-            InitializeComponent(); 
+        {
+            InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

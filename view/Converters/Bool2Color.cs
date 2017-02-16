@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Cognitivo.Converters
 {
-    class Bool2Color : IValueConverter
+    internal class Bool2Color : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

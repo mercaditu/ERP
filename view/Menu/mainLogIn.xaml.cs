@@ -1,21 +1,20 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Deployment.Application;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading.Tasks;
-using entity;
-using System.Deployment.Application;
-using System.Reflection;
-using InteractivePreGeneratedViews;
 
 namespace Cognitivo.Menu
 {
     public partial class mainLogIn : Page
     {
-        Frame myFrame;
-        Task taskAuth;
-        MainWindow myWindow = Application.Current.MainWindow as MainWindow;
+        private Frame myFrame;
+        private Task taskAuth;
+        private MainWindow myWindow = Application.Current.MainWindow as MainWindow;
 
         public Version AssemblyVersion
         {
@@ -24,6 +23,7 @@ namespace Cognitivo.Menu
                 return ApplicationDeployment.CurrentDeployment.CurrentVersion;
             }
         }
+
         public Version LocalVersion
         {
             get
@@ -35,8 +35,6 @@ namespace Cognitivo.Menu
         public mainLogIn()
         {
             InitializeComponent();
-
-
 
             try
             {
@@ -53,8 +51,6 @@ namespace Cognitivo.Menu
                 //}
 
                 lblVersion.Content = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-
-
             }
             catch
             {
@@ -133,7 +129,7 @@ namespace Cognitivo.Menu
                 else
                 {
                     //Incorrect user credentials.
-                    Dispatcher.BeginInvoke((Action)(() => 
+                    Dispatcher.BeginInvoke((Action)(() =>
                     {
                         tbxPassword.Focus();
                         Cursor = Cursors.Arrow;
@@ -190,7 +186,5 @@ namespace Cognitivo.Menu
         {
             MessageBox.Show("sdf");
         }
-
-     
     }
 }

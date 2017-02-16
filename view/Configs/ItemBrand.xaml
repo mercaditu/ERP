@@ -2,46 +2,45 @@
       xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:local="clr-namespace:Cognitivo.Converters"
-      mc:Ignorable="d" 
-      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+      mc:Ignorable="d"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US"
       d:DesignHeight="600" d:DesignWidth="800"
-	  Title="{lex:Loc Brand}" Loaded="Page_Loaded"
-      >
+	  Title="{lex:Loc Brand}" Loaded="Page_Loaded">
     <Page.Resources>
-        <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
-        <local:IsActive2ColorConverter x:Key="Converter"/>
+        <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}" />
+        <local:IsActive2ColorConverter x:Key="Converter" />
     </Page.Resources>
-    <Grid DataContext="{StaticResource item_brandViewSource}" >
+    <Grid DataContext="{StaticResource item_brandViewSource}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <StackPanel Background="{StaticResource appConfig}">
-            <Image Width="83" Height="83" Margin="0,50,0,0" VerticalAlignment="Center" 
-                   Source="/Cognitivo;component/Images/Application/128/ProductTag.png"/>
+            <Image Width="83" Height="83" Margin="0,50,0,0" VerticalAlignment="Center"
+                   Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
 
-            <Label Content="{lex:Loc Brand}" HorizontalAlignment="Center" 
-                   Style="{StaticResource H1}"/>
+            <Label Content="{lex:Loc Brand}" HorizontalAlignment="Center"
+                   Style="{StaticResource H1}" />
             <Button x:Name="btnNew" Content="{lex:Loc Create}" Margin="15"
-                        Style="{StaticResource btn_green}" Click="btnNew_Click"/>
-            <TextBlock Text="Define brands of item" 
-                            HorizontalAlignment="Center" 
-                            Style="{StaticResource text_Instructions}"/>
+                        Style="{StaticResource btn_green}" Click="btnNew_Click" />
+            <TextBlock Text="Define brands of item"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource text_Instructions}" />
         </StackPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
             <ItemsControl ItemsSource="{Binding}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <WrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -49,12 +48,12 @@
                         <Grid>
                             <Panels:pnl_Curd Margin="5"
                                              DisplayName="{Binding name}" Id="{Binding id_brand}" linkEdit_click="pnl_Curd_linkEdit_click"
-                                             Status="PaleGreen"/>
+                                             Status="PaleGreen" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Grid Name="crud_modal" Background="#7FC0C0C0" Grid.ColumnSpan="3" Visibility="Hidden"/>
+        <Grid Name="crud_modal" Background="#7FC0C0C0" Grid.ColumnSpan="3" Visibility="Hidden" />
     </Grid>
 </Page>

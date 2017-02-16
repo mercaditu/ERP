@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cognitivo.Project.PrintingPress
+﻿namespace Cognitivo.Project.PrintingPress
 {
     /// <summary>
     /// Paper is the raw material that will be processed into a Page and then Product.
     /// </summary>
-  public  class Paper
+    public class Paper
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -25,19 +20,19 @@ namespace Cognitivo.Project.PrintingPress
     /// <summary>
     /// Page is a semi-processed paper for a product.
     /// </summary>
-  public class Page
+    public class Page
     {
         public decimal Long { get; set; }
         public decimal Short { get; set; }
         public int Qty { get; set; }
         public decimal Qty_Fit { get; set; }
         public int Qty_Waste { get; set; }
-
     }
+
     /// <summary>
     /// Product is the final item being produced.
     /// </summary>
-  public class Product
+    public class Product
     {
         public int Id { get; set; }
         public decimal Long { get; set; }

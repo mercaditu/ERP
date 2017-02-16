@@ -24,7 +24,7 @@ namespace Cognitivo.Menu
             {
                 ///Check existance of Security. If existance is not there, will go into Catch.
                 ///If it goes into catch, we will need to update the Tag of the Icon in XAML to be the same as the Enum.
-                
+
                 entity.Brillo.Security security = new entity.Brillo.Security((entity.App.Names)Enum.Parse(typeof(entity.App.Names), configName, true));
                 if (security.view == true)
                 {
@@ -32,7 +32,7 @@ namespace Cognitivo.Menu
                     dynamic taskAuth = Task.Factory.StartNew(() => load_Thread(configName));
                 }
             }
-            catch 
+            catch
             {
                 //MessageBox.Show(configName);
                 dynamic taskAuth = Task.Factory.StartNew(() => load_Thread(configName));
@@ -70,9 +70,9 @@ namespace Cognitivo.Menu
                 {
                     MessageBox.Show(configName);
                 }
-                finally 
-                { 
-                    Cursor = Cursors.Arrow; 
+                finally
+                {
+                    Cursor = Cursors.Arrow;
                 }
             }));
         }
@@ -82,6 +82,5 @@ namespace Cognitivo.Menu
             MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
             rootWindow.mainFrame.Navigate(null);
         }
-
     }
 }

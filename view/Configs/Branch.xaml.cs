@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Branch : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource branchViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource branchViewSource;
 
         public Branch()
         { InitializeComponent(); }
@@ -20,7 +20,7 @@ namespace Cognitivo.Configs
             try
             {
                 branchViewSource = ((CollectionViewSource)(this.FindResource("app_branchViewSource")));
-                entity.db.app_branch.Where(a=> a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
+                entity.db.app_branch.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
                 branchViewSource.Source = entity.db.app_branch.Local;
             }
             catch { }

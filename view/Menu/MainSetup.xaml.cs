@@ -1,9 +1,9 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
-using entity;
 
 namespace Cognitivo.Menu
 {
@@ -16,6 +16,7 @@ namespace Cognitivo.Menu
         {
             InitializeComponent();
         }
+
         public class LicenceInfo
         {
             public string slm_action { get; set; }
@@ -24,8 +25,8 @@ namespace Cognitivo.Menu
             public string last_name { get; set; }
             public string email { get; set; }
             public string company_name { get; set; }
-
         }
+
         public class LicenceRegistration
         {
             public string Key { get; set; }
@@ -58,8 +59,7 @@ namespace Cognitivo.Menu
                 try
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "",(int)CurrentSession.Versions.Full);
-                 
+                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "", (int)CurrentSession.Versions.Full);
                 }
                 catch (Exception)
                 {
@@ -128,7 +128,6 @@ namespace Cognitivo.Menu
                 app_branch.app_terminal.Add(app_terminal);
                 db.app_branch.Add(app_branch);
                 db.SaveChanges();
-
 
                 //Contact Role
                 contact_role role = new contact_role();
@@ -315,12 +314,10 @@ namespace Cognitivo.Menu
                 {
                     System.Windows.Forms.MessageBox.Show(ex.ToString());
                 }
-
-
             }
         }
 
-        void Countdown(int count, TimeSpan interval, Action<int> ts)
+        private void Countdown(int count, TimeSpan interval, Action<int> ts)
         {
             var dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = interval;

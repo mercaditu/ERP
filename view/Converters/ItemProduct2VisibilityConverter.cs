@@ -4,14 +4,14 @@ using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class ItemProduct2VisibilityConverter : IValueConverter
+    internal class ItemProduct2VisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value != null)
             {
                 int v = (int)value;
-                if(v == 1 || v==4)
+                if (v == 1 || v == 4)
                 {
                     v = 0;
                 }

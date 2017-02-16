@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cognitivo.Configs
 {
@@ -19,12 +11,14 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class KeyGestureSettings : Page
     {
-        List<clsKeyModifiers> KeyModifiers = new List<clsKeyModifiers>();
+        private List<clsKeyModifiers> KeyModifiers = new List<clsKeyModifiers>();
+
         //Cognitivo.GestureSettings propGesture = new Cognitivo.GestureSettings();
         public enum MyKeys
         {
             A = 'A', B = 'B', C = 'C', D = 'D', E = 'E', F = 'F', G = 'G', H = 'H', I = 'I', J = 'J', K = 'K', L = 'L', M = 'M', N = 'N', O = 'O', P = 'P', Q = 'Q', R = 'R', S = 'S', T = 'T', U = 'U', V = 'V', W = 'W', X = 'X', Y = 'Y', Z = 'Z'
         }
+
         public KeyGestureSettings()
         {
             InitializeComponent();
@@ -37,6 +31,7 @@ namespace Cognitivo.Configs
             ControlKeyModifier.ModifierValue = "Control";
             KeyModifiers.Add(ControlKeyModifier);
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             cbxSaveKeyModifier.ItemsSource = KeyModifiers;

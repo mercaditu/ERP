@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -50,7 +49,6 @@ namespace Cognitivo.Setup.Migration
                        + " VENDEDOR ON DEVOLUCION.CODVENDEDOR = VENDEDOR.CODVENDEDOR LEFT OUTER JOIN"
                        + " VENTAS ON CLIENTES.CODCLIENTE = VENTAS.CODCLIENTE AND DEVOLUCION.CODVENTA = VENTAS.CODVENTA ";
 
-
             SqlConnection conn = new SqlConnection(_connString);
 
             //Counts Total number of Rows we have to process
@@ -96,7 +94,6 @@ namespace Cognitivo.Setup.Migration
                     //    sales_invoice.is_accounted = (Convert.ToByte(reader[23]) == 0) ? false : true;
                     //}
 
-
                     //sales_invoice.version = 1;
 
                     sales_return.number = (reader["NUMDEVOLUCION"] is DBNull) ? null : reader["NUMDEVOLUCION"].ToString();
@@ -109,12 +106,9 @@ namespace Cognitivo.Setup.Migration
                         contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
                         if (contact != null)
                         {
-
                             sales_return.id_contact = contact.id_contact;
                             sales_return.contact = contact;
                         }
-
-
                     }
 
                     //Condition (Cash or Credit)
@@ -135,9 +129,6 @@ namespace Cognitivo.Setup.Migration
                         sales_return.id_contract = app_contract.id_contract;
                     }
 
-
-
-
                     int? id_location = null;
                     app_location app_location = null;
 
@@ -154,7 +145,6 @@ namespace Cognitivo.Setup.Migration
                         if (app_location != null)
                         {
                             id_location = app_location.id_location;
-
                         }
 
                         //Terminal
@@ -199,9 +189,6 @@ namespace Cognitivo.Setup.Migration
                         if (item != null)
                         {
                             sales_return_detail.id_item = item.id_item;
-
-
-
                         }
                         else
                         {
@@ -231,7 +218,6 @@ namespace Cognitivo.Setup.Migration
                             {
                                 sales_return_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
                             }
-
                         }
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
@@ -239,17 +225,13 @@ namespace Cognitivo.Setup.Migration
                         if (!(row["COSTOPROMEDIO"] is DBNull))
                         { sales_return_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]); }
 
-
                         //Commit Sales Invoice Detail
                         sales_return.sales_return_detail.Add(sales_return_detail);
-
-
                     }
                     sales_return.return_type = Status.ReturnTypes.Bonus;
 
                     if (sales_return.Error == null)
                     {
-
                         sales_return.State = System.Data.Entity.EntityState.Added;
                         sales_return.IsSelected = true;
                         db.sales_return.Add(sales_return);
@@ -273,7 +255,6 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_return.comment = reader[11].ToString();
                                 }
-
                             }
                             else if (status == 1)
                             {
@@ -284,7 +265,6 @@ namespace Cognitivo.Setup.Migration
                                 }
 
                                 db.Approve();
-
                             }
                             else if (status == 2)
                             {
@@ -298,9 +278,7 @@ namespace Cognitivo.Setup.Migration
 
                                 db.Anull();
                             }
-
                         }
-
 
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
@@ -319,6 +297,5 @@ namespace Cognitivo.Setup.Migration
 
             //_customer_Current = _customer_Max;
         }
-
     }
 }

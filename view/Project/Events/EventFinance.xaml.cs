@@ -1,20 +1,20 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace Cognitivo.Project
 {
     public partial class EventFinance : Page, INotifyPropertyChanged
     {
-        SalesOrderDB SalesOrderDB = new SalesOrderDB();
-        CollectionViewSource project_taskViewSource;
-        CollectionViewSource projectViewSource;
+        private SalesOrderDB SalesOrderDB = new SalesOrderDB();
+        private CollectionViewSource project_taskViewSource;
+        private CollectionViewSource projectViewSource;
 
         public bool ViewAll { get; set; }
 
@@ -32,6 +32,7 @@ namespace Cognitivo.Project
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
@@ -73,7 +74,7 @@ namespace Cognitivo.Project
                 objSalesinvoice.project = project;
                 objSalesinvoice.db = SalesOrderDB;
 
-                objSalesinvoice.TotalCost = project.project_task.Sum(x=>x.SubTotal_WithVAT);
+                objSalesinvoice.TotalCost = project.project_task.Sum(x => x.SubTotal_WithVAT);
                 ///Crud Modal Visibility and Add.
                 crud_modal.Visibility = Visibility.Visible;
                 crud_modal.Children.Add(objSalesinvoice);
@@ -117,6 +118,5 @@ namespace Cognitivo.Project
         {
             projectViewSource.View.Refresh();
         }
-
     }
 }

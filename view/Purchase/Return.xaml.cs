@@ -1,25 +1,26 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
     public partial class Return : Page
     {
-        PurchaseReturnDB dbContext = new PurchaseReturnDB();
+        private PurchaseReturnDB dbContext = new PurchaseReturnDB();
 
-        CollectionViewSource
+        private CollectionViewSource
             purchaseReturnViewSource,
             purchase_returnpurchase_return_detailViewSource;
 
-        cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
         public Return()
         {
             InitializeComponent();
@@ -45,7 +46,6 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnDelete_Click(object sender)
         {
-
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
@@ -92,6 +92,7 @@ namespace Cognitivo.Purchase
         }
 
         #region Datagrid Events
+
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
@@ -109,7 +110,7 @@ namespace Cognitivo.Purchase
             purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
         }
 
-        #endregion
+        #endregion Datagrid Events
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -186,7 +187,6 @@ namespace Cognitivo.Purchase
 
         private async void set_ContactPref_Thread(contact objContact)
         {
-
             if (objContact != null)
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
@@ -207,12 +207,12 @@ namespace Cognitivo.Purchase
                 }));
             }
         }
+
         private async void select_Item(purchase_return purchase_return, item item, int id_contact, item_movement item_movement)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
             purchase_return_detail purchase_return_detail = purchase_return.purchase_return_detail
                 .Where(a => a.id_item == sbxItem.ItemID && a.movement_id == id_movement).FirstOrDefault();
-
 
             if (purchase_return_detail == null)
             {
@@ -280,13 +280,13 @@ namespace Cognitivo.Purchase
                 purchase_return_detail.quantity += sbxItem.Quantity;
             }
 
-
             await Dispatcher.BeginInvoke((Action)(() =>
          {
              purchase_returnpurchase_return_detailViewSource.View.Refresh();
              calculate_vat(null, null);
          }));
         }
+
         private async void item_Select(object sender, EventArgs e)
         {
             try
@@ -304,12 +304,8 @@ namespace Cognitivo.Purchase
                     }
                     else
                     {
-
                         Task Thread = Task.Factory.StartNew(() => select_Item(purchase_return, item, sbxContact.ContactID, null));
                     }
-
-
-
                 }
                 else
                 {
@@ -368,20 +364,16 @@ namespace Cognitivo.Purchase
                     else
                     {
                         purchase_return_detail.quantity += 1;
-
                     }
                     purchase_returnpurchase_return_detailViewSource.View.Refresh();
                     calculate_vat(sender, e);
                 }
-
             }
             catch (Exception)
             {
                 //throw ex;
             }
         }
-
-
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -441,6 +433,7 @@ namespace Cognitivo.Purchase
             pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
             crud_modal.Children.Add(pnlPurchaseInvoice);
         }
+
         public void PurchaseInvoice_Click(object sender)
         {
             purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;

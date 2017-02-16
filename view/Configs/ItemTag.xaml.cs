@@ -1,17 +1,17 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Data.Entity;
-using entity;
+﻿using entity;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cognitivo.Product
 {
     public partial class ItemTag : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource item_tagViewSource = null;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource item_tagViewSource = null;
         //entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ItemTag()
@@ -47,6 +47,5 @@ namespace Cognitivo.Product
             _ItemTag.entity = entity;
             crud_modal.Children.Add(_ItemTag);
         }
-
     }
 }

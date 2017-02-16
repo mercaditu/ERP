@@ -3,11 +3,11 @@ using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    class ProuctionPending2BooleanConverter : IValueConverter
+    internal class ProuctionPending2BooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object ConverterParameter, System.Globalization.CultureInfo culture)
         {
-            if (value!= null)
+            if (value != null)
             {
                 entity.Status.Production status = (entity.Status.Production)value;
                 if (status == entity.Status.Production.Pending)
@@ -16,7 +16,6 @@ namespace Cognitivo.Converters
                 }
             }
             return false;
-          
         }
 
         public object ConvertBack(object value, Type targetTypes,

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using entity;
+using entity.Brillo;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using entity.Brillo;
 
 namespace Cognitivo.Sales
 {
@@ -16,26 +16,26 @@ namespace Cognitivo.Sales
     /// </summary>
     public partial class Export : Page
     {
-        ImpexDB ImpexDB = new ImpexDB();
-        CollectionViewSource impexViewSource, impeximpex_expenseViewSource, sales_invoiceViewSource = null;
-        cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
+        private ImpexDB ImpexDB = new ImpexDB();
+        private CollectionViewSource impexViewSource, impeximpex_expenseViewSource, sales_invoiceViewSource = null;
+        private cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
 
-        List<entity.Class.Impex_ItemDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_ItemDetail>();
-        List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
+        private List<entity.Class.Impex_ItemDetail> Impex_CostDetailLIST = new List<entity.Class.Impex_ItemDetail>();
+        private List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
 
-        int company_ID = CurrentSession.Id_Company;
+        private int company_ID = CurrentSession.Id_Company;
 
         public Export()
         {
             InitializeComponent();
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 //sales_invoiceViewSource
                 sales_invoiceViewSource = this.FindResource("sales_invoiceViewSource") as CollectionViewSource;
-
 
                 impexViewSource = this.FindResource("impexViewSource") as CollectionViewSource;
                 ImpexDB.impex
@@ -71,6 +71,7 @@ namespace Cognitivo.Sales
         }
 
         #region Toolbar events
+
         private void toolBar_btnNew_Click(object sender)
         {
             sales_invoiceViewSource.Source = ImpexDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
@@ -199,7 +200,8 @@ namespace Cognitivo.Sales
             impexViewSource.View.MoveCurrentToFirst();
             ImpexDB.CancelAllChanges();
         }
-        #endregion
+
+        #endregion Toolbar events
 
         private void btnImportInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -217,7 +219,6 @@ namespace Cognitivo.Sales
                 impex_ExportDataGrid.ItemsSource = Impex_CostDetailLIST;
                 productDataGrid.ItemsSource = Impex_ProductsLIST;
             }
-
         }
 
         private void impexDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -231,9 +232,9 @@ namespace Cognitivo.Sales
                 {
                     getProratedCostCounted(impex_export.sales_invoice, false);
                 }
-
             }
         }
+
         private void getProratedCostCounted(sales_invoice sales_invoice, bool isNew)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
@@ -264,7 +265,6 @@ namespace Cognitivo.Sales
                     impex_export impex_export = impex.impex_export.First();
                     sales_invoice = impex_export.sales_invoice;
                 }
-
             }
 
             //Get expences
@@ -272,7 +272,7 @@ namespace Cognitivo.Sales
             decimal totalExpence = 0;
             foreach (var item in impex_expense)
             {
-                totalExpence +=(decimal) item.value;
+                totalExpence += (decimal)item.value;
             }
 
             //Insert sales Invoice Detail
@@ -322,12 +322,8 @@ namespace Cognitivo.Sales
                     ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
                     Impex_CostDetailLIST.Add(ImpexImportDetails);
                 }
-
             }
-
         }
-
-      
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -360,7 +356,6 @@ namespace Cognitivo.Sales
         {
             try
             {
-
                 if (sbxContact.ContactID > 0)
                 {
                     contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
@@ -379,6 +374,7 @@ namespace Cognitivo.Sales
                 toolBar.msgError(ex);
             }
         }
+
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
@@ -411,12 +407,10 @@ namespace Cognitivo.Sales
                         decimal SubTotal = (_ImpexImportDetails.quantity * _ImpexImportDetails.prorated_cost);
                         _ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
                     }
-
-
                 }
-
             }
         }
+
         private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -441,8 +435,8 @@ namespace Cognitivo.Sales
 
             pnlSalesInvoice.SalesInvoice_Click += SalesInvoice_Click;
             crud_modal.Children.Add(pnlSalesInvoice);
-
         }
+
         public void SalesInvoice_Click(object sender)
         {
             if (pnlSalesInvoice.selected_sales_invoice.FirstOrDefault() != null)
@@ -465,6 +459,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             entity.Class.Impex_Products clsProductDetail = productDataGrid.SelectedItem as entity.Class.Impex_Products;
@@ -472,7 +467,6 @@ namespace Cognitivo.Sales
             {
                 if (impeximpex_expenseViewSource.View != null)
                 {
-
                     impeximpex_expenseViewSource.View.Filter = i =>
                     {
                         impex_expense impex_expense = (impex_expense)i;
@@ -481,7 +475,6 @@ namespace Cognitivo.Sales
                         else
                             return false;
                     };
-
                 }
             }
         }
@@ -490,7 +483,6 @@ namespace Cognitivo.Sales
         {
             if (impexDataGrid.SelectedItem != null)
             {
-
                 if (id_incotermComboBox.SelectedItem != null && pnlSalesInvoice.selected_sales_invoice.FirstOrDefault() != null)
                 {
                     impex impex = impexDataGrid.SelectedItem as impex;
@@ -509,7 +501,6 @@ namespace Cognitivo.Sales
                         //Only fetch seller expence
                         impex_incoterm_detail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.seller == true).ToList();
                     }
-
 
                     foreach (entity.Class.Impex_Products product in Impex_ProductsLIST)
                     {
@@ -537,8 +528,5 @@ namespace Cognitivo.Sales
                 }
             }
         }
-
-       
-
     }
 }

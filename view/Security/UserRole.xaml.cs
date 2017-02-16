@@ -10,19 +10,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-
 namespace Cognitivo.Security
 {
     public partial class UserRole : Page
     {
-        UserRoleDB UserRoleDB = new UserRoleDB();
-        CollectionViewSource
+        private UserRoleDB UserRoleDB = new UserRoleDB();
+
+        private CollectionViewSource
             security_rolesecurity_curdViewSource,
             security_roleViewSource,
             security_rolesecurity_role_privilageViewSource;
 
-        entity.CurrentSession.Versions CurrentVersion;
-        entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+        private entity.CurrentSession.Versions CurrentVersion;
+        private entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+
         public UserRole()
         {
             InitializeComponent();
@@ -46,13 +47,12 @@ namespace Cognitivo.Security
 
             add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
-         
+
             app_company app_company = UserRoleDB.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
             if (app_company != null)
             {
                 Licence.VerifyCompanyLicence(app_company.version);
             }
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -99,7 +99,7 @@ namespace Cognitivo.Security
 
                     int UserCount = 0;
                     UserCount = security_roleList.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
-                    
+
                     int UserLimit = 0;
                     if (Licence.CompanyLicence != null)
                     {
@@ -119,15 +119,14 @@ namespace Cognitivo.Security
                         }
                         else
                         {
-                             string key=  Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key,(int)CurrentSession.Versions.Full);
+                            string key = Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key, (int)CurrentSession.Versions.Full);
                             //write code for trial 15 days for this plan.
-                            if (key== Licence.CompanyLicence.license_key && security_role.Version !=CurrentSession.Versions.Lite)
+                            if (key == Licence.CompanyLicence.license_key && security_role.Version != CurrentSession.Versions.Lite)
                             {
                                 MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
                                            "You will have 15 days trial period, once finished, you will be diverted to the free account."
                                            , "Cognitivo");
                             }
-                           
                         }
                     }
 
@@ -145,7 +144,6 @@ namespace Cognitivo.Security
 
         private void toolBar_btnDelete_Click(object sender)
         {
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -218,9 +216,7 @@ namespace Cognitivo.Security
                                 security_privilage.id_application = Names;
                                 security_privilage.name = Privilage;
                                 UserRoleDB.security_privilage.Add(security_privilage);
-
                             }
-
                         }
                     }
                 }
@@ -228,7 +224,6 @@ namespace Cognitivo.Security
 
             List<entity.App.Names> PreferenceList = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<security_privilage> security_privilageList = UserRoleDB.security_privilage.ToList();
-
 
             foreach (security_privilage security_privilage in security_privilageList)
             {
@@ -334,7 +329,6 @@ namespace Cognitivo.Security
                 }
                 else if (CurrentVersion > NewVersion)
                 {
-
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
                     foreach (DataRow item in appList.dtApp.Select("Version = '" + NewVersion + "'"))
                     {
@@ -356,7 +350,6 @@ namespace Cognitivo.Security
                             security_role.security_curd.Remove(_security_curd);
                         }
                     }
-
                 }
                 CurrentVersion = NewVersion;
             }
@@ -401,14 +394,10 @@ namespace Cognitivo.Security
 
                 if (Licence.CompanyLicence != null)
                 {
-
-
                     versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)security_role.Version).FirstOrDefault();
 
                     if (versions != null)
                     { //Exists = Yes.
-
-
                         lblVersionInternet.Content = versions.user_number;
                     }
                 }

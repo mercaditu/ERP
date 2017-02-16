@@ -1,23 +1,23 @@
-﻿using System;
+﻿using entity;
+using System;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Data.Entity;
-using entity;
-using System.Data;
-using System.Windows.Controls.Primitives;
 
 namespace Cognitivo.Product
 {
     public partial class Transfer : Page
     {
-        ProductTransferDB ProductTransferDB = new ProductTransferDB();
-        Class.StockCalculations StockCalculations = new Class.StockCalculations();
-        CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
-        Configs.itemMovement itemMovement = new Configs.itemMovement();
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private ProductTransferDB ProductTransferDB = new ProductTransferDB();
+        private Class.StockCalculations StockCalculations = new Class.StockCalculations();
+        private CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
+        private Configs.itemMovement itemMovement = new Configs.itemMovement();
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
 
         public Transfer()
         {
@@ -136,7 +136,7 @@ namespace Cognitivo.Product
                             if (item.item_product.FirstOrDefault() != null && item.item_product.FirstOrDefault().can_expire)
                             {
                                 crud_modalExpire.Visibility = Visibility.Visible;
-                                pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_transfer.app_branch_origin.id_branch,null , item.item_product.FirstOrDefault().id_item_product);
+                                pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_transfer.app_branch_origin.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
                                 crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                             }
                             else
@@ -156,14 +156,12 @@ namespace Cognitivo.Product
                                 item_transfer_detail.RaisePropertyChanged("item_product");
                                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
                             }
-
                         }
                         else
                         {
                             item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
                             item_transfer_detail.quantity_origin += 1;
                         }
-
                     }
                     else
                     {
@@ -196,7 +194,6 @@ namespace Cognitivo.Product
                 item_transfer.IsSelected = true;
                 ProductTransferDB.ApproveDestination(item_transfer, false);
             }
-
         }
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
@@ -293,13 +290,11 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
 
             if (crud_modal.Visibility == Visibility.Hidden)
             {
-
                 if (item != null &&
                           item.item_product != null &&
                           item_transfer != null &&
@@ -333,7 +328,6 @@ namespace Cognitivo.Product
                         item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                     }
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
-
                 }
                 else
                 {
@@ -373,8 +367,6 @@ namespace Cognitivo.Product
                 item_transferViewSource.View.Filter = null;
             }
         }
-
-       
 
         private void sbxItemAsset_Select(object sender, RoutedEventArgs e)
         {
@@ -424,4 +416,3 @@ namespace Cognitivo.Product
         }
     }
 }
-

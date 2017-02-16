@@ -11,7 +11,6 @@ namespace Cognitivo
         public openweather()
         {
             InitializeComponent();
-
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

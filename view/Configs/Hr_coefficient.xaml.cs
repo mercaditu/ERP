@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using cntrl;
+using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using cntrl;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -13,10 +13,10 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class Hr_coefficient : Page
     {
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource hr_time_coefficientViewSource;
 
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource hr_time_coefficientViewSource;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
         public Hr_coefficient()
         {
             InitializeComponent();
@@ -28,6 +28,7 @@ namespace Cognitivo.Configs
             entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_time_coefficientViewSource.Source = entity.db.hr_time_coefficient.Local;
         }
+
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -62,12 +63,9 @@ namespace Cognitivo.Configs
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
             hr_time_coefficientViewSource = ((CollectionViewSource)(FindResource("hr_time_coefficientViewSource")));
             entity.db.hr_time_coefficient.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_time_coefficientViewSource.Source = entity.db.hr_time_coefficient.Local;
-
         }
     }
 }
-

@@ -1,20 +1,21 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Data;
-using entity;
 
 namespace Cognitivo.Product
 {
     public partial class Movement : Page
     {
-        ProductTransferDB ProductTransferDB = new ProductTransferDB();
-        CollectionViewSource item_transferViewSource;
-        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+        private ProductTransferDB ProductTransferDB = new ProductTransferDB();
+        private CollectionViewSource item_transferViewSource;
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
         public Movement()
         {
             InitializeComponent();
@@ -120,7 +121,6 @@ namespace Cognitivo.Product
             cbxBranch_SelectionChanged(sender, null);
         }
 
-
         private void cbxBranch_SelectionChanged(object sender, EventArgs e)
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
@@ -134,7 +134,6 @@ namespace Cognitivo.Product
                 }
             }
         }
-
 
         private void set_ContactPref(object sender, EventArgs e)
         {
@@ -237,7 +236,6 @@ namespace Cognitivo.Product
                 {
                     item_movement item_movement_dest;
 
-
                     List<item_movement_dimension> DimensionList = null;
 
                     if (item_movement.item_movement_dimension.Count() > 0)
@@ -272,7 +270,6 @@ namespace Cognitivo.Product
 
                     item_transfer.status = Status.Transfer.Approved;
                 }
-
             }
 
             if (item_transfer.status == Status.Transfer.Approved && item_transfer.app_document_range != null)
@@ -288,7 +285,6 @@ namespace Cognitivo.Product
 
         private void cbxItem_KeyDown(object sender, RoutedEventArgs e)
         {
-
             if (sbxItem.ItemID > 0)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
@@ -376,7 +372,6 @@ namespace Cognitivo.Product
                         }
                     }
 
-
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
                 }
 
@@ -396,7 +391,7 @@ namespace Cognitivo.Product
                     {
                         string number = item_transfer.number != null ? item_transfer.number : "";
                         string origin = item_transfer.app_location_origin.name != null ? item_transfer.app_location_origin.name : "";
-                        //string 
+                        //string
                         if (number.ToLower().Contains(query.ToLower()) || origin.ToLower().Contains(query.ToLower()))
                         {
                             return true;
@@ -419,6 +414,7 @@ namespace Cognitivo.Product
                 entity.Brillo.Document.Start.Automatic(item_transfer, item_transfer.app_document_range);
             }
         }
+
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)

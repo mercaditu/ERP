@@ -10,16 +10,29 @@ namespace Cognitivo.Configs
 {
     public partial class ConnectionBuilder : Page
     {
-        StringBuilder connString = new StringBuilder();
+        private StringBuilder connString = new StringBuilder();
 
         public ConnectionBuilder()
         { InitializeComponent(); }
 
         #region "Database Providers"
-        public void SQLServerconnString() { }
-        public void OracleconnString() { }
-        public void IBMDB2connString() { }
-        public void SQLite() { }
+
+        public void SQLServerconnString()
+        {
+        }
+
+        public void OracleconnString()
+        {
+        }
+
+        public void IBMDB2connString()
+        {
+        }
+
+        public void SQLite()
+        {
+        }
+
         public void MySQLconnString(string connString)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -27,7 +40,8 @@ namespace Cognitivo.Configs
             config.Save(ConfigurationSaveMode.Modified, true);
             ConfigurationManager.RefreshSection("connectionStrings");
         }
-        #endregion
+
+        #endregion "Database Providers"
 
         private void btnTestConn_Click(object sender, RoutedEventArgs e)
         {
@@ -49,10 +63,9 @@ namespace Cognitivo.Configs
 
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                 Application.Current.Shutdown();
-
-                
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 System.Windows.Forms.MessageBox.Show("Problem connecting to Database. Please check your credentials: " + ex.Message, "Cognitivo");
             }
         }
@@ -63,7 +76,7 @@ namespace Cognitivo.Configs
             string ApplicationPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             string YourPath = System.IO.Path.GetDirectoryName(ApplicationPath);
             bool isNew = false;
-        
+
             XmlDocument doc = new XmlDocument();
             doc.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             XmlNodeList list = doc.DocumentElement.SelectNodes(string.Format("connectionStrings/add[@name='{0}']", name));
@@ -105,9 +118,6 @@ namespace Cognitivo.Configs
                 doc.DocumentElement.SelectNodes("connectionStrings")[0].AppendChild(node);
             }
             doc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-
-
         }
-
     }
 }

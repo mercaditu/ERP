@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Data.Entity;
-using entity;
+﻿using entity;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cognitivo.Project
 {
@@ -13,9 +13,9 @@ namespace Cognitivo.Project
     /// </summary>
     public partial class ProjectTag : Page
     {
-       dbContext entity = new dbContext();
-       CollectionViewSource project_tagViewSource = null;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        private dbContext entity = new dbContext();
+        private CollectionViewSource project_tagViewSource = null;
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ProjectTag()
         {
@@ -50,6 +50,5 @@ namespace Cognitivo.Project
             _ProjectTag.entity = entity;
             crud_modal.Children.Add(_ProjectTag);
         }
-
     }
 }

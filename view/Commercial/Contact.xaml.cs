@@ -1,35 +1,34 @@
-﻿using System;
+﻿using entity;
+using Microsoft.Maps.MapControl.WPF;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
-using System.Data.Entity;
-using entity;
-using System.Windows.Input;
-using System.Windows.Data;
 using System.Windows.Controls;
-using Microsoft.Maps.MapControl.WPF;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Cognitivo.Commercial
 {
     public partial class Contact : Page
     {
-        ContactDB ContactDB = new ContactDB();
+        private ContactDB ContactDB = new ContactDB();
 
-        CollectionViewSource contactChildListViewSource;
-        CollectionViewSource contactViewSource;
-        CollectionViewSource contactcontact_field_valueViewSource;
-        CollectionViewSource contactcontact_field_valueemailViewSource;
-        CollectionViewSource contactcontact_field_valuephoneViewSource;
-        CollectionViewSource app_fieldViewSource;
-        CollectionViewSource app_fieldemailViewSource;
-        CollectionViewSource app_fieldphoneViewSource;
+        private CollectionViewSource contactChildListViewSource;
+        private CollectionViewSource contactViewSource;
+        private CollectionViewSource contactcontact_field_valueViewSource;
+        private CollectionViewSource contactcontact_field_valueemailViewSource;
+        private CollectionViewSource contactcontact_field_valuephoneViewSource;
+        private CollectionViewSource app_fieldViewSource;
+        private CollectionViewSource app_fieldemailViewSource;
+        private CollectionViewSource app_fieldphoneViewSource;
 
         #region Initilize and load
 
         public Contact()
         {
-           InitializeComponent(); 
+            InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, EventArgs e)
@@ -41,7 +40,6 @@ namespace Cognitivo.Commercial
 
             //Contact
             await ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
@@ -64,7 +62,7 @@ namespace Cognitivo.Commercial
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
             itemPriceListViewSource.Source = CurrentSession.PriceLists; //ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-            
+
             CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
             salesRepViewSource.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
 
@@ -103,9 +101,11 @@ namespace Cognitivo.Commercial
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.OrderBy(a => a.name);
             Filter();
         }
-        #endregion
+
+        #endregion Initilize and load
 
         #region Toolbar Events
+
         private void toolBar_btnNew_Click(object sender)
         {
             contact contact = ContactDB.New();
@@ -167,7 +167,7 @@ namespace Cognitivo.Commercial
             contact.State = EntityState.Unchanged;
         }
 
-        #endregion
+        #endregion Toolbar Events
 
         private void cbxContactRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -194,18 +194,19 @@ namespace Cognitivo.Commercial
                 }
             }
         }
+
         private void Filter()
         {
-            if (contactcontact_field_valueViewSource!=null)
+            if (contactcontact_field_valueViewSource != null)
             {
-                if (contactcontact_field_valueViewSource.View!=null)
+                if (contactcontact_field_valueViewSource.View != null)
                 {
                     contactcontact_field_valueViewSource.View.Filter = i =>
                     {
                         contact_field_value contact_field_value = (contact_field_value)i;
                         if (contact_field_value != null)
                         {
-                            if (contact_field_value.app_field.field_type==app_field.field_types.Account)
+                            if (contact_field_value.app_field.field_type == app_field.field_types.Account)
                             {
                                 return true;
                             }
@@ -240,7 +241,6 @@ namespace Cognitivo.Commercial
                 {
                     contactcontact_field_valuephoneViewSource.View.Filter = i =>
                     {
-
                         contact_field_value contact_field_value = (contact_field_value)i;
                         if (contact_field_value != null)
                         {
@@ -326,7 +326,6 @@ namespace Cognitivo.Commercial
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -369,12 +368,12 @@ namespace Cognitivo.Commercial
                 contact.app_geography = await ContactDB.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
         }
+
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 Add_Tag();
-
             }
         }
 
@@ -383,7 +382,7 @@ namespace Cognitivo.Commercial
             Add_Tag();
         }
 
-        void Add_Tag()
+        private void Add_Tag()
         {
             // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
@@ -400,7 +399,6 @@ namespace Cognitivo.Commercial
                         contact.contact_tag_detail.Add(contact_tag_detail);
                         CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
                         contactcontact_tag_detailViewSource.View.Refresh();
-
                     }
                 }
             }
@@ -439,8 +437,6 @@ namespace Cognitivo.Commercial
         {
             // FilterSubscription();
         }
-
-      
 
         private void MapsDropPin_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -511,7 +507,7 @@ namespace Cognitivo.Commercial
                     app_fieldemailViewSource.View.Refresh();
                     app_fieldemailViewSource.View.MoveCurrentToLast();
                 }
-                
+
                 contact_field_value contact_field_value = new contact_field_value();
                 contact_field_value.app_field = app_field;
                 contact.contact_field_value.Add(contact_field_value);
@@ -560,7 +556,6 @@ namespace Cognitivo.Commercial
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
-
         }
 
         private void lblCancelCost_MouseUp(object sender, MouseButtonEventArgs e)
@@ -583,7 +578,6 @@ namespace Cognitivo.Commercial
             }
         }
 
-      
         private void lblCancelBank_MouseUp(object sender, MouseButtonEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;

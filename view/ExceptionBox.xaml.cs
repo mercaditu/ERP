@@ -8,6 +8,7 @@ namespace Cognitivo
     public partial class ExceptionBox : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -53,6 +54,7 @@ namespace Cognitivo
                 }
             }
         }
+
         private Exception _ex;
 
         public string errMessage { get; set; }
@@ -101,7 +103,6 @@ namespace Cognitivo
                     bool Sent = _Email.Send(SendTo, "Error: " + errTargetSite, Message);
                 }
             }
-
         }
     }
 }

@@ -1,68 +1,67 @@
 ﻿<Page x:Class="Cognitivo.Project.PrintingPressCalculationPage" x:Name="_PrintingPressCalculation"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:printingpress="clr-namespace:Cognitivo.Project.PrintingPress"
       xmlns:pref="clr-namespace:Cognitivo.Project.PrintingPress"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en-US"
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
 	Title="PrintingPressCalculationPage">
     <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-        <CollectionViewSource x:Key="cost_calviewsource" d:DesignSource="{d:DesignInstance {x:Type printingpress:calc_Cost}, CreateList=True}"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <CollectionViewSource x:Key="cost_calviewsource" d:DesignSource="{d:DesignInstance {x:Type printingpress:calc_Cost}, CreateList=True}" />
     </Page.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="2" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <StackPanel Background="White" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <Label Content="Tipo" Style="{StaticResource input_label}"/>
+            <Label Content="Tipo" Style="{StaticResource input_label}" />
             <StackPanel Orientation="Horizontal" Margin="4">
-                <RadioButton x:Name="rbtnPage" IsChecked="True" Content="Impression" Margin="4,0"/>
-                <RadioButton x:Name="rbtnMagazine" Content="Encuadernado" Margin="4,0"/>
-                <RadioButton x:Name="rbtnBag" Content="Bolsas" Margin="4,0"/>
+                <RadioButton x:Name="rbtnPage" IsChecked="True" Content="Impression" Margin="4,0" />
+                <RadioButton x:Name="rbtnMagazine" Content="Encuadernado" Margin="4,0" />
+                <RadioButton x:Name="rbtnBag" Content="Bolsas" Margin="4,0" />
             </StackPanel>
             <StackPanel Margin="3">
                 <StackPanel>
                     <StackPanel Background="WhiteSmoke">
-                        <Label Content="Dimensiones del Trabajo (CM)" Style="{StaticResource input_label}"/>
+                        <Label Content="Dimensiones del Trabajo (CM)" Style="{StaticResource input_label}" />
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding ElementName=cbxShort, Path=Text}"/>
+                                <Label Content="{Binding ElementName=cbxShort, Path=Text}" />
                                 <TextBox Style="{StaticResource input_textbox}" Width="64"
                                                          metro:TextBoxHelper.SelectAllOnFocus="True"
-                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Long, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="{Binding ElementName=cbxLong, Path=Text}"/>
+                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Long, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="{Binding ElementName=cbxLong, Path=Text}" />
                                 <TextBox Style="{StaticResource input_textbox}" Width="64"
                                                          metro:TextBoxHelper.SelectAllOnFocus="True"
-                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Short, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="{Binding ElementName=cbxHeight, Path=Text}" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnBag}"/>
+                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Short, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="{Binding ElementName=cbxHeight, Path=Text}" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnBag}" />
                                 <TextBox Style="{StaticResource input_textbox}" Width="64"
                                                          metro:TextBoxHelper.SelectAllOnFocus="True" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnBag}"
-                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Short, UpdateSourceTrigger=PropertyChanged}"/>
+                                                         Text="{Binding ElementName=_PrintingPressCalculation, Path=_product_Short, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </StackPanel>
-                        <Label Content="Peso del Papel (Gramaje)" Style="{StaticResource input_label}"/>
+                        <Label Content="Peso del Papel (Gramaje)" Style="{StaticResource input_label}" />
                         <ComboBox x:Name="cmbweight" Grid.Column="1"
                                                   SelectionChanged="cmbweight_SelectionChanged"
-                                                  Style="{StaticResource input_combobox}"/>
+                                                  Style="{StaticResource input_combobox}" />
                     </StackPanel>
                     <WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                         <ItemsControl x:Name="stppaper">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
 
-                                    <WrapPanel/>
-
+                                    <WrapPanel />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <!-- render each bound item using a TextBlock-->
@@ -74,10 +73,10 @@
                                             <RadioButton.Content>
                                                 <StackPanel>
                                                     <StackPanel.Background>
-                                                        <SolidColorBrush Color="White" Opacity="0.80"/>
+                                                        <SolidColorBrush Color="White" Opacity="0.80" />
                                                     </StackPanel.Background>
-                                                    <Label Content="{Binding Name}" Style="{StaticResource H3}" HorizontalAlignment="Center"/>
-                                                    <Label Content="{Binding Cost}" HorizontalAlignment="Center"/>
+                                                    <Label Content="{Binding Name}" Style="{StaticResource H3}" HorizontalAlignment="Center" />
+                                                    <Label Content="{Binding Cost}" HorizontalAlignment="Center" />
                                                 </StackPanel>
                                             </RadioButton.Content>
                                         </RadioButton>
@@ -88,48 +87,48 @@
                     </WrapPanel>
                 </StackPanel>
                 <CheckBox Content="Double Cara" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnPage}"
-                          Style="{StaticResource input_checkbox}"/>
+                          Style="{StaticResource input_checkbox}" />
                 <Label Content="Cantidad de Cambios" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnPage}"
-                       Style="{StaticResource input_label}"/>
+                       Style="{StaticResource input_label}" />
                 <metro:NumericUpDown Width="256" HorizontalAlignment="Left" Margin="4" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnPage}"
-                                     Value="{Binding FallbackValue=1, ElementName=_PrintingPressCalculation, Path=_change_Qty, UpdateSourceTrigger=PropertyChanged}" 
-                                     Maximum="5" Minimum="1"/>
-                <Label Content="Cantidad de Paginas" Style="{StaticResource input_label}" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnMagazine}"/>
+                                     Value="{Binding FallbackValue=1, ElementName=_PrintingPressCalculation, Path=_change_Qty, UpdateSourceTrigger=PropertyChanged}"
+                                     Maximum="5" Minimum="1" />
+                <Label Content="Cantidad de Paginas" Style="{StaticResource input_label}" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnMagazine}" />
                 <metro:NumericUpDown Width="256" HorizontalAlignment="Left" Margin="4" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnMagazine}"
-                                     Value="{Binding FallbackValue=8, ElementName=_PrintingPressCalculation, Path=_change_Qty, UpdateSourceTrigger=PropertyChanged}" 
-                                     Minimum="8" Interval="8"/>
-                <Label Content="Cantidad de Colores" Style="{StaticResource input_label}"/>
+                                     Value="{Binding FallbackValue=8, ElementName=_PrintingPressCalculation, Path=_change_Qty, UpdateSourceTrigger=PropertyChanged}"
+                                     Minimum="8" Interval="8" />
+                <Label Content="Cantidad de Colores" Style="{StaticResource input_label}" />
                 <metro:NumericUpDown Width="256" HorizontalAlignment="Left" Margin="4"
-                                     Value="{Binding FallbackValue=1, ElementName=_PrintingPressCalculation, Path=_color_Qty, UpdateSourceTrigger=PropertyChanged}" 
-                                     Maximum="5" Minimum="1"/>
-                <Label Content="Consumo de Tinta (Colores)" Style="{StaticResource input_label}"/>
+                                     Value="{Binding FallbackValue=1, ElementName=_PrintingPressCalculation, Path=_color_Qty, UpdateSourceTrigger=PropertyChanged}"
+                                     Maximum="5" Minimum="1" />
+                <Label Content="Consumo de Tinta (Colores)" Style="{StaticResource input_label}" />
                 <DataGrid x:Name="itemink" Grid.Column="1" AutoGenerateColumns="False"
                                           RowEditEnding="itemink_RowEditEnding">
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn x:Name="cmbink" Header="Tinta" Width="*" SelectedValueBinding="{Binding Id,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridComboBoxColumn x:Name="cmbvalue" Header="Valor (%)" Width="*" 
-                                                            SelectedValueBinding="{Binding Consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P}}"/>
-                        <DataGridTextColumn Header="Costo" Binding="{Binding Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"   Width="*"/>
+                        <DataGridComboBoxColumn x:Name="cmbink" Header="Tinta" Width="*" SelectedValueBinding="{Binding Id,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn x:Name="cmbvalue" Header="Valor (%)" Width="*"
+                                                            SelectedValueBinding="{Binding Consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P}}" />
+                        <DataGridTextColumn Header="Costo" Binding="{Binding Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"   Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Label Content="Accesorios" VerticalAlignment="Top" Style="{StaticResource input_label}"/>
+                <Label Content="Accesorios" VerticalAlignment="Top" Style="{StaticResource input_label}" />
                 <DataGrid x:Name="itemaccesories" Grid.Column="1"
-                                          AutoGenerateColumns="False"  Grid.ColumnSpan="2" RowEditEnding="itemaccesories_RowEditEnding" >
+                                          AutoGenerateColumns="False"  Grid.ColumnSpan="2" RowEditEnding="itemaccesories_RowEditEnding">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Accesorio" Binding="{Binding Name}" Width="*"/>
-                        <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="*"/>
-                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Consumption,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="*"/>
-                        <DataGridTextColumn Header="Costo Total" Binding="{Binding Calc_Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"    Width="*"/>
+                        <DataGridTextColumn Header="Accesorio" Binding="{Binding Name}" Width="*" />
+                        <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="*" />
+                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Consumption,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="*" />
+                        <DataGridTextColumn Header="Costo Total" Binding="{Binding Calc_Cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"    Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <TextBlock Text="Los Resultados calculados apareceran a la derecha." Style="{StaticResource text_Instructions}"/>
+                <TextBlock Text="Los Resultados calculados apareceran a la derecha." Style="{StaticResource text_Instructions}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button IsDefault="True" Width="256" Click="btnCalculate_Click" Background="Transparent" 
+                    <Button IsDefault="True" Width="256" Click="btnCalculate_Click" Background="Transparent"
                             BorderBrush="Transparent" TabIndex="2">
                         <Button.Content>
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
-                                <ProgressBar Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
-                                <Label Content="CALCULAR >>>" FontSize="14" HorizontalContentAlignment="Center"/>
+                                <ProgressBar Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}" />
+                                <Label Content="CALCULAR >>>" FontSize="14" HorizontalContentAlignment="Center" />
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -139,10 +138,10 @@
             </StackPanel>
         </StackPanel>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="Gainsboro"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="Gainsboro" />
 
         <ScrollViewer Grid.Column="2" Background="Gray"
-                                  VerticalScrollBarVisibility="Auto" 
+                                  VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Auto">
             <Canvas x:Name="canvas_Draw"></Canvas>
         </ScrollViewer>
@@ -151,164 +150,164 @@
                               RowEditEnding="itemink_RowEditEnding"
                               CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding cost_Accessory, StringFormat=\{0:N2\}}" Header="Acessorios"/>
-                <DataGridTextColumn Binding="{Binding cost_Paper, StringFormat=\{0:N2\}}" Header="Papel"/>
-                <DataGridTextColumn Binding="{Binding cost_Printer, StringFormat=\{0:N2\}}" Header="Impresora"/>
-                <DataGridTextColumn Binding="{Binding cost_Toner, StringFormat=\{0:N2\}}" Header="Toner"/>
-                <DataGridTextColumn Binding="{Binding cost_Ink, StringFormat=\{0:N2\}}" Header="Tinta"/>
-                <DataGridTextColumn Binding="{Binding cost_Cut, StringFormat=\{0:N2\}}" Header="Corte"/>
-                <DataGridTextColumn Binding="{Binding cost, StringFormat=\{0:N2\}}" Header="Costo Total"/>
+                <DataGridTextColumn Binding="{Binding cost_Accessory, StringFormat=\{0:N2\}}" Header="Acessorios" />
+                <DataGridTextColumn Binding="{Binding cost_Paper, StringFormat=\{0:N2\}}" Header="Papel" />
+                <DataGridTextColumn Binding="{Binding cost_Printer, StringFormat=\{0:N2\}}" Header="Impresora" />
+                <DataGridTextColumn Binding="{Binding cost_Toner, StringFormat=\{0:N2\}}" Header="Toner" />
+                <DataGridTextColumn Binding="{Binding cost_Ink, StringFormat=\{0:N2\}}" Header="Tinta" />
+                <DataGridTextColumn Binding="{Binding cost_Cut, StringFormat=\{0:N2\}}" Header="Corte" />
+                <DataGridTextColumn Binding="{Binding cost, StringFormat=\{0:N2\}}" Header="Costo Total" />
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Producto" Style="{StaticResource H3}"/>
+                                <Label Content="Producto" Style="{StaticResource H3}" />
                                 <StackPanel>
-                                    <Label Content="ID"/>
-                                    <Label Content="{Binding _product.Id, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="ID" />
+                                    <Label Content="{Binding _product.Id, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Long"/>
-                                    <Label  Content="{Binding _product.Long, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Long" />
+                                    <Label  Content="{Binding _product.Long, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Short"/>
-                                    <Label  Content="{Binding _product.Short, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Short" />
+                                    <Label  Content="{Binding _product.Short, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Weight"/>
-                                    <Label  Content="{Binding _product.Weight, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Weight" />
+                                    <Label  Content="{Binding _product.Weight, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Color"/>
-                                    <Label  Content="{Binding _product.Color, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Color" />
+                                    <Label  Content="{Binding _product.Color, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Cambios"/>
-                                    <Label  Content="{Binding _product.Change, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Cambios" />
+                                    <Label  Content="{Binding _product.Change, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Cantidad"/>
-                                    <Label  Content="{Binding _product.Qty, StringFormat=\{0:N2\}}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
-                        <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Pagina" Style="{StaticResource H3}"/>
-                                <StackPanel>
-                                    <Label Content="Long"/>
-                                    <Label  Content="{Binding _page.Long, StringFormat=\{0:N2\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Short"/>
-                                    <Label  Content="{Binding _page.Short, StringFormat=\{0:N2\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Prod&gt;Pag"/>
-                                    <Label  Content="{Binding _page.Qty_Fit, StringFormat=\{0:N\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Cantidad"/>
-                                    <Label  Content="{Binding _page.Qty, StringFormat=\{0:N\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Qty Waste"/>
-                                    <Label  Content="{Binding _page.Qty_Waste, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Cantidad" />
+                                    <Label  Content="{Binding _product.Qty, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Papel" Style="{StaticResource H3}"/>
+                                <Label Content="Pagina" Style="{StaticResource H3}" />
                                 <StackPanel>
-                                    <Label Content="Nombre"/>
-                                    <Label  Content="{Binding _paper.Name, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Long" />
+                                    <Label  Content="{Binding _page.Long, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Long"/>
-                                    <Label  Content="{Binding _paper.Long, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Short" />
+                                    <Label  Content="{Binding _page.Short, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Short"/>
-                                    <Label  Content="{Binding _paper.Short, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Prod&gt;Pag" />
+                                    <Label  Content="{Binding _page.Qty_Fit, StringFormat=\{0:N\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Weight"/>
-                                    <Label  Content="{Binding _paper.Weight, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Cantidad" />
+                                    <Label  Content="{Binding _page.Qty, StringFormat=\{0:N\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Cantidad"/>
-                                    <Label  Content="{Binding _paper.Qty, StringFormat=\{0:N2\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Pag&gt;Papel"/>
-                                    <Label  Content="{Binding _paper.Qty_Fit, StringFormat=\{0:N2\}}"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Costo"/>
-                                    <Label  Content="{Binding _paper.Calc_Cost, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Qty Waste" />
+                                    <Label  Content="{Binding _page.Qty_Waste, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Impresora" Style="{StaticResource H3}"/>
+                                <Label Content="Papel" Style="{StaticResource H3}" />
                                 <StackPanel>
-                                    <Label Content="Nombre"/>
-                                    <Label  Content="{Binding _printer.Name}"/>
+                                    <Label Content="Nombre" />
+                                    <Label  Content="{Binding _paper.Name, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Color"/>
-                                    <Label  Content="{Binding _printer.Color_Limit}"/>
+                                    <Label Content="Long" />
+                                    <Label  Content="{Binding _paper.Long, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Min Largo"/>
-                                    <Label  Content="{Binding _printer.Min_Long, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Short" />
+                                    <Label  Content="{Binding _paper.Short, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Min Corto"/>
-                                    <Label  Content="{Binding _printer.Min_Short, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Weight" />
+                                    <Label  Content="{Binding _paper.Weight, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Max Largo"/>
-                                    <Label  Content="{Binding _printer.Max_Long, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Cantidad" />
+                                    <Label  Content="{Binding _paper.Qty, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Max Corto"/>
-                                    <Label  Content="{Binding _printer.Max_Short, StringFormat=\{0:N2\}}"/>
+                                    <Label Content="Pag&gt;Papel" />
+                                    <Label  Content="{Binding _paper.Qty_Fit, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Velocidad"/>
-                                    <Label  Content="{Binding _printer.Speed, StringFormat=\{0:N0\}}"/>
+                                    <Label Content="Costo" />
+                                    <Label  Content="{Binding _paper.Calc_Cost, StringFormat=\{0:N2\}}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Impresora" Style="{StaticResource H3}" />
+                                <StackPanel>
+                                    <Label Content="Nombre" />
+                                    <Label  Content="{Binding _printer.Name}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Vueltas"/>
-                                    <Label  Content="{Binding _printer.Runs}"/>
+                                    <Label Content="Color" />
+                                    <Label  Content="{Binding _printer.Color_Limit}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Tiempo de Uso"/>
-                                    <Label  Content="{Binding _printer.Time, StringFormat={}{0:N2}}"/>
+                                    <Label Content="Min Largo" />
+                                    <Label  Content="{Binding _printer.Min_Long, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Costo por Hora"/>
-                                    <Label  Content="{Binding _printer.Calc_Cost, StringFormat=\{0:N0\}}"/>
+                                    <Label Content="Min Corto" />
+                                    <Label  Content="{Binding _printer.Min_Short, StringFormat=\{0:N2\}}" />
                                 </StackPanel>
                                 <StackPanel>
-                                    <Label Content="Costo Plancha"/>
-                                    <Label  Content="{Binding _printer.Cost_DieSet, StringFormat=\{0:N0\}}"/>
+                                    <Label Content="Max Largo" />
+                                    <Label  Content="{Binding _printer.Max_Long, StringFormat=\{0:N2\}}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Max Corto" />
+                                    <Label  Content="{Binding _printer.Max_Short, StringFormat=\{0:N2\}}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Velocidad" />
+                                    <Label  Content="{Binding _printer.Speed, StringFormat=\{0:N0\}}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Vueltas" />
+                                    <Label  Content="{Binding _printer.Runs}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Tiempo de Uso" />
+                                    <Label  Content="{Binding _printer.Time, StringFormat={}{0:N2}}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Costo por Hora" />
+                                    <Label  Content="{Binding _printer.Calc_Cost, StringFormat=\{0:N0\}}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Costo Plancha" />
+                                    <Label  Content="{Binding _printer.Cost_DieSet, StringFormat=\{0:N0\}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="WhiteSmoke">
                             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                <Label Content="Toner" Style="{StaticResource H3}"/>
-                                <Label Content="Name"/>
-                                <Label  Content="{Binding _toner.Name}"/>
-                                <Label Content="Cost"/>
-                                <Label  Content="{Binding _toner.Cost}"/>
+                                <Label Content="Toner" Style="{StaticResource H3}" />
+                                <Label Content="Name" />
+                                <Label  Content="{Binding _toner.Name}" />
+                                <Label Content="Cost" />
+                                <Label  Content="{Binding _toner.Cost}" />
                             </StackPanel>
                         </Border>
                     </StackPanel>

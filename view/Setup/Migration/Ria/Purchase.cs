@@ -11,6 +11,7 @@ namespace Cognitivo.Setup.Migration
     public partial class MigrationAssistant
     {
         public List<purchase_invoice> purchase_invoice_ErrorList = new List<purchase_invoice>();
+
         public void purchase()
         {
             string sql = " SELECT " +
@@ -84,7 +85,7 @@ namespace Cognitivo.Setup.Migration
                     {
                         continue;
                     }
-                    
+
                     //Supplier
                     if (!(purchaserow["NOMBRE"] is DBNull))
                     {
@@ -109,7 +110,7 @@ namespace Cognitivo.Setup.Migration
                         {
                             app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
                             db.app_contract.Add(app_contract);
-                         
+
                             purchase_invoice.app_contract = app_contract;
                             purchase_invoice.id_contract = app_contract.id_contract;
                         }
@@ -132,7 +133,7 @@ namespace Cognitivo.Setup.Migration
                             {
                                 app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
                                 db.app_contract.Add(app_contract);
-                         
+
                                 purchase_invoice.app_contract = app_contract;
                                 purchase_invoice.id_contract = app_contract.id_contract;
                             }
@@ -154,7 +155,6 @@ namespace Cognitivo.Setup.Migration
                         //Terminal
                         purchase_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
-
 
                     string _desMoneda = string.Empty;
 
@@ -219,7 +219,7 @@ namespace Cognitivo.Setup.Migration
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
                         // purchase_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / purchase_invoice_detail.quantity) / cotiz1;
-                       
+
                         if (row["COSTOUNITARIO"] is DBNull)
                         {
                             purchase_invoice_detail.unit_cost = 0;
@@ -234,19 +234,19 @@ namespace Cognitivo.Setup.Migration
 
                     if (purchase_invoice.Error == null)
                     {
-                            purchase_invoice.State = System.Data.Entity.EntityState.Added;
-                            purchase_invoice.IsSelected = true;
+                        purchase_invoice.State = System.Data.Entity.EntityState.Added;
+                        purchase_invoice.IsSelected = true;
 
-                            // db.purchase_invoice.Add(purchase_invoice);
-                            IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
-                            if (validationresult.Count() == 0)
-                            {
-                                db.SaveChanges();
-                            }
+                        // db.purchase_invoice.Add(purchase_invoice);
+                        IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
+                        if (validationresult.Count() == 0)
+                        {
+                            db.SaveChanges();
+                        }
 
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
-                        Dispatcher.BeginInvoke((Action)(() =>purchaseValue.Text = value.ToString()));
+                        Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
                     }
                     else
                     {
@@ -255,7 +255,7 @@ namespace Cognitivo.Setup.Migration
                     }
                 }
             }
-           // reader.Close();
+            // reader.Close();
             cmd.Dispose();
             conn.Close();
 

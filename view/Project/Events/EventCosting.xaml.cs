@@ -1,30 +1,32 @@
-﻿using System;
+﻿using entity;
+using entity.Brillo;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using entity;
-using System.Data.Entity;
-using System.ComponentModel;
-using entity.Brillo;
 
 namespace Cognitivo.Project
 {
     public partial class EventCosting : Page, INotifyPropertyChanged, IDisposable
     {
-        entity.EventManagement.EventDB EventDB = new entity.EventManagement.EventDB();
-        CollectionViewSource
+        private entity.EventManagement.EventDB EventDB = new entity.EventManagement.EventDB();
+
+        private CollectionViewSource
             project_costingViewSource,
             project_costingproject_event_template_variable_detailsViewSource,
             project_costingservices_per_event_detailsViewSource,
             itemViewSource,
             contractViewSource = null;
 
-        int IDcurrencyfx = 0;
+        private int IDcurrencyfx = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
@@ -32,6 +34,7 @@ namespace Cognitivo.Project
 
         //Total Property
         public decimal TotalCost { get; set; }
+
         public decimal CostForPerPersonServices { get; set; }
         public decimal CostForPerEventServices { get; set; }
         public decimal CostForHall { get; set; }
@@ -50,7 +53,7 @@ namespace Cognitivo.Project
 
             CollectionViewSource conditionViewSource = FindResource("conditionViewSource") as CollectionViewSource;
             conditionViewSource.Source = CurrentSession.Conditions;
-            
+
             CollectionViewSource template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
             template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToListAsync();
 
@@ -67,6 +70,7 @@ namespace Cognitivo.Project
         }
 
         #region toolbar events
+
         private void toolBar_btnNew_Click(object sender)
         {
             project_event project_costing = new project_event();
@@ -111,9 +115,11 @@ namespace Cognitivo.Project
         {
             EventDB.SaveChanges();
         }
-        #endregion
+
+        #endregion toolbar events
 
         #region DeleteChild
+
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as project_event_variable != null)
@@ -151,7 +157,8 @@ namespace Cognitivo.Project
             }
             catch { }
         }
-        #endregion
+
+        #endregion DeleteChild
 
         private void GetServices(object sender, RoutedEventArgs e)
         {
@@ -163,8 +170,6 @@ namespace Cognitivo.Project
                 project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
                 //if (project_event.project_event_fixed.Count()==0)
                 //{
-
-
                 if (project_event != null && id_template_designerComboBox.SelectedItem != null)
                 {
                     project_event_template project_event_template = id_template_designerComboBox.SelectedItem as project_event_template;
@@ -173,7 +178,6 @@ namespace Cognitivo.Project
                         // EventDB.project_event_variable.RemoveRange(project_event.project_event_variable);
                         foreach (project_event_template_variable person_service in project_event_template.project_event_template_variable)
                         {
-
                             item_tag item_tag = person_service.item_tag;
                             foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
                             {
@@ -185,7 +189,6 @@ namespace Cognitivo.Project
                                         project_event_variable.project_event = project_event;
                                         project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
                                         project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
-
                                     }
                                     else
                                     {
@@ -201,8 +204,6 @@ namespace Cognitivo.Project
                                         project_event_variable.is_included = false;
                                         project_event.project_event_variable.Add(project_event_variable);
                                     }
-
-
                                 }
                             }
                         }
@@ -229,7 +230,6 @@ namespace Cognitivo.Project
                                         services_per_event_details.project_event = project_event;
                                         services_per_event_details.id_project_event = project_event.id_project_event;
                                         services_per_event_details.consumption = services_per_event_details.consumption;
-
                                     }
                                     else
                                     {
@@ -330,7 +330,6 @@ namespace Cognitivo.Project
                         EventForHall.SubTotal = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Sales);
                         EventList.Add(EventForHall);
                     }
-
                 }
                 TotalCost = CostForPerEventServices + CostForPerPersonServices + CostForHall;
             }
@@ -345,13 +344,13 @@ namespace Cognitivo.Project
         {
             EstimateCost();
         }
-        
+
         private void id_template_designerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (id_template_designerComboBox.SelectedItem != null)
             {
                 project_event_template template_designer = id_template_designerComboBox.SelectedItem as project_event_template;
-                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item) && x.is_active ).ToList();
+                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item) && x.is_active).ToList();
             }
         }
 
@@ -372,21 +371,21 @@ namespace Cognitivo.Project
         }
 
         #region Add/Edit Contact
+
         private void AddContact_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
         }
 
         private void EditContact_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
         }
-        #endregion
+
+        #endregion Add/Edit Contact
 
         #region Plase Order
+
         private void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-
             id_conditionComboBox.SelectedIndex = -1;
             id_contractComboBox.SelectedIndex = -1;
             crud_modal.Visibility = Visibility.Visible;
@@ -425,7 +424,6 @@ namespace Cognitivo.Project
                         sales_budget.id_condition = app_condition.id_condition;
                         sales_budget.id_contract = app_contract.id_contract;
                         sales_budget.id_currencyfx = project_costing.id_currencyfx;
-
 
                         foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                         {
@@ -485,6 +483,7 @@ namespace Cognitivo.Project
                 }
             }
         }
+
         private void id_conditionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             app_condition app_condition = id_conditionComboBox.SelectedItem as app_condition;
@@ -501,7 +500,8 @@ namespace Cognitivo.Project
                 id_contractComboBox.SelectedIndex = 0;
             }
         }
-        #endregion
+
+        #endregion Plase Order
 
         public decimal get_Price(contact contact, int id_currencyfx, item item, entity.App.Modules Module)
         {
@@ -547,20 +547,16 @@ namespace Cognitivo.Project
                         item_price_value = item_price.valuewithVAT;
                         using (db db = new db())
                         {
-
                             if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault() != null)
                             {
                                 if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                                 {
                                     return Currency.convert_Values(item_price_value, db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, id_currencyfx, Module);
-
                                 }
                             }
                         }
-
                     }
-                    //return Currency.convert_Value(item_price_value, id_currencyfx, Module);            
-
+                    //return Currency.convert_Value(item_price_value, id_currencyfx, Module);
                 }
             }
             return 0;
@@ -591,7 +587,7 @@ namespace Cognitivo.Project
 
             contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
             project.id_contact = contact.id_contact;
-            project.id_currency =EventDB.app_currencyfx.Where(x=>x.id_currencyfx==project_costing.id_currencyfx).FirstOrDefault().id_currency;
+            project.id_currency = EventDB.app_currencyfx.Where(x => x.id_currencyfx == project_costing.id_currencyfx).FirstOrDefault().id_currency;
             project.IsSelected = true;
             project.id_branch = CurrentSession.Id_Branch;
             project.name = txtName.Text;
@@ -599,7 +595,6 @@ namespace Cognitivo.Project
             project.est_end_date = timestampCalendar.SelectedDate;
             project.priority = 0;
 
-        
             if (project_costing != null)
             {
                 foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
@@ -726,7 +721,7 @@ namespace Cognitivo.Project
                         {
                             Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * _project_task.quantity_est;
                         }
-                        
+
                         _project_task.child.Add(Subproject_task);
                     }
                     project.project_task.Add(_project_task);
@@ -763,7 +758,6 @@ namespace Cognitivo.Project
             {
                 cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
             }
-
         }
 
         public void Dispose()
@@ -775,6 +769,7 @@ namespace Cognitivo.Project
         {
             EstimateCost();
         }
+
         public class Event
         {
             public string code { get; set; }
@@ -786,7 +781,6 @@ namespace Cognitivo.Project
 
         private void dgvServicePerEvent_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
             if (e.Column.DisplayIndex == 0 || e.Column.DisplayIndex == 3)
             {
                 EstimateCost();
@@ -816,7 +810,7 @@ namespace Cognitivo.Project
                     project_event_variable.is_included = true;
                     project_event_variable.item = item;
                     project_event_variable.id_item = item.id_item;
-                    
+
                     if (item.item_tag_detail.Count() > 0)
                     {
                         if (item.item_tag_detail.FirstOrDefault().item_tag != null)
@@ -828,14 +822,13 @@ namespace Cognitivo.Project
                     else
                     {
                         toolBar.msgWarning("Item needs Tag");
-                        return; 
+                        return;
                     }
 
                     project_event_variable.adult_consumption = 1;
                     project_event_variable.child_consumption = 1;
                     project_event_variable.is_included = false;
                     project_event.project_event_variable.Add(project_event_variable);
-
                 }
                 project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
                 toolBar_btnSave_Click(sender);
@@ -854,7 +847,6 @@ namespace Cognitivo.Project
 
                     item item = EventDB.items.Where(x => x.id_item == sbxItemevent.ItemID).FirstOrDefault();
 
-
                     project_event_fixed services_per_event_details = new project_event_fixed();
                     services_per_event_details.id_project_event = project_event.id_project_event;
                     services_per_event_details.project_event = project_event;
@@ -868,7 +860,6 @@ namespace Cognitivo.Project
                             services_per_event_details.item_tag = item.item_tag_detail.FirstOrDefault().item_tag;
                             services_per_event_details.id_tag = item.item_tag_detail.FirstOrDefault().item_tag.id_tag;
                         }
-
                     }
                     services_per_event_details.consumption = 1;
 
@@ -879,8 +870,6 @@ namespace Cognitivo.Project
                 toolBar_btnSave_Click(sender);
                 toolBar_btnEdit_Click(sender);
                 EstimateCost();
-
-
             }
         }
 
@@ -890,7 +879,6 @@ namespace Cognitivo.Project
             {
                 if (project_costingproject_event_template_variable_detailsViewSource.View != null)
                 {
-
                     project_costingproject_event_template_variable_detailsViewSource.View.Filter = i =>
                     {
                         project_event_variable project_event_variable = (project_event_variable)i;
@@ -899,7 +887,6 @@ namespace Cognitivo.Project
                         else
                             return false;
                     };
-
                 }
             }
         }
@@ -910,7 +897,6 @@ namespace Cognitivo.Project
             {
                 if (project_costingservices_per_event_detailsViewSource.View != null)
                 {
-
                     project_costingservices_per_event_detailsViewSource.View.Filter = i =>
                     {
                         project_event_fixed project_event_fixed = (project_event_fixed)i;
@@ -919,7 +905,6 @@ namespace Cognitivo.Project
                         else
                             return false;
                     };
-
                 }
             }
         }
@@ -934,7 +919,6 @@ namespace Cognitivo.Project
                 project_event.contact = contact;
                 get_ActiveRateXContact(ref contact);
             }
-
         }
 
         private void project_costingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -943,22 +927,16 @@ namespace Cognitivo.Project
 
             if (project_event != null)
             {
-                if (project_event.id_contact!=null)
+                if (project_event.id_contact != null)
                 {
                     sbxContact.ContactID = (int)project_event.id_contact;
-                    if (project_costingproject_event_template_variable_detailsViewSource!=null && project_costingservices_per_event_detailsViewSource!=null )
+                    if (project_costingproject_event_template_variable_detailsViewSource != null && project_costingservices_per_event_detailsViewSource != null)
                     {
                         if (project_costingproject_event_template_variable_detailsViewSource.View != null && project_costingservices_per_event_detailsViewSource.View != null)
                         { GetServices(sender, null); }
-                        
                     }
-                    
                 }
-              
             }
         }
-
-
-
     }
 }

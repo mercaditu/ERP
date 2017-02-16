@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
-using System.Data.Entity;
 
 namespace Cognitivo.Configs
 {
     public partial class ItemBrand : Page
     {
-        dbContext dbContext = new dbContext();
-        CollectionViewSource item_brandViewSource;
+        private dbContext dbContext = new dbContext();
+        private CollectionViewSource item_brandViewSource;
 
         public ItemBrand()
         {

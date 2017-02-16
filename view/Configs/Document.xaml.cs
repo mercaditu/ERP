@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq; 
+﻿using entity;
+using System;
+using System.Data;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input; 
-using System.Data.Entity;
-using entity; 
-using System.Data; 
-using System.IO;
-
+using System.Windows.Input;
 
 namespace Cognitivo.Configs
-{ 
+{
     public partial class Document : Page
     {
-        DocumentDB dbcontext = new DocumentDB();
-        CollectionViewSource app_documentViewSource;
+        private DocumentDB dbcontext = new DocumentDB();
+        private CollectionViewSource app_documentViewSource;
 
         public Document()
         {
@@ -75,10 +73,10 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_documentViewSource = ((CollectionViewSource)(this.FindResource("app_documentViewSource")));
-            dbcontext.app_document.Where(a=>a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
+            dbcontext.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_documentViewSource.Source = dbcontext.app_document.Local;
 
-            cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names)).OfType<entity.App.Names>().ToList().OrderBy(x=>x);
+            cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names)).OfType<entity.App.Names>().ToList().OrderBy(x => x);
 
             if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Documents\\"))
             {
@@ -93,12 +91,12 @@ namespace Cognitivo.Configs
             FlowDocument doc = new FlowDocument(new Paragraph(new Run(rtfheader.Text)));
             doc.Name = "FlowDoc";
             IDocumentPaginatorSource idpSource = doc;
-            pd.PrintDocument(idpSource.DocumentPaginator, "Hello WPF Printing.");  
+            pd.PrintDocument(idpSource.DocumentPaginator, "Hello WPF Printing.");
         }
 
         private void cbxApplication_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbxApplication.SelectedItem!=null)
+            if (cbxApplication.SelectedItem != null)
             {
                 entity.App.Names module = (entity.App.Names)cbxApplication.SelectedItem;
                 if (module == entity.App.Names.Movement)

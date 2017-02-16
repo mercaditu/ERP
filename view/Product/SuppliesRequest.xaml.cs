@@ -1,18 +1,9 @@
 ﻿using entity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cognitivo.Product
 {
@@ -21,25 +12,22 @@ namespace Cognitivo.Product
     /// </summary>
     public partial class SuppliesRequest : Page
     {
-
         /// <summary>
         /// Context
         /// </summary>
-        db ItemDB = new db();
+        private db ItemDB = new db();
 
         /// <summary>
         /// CollectionViewSource
         /// </summary>
-        CollectionViewSource item_requestViewSource, item_requestitem_request_detailViewSource;
- 
+        private CollectionViewSource item_requestViewSource, item_requestitem_request_detailViewSource;
+
         public SuppliesRequest()
         {
             InitializeComponent();
         }
 
         #region SmartBox Selection
-
-      
 
         private void sbxItem_Select(object sender, RoutedEventArgs e)
         {
@@ -63,7 +51,7 @@ namespace Cognitivo.Product
             }
         }
 
-        #endregion
+        #endregion SmartBox Selection
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -110,6 +98,7 @@ namespace Cognitivo.Product
                 item_requestViewSource.View.MoveCurrentTo(item_request_New);
             }
         }
+
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as item_request_detail != null)
@@ -122,7 +111,6 @@ namespace Cognitivo.Product
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -132,16 +120,15 @@ namespace Cognitivo.Product
                     //item_request_detail.item_request_decision.Remove(e.Parameter as item_request_decision);
                     ItemDB.item_request_detail.Remove(e.Parameter as item_request_detail);
                     item_requestitem_request_detailViewSource.View.Refresh();
-               
+
                     //calculate_total(sender, e);
                     item_request_detail.item_request.GetTotalDecision();
                 }
             }
             catch
             {
-               // toolBar.msgError(ex);
+                // toolBar.msgError(ex);
             }
         }
-
     }
 }

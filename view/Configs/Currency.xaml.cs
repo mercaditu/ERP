@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
     public partial class Currency : Page
     {
-        dbContext entity = new dbContext();
-        CollectionViewSource app_currencyViewSource;
+        private dbContext entity = new dbContext();
+        private CollectionViewSource app_currencyViewSource;
         private int _IdCurrency;
 
         public Currency()

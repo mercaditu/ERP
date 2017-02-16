@@ -1,10 +1,9 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using cntrl;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -13,10 +12,10 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class Hr_position : Page
     {
+        private entity.dbContext entity = new entity.dbContext();
+        private CollectionViewSource hr_positionViewSource;
 
-        entity.dbContext entity = new entity.dbContext();
-        CollectionViewSource hr_positionViewSource;
-       // entity.Properties.Settings _entity = new entity.Properties.Settings();
+        // entity.Properties.Settings _entity = new entity.Properties.Settings();
         public Hr_position()
         {
             InitializeComponent();
@@ -28,6 +27,7 @@ namespace Cognitivo.Configs
             entity.db.hr_position.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_positionViewSource.Source = entity.db.hr_position.Local;
         }
+
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -62,12 +62,9 @@ namespace Cognitivo.Configs
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
             hr_positionViewSource = ((CollectionViewSource)(FindResource("hr_positionViewSource")));
             entity.db.hr_position.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             hr_positionViewSource.Source = entity.db.hr_position.Local;
-
         }
     }
 }
-

@@ -1,21 +1,22 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using entity;
-using System.Data.Entity.Validation;
-using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
     public partial class EmpRecievable : Page, INotifyPropertyChanged
     {
-
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -23,12 +24,11 @@ namespace Cognitivo.Commercial
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
-        #endregion
 
-        CollectionViewSource payment_schedualViewSource, contactViewSource;
-        PaymentDB PaymentDB = new entity.PaymentDB();
+        #endregion INotifyPropertyChanged
 
-
+        private CollectionViewSource payment_schedualViewSource, contactViewSource;
+        private PaymentDB PaymentDB = new entity.PaymentDB();
 
         public EmpRecievable()
         {
@@ -37,14 +37,11 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnApprove_Click(object sender)
         {
-
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-
         }
-
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -63,8 +60,6 @@ namespace Cognitivo.Commercial
                         return false;
                     }
                 };
-
-
             }
             else
             {
@@ -92,17 +87,16 @@ namespace Cognitivo.Commercial
             contactViewSource.Source = PaymentDB.contacts.Where(x => x.is_employee).ToList();
         }
 
-        private  void load_Schedual()
+        private void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-           PaymentDB.payment_schedual
-                    .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company && x.contact.is_employee
-                        && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note==null
-                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                        .OrderBy(x => x.expire_date)
-                        .Load();
-           payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
-                
+            PaymentDB.payment_schedual
+                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company && x.contact.is_employee
+                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
+                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                         .OrderBy(x => x.expire_date)
+                         .Load();
+            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)
@@ -123,7 +117,7 @@ namespace Cognitivo.Commercial
                 return;
             }
 
-            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList,ref PaymentDB);
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList, ref PaymentDB);
 
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(Payment);
@@ -131,7 +125,6 @@ namespace Cognitivo.Commercial
 
         public void Save_Click(object sender)
         {
-
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -198,7 +191,7 @@ namespace Cognitivo.Commercial
             cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
 
             Refinance.objEntity = PaymentDB;
-            Refinance.payment_schedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected).ToList(); 
+            Refinance.payment_schedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected).ToList();
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
             Refinance.btnSave_Click += SaveRefinance_Click;
@@ -242,7 +235,6 @@ namespace Cognitivo.Commercial
                 {
                     toolbar.msgWarning("Linked With Vat Holding...");
                 }
-
             }
         }
 
@@ -257,8 +249,5 @@ namespace Cognitivo.Commercial
         {
             PaymentDB.Rearrange_Payment();
         }
-
-        
     }
 }
-

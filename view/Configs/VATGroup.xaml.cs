@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using entity;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.Entity;
-using entity;
 
 namespace Cognitivo.Configs
 {
@@ -22,10 +12,10 @@ namespace Cognitivo.Configs
     /// </summary>
     public partial class VATGroup : Page
     {
-        entity.dbContext _entity = new entity.dbContext();
-        CollectionViewSource app_vat_groupViewSource;
-        Cognitivo.Properties.Settings _pref_Cognitivo = new Cognitivo.Properties.Settings();
-       // entity.Properties.Settings _settings = new entity.Properties.Settings();
+        private entity.dbContext _entity = new entity.dbContext();
+        private CollectionViewSource app_vat_groupViewSource;
+        private Cognitivo.Properties.Settings _pref_Cognitivo = new Cognitivo.Properties.Settings();
+        // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         public VATGroup()
         {
@@ -58,7 +48,7 @@ namespace Cognitivo.Configs
             app_vat_groupViewSource.View.MoveCurrentTo(_entity.db.app_vat_group.Where(x => x.id_vat_group == intId).FirstOrDefault());
             vat_group.app_vat_groupViewSource = app_vat_groupViewSource;
             vat_group._entity = _entity;
-            
+
             crud_modal.Children.Add(vat_group);
         }
     }

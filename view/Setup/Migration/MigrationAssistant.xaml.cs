@@ -1,14 +1,13 @@
-﻿using MySql.Data.MySqlClient;
+﻿using entity;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using entity;
-using System.Collections.Generic;
-using System.Transactions;
-using System.Linq;
 
 namespace Cognitivo.Setup.Migration
 {
@@ -42,30 +41,27 @@ namespace Cognitivo.Setup.Migration
             InitializeComponent();
             dbContext = new db();
             id_company = CurrentSession.Id_Company;
-            if (CurrentSession.Id_User==0)
+            if (CurrentSession.Id_User == 0)
             {
-                if (dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault()!=null)
+                if (dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault() != null)
                 {
                     id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
 
                     CurrentSession.Id_User = id_user;
                 }
-          
             }
-               
-                   
-                
+
             //dbContext.Configuration.AutoDetectChangesEnabled = false;
             _cogent_State = false;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-           // dbContext db = new dbContext();
+            // dbContext db = new dbContext();
             //string sql = " select ' truncate table ' + table_name "
             //           + " from information_schema.tables where TAble_schema='"+ "astilleronew" +"'";
 
-          //  db.Truncates();
+            //  db.Truncates();
             //Check Connection.
             if (_cogent_State == false)
             {
@@ -83,8 +79,8 @@ namespace Cognitivo.Setup.Migration
             builder.Password = tbxPassword.Password;
             builder.IntegratedSecurity = true;
             _connString = builder.ToString();
-           
-            string sql =  " SELECT [name] "
+
+            string sql = " SELECT [name] "
                         + " FROM master.dbo.sysdatabases "
                         + " WHERE dbid > 4 ";
             DataTable dt = exeDT(sql);
@@ -102,7 +98,7 @@ namespace Cognitivo.Setup.Migration
             _connString = builder.ToString();
             _DataBase = cbxDataBaseList.Text;
             DataTable dt = exeDT("SELECT * FROM EMPRESA");
-            if (dt.Rows.Count > 0) 
+            if (dt.Rows.Count > 0)
             {
                 _cogent_State = true;
                 popConnBuilder.IsOpen = false;
@@ -134,7 +130,6 @@ namespace Cognitivo.Setup.Migration
             }
             return dt;
         }
-     
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -148,9 +143,9 @@ namespace Cognitivo.Setup.Migration
             //           + " from information_schema.tables where TAble_schema='"+ "astilleronew" +"'";
 
             db.Truncates();
-
         }
     }
+
     public static class DbContextExtension
     {
         public static int Truncates(this dbContext db, params string[] tables)

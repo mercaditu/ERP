@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Media;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Cognitivo.Converters
 {
@@ -10,8 +10,6 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-
-
                 entity.Status.Production status = (entity.Status.Production)value;
 
                 if (status == entity.Status.Production.Approved)
@@ -45,14 +43,11 @@ namespace Cognitivo.Converters
             }
             else
             {
-
                 return Brushes.WhiteSmoke;
             }
-
-            
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, 
+        public object ConvertBack(object value, Type targetType, object parameter,
                                                 System.Globalization.CultureInfo culture)
         { throw new NotImplementedException(); }
     }

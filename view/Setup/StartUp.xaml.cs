@@ -2,34 +2,36 @@
 using entity;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Cognitivo.Menu
 {
     public partial class StartUp : Page
     {
+        private bool _one;
 
-        bool _one;
         public bool one_Active
         {
             get { return _one; }
             set { _one = value; }
         }
 
-        bool _two;
+        private bool _two;
+
         public bool two_Active
         {
             get { return _two; }
             set { _two = value; }
         }
 
-        bool _three;
+        private bool _three;
+
         public bool three_Active
         {
             get { return _three; }
@@ -86,7 +88,6 @@ namespace Cognitivo.Menu
             {
                 _one = false;
             }
-
         }
 
         private void check_Database()
@@ -151,7 +152,6 @@ namespace Cognitivo.Menu
 
         private void createCompany_Click(object sender, RoutedEventArgs e)
         {
-
             frameConfig.Navigate(new MainSetup());
         }
 
@@ -191,7 +191,6 @@ namespace Cognitivo.Menu
             {
                 return null;
             }
-
         }
 
         private void migrate_Click(object sender, RoutedEventArgs e)
@@ -206,8 +205,6 @@ namespace Cognitivo.Menu
             myFrame.Navigate(new mainLogIn());
         }
 
-
-
         private void migratesql_Click(object sender, RoutedEventArgs e)
         {
             frameConfig.Navigate(new Setup.Migration.Cogent.MigrationGUI());
@@ -220,7 +217,6 @@ namespace Cognitivo.Menu
             {
                 Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
             }
-
         }
 
         private void GenerateParentChildRel_Thread()
@@ -237,12 +233,11 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = true; }));
 
-
             UpdateUnitCost();
 
             Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = false; }));
-
         }
+
         public void UpdateUnitCost()
         {
             using (db db = new db())
@@ -277,16 +272,14 @@ namespace Cognitivo.Menu
             string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");
             if (PASsWORD == "DOCOMO")
             {
-               string licensekey = "Cognitivo5895b2d3b0ab96.82490138";
+                string licensekey = "Cognitivo5895b2d3b0ab96.82490138";
                 using (db db = new db())
                 {
                     app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
                     if (app_company != null)
                     {
-
                         app_company.version = licensekey;
-
                     }
                     db.SaveChanges();
                 }

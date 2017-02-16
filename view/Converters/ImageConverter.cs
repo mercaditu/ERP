@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace Cognitivo.Converters
 {
-    class ImageConverter : IValueConverter
+    internal class ImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

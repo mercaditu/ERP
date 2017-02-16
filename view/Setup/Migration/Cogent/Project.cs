@@ -42,8 +42,6 @@ namespace Cognitivo.Setup.Migration.Cogent
             MySqlDataReader category_reader = cmd.ExecuteReader();
             while (category_reader.Read())
             {
-                
-               
                 using (db db = new db())
                 {
                     project_template project_template = new project_template();
@@ -69,16 +67,14 @@ namespace Cognitivo.Setup.Migration.Cogent
             MySqlDataReader template_reader = cmd.ExecuteReader();
             while (template_reader.Read())
             {
-              
                 using (db db = new db())
                 {
-                  
                     project_template_detail project_template_detail = new project_template_detail();
                     string category = template_reader.GetString("category");
                     project_template_detail.id_project_template = db.project_template.Where(i => i.name == category).FirstOrDefault().id_project_template;
                     project_template_detail.code = template_reader.GetString("task_number");
                     project_template_detail.item_description = template_reader.GetString("product");
-                    if (db.items.Where(i => i.name == project_template_detail.item_description).FirstOrDefault()!=null)
+                    if (db.items.Where(i => i.name == project_template_detail.item_description).FirstOrDefault() != null)
                     {
                         project_template_detail.id_item = db.items.Where(i => i.name == project_template_detail.item_description).FirstOrDefault().id_item;
                         if (template_reader.GetInt16("id_task_rel") == 0)
@@ -100,9 +96,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         db.project_template_detail.Add(project_template_detail);
                         db.SaveChanges();
                     }
-                  
-                
-                  
                 }
             }
             conn.Close();
@@ -115,9 +108,6 @@ namespace Cognitivo.Setup.Migration.Cogent
             MySqlDataReader proj_reader = cmd.ExecuteReader();
             while (proj_reader.Read())
             {
-
-              
-               
                 using (db db = new db())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
@@ -145,9 +135,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                         Dispatcher.BeginInvoke((Action)(() => progProject.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => projectValue.Text = value.ToString()));
                     }
-
                 }
-
             }
             conn.Close();
 
@@ -161,11 +149,8 @@ namespace Cognitivo.Setup.Migration.Cogent
             cmd.CommandType = CommandType.Text;
             MySqlDataReader proj_task_reader = cmd.ExecuteReader();
 
-
             while (proj_task_reader.Read())
             {
-               
-
                 using (db db = new db())
                 {
                     project_task project_task = new project_task();
@@ -174,7 +159,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                     project_task.code = proj_task_reader.GetString("task_number");
 
                     string product = proj_task_reader.GetString("product");
-                    if ( db.items.Where(i => i.name == product).FirstOrDefault()!=null)
+                    if (db.items.Where(i => i.name == product).FirstOrDefault() != null)
                     {
                         project_task.item_description = db.items.Where(i => i.name == product).FirstOrDefault().name;
                         project_task.id_item = db.items.Where(i => i.name == product).FirstOrDefault().id_item;
@@ -191,9 +176,6 @@ namespace Cognitivo.Setup.Migration.Cogent
                         {
                             project_task.quantity_est = proj_task_reader.GetInt16("qty");
                         }
-
-
-
 
                         if (proj_task_reader.GetInt16("id_task_rel") == 0)
                         {
@@ -226,52 +208,47 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                         //if (project_task.Error == null)
                         //{
-                            db.project_task.Add(project_task);
+                        db.project_task.Add(project_task);
                         //}
                     }
                     else
                     {
-                       
-
                     }
-                  
-                  
 
                     string sql_task = "SELECT * FROM project_task_dimension inner join app_dimension on app_dimension.id=project_task_dimension.id_dimension inner join project_task on project_task.id=project_task_dimension.id_task where id_task=" + proj_task_reader.GetInt32("id");
 
-                        MySqlConnection conntask = new MySqlConnection(_connString);
-                        MySqlCommand cmdtask = new MySqlCommand();
-                        conntask.Open();
-                        cmdtask.Connection = conntask;
-                        cmdtask.CommandText = sql_task;
-                        cmdtask.CommandType = CommandType.Text;
-                        MySqlDataReader task_reader = cmdtask.ExecuteReader();
-                        while (task_reader.Read())
+                    MySqlConnection conntask = new MySqlConnection(_connString);
+                    MySqlCommand cmdtask = new MySqlCommand();
+                    conntask.Open();
+                    cmdtask.Connection = conntask;
+                    cmdtask.CommandText = sql_task;
+                    cmdtask.CommandType = CommandType.Text;
+                    MySqlDataReader task_reader = cmdtask.ExecuteReader();
+                    while (task_reader.Read())
+                    {
+                        project_task_dimension project_task_dimension = new project_task_dimension();
+                        string name = task_reader.GetString("dimension");
+                        if (db.app_dimension.Where(x => x.name == name).FirstOrDefault() != null)
                         {
-                            project_task_dimension project_task_dimension = new project_task_dimension();
-                            string name=task_reader.GetString("dimension");
-                            if (db.app_dimension.Where(x => x.name == name).FirstOrDefault() != null)
+                            project_task_dimension.id_dimension = db.app_dimension.Where(x => x.name == name).FirstOrDefault().id_dimension;
+                            project_task_dimension.project_task = project_task;
+                            project_task_dimension.value = task_reader.GetInt32("value");
+                            project_task_dimension.id_measurement = db.app_measurement.FirstOrDefault().id_measurement;
+                            if (project_task_dimension.Error == null)
                             {
-                                project_task_dimension.id_dimension = db.app_dimension.Where(x => x.name == name).FirstOrDefault().id_dimension;
-                                project_task_dimension.project_task = project_task;
-                                project_task_dimension.value = task_reader.GetInt32("value");
-                                project_task_dimension.id_measurement = db.app_measurement.FirstOrDefault().id_measurement;
-                                if (project_task_dimension.Error == null)
-                                {
-                                    db.project_task_dimension.Add(project_task_dimension);
-                                }
+                                db.project_task_dimension.Add(project_task_dimension);
                             }
                         }
-                        task_reader.Close();
-                        cmdtask.Dispose();
-                        conntask.Close();
-
+                    }
+                    task_reader.Close();
+                    cmdtask.Dispose();
+                    conntask.Close();
 
                     IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
                         db.SaveChanges();
-                            
+
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progProject.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => projectValue.Text = value.ToString()));

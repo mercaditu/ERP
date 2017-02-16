@@ -1,22 +1,22 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Data.Entity;
-using System.ComponentModel;
 using System.Windows.Documents;
-using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Cognitivo.Project
 {
     public partial class ProjectFinance : Page, INotifyPropertyChanged
     {
-        SalesOrderDB SalesOrderDB = new SalesOrderDB();
-        CollectionViewSource project_taskViewSource;
-        CollectionViewSource projectViewSource;
+        private SalesOrderDB SalesOrderDB = new SalesOrderDB();
+        private CollectionViewSource project_taskViewSource;
+        private CollectionViewSource projectViewSource;
 
         public bool ViewAll { get; set; }
 
@@ -35,8 +35,6 @@ namespace Cognitivo.Project
 
             filter_task();
         }
-
-
 
         public void filter_task()
         {
@@ -70,6 +68,7 @@ namespace Cognitivo.Project
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
@@ -166,11 +165,11 @@ namespace Cognitivo.Project
         //    }
         //}
 
-
         private void Price_Click(object sender, RoutedEventArgs e)
         {
             set_price();
         }
+
         public void set_price()
         {
             project project = projectViewSource.View.CurrentItem as project;
@@ -193,7 +192,6 @@ namespace Cognitivo.Project
                             }
                         }
                     }
-
                 }
             }
         }
@@ -210,11 +208,8 @@ namespace Cognitivo.Project
                         List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x => x.id_project_task).ToList();
                         foreach (project_task project_task in project_taskLIST)
                         {
-
                             project_task.CalcExecutedQty_TimerTaks();
-
                         }
-
                     }
                 }
             }

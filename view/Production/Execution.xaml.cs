@@ -477,7 +477,7 @@ namespace Cognitivo.Production
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
-        private void btnInsert_Click(object sender, EventArgs e)
+        private async void btnInsert_Click(object sender, EventArgs e)
         {
             production_order_detail production_order_detail = null;
             Button btn = sender as Button;
@@ -540,23 +540,36 @@ namespace Cognitivo.Production
                         }
                         else
                         {
-                            decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity) + Quantity;
-                            decimal avlqty = 0;
-                            int location = production_order_detail.production_order.production_line.id_location;
-                            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
-                            {
-                                List<entity.BrilloQuery.Item> Items = Execute.GetItemsByLocation();
-                                entity.BrilloQuery.Item Item = Items.Where(x => x.ID == production_order_detail.id_item && x.LocationID == location).FirstOrDefault();
+                            //Summ all Executed Quantities, because they are not yet discounted from Stock. Once approved they will be discounted.
+                            decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity);
+                            decimal QuantityAvaiable = 0;
+                            int LocationID = production_order_detail.production_order.production_line.id_location;
+                            
 
-                                if (Item != null)
+                            if (production_order_detail.item.item_product.Count() > 0)
+                            {
+                                int ProductID = production_order_detail.item.item_product.FirstOrDefault().id_item_product;
+
+                                using (db db = new db())
                                 {
-                                    avlqty = Item.InStock;
+                                    await ExecutionDB.item_movement.Where(x =>
+                                        x.id_item_product == ProductID &&
+                                        x.id_location == LocationID).LoadAsync();
+
+                                    QuantityAvaiable = ExecutionDB.item_movement.Local.Sum(x => x.credit) - ExecutionDB.item_movement.Local.Sum(x => x.debit);
                                 }
                             }
-                            if (avlqty < QuantityExe)
+
+                            if (QuantityAvaiable < (QuantityExe + Quantity))
                             {
-                                toolBar.msgWarning("Item is Not in Stock;Execustion Quantity Is " + Math.Round(QuantityExe, 2) + " Stock Quantity Is " + Math.Round(avlqty, 2));
-                                return;
+                                toolBar.msgWarning("Item is Not in Stock; Execution Quantity Is " + Math.Round(QuantityExe, 2) + " Stock Quantity Is " + Math.Round(QuantityAvaiable, 2));
+                                Quantity = (QuantityAvaiable - QuantityExe);
+
+                                //If quantity is zero, just ignore.
+                                if (Quantity <= 0)
+                                {
+                                    return;
+                                }
                             }
                             Insert_IntoDetail(production_order_detail, Quantity);
                             RefreshData();

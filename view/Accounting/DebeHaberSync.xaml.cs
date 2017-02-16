@@ -153,10 +153,11 @@ namespace Cognitivo.Accounting
 
         private async void Get_ProductionExecution()
         {
+            //If we bring only low level items, it's easy to calculate the higher level items.
             await db.production_order_detail.Where
                 (x =>
                 x.id_company == CurrentSession.Id_Company &&
-                x.production_execution_detail.Where(y => y.is_accounted == false).Count() > 0
+                x.production_execution_detail.Where(y => y.is_accounted == false && x.child.Count() == 0).Count() > 0
                 )
                 .Include(z => z.production_order)
                 .Include(a => a.production_execution_detail)
@@ -558,76 +559,76 @@ namespace Cognitivo.Accounting
 
         private void Production_Sync()
         {
-            List<production_order_detail> OrderDetailList = db.production_order_detail.Local.Where(x => x.IsSelected).ToList();
+            List<production_order> OrderList = db.production_order.Local.Where(x => x.production_order_detail.Where(y => y.IsSelected).Count() > 0).ToList();
 
-            //Loop through
-            foreach (production_order_detail production_order_detail in OrderDetailList)
+            foreach (production_order ProductionOrder in OrderList)
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
-
                 DebeHaber.Production Production = new DebeHaber.Production();
 
-                //Loads Data from Production Order
-                if (production_order_detail.production_order != null)
+                Production.branch = ProductionOrder.id_branch > 0 ? db.app_branch.Find(ProductionOrder.id_branch).name : "";
+                Production.name = ProductionOrder.name;
+                Production.trans_date = ProductionOrder.trans_date;
+
+                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.IsSelected))
                 {
-                    if (production_order_detail.production_order.app_branch != null)
-                    {
-                        Production.branch = production_order_detail.production_order.app_branch.name;
-                    }
-                }
 
-                Production.name = production_order_detail.production_order.name;
-                Production.trans_date = production_order_detail.production_order.trans_date;
-
-                // Project Name to be used in case there is not obvious Output.
-                string project;
-                if (production_order_detail.production_order.project != null)
-                {
-                    project = production_order_detail.production_order.project.name;
-                }
-
-                ///Loop through Details. Check for Is Accounted, because this Production Order could have 1 Accounted, and 1 Non Accounted Execution. Only use the Non Accounted.
-                foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
-                {
-                    DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
-                    //Fill and Detail SalesDetail
-                    Production_Detail.Fill_ByExecution(production_execution_detail, db);
-                    Production.Production_Detail.Add(Production_Detail);
-                }
-
-                Transaction.Production.Add(Production);
-                Integration.Transactions.Add(Transaction);
-
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Sales_Json);
-                    db.SaveChanges();
-
-                    production_order_detail.IsSelected = false;
-
-                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
-                    {
-                        production_execution_detail.is_accounted = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
-                    {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
-                    }
-                }
-                finally
-                {
-                    fill();
-                    db.SaveChanges();
                 }
             }
+
+            ////Loop through
+            //foreach (production_order_detail production_order_detail in OrderDetailList)
+            //{
+
+            //    // Project Name to be used in case there is not obvious Output.
+            //    string ProjectName = "";
+            //    if (production_order_detail.production_order.project != null)
+            //    {
+            //        ProjectName = production_order_detail.production_order.project.name;
+            //    }
+
+            //    ///Loop through Details. Check for Is Accounted, because this Production Order could have 1 Accounted, and 1 Non Accounted Execution. Only use the Non Accounted.
+            //    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
+            //    {
+            //        DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
+            //        //Fill and Detail SalesDetail
+            //        Production_Detail.Fill_ByExecution(production_execution_detail, db, ProjectName);
+            //        Production.Production_Detail.Add(Production_Detail);
+            //    }
+
+            //    Transaction.Production.Add(Production);
+            //    Integration.Transactions.Add(Transaction);
+
+            //    try
+            //    {
+            //        var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+            //        Send2API(Sales_Json);
+            //        db.SaveChanges();
+
+            //        production_order_detail.IsSelected = false;
+
+            //        foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
+            //        {
+            //            production_execution_detail.is_accounted = true;
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+            //        {
+            //            MessageBox.Show(ex.Message, "Error Message");
+            //            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+            //        }
+            //    }
+            //    finally
+            //    {
+            //        fill();
+            //        db.SaveChanges();
+            //    }
+            //}
         }
 
         #endregion

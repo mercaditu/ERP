@@ -527,7 +527,7 @@ namespace DebeHaber
         //Collection Property
         public virtual ICollection<CostCenter> CCListOutput { get; set; }
 
-        public void Fill_ByExecution(production_execution_detail Detail, db db)
+        public void Fill_ByExecution(production_execution_detail Detail, db db, string ProjectName)
         {
             value = Detail.unit_cost * Detail.quantity;
             comment = Detail.name;

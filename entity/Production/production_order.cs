@@ -138,7 +138,7 @@ namespace entity
 
         public virtual project project { get; set; }
 
-        public virtual app_branch app_branch { get; set; }
+        //public virtual app_branch app_branch { get; set; }
 
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }

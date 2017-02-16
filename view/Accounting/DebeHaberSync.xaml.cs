@@ -582,6 +582,13 @@ namespace Cognitivo.Accounting
                 Production.name = production_order_detail.production_order.name;
                 Production.trans_date = production_order_detail.production_order.trans_date;
 
+                // Project Name to be used in case there is not obvious Output.
+                string project;
+                if (production_order_detail.production_order.project != null)
+                {
+                    project = production_order_detail.production_order.project.name;
+                }
+
                 ///Loop through Details. Check for Is Accounted, because this Production Order could have 1 Accounted, and 1 Non Accounted Execution. Only use the Non Accounted.
                 foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
                 {

@@ -10,7 +10,7 @@
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
-	  d:DesignHeight="600" d:DesignWidth="800" Background="{StaticResource AccentColor_Brush}"
+	  d:DesignHeight="600" d:DesignWidth="1000" Background="{StaticResource AccentColor_Brush}"
 	Title="DebeHaberSync">
     <Page.Resources>
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
@@ -19,6 +19,7 @@
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
+        <CollectionViewSource x:Key="production_order_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}" />
     </Page.Resources>
     <Grid>
         <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
@@ -27,9 +28,9 @@
                           StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}"  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4">
-            <Button Content="Refresh" Margin="4" Padding="4,2" Click="btnData_Refresh" />
+            <Button Content="{lex:Loc Refresh}" Margin="4" Padding="4,2" Click="btnData_Refresh" />
             <ProgressBar x:Name="progBar" Width="128" Height="16" />
-            <Button Content="Syncronize" Margin="4" Click="btnData_Sync" Style="{StaticResource btn_green}" />
+            <Button Content="{lex:Loc Export}" Margin="4" Click="btnData_Sync" Style="{StaticResource btn_green}" />
         </StackPanel>
         <TabControl Margin="0,38,0,0" TabStripPlacement="Bottom">
             <TabItem Header="{lex:Loc SalesInvoice}">
@@ -124,7 +125,21 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="{lex:Loc FixedAsset}">
+            <TabItem Header="{lex:Loc Production}">
+                <Grid Background="White" DataContext="{StaticResource production_order_detailViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding production_order.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Task}" IsReadOnly="True" Binding="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Status}" IsReadOnly="True" Binding="{Binding state, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{lex:Loc FixedAssets}" Visibility="Collapsed">
                 <Grid Background="White" DataContext="{StaticResource item_assetViewSource}">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
                     <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">

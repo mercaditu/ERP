@@ -69,12 +69,13 @@
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"
 					   Grid.Row="0" VerticalAlignment="Top"
-						btnCancel_Click="toolBar_btnCancel_Click"
+					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnDelete_Click="toolBar_btnDelete_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                       btnSync_Click="Page_Loaded"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   appName="Incoterm" />
     </Grid>

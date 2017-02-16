@@ -36,6 +36,7 @@ namespace DebeHaber
         public virtual ICollection<Commercial_Invoice> Commercial_Invoices { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
         public virtual ICollection<FixedAssetGroup> FixedAssetGroups { get; set; }
+        public virtual ICollection<Production> Production { get; set; }
     }
 
     public class Commercial_Invoice
@@ -199,7 +200,7 @@ namespace DebeHaber
         //Collection Property
         public virtual ICollection<CostCenter> CostCenter { get; set; }
 
-        //Methods
+        #region Methods
         public void Fill_BySales(sales_invoice_detail Detail, db db)
         {
             VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
@@ -417,6 +418,7 @@ namespace DebeHaber
                 CostCenter.Add(CC);
             }
         }
+        #endregion
     }
 
     public class CostCenter
@@ -425,6 +427,7 @@ namespace DebeHaber
         public string Name { get; set; }
 
         public CommercialInvoice_Detail CommercialInvoice_Detail { get; set; }
+        public Production_Detail Production_Detail { get; set; }
     }
 
     public class Payments
@@ -495,5 +498,130 @@ namespace DebeHaber
         public decimal LifespanYears { get; set; }
 
         public virtual List<FixedAsset> FixedAssets { get; set; }
+    }
+
+    public class Production
+    {
+        public Production()
+        {
+            Production_Detail = new List<Production_Detail>();
+        }
+
+        public string branch { get; set; }
+        public string name { get; set; }
+        public DateTime trans_date { get; set; }
+
+        public virtual ICollection<Production_Detail> Production_Detail { get; set; }
+    }
+
+    public class Production_Detail
+    {
+        public CostCenter cost_center_input { get; set; }
+        public CostCenter cost_center_output { get; set; }
+        public decimal value { get; set; }
+        public string comment { get; set; }
+        public DateTime trans_date { get; set; }
+
+        //Collection Property
+        public virtual ICollection<CostCenter> CCListInput { get; set; }
+        //Collection Property
+        public virtual ICollection<CostCenter> CCListOutput { get; set; }
+
+        public void Fill_ByExecution(production_execution_detail Detail, db db)
+        {
+            value = Detail.unit_cost * Detail.quantity;
+            comment = Detail.name;
+            trans_date = Detail.trans_date;
+
+            CostCenter CCOutput = new CostCenter();
+            CostCenter CCInput = new CostCenter();
+
+            //Check if Execution has Item. If not its an expense.
+            if (Detail.item != null)
+            {
+                // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
+                if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                {
+                    if (Detail.is_input)
+                    {
+                        CCInput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CCInput.Type = CostCenterTypes.FixedAsset;
+                        CCListInput.Add(CCInput);
+                    }
+                    else
+                    {
+                        CCOutput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CCOutput.Type = CostCenterTypes.FixedAsset;
+                        CCListOutput.Add(CCOutput);
+                    }
+                }
+                // If Item being sold is a Service, Contract, or Task. Take it as Direct Expense.
+                else if (Detail.item.id_item_type == item.item_type.Product || Detail.item.id_item_type == item.item_type.RawMaterial || Detail.item.id_item_type == item.item_type.Supplies)
+                {
+                    app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
+
+                    if (Detail.is_input)
+                    {
+                        if (app_cost_center != null)
+                        {
+                            CCInput.Name = app_cost_center.name;
+                            CCInput.Type = CostCenterTypes.Merchendice;
+                        }
+                        else
+                        {
+                            CCInput.Name = "Mercaderia";
+                            CCInput.Type = CostCenterTypes.Merchendice;
+                        }
+
+                        //Add CostCenter into Detail.
+                        CCListInput.Add(CCInput);
+                    }
+                    else
+                    {
+                        if (app_cost_center != null)
+                        {
+                            CCOutput.Name = app_cost_center.name;
+                            CCOutput.Type = CostCenterTypes.Merchendice;
+                        }
+                        else
+                        {
+                            CCOutput.Name = "Mercaderia";
+                            CCOutput.Type = CostCenterTypes.Merchendice;
+                        }
+
+                        //Add CostCenter into Detail.
+                        CCListOutput.Add(CCOutput);
+                    }
+                }
+                // Finally if all else fails, assume Item being sold is Expense -- General.
+                else
+                {
+                    if (Detail.is_input)
+                    {
+                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        { CCInput.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                        else
+                        { CCInput.Name = Detail.name; }
+
+                        CCInput.Type = CostCenterTypes.Expense;
+
+                        //Add CostCenter into Detail.
+                        CCListInput.Add(CCInput);
+                    }
+                    else
+                    {
+                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        { CCOutput.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                        else
+                        { CCOutput.Name = Detail.name; }
+
+                        CCOutput.Type = CostCenterTypes.Expense;
+
+                        //Add CostCenter into Detail.
+                        CCListOutput.Add(CCOutput);
+                    }
+                }
+            }
+        }
     }
 }

@@ -336,7 +336,7 @@
 											 Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
 											 DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 VerticalAlignment="Top" HorizontalAlignment="Right" btnClean_Click="Totals_btnClean_Click" />
+											 VerticalAlignment="Top" HorizontalAlignment="Right"/>
                 <Popup x:Name="popupVAT" IsOpen="{Binding ElementName=lblVAT, Path=IsMouseOver, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							   Placement="Top">
                     <DataGrid x:Name="dgvvat" AutoGenerateColumns="False" EnableRowVirtualization="True"

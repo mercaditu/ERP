@@ -22,6 +22,7 @@ namespace Cognitivo.Accounting
         private CollectionViewSource purchase_returnViewSource;
         private CollectionViewSource payment_detailViewSource;
         private CollectionViewSource item_assetViewSource;
+        private CollectionViewSource production_order_detailViewSource;
 
         private db db = new db();
 
@@ -56,6 +57,7 @@ namespace Cognitivo.Accounting
             purchase_returnViewSource = ((CollectionViewSource)(FindResource("purchase_returnViewSource")));
             payment_detailViewSource = ((CollectionViewSource)(FindResource("payment_detailViewSource")));
             item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
+            production_order_detailViewSource = ((CollectionViewSource)(FindResource("production_order_detailViewSource")));
 
             RelationshipHash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
 
@@ -76,7 +78,9 @@ namespace Cognitivo.Accounting
                 Get_PurchaseReturnInvoice();
                 Get_SalesReturn();
                 Get_Payment();
-                Get_ItemAsset();
+                //Get_ItemAsset();
+                Get_ProductionExecution();
+
             }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
@@ -147,6 +151,20 @@ namespace Cognitivo.Accounting
             item_assetViewSource.Source = db.item_asset.Local;
         }
 
+        private async void Get_ProductionExecution()
+        {
+            await db.production_order_detail.Where
+                (x =>
+                x.id_company == CurrentSession.Id_Company &&
+                x.production_execution_detail.Where(y => y.is_accounted == false).Count() > 0
+                )
+                .Include(z => z.production_order)
+                .Include(a => a.production_execution_detail)
+                .ToListAsync();
+
+            item_assetViewSource.Source = db.item_asset.Local;
+        }
+
         #endregion LoadData
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
@@ -157,6 +175,7 @@ namespace Cognitivo.Accounting
             SalesReturn_Sync();
             PurchaseReturn_Sync();
             PaymentSync();
+            Production_Sync();
         }
 
         #region Sales Sync
@@ -233,6 +252,7 @@ namespace Cognitivo.Accounting
                 finally
                 {
                     fill();
+                    db.SaveChanges();
                 }
             }
         }
@@ -312,6 +332,7 @@ namespace Cognitivo.Accounting
                 finally
                 {
                     fill();
+                    db.SaveChanges();
                 }
             }
         }
@@ -392,6 +413,7 @@ namespace Cognitivo.Accounting
                 finally
                 {
                     fill();
+                    db.SaveChanges();
                 }
             }
         }
@@ -473,6 +495,7 @@ namespace Cognitivo.Accounting
                 finally
                 {
                     fill();
+                    db.SaveChanges();
                 }
             }
         }
@@ -524,11 +547,83 @@ namespace Cognitivo.Accounting
                 finally
                 {
                     fill();
+                    db.SaveChanges();
                 }
             }
         }
 
         #endregion Payment Sync
+
+        #region Production_Sync
+
+        private void Production_Sync()
+        {
+            List<production_order_detail> OrderDetailList = db.production_order_detail.Local.Where(x => x.IsSelected).ToList();
+
+            //Loop through
+            foreach (production_order_detail production_order_detail in OrderDetailList)
+            {
+                DebeHaber.Integration Integration = new DebeHaber.Integration();
+                Integration.Key = RelationshipHash;
+
+                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+
+                DebeHaber.Production Production = new DebeHaber.Production();
+
+                //Loads Data from Production Order
+                if (production_order_detail.production_order != null)
+                {
+                    if (production_order_detail.production_order.app_branch != null)
+                    {
+                        Production.branch = production_order_detail.production_order.app_branch.name;
+                    }
+                }
+
+                Production.name = production_order_detail.production_order.name;
+                Production.trans_date = production_order_detail.production_order.trans_date;
+
+                ///Loop through Details. Check for Is Accounted, because this Production Order could have 1 Accounted, and 1 Non Accounted Execution. Only use the Non Accounted.
+                foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
+                {
+                    DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
+                    //Fill and Detail SalesDetail
+                    Production_Detail.Fill_ByExecution(production_execution_detail, db);
+                    Production.Production_Detail.Add(Production_Detail);
+                }
+
+                Transaction.Production.Add(Production);
+                Integration.Transactions.Add(Transaction);
+
+                try
+                {
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                    Send2API(Sales_Json);
+                    db.SaveChanges();
+
+                    production_order_detail.IsSelected = false;
+
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
+                    {
+                        production_execution_detail.is_accounted = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    {
+                        MessageBox.Show(ex.Message, "Error Message");
+                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                    }
+                }
+                finally
+                {
+                    fill();
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        #endregion
 
         private void FixedAsset(DebeHaber.Transaction Transaction)
         {

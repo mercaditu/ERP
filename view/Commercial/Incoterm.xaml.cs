@@ -14,7 +14,7 @@ namespace Cognitivo.Commercial
     public partial class Incoterm : Page
     {
         //entity.dbContext entity = new entity.dbContext();
-        private IncotermDB dbContext = new IncotermDB();
+        private IncotermDB IncotermDB = new IncotermDB();
 
         private CollectionViewSource impex_incotermViewSource = null;
 
@@ -23,59 +23,19 @@ namespace Cognitivo.Commercial
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
-            //int module;
-            //if (Tag == null)
-            //{
-            //    module = 0;
-            //}
-            //else { module = (int)this.Tag; }
-            //if (module > 0)
-            //{
-            //    entity.Properties.Settings _setting = new entity.Properties.Settings();
-            //    int user_id = _setting.user_ID;
-            //    int id_role = entity.db.security_user.Where(x => x.id_user == user_id).FirstOrDefault().id_role;
-            //    security_curd security_curd = entity.db.security_curd.Where(x => x.id_role == id_role && x.id_module == module).FirstOrDefault();
-            //    if (security_curd != null)
-            //    {
-            //        toolBar.canadd = security_curd.can_insert;
-            //        toolBar.canedit = security_curd.can_update;
-            //        toolBar.candelete = security_curd.can_delete;
-            //    }
-            //    else
-            //    {
-            //        toolBar.canadd = true;
-            //        toolBar.canedit = true;
-            //        toolBar.candelete = true;
-            //    }
+            impex_incotermViewSource = this.FindResource("impex_incotermViewSource") as CollectionViewSource;
+            await IncotermDB.impex_incoterm.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
+            impex_incotermViewSource.Source = IncotermDB.impex_incoterm.Local;
 
-            //}
-            //else
-            //{
-            //    toolBar.canadd = true;
-            //    toolBar.canedit = true;
-            //    toolBar.candelete = true;
-            //}
-
-            try
-            {
-                impex_incotermViewSource = this.FindResource("impex_incotermViewSource") as CollectionViewSource;
-                dbContext.impex_incoterm.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                impex_incotermViewSource.Source = dbContext.impex_incoterm.Local;
-
-                CollectionViewSource incoterm_conditionViewSource = this.FindResource("incoterm_conditionViewSource") as CollectionViewSource;
-                incoterm_conditionViewSource.Source = dbContext.impex_incoterm_condition.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            CollectionViewSource incoterm_conditionViewSource = this.FindResource("incoterm_conditionViewSource") as CollectionViewSource;
+            incoterm_conditionViewSource.Source = await IncotermDB.impex_incoterm_condition.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            IncotermDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -85,7 +45,7 @@ namespace Cognitivo.Commercial
                 if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question)
                 == MessageBoxResult.Yes)
                 {
-                    dbContext.impex_incoterm.Remove((impex_incoterm)impex_incotermDataGrid.SelectedItem);
+                    IncotermDB.impex_incoterm.Remove((impex_incoterm)impex_incotermDataGrid.SelectedItem);
                     toolBar_btnSave_Click(sender);
                 }
             }
@@ -100,17 +60,17 @@ namespace Cognitivo.Commercial
             impex_incoterm impex_incoterm = new impex_incoterm();
             impex_incoterm.State = EntityState.Added;
             impex_incoterm.IsSelected = true;
-            dbContext.Entry(impex_incoterm).State = EntityState.Added;
+            IncotermDB.Entry(impex_incoterm).State = EntityState.Added;
 
             impex_incotermViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() > 0)
+            if (IncotermDB.SaveChanges() > 0)
             {
                 impex_incotermViewSource.View.Refresh();
-                toolBar.msgSaved(dbContext.NumberOfRecords);
+                toolBar.msgSaved(IncotermDB.NumberOfRecords);
             }
         }
 
@@ -121,7 +81,7 @@ namespace Cognitivo.Commercial
                 impex_incoterm impex_incoterm = (impex_incoterm)impex_incotermDataGrid.SelectedItem;
                 impex_incoterm.IsSelected = true;
                 impex_incoterm.State = EntityState.Modified;
-                dbContext.Entry(impex_incoterm).State = EntityState.Modified;
+                IncotermDB.Entry(impex_incoterm).State = EntityState.Modified;
             }
             else
             {

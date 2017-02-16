@@ -663,7 +663,6 @@
 											 Currency="{Binding app_currencyfx.app_currency.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
 											 DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 btnClean_Click="btnTotalClean_Click"
 											 VerticalAlignment="Top" HorizontalAlignment="Right" />
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,0,0">

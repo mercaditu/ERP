@@ -136,7 +136,15 @@ namespace entity
 
         public string supplier_name
         {
-            get { return _supplier_name; }
+            get
+            {
+                if (string.IsNullOrEmpty(_supplier_name))
+                {
+                    _supplier_name = name;
+                }
+
+                return _supplier_name;
+            }
             set { _supplier_name = value; RaisePropertyChanged("supplier_name"); }
         }
 

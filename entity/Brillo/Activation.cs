@@ -5,7 +5,8 @@ namespace entity.Brillo
 {
     public class Activation
     {
-        db db = new db();
+        private db db = new db();
+
         #region Version
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace entity.Brillo
                     }
                 }
             }
-            
+
             if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
             {
                 return CurrentSession.Versions.Lite;
@@ -75,17 +76,15 @@ namespace entity.Brillo
                 return CurrentSession.Versions.Lite;
             }
         }
+
         public CurrentSession.Versions VersionDecrypt(security_role security_role)
         {
             string VersionKey = "Himayuddin_51";
             string versionname = "";
             string companycode = "";
-          
 
             string _Passkey = "^%*@$^$";
-          
 
-         
             if (security_role != null)
             {
                 if (security_role.version != null)
@@ -144,6 +143,7 @@ namespace entity.Brillo
                 return CurrentSession.Versions.Lite;
             }
         }
+
         public CurrentSession.Versions VersionDecrypt(string key, security_role security_role)
         {
             string VersionKey = "Himayuddin_51";
@@ -154,14 +154,11 @@ namespace entity.Brillo
 
             int id_role = CurrentSession.UserRole.id_role;
 
-
             if (security_role != null)
             {
                 if (security_role.version != null)
                 {
-                   
-
-                    string _Hash = key ;
+                    string _Hash = key;
                     VersionKey = VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
                     string[] version = VersionKey.Split('.');
                     if (version.Count() >= 1)
@@ -253,6 +250,7 @@ namespace entity.Brillo
                 return "";
             }
         }
+
         public string VersionEncrypt(CurrentSession.Versions Version, security_role security_role)
         {
             try
@@ -294,7 +292,7 @@ namespace entity.Brillo
             }
         }
 
-        #endregion
+        #endregion Version
 
         #region Seats
 
@@ -338,7 +336,7 @@ namespace entity.Brillo
             }
         }
 
-        #endregion
+        #endregion Seats
 
         #region Fibonacci
 
@@ -366,6 +364,6 @@ namespace entity.Brillo
             }
         }
 
-        #endregion
+        #endregion Fibonacci
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace entity
+﻿namespace entity
 {
     using System;
     using System.Collections.Generic;
@@ -9,13 +8,12 @@ namespace entity
 
     public partial class item_request : Audit
     {
-      
         public item_request()
         {
             item_request_detail = new List<item_request_detail>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
-                        is_head = true;
+            id_user = CurrentSession.Id_User;
+            is_head = true;
             status = Status.Documents_General.Pending;
             request_date = DateTime.Now;
         }
@@ -23,16 +21,18 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_request { get; set; }
+
         public int? id_project { get; set; }
         public int? id_sales_order { get; set; }
         public int? id_production_order { get; set; }
         public int? id_currency { get; set; }
         public int? id_branch { get; set; }
         public int? id_department { get; set; }
-           
+
         public DateTime request_date { get; set; }
         public string name { get; set; }
         public string comment { get; set; }
+
         public Status.Documents_General status
         {
             get
@@ -45,10 +45,11 @@ namespace entity
                 RaisePropertyChanged("status");
             }
         }
+
         private Status.Documents_General _status;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_range
         {
@@ -60,7 +61,6 @@ namespace entity
             {
                 if (_id_range != value)
                 {
-
                     _id_range = value;
                     if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                     {
@@ -68,7 +68,7 @@ namespace entity
                         {
                             app_document_range _app_range = db.app_document_range.Find(_id_range);
                             if (_app_range != null)
-                            {   
+                            {
                                 if (app_branch != null)
                                 {
                                     Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
@@ -94,16 +94,16 @@ namespace entity
                 }
             }
         }
+
         private int? _id_range;
 
-        
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string number { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
@@ -125,7 +125,7 @@ namespace entity
         public void GetTotalDecision()
         {
             int i = 0;
-            
+
             foreach (item_request_detail detail in item_request_detail)
             {
                 i += detail.GetTotalDecision();

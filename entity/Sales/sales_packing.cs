@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -6,8 +5,8 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class sales_packing : Audit, IDataErrorInfo
     {
@@ -25,19 +24,22 @@ namespace entity
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
 
             status = Status.Documents_General.Pending;
-
-
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_packing { get; set; }
+
         public int id_opportunity { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_contact { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_branch { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_terminal { get; set; }
@@ -74,6 +76,7 @@ namespace entity
                 }
             }
         }
+
         private int? _id_range;
         public string number { get; set; }
         public int? id_item_asset { get; set; }
@@ -84,7 +87,7 @@ namespace entity
         public string avg_distance { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
@@ -92,6 +95,7 @@ namespace entity
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
         public Status.PackingTypes packing_type { get; set; }
+
         public Status.Documents_General status
         {
             get { return _status; }
@@ -101,12 +105,14 @@ namespace entity
                 RaisePropertyChanged("status");
             }
         }
-        Status.Documents_General _status;
+
+        private Status.Documents_General _status;
 
         public bool is_issued { get; set; }
 
         //TimeCapsule
         public ICollection<sales_packing> older { get; set; }
+
         public sales_packing newer { get; set; }
 
         public virtual ICollection<sales_packing_detail> sales_packing_detail { get; set; }
@@ -116,8 +122,8 @@ namespace entity
             get { return _contact; }
             set { _contact = value; RaisePropertyChanged("Contact"); }
         }
-        contact _contact;
 
+        private contact _contact;
 
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual app_document_range app_document_range { get; set; }
@@ -149,6 +155,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

@@ -13,7 +13,7 @@ namespace entity
         public project()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             project_task = new List<project_task>();
@@ -27,22 +27,24 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project { get; set; }
+
         public int? id_project_template { get; set; }
         public int? id_branch { get; set; }
         public int? id_contact { get; set; }
 
         public int? id_currency
         {
-            get { return _id_currency;}
+            get { return _id_currency; }
             set
             {
                 if (_id_currency != value)
                 {
-                    _id_currency = value;  
+                    _id_currency = value;
                 }
             }
         }
-        int? _id_currency;
+
+        private int? _id_currency;
 
         [NotMapped]
         public int? CurrecyFx_ID
@@ -70,10 +72,11 @@ namespace entity
                 }
             }
         }
-        int? _CurrecyFx_ID;
+
+        private int? _CurrecyFx_ID;
 
         [Required]
-        public string name 
+        public string name
         {
             get
             {
@@ -88,6 +91,7 @@ namespace entity
                 }
             }
         }
+
         private string _name;
 
         public string code { get; set; }
@@ -98,9 +102,9 @@ namespace entity
         public int priority { get; set; }
         public bool is_active { get; set; }
 
-
         [NotMapped]
         public int SelectedCount { get; set; }
+
         [NotMapped]
         public bool is_Executable { get; set; }
 
@@ -136,6 +140,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

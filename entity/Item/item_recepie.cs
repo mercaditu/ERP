@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -7,13 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class item_recepie : Audit, IDataErrorInfo
     {
         public item_recepie()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             item_recepie_detail = new List<item_recepie_detail>();
@@ -22,22 +21,22 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_recepie { get; set; }
+
         [Required]
         public decimal id_item { get; set; }
-       
+
         [Required]
         public bool is_active { get; set; }
 
         public virtual item item { get; set; }
         public virtual ICollection<item_recepie_detail> item_recepie_detail { get; set; }
-       
 
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -51,6 +50,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -61,7 +61,7 @@ namespace entity
                     if (id_item == 0)
                         return "Value needs to be filled";
                 }
-               
+
                 return "";
             }
         }

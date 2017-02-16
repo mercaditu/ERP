@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace entity
 {
     public partial class IncotermDB : BaseDB
     {
-
         public override int SaveChanges()
         {
             validate_Incoterm();
@@ -20,7 +17,6 @@ namespace entity
             validate_Incoterm();
             return base.SaveChangesAsync();
         }
-
 
         private void validate_Incoterm()
         {

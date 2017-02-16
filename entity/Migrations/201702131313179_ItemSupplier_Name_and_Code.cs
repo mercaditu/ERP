@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class ItemSupplier_Name_and_Code : DbMigration
     {
         public override void Up()
@@ -21,7 +20,7 @@ namespace entity.Migrations
             CreateIndex("sales_packing_detail", "id_branch");
             AddForeignKey("sales_packing_detail", "id_branch", "app_branch", "id_branch");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("sales_packing_detail", "id_branch", "app_branch");

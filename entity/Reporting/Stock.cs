@@ -2,7 +2,7 @@
 
 namespace entity.Reporting
 {
-  public class Stock
+    public class Stock
     {
         public int MovementID { get; set; }
 

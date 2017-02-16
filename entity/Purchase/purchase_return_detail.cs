@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -13,7 +12,7 @@ namespace entity
         public purchase_return_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
             item_movement = new List<item_movement>();
@@ -22,16 +21,16 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_return_detail { get; set; }
+
         public int id_purchase_return { get; set; }
         public int? id_purchase_invoice_detail { get; set; }
-
-        
 
         public bool has_return { get; set; }
 
         #region Discount Calculations
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public new decimal discount
         {
@@ -47,6 +46,7 @@ namespace entity
                 RaisePropertyChanged("discount");
             }
         }
+
         private decimal _discount;
 
         /// <summary>
@@ -62,10 +62,11 @@ namespace entity
                 RaisePropertyChanged("DiscountPercentage");
             }
         }
+
         private decimal _DiscountPercentage;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public new decimal Discount_SubTotal
@@ -88,10 +89,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _Discount_SubTotal;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal Discount_SubTotalPercentage
@@ -103,11 +105,11 @@ namespace entity
                 RaisePropertyChanged("Discount_SubTotalPercentage");
             }
         }
+
         private decimal _Discount_SubTotalPercentage;
 
-        #endregion
+        #endregion Discount Calculations
 
-        
         public virtual purchase_return purchase_return
         {
             get { return _purchase_return; }
@@ -128,12 +130,14 @@ namespace entity
                 }
             }
         }
-        purchase_return _purchase_return;
+
+        private purchase_return _purchase_return;
         public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_return_dimension> purchase_return_dimension { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -168,6 +172,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

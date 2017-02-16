@@ -1,19 +1,19 @@
-
 namespace entity
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-  
 
-    
     public partial class app_attachment
     {
-        public app_attachment() {  }
+        public app_attachment()
+        {
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_attachment { get; set; }
+
         public byte[] file { get; set; }
         public string mime { get; set; }
         public int reference_id { get; set; }

@@ -59,7 +59,7 @@ namespace entity
                     {
                         purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
                     }
-                    
+
                     if (purchase_invoice.State == EntityState.Added)
                     {
                         purchase_invoice.timestamp = DateTime.Now;
@@ -195,7 +195,7 @@ namespace entity
                     //New
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                     base.item_movement.Add(_Stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.PurchaseInvoice, invoice.id_purchase_invoice, purchase_invoice_detail.id_purchase_invoice_detail,
-                        invoice.id_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product, 
+                        invoice.id_currencyfx, purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
                         (int)purchase_invoice_detail.id_location, purchase_invoice_detail.quantity,
                         invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Invoice Fix", null, purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code));
                 }

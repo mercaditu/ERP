@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using entity.Brillo;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections.Generic;
-using entity.Brillo;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace entity
@@ -48,6 +48,7 @@ namespace entity
         }
 
         #region Save
+
         public override int SaveChanges()
         {
             validate_Contact();
@@ -92,9 +93,9 @@ namespace entity
                         Entry(payment).State = EntityState.Unchanged;
                 }
             }
-
         }
-        #endregion
+
+        #endregion Save
 
         public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable, bool is_print)
         {
@@ -106,7 +107,6 @@ namespace entity
                 }
 
                 //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(payment_schedualList, payment, IsRecievable, is_print);
@@ -128,11 +128,9 @@ namespace entity
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
                 payment_schedual Parent_Schedual = new payment_schedual();
-           
 
                 //Assigns appCurrencyFX ID & Entity
 
-                            
                 if (payment_detail.id_currencyfx == 0)
                 {
                     payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -195,7 +193,6 @@ namespace entity
                             {
                                 child_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                                 ModuleName = "PurchaseInvoice";
-
                             }
 
                             ///
@@ -239,7 +236,6 @@ namespace entity
                                 Parent_Schedual = child_schedual.parent;
                                 ChildBalance -= ChildBalance;
                             }
-
 
                             ///
                             number = Parent_Schedual.sales_invoice.number;
@@ -292,14 +288,12 @@ namespace entity
                         app_account_detail.status = Status.Documents_General.Pending;
                     }
 
-
                     if (payment_detail.id_range > 0)
                     {
                         app_document_range detail_document_range = await base.app_document_range.FindAsync(payment_detail.id_range);
                         payment_detail.payment_type_number = Brillo.Logic.Range.calc_Range(detail_document_range, true);
                         payment.RaisePropertyChanged("payment_type_number");
                     }
-
 
                     ///Gets the Session ID necesary for cashier movement.
                     int id_account_session = await base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).Select(y => y.id_session).FirstOrDefaultAsync();
@@ -325,11 +319,9 @@ namespace entity
                     ///Insert AccountDetail into Context.
                     ///
 
-
                     app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     base.app_account_detail.Add(app_account_detail);
-
                 }
 
                 ///Logic for Value in Balance Payment Schedual.
@@ -367,7 +359,6 @@ namespace entity
             {
                 Brillo.Document.Start.Automatic(payment, app_document_range);
             }
-
         }
 
         public void Rearrange_Payment()
@@ -399,7 +390,6 @@ namespace entity
                             }
                         }
                     }
-
                 }
             }
             base.SaveChanges();

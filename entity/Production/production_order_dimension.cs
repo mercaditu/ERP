@@ -10,17 +10,21 @@ namespace entity
         public production_order_dimension()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_order_dimension { get; set; }
+
         public int id_order_detail { get; set; }
-         [Required]
+
+        [Required]
         public int id_dimension { get; set; }
+
         public int id_measurement { get; set; }
+
         [Required]
         public decimal value { get; set; }
 
@@ -47,6 +51,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -56,7 +61,6 @@ namespace entity
                 {
                     if (id_dimension <= 0)
                         return "id_dimension cannot be zero";
-               
                 }
                 return "";
             }

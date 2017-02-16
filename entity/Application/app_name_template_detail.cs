@@ -1,18 +1,14 @@
 namespace entity
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
 
     public partial class app_name_template_detail : Audit
     {
         public app_name_template_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
 
             answer_type = AnswerTypes.AlphaNumeric;
@@ -23,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short id_name_template_detail { get; set; }
+
         public short id_name_template { get; set; }
 
         public short sequence { get; set; }

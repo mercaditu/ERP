@@ -12,7 +12,7 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
 
             project_event_template_fixed = new List<project_event_template_fixed>();
@@ -22,11 +22,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_event_template { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_tag { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public bool is_active { get; set; }
 
         public virtual item_tag item_tag { get; set; }
@@ -55,6 +58,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

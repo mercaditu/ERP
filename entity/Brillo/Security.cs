@@ -53,7 +53,6 @@
             //If Master is true, jump if, and return True.
             if (CurrentSession.User.security_role.is_master == false)
             {
-
                 if (Privilage > 0)
                 {
                     using (db db = new db())
@@ -85,6 +84,5 @@
             }
             return 0M;
         }
-
     }
 }

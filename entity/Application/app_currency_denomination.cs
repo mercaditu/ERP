@@ -1,7 +1,6 @@
 namespace entity
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -13,20 +12,24 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_denomination { get; set; }
+
         [Required]
         [CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
         public int id_currency { get; set; }
+
         [Required]
         public string name { get; set; }
+
         [Required]
         public bool is_bill { get; set; }
+
         public bool is_active { get; set; }
         public virtual app_currency app_currency { get; set; }
 
@@ -51,6 +54,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

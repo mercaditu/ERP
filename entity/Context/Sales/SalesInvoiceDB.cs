@@ -22,7 +22,6 @@ namespace entity
             sales_invoice.app_currencyfx = app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
             sales_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
 
-
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
             {
@@ -39,7 +38,6 @@ namespace entity
             validate_Invoice();
 
             return base.SaveChanges();
-
         }
 
         public override Task<int> SaveChangesAsync()
@@ -148,7 +146,6 @@ namespace entity
 
                 if (Check_CreditLimit(invoice))
                 {
-
                     //Logic
                     List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                     Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
@@ -219,7 +216,6 @@ namespace entity
             return ApprovalStatus; ;
         }
 
-
         /// <summary>
         /// Executes code that will insert Invoiced Items into Movement.
         /// </summary>
@@ -254,7 +250,6 @@ namespace entity
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-
                 long id_movement = item_movement != null ? item_movement.id_movement : 0;
                 if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item && a.IsPromo == false && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
                 {
@@ -304,7 +299,6 @@ namespace entity
                 sales_invoice_detail.expire_date = item_movement.expire_date;
                 sales_invoice_detail.movement_id = (int)item_movement.id_movement;
             }
-
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.id_vat_group = VatGroupID;
@@ -450,7 +444,7 @@ namespace entity
         }
 
         /// <summary>
-        /// Checks for Credit Limit. 
+        /// Checks for Credit Limit.
         /// </summary>
         /// <param name="sales_invoice"></param>
         /// <returns></returns>

@@ -18,7 +18,7 @@ namespace entity
         public app_account_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
         }
@@ -26,11 +26,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_account_detail { get; set; }
+
         [Required]
         public int id_account { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx { get; set; }
+
         public int? id_payment_detail { get; set; }
         public int? id_payment_approve_detail { get; set; }
         public int id_payment_type { get; set; }
@@ -38,8 +41,10 @@ namespace entity
         public decimal debit { get; set; }
         public decimal credit { get; set; }
         public string comment { get; set; }
+
         [Required]
         public DateTime trans_date { get; set; }
+
         public int? id_session { get; set; }
         public tran_types? tran_type { get; set; }
 
@@ -49,6 +54,7 @@ namespace entity
         public virtual payment_detail payment_detail { get; set; }
         public virtual payment_approve_detail payment_approve_detail { get; set; }
         public virtual app_account_session app_account_session { get; set; }
+
         public string Error
         {
             get
@@ -70,6 +76,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

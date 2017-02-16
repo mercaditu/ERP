@@ -1,13 +1,16 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using entity;
 
 namespace DebeHaber
 {
-    public enum TransactionTypes { Sales = 1, Purchase = 2, SalesReturn = 3, PurchaseReturn = 4}
+    public enum TransactionTypes { Sales = 1, Purchase = 2, SalesReturn = 3, PurchaseReturn = 4 }
+
     public enum States { Approved = 1, Annuled = 2 }
+
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
+
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
     public class Integration
@@ -42,12 +45,13 @@ namespace DebeHaber
             CommercialInvoice_Detail = new List<CommercialInvoice_Detail>();
             Payments = new List<Payments>();
         }
-        
+
         //Invoice Data
         public TransactionTypes Type { get; set; }
+
         public States State { get; set; }
         public DateTime TransDate { get; set; }
-        public string Company {get;set;}
+        public string Company { get; set; }
         public string Gov_Code { get; set; }
         public string Branch { get; set; }
 
@@ -56,6 +60,7 @@ namespace DebeHaber
 
         //Invoice Documents
         public string DocNumber { get; set; }
+
         public string DocCode { get; set; }
         public DateTime? DocExpiry { get; set; }
 
@@ -63,6 +68,7 @@ namespace DebeHaber
 
         //Collection Property
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
+
         public virtual ICollection<Payments> Payments { get; set; }
 
         //Fill Methods
@@ -97,8 +103,8 @@ namespace DebeHaber
             {
                 DocCode = sales_invoice.code;
             }
-            
-            DocExpiry = (sales_invoice.app_document_range != null ? sales_invoice.app_document_range.expire_date != null ? sales_invoice.app_document_range.expire_date: DateTime.Now : DateTime.Now);
+
+            DocExpiry = (sales_invoice.app_document_range != null ? sales_invoice.app_document_range.expire_date != null ? sales_invoice.app_document_range.expire_date : DateTime.Now : DateTime.Now);
         }
 
         public void Fill_BySalesReturn(sales_return sales_return)
@@ -189,6 +195,7 @@ namespace DebeHaber
 
         //Nav Property
         public virtual Commercial_Invoice Commercial_Invoice { get; set; }
+
         //Collection Property
         public virtual ICollection<CostCenter> CostCenter { get; set; }
 
@@ -432,7 +439,7 @@ namespace DebeHaber
         public string DocCode { get; set; }
         public DateTime? DocExpiry { get; set; }
 
-        public string  Account { get; set; }
+        public string Account { get; set; }
         public decimal Value { get; set; }
         public string Currency { get; set; }
 
@@ -449,7 +456,7 @@ namespace DebeHaber
                 PaymentType = PaymentTypes.VATWithHolding;
             }
 
-            Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
+            Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "");
             Company = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
             Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
             DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
@@ -487,7 +494,6 @@ namespace DebeHaber
         public string Name { get; set; }
         public decimal LifespanYears { get; set; }
 
-        public virtual List<FixedAsset> FixedAssets {get;set;}
+        public virtual List<FixedAsset> FixedAssets { get; set; }
     }
-
 }

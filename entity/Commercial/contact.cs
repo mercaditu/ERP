@@ -16,12 +16,16 @@ namespace entity
         {
             [LocalizedDescription("Soltero/a")]
             Single,
+
             [LocalizedDescription("Casado/a")]
             Married,
+
             [LocalizedDescription("Separado/a")]
             Seperated,
+
             [LocalizedDescription("Divorciado/a")]
             Divorced,
+
             [LocalizedDescription("Viudo/a")]
             Widowed
         }
@@ -31,26 +35,34 @@ namespace entity
         {
             [LocalizedDescription("Male")]
             Male,
+
             [LocalizedDescription("Female")]
             Female
         }
-        
+
         public enum BloodTypes
         {
             [LocalizedDescription("O+")]
             Op,
+
             [LocalizedDescription("O-")]
             On,
+
             [LocalizedDescription("A+")]
             Ap,
+
             [LocalizedDescription("A-")]
             An,
+
             [LocalizedDescription("B+")]
             Bp,
+
             [LocalizedDescription("B-")]
             Bn,
+
             [LocalizedDescription("AB+")]
             ABp,
+
             [LocalizedDescription("AB-")]
             ABn,
         }
@@ -115,6 +127,7 @@ namespace entity
                 name = _LastName + ", " + _FirstName;
             }
         }
+
         private string _FirstName;
 
         [NotMapped]
@@ -138,6 +151,7 @@ namespace entity
                 name = _LastName + ", " + _FirstName;
             }
         }
+
         private string _LastName;
 
         public string alias { get; set; }
@@ -162,6 +176,7 @@ namespace entity
                 RaisePropertyChanged("is_customer");
             }
         }
+
         private bool _is_customer;
 
         public bool is_supplier
@@ -173,6 +188,7 @@ namespace entity
                 RaisePropertyChanged("is_supplier");
             }
         }
+
         private bool _is_supplier;
 
         public bool is_employee { get; set; }
@@ -244,7 +260,7 @@ namespace entity
                                 }
                             }
                         }
-                    }   
+                    }
                 }
 
                 return Math.Round(_GrandTotal, 2);
@@ -258,6 +274,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _GrandTotal;
 
         [NotMapped]
@@ -274,10 +291,12 @@ namespace entity
 
         //Heirarchy Nav Properties
         public virtual ICollection<contact> child { get; set; }
+
         public virtual contact parent { get; set; }
 
         //Navigation Properties
         public virtual ICollection<contact_field_value> contact_field_value { get; set; }
+
         public virtual ICollection<contact_subscription> contact_subscription { get; set; }
 
         public virtual IEnumerable<item_brand> item_brand { get; set; }
@@ -363,7 +382,7 @@ namespace entity
             }
         }
 
-        #endregion
+        #endregion Validation
 
         public void Check_CreditAvailability()
         {

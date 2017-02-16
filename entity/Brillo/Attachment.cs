@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace entity.Brillo
 {
-   public class Attachment
+    public class Attachment
     {
         public void SaveFile(DataObject data, App.Names Application, int reference_id)
         {
@@ -15,7 +15,7 @@ namespace entity.Brillo
                 if (!string.IsNullOrEmpty(extension))
                 {
                     app_attachment app_attachment = new app_attachment();
-                
+
                     if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
                     {
                         app_attachment.mime = "image/" + extension.Substring(1);
@@ -27,7 +27,7 @@ namespace entity.Brillo
                     {
                         app_attachment.mime = "application/" + extension.Substring(1);
                     }
-                  
+
                     app_attachment.reference_id = reference_id;
                     app_attachment.application = Application;
 

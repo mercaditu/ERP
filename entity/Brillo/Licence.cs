@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-
-using Newtonsoft.Json;
 
 namespace entity.Brillo
 {
@@ -68,12 +67,12 @@ namespace entity.Brillo
                 return "";
             }
         }
+
         public string CreateLicenceVersion(String LicenceKey, int version)
         {
             try
             {
                 var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVersion";
-
 
                 webAddr = webAddr + "/" + LicenceKey + "/" + version;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
@@ -93,6 +92,7 @@ namespace entity.Brillo
                 return "";
             }
         }
+
         public void VerifyCompanyLicence(String LicenceKey)
         {
             try
@@ -113,7 +113,6 @@ namespace entity.Brillo
             }
             catch (Exception ex)
             {
-
             }
         }
     }

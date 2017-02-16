@@ -26,12 +26,13 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_schedual { get; set; }
+
         public int? id_sales_rep { get; set; }
         public int? id_opportunity { get; set; }
         public int? id_contact { get; set; }
 
         public Types type { get; set; }
-        public int ref_id {get;set;}
+        public int ref_id { get; set; }
 
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }

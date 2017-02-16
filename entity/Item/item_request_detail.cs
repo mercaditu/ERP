@@ -1,5 +1,4 @@
-﻿
-namespace entity
+﻿namespace entity
 {
     using System;
     using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace entity
         public item_request_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             date_needed_by = DateTime.Now;
             item_request_dimension = new List<item_request_dimension>();
@@ -30,6 +29,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_request_detail { get; set; }
+
         public int id_item_request { get; set; }
         public int? id_project_task { get; set; }
         public int? id_sales_order_detail { get; set; }
@@ -39,7 +39,7 @@ namespace entity
         public int id_item { get; set; }
         public decimal max_value { get; set; }
         public decimal quantity { get; set; }
-    
+
         [NotMapped]
         public decimal balance
         {
@@ -52,6 +52,7 @@ namespace entity
                 _balance = value;
             }
         }
+
         private decimal _balance;
         public DateTime date_needed_by { get; set; }
         public string comment { get; set; }
@@ -80,6 +81,7 @@ namespace entity
         }
 
         #region Error
+
         public string Error
         {
             get
@@ -101,6 +103,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -120,6 +123,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion Error
     }
 }

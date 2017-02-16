@@ -11,14 +11,16 @@ namespace entity
     public static class CurrentSession
     {
         #region PropertyChanged
+
         // INotifyPropertyChanged implementation
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
+
         private static void NotifyStaticPropertyChanged(string propertyName)
         {
             StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
+        #endregion PropertyChanged
 
         #region Properties
 
@@ -71,7 +73,8 @@ namespace entity
                 }
             }
         }
-        static int _Id_Company;
+
+        private static int _Id_Company;
 
         public static int Id_User { get; set; }
 
@@ -103,7 +106,8 @@ namespace entity
                 }
             }
         }
-        static int _Id_Branch;
+
+        private static int _Id_Branch;
 
         public static int Id_Terminal
         {
@@ -127,12 +131,11 @@ namespace entity
                         Properties.Settings.Default.terminal_Name = app_terminal.name;
                         Properties.Settings.Default.Save();
                     }
-
-
                 }
             }
         }
-        static int _Id_Terminal;
+
+        private static int _Id_Terminal;
 
         public static int Id_Account
         {
@@ -159,7 +162,8 @@ namespace entity
                 }
             }
         }
-        static int _Id_Account;
+
+        private static int _Id_Account;
 
         public static string ConnectionString
         {
@@ -169,7 +173,8 @@ namespace entity
             }
             set { _ConnectionString = value; }
         }
-        static string _ConnectionString;
+
+        private static string _ConnectionString;
 
         public static Versions Version { get; set; }
 
@@ -192,9 +197,10 @@ namespace entity
                 NotifyStaticPropertyChanged("IsDataLoading");
             }
         }
+
         private static bool _IsDataLoading = false;
 
-        #endregion
+        #endregion Properties
 
         public static void Start(security_user Sec_User, security_role Role)
         {
@@ -215,7 +221,7 @@ namespace entity
                         if (app_company.version != null || app_company.version == "")
                         {
                             Licence.VerifyCompanyLicence(app_company.version);
-                            if (Licence.CompanyLicence.versions.Count()==0)
+                            if (Licence.CompanyLicence.versions.Count() == 0)
                             {
                                 licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
                                 app_company.version = licensekey;
@@ -331,7 +337,6 @@ namespace entity
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -342,7 +347,7 @@ namespace entity
             IsDataLoading = true;
         }
 
-        static bool IsLoaded = false;
+        private static bool IsLoaded = false;
 
         private static void Thread_Data()
         {
@@ -376,7 +381,6 @@ namespace entity
                 IsDataLoading = false;
             }
         }
-
 
         public static List<sales_rep> SalesReps { get; set; }
         public static List<app_contract> Contracts { get; set; }

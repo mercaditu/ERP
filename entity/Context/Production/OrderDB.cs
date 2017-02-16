@@ -19,7 +19,6 @@ namespace entity
             return production_order;
         }
 
-
         public override int SaveChanges()
         {
             validate_order();

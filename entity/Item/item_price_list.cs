@@ -12,7 +12,7 @@ namespace entity
         public item_price_list()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_price_rel = new List<item_price>();
             is_active = true;
@@ -27,8 +27,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_price_list { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public bool is_default { get; set; }
         public bool is_active { get; set; }
 

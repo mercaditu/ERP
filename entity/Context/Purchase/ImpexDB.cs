@@ -8,7 +8,6 @@ namespace entity
 {
     public partial class ImpexDB : BaseDB
     {
-
         public override int SaveChanges()
         {
             validate_Impex();
@@ -69,13 +68,10 @@ namespace entity
                 {
                     totalExpense += (decimal)item.value;
                 }
-
             }
 
             foreach (impex_import impex_import in impex_importList)
             {
-
-
                 if (impex_import.purchase_invoice != null)
                 {
                     //Insert Purchase Invoice Detail
@@ -87,8 +83,6 @@ namespace entity
                     {
                         TotalInvoiceAmount += (item.quantity * item.UnitCost_Vat);
                     }
-
-
 
                     foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail.Where(x => x.item != null && x.item.item_product != null))
                     {
@@ -137,14 +131,13 @@ namespace entity
                         decimal GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
                         if (GrandTotal != 0)
                         {
-
                             foreach (Class.Impex_ItemDetail Impex_CostDetail in Impex_ItemDetail)
                             {
                                 //Get total value of a Product Row
                                 decimal itemTotal = Impex_CostDetail.quantity * Impex_CostDetail.unit_cost;
 
                                 item_movement item_movement = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).FirstOrDefault();
-                              
+
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {
                                     if (_impex_expense.id_item == 0 || _impex_expense.id_item == Impex_CostDetail.id_item)
@@ -161,7 +154,7 @@ namespace entity
                                     item_movement_value.unit_value = Impex_CostDetail.unit_Importcost;
                                     item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
                                     item_movement_value.comment = _impex_expense.impex_incoterm_condition.name;
-                                    
+
                                     if (item_movement != null)
                                     {
                                         item_movement.item_movement_value.Add(item_movement_value);

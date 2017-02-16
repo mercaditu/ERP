@@ -1,5 +1,4 @@
-﻿
-namespace entity
+﻿namespace entity
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +24,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_request_decision { get; set; }
+
         public int id_item_request_detail { get; set; }
         public int? id_location { get; set; }
         public Decisions decision { get; set; }

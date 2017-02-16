@@ -3,15 +3,15 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class item_price : Audit, IDataErrorInfo
     {
         public item_price()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
 
             min_quantity = 1;
@@ -27,12 +27,16 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_price { get; set; }
+
         public virtual item item { get; set; }
+
         [Required]
         public int id_item { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_price_list { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currency { get; set; }
@@ -49,7 +53,8 @@ namespace entity
                 }
             }
         }
-        decimal _value;
+
+        private decimal _value;
 
         [NotMapped]
         public decimal valuewithVAT
@@ -76,25 +81,24 @@ namespace entity
                 }
             }
         }
-        decimal _valuewithVAT;
+
+        private decimal _valuewithVAT;
 
         public void return_ValueWithVAT(int id_vat_group)
         {
-             
-              if (id_item>0)
-              {
-                  _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
-                  
-              }
-              else
-              {
-                 // id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
-                  _valuewithVAT = Brillo.Vat.return_ValueWithVAT(item.id_vat_group, _value);
-              }
-               
-                RaisePropertyChanged("valuewithVAT");
-            
+            if (id_item > 0)
+            {
+                _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
+            }
+            else
+            {
+                // id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
+                _valuewithVAT = Brillo.Vat.return_ValueWithVAT(item.id_vat_group, _value);
+            }
+
+            RaisePropertyChanged("valuewithVAT");
         }
+
         public void return_ValueWithVAT()
         {
             int id_vat_group;
@@ -112,11 +116,10 @@ namespace entity
             }
 
             RaisePropertyChanged("valuewithVAT");
-
         }
 
         public decimal min_quantity { get; set; }
-       
+
         public virtual item_price_list item_price_list { get; set; }
 
         public string Error
@@ -138,6 +141,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

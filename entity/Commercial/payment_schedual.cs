@@ -24,11 +24,11 @@ namespace entity
         public payment_schedual()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             can_calculate = true;
             child = new List<payment_schedual>();
-     
+
             expire_date = DateTime.Now;
             timestamp = DateTime.Now;
         }
@@ -36,6 +36,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_payment_schedual { get; set; }
+
         public int? id_purchase_invoice { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_sales_invoice { get; set; }
@@ -57,30 +58,34 @@ namespace entity
             {
                 _IsSelected = value;
                 RaisePropertyChanged("IsSelected");
-                foreach (payment_schedual payment_schedual in child.Where(x=>x.is_interest))
+                foreach (payment_schedual payment_schedual in child.Where(x => x.is_interest))
                 {
                     payment_schedual.IsSelected = value;
                     payment_schedual.RaisePropertyChanged("IsSelected");
                 }
             }
         }
-        bool _IsSelected;
-        public decimal debit { 
-            get 
-            { 
-                return _debit; 
-            } 
-            set 
+
+        private bool _IsSelected;
+
+        public decimal debit
+        {
+            get
+            {
+                return _debit;
+            }
+            set
             {
                 if (_debit != value)
                 {
                     _debit = value;
                     RaisePropertyChanged("debit");
-                    RaisePropertyChanged("AccountReceivableBalance"); 
+                    RaisePropertyChanged("AccountReceivableBalance");
                 }
-            } 
+            }
         }
-        Decimal _debit;
+
+        private Decimal _debit;
 
         public decimal credit { get; set; }
 
@@ -88,10 +93,13 @@ namespace entity
         public bool is_interest { get; set; }
 
         #region NotMapped
+
         [NotMapped]
         public Actions? Action { get; set; }
+
         [NotMapped]
         public ActionsStatus ActionStatus { get; set; }
+
         [NotMapped]
         public int? id_range
         {
@@ -123,6 +131,7 @@ namespace entity
                 }
             }
         }
+
         private int? _id_range;
 
         [NotMapped]
@@ -141,7 +150,8 @@ namespace entity
                 RaisePropertyChanged("AccountPayableBalance");
             }
         }
-        decimal _AccountPayableBalance;
+
+        private decimal _AccountPayableBalance;
 
         [NotMapped]
         public decimal AccountReceivableBalance
@@ -156,15 +166,17 @@ namespace entity
                 RaisePropertyChanged("AccountReceivableBalance");
             }
         }
-        decimal _AccountReceivableBalance;
 
-        #endregion
+        private decimal _AccountReceivableBalance;
+
+        #endregion NotMapped
 
         public DateTime trans_date { get; set; }
         public DateTime expire_date { get; set; }
 
         //Hierarchy
         public virtual ICollection<payment_schedual> child { get; set; }
+
         public virtual payment_schedual parent { get; set; }
         public virtual payment_approve_detail payment_approve_detail { get; set; }
         public virtual payment_detail payment_detail { get; set; }

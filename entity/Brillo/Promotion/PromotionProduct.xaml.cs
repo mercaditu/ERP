@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace entity.Brillo.Promotion
 {
@@ -23,8 +14,9 @@ namespace entity.Brillo.Promotion
         public int TagID { get; set; }
         public Decimal TotalQuantity { get; set; }
 
-        List<entity.Brillo.Promotion.DetailProduct> TotalProduct = new List<DetailProduct>();
-        db db = new db();
+        private List<entity.Brillo.Promotion.DetailProduct> TotalProduct = new List<DetailProduct>();
+        private db db = new db();
+
         public PromotionProduct()
         {
             InitializeComponent();
@@ -32,7 +24,7 @@ namespace entity.Brillo.Promotion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity) != TotalQuantity) 
+            if (TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity) != TotalQuantity)
             {
                 MessageBox.Show("Invalid quantity.. Total Quantity Is:" + TotalQuantity + " You have Selectd :-" + TotalProduct.Where(x => x.Quantity > 0).Sum(x => x.Quantity));
             }
@@ -41,14 +33,12 @@ namespace entity.Brillo.Promotion
                 ProductList = TotalProduct.Where(x => x.Quantity > 0).ToList();
                 this.Close();
             }
-
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //IQueryable<entity.BrilloQuery.GetItem> ItemList;
-        
+
             //entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems();
 
             List<item> items = db.items.Where(a => a.item_tag_detail.Where(x => x.id_tag == TagID).Count() > 0 && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();

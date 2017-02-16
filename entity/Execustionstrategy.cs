@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using MySql.Data.MySqlClient;
+
 namespace entity
 {
     public class Execustionstrategy : DbExecutionStrategy
@@ -9,7 +10,7 @@ namespace entity
         public bool IsHandeled { get; set; }
 
         /// <summary>
-        /// The default retry limit is 5, which means that the total amount of time spent 
+        /// The default retry limit is 5, which means that the total amount of time spent
         /// between retries is 26 seconds plus the random factor.
         /// </summary>
         public Execustionstrategy()
@@ -23,7 +24,7 @@ namespace entity
         /// </summary>
         /// <param name="maxRetryCount"> The maximum number of retry attempts. </param>
         /// <param name="maxDelay"> The maximum delay in milliseconds between retries. </param>
-        public Execustionstrategy(int maxRetryCount, TimeSpan maxDelay) : base (maxRetryCount, maxDelay)
+        public Execustionstrategy(int maxRetryCount, TimeSpan maxDelay) : base(maxRetryCount, maxDelay)
         {
             IsHandeled = false;
         }
@@ -31,46 +32,45 @@ namespace entity
         protected override bool ShouldRetryOn(Exception ex)
         {
             bool retry = false;
-           
-                MySqlException sqlException = ex as MySqlException;
 
-                if (sqlException != null)
+            MySqlException sqlException = ex as MySqlException;
+
+            if (sqlException != null)
+            {
+                int[] errorsToRetry =
                 {
-                    int[] errorsToRetry =
-                    {
                         1042,  //Deadlock
                         1205   //Timeout
                     };
 
-                    if (errorsToRetry.Contains(sqlException.Number))
-                    {
-                        if (IsHandeled == false)
-                        {
-                            AboutBox1 box = new AboutBox1();
-                            box.Show();
-
-                            IsHandeled = true;
-                        }
-
-                        //Tells the code to retry the connection.
-                        return true;
-                    }
-                    else
-                    {
-                        //Add some error logging on this line for errors we aren't retrying.
-                        //Make sure you record the Number property of sqlError. 
-                        //If you see an error pop up that you want to retry, you can look in 
-                        //your log and add that number to the list above.
-                    }
-                }
-
-                if (ex is TimeoutException)
+                if (errorsToRetry.Contains(sqlException.Number))
                 {
-                    
-                    retry = true;
+                    if (IsHandeled == false)
+                    {
+                        AboutBox1 box = new AboutBox1();
+                        box.Show();
+
+                        IsHandeled = true;
+                    }
+
+                    //Tells the code to retry the connection.
+                    return true;
                 }
+                else
+                {
+                    //Add some error logging on this line for errors we aren't retrying.
+                    //Make sure you record the Number property of sqlError.
+                    //If you see an error pop up that you want to retry, you can look in
+                    //your log and add that number to the list above.
+                }
+            }
+
+            if (ex is TimeoutException)
+            {
+                retry = true;
+            }
 
             return retry;
         }
-    } 
+    }
 }

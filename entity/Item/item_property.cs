@@ -10,30 +10,35 @@ namespace entity
         public item_property()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_property { get; set; }
+
         [Required]
         public int id_item { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_property { get; set; }
+
         public int? id_measurement { get; set; }
+
         [Required]
         public decimal value { get; set; }
 
         public virtual item item { get; set; }
         public virtual app_property app_property { get; set; }
+
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {

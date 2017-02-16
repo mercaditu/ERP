@@ -6,7 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class app_currencyfx : AuditGeneric, IDataErrorInfo
     {
         public enum CurrencyFXTypes
@@ -19,7 +19,7 @@ namespace entity
         public app_currencyfx()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             timestamp = DateTime.Now;
@@ -28,14 +28,19 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_currencyfx { get; set; }
+
         [Required]
         public int id_currency { get; set; }
+
         [Required]
         public decimal buy_value { get; set; }
+
         [Required]
         public decimal sell_value { get; set; }
+
         [Required]
         public bool is_active { get; set; }
+
         public bool is_reverse { get; set; }
 
         public CurrencyFXTypes type { get; set; }
@@ -78,6 +83,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

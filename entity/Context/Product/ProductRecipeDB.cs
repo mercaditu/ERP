@@ -14,6 +14,7 @@ namespace entity
 
             return item_recepie;
         }
+
         public override int SaveChanges()
         {
             validate_ProductRecipe();
@@ -31,7 +32,7 @@ namespace entity
             foreach (item_recepie item_recepie in base.item_recepie.Local)
             {
                 if (item_recepie.IsSelected)
-                    // && item_transfer.Error == null)
+                // && item_transfer.Error == null)
                 {
                     if (item_recepie.State == EntityState.Added)
                     {

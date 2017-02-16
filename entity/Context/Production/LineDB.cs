@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace entity
@@ -46,7 +45,6 @@ namespace entity
                         base.production_line.Remove(production_line);
                     }
                     NumberOfRecords += 1;
-
                 }
                 else if (production_line.State > 0)
                 {
@@ -57,6 +55,5 @@ namespace entity
                 }
             }
         }
-   
     }
 }

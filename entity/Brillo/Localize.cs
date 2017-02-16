@@ -12,9 +12,9 @@ namespace entity.Brillo
         public static string StringText(string key)
         {
             string s = LocExtension.GetLocalizedValue<string>("Cognitivo:local:" + key);
-            if (s==null)
+            if (s == null)
             {
-                s = key; 
+                s = key;
             }
             return s;
         }

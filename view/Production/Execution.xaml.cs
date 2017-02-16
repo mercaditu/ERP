@@ -34,7 +34,7 @@ namespace Cognitivo.Production
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
             item_dimensionViewSource.Source = await ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();

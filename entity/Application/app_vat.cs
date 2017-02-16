@@ -16,18 +16,20 @@ namespace entity
             on_destination = false;
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
-
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_vat { get; set; }
+
         [Required]
         public string name { get; set; }
+
         [Required]
         public decimal coefficient { get; set; }
+
         public bool on_product { get; set; }
         public bool on_branch { get; set; }
         public bool on_destination { get; set; }
@@ -44,6 +46,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual IEnumerable<app_branch> app_branch { get; set; }
 

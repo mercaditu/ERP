@@ -135,7 +135,7 @@ namespace entity.Brillo
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="originalValue"></param>
         /// <param name="id_app_currencyfx"></param>

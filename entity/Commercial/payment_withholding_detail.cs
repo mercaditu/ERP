@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -10,7 +9,7 @@ namespace entity
         public payment_withholding_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             timestamp = DateTime.Now;
         }
@@ -18,6 +17,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_withholding_detail { get; set; }
+
         public int id_withholding { get; set; }
         public int? id_sales_invoice { get; set; }
         public int? id_purchase_invoice { get; set; }

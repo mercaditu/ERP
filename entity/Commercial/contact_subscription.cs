@@ -1,14 +1,13 @@
-
 namespace entity
 {
+    using entity.Brillo;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using entity.Brillo;
 
     public partial class contact_subscription : Audit
     {
-       public enum Billng_Cycles
+        public enum Billng_Cycles
         {
             Daily,
             Weekly,
@@ -18,7 +17,7 @@ namespace entity
         public contact_subscription()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             start_date = DateTime.Now;
@@ -27,10 +26,10 @@ namespace entity
             quantity = 1;
         }
 
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_subscription { get; set; }
+
         public int id_contact { get; set; }
         public int id_item { get; set; }
         public int id_contract { get; set; }
@@ -50,10 +49,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _quantity;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -72,9 +72,9 @@ namespace entity
                         update_UnitPriceVAT();
                     }
                 }
-
             }
         }
+
         private int _id_vat_group;
 
         public decimal unit_price
@@ -92,6 +92,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _unit_price;
 
         [NotMapped]
@@ -117,8 +118,9 @@ namespace entity
                 update_SubTotalVAT();
             }
         }
+
         private decimal _UnitPrice_Vat;
-        
+
         [NotMapped]
         public decimal SubTotal
         {
@@ -130,8 +132,9 @@ namespace entity
                 update_SubTotalVAT();
             }
         }
+
         private decimal _SubTotal;
-        
+
         [NotMapped]
         public decimal SubTotal_Vat
         {
@@ -141,13 +144,13 @@ namespace entity
                 _SubTotal_Vat = value;
                 RaisePropertyChanged("SubTotal_Vat");
 
-                if (contact!=null)
+                if (contact != null)
                 {
                     contact.RaisePropertyChanged("GrandTotal");
                 }
-              
             }
         }
+
         private decimal _SubTotal_Vat;
 
         public DateTime start_date { get; set; }
@@ -162,13 +165,10 @@ namespace entity
         [NotMapped]
         public virtual app_currency app_currency { get; set; }
 
-
         #region Methods
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
@@ -177,7 +177,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPriceVAT()
         {
@@ -186,7 +186,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_SubTotal()
         {
@@ -194,13 +194,13 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_SubTotalVAT()
         {
             SubTotal_Vat = _UnitPrice_Vat * _quantity;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

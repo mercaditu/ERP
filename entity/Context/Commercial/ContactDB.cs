@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace entity
 {
@@ -20,7 +20,7 @@ namespace entity
             contact.hr_talent_detail = new List<hr_talent_detail>();
 
             contact.id_company = CurrentSession.Id_Company;
-            contact.id_user =  CurrentSession.Id_User;
+            contact.id_user = CurrentSession.Id_User;
             contact.is_head = true;
             contact.is_active = true;
             contact.lead_time = 0;
@@ -43,7 +43,7 @@ namespace entity
         public override int SaveChanges()
         {
             validate_Contact();
-            return base.SaveChanges();           
+            return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync()
@@ -56,7 +56,7 @@ namespace entity
         {
             foreach (contact contact in base.contacts.Local)
             {
-                if (contact.IsSelected )
+                if (contact.IsSelected)
                 {
                     if (contact.State == EntityState.Added)
                     {

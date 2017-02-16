@@ -6,7 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class app_cost_center : Audit, IDataErrorInfo
     {
         public app_cost_center()
@@ -14,18 +14,22 @@ namespace entity
             is_active = true;
             is_head = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_cost_center { get; set; }
+
         [Required]
         public string name { get; set; }
+
         [Required]
         public bool is_administrative { get; set; }
+
         [Required]
         public bool is_product { get; set; }
+
         [Required]
         public bool is_fixedasset { get; set; }
 
@@ -41,6 +45,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }
@@ -67,6 +72,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

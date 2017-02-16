@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using Brillo;
@@ -7,8 +6,8 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class payment_approve_detail : Audit, IDataErrorInfo
     {
@@ -22,12 +21,14 @@ namespace entity
 
         [Key, ForeignKey("payment_schedual")]
         public int id_payment_approve_detail { get; set; }
+
         public int? id_bank { get; set; }
         public int? id_payment_approve { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
         public int? id_account { get; set; }
-       public int id_currency
+
+        public int id_currency
         {
             get
             {
@@ -58,7 +59,8 @@ namespace entity
                 }
             }
         }
-        int _id_currency;
+
+        private int _id_currency;
 
         [NotMapped]
         public int Default_id_currencyfx { get; set; }
@@ -90,7 +92,7 @@ namespace entity
                                     if (db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                                     {
                                         app_currencyfx newfx = db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                        
+
                                         if (oldfx.id_currency != newfx.id_currency)
                                         {
                                             this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
@@ -104,20 +106,20 @@ namespace entity
                 }
             }
         }
-        int _id_currencyfx;
+
+        private int _id_currencyfx;
 
         [NotMapped]
         public decimal Max_Value { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public App.Names App_Name { get; set; }
 
-       
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -149,14 +151,16 @@ namespace entity
                 }
             }
         }
+
         private int _id_payment_type;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public short? payment_type_ref { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         public decimal value
@@ -183,10 +187,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _value;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal ValueInDefaultCurrency
@@ -226,16 +231,16 @@ namespace entity
                 }
             }
         }
+
         private decimal _ValueInDefaultCurrency;
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DateTime trans_date { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_range
         {
@@ -268,18 +273,21 @@ namespace entity
                 }
             }
         }
+
         #region Document Range => Navigation & Variables
+
         private int? _id_range;
         public virtual app_document_range app_document_range { get; set; }
-        #endregion
+
+        #endregion Document Range => Navigation & Variables
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string payment_type_number { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
@@ -296,6 +304,7 @@ namespace entity
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
 
         #region Validation
+
         public string Error
         {
             get
@@ -317,6 +326,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -339,7 +349,6 @@ namespace entity
                         if (payment_approve.GrandTotalDetail > payment_approve.Balance)
                             return "Amount is not Higher than Balace: " + Math.Round(payment_approve.Balance, 2);
                     }
-
                 }
 
                 if (columnName == "id_payment_type")
@@ -350,6 +359,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion Validation
     }
 }

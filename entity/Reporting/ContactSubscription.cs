@@ -27,7 +27,5 @@ namespace entity.Reporting
         public DateTime EndDate { get; set; }
         public int BillCycle { get; set; }
         public short BillOn { get; set; }
-   
-
     }
 }

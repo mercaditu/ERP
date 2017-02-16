@@ -8,7 +8,6 @@ namespace entity
 {
     public partial class PackingListDB : BaseDB
     {
-
         public sales_packing New()
         {
             sales_packing sales_packing = new sales_packing();

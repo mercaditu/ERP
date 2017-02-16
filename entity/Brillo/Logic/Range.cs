@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace entity.Brillo.Logic
 {
@@ -97,10 +97,9 @@ namespace entity.Brillo.Logic
 
         public static List<app_document_range> List_Range(db db, App.Names AppName, int BranchID, int TerminalID)
         {
-
-            List<app_document_range> documentlist = 
+            List<app_document_range> documentlist =
                 db.app_document_range.Where(x =>
-                                    x.is_active && 
+                                    x.is_active &&
                                     x.id_company == CurrentSession.Id_Company &&
                                     x.app_document.id_application == AppName
                                     )
@@ -110,16 +109,16 @@ namespace entity.Brillo.Logic
 
             return documentlist.Where(x =>
                                     (
-                                    x.app_document.filterby_branch == false && 
+                                    x.app_document.filterby_branch == false &&
                                     x.app_document.filterby_tearminal == false
                                     )
                                       ||
                                     (
-                                    x.app_document.filterby_branch == true && 
-                                    x.id_branch == BranchID && 
-                                    x.app_document.filterby_tearminal == true && 
+                                    x.app_document.filterby_branch == true &&
+                                    x.id_branch == BranchID &&
+                                    x.app_document.filterby_tearminal == true &&
                                     x.id_terminal == TerminalID
-                                    )) 
+                                    ))
                                     .ToList();
         }
     }

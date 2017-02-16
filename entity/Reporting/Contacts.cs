@@ -31,6 +31,5 @@ namespace entity.Reporting
         public string Currency { get; set; }
         public string CostCenter { get; set; }
         public string Gender { get; set; }
-
     }
 }

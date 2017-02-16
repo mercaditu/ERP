@@ -6,12 +6,12 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class production_line : Audit,IDataErrorInfo
+    public partial class production_line : Audit, IDataErrorInfo
     {
         public production_line()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             production_order = new List<production_order>();
         }
@@ -19,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_production_line { get; set; }
+
         public int id_location { get; set; }
 
         public string name { get; set; }
@@ -26,6 +27,7 @@ namespace entity
         public virtual app_location app_location { get; set; }
 
         public virtual ICollection<production_order> production_order { get; set; }
+
         public string Error
         {
             get
@@ -48,6 +50,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

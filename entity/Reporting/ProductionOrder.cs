@@ -2,7 +2,7 @@
 
 namespace entity.Reporting
 {
-  public class ProductionOrder
+    public class ProductionOrder
     {
         public string Project { get; set; }
         public string ProjectCode { get; set; }

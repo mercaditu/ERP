@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 
 namespace entity
 {
-  public partial  class SalesmanDB : BaseDB
+    public partial class SalesmanDB : BaseDB
     {
-
         public override int SaveChanges()
         {
             validate_Salesman();

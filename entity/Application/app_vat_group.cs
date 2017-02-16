@@ -12,7 +12,7 @@
         public app_vat_group()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             app_vat_group_details = new List<app_vat_group_details>();
@@ -22,8 +22,10 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_vat_group { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -36,6 +38,7 @@
                 }
             }
         }
+
         private bool _is_active;
         public bool is_default { get; set; }
 

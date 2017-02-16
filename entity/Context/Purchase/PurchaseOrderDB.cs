@@ -40,12 +40,10 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-
             foreach (purchase_order purchase_order in base.purchase_order.Local)
             {
                 if (purchase_order.IsSelected && purchase_order.Error == null)
                 {
-
                     if (purchase_order.contact.id_contract == 0)
                     {
                         purchase_order.contact.id_contract = purchase_order.id_contract;
@@ -60,7 +58,6 @@ namespace entity
                     {
                         purchase_order.contact.id_cost_center = purchase_order.purchase_order_detail.FirstOrDefault().id_cost_center;
                     }
-
 
                     if (purchase_order.State == EntityState.Added)
                     {
@@ -82,7 +79,6 @@ namespace entity
                     }
 
                     NumberOfRecords += 1;
-
                 }
                 else if (purchase_order.State > 0)
                 {
@@ -136,13 +132,11 @@ namespace entity
                         }
 
                         purchase_order.status = Status.Documents_General.Approved;
-                      
+
                         foreach (purchase_order_detail purchase_order_detail in purchase_order.purchase_order_detail)
                         {
-                            if (purchase_order_detail.item.id_item_type==item.item_type.ServiceContract)
+                            if (purchase_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
-
-
                                 production_service_account production_service_account = new entity.production_service_account();
                                 production_service_account.id_contact = purchase_order_detail.purchase_order.id_contact;
                                 production_service_account.id_item = (int)purchase_order_detail.id_item;
@@ -166,7 +160,6 @@ namespace entity
 
                     NumberOfRecords += 1;
                     purchase_order.IsSelected = false;
-
                 }
                 else if (purchase_order.Error != null)
                 {

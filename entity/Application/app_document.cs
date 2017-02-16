@@ -15,7 +15,7 @@ namespace entity
             payment_type = new List<payment_type>();
             style_printer = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
         }
@@ -23,16 +23,21 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_document { get; set; }
+
         [Required]
         public App.Names id_application { get; set; }
+
         [Required]
         public string name { get; set; }
-       
+
         public string designer_name { get; set; }
+
         [Required]
         public bool style_reciept { get; set; }
+
         [Required]
         public bool style_printer { get; set; }
+
         public bool filterby_branch { get; set; }
         public bool filterby_tearminal { get; set; }
 
@@ -48,6 +53,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public int? line_limit { get; set; }
 
@@ -79,6 +85,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

@@ -1,19 +1,19 @@
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel;
-    using System.Text;
     using System.Linq;
-    using System;
+    using System.Text;
 
     public partial class sales_budget_detail : CommercialSalesDetail, IDataErrorInfo
     {
         public sales_budget_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
             sales_order_detail = new List<sales_order_detail>();
@@ -22,14 +22,15 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_budget_detail { get; set; }
+
         public int id_sales_budget { get; set; }
         public int? movement_id { get; set; }
+
         [NotMapped]
         public decimal balance
         {
             get
             {
-
                 _balance = quantity - sales_order_detail.Sum(x => x.quantity);
                 return _balance;
             }
@@ -38,18 +39,19 @@ namespace entity
                 _balance = value;
             }
         }
-        decimal _balance;
+
+        private decimal _balance;
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
-
         #region "Foreign Key"
+
         public virtual sales_budget sales_budget
         {
             get { return _sales_budget; }
             set
             {
-                if (value!=null)
+                if (value != null)
                 {
                     if (_sales_budget != value)
                     {
@@ -61,16 +63,17 @@ namespace entity
                 {
                     _sales_budget = null;
                     RaisePropertyChanged("sales_budget");
-                    
                 }
-               
             }
         }
+
         private sales_budget _sales_budget;
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
-        #endregion
+
+        #endregion "Foreign Key"
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -88,6 +91,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -111,6 +115,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

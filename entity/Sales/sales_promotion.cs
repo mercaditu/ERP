@@ -9,11 +9,14 @@ namespace entity
         public enum salesPromotion
         {
             Discount_onGrandTotal = 1,
+
             //Discount_onQuantityTotal = 2,
             //Discount_onQuantityRow = 3,
             Discount_onTag = 4,
+
             //Discount_onBrand = 5,
             Discount_onItem = 6,
+
             BuyThis_GetThat = 7,
             BuyTag_GetThat = 8,
             Discount_onCustomerType = 10
@@ -33,8 +36,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_promotion { get; set; }
+
         public salesPromotion type { get; set; }
         public string name { get; set; }
+
         public int reference
         {
             get
@@ -46,7 +51,8 @@ namespace entity
                 _refrence = value;
             }
         }
-        int _refrence;
+
+        private int _refrence;
         public DateTime date_start { get; set; }
         public DateTime date_end { get; set; }
         public decimal quantity_min { get; set; }
@@ -59,6 +65,7 @@ namespace entity
 
         [NotMapped]
         public string InputName { get; set; }
+
         [NotMapped]
         public string OutputName { get; set; }
     }

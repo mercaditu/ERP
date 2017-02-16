@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -6,24 +5,26 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class item_conversion_factor : Audit, IDataErrorInfo
     {
         public item_conversion_factor()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_conversion { get; set; }
+
         public int id_measurement { get; set; }
         public int id_item_product { get; set; }
+
         [Required]
         public decimal value { get; set; }
-    
+
         public virtual item_product item_product { get; set; }
         public virtual app_measurement app_measurement { get; set; }
 

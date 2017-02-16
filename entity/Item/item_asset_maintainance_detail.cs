@@ -7,12 +7,10 @@ namespace entity
 
     public partial class item_asset_maintainance_detail : Audit
     {
- 
-
         public item_asset_maintainance_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_request_detail = new List<item_request_detail>();
         }
@@ -20,6 +18,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_maintainance_detail { get; set; }
+
         public int id_maintainance { get; set; }
 
         public int? id_item { get; set; }
@@ -29,6 +28,7 @@ namespace entity
         public int? id_currencyfx { get; set; }
         public int? id_time_coefficient { get; set; }
         public int? id_contact { get; set; }
+
         public DateTime start_date
         {
             get { return _start_date; }
@@ -40,6 +40,7 @@ namespace entity
                 }
             }
         }
+
         private DateTime _start_date = DateTime.Now;
 
         public DateTime end_date
@@ -57,8 +58,6 @@ namespace entity
 
                     _hour = (decimal)time.TotalMinutes / 60;
                     RaisePropertyChanged("hours");
-
-
                 }
             }
         }
@@ -77,7 +76,9 @@ namespace entity
                 _hour = value;
             }
         }
-        decimal _hour;
+
+        private decimal _hour;
+
         [NotMapped]
         public new bool IsSelected
         {
@@ -93,13 +94,15 @@ namespace entity
                     {
                         item_asset_maintainance.Update_SelectedCount();
                     }
-
                 }
             }
         }
+
         private bool _is_selected;
+
         //Nav Properties
         public virtual item_asset_maintainance item_asset_maintainance { get; set; }
+
         public virtual item item { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }

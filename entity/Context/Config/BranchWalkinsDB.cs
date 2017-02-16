@@ -1,9 +1,8 @@
-﻿using System; 
+﻿using System;
 using System.Data.Entity;
-using System.Linq; 
 using System.Threading.Tasks;
 
-namespace entity 
+namespace entity
 {
     public partial class BranchWalkinsDB : BaseDB
     {
@@ -23,7 +22,7 @@ namespace entity
         {
             foreach (app_branch_walkins app_branch_walkins in base.app_branch_walkins.Local)
             {
-                if (app_branch_walkins.IsSelected )
+                if (app_branch_walkins.IsSelected)
                 {
                     if (app_branch_walkins.State == EntityState.Added)
                     {

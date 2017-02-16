@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class receipeandpaymentdetailchanges : DbMigration
     {
         public override void Up()
@@ -14,7 +13,7 @@ namespace entity.Migrations
             AddForeignKey("item_request", "given_user_id_user", "security_user", "id_user");
             AddForeignKey("payments", "id_sales_rep", "sales_rep", "id_sales_rep");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("payments", "id_sales_rep", "sales_rep");

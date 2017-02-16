@@ -18,10 +18,13 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_vat_group_detail { get; set; }
+
         public int id_vat_group { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_vat { get; set; }
+
         public decimal percentage
         {
             get
@@ -34,7 +37,8 @@
             }
             set { _percentage = value; }
         }
-        decimal _percentage;
+
+        private decimal _percentage;
 
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_vat app_vat { get; set; }

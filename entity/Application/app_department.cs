@@ -14,13 +14,16 @@ namespace entity
             is_active = true;
             is_head = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_department { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -33,6 +36,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual ICollection<hr_position> hr_position { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
@@ -59,6 +63,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -72,7 +77,5 @@ namespace entity
                 return "";
             }
         }
-
-      
     }
 }

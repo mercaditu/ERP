@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System.Collections.Generic;
@@ -6,13 +5,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-  
+
     public partial class project_template : Audit
     {
         public project_template()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             project = new List<project>();
             project_template_detail = new List<project_template_detail>();
@@ -22,10 +21,12 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_template { get; set; }
+
         public int id_item_output { get; set; }
         public string name { get; set; }
         public string code { get; set; }
-        public bool is_active 
+
+        public bool is_active
         {
             get { return _is_active; }
             set
@@ -37,6 +38,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
 
         public virtual IEnumerable<project> project { get; set; }
@@ -62,6 +64,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -69,9 +72,8 @@ namespace entity
                 //apply property level validation rules
                 if (columnName == "value")
                 {
-                    if (name=="")
+                    if (name == "")
                         return "Name Cannot br Blank";
-
                 }
                 return "";
             }

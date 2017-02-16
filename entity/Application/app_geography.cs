@@ -9,26 +9,27 @@ namespace entity
 
     public partial class app_geography : Audit, IDataErrorInfo
     {
-        
         public app_geography()
         {
             is_active = true;
             child = new List<app_geography>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_geography { get; set; }
-       
+
         [Required]
         public string name { get; set; }
+
         public string code { get; set; }
         public Status.geo_types type { get; set; }
         public decimal? geo_long { get; set; }
         public decimal? geo_lat { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -41,13 +42,17 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
+
         //Heirarchy Nav Properties
         public app_geography parent { get; set; }
+
         public ICollection<app_geography> child { get; set; }
 
         //Nav Properites
         public ICollection<app_bank> app_bank { get; set; }
+
         public ICollection<app_branch> app_branch { get; set; }
         public ICollection<contact> contact { get; set; }
 
@@ -72,6 +77,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

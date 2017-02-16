@@ -6,16 +6,17 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class app_property : IDataErrorInfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_property { get; set; }
+
         [Required]
         public string name { get; set; }
+
         //
-        
 
         public virtual ICollection<item_property> item_property { get; set; }
 

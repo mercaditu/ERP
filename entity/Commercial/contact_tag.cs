@@ -12,7 +12,7 @@
         public contact_tag()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             contact_tag_detail = new List<contact_tag_detail>();
             is_active = true;
@@ -24,6 +24,7 @@
 
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -36,10 +37,9 @@
                 }
             }
         }
+
         private bool _is_active;
         public virtual ICollection<contact_tag_detail> contact_tag_detail { get; set; }
-      
-
 
         public string Error
         {

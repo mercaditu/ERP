@@ -123,7 +123,7 @@ namespace Cognitivo.Production
             production_orderViewSource.View.Refresh();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             production_lineViewSource = (CollectionViewSource)FindResource("production_lineViewSource");
             production_lineViewSource.Source = await OrderDB.production_line.Where(x =>

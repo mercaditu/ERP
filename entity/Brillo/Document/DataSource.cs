@@ -1,14 +1,14 @@
-﻿using Microsoft.Reporting.WinForms;
+﻿using entity.Class;
+using Microsoft.Reporting.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using entity.Class;
 
 namespace entity.Brillo.Document
 {
     public class DataSource
     {
-        ReportDataSource reportDataSource = new ReportDataSource();
+        private ReportDataSource reportDataSource = new ReportDataSource();
 
         public ReportDataSource Create(object Document)
         {
@@ -100,7 +100,6 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
-          
 
             return null;
         }
@@ -156,7 +155,6 @@ namespace entity.Brillo.Document
                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
                     HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false,
-
                 }).ToList();
 
             return reportDataSource;
@@ -170,7 +168,6 @@ namespace entity.Brillo.Document
             reportDataSource.Value = sales_order_detail
                 .Select(g => new
                 {
-
                     geo_name = g.sales_order != null ? g.sales_order.contact != null ? g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "" : "" : "",
                     sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
                     contact_name = g.sales_order != null ? g.sales_order.contact.name : "",
@@ -218,7 +215,6 @@ namespace entity.Brillo.Document
 
                     HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false,
                     unit_price_discount = g.discount,
-
                 }).ToList();
 
             return reportDataSource;
@@ -313,7 +309,6 @@ namespace entity.Brillo.Document
 
             return PackingList;
         }
-
 
         public ReportDataSource Sales_PackingList(sales_packing sales_packing)
         {
@@ -566,7 +561,6 @@ namespace entity.Brillo.Document
                     PurchaseCode = g.purchase_invoice.code,
                     PurchaseDate = g.purchase_invoice.trans_date,
 
-
                     AmountWords = g.purchase_invoice != null ? g.purchase_invoice.app_currencyfx != null ? g.purchase_invoice.app_currencyfx.app_currency != null ? g.purchase_invoice.app_currencyfx.app_currency.has_rounding ?
 
                  // Text -> Words
@@ -622,8 +616,8 @@ namespace entity.Brillo.Document
                     timestamp = g.timestamp,
                     status = g.status,
                     comment = g.item_transfer.comment,
-                    Asset=g.item_transfer.item_asset!=null?g.item_transfer.item_asset.item!=null? g.item_transfer.item_asset.item.name:"":"",
-                    eta=g.item_transfer.eta!=null?g.item_transfer.eta.ToString():"",
+                    Asset = g.item_transfer.item_asset != null ? g.item_transfer.item_asset.item != null ? g.item_transfer.item_asset.item.name : "" : "",
+                    eta = g.item_transfer.eta != null ? g.item_transfer.eta.ToString() : "",
                     etd = g.item_transfer.etd != null ? g.item_transfer.etd.ToString() : "",
                     driver = g.item_transfer.driver != null ? g.item_transfer.driver.ToString() : "",
                     licence = g.item_transfer.licence_no != null ? g.item_transfer.licence_no.ToString() : "",
@@ -632,6 +626,7 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
+
         public ReportDataSource ItemRequest(item_request item_request)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -648,7 +643,6 @@ namespace entity.Brillo.Document
                     UserName = g.security_user != null ? g.security_user.name : "",
                     RequstedUserName = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.name : "" : "",
                     RequstedUserCode = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.code : "" : "",
-
 
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
@@ -677,34 +671,6 @@ namespace entity.Brillo.Document
                     reportDataSource.Value = ImportCostReport.Impex_ItemDetailLIST
                         .Select(g => new
                         {
-                            number=g.number,
-                            incoterm = g.incoterm,
-                            item = g.item,
-                            code = g.item_code,
-                            quantity = g.quantity,
-                            unit_cost=g.unit_cost,
-                            unit_Importcost=g.unit_Importcost,
-                            cost = g.cost,
-                            prorated_cost = g.prorated_cost,
-                            sub_total = g.sub_total,
-                          
-                        }).ToList();
-                    reportDataSourceCost.Value = ImportCostReport.CostDetailLIST.GroupBy(x=>x.CostName)
-                       .Select(g => new
-                       {
-                           Cost = g.Sum(x=>x.Cost),
-                           Costfx = g.Sum(x => x.Costfx),
-                           CostName = g.Key
-                       }).ToList();
-                    ReportDataSourceList.Add(reportDataSource);
-                    ReportDataSourceList.Add(reportDataSourceCost);
-                }
-                else
-                {
-                    Brillo.ImportCostReport ImportCostReport = new Brillo.ImportCostReport();
-                       reportDataSource.Value = ImportCostReport.Impex_ItemDetailLIST
-                        .Select(g => new
-                        {
                             number = g.number,
                             incoterm = g.incoterm,
                             item = g.item,
@@ -715,7 +681,6 @@ namespace entity.Brillo.Document
                             cost = g.cost,
                             prorated_cost = g.prorated_cost,
                             sub_total = g.sub_total,
-
                         }).ToList();
                     reportDataSourceCost.Value = ImportCostReport.CostDetailLIST.GroupBy(x => x.CostName)
                        .Select(g => new
@@ -727,9 +692,34 @@ namespace entity.Brillo.Document
                     ReportDataSourceList.Add(reportDataSource);
                     ReportDataSourceList.Add(reportDataSourceCost);
                 }
-
+                else
+                {
+                    Brillo.ImportCostReport ImportCostReport = new Brillo.ImportCostReport();
+                    reportDataSource.Value = ImportCostReport.Impex_ItemDetailLIST
+                     .Select(g => new
+                     {
+                         number = g.number,
+                         incoterm = g.incoterm,
+                         item = g.item,
+                         code = g.item_code,
+                         quantity = g.quantity,
+                         unit_cost = g.unit_cost,
+                         unit_Importcost = g.unit_Importcost,
+                         cost = g.cost,
+                         prorated_cost = g.prorated_cost,
+                         sub_total = g.sub_total,
+                     }).ToList();
+                    reportDataSourceCost.Value = ImportCostReport.CostDetailLIST.GroupBy(x => x.CostName)
+                       .Select(g => new
+                       {
+                           Cost = g.Sum(x => x.Cost),
+                           Costfx = g.Sum(x => x.Costfx),
+                           CostName = g.Key
+                       }).ToList();
+                    ReportDataSourceList.Add(reportDataSource);
+                    ReportDataSourceList.Add(reportDataSourceCost);
+                }
             }
-
 
             return ReportDataSourceList;
         }
@@ -757,7 +747,6 @@ namespace entity.Brillo.Document
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
                     :
                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
-
             }
                 );
             return reportDataSource;
@@ -827,8 +816,6 @@ namespace entity.Brillo.Document
                                 //NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "",
 
                                 //            HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false
-
-
                             }).ToList();
 
             return reportDataSource;
@@ -863,11 +850,11 @@ namespace entity.Brillo.Document
                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "" : "",
 
                                 HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false
-
                             }).ToList();
 
             return reportDataSource;
         }
+
         public ReportDataSource Project(project project)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -889,7 +876,6 @@ namespace entity.Brillo.Document
                 contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
                 gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
                 TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
-
             }).ToList();
 
             return reportDataSource;
@@ -915,11 +901,11 @@ namespace entity.Brillo.Document
                     quantity_counted = g.value_counted,
                     unit_cost = g.unit_value,
                     location = g.app_location != null ? g.app_location.name : "",
-
                 }).ToList();
 
             return reportDataSource;
         }
+
         private string GetTag(List<project_tag_detail> project_tag_detail)
         {
             string TagList = "";
@@ -937,6 +923,7 @@ namespace entity.Brillo.Document
 
             return TagList;
         }
+
         private string GetRelation(List<contact> contact)
         {
             string ContactList = "";
@@ -954,7 +941,5 @@ namespace entity.Brillo.Document
 
             return ContactList;
         }
-
-
     }
 }

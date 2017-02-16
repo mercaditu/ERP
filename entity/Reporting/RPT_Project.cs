@@ -2,7 +2,7 @@
 
 namespace entity.Reporting
 {
-   public class RPT_Project
+    public class RPT_Project
     {
         public string ProjectName { get; set; }
         public int status { get; set; }
@@ -27,6 +27,5 @@ namespace entity.Reporting
         public decimal TotalInvoiced { get; set; }
         public decimal TotalPaid { get; set; }
         public decimal Balance { get; set; }
-
     }
 }

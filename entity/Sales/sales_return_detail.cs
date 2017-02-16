@@ -1,12 +1,11 @@
-
 namespace entity
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel;
     using System.Text;
-    using System.Collections.Generic;
 
     public partial class sales_return_detail : CommercialSalesDetail, IDataErrorInfo
     {
@@ -22,11 +21,13 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_return_detail { get; set; }
+
         public int id_sales_return { get; set; }
         public bool has_return { get; set; }
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
+
         [NotMapped]
         public decimal Balance
         {
@@ -41,9 +42,11 @@ namespace entity
             }
             set { _Balance = value; }
         }
+
         private decimal _Balance;
 
         #region "Foreign Key"
+
         public virtual sales_return sales_return
         {
             get { return _sales_return; }
@@ -62,17 +65,18 @@ namespace entity
                     _sales_return = null;
                     RaisePropertyChanged("sales_return ");
                 }
-
-
             }
         }
+
         private sales_return _sales_return;
 
         public virtual sales_invoice_detail sales_invoice_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
-        #endregion
+
+        #endregion "Foreign Key"
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -126,6 +130,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

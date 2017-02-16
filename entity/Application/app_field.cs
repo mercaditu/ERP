@@ -12,17 +12,19 @@ namespace entity
         public app_field()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
-        public enum field_types { Telephone = 1, Account = 2,Email=3,Address=4}
+        public enum field_types { Telephone = 1, Account = 2, Email = 3, Address = 4 }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short id_field { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public field_types field_type { get; set; }
         public string mask { get; set; }
 

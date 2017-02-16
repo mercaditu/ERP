@@ -6,6 +6,7 @@ namespace entity
     public partial class Email : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)

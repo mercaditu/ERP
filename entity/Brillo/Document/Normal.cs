@@ -2,22 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 using System.Linq;
-
+using System.Windows;
 
 namespace entity.Brillo.Document
 {
     public class Normal
     {
-        Logic.Reciept TicketPrint = new Logic.Reciept();
+        private Logic.Reciept TicketPrint = new Logic.Reciept();
+
         public enum PrintStyles
         {
             Automatic,
             Manual
         }
+
         public Normal()
         { }
+
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
             if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application == App.Names.PointOfSale : false)
@@ -39,10 +41,8 @@ namespace entity.Brillo.Document
 
                 string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + app_range.app_document.name + ".rdlc";
 
-
                 if (Directory.Exists(PathFull) == false)
                 {
-
                     CreateFile(app_range);
                 }
 
@@ -75,23 +75,17 @@ namespace entity.Brillo.Document
                 }
             }
         }
+
         public Normal(object Document, string DocumentName)
         {
-
-
-
-
             string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + DocumentName + ".rdlc";
-
 
             if (Directory.Exists(PathFull) == false)
             {
-
                 CreateFile(DocumentName);
             }
 
             DataSource DataSource = new DataSource();
-
 
             DocumentViewr DocumentViewr = new DocumentViewr();
             DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
@@ -106,68 +100,68 @@ namespace entity.Brillo.Document
             };
 
             window.ShowDialog();
-
-        }
-    
-
-    private void CreateFile(app_document_range app_range)
-    {
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
-
-        //If path (CognitivoERP) does not exist, create path.
-        if (Directory.Exists(path) == false)
-        {
-            Directory.CreateDirectory(path);
         }
 
-        string SubFolder = "\\TemplateFiles";
-
-        //If path (TemplateFiles) does not exist, create path
-        if (!Directory.Exists(path + SubFolder))
+        private void CreateFile(app_document_range app_range)
         {
-            Directory.CreateDirectory(path + SubFolder);
-        }
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
-        //If file does not exist, create file.
-        if (!File.Exists(path + SubFolder + "\\" + app_range.app_document.name + ".rdlc"))
-        {
-            //Add Logic
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc"))
+            //If path (CognitivoERP) does not exist, create path.
+            if (Directory.Exists(path) == false)
             {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc",
-                       path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
+                Directory.CreateDirectory(path);
+            }
+
+            string SubFolder = "\\TemplateFiles";
+
+            //If path (TemplateFiles) does not exist, create path
+            if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+            }
+
+            //If file does not exist, create file.
+            if (!File.Exists(path + SubFolder + "\\" + app_range.app_document.name + ".rdlc"))
+            {
+                //Add Logic
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc",
+                           path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
+                }
             }
         }
-    }
-    public void CreateFile(app_document app_document)
-    {
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
-        //If path (CognitivoERP) does not exist, create path.
-        if (Directory.Exists(path) == false)
+        public void CreateFile(app_document app_document)
         {
-            Directory.CreateDirectory(path);
-        }
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
-        string SubFolder = "\\TemplateFiles";
-
-        //If path (TemplateFiles) does not exist, create path
-        if (!Directory.Exists(path + SubFolder))
-        {
-            Directory.CreateDirectory(path + SubFolder);
-        }
-
-        //If file does not exist, create file.
-        if (!File.Exists(path + SubFolder + "\\" + app_document.name + ".rdlc"))
-        {
-            //Add Logic
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc"))
+            //If path (CognitivoERP) does not exist, create path.
+            if (Directory.Exists(path) == false)
             {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc",
-                       path + SubFolder + "\\" + app_document.name + ".rdlc");
+                Directory.CreateDirectory(path);
+            }
+
+            string SubFolder = "\\TemplateFiles";
+
+            //If path (TemplateFiles) does not exist, create path
+            if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+            }
+
+            //If file does not exist, create file.
+            if (!File.Exists(path + SubFolder + "\\" + app_document.name + ".rdlc"))
+            {
+                //Add Logic
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc",
+                           path + SubFolder + "\\" + app_document.name + ".rdlc");
+                }
             }
         }
-    }
+
         public void CreateFile(string app_document)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
@@ -197,86 +191,85 @@ namespace entity.Brillo.Document
                 }
             }
         }
+
         public void loadCarnetcontactReport(contact contact)
-    {
-        try
         {
-            ReportDataSource reportDataSource = new ReportDataSource();
-            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-
-            if (contact.child.Count > 0)
+            try
             {
-                List<contact> contact_detail = contact.child.ToList();
-                reportDataSource.Value = contact_detail
-                   .Select(g => new
-                   {
-                       id_contact = g.id_contact,
-                       contacts_name = g.parent.name,
-                       date_birth = g.parent.date_birth,
-                       gove_code = g.parent.gov_code,
-                       trans_date = g.parent.timestamp,
-                       contacts_code = g.parent.code,
-                       Product_code = g.parent.contact_subscription.FirstOrDefault().item.name,
-                       name = g.name
-                   }).ToList();
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+
+                if (contact.child.Count > 0)
+                {
+                    List<contact> contact_detail = contact.child.ToList();
+                    reportDataSource.Value = contact_detail
+                       .Select(g => new
+                       {
+                           id_contact = g.id_contact,
+                           contacts_name = g.parent.name,
+                           date_birth = g.parent.date_birth,
+                           gove_code = g.parent.gov_code,
+                           trans_date = g.parent.timestamp,
+                           contacts_code = g.parent.code,
+                           Product_code = g.parent.contact_subscription.FirstOrDefault().item.name,
+                           name = g.name
+                       }).ToList();
+                }
+                else
+                {
+                    List<contact> contact_detail = new List<contact>();
+                    contact_detail.Add(contact);
+                    reportDataSource.Value = contact_detail
+                       .Select(g => new
+                       {
+                           id_contact = g.id_contact,
+                           contacts_name = g.name,
+                           date_birth = g.date_birth,
+                           gove_code = g.gov_code,
+                           trans_date = g.timestamp,
+                           contacts_code = g.code,
+                           Product_code = g.contact_subscription.FirstOrDefault() != null ? g.contact_subscription.FirstOrDefault().item != null ? g.contact_subscription.FirstOrDefault().item.name : "" : "",
+                           name = ""
+                       }).ToList();
+                }
+
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                path = path + "\\CogntivoERP";
+                string SubFolder = "";
+                SubFolder = "\\TemplateFiles";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path + SubFolder);
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
+                }
+                else if (!Directory.Exists(path + SubFolder))
+                {
+                    Directory.CreateDirectory(path + SubFolder);
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
+                }
+                else if (!File.Exists(path + SubFolder + "\\Carnet_Contact.rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
+                }
+
+                DocumentViewr DocumentViewr = new DocumentViewr();
+                DocumentViewr.reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                DocumentViewr.reportViewer.RefreshReport();
+
+                Window window = new Window
+                {
+                    Title = "Report",
+                    Content = DocumentViewr
+                };
+
+                window.ShowDialog();
             }
-            else
+            catch (Exception ex)
             {
-                List<contact> contact_detail = new List<contact>();
-                contact_detail.Add(contact);
-                reportDataSource.Value = contact_detail
-                   .Select(g => new
-                   {
-                       id_contact = g.id_contact,
-                       contacts_name = g.name,
-                       date_birth = g.date_birth,
-                       gove_code = g.gov_code,
-                       trans_date = g.timestamp,
-                       contacts_code = g.code,
-                       Product_code = g.contact_subscription.FirstOrDefault() != null ? g.contact_subscription.FirstOrDefault().item != null ? g.contact_subscription.FirstOrDefault().item.name : "" : "",
-                       name = ""
-                   }).ToList();
+                throw ex;
             }
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = path + "\\CogntivoERP";
-            string SubFolder = "";
-            SubFolder = "\\TemplateFiles";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
-            }
-            else if (!Directory.Exists(path + SubFolder))
-            {
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
-
-            }
-            else if (!File.Exists(path + SubFolder + "\\Carnet_Contact.rdlc"))
-            {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
-            }
-
-            DocumentViewr DocumentViewr = new DocumentViewr();
-            DocumentViewr.reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
-            DocumentViewr.reportViewer.LocalReport.DataSources.Add(reportDataSource);
-            DocumentViewr.reportViewer.RefreshReport();
-
-            Window window = new Window
-            {
-                Title = "Report",
-                Content = DocumentViewr
-            };
-
-            window.ShowDialog();
-
-        }
-        catch (Exception ex)
-        {
-            throw ex;
         }
     }
-}
 }

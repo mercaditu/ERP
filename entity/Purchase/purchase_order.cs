@@ -13,7 +13,7 @@ namespace entity
         public purchase_order()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
 
             purchase_order_detail = new List<purchase_order_detail>();
@@ -29,8 +29,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_order { get; set; }
+
         public int? id_purchase_tender { get; set; }
         public int? id_department { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx
@@ -55,6 +57,7 @@ namespace entity
                 }
             }
         }
+
         private int _id_currencyfx;
 
         public DateTime? recieve_date_est { get; set; }
@@ -88,8 +91,8 @@ namespace entity
                 }
             }
         }
-        private decimal _GrandTotal;
 
+        private decimal _GrandTotal;
 
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
@@ -116,7 +119,9 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {
@@ -132,7 +137,6 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / purchase_order_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in purchase_order_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
@@ -142,15 +146,14 @@ namespace entity
                 {
                     foreach (var item in purchase_order_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
                     }
                 }
-
             }
         }
+
         private decimal _DiscountWithoutPercentage;
 
         public new System.Data.Entity.EntityState State
@@ -170,11 +173,12 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
 
+        private System.Data.Entity.EntityState _State;
 
         //TimeCapsule
         public ICollection<purchase_order> older { get; set; }
+
         public purchase_order newer { get; set; }
 
         public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
@@ -204,6 +208,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

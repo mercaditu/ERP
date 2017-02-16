@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace entity.Brillo
 {
-    class Location
+    internal class Location
     {
         public int get_Location(item_product item_product, app_branch app_branch)
         {
-
             try
             {
                 return get_ProductLocation(item_product, app_branch);
@@ -25,10 +23,7 @@ namespace entity.Brillo
                     db.SaveChangesAsync();
                     return app_location.id_location;
                 }
-
             }
-
-
         }
 
         public int get_ProductLocation(item_product item_product, app_branch app_branch)

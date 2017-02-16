@@ -1,6 +1,5 @@
 ﻿namespace entity
 {
-    using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -11,22 +10,25 @@
         public item_dimension()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_dimension { get; set; }
+
         public int id_item { get; set; }
         public int id_app_dimension { get; set; }
         public int id_measurement { get; set; }
+
         [Required]
         public decimal value { get; set; }
 
         public virtual item item { get; set; }
         public virtual app_dimension app_dimension { get; set; }
         public virtual app_measurement app_measurement { get; set; }
+
         public string Error
         {
             get
@@ -48,6 +50,7 @@
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -62,5 +65,4 @@
             }
         }
     }
-
 }

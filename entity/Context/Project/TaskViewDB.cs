@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace entity
@@ -18,6 +17,7 @@ namespace entity
             validate_Task();
             return base.SaveChangesAsync();
         }
+
         private void validate_Task()
         {
             foreach (project_task project_task in base.project_task.Local)

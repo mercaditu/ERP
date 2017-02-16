@@ -16,13 +16,14 @@ namespace entity
             use_default_printer = false;
             expire_date = DateTime.Now.AddYears(1);
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_range { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_document { get; set; }
@@ -32,11 +33,15 @@ namespace entity
 
         [Required]
         public int range_start { get; set; }
+
         [Required]
         public int range_current { get; set; }
+
         [Required]
         public int range_end { get; set; }
+
         public string range_padding { get; set; }
+
         [Required]
         public string range_template { get; set; }
 
@@ -46,6 +51,7 @@ namespace entity
         public bool use_default_printer { get; set; }
         public string printer_name { get; set; }
         public bool can_print { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -58,6 +64,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual app_document app_document { get; set; }
         public virtual app_branch app_branch { get; set; }
@@ -73,6 +80,7 @@ namespace entity
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }
         public virtual IEnumerable<project_task> project_task { get; set; }
         public virtual IEnumerable<payment_promissory_note> payment_promissory_note { get; set; }
+
         public string Error
         {
             get
@@ -94,6 +102,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

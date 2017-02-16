@@ -33,11 +33,11 @@ namespace entity
             {
                 //Fix if no Default is Available.
                 app_contract app_contract = new app_contract();
-
             }
 
             return sales_return;
         }
+
         public override int SaveChanges()
         {
             validate_Return();
@@ -52,9 +52,8 @@ namespace entity
 
         private void validate_Return()
         {
-            foreach (sales_return sales_return in base.sales_return.Local.Where(x=>x.IsSelected))
+            foreach (sales_return sales_return in base.sales_return.Local.Where(x => x.IsSelected))
             {
-
                 if (sales_return.Error == null)
                 {
                     if (sales_return.State == EntityState.Added)
@@ -90,8 +89,7 @@ namespace entity
 
         private void add_CRM(sales_return sales_return)
         {
-          
-            sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault() != null? sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail:null;
+            sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault() != null ? sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail : null;
             if (sales_invoice_detail == null)
             {
                 crm_opportunity crm_opportunity = new crm_opportunity();
@@ -134,8 +132,8 @@ namespace entity
                         _return.code = sales_return.code;
                         _return.comment = sales_return.comment;
                         _return.return_type = sales_return.return_type;
-                    // _invoice.CreditLimit = invoice.CreditLimit;
-                    _return.app_branch = sales_return.app_branch;
+                        // _invoice.CreditLimit = invoice.CreditLimit;
+                        _return.app_branch = sales_return.app_branch;
                         _return.id_branch = sales_return.id_branch;
                         _return.app_company = sales_return.app_company;
                         _return.id_company = sales_return.id_company;
@@ -206,10 +204,11 @@ namespace entity
                 }
             }
         }
+
         public void Approve()
         {
             List<sales_return> SalesReturnList = base.sales_return.Local.Where(x =>
-                                                x.status != Status.Documents_General.Approved 
+                                                x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null).ToList();
             foreach (sales_return sales_return in SalesReturnList)
             {
@@ -222,7 +221,6 @@ namespace entity
                     sales_return.IsSelected && sales_return.is_head &&
                     sales_return.Error == null)
                 {
-
                     if (sales_return.id_sales_return == 0)
                     {
                         SaveChanges();
@@ -264,33 +262,31 @@ namespace entity
                             payment_schedual.AddRange(payment_schedualList);
                         }
 
-                            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                            List<item_movement> item_movementList = new List<item_movement>();
-                            item_movementList = _Stock.SalesReturn_Approve(this, sales_return);
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.SalesReturn_Approve(this, sales_return);
 
-                            if (item_movementList.Count() > 0)
+                        if (item_movementList.Count() > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+
+                            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null))
                             {
-                                item_movement.AddRange(item_movementList);
-
-                                foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null))
+                                if (sales_return_detail.item_movement.FirstOrDefault() != null)
                                 {
-                                    if (sales_return_detail.item_movement.FirstOrDefault() != null)
+                                    if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
                                     {
-                                        if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
-                                        {
-                                            sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                                            sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                                            sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
-                                        }
+                                        sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                                        sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                                        sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
                                     }
                                 }
                             }
-                            if (item_movementList != null && item_movementList.Count > 0)
-                            {
-                                item_movement.AddRange(item_movementList);
-                            }
-                        
-                        
+                        }
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+                        }
 
                         SaveChanges();
 

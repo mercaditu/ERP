@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace entity
 {
-  public partial class SalesBudgetDB : BaseDB
+    public partial class SalesBudgetDB : BaseDB
     {
         public sales_budget New()
         {
@@ -87,7 +87,7 @@ namespace entity
             crm_opportunity crm_opportunity = new crm_opportunity();
             crm_opportunity.id_contact = invoice.id_contact;
             crm_opportunity.id_currency = invoice.id_currencyfx;
-            crm_opportunity.value = invoice.sales_budget_detail.Sum(x => x.SubTotal_Vat); 
+            crm_opportunity.value = invoice.sales_budget_detail.Sum(x => x.SubTotal_Vat);
 
             crm_opportunity.sales_budget.Add(invoice);
             base.crm_opportunity.Add(crm_opportunity);
@@ -158,7 +158,7 @@ namespace entity
             {
                 if (budget.IsSelected && budget.Error == null)
                 {
-                    if(budget.sales_order==null || budget.sales_order.Count()==0)
+                    if (budget.sales_order == null || budget.sales_order.Count() == 0)
                     {
                         budget.status = Status.Documents_General.Annulled;
                         SaveChanges();

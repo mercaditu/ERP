@@ -7,6 +7,7 @@ namespace entity
     public partial class AuditGeneric : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)
@@ -18,8 +19,8 @@ namespace entity
         public int? id_company { get; set; }
         public int id_user { get; set; }
         public bool is_head { get; set; }
-        
-        public DateTime timestamp 
+
+        public DateTime timestamp
         {
             get
             {
@@ -33,6 +34,7 @@ namespace entity
                 }
             }
         }
+
         public DateTime _timestamp;
 
         public bool is_read { get; set; }
@@ -57,6 +59,7 @@ namespace entity
                 }
             }
         }
+
         private bool _IsSelected;
 
         [NotMapped]
@@ -75,8 +78,9 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
-        
+
+        private System.Data.Entity.EntityState _State;
+
         public virtual app_company app_company { get; set; }
         public virtual security_user security_user { get; set; }
     }

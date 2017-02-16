@@ -7,18 +7,17 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    
     public partial class app_location : Audit, IDataErrorInfo
     {
         public app_location()
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_read = false;
             timestamp = DateTime.Now;
-            item_movement= new List<item_movement>();
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -27,6 +26,7 @@ namespace entity
 
         [Required]
         public int id_branch { get; set; }
+
         public int? id_contact { get; set; }
 
         [Required]
@@ -44,6 +44,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active; public bool is_default { get; set; }
 
         public virtual app_branch app_branch { get; set; }
@@ -89,6 +90,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

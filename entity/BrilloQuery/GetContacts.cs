@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.BrilloQuery
 {
-    public class GetContacts: IDisposable
+    public class GetContacts : IDisposable
     {
         public ICollection<Contact> List { get; set; }
 
@@ -18,7 +15,7 @@ namespace entity.BrilloQuery
         {
             List = new List<Contact>();
 
-            string query = @" select 
+            string query = @" select
                                 id_contact as ID,
                                 name as Name,
                                 alias as Alias,
@@ -56,15 +53,15 @@ namespace entity.BrilloQuery
                     Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
                     Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
                     Contact.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
-                  
+
                     List.Add(Contact);
-                }   
+                }
             }
         }
 
         public void Dispose()
         {
-           // Dispose(true);
+            // Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -97,6 +94,5 @@ namespace entity.BrilloQuery
         public bool IsSupplier { get; set; }
         public bool IsEmployee { get; set; }
         public bool IsActive { get; set; }
-     
     }
 }

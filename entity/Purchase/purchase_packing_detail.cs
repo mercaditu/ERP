@@ -8,17 +8,18 @@ namespace entity
     using System.Text;
 
     public partial class purchase_packing_detail : Audit, IDataErrorInfo
-    { 
+    {
         public purchase_packing_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_packing_detail { get; set; }
+
         public int id_purchase_packing { get; set; }
         public int? id_purchase_order_detail { get; set; }
         public int? id_location { get; set; }
@@ -41,6 +42,7 @@ namespace entity
                 }
             }
         }
+
         private int _id_item;
 
         [Required]
@@ -50,7 +52,6 @@ namespace entity
             get { return _quantity; }
             set
             {
-
                 if (value > 0)
                 {
                     _quantity = value;
@@ -58,6 +59,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _quantity;
 
         public DateTime? expire_date { get; set; }
@@ -74,6 +76,7 @@ namespace entity
             get { return _user_verified; }
             set { _user_verified = value; RaisePropertyChanged("user_verified"); }
         }
+
         private bool _user_verified;
 
         public decimal? user_quantity
@@ -81,8 +84,9 @@ namespace entity
             get { return _user_quantity; }
             set { _user_quantity = value; RaisePropertyChanged("user_quantity"); }
         }
+
         private decimal? _user_quantity;
-        
+
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }
@@ -113,6 +117,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

@@ -1,6 +1,5 @@
 namespace entity
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -22,13 +21,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_invoice_detail { get; set; }
+
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
 
-    
-
         #region "Navigation Properties"
+
         public virtual purchase_order_detail purchase_order_detail { get; set; }
+
         public virtual purchase_invoice purchase_invoice
         {
             get { return _purchase_invoice; }
@@ -50,9 +50,11 @@ namespace entity
                 }
             }
         }
-        purchase_invoice _purchase_invoice;
+
+        private purchase_invoice _purchase_invoice;
 
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
+
         public virtual ICollection<purchase_invoice_dimension> purchase_invoice_dimension
         {
             get
@@ -61,19 +63,20 @@ namespace entity
             }
             set
             {
-                _purchase_invoice_dimension = value;            
+                _purchase_invoice_dimension = value;
             }
         }
 
-        ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
+        private ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
         public virtual project_task project_task { get; set; }
 
-        #endregion
+        #endregion "Navigation Properties"
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -119,7 +122,8 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
 
         public decimal GetDimensionValue()
         {
@@ -134,6 +138,5 @@ namespace entity
 
             return Dimension;
         }
-
     }
 }

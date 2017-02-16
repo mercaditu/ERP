@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -9,8 +8,6 @@ namespace entity.Brillo
 {
     public class Byte2FileConverter
     {
-
-
         public BitmapImage ByteArrayToImage(byte[] byteArrayIn)
         {
             if (byteArrayIn == null || byteArrayIn.Length == 0) return null;
@@ -24,6 +21,7 @@ namespace entity.Brillo
                 return image;
             }
         }
+
         public byte[] ResizeImage(string path)
         {
             Image image;
@@ -43,7 +41,6 @@ namespace entity.Brillo
                         image.Save(outputStream, jpegEncoder, encoderParameters);
                         return outputStream.ToArray();
                     }
-
                 }
                 else if (extension.ToLower().Contains("png"))
                 {
@@ -61,6 +58,5 @@ namespace entity.Brillo
 
             return null;
         }
-
     }
 }

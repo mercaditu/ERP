@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +12,6 @@ namespace entity
 
         public override int SaveChanges()
         {
-            
             return base.SaveChanges();
         }
 
@@ -35,31 +33,31 @@ namespace entity
                     switch (entry.State)
                     {
                         case EntityState.Modified:
-                        {
-                            entry.CurrentValues.SetValues(entry.OriginalValues);
-                            entry.State = EntityState.Unchanged;
-                            break;
-                        }
+                            {
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
                         case EntityState.Deleted:
-                        {
-                            entry.State = EntityState.Unchanged;
-                            break;
-                        }
+                            {
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
                         case EntityState.Added:
-                        {
-                            entry.State = EntityState.Detached;
-                            break;
-                        }
+                            {
+                                entry.State = EntityState.Detached;
+                                break;
+                            }
                     }
                 }
             }
         }
 
-        public object GetClone(object obj,Type a)
-        {   
+        public object GetClone(object obj, Type a)
+        {
             var source = obj;
             var clone = Activator.CreateInstance(a);
-            
+
             base.Entry(clone).State = EntityState.Added;
 
             var sourceValues = base.Entry(source).CurrentValues;

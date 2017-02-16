@@ -214,6 +214,7 @@ namespace entity
                 }
             }
         }
+
         public void Anull()
         {
             foreach (purchase_tender purchase_tender in base.purchase_tender.Local.Where(x => x.IsSelected == true))
@@ -224,11 +225,8 @@ namespace entity
                     {
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.status == Status.Documents_General.Approved))
                         {
-
                             if (purchase_tender_detail.purchase_order_detail != null)
                             {
-
-
                                 if (purchase_tender_detail.purchase_order_detail.FirstOrDefault().purchase_order.status == Status.Documents_General.Pending)
                                 {
                                     //   base.purchase_order.RemoveRange(purchase_order);
@@ -238,19 +236,12 @@ namespace entity
                                     }
                                     purchase_tender_detail.status = Status.Documents_General.Annulled;
                                     purchase_tender.status = Status.Documents_General.Annulled;
-
-
                                 }
                                 else
                                 {
                                     purchase_tender.status = Status.Documents_General.Approved;
                                     purchase_tender_detail.status = Status.Documents_General.Approved;
                                 }
-
-
-
-
-
                             }
                         }
                     }

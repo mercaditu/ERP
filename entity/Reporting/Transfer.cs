@@ -1,9 +1,9 @@
 ﻿using System;
+
 namespace entity.Reporting
 {
     public class Transfers
     {
-
         public DateTime Date { get; set; }
         public string OriginL { get; set; }
         public string DestinationL { get; set; }
@@ -20,5 +20,4 @@ namespace entity.Reporting
         public decimal Quantity_D { get; set; }
         public decimal Quantity_O { get; set; }
     }
-     
 }

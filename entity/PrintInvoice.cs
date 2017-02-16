@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using Microsoft.Reporting.WinForms;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
-using System.Collections.Generic;
-using Microsoft.Reporting.WinForms;
-using System.Drawing;
-using System.Linq;
+using System.IO;
+using System.Text;
 
 public class PrintInvoice : IDisposable
 {
@@ -15,7 +14,7 @@ public class PrintInvoice : IDisposable
 
     //private DataTable LoadSalesData()
     //{
-    //    // Create a new DataSet and read sales data file 
+    //    // Create a new DataSet and read sales data file
     //    //    data.xml into the first DataTable.
     //    DataSet dataSet = new DataSet();
     //    dataSet.ReadXml(@"..\..\data.xml");
@@ -87,7 +86,7 @@ public class PrintInvoice : IDisposable
         try
         {
             printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
-            //printDoc.PrinterSettings.ToPage = 
+            //printDoc.PrinterSettings.ToPage =
             printDoc.PrinterSettings.PrinterName = printername;
             m_currentPageIndex = 0;
 
@@ -109,7 +108,6 @@ public class PrintInvoice : IDisposable
             }
         }
     }
-   
 
     public void Dispose()
     {
@@ -120,6 +118,4 @@ public class PrintInvoice : IDisposable
             m_streams = null;
         }
     }
-
- 
 }

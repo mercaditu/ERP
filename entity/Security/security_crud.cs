@@ -1,18 +1,17 @@
-
 namespace entity
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class security_crud : INotifyPropertyChanged
     {
         public security_crud()
         {
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
@@ -21,8 +20,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_crud { get; set; }
+
         public int id_role { get; set; }
         public App.Names id_application { get; set; }
+
         public bool can_create
         {
             get
@@ -38,7 +39,8 @@ namespace entity
                 }
             }
         }
-        bool _can_create = false;
+
+        private bool _can_create = false;
 
         [NotMapped]
         public bool all
@@ -93,6 +95,7 @@ namespace entity
                 }
             }
         }
+
         private bool _all;
 
         public bool can_read
@@ -110,12 +113,14 @@ namespace entity
                 }
             }
         }
-        bool _can_read = false;
+
+        private bool _can_read = false;
 
         public bool can_update { get; set; }
         public bool can_delete { get; set; }
 
         public bool can_approve { get; set; }
+
         public bool can_annul
         {
             get
@@ -131,7 +136,8 @@ namespace entity
                 }
             }
         }
-        bool _can_annul = false;
+
+        private bool _can_annul = false;
 
         public virtual security_role security_role { get; set; }
     }

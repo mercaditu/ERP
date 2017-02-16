@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -28,21 +27,22 @@ namespace entity
         public int id_payment_approve { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_contact { get { return _id_contact; } set { _id_contact = value; RaisePropertyChanged("id_contact"); } }
+
         private int? _id_contact;
 
         public virtual contact contact { get { return _contact; } set { _contact = value; RaisePropertyChanged("contact"); } }
         private contact _contact;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Status.Documents_General status { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_range
         {
@@ -76,10 +76,14 @@ namespace entity
                 }
             }
         }
+
         private int? _id_range;
+
         #region Document Range => Navigation
+
         public virtual app_document_range app_document_range { get; set; }
-        #endregion
+
+        #endregion Document Range => Navigation
 
         [NotMapped]
         public decimal GrandTotal
@@ -94,6 +98,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _GrandTotal;
 
         [NotMapped]
@@ -114,6 +119,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotalDetail");
             }
         }
+
         private decimal _GrandTotalDetail;
 
         [NotMapped]
@@ -134,6 +140,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotalDetailValue");
             }
         }
+
         private decimal _GrandTotalDetailValue;
 
         [NotMapped]
@@ -152,38 +159,44 @@ namespace entity
                 RaisePropertyChanged("id_currencyfx");
             }
         }
+
         private int _id_currencyfx;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string number { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>     
+        ///
+        /// </summary>
         public int? id_branch { get; set; }
+
         #region Branch => Navigation
+
         public virtual app_branch app_branch { get; set; }
-        #endregion
+
+        #endregion Branch => Navigation
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_terminal { get; set; }
+
         #region Terminal => Navigation
+
         public virtual app_terminal app_terminal { get; set; }
-        #endregion
+
+        #endregion Terminal => Navigation
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DateTime trans_date { get; set; }
 

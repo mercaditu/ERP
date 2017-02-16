@@ -17,16 +17,23 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_company { get; set; }
+
         public int? id_geography { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public string alias { get; set; }
+
         [Required]
         public string gov_code { get; set; }
+
         [Required]
         public string address { get; set; }
+
         public string domain { get; set; }
         public string hash_debehaber { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -39,6 +46,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public string version { get; set; }
         public string seats { get; set; }
@@ -70,7 +78,6 @@ namespace entity
         public virtual IEnumerable<payment_type> payment_type { get; set; }
         public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
         public virtual IEnumerable<payment_withholding_tax> payment_withholding_tax { get; set; }
-
 
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }
@@ -130,6 +137,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

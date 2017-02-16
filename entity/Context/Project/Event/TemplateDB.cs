@@ -2,10 +2,9 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-
 namespace entity.EventManagement
 {
-    public class TemplateDB:BaseDB
+    public class TemplateDB : BaseDB
     {
         public override int SaveChanges()
         {
@@ -18,7 +17,7 @@ namespace entity.EventManagement
             validate_Template();
             return base.SaveChangesAsync();
         }
-        
+
         private void validate_Template()
         {
             foreach (project_event_template project_event_template in base.project_event_template.Local)
@@ -52,7 +51,5 @@ namespace entity.EventManagement
                 }
             }
         }
-
-
     }
 }

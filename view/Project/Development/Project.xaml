@@ -116,6 +116,7 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
 			            btnCancel_Click="toolBar_btnCancel_Click"
+                       btnSync_Click="Project_Loaded"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 

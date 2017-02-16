@@ -16,7 +16,6 @@
             string PrinterName;
             string Content = "";
 
-
             using (db db = new db())
             {
                 app_document_range app_document_range = db.app_document_range.Find(RangeID);
@@ -114,7 +113,6 @@
                 if (i.app_location_origin.app_branch != null)
                 {
                     BranchName = i.app_location_origin.app_branch.name;
-
                 }
             }
 
@@ -128,7 +126,6 @@
             if (i.app_department != null)
             {
                 DepartmentName = i.app_department.name;
-
             }
             string ProjectName = string.Empty;
             string ProjectCode = string.Empty;
@@ -137,7 +134,6 @@
                 ProjectName = i.project.name;
                 ProjectCode = i.project.code;
             }
-
 
             Header =
                 CompanyName + "\n"
@@ -172,7 +168,6 @@
                             ItemCode = d.project_task.code;
                         }
 
-
                         decimal? Qty = d.project_task.quantity_est;
                         string TaskName = d.project_task.item_description;
                         string TaskCode = d.project_task.items.code;
@@ -189,20 +184,16 @@
                         }
                         foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
                         {
-
                             decimal value = project_task_dimension.value;
                             string name = project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "";
                             string measurement = project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "";
                             string dimension = "-------------------------------" + "\n"
                            + name + "\t" + value + "\t" + measurement + "\n";
                             Detail = Detail + dimension + "\n";
-
                         }
 
                         //}
                     }
-
-
                 }
                 else
                 {
@@ -220,9 +211,7 @@
                                 ItemCode = d.item_product.item.code;
                             }
 
-
                             decimal? Qty = d.quantity_destination;
-
 
                             Detail = Detail
                                 + "-------------------------------" + "\n"
@@ -258,12 +247,10 @@
                 Footer += "APRORADO: " + i.user_given.name_full + "\n";
             }
 
-
             Footer += "-------------------------------";
 
             string Text = Header + Detail + Footer;
             return Text;
-          
         }
 
         public string SalesReturn(sales_return sales_return)
@@ -334,7 +321,6 @@
                     + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
             }
 
-
             Footer = "--------------------------------" + "\n";
             Footer += "Total " + sales_return.app_currencyfx.app_currency.name + ": " + sales_return.GrandTotal + "\n";
             Footer += "Fecha & Hora: " + sales_return.trans_date + "\n";
@@ -346,7 +332,6 @@
                 List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
                 if (sales_return_detail.Count > 0)
                 {
-
                     using (db db = new db())
                     {
                         var listvat = sales_return_detail
@@ -455,7 +440,7 @@
             string CurrencyName = "";
             if (sales_invoice.app_currencyfx != null)
             {
-                if (sales_invoice.app_currencyfx.app_currency!=null)
+                if (sales_invoice.app_currencyfx.app_currency != null)
                 {
                     CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
                 }
@@ -554,7 +539,7 @@
             if (sales_invoice.id_sales_rep > 0)
             {
                 string SalesRep_Name = "";
-                int RepID= (int)sales_invoice.id_sales_rep;
+                int RepID = (int)sales_invoice.id_sales_rep;
                 sales_rep sales_rep = CurrentSession.SalesReps.Where(x => x.id_sales_rep == RepID).FirstOrDefault();
                 if (sales_rep != null)
                 {
@@ -616,11 +601,8 @@
                 }
             }
 
-
-
             string TransNumber = payment.number;
             DateTime TransDate = payment.trans_date;
-           
 
             Header =
                 CompanyName + "\n"
@@ -810,7 +792,6 @@
                                 InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
                             }
                         }
-
                     }
 
                     decimal? value = d.credit - d.debit;
@@ -831,7 +812,6 @@
                 foreach (dynamic item in listvat)
                 {
                     Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + "\n";
-
                 }
 
                 foreach (app_account_detail account_detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close && x.id_currencyfx == detail.id_currencyfx).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
@@ -865,7 +845,6 @@
                                 amount += payment_schedual.credit;
                             }
                         }
-
                     }
                 }
 
@@ -908,8 +887,6 @@
             }
             catch
             { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
-
         }
-
     }
 }

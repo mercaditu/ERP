@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class GeneralERPUpdate : DbMigration
     {
         public override void Up()
@@ -10,28 +9,28 @@ namespace entity.Migrations
             CreateTable(
                 "payment_approve_detail",
                 c => new
-                    {
-                        id_payment_approve_detail = c.Int(nullable: false),
-                        id_bank = c.Int(),
-                        id_payment_approve = c.Int(),
-                        id_sales_return = c.Int(),
-                        id_purchase_return = c.Int(),
-                        id_account = c.Int(),
-                        id_currency = c.Int(nullable: false),
-                        id_payment_type = c.Int(nullable: false),
-                        payment_type_ref = c.Short(),
-                        value = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        trans_date = c.DateTime(nullable: false, precision: 0),
-                        id_range = c.Int(),
-                        payment_type_number = c.String(unicode: false),
-                        comment = c.String(unicode: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_payment_approve_detail)                
+                {
+                    id_payment_approve_detail = c.Int(nullable: false),
+                    id_bank = c.Int(),
+                    id_payment_approve = c.Int(),
+                    id_sales_return = c.Int(),
+                    id_purchase_return = c.Int(),
+                    id_account = c.Int(),
+                    id_currency = c.Int(nullable: false),
+                    id_payment_type = c.Int(nullable: false),
+                    payment_type_ref = c.Short(),
+                    value = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    trans_date = c.DateTime(nullable: false, precision: 0),
+                    id_range = c.Int(),
+                    payment_type_number = c.String(unicode: false),
+                    comment = c.String(unicode: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_payment_approve_detail)
                 .ForeignKey("app_account", t => t.id_account)
                 .ForeignKey("app_bank", t => t.id_bank)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
@@ -50,26 +49,26 @@ namespace entity.Migrations
                 .Index(t => t.id_range)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             CreateTable(
                 "payment_approve",
                 c => new
-                    {
-                        id_payment_approve = c.Int(nullable: false, identity: true),
-                        id_contact = c.Int(),
-                        status = c.Int(nullable: false),
-                        id_range = c.Int(),
-                        number = c.String(unicode: false),
-                        id_branch = c.Int(),
-                        id_terminal = c.Int(),
-                        trans_date = c.DateTime(nullable: false, precision: 0),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_payment_approve)                
+                {
+                    id_payment_approve = c.Int(nullable: false, identity: true),
+                    id_contact = c.Int(),
+                    status = c.Int(nullable: false),
+                    id_range = c.Int(),
+                    number = c.String(unicode: false),
+                    id_branch = c.Int(),
+                    id_terminal = c.Int(),
+                    trans_date = c.DateTime(nullable: false, precision: 0),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_payment_approve)
                 .ForeignKey("app_branch", t => t.id_branch)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("app_document_range", t => t.id_range)
@@ -82,31 +81,31 @@ namespace entity.Migrations
                 .Index(t => t.id_terminal)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             CreateTable(
                 "production_service_account",
                 c => new
-                    {
-                        id_production_service_account = c.Int(nullable: false, identity: true),
-                        id_contact = c.Int(),
-                        id_item = c.Int(nullable: false),
-                        id_order_detail = c.Int(),
-                        id_purchase_order_detail = c.Int(),
-                        id_purchase_invoice_detail = c.Int(),
-                        status = c.Int(),
-                        unit_cost = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        debit = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        credit = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        trans_date = c.DateTime(nullable: false, precision: 0),
-                        exp_date = c.DateTime(precision: 0),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                        parent_id_production_service_account = c.Int(),
-                    })
-                .PrimaryKey(t => t.id_production_service_account)                
+                {
+                    id_production_service_account = c.Int(nullable: false, identity: true),
+                    id_contact = c.Int(),
+                    id_item = c.Int(nullable: false),
+                    id_order_detail = c.Int(),
+                    id_purchase_order_detail = c.Int(),
+                    id_purchase_invoice_detail = c.Int(),
+                    status = c.Int(),
+                    unit_cost = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    debit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    credit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    trans_date = c.DateTime(nullable: false, precision: 0),
+                    exp_date = c.DateTime(precision: 0),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                    parent_id_production_service_account = c.Int(),
+                })
+                .PrimaryKey(t => t.id_production_service_account)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("production_service_account", t => t.parent_id_production_service_account)
                 .ForeignKey("contacts", t => t.id_contact)
@@ -123,27 +122,27 @@ namespace entity.Migrations
                 .Index(t => t.id_company)
                 .Index(t => t.id_user)
                 .Index(t => t.parent_id_production_service_account);
-            
+
             CreateTable(
                 "crm_schedual",
                 c => new
-                    {
-                        id_schedual = c.Int(nullable: false, identity: true),
-                        id_sales_rep = c.Int(),
-                        id_opportunity = c.Int(),
-                        id_contact = c.Int(),
-                        type = c.Int(nullable: false),
-                        ref_id = c.Int(nullable: false),
-                        start_date = c.DateTime(nullable: false, precision: 0),
-                        end_date = c.DateTime(nullable: false, precision: 0),
-                        comment = c.String(unicode: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_schedual)                
+                {
+                    id_schedual = c.Int(nullable: false, identity: true),
+                    id_sales_rep = c.Int(),
+                    id_opportunity = c.Int(),
+                    id_contact = c.Int(),
+                    type = c.Int(nullable: false),
+                    ref_id = c.Int(nullable: false),
+                    start_date = c.DateTime(nullable: false, precision: 0),
+                    end_date = c.DateTime(nullable: false, precision: 0),
+                    comment = c.String(unicode: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_schedual)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("contacts", t => t.id_contact)
                 .ForeignKey("crm_opportunity", t => t.id_opportunity)
@@ -154,23 +153,23 @@ namespace entity.Migrations
                 .Index(t => t.id_contact)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             CreateTable(
                 "loyalty_member",
                 c => new
-                    {
-                        id_member = c.Int(nullable: false, identity: true),
-                        id_tier = c.Int(nullable: false),
-                        id_contact = c.Int(),
-                        number = c.String(nullable: false, unicode: false),
-                        is_active = c.Boolean(nullable: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_member)                
+                {
+                    id_member = c.Int(nullable: false, identity: true),
+                    id_tier = c.Int(nullable: false),
+                    id_contact = c.Int(),
+                    number = c.String(nullable: false, unicode: false),
+                    is_active = c.Boolean(nullable: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_member)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("contacts", t => t.id_contact)
                 .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
@@ -179,52 +178,52 @@ namespace entity.Migrations
                 .Index(t => t.id_contact)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             CreateTable(
                 "loyalty_member_detail",
                 c => new
-                    {
-                        id_member_detail = c.Int(nullable: false, identity: true),
-                        id_member = c.Int(nullable: false),
-                        trans_date = c.DateTime(nullable: false, precision: 0),
-                        expire_date = c.DateTime(nullable: false, precision: 0),
-                        debit = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        credit = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        comment = c.String(unicode: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_member_detail)                
+                {
+                    id_member_detail = c.Int(nullable: false, identity: true),
+                    id_member = c.Int(nullable: false),
+                    trans_date = c.DateTime(nullable: false, precision: 0),
+                    expire_date = c.DateTime(nullable: false, precision: 0),
+                    debit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    credit = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    comment = c.String(unicode: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_member_detail)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("loyalty_member", t => t.id_member, cascadeDelete: true)
                 .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
                 .Index(t => t.id_member)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             CreateTable(
                 "loyalty_tier",
                 c => new
-                    {
-                        id_tier = c.Int(nullable: false, identity: true),
-                        name = c.String(nullable: false, unicode: false),
-                        min_value = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        is_active = c.Boolean(nullable: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_tier)                
+                {
+                    id_tier = c.Int(nullable: false, identity: true),
+                    name = c.String(nullable: false, unicode: false),
+                    min_value = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    is_active = c.Boolean(nullable: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_tier)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("security_user", t => t.id_user, cascadeDelete: true)
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
-            
+
             AddColumn("app_account_detail", "id_payment_approve_detail", c => c.Int());
             AddColumn("app_branch", "address", c => c.String(unicode: false));
             AddColumn("app_bank", "can_transfer", c => c.Boolean(nullable: false));
@@ -361,7 +360,7 @@ namespace entity.Migrations
             DropColumn("purchase_return_detail", "lot_number");
             DropColumn("purchase_return_detail", "expiration_date");
         }
-        
+
         public override void Down()
         {
             AddColumn("purchase_return_detail", "expiration_date", c => c.DateTime(precision: 0));

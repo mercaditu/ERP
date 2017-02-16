@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -6,15 +5,15 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class purchase_order_detail : CommercialPurchaseDetail, IDataErrorInfo
     {
         public purchase_order_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             purchase_order_dimension = new List<purchase_order_dimension>();
             purchase_invoice_detail = new List<purchase_invoice_detail>();
@@ -23,6 +22,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_order_detail { get; set; }
+
         public int id_purchase_order { get; set; }
         public int? id_purchase_tender_detail { get; set; }
 
@@ -51,7 +51,8 @@ namespace entity
                 }
             }
         }
-        purchase_order _purchase_order;
+
+        private purchase_order _purchase_order;
         public virtual purchase_tender_detail purchase_tender_detail { get; set; }
 
         public virtual IEnumerable<purchase_packing_detail> purchase_packing_detail { get; set; }
@@ -60,7 +61,7 @@ namespace entity
         public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
 
-        #endregion
+        #endregion "Navigation Properties"
 
         public decimal GetDimensionValue()
         {
@@ -75,12 +76,13 @@ namespace entity
 
             return Dimension;
         }
+
         [NotMapped]
         public decimal balance
         {
             get
             {
-                if (purchase_invoice_detail!=null)
+                if (purchase_invoice_detail != null)
                 {
                     _balance = quantity - purchase_invoice_detail.Sum(x => x.quantity);
                     return _balance;
@@ -92,8 +94,11 @@ namespace entity
                 _balance = value;
             }
         }
-        decimal _balance;
+
+        private decimal _balance;
+
         #region "Validation"
+
         public string Error
         {
             get
@@ -113,6 +118,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -135,6 +141,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

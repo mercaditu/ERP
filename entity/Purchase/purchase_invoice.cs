@@ -1,6 +1,5 @@
 namespace entity
 {
-
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -28,12 +27,12 @@ namespace entity
 
             payment_withholding_detail = new List<payment_withholding_detail>();
             impex_expense = new List<impex_expense>();
-          
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_invoice { get; set; }
+
         public int? id_purchase_order { get; set; }
         public int? id_department { get; set; }
 
@@ -64,11 +63,13 @@ namespace entity
                 //}
             }
         }
+
         private int _id_currencyfx;
         public bool is_accounted { get; set; }
 
         //TimeCapsule
         public ICollection<purchase_invoice> older { get; set; }
+
         public purchase_invoice newer { get; set; }
 
         [NotMapped]
@@ -87,11 +88,9 @@ namespace entity
                 //    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
                 //    foreach (var item in purchase_invoice_detail)
                 //    {
-
                 //        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
                 //        item.RaisePropertyChanged("UnitCost_Vat");
                 //    }
-
 
                 //}
 
@@ -99,6 +98,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _GrandTotal;
 
         [NotMapped]
@@ -120,6 +120,7 @@ namespace entity
                 RaisePropertyChanged("TotalVat");
             }
         }
+
         private decimal _TotalVat;
 
         /// <summary>
@@ -147,6 +148,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
 
         [NotMapped]
@@ -164,7 +166,6 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / purchase_invoice_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in purchase_invoice_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
@@ -174,15 +175,14 @@ namespace entity
                 {
                     foreach (var item in purchase_invoice_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
                     }
                 }
-
             }
         }
+
         private decimal _DiscountWithoutPercentage;
 
         [NotMapped]
@@ -207,9 +207,10 @@ namespace entity
                 _displayexpire = false;
                 return _displayexpire;
             }
-            set { _displayexpire=value; }
+            set { _displayexpire = value; }
         }
-        Boolean _displayexpire=false;
+
+        private Boolean _displayexpire = false;
 
         [NotMapped]
         public new System.Data.Entity.EntityState State
@@ -229,12 +230,13 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
+
+        private System.Data.Entity.EntityState _State;
 
         #region "Navigation Properties"
+
         public virtual purchase_order purchase_order { get; set; }
         public virtual app_department app_department { get; set; }
-
 
         public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail
         {
@@ -247,7 +249,8 @@ namespace entity
                 _purchase_invoice_detail = value;
             }
         }
-        ICollection<purchase_invoice_detail> _purchase_invoice_detail;
+
+        private ICollection<purchase_invoice_detail> _purchase_invoice_detail;
         public virtual IEnumerable<purchase_packing_relation> purchase_packing_relation { get; set; }
         public virtual ICollection<impex_import> impex_import { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
@@ -255,9 +258,10 @@ namespace entity
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
 
-        #endregion
+        #endregion "Navigation Properties"
 
         #region Validation
+
         public string Error
         {
             get
@@ -276,6 +280,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -309,6 +314,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion Validation
     }
 }

@@ -4,7 +4,7 @@ namespace entity.Class
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {
-        string _resourceKey;
+        private string _resourceKey;
 
         public LocalizedDescriptionAttribute(string resourceKey)
         {

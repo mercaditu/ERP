@@ -11,14 +11,16 @@
         public contact_tag_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_contact_tag_detail { get; set; }
+
         public int id_contact { get; set; }
+
         [Required]
         public int id_tag { get; set; }
 
@@ -58,4 +60,3 @@
         }
     }
 }
-

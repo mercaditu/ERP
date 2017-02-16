@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClosedXML.Excel;
 using System.Reflection;
 
 namespace entity.Brillo
@@ -29,7 +29,7 @@ namespace entity.Brillo
                         Detail.LocationID = inv_detail.id_location;
                         Detail.ProductID = inv_detail.id_item_product;
 
-                        Detail.Brand = inv_detail.item_product.item.item_brand != null ? inv_detail.item_product.item.item_brand.name : "" ;
+                        Detail.Brand = inv_detail.item_product.item.item_brand != null ? inv_detail.item_product.item.item_brand.name : "";
                         Detail.Code = inv_detail.item_product.item.code;
                         Detail.Product = inv_detail.item_product.item.name;
 
@@ -82,7 +82,7 @@ namespace entity.Brillo
                         int ProductID = row.Cell(3).GetValue<int>();
 
                         item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_location == LocationID && x.id_item_product == ProductID).FirstOrDefault();
-                     
+
                         if (detail != null)
                         {
                             detail.value_counted = row.Cell(11).GetValue<decimal>();
@@ -126,7 +126,7 @@ namespace entity.Brillo
         }
     }
 
-    class InventoryDetail
+    internal class InventoryDetail
     {
         public int DetailID { get; set; } //1
         public int LocationID { get; set; }
@@ -145,8 +145,7 @@ namespace entity.Brillo
         public decimal? Real_Quantity { get; set; } //11
 
         public decimal Cost { get; set; } //12
-        
-        public string Comments { get; set; } //13
 
+        public string Comments { get; set; } //13
     }
 }

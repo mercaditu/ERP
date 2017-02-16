@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 
 namespace entity.Brillo
 {
@@ -11,7 +10,8 @@ namespace entity.Brillo
     {
         public List<Impex_ItemDetail> Impex_ItemDetailLIST = new List<Impex_ItemDetail>();
         public List<CostDetail> CostDetailLIST = new List<CostDetail>();
-        ImpexDB ImpexDB = new ImpexDB();
+        private ImpexDB ImpexDB = new ImpexDB();
+
         public void GetExpensesForAllIncoterm(impex impex)
         {
             Impex_ItemDetailLIST.Clear();
@@ -24,7 +24,6 @@ namespace entity.Brillo
             {
                 List<impex_incoterm_detail> IncotermDetail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == Incoterm.id_incoterm && i.buyer == true).ToList();
                 decimal totalExpense = 0;
-
 
                 if (PurchaseInvoice != null)
                 {
@@ -50,12 +49,10 @@ namespace entity.Brillo
                                             CostDetail.Costfx = (decimal)_impex_expense.value * impex.fx_rate;
                                         }
                                     }
-
                                 }
 
                                 CostDetail.Cost = (decimal)_impex_expense.value;
                                 CostDetail.CostName = _impex_expense.impex_incoterm_condition.name;
-
 
                                 CostDetailLIST.Add(CostDetail);
                                 totalExpense += (decimal)_impex_expense.value;
@@ -104,19 +101,12 @@ namespace entity.Brillo
                                     ImpexImportDetails.unit_Importcostfx = ImpexImportDetails.unit_Importcostfx * impex.fx_rate;
                                     ImpexImportDetails.prorated_costfx = ImpexImportDetails.prorated_costfx * impex.fx_rate;
                                 }
-
                             }
                         }
                         Impex_ItemDetailLIST.Add(ImpexImportDetails);
                     }
-
                 }
             }
-
         }
-
-
-
-
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity
 {
-    public partial  class SalesOrderDB : BaseDB
+    public partial class SalesOrderDB : BaseDB
     {
         public sales_order New()
         {
@@ -26,7 +26,7 @@ namespace entity
             if (security_user != null)
             {
                 sales_order.security_user = security_user;
-            } 
+            }
 
             sales_order.State = EntityState.Added;
             sales_order.IsSelected = true;
@@ -53,7 +53,7 @@ namespace entity
             List<sales_order> sales_orderLIST = base.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0).ToList();
             foreach (sales_order sales_order in sales_orderLIST)
             {
-                if(sales_order.IsSelected && sales_order.Error == null)
+                if (sales_order.IsSelected && sales_order.Error == null)
                 {
                     if (sales_order.State == EntityState.Added)
                     {
@@ -95,8 +95,8 @@ namespace entity
                 crm_opportunity crm_opportunity = new crm_opportunity();
                 crm_opportunity.id_contact = order.id_contact;
                 crm_opportunity.id_currency = order.id_currencyfx;
-               
-                crm_opportunity.value = order.sales_order_detail.Sum(x => x.SubTotal_Vat); 
+
+                crm_opportunity.value = order.sales_order_detail.Sum(x => x.SubTotal_Vat);
 
                 crm_opportunity.sales_order.Add(order);
                 base.crm_opportunity.Add(crm_opportunity);
@@ -111,7 +111,6 @@ namespace entity
 
         public bool Approve()
         {
-
             foreach (sales_order sales_order in base.sales_order.Local.Where(x => x.status != Status.Documents_General.Approved && x.id_contact > 0))
             {
                 NumberOfRecords = 0;
@@ -180,10 +179,8 @@ namespace entity
                             item_request.name = sales_order.contact.name;
                             item_request.comment = sales_order.comment;
 
-
                             item_request.id_sales_order = sales_order.id_sales_order;
                             item_request.id_branch = sales_order.id_branch;
-
 
                             item_request.request_date = (DateTime)sales_order.delivery_date;
 
@@ -202,7 +199,6 @@ namespace entity
                                     item_request_detail.comment = item_request_detail.item.name;
                                 }
 
-
                                 item_request_detail.quantity = data.quantity;
 
                                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -217,7 +213,6 @@ namespace entity
                                 }
 
                                 item_request.item_request_detail.Add(item_request_detail);
-
                             }
                             base.item_request.Add(item_request);
                         }
@@ -280,6 +275,5 @@ namespace entity
             }
             return true;
         }
-
     }
 }

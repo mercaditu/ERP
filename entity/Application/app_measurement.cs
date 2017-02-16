@@ -13,21 +13,26 @@ namespace entity
         {
             id_company = CurrentSession.Id_Company;
             is_active = true;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_conversion_factor = new List<item_conversion_factor>();
             item_dimension = new List<item_dimension>();
             item_movement_dimension = new List<item_movement_dimension>();
             item_inventory_dimension = new List<item_inventory_dimension>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_measurement { get; set; }
+
         [CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
         public short id_measurement_type { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public string code_iso { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -40,6 +45,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual app_measurement_type app_measurement_type { get; set; }
         public virtual IEnumerable<project_task_dimension> project_task_dimension { get; set; }

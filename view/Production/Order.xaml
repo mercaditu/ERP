@@ -400,6 +400,7 @@
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                       btnSync_Click="Page_Loaded"
 					   appName="ProductionOrder"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

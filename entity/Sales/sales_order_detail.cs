@@ -1,13 +1,12 @@
-
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel;
-    using System.Text;
     using System.Linq;
-    using System;
+    using System.Text;
 
     public partial class sales_order_detail : CommercialSalesDetail, IDataErrorInfo
     {
@@ -18,15 +17,17 @@ namespace entity
             is_head = true;
             quantity = 1;
 
-             sales_invoice_detail = new List<sales_invoice_detail>();
+            sales_invoice_detail = new List<sales_invoice_detail>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_order_detail { get; set; }
+
         public int id_sales_order { get; set; }
         public int? movement_id { get; set; }
         public int? id_sales_budget_detail { get; set; }
+
         [NotMapped]
         public decimal balance
         {
@@ -40,10 +41,12 @@ namespace entity
                 _balance = value;
             }
         }
-        decimal _balance;
+
+        private decimal _balance;
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
+
         #region "Nav Properties"
 
         public virtual sales_order sales_order
@@ -58,32 +61,29 @@ namespace entity
                 {
                     if (_sales_order != value)
                     {
-
                         _sales_order = value;
                         CurrencyFX_ID = value.id_currencyfx;
-
-
                     }
                 }
                 else
                 {
                     _sales_order = null;
                     RaisePropertyChanged("sales_order");
-
                 }
             }
         }
+
         private sales_order _sales_order;
-
-
 
         public virtual sales_budget_detail sales_budget_detail { get; set; }
         public virtual IEnumerable<sales_packing_detail> sales_packing_detail { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
-        #endregion
+
+        #endregion "Nav Properties"
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -101,6 +101,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -124,6 +125,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

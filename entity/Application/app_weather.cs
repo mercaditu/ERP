@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class app_weather
     {
         public app_weather()
         {
-
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_weather { get; set; }
+
         public int id_branch { get; set; }
 
         public decimal? temp { get; set; }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Threading;
-using System.Web;
-using System.IO;
-using System.Net;
+﻿using System.Collections.Generic;
 
 namespace entity.Brillo
 {
@@ -14,6 +7,7 @@ namespace entity.Brillo
         public decimal lon { get; set; }
         public decimal lat { get; set; }
     }
+
     public class Sys
     {
         public decimal message { get; set; }
@@ -21,6 +15,7 @@ namespace entity.Brillo
         public int sunrise { get; set; }
         public int sunset { get; set; }
     }
+
     public class Weather
     {
         public int id { get; set; }
@@ -28,6 +23,7 @@ namespace entity.Brillo
         public string description { get; set; }
         public string icon { get; set; }
     }
+
     public class Main
     {
         //decimal _temp;
@@ -98,15 +94,18 @@ namespace entity.Brillo
         public decimal grnd_level { get; set; }
         public int humidity { get; set; }
     }
+
     public class Wind
     {
         public decimal speed { get; set; }
         public decimal deg { get; set; }
     }
+
     public class Clouds
     {
         public int all { get; set; }
     }
+
     public class RootObject
     {
         public RootObject()
@@ -122,6 +121,7 @@ namespace entity.Brillo
             ////dispatcherTimer.Start();
             //get_weather(null, null);
         }
+
         public Coord coord { get; set; }
         public Sys sys { get; set; }
         public List<Weather> weather { get; set; }
@@ -133,9 +133,8 @@ namespace entity.Brillo
         public int id { get; set; }
         public string name { get; set; }
         public int cod { get; set; }
-
-   
     }
+
     public class Getweather
     {
         public Getweather()

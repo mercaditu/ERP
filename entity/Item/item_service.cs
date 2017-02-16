@@ -5,19 +5,20 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-   
+
     public partial class item_service : Audit, IDataErrorInfo
     {
         public item_service()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_service { get; set; }
+
         public int id_item { get; set; }
         public int? id_talent { get; set; }
 
@@ -29,7 +30,7 @@ namespace entity
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -52,7 +53,5 @@ namespace entity
                 return "";
             }
         }
-
-       
     }
 }

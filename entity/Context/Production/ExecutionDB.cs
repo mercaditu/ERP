@@ -18,15 +18,16 @@ namespace entity
             production_order.name = name;
             return production_order;
         }
-        
+
         public override int SaveChanges()
         {
             validate_Execution();
             return base.SaveChanges();
         }
+
         public int SaveChangesWithoutValidation()
         {
-           // validate_Execution();
+            // validate_Execution();
             return base.SaveChanges();
         }
 
@@ -69,7 +70,6 @@ namespace entity
                     }
                 }
             }
-
         }
 
         public int Approve(production_order.ProductionOrderTypes Type)
@@ -82,7 +82,7 @@ namespace entity
                     {
                         ///Assign this so that inside Stock Brillo we can run special logic required for Production or Fraction.
                         ///Production: Sums all input Childs to the Cost.
-                        ///Fraction: Takes a Fraction of the parent. 
+                        ///Fraction: Takes a Fraction of the parent.
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
@@ -108,10 +108,10 @@ namespace entity
                         }
                         else
                         {
-                            if (production_execution_detail.id_project_task!=null && production_execution_detail.id_project_task>0)
+                            if (production_execution_detail.id_project_task != null && production_execution_detail.id_project_task > 0)
                             {
                                 project_task project_task = base.project_task.Where(x => x.id_project_task == production_execution_detail.id_project_task).FirstOrDefault();
-                                if (project_task!= null)
+                                if (project_task != null)
                                 {
                                     project_task.status = Status.Project.Executed;
                                 }
@@ -144,6 +144,5 @@ namespace entity
         //        production_execution.status = Status.Documents_General.Annulled;
         //    }
         //}
-
     }
 }

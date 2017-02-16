@@ -26,12 +26,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_product { get; set; }
+
         public int id_item { get; set; }
         public decimal? stock_min { get; set; }
         public decimal? stock_max { get; set; }
         public bool can_expire { get; set; }
         public bool is_weigted { get; set; }
         public COGS_Types cogs_type { get; set; }
+
         [NotMapped]
         public decimal stock
         {
@@ -41,8 +43,9 @@ namespace entity
                 RaisePropertyChanged("stock");
                 return _stock;
             }
-            set { _stock=value; }
+            set { _stock = value; }
         }
+
         public decimal _stock;
         public virtual item item { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }

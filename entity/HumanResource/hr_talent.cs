@@ -10,7 +10,7 @@
         public hr_talent()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             timestamp = DateTime.Now;
@@ -20,13 +20,15 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_talent { get; set; }
+
         [Required]
-        public string name { get { return _name; } set { _name = value;RaisePropertyChanged("name");} }
-        string _name;
+        public string name { get { return _name; } set { _name = value; RaisePropertyChanged("name"); } }
+
+        private string _name;
+
         [Required]
         public bool is_active { get; set; }
 
         public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
-
     }
 }

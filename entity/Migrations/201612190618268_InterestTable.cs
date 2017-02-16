@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InterestTable : DbMigration
     {
         public override void Up()
@@ -14,16 +13,16 @@ namespace entity.Migrations
             CreateTable(
                 "app_company_interest",
                 c => new
-                    {
-                        id_interest = c.Int(nullable: false),
-                        grace_period = c.Int(nullable: false),
-                        interest = c.Decimal(nullable: false, precision: 20, scale: 9),
-                        is_forced = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.id_interest)                
+                {
+                    id_interest = c.Int(nullable: false),
+                    grace_period = c.Int(nullable: false),
+                    interest = c.Decimal(nullable: false, precision: 20, scale: 9),
+                    is_forced = c.Boolean(nullable: false),
+                })
+                .PrimaryKey(t => t.id_interest)
                 .ForeignKey("app_company", t => t.id_interest)
                 .Index(t => t.id_interest);
-            
+
             AddColumn("contacts", "trans_code_exp", c => c.DateTime(precision: 0));
             AddColumn("app_contract", "surcharge", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("app_vat_group_details", "percentage", c => c.Decimal(nullable: false, precision: 20, scale: 9));
@@ -37,7 +36,7 @@ namespace entity.Migrations
             DropColumn("app_attachment", "timestamp");
             DropColumn("app_attachment", "is_read");
         }
-        
+
         public override void Down()
         {
             AddColumn("app_attachment", "is_read", c => c.Boolean(nullable: false));

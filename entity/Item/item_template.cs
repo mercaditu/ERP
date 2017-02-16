@@ -1,6 +1,4 @@
-﻿
-
-namespace entity
+﻿namespace entity
 {
     using System;
     using System.Collections.Generic;
@@ -8,13 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class item_template : Audit, IDataErrorInfo
     {
         public item_template()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_template_detail = new List<item_template_detail>();
             is_active = true;
@@ -26,6 +24,7 @@ namespace entity
 
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -38,17 +37,16 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
         public virtual ICollection<item_template_detail> item_template_detail { get; set; }
-  
-
 
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {

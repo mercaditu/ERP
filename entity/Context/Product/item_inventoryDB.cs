@@ -1,11 +1,8 @@
-﻿using entity.Brillo.Document;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace entity
 {
@@ -50,9 +47,7 @@ namespace entity
                         base.item_inventory.Remove(item_inventory);
                     }
 
-
                     NumberOfRecords += 1;
-
                 }
                 else if (item_inventory.State > 0)
                 {
@@ -118,7 +113,7 @@ namespace entity
                 }
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
-              
+
                 Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                 item_movementLIST = _Stock.Inventory_Approve(this, item_inventory);
 
@@ -138,6 +133,3 @@ namespace entity
         }
     }
 }
-
-
-

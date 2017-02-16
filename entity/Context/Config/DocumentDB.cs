@@ -1,11 +1,10 @@
-﻿using System; 
+﻿using System;
 using System.Data.Entity;
-using System.Linq; 
 using System.Threading.Tasks;
 
-namespace entity 
+namespace entity
 {
-     public partial class DocumentDB:BaseDB
+    public partial class DocumentDB : BaseDB
     {
         public override int SaveChanges()
         {

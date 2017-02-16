@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -11,7 +10,7 @@ namespace entity
         public payment_withholding_tax()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             payment_withholding_detail = new List<payment_withholding_detail>();
             payment_detail = new List<payment_detail>();
@@ -20,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_withholding { get; set; }
+
         public Status.Documents_General status { get; set; }
         public int id_contact { get; set; }
         public int? id_range { get; set; }
@@ -32,7 +32,7 @@ namespace entity
         public decimal value { get; set; }
         public DateTime trans_date { get; set; }
         public DateTime expire_date { get; set; }
-        
+
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual app_document_range app_document_range { get; set; }
         public virtual contact contact { get; set; }

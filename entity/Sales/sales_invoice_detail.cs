@@ -2,11 +2,12 @@ namespace entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel;
-    using System.Text;
     using System.Linq;
+    using System.Text;
+
     public partial class sales_invoice_detail : CommercialSalesDetail, IDataErrorInfo
     {
         public sales_invoice_detail()
@@ -24,6 +25,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_invoice_detail { get; set; }
+
         public int id_sales_invoice { get; set; }
         public int? movement_id { get; set; }
         public int? id_sales_order_detail { get; set; }
@@ -33,19 +35,21 @@ namespace entity
 
         [NotMapped]
         public int PromoID { get; set; }
+
         [NotMapped]
         public decimal Balance
         {
-            get { return quantity - sales_return_detail.Where(x=>x.id_sales_return_detail>0).Sum(x => x.quantity); }
-            set { _Balance = value;  }
-
+            get { return quantity - sales_return_detail.Where(x => x.id_sales_return_detail > 0).Sum(x => x.quantity); }
+            set { _Balance = value; }
         }
-        decimal _Balance;
+
+        private decimal _Balance;
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
         #region "Nav Properties"
+
         public virtual sales_invoice sales_invoice
         {
             get { return _sales_invoice; }
@@ -68,14 +72,18 @@ namespace entity
         }
 
         private sales_invoice _sales_invoice;
+
         // public virtual sales_invoice sales_invoice { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }
+
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
-        #endregion
+
+        #endregion "Nav Properties"
 
         #region "Validation"
+
         public string Error
         {
             get
@@ -95,6 +103,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -118,6 +127,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion "Validation"
     }
 }

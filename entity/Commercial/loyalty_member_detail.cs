@@ -9,13 +9,14 @@
         public loyalty_member_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_member_detail { get; set; }
+
         public int id_member { get; set; }
         public DateTime trans_date { get; set; }
         public DateTime expire_date { get; set; }

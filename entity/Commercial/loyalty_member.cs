@@ -12,7 +12,7 @@
         public loyalty_member()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             loyalty_member_detail = new List<loyalty_member_detail>();
             is_active = true;
@@ -21,6 +21,7 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_member { get; set; }
+
         public int id_tier { get; set; }
         public int? id_contact { get; set; }
 
@@ -39,11 +40,12 @@
                 }
             }
         }
+
         private bool _is_active;
 
         public virtual contact contact { get; set; }
         public virtual ICollection<loyalty_member_detail> loyalty_member_detail { get; set; }
-      
+
         public string Error
         {
             get

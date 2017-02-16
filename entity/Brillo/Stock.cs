@@ -8,15 +8,14 @@ namespace entity.Brillo
 {
     public class Stock
     {
-
         public List<StockList> List(int BranchID, int? LocationID, int ProductID)
         {
-            string query = @"select 
+            string query = @"select
                                 loc.id_location as LocationID,
                                 loc.name as Location,
-                                parent.id_movement as MovementID, 
+                                parent.id_movement as MovementID,
                                 parent.trans_date as TransDate, parent.expire_date,parent.code,
-                                parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance, 
+                                parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
@@ -29,7 +28,7 @@ namespace entity.Brillo
             string WhereQuery = "";
 
             //This determins if we should bring cost of entire block of
-            if (LocationID > 0 || LocationID !=null)
+            if (LocationID > 0 || LocationID != null)
             {
                 WhereQuery = string.Format("parent.id_location = {0}", LocationID);
             }
@@ -45,10 +44,10 @@ namespace entity.Brillo
 
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
-            string query = @"select 
-                                parent.id_movement as MovementID, 
+            string query = @"select
+                                parent.id_movement as MovementID,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
-                                parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance, 
+                                parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance,
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
@@ -74,12 +73,13 @@ namespace entity.Brillo
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
+
         public List<StockList> ScalarMovement(item_movement item_movement)
         {
-            string query = @"select 
-                                parent.id_movement as MovementID, 
+            string query = @"select
+                                parent.id_movement as MovementID,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
-                                parent.credit  as QtyBalance, 
+                                parent.credit  as QtyBalance,
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
@@ -152,7 +152,7 @@ namespace entity.Brillo
                     Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
                     if (!(DataRow["expire_date"] is DBNull))
                     {
-                        Stock.ExpirationDate =Convert.ToDateTime(DataRow["expire_date"]);
+                        Stock.ExpirationDate = Convert.ToDateTime(DataRow["expire_date"]);
                     }
                     Stock.Location = Convert.ToString(DataRow["Location"]);
                     Stock.LocationID = Convert.ToInt32(DataRow["LocationID"]);
@@ -170,7 +170,6 @@ namespace entity.Brillo
 
     public class StockList
     {
-
         public int LocationID { get; set; }
         public string Location { get; set; }
         public int MovementID { get; set; }

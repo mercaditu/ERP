@@ -45,28 +45,20 @@ namespace entity.Brillo.Promotion
 
                 if (Best_Promotion != null)
                 {
-
-
                     if (Best_Promotion.is_promo == false && Best_Promotion.sales_invoice_detail != null)
                     {
-
-
                         _sales_invoice_detail.DiscountVat = data.discountvat;
                         _sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
                         //_sales_invoice_detail.sales_promotion = Best_Promotion.Promotion;
                     }
-
                 }
             }
             foreach (var data in list)
             {
                 Detail Best_Promotion = data.Detail;
 
-
                 if (Best_Promotion != null)
                 {
-
-
                     ///Logic to add new Items from GetThat Promotions...
                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                     sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
@@ -77,7 +69,6 @@ namespace entity.Brillo.Promotion
                     sales_invoice_detail.discount = Best_Promotion.Discount;
 
                     SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
-
                 }
             }
         }
@@ -172,12 +163,10 @@ namespace entity.Brillo.Promotion
                     Invoice.Details.Add(Detail);
                 }
 
-
                 decimal TotalQuantity = 0;
 
                 List<Detail> DetailList = new List<Detail>();
                 List<DetailTag> DetailTagList = new List<DetailTag>();
-
 
                 DetailList = Invoice.Details.Where(x => x.Item.item_tag_detail.Any(y => y.id_tag == Promo.reference) && x.is_promo == false).ToList();
 
@@ -191,8 +180,6 @@ namespace entity.Brillo.Promotion
 
                 TotalQuantity = DetailList.Sum(x => x.Quantity);
 
-
-
                 if (DetailTagList.Count() > 0 && TotalQuantity >= Promo.quantity_step)
                 {
                     foreach (DetailTag _DetailTag in DetailTagList)
@@ -200,7 +187,6 @@ namespace entity.Brillo.Promotion
                         Promo _Promo = new Promo();
                         _Promo.Type = sales_promotion.salesPromotion.BuyTag_GetThat;
                         _Promo.Shared = true;
-
 
                         PromotionProduct window = new PromotionProduct()
                         {
@@ -219,8 +205,6 @@ namespace entity.Brillo.Promotion
                         {
                             foreach (DetailProduct _DetailProduct in DetailProduct)
                             {
-
-
                                 //Needed to calculate the discounts and unit prices further on.
                                 Detail Detail = new Detail();
 
@@ -229,7 +213,6 @@ namespace entity.Brillo.Promotion
                                     item item = db.items.Where(x => x.id_item == _DetailProduct.ProductId).FirstOrDefault();
                                     if (item != null)
                                     {
-
                                         Detail.Item = item;
                                     }
 
@@ -248,17 +231,8 @@ namespace entity.Brillo.Promotion
                                 Detail.Quantity = _DetailProduct.Quantity;
 
                                 DetailLIST.Add(Detail);
-
                             }
-
-
-
                         }
-
-
-
-
-
                     }
                 }
             }
@@ -340,7 +314,6 @@ namespace entity.Brillo.Promotion
                     Invoice.Details.Add(Detail);
                 }
 
-
                 decimal TotalQuantity = 0;
 
                 List<Detail> DetailList = new List<Detail>();
@@ -358,8 +331,6 @@ namespace entity.Brillo.Promotion
                     }
                     TotalQuantity = DetailList.Sum(x => x.Quantity);
                 }
-
-
 
                 if (DetailTagList.Count() > 0 && TotalQuantity >= Promo.quantity_step)
                 {
@@ -409,7 +380,6 @@ namespace entity.Brillo.Promotion
                     Detail.is_promo = _Detail.IsPromo;
                     Invoice.Details.Add(Detail);
                 }
-
 
                 if (Promo.reference == SalesInvoice.app_currencyfx.id_currency)
                 {
@@ -464,9 +434,6 @@ namespace entity.Brillo.Promotion
                     Invoice.Details.Add(Detail);
                 }
 
-
-
-
                 if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
                 {
                     SalesInvoice.DiscountPercentage = Promo.result_value;
@@ -490,7 +457,6 @@ namespace entity.Brillo.Promotion
                         DetailLIST.Add(Detail);
                     }
                 }
-
             }
         }
 
@@ -584,5 +550,5 @@ namespace entity.Brillo.Promotion
         public bool Shared { get; set; }
     }
 
-    #endregion
+    #endregion Sales-Object
 }

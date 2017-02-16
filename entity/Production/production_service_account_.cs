@@ -20,10 +20,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_production_service_account { get; set; }
+
         public int? id_contact { get; set; }
         public int id_item { get; set; }
         public int? id_order_detail { get; set; }
-    
 
         public int? id_purchase_order_detail { get; set; }
         public int? id_purchase_invoice_detail { get; set; }
@@ -33,12 +33,14 @@ namespace entity
 
         [Required]
         public decimal debit { get; set; }
+
         [Required]
         public decimal credit { get; set; }
 
         [NotMapped]
-        public decimal Balance { get { return credit- child.Sum(x => x.debit); } set { _Balance = value;  } }
-        decimal _Balance;
+        public decimal Balance { get { return credit - child.Sum(x => x.debit); } set { _Balance = value; } }
+
+        private decimal _Balance;
 
         [Required]
         public DateTime trans_date { get; set; }
@@ -47,6 +49,7 @@ namespace entity
 
         //Heirarchy
         public virtual production_service_account parent { get; set; }
+
         public virtual ICollection<production_service_account> child { get; set; }
 
         public virtual item item { get; set; }

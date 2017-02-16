@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class DatabaseChange : DbMigration
     {
         public override void Up()
@@ -19,7 +18,7 @@ namespace entity.Migrations
             DropColumn("item_transfer_dimension", "id_transfer_detail");
             DropColumn("item_request_dimension", "id_item_request_detail");
         }
-        
+
         public override void Down()
         {
             AddColumn("item_request_dimension", "id_item_request_detail", c => c.Long(nullable: false));

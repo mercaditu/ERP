@@ -4,7 +4,6 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class production_account : Audit
     {
@@ -20,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_production_account { get; set; }
+
         public int id_contact { get; set; }
         public int id_item { get; set; }
         public int? id_order_detail { get; set; }
@@ -33,6 +33,7 @@ namespace entity
 
         [Required]
         public decimal debit { get; set; }
+
         [Required]
         public decimal credit { get; set; }
 
@@ -43,6 +44,7 @@ namespace entity
 
         //Heirarchy
         public virtual production_account parent { get; set; }
+
         public virtual ICollection<production_account> child { get; set; }
 
         public virtual item item { get; set; }

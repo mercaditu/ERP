@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -9,14 +8,17 @@ namespace entity
 
     public partial class sales_packing_relation : IDataErrorInfo
     {
-        public sales_packing_relation() { }
+        public sales_packing_relation()
+        {
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_packing_relation { get; set; }
-        [Required]
 
+        [Required]
         public long id_sales_invoice_detail { get; set; }
+
         [Required]
         public int id_sales_packing_detail { get; set; }
 
@@ -42,12 +44,13 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
             {
                 // apply property level validation rules
-              
+
                 if (columnName == "id_sales_packinglist")
                 {
                     if (id_sales_packing_detail == 0)

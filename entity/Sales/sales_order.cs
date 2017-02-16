@@ -5,14 +5,13 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class sales_order : CommercialHead, IDataErrorInfo
     {
-
         public sales_order()
-         {
+        {
             is_head = true;
             trans_date = DateTime.Now;
             delivery_date = DateTime.Now;
@@ -29,10 +28,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_order { get; set; }
-        
+
         public int? id_sales_budget { get; set; }
         public int id_opportunity { get; set; }
-        
+
         public int id_currencyfx
         {
             get
@@ -55,8 +54,9 @@ namespace entity
                 }
             }
         }
+
         private int _id_currencyfx;
-        
+
         public DateTime? delivery_date { get; set; }
         public DateTime? valid_date { get; set; }
 
@@ -78,6 +78,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _GrandTotal;
 
         /// <summary>
@@ -106,14 +107,15 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {
             get { return _DiscountWithoutPercentage; }
             set
             {
-
                 _DiscountWithoutPercentage = value;
                 RaisePropertyChanged("DiscountWithoutPercentage");
 
@@ -123,7 +125,6 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / sales_order_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in sales_order_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
@@ -133,21 +134,21 @@ namespace entity
                 {
                     foreach (var item in sales_order_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
                     }
                 }
-
             }
         }
+
         private decimal _DiscountWithoutPercentage;
 
         //TimeCapsule
         public ICollection<sales_order> older { get; set; }
+
         public sales_order newer { get; set; }
-        
+
         public virtual sales_budget sales_budget { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }
 
@@ -155,14 +156,13 @@ namespace entity
         public virtual ICollection<sales_invoice> sales_invoice { get; set; }
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
         public virtual IEnumerable<item_request> item_request { get; set; }
-       
 
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -176,6 +176,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

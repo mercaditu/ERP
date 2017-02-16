@@ -1,6 +1,5 @@
 ﻿namespace entity
 {
-    using InteractivePreGeneratedViews;
     using System.Data.Entity;
 
     public class db : DbContext

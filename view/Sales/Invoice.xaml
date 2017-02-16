@@ -178,9 +178,9 @@
                     <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
 						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
                     <Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
-						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="600" />
+						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
                     <Grid Name="crud_modalDuePaymnet" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
-						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="500">
+						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />

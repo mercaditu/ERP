@@ -15,22 +15,22 @@ namespace entity
             Terminal = 2
         }
 
-        app_account_type actype;
+        private app_account_type actype;
 
         public app_account()
         {
             app_account_detail = new List<app_account_detail>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             app_account_session = new List<app_account_session>();
         }
 
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_account { get; set; }
+
         public app_account_type id_account_type
         {
             get
@@ -46,12 +46,14 @@ namespace entity
                 //    is_active = false;
             }
         }
+
         public int? id_bank { get; set; }
         public int? id_currency { get; set; }
         public int? id_terminal { get; set; }
 
         [Required]
         public string name { get; set; }
+
         public string code { get; set; }
         public decimal? initial_amount { get; set; }
         public bool is_active { get; set; }
@@ -85,6 +87,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

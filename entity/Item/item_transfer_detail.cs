@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -11,7 +10,7 @@ namespace entity
         public item_transfer_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_movement = new List<item_movement>();
             item_transfer_dimension = new List<item_transfer_dimension>();
@@ -20,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_transfer_detail { get; set; }
+
         public Status.Documents_General status { get; set; }
         public Status.Documents_General status_dest { get; set; }
         public int id_transfer { get; set; }
@@ -30,7 +30,7 @@ namespace entity
         public decimal? net_weight { get; set; }
         public decimal? volume { get; set; }
 
-        public decimal quantity_origin 
+        public decimal quantity_origin
         {
             get { return _quantity_origin; }
             set
@@ -40,12 +40,13 @@ namespace entity
                     _quantity_origin = value;
                     RaisePropertyChanged("quantity_origin");
 
-                    //Updates the Destination automatically. 
+                    //Updates the Destination automatically.
                     quantity_destination = _quantity_origin;
                 }
             }
         }
-        decimal _quantity_origin;
+
+        private decimal _quantity_origin;
 
         [NotMapped]
         public decimal Quantity_InStock
@@ -63,12 +64,13 @@ namespace entity
                 }
             }
         }
+
         private decimal _Quantity_InStock;
 
         [NotMapped]
         public bool InStock { get; set; }
 
-        public decimal quantity_destination 
+        public decimal quantity_destination
         {
             get { return _quantity_destination; }
             set
@@ -80,8 +82,8 @@ namespace entity
                 }
             }
         }
-        decimal _quantity_destination;
 
+        private decimal _quantity_destination;
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
@@ -98,6 +100,5 @@ namespace entity
         {
             //entity.Brillo.
         }
-   
     }
 }

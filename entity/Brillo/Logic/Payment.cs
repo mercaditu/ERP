@@ -16,6 +16,7 @@ namespace entity.Brillo.Logic
                 }
             }
         }
+
         private List<payment_promissory_note> _payment_promissory_noteLIST = new List<payment_promissory_note>();
 
         public List<payment_schedual> insert_Schedual(object obj_entity)
@@ -81,7 +82,6 @@ namespace entity.Brillo.Logic
                     {
                         payment_schedualList.Add(payment_schedual);
                     }
-
                 }
 
                 return payment_schedualList;
@@ -127,7 +127,6 @@ namespace entity.Brillo.Logic
                 return payment_schedualList;
             }
 
-
             //SALES ORDER
             else if (obj_entity as sales_order != null)
             {
@@ -148,8 +147,6 @@ namespace entity.Brillo.Logic
                 }
                 return payment_schedualList;
             }
-
-
 
             //PURCHASE INVOICE
             else if (obj_entity as purchase_invoice != null)
@@ -213,7 +210,6 @@ namespace entity.Brillo.Logic
                 }
                 return payment_schedualList;
             }
-
 
             //PURCHASE ORDER
             else if (obj_entity as purchase_order != null)
@@ -336,16 +332,12 @@ namespace entity.Brillo.Logic
                     db.payment_detail.Remove(parent_paymnet_schedual.payment_detail);
                     db.payment_schedual.Remove(parent_paymnet_schedual);
                     db.payment_schedual.Remove(payment_schedual);
-
                 }
                 else
                 {
                     db.payment_schedual.Remove(payment_schedual);
                 }
             }
-
-
-
         }
     }
 }

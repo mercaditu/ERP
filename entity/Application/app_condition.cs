@@ -12,8 +12,10 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_condition { get; set; }
-        [Required] 
+
+        [Required]
         public string name { get; set; }
+
         [Required]
         public bool is_active
         {
@@ -27,16 +29,18 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
 
         public app_condition()
         {
             app_contract = new List<app_contract>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
         }
+
         public virtual ICollection<app_contract> app_contract { get; set; }
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }

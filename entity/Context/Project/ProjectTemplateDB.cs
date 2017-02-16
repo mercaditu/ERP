@@ -3,10 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace entity
 {
-    public class ProjectTemplateDB:BaseDB
+    public class ProjectTemplateDB : BaseDB
     {
         public override int SaveChanges()
         {
@@ -19,7 +18,7 @@ namespace entity
             validate_Template();
             return base.SaveChangesAsync();
         }
-        
+
         private void validate_Template()
         {
             NumberOfRecords = 0;

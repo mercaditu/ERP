@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -10,17 +9,17 @@ namespace entity
 
     public partial class sales_rep : Audit, IDataErrorInfo
     {
-        public enum SalesRepType 
-        { 
-            Salesman = 1, 
-            Collector = 2, 
-            PurchaseAgent = 3 
+        public enum SalesRepType
+        {
+            Salesman = 1,
+            Collector = 2,
+            PurchaseAgent = 3
         }
 
         public sales_rep()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             sales_order = new List<sales_order>();
             sales_invoice = new List<sales_invoice>();
@@ -31,6 +30,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_rep { get; set; }
+
         public int id_contact { get; set; }
 
         [Required]
@@ -38,6 +38,7 @@ namespace entity
 
         [Required]
         public string name { get; set; }
+
         public string code { get; set; }
         public decimal? commision_base { get; set; }
         public string commision_calculation { get; set; }
@@ -47,9 +48,12 @@ namespace entity
         public decimal monthly_goal { get; set; }
 
         [NotMapped]
-        public decimal daily_goal {
+        public decimal daily_goal
+        {
             get { _daily_goal = monthly_goal / 30; return _daily_goal; }
-            set { _daily_goal = value; monthly_goal = value * 30; RaisePropertyChanged("monthly_goal"); } }
+            set { _daily_goal = value; monthly_goal = value * 30; RaisePropertyChanged("monthly_goal"); }
+        }
+
         private decimal _daily_goal;
 
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }

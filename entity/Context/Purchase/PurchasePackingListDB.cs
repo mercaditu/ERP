@@ -8,7 +8,6 @@ namespace entity
 {
     public partial class PurchasePackingListDB : BaseDB
     {
-
         public purchase_packing New()
         {
             purchase_packing purchase_packing = new purchase_packing();
@@ -43,9 +42,6 @@ namespace entity
             {
                 if (purchase_packing.IsSelected && purchase_packing.Error == null)
                 {
-
-
-
                     if (purchase_packing.State == EntityState.Added)
                     {
                         purchase_packing.timestamp = DateTime.Now;

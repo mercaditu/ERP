@@ -29,7 +29,7 @@ namespace entity.Brillo
             {
                 foreach (app_vat_group_details app_vat_group_details in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group))
                 {
-                    coefficient = coefficient + (CurrentSession.VATs.Where(x => x.id_vat == app_vat_group_details.id_vat).FirstOrDefault().coefficient * app_vat_group_details.percentage );
+                    coefficient = coefficient + (CurrentSession.VATs.Where(x => x.id_vat == app_vat_group_details.id_vat).FirstOrDefault().coefficient * app_vat_group_details.percentage);
                 }
             }
 

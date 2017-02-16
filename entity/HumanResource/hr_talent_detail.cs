@@ -5,17 +5,17 @@
 
     public class hr_talent_detail : Audit
     {
-
         public hr_talent_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_talent_detail { get; set; }
+
         public int id_talent { get; set; }
         public int id_contact { get; set; }
 

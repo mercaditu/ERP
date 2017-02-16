@@ -1,17 +1,16 @@
 namespace entity
 {
-    using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-   
+
     public partial class app_contract_detail : Audit, IDataErrorInfo
     {
         public app_contract_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_order = false;
         }
@@ -19,6 +18,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_contract_detail { get; set; }
+
         [Required]
         public int id_contract { get; set; }
 
@@ -27,6 +27,7 @@ namespace entity
         /// </summary>
         [Required]
         public decimal coefficient { get; set; }
+
         /// <summary>
         /// Interval > Interval of Days between one payment and the next. (ex=> 30 = payment in 30 days from date of transaction)
         /// </summary>
@@ -56,6 +57,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

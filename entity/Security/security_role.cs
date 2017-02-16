@@ -1,6 +1,5 @@
 namespace entity
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,7 @@ namespace entity
 
     public partial class security_role : IDataErrorInfo, INotifyPropertyChanged
     {
-        Brillo.Activation Activation = new Brillo.Activation();
+        private Brillo.Activation Activation = new Brillo.Activation();
 
         public security_role()
         {
@@ -25,23 +24,25 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_role { get; set; }
+
         public int id_company { get; set; }
         public int? id_department { get; set; }
 
         [Required]
         public string name
-        { 
+        {
             get
             {
                 return _name;
-            } 
+            }
             set
-            { 
+            {
                 _name = value;
-                RaisePropertyChanged("name"); 
+                RaisePropertyChanged("name");
             }
         }
-        string _name;
+
+        private string _name;
 
         public bool see_cost { get; set; }
         public bool is_active { get; set; }
@@ -61,7 +62,7 @@ namespace entity
         public virtual ICollection<security_user> security_user { get; set; }
         public virtual ICollection<security_crud> security_curd { get; set; }
         public virtual ICollection<security_role_privilage> security_role_privilage { get; set; }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)
@@ -86,7 +87,7 @@ namespace entity
             }
         }
 
-        System.Data.Entity.EntityState _State;
+        private System.Data.Entity.EntityState _State;
 
         [NotMapped]
         public bool IsSelected { get; set; }
@@ -109,6 +110,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

@@ -44,6 +44,5 @@ namespace entity.Reporting
         public string GeoLevel3 { get; set; }
         public string GeoLevel4 { get; set; }
         public string GeoLevel5 { get; set; }
-
     }
 }

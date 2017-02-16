@@ -8,7 +8,7 @@ namespace entity
         public app_configuration()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
@@ -30,6 +30,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_configuration { get; set; }
+
         public App.Names application { get; set; }
         public Configuration configuration { get; set; }
         public string value { get; set; }

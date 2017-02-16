@@ -1,7 +1,6 @@
 namespace entity
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -13,21 +12,20 @@ namespace entity
         public app_account_session()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
-        
+
             op_date = DateTime.Now;
             is_active = true;
-           app_account_detail = new List<app_account_detail>();
+            app_account_detail = new List<app_account_detail>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_session { get; set; }
-       
-       
+
         public DateTime op_date { get; set; }
-     
+
         public DateTime? cl_date { get; set; }
 
         public int id_account { get; set; }
@@ -56,13 +54,13 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
             {
                 // apply property level validation rules
-              
-              
+
                 return "";
             }
         }

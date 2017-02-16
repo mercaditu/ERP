@@ -12,9 +12,12 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_bank { get; set; }
+
         public int? id_geography { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -27,6 +30,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
 
         public bool can_transfer { get; set; }
@@ -39,15 +43,14 @@ namespace entity
         public string intermediary_country { get; set; }
         public string intermediary_swift { get; set; }
 
-
         public app_bank()
-        { 
+        {
             app_account = new List<app_account>();
             payment_detail = new List<payment_detail>();
             is_active = true;
             id_company = CurrentSession.Id_Company;
             is_head = true;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
         }
 
         public virtual ICollection<app_account> app_account { get; set; }
@@ -75,12 +78,13 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
             {
                 // apply property level validation rules
-                if(columnName == "name")
+                if (columnName == "name")
                 {
                     if (String.IsNullOrEmpty(name))
                         return "Name needs to be filled";

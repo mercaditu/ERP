@@ -59,7 +59,6 @@ namespace entity.Brillo.Document
             else if (value < 2000000) Num2Text = "un millón " + (value % 1000000).IntToText();
             else if (value < int.MaxValue)
             {
-
                 Num2Text = IntToText((((value - (value % 1000000)) / 1000000))) + " millones";
                 if ((value % 1000000) > 0) Num2Text += " " + IntToText((value % 1000000));
             }

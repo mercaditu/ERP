@@ -9,6 +9,7 @@ namespace entity.Brillo
     {
         //Server Properties
         private string IMAP_Server { get; set; }
+
         private short IMAP_Server_Port { get; set; }
         private string SMTP_Server { get; set; }
         private short SMTP_Server_Port { get; set; }
@@ -26,7 +27,7 @@ namespace entity.Brillo
         /// <param name="Header">Email Header **Required</param>
         /// <param name="Message">Email Message **Required</param>
         /// <returns></returns>
-        public bool Send(string SendTo,string Header, string Message)
+        public bool Send(string SendTo, string Header, string Message)
         {
             if (SendTo.Contains("@") == false && Message == string.Empty)
             {

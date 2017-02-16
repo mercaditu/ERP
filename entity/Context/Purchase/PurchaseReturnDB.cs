@@ -34,7 +34,7 @@ namespace entity
             validate_Return();
             return base.SaveChangesAsync();
         }
-        
+
         private void validate_Return()
         {
             foreach (purchase_return purchase_return in base.purchase_return.Local)
@@ -72,7 +72,7 @@ namespace entity
 
         public void Approve()
         {
-            foreach(purchase_return purchase_return in base.purchase_return.Local.Where(x => x.status != Status.Documents_General.Approved))
+            foreach (purchase_return purchase_return in base.purchase_return.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
                 if (purchase_return.status != Status.Documents_General.Approved &&
                     purchase_return.IsSelected &&
@@ -141,7 +141,6 @@ namespace entity
                     }
                 }
             }
-
         }
 
         private void Linked2Sales(purchase_return purchase_return)

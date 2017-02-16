@@ -2,10 +2,8 @@ namespace entity
 {
     using Brillo;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class CommercialPurchaseDetail : Audit
     {
@@ -17,7 +15,7 @@ namespace entity
         public int? id_location { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int id_cost_center
         {
@@ -28,6 +26,7 @@ namespace entity
                 RaisePropertyChanged("id_cost_center");
             }
         }
+
         private int _id_cost_center;
 
         /// <summary>
@@ -60,10 +59,11 @@ namespace entity
                 }
             }
         }
+
         private int? _id_item;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string item_description
         {
@@ -80,10 +80,11 @@ namespace entity
                 }
             }
         }
+
         private string _item_description;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         public decimal quantity
@@ -93,19 +94,20 @@ namespace entity
             {
                 if (_quantity != value)
                 {
-                   _quantity = value;
-                   RaisePropertyChanged("quantity");
-                   //update quantity
-                   update_SubTotal();
-                   //_Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,);
-                   //RaisePropertyChanged("_Quantity_Factored");
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+                    //update quantity
+                    update_SubTotal();
+                    //_Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,);
+                    //RaisePropertyChanged("_Quantity_Factored");
                 }
             }
         }
+
         private decimal _quantity;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal Quantity_Factored
@@ -113,7 +115,7 @@ namespace entity
             get { return _Quantity_Factored; }
             set
             {
-              if (_Quantity_Factored != value)
+                if (_Quantity_Factored != value)
                 {
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
@@ -122,20 +124,21 @@ namespace entity
                 }
             }
         }
+
         private decimal _Quantity_Factored;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string batch_code { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DateTime? expire_date { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -155,13 +158,13 @@ namespace entity
                         update_SubTotal();
                     }
                 }
-
             }
         }
+
         private int _id_vat_group;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public int CurrencyFX_ID
@@ -183,10 +186,11 @@ namespace entity
                 }
             }
         }
+
         private int _CurrencyFX_ID;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         public decimal unit_cost
@@ -204,10 +208,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _unit_cost;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal UnitCost_Vat
@@ -223,17 +228,16 @@ namespace entity
                 }
             }
         }
+
         private decimal _UnitCost_Vat;
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string comment { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal SubTotal
@@ -246,10 +250,11 @@ namespace entity
                 update_SubTotalVAT();
             }
         }
+
         private decimal _SubTotal;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal SubTotal_Vat
@@ -264,6 +269,7 @@ namespace entity
                 RaisePropertyChanged("Total_Vat");
             }
         }
+
         private decimal _SubTotal_Vat;
 
         [NotMapped]
@@ -282,10 +288,8 @@ namespace entity
             get { return _discount; }
             set
             {
-
                 if (_discount != value)
                 {
-                
                     if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         ApplyDiscount_UnitPrice(_discount, value, unit_cost);
@@ -294,17 +298,14 @@ namespace entity
                     RaisePropertyChanged("discount");
                     Calculate_UnitVatDiscount(value);
                     Calculate_SubTotalDiscount(value);
-
-                  
                 }
-
-             
             }
         }
+
         private decimal _discount;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal DiscountVat
@@ -322,15 +323,14 @@ namespace entity
                         Calculate_UnitDiscount(value);
                         Calculate_SubTotalVatDiscount(value);
                     }
-                
                 }
-              
             }
         }
+
         private decimal _DiscountVat;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal Discount_SubTotal
@@ -347,10 +347,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _Discount_SubTotal;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal Discount_SubTotal_Vat
@@ -365,10 +366,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _Discount_SubTotal_Vat;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="oldDiscount"></param>
         /// <param name="value"></param>
@@ -380,7 +382,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="discountvat"></param>
         public void Calculate_UnitDiscount(decimal discountvat)
@@ -394,7 +396,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="discount"></param>
         public void Calculate_UnitVatDiscount(decimal discount)
@@ -405,7 +407,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="discount"></param>
         public void Calculate_SubTotalDiscount(decimal discount)
@@ -415,7 +417,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="DiscountVat"></param>
         public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
@@ -424,20 +426,22 @@ namespace entity
             RaisePropertyChanged("Discount_SubTotal_Vat");
         }
 
-        #endregion
+        #endregion Discount Calculations
 
         #region "Foreign Key"
+
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_cost_center app_cost_center { get; set; }
         public virtual app_location app_location { get; set; }
-      
+
         public virtual item item { get; set; }
-        #endregion
+
+        #endregion "Foreign Key"
 
         #region Methods
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitCost(int id_currecyfx)
         {
@@ -451,7 +455,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
@@ -460,7 +464,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPriceVAT()
         {
@@ -469,7 +473,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void update_SubTotal()
         {
@@ -478,7 +482,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_SubTotalVAT()
         {
@@ -486,6 +490,6 @@ namespace entity
             RaisePropertyChanged("SubTotal_Vat");
         }
 
-        #endregion
+        #endregion Methods
     }
 }

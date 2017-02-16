@@ -12,7 +12,7 @@
         public loyalty_tier()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             loyalty_member = new List<loyalty_member>();
             is_active = true;
@@ -24,6 +24,7 @@
 
         [Required]
         public string name { get; set; }
+
         public decimal min_value { get; set; }
 
         public bool is_active
@@ -38,6 +39,7 @@
                 }
             }
         }
+
         private bool _is_active;
         public virtual ICollection<loyalty_member> loyalty_member { get; set; }
 

@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace entity
 {
-   
     public class ProjectDB : BaseDB
     {
-      
         public override int SaveChanges()
         {
             validate_Project();
@@ -54,21 +52,21 @@ namespace entity
                 }
             }
         }
+
         public void ActivateProject()
         {
             foreach (project project in base.projects.Local)
             {
-                if (project.IsSelected )
+                if (project.IsSelected)
                 {
                     project.is_active = true;
-                   
-
                 }
             }
-         
+
             base.SaveChanges();
         }
-        public void  DeActivateProject()
+
+        public void DeActivateProject()
         {
             foreach (project project in base.projects.Local)
             {
@@ -79,7 +77,5 @@ namespace entity
             }
             base.SaveChanges();
         }
-
-      
     }
 }

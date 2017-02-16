@@ -11,7 +11,7 @@ namespace entity
     {
         public project_event()
         {
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_active = true;
             trans_date = DateTime.Now;
             id_company = CurrentSession.Id_Company;
@@ -23,25 +23,32 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_event { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_project_event_template { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_item { get; set; }
+
         public int? id_contact { get; set; }
+
         [Required]
         public string name { get { return _name; } set { _name = value; RaisePropertyChanged("name"); } }
-        string _name;
+
+        private string _name;
         public int quantity_adult { get; set; }
         public int quantity_child { get; set; }
         public DateTime trans_date { get; set; }
         public bool is_active { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         public int id_currencyfx { get; set; }
+
         public Status.Documents_General status
         {
             get
@@ -54,12 +61,13 @@ namespace entity
                 RaisePropertyChanged("status");
             }
         }
+
         private Status.Documents_General _status;
 
         public virtual item item { get; set; }
         public virtual project_event_template project_event_template { get; set; }
         public virtual contact contact { get; set; }
-       
+
         public virtual ICollection<project_event_fixed> project_event_fixed { get; set; }
         public virtual ICollection<project_event_variable> project_event_variable { get; set; }
 
@@ -80,6 +88,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

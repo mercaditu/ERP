@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Class
 {
-   public class clsBarcode
+    public class clsBarcode
     {
         public string ConvertToBarcode(string decode)
         {
@@ -32,7 +28,7 @@ namespace entity.Class
             encode += decode + Convert.ToChar(ans1) + Convert.ToChar(206);
             return encode;
             //    REM: for example 78
-            //    REM: get 7 
+            //    REM: get 7
             //    REM: call check_value for 7=23
             //    REM:now 23 * 1= 23
             //    REM: 23+104=127
@@ -44,6 +40,7 @@ namespace entity.Class
             //    REM: call check_ascii for getting caracter of 72
             //    REM: append char of 72 with i78hi
         }
+
         public int check_ascii(int val)
         {
             int ans = 0;
@@ -61,6 +58,7 @@ namespace entity.Class
             }
             return ans;
         }
+
         public int check_value(int ascii)
         {
             int ans = 0;

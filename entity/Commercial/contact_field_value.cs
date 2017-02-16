@@ -11,20 +11,24 @@ namespace entity
         public contact_field_value()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short id_contact_field { get; set; }
+
         public int id_contact { get; set; }
+
         [Required]
-       
         public short id_field { get; set; }
+
         public string value { get; set; }
-    
+
         public virtual contact contact { get; set; }
         public virtual app_field app_field { get; set; }
+
         public string Error
         {
             get
@@ -60,6 +64,5 @@ namespace entity
                 return "";
             }
         }
-   
     }
 }

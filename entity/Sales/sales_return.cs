@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -6,13 +5,11 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
-
+    using System.Text;
 
     public partial class sales_return : CommercialHead, IDataErrorInfo
     {
-               
         public sales_return()
         {
             is_head = true;
@@ -26,7 +23,7 @@ namespace entity
 
             sales_return_detail = new List<sales_return_detail>();
             payment_schedual = new List<payment_schedual>();
-           
+
             status = Status.Documents_General.Pending;
         }
 
@@ -49,7 +46,7 @@ namespace entity
             }
             set
             {
-                if(_id_currencyfx != value)
+                if (_id_currencyfx != value)
                 {
                     _id_currencyfx = value;
                     RaisePropertyChanged("id_currencyfx");
@@ -63,9 +60,10 @@ namespace entity
                         }
                         RaisePropertyChanged("GrandTotal");
                     }
-                }       
+                }
             }
         }
+
         private int _id_currencyfx;
 
         public bool is_accounted { get; set; }
@@ -88,6 +86,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _GrandTotal;
 
         [NotMapped]
@@ -96,7 +95,7 @@ namespace entity
             get
             {
                 _Balance = 0;
-                _Balance=(this.GrandTotal - this.payment_schedual.Where(x => x.id_sales_return == this.id_sales_return).Sum(x => x.credit));
+                _Balance = (this.GrandTotal - this.payment_schedual.Where(x => x.id_sales_return == this.id_sales_return).Sum(x => x.credit));
                 return Math.Round(_Balance, 2);
             }
             set
@@ -105,9 +104,8 @@ namespace entity
                 RaisePropertyChanged("Balance");
             }
         }
-        private decimal _Balance;
 
-      
+        private decimal _Balance;
 
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
@@ -129,7 +127,6 @@ namespace entity
                         decimal PerRawDiscount = DiscountValue / sales_return_detail.Where(x => x.quantity > 0).Count();
                         foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
                         {
-
                             item.DiscountVat = PerRawDiscount / item.quantity;
                             item.RaisePropertyChanged("DiscountVat");
                             RaisePropertyChanged("GrandTotal");
@@ -139,7 +136,6 @@ namespace entity
                     {
                         foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
                         {
-
                             item.DiscountVat = 0;
                             item.RaisePropertyChanged("DiscountVat");
                             RaisePropertyChanged("GrandTotal");
@@ -153,14 +149,15 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {
             get { return _DiscountWithoutPercentage; }
             set
             {
-
                 _DiscountWithoutPercentage = value;
                 RaisePropertyChanged("DiscountWithoutPercentage");
 
@@ -170,7 +167,6 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / sales_return_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
@@ -180,26 +176,26 @@ namespace entity
                 {
                     foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
                     }
                 }
-
             }
         }
+
         private decimal _DiscountWithoutPercentage;
 
         //TimeCapsule
         public ICollection<sales_return> older { get; set; }
+
         public sales_return newer { get; set; }
 
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }
-        
+
         public string Error
         {
             get
@@ -250,7 +246,5 @@ namespace entity
                 return "";
             }
         }
-
-        
     }
 }

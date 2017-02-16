@@ -22,13 +22,13 @@ namespace Cognitivo.Project
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             project_task = new List<entity.project_task>();
             project_taskViewSource = ((CollectionViewSource)(this.FindResource("projectproject_taskViewSource")));
 
             projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
-            dbContext.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            await dbContext.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).LoadAsync();
             projectViewSource.Source = dbContext.db.projects.Local;
             filter_task();
         }

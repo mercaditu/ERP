@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System.Windows;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Windows;
 using WPFLocalizeExtension.Extensions;
 
 namespace entity
@@ -15,7 +15,8 @@ namespace entity
             set
             { dbCntxt = value; }
         }
-        db dbCntxt = new db();
+
+        private db dbCntxt = new db();
 
         public dbContext()
         {
@@ -35,7 +36,7 @@ namespace entity
         }
 
         /// <summary>
-        /// Cancels changes made to Entity asking the user to approve this method before continuing. 
+        /// Cancels changes made to Entity asking the user to approve this method before continuing.
         /// </summary>
         public void CancelChanges_withQuestion()
         {
@@ -49,7 +50,7 @@ namespace entity
         }
 
         /// <summary>
-        /// Cancels changes made to Enttiy without asking the user. 
+        /// Cancels changes made to Enttiy without asking the user.
         /// Mostly used in CURD Controls.
         /// </summary>
         public void CancelChanges()
@@ -61,12 +62,15 @@ namespace entity
                     case EntityState.Modified:
                         entry.State = EntityState.Unchanged;
                         break;
+
                     case EntityState.Added:
                         entry.State = EntityState.Detached;
                         break;
+
                     case EntityState.Deleted:
                         entry.Reload();
                         break;
+
                     default: break;
                 }
             }
@@ -88,17 +92,20 @@ namespace entity
                     case EntityState.Modified:
                         entry.State = EntityState.Unchanged;
                         break;
+
                     case EntityState.Added:
                         entry.State = EntityState.Detached;
                         break;
+
                     case EntityState.Deleted:
                         entry.Reload();
                         break;
+
                     default: break;
                 }
             }
         }
-        
+
         public static object Entry(item_inventory item_inventory)
         {
             throw new System.NotImplementedException();

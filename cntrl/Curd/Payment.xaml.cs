@@ -42,7 +42,7 @@ namespace cntrl.Curd
             PaymentDB.payments.Add(payment);
             paymentViewSource.Source = PaymentDB.payments.Local;
 
-            int id_contact = payment_schedualList.FirstOrDefault().id_contact;
+            int id_contact = payment_schedualList.Select(x => x.id_contact).FirstOrDefault();
             sbxReturn.ContactID = id_contact;
 
             entity.contact contacts = PaymentDB.contacts.Find(id_contact);
@@ -64,7 +64,8 @@ namespace cntrl.Curd
                 Add_PaymentDetail(id.Currency, id.payment_type, id.Account);
             }
 
-            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail == null).GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail == null)
+                .GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.id_currency, null, null);
@@ -332,6 +333,7 @@ namespace cntrl.Curd
                                                                             - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID && x.IsLocked == false).Sum(x => x.value);
                 }
 
+                //If PaymentTypeID is not null, then this transaction has a PaymentApproval
                 if (AccountID != null && PaymentTypeID != null)
                 {
                     payment_detail.IsLocked = true;

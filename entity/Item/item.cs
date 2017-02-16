@@ -1,12 +1,12 @@
 namespace entity
 {
+    using Class;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
-    using Class;
+    using System.Text;
 
     public partial class item : AuditGeneric, IDataErrorInfo
     {
@@ -15,16 +15,22 @@ namespace entity
         {
             [LocalizedDescription("Product")]
             Product = 1,
+
             [LocalizedDescription("RawMaterial")]
             RawMaterial = 2,
+
             [LocalizedDescription("Service")]
             Service = 3,
+
             [LocalizedDescription("FixedAssets")]
             FixedAssets = 4,
+
             [LocalizedDescription("Task")]
             Task = 5,
+
             [LocalizedDescription("Supplies")]
             Supplies = 6,
+
             [LocalizedDescription("ServiceContract")]
             ServiceContract = 7
         }
@@ -32,7 +38,7 @@ namespace entity
         public item()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
 
             is_head = true;
             is_active = true;
@@ -55,7 +61,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item { get; set; }
-     
+
         [Required]
         [CustomValidation(typeof(EntityValidation), "CheckId")]
         public item_type id_item_type { get; set; }
@@ -80,6 +86,7 @@ namespace entity
                 }
             }
         }
+
         private int _id_vat_group;
 
         public int? id_brand { get; set; }
@@ -94,14 +101,15 @@ namespace entity
             {
                 _name = value;
                 RaisePropertyChanged("name");
-                if (code=="" || code==null)
+                if (code == "" || code == null)
                 {
                     _code = value;
                     RaisePropertyChanged("code");
                 }
             }
         }
-        string _name;
+
+        private string _name;
 
         [Required]
         public string code
@@ -109,7 +117,8 @@ namespace entity
             get { return _code; }
             set { _code = value; RaisePropertyChanged("code"); }
         }
-        string _code;
+
+        private string _code;
 
         public string variation { get; set; }
         public string description { get; set; }
@@ -120,6 +129,7 @@ namespace entity
             get { return _is_autorecepie; }
             set { _is_autorecepie = value; RaisePropertyChanged("is_autorecepie"); }
         }
+
         private bool _is_autorecepie;
 
         public bool is_active { get; set; }
@@ -129,6 +139,7 @@ namespace entity
             get { return _supplier_name; }
             set { _supplier_name = value; RaisePropertyChanged("supplier_name"); }
         }
+
         private string _supplier_name;
 
         public string supplier_code
@@ -144,6 +155,7 @@ namespace entity
             }
             set { _supplier_code = value; RaisePropertyChanged("supplier_code"); }
         }
+
         private string _supplier_code;
 
         public string sku { get; set; }
@@ -259,7 +271,7 @@ namespace entity
                         {
                             if (db.items.Any(x => x.code == code && x.id_item != id_item))
                             {
-                               return "Duplicate Code Not Allowed"; 
+                                return "Duplicate Code Not Allowed";
                             }
                         }
                     }

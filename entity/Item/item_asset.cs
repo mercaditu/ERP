@@ -27,9 +27,11 @@ namespace entity
             ESTRANGEMENT_ENAJENACION_O_VENTA = 3,
             INPERFECTION_DESPERFECTO = 4
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_asset { get; set; }
+
         public int id_item { get; set; }
         public int? id_branch { get; set; }
         public int? id_item_asset_group { get; set; }
@@ -44,8 +46,10 @@ namespace entity
 
         public decimal? speed { get; set; }
         public DeActiveTypes deactivetype { get; set; }
+
         //Remove all items
         public decimal? dieset_price { get; set; }
+
         public decimal? min_length { get; set; }
         public decimal? max_length { get; set; }
         public decimal? min_width { get; set; }
@@ -53,6 +57,7 @@ namespace entity
 
         //Nav Properties
         public virtual item item { get; set; }
+
         public virtual item_asset_group item_asset_group { get; set; }
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }

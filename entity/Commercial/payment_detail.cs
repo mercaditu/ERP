@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using Brillo;
@@ -7,8 +6,8 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class payment_detail : Audit, IDataErrorInfo
     {
@@ -24,6 +23,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_payment_detail { get; set; }
+
         public int? id_payment { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
@@ -61,7 +61,8 @@ namespace entity
                 }
             }
         }
-        int _id_currency;
+
+        private int _id_currency;
 
         [NotMapped]
         public int Default_id_currencyfx { get; set; }
@@ -92,7 +93,7 @@ namespace entity
                                     if (db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                                     {
                                         app_currencyfx newfx = db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                        
+
                                         if (oldfx.id_currency != newfx.id_currency)
                                         {
                                             this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
@@ -106,12 +107,14 @@ namespace entity
                 }
             }
         }
-        int _id_currencyfx;
+
+        private int _id_currencyfx;
 
         [NotMapped]
         public decimal Max_Value { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public App.Names App_Name { get; set; }
@@ -120,7 +123,7 @@ namespace entity
         public int id_payment_schedual { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -152,14 +155,16 @@ namespace entity
                 }
             }
         }
+
         private int _id_payment_type;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public short? payment_type_ref { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         public decimal value
@@ -172,11 +177,8 @@ namespace entity
             {
                 if (value > 0)
                 {
-
-
                     if (_value != value)
                     {
-
                         _value = value;
                         RaisePropertyChanged("value");
 
@@ -189,10 +191,11 @@ namespace entity
                 }
             }
         }
+
         private decimal _value;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public decimal ValueInDefaultCurrency
@@ -232,16 +235,16 @@ namespace entity
                 }
             }
         }
+
         private decimal _ValueInDefaultCurrency;
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DateTime trans_date { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_range
         {
@@ -274,18 +277,21 @@ namespace entity
                 }
             }
         }
+
         #region Document Range => Navigation & Variables
+
         private int? _id_range;
         public virtual app_document_range app_document_range { get; set; }
-        #endregion
+
+        #endregion Document Range => Navigation & Variables
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string payment_type_number { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
@@ -303,6 +309,7 @@ namespace entity
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
 
         #region Validation
+
         public string Error
         {
             get
@@ -324,12 +331,14 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         [NotMapped]
         public bool IsLocked
         {
             get { return _IsLocked; }
             set { _IsLocked = value; RaisePropertyChanged("IsLocked"); }
         }
+
         private bool _IsLocked = false;
 
         public string this[string columnName]
@@ -354,7 +363,6 @@ namespace entity
                         if (payment.GrandTotalDetail > payment.Balance)
                             return "Amount is not Higher than Balace: " + Math.Round(payment.Balance, 2);
                     }
-
                 }
 
                 if (columnName == "id_payment_type")
@@ -365,6 +373,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
+
+        #endregion Validation
     }
 }

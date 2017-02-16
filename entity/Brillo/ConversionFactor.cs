@@ -17,19 +17,17 @@ namespace entity.Brillo
                         {
                             if (item.item_dimension.Count() > 0)
                             {
-                                if ((BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value)>0)
+                                if ((BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value) > 0)
                                 {
                                     return Quantity_Factored / (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
-                                    
                                 }
                                 else
                                 {
-                                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value>0)
+                                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                                     {
-                                         return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                        return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
                                     }
                                 }
-                           
                             }
                             else
                             {
@@ -46,7 +44,7 @@ namespace entity.Brillo
             return Quantity_Factored;
         }
 
-        public static decimal Factor_Quantity(item item, decimal Quantity,Decimal BaseDimension)
+        public static decimal Factor_Quantity(item item, decimal Quantity, Decimal BaseDimension)
         {
             if (item != null)
             {

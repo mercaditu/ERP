@@ -19,23 +19,26 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_user { get; set; }
+
         public int? id_company { get; set; }
 
         public int? id_contact { get; set; }
         public int? id_question { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_role { get; set; }
+
         [Required]
-        public string name 
+        public string name
         {
             get
             {
                 return _name;
             }
-            set 
+            set
             {
-               _name = value;
+                _name = value;
 
                 string domain = string.Empty;
                 if (app_company != null)
@@ -54,13 +57,14 @@ namespace entity
                 }
             }
         }
+
         private string _name = string.Empty;
 
         [Required]
         public string password { get; set; }
 
         public string name_full { get; set; }
-        
+
         public string email { get; set; }
         public string email_username { get; set; }
         public string email_password { get; set; }
@@ -70,6 +74,7 @@ namespace entity
         public bool is_active { get; set; }
         public DateTime? trans_date { get; set; }
         public int? id_created_user { get; set; }
+
         [NotMapped]
         public System.Data.Entity.EntityState State
         {
@@ -86,18 +91,22 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
+
+        private System.Data.Entity.EntityState _State;
 
         public virtual security_role security_role { get; set; }
+
         //public virtual contact contact { get; set; }
         public virtual app_company app_company { get; set; }
+
         public virtual security_question security_question { get; set; }
         public virtual IEnumerable<project_task> project_task { get; set; }
         public virtual IEnumerable<project_task_dimension> project_task_dimension { get; set; }
 
         public virtual IEnumerable<security_user> child { get; set; }
         public virtual security_user parent { get; set; }
-       // public virtual security_user Createdby { get; set; }
+
+        // public virtual security_user Createdby { get; set; }
         public virtual IEnumerable<item_inventory> item_inventory { get; set; }
 
         public virtual IEnumerable<sales_budget> sales_budget { get; set; }
@@ -125,6 +134,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

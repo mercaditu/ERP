@@ -1,7 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System;
 
 namespace entity
 {
@@ -17,7 +14,7 @@ namespace entity
             return base.SaveChangesAsync();
         }
 
-        public decimal getStockCount (int id_location, int id_item_product)
+        public decimal getStockCount(int id_location, int id_item_product)
         {
             //return base.item_movement.Where(x => x.id_location == id_location
             //                && x.id_item_product == id_item_product

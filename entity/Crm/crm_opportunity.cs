@@ -1,6 +1,5 @@
 namespace entity
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -15,13 +14,14 @@ namespace entity
             sales_packing = new List<sales_packing>();
             sales_return = new List<sales_return>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_opportunity { get; set; }
+
         public int id_contact { get; set; }
         public int id_currency { get; set; }
         public decimal value { get; set; }

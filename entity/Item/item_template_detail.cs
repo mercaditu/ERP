@@ -1,5 +1,4 @@
-﻿
-namespace entity
+﻿namespace entity
 {
     using System;
     using System.ComponentModel;
@@ -19,12 +18,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_template_detail { get; set; }
+
         public int id_template { get; set; }
+
         [Required]
         public string question { get; set; }
+
         [NotMapped]
         public string value { get; set; }
-
 
         public virtual item_template item_template { get; set; }
 

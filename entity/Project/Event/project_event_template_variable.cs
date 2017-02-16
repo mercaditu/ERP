@@ -11,17 +11,20 @@ namespace entity
         {
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_event_template_variable { get; set; }
+
         public int id_project_event_template { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_tag { get; set; }
+
         public decimal adult_consumption { get; set; }
         public decimal child_consumption { get; set; }
         public bool is_active { get; set; }
@@ -47,6 +50,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

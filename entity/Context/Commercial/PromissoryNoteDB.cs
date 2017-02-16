@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections.Generic;
-using entity.Brillo;
+using System.Threading.Tasks;
 
 namespace entity
 {
     public partial class PromissoryNoteDB : BaseDB
     {
-       
-
-      
-
         #region Save
+
         public override int SaveChanges()
         {
             validate_PromissoryNote();
@@ -58,9 +53,9 @@ namespace entity
                         Entry(payment_promissory_note).State = EntityState.Unchanged;
                 }
             }
-
         }
-        #endregion
+
+        #endregion Save
 
         public void Approve()
         {
@@ -73,11 +68,11 @@ namespace entity
                 payment_promissory_note.note_number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                 payment_promissory_note.RaisePropertyChanged("note_number");
                 entity.Brillo.Document.Start.Automatic(payment_promissory_note, payment_promissory_note.app_document_range);
-
             }
 
             base.SaveChanges();
         }
+
         public void Anull()
         {
             foreach (payment_promissory_note payment_promissory_note in base.payment_promissory_note.Local.Where(x =>
@@ -87,8 +82,6 @@ namespace entity
                 payment_promissory_note.status = Status.Documents.Returned;
             }
             base.SaveChanges();
-
         }
-     
     }
 }

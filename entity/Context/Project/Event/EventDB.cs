@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace entity.EventManagement
 {
-    
     public class EventDB : BaseDB
     {
         public override int SaveChanges()
@@ -55,7 +51,5 @@ namespace entity.EventManagement
                 }
             }
         }
-
-
     }
 }

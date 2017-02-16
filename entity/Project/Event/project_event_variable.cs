@@ -1,10 +1,10 @@
-﻿using System;
+﻿using entity.Brillo;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Linq;
-using entity.Brillo;
+using System.Text;
 
 namespace entity
 {
@@ -12,14 +12,15 @@ namespace entity
     {
         public project_event_variable()
         {
-            id_user =  CurrentSession.Id_User;
-           
+            id_user = CurrentSession.Id_User;
+
             id_company = CurrentSession.Id_Company;
-         
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_event_variable { get; set; }
+
         public int id_project_event { get; set; }
 
         public int? id_tag { get; set; }
@@ -36,38 +37,31 @@ namespace entity
                     _id_item = value;
                     RaisePropertyChanged("id_item");
 
-
-                 
-                   
-
-                        update_UnitPrice();
-                    
+                    update_UnitPrice();
                 }
             }
         }
+
         private int _id_item;
         public decimal adult_consumption { get; set; }
         public decimal child_consumption { get; set; }
         public bool is_included { get; set; }
+
         [NotMapped]
         public decimal unit_price { get; set; }
+
         private void update_UnitPrice()
         {
-           
-                using (db db = new db())
-                {
-                    item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
-                    project_event _project_event = db.project_event.Where(x => x.id_project_event == id_project_event).FirstOrDefault();
+            using (db db = new db())
+            {
+                item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+                project_event _project_event = db.project_event.Where(x => x.id_project_event == id_project_event).FirstOrDefault();
 
-
-
-
-                    unit_price = get_Price(_project_event.contact, _project_event.id_currencyfx, _item, App.Modules.Sales);
-                    RaisePropertyChanged("unit_price");
-                }
-
-           
+                unit_price = get_Price(_project_event.contact, _project_event.id_currencyfx, _item, App.Modules.Sales);
+                RaisePropertyChanged("unit_price");
+            }
         }
+
         public decimal get_Price(contact contact, int id_currencyfx, item item, entity.App.Modules Module)
         {
             if (item != null && contact != null)
@@ -112,24 +106,21 @@ namespace entity
                         item_price_value = item_price.valuewithVAT;
                         using (db db = new db())
                         {
-
                             if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault() != null)
                             {
                                 if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                                 {
                                     return Currency.convert_Values(item_price_value, db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, id_currencyfx, Module);
-
                                 }
                             }
                         }
-
                     }
-                    //return Currency.convert_Value(item_price_value, id_currencyfx, Module);            
-
+                    //return Currency.convert_Value(item_price_value, id_currencyfx, Module);
                 }
             }
             return 0;
         }
+
         public item_price get_Default(int? id_company)
         {
             item_price item_price = new item_price();
@@ -147,6 +138,7 @@ namespace entity
             }
             return item_price;
         }
+
         public virtual project_event project_event { get; set; }
         public virtual item_tag item_tag { get; set; }
         public virtual item item { get; set; }

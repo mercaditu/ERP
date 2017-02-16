@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace entity
 {
-    public partial class hr_TalentDB: BaseDB
+    public partial class hr_TalentDB : BaseDB
     {
         public override int SaveChanges()
         {
@@ -53,6 +52,5 @@ namespace entity
                 }
             }
         }
-   
     }
 }

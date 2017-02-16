@@ -18,7 +18,9 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_tag_detail { get; set; }
+
         public int id_project { get; set; }
+
         [Required]
         public int id_tag { get; set; }
 
@@ -58,4 +60,3 @@
         }
     }
 }
-

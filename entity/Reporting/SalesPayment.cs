@@ -4,7 +4,6 @@ namespace entity.Reporting
 {
     public class SalesPayment
     {
-      
         public int SchedualID { get; set; }
         public string Contact { get; set; }
         public string SalesPerson { get; set; }
@@ -25,6 +24,5 @@ namespace entity.Reporting
         public DateTime PaymentDate { get; set; }
         public decimal PaymentRate { get; set; }
         public string PaymentCurrency { get; set; }
-
     }
 }

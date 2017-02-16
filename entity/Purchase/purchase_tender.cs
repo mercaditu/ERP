@@ -1,25 +1,24 @@
 namespace entity
 {
-
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    
+
     public partial class purchase_tender : Audit
     {
         public purchase_tender()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
 
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;
-          
+
             purchase_order = new List<purchase_order>();
             purchase_tender_contact_detail = new List<purchase_tender_contact>();
             purchase_tender_item_detail = new List<purchase_tender_item>();
@@ -28,6 +27,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_tender { get; set; }
+
         public int id_branch { get; set; }
 
         public Status.Documents_General status
@@ -45,6 +45,7 @@ namespace entity
                 }
             }
         }
+
         private Status.Documents_General _status;
 
         public int? id_department { get; set; }
@@ -54,6 +55,7 @@ namespace entity
         public short code { get; set; }
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
+
         public int? id_range
         {
             get
@@ -109,7 +111,6 @@ namespace entity
                                     }
                                 }
 
-
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                                 RaisePropertyChanged("NumberWatermark");
                             }
@@ -118,11 +119,13 @@ namespace entity
                 }
             }
         }
+
         private int? _id_range;
         public int? id_terminal { get; set; }
-        public string number{ get; set; }
+        public string number { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }

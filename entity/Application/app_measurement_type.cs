@@ -13,16 +13,17 @@ namespace entity
         {
             app_measurement = new List<app_measurement>();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short id_measurement_type { get; set; }
+
         [Required]
         public string name { get; set; }
-    
+
         public virtual ICollection<app_measurement> app_measurement { get; set; }
 
         public string Error

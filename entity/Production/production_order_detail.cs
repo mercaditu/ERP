@@ -8,10 +8,10 @@ namespace entity
 
     public partial class production_order_detail : Audit
     {
-        Project.clsproject objclsproject = new Project.clsproject();
+        private Project.clsproject objclsproject = new Project.clsproject();
+
         public production_order_detail()
         {
-
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
@@ -25,11 +25,13 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_order_detail { get; set; }
+
         public int id_production_order { get; set; }
         public int? id_project_task { get; set; }
         public int? id_item { get; set; }
         public int? movement_id { get; set; }
         public string name { get; set; }
+
         public decimal quantity
         {
             get { return _quantity; }
@@ -39,7 +41,6 @@ namespace entity
                 {
                     _quantity = value;
                     RaisePropertyChanged("quantity");
-
 
                     //CALCULATES NON RECEPIE ITEMS. NORMAL PRODUCTS OR RAW MATERIALS.
                     if (production_order != null)
@@ -54,7 +55,7 @@ namespace entity
                             }
                         }
                     }
-                  
+
                     //CALCULATES FOR CHILD RECEPIES
                     if (item != null)
                     {
@@ -70,20 +71,19 @@ namespace entity
                             }
                         }
                     }
-
                 }
             }
         }
+
         private decimal _quantity;
 
         [NotMapped]
         public decimal? quantity_exe
         { get; set; }
+
         [NotMapped]
         public decimal? Unit_Cost_exe
         { get; set; }
-
-   
 
         public Status.Production? status
         {
@@ -97,12 +97,15 @@ namespace entity
                 }
             }
         }
+
         private Status.Production _status = Status.Production.Pending;
+
         public string code
         {
             get { return _code; }
             set { _code = value; RaisePropertyChanged("code"); }
         }
+
         private string _code;
 
         [NotMapped]
@@ -124,33 +127,30 @@ namespace entity
                             {
                                 _child.IsSelected = value;
                                 _child.RaisePropertyChanged("IsSelected");
-
                             }
                         }
                     }
-                  
-
 
                     if (production_order != null)
                     {
                         production_order.Update_SelectedCount();
                     }
-                  
                 }
             }
         }
+
         private bool _is_selected;
 
-
         public bool is_input { get; set; }
+
         [NotMapped]
         public bool is_request
         {
             get
             {
-                if (item_request_detail!=null)
+                if (item_request_detail != null)
                 {
-                    if (item_request_detail.Count()>0)
+                    if (item_request_detail.Count() > 0)
                     {
                         _is_request = true;
                     }
@@ -158,12 +158,13 @@ namespace entity
                     {
                         _is_request = false;
                     }
-                } 
+                }
                 return _is_request;
             }
-            set { _is_request=value; }
+            set { _is_request = value; }
         }
-        bool _is_request;
+
+        private bool _is_request;
 
         [Required]
         public DateTime trans_date { get; set; }
@@ -173,6 +174,7 @@ namespace entity
 
         //Self Referencing
         public virtual production_order_detail parent { get; set; }
+
         public virtual ICollection<production_order_detail> child { get; set; }
         public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
@@ -219,8 +221,7 @@ namespace entity
             }
             catch { }
         }
-       
 
-        #endregion
+        #endregion Methods
     }
 }

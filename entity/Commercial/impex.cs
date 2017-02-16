@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -19,7 +18,7 @@ namespace entity
         public impex()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             etd = DateTime.Now;
@@ -29,6 +28,7 @@ namespace entity
             impex_import = new List<impex_import>();
             impex_export = new List<impex_export>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_impex { get; set; }
@@ -40,6 +40,7 @@ namespace entity
         [Required]
         //[CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
         public int id_contact { get; set; }
+
         public Status.Documents_General status
         {
             get
@@ -52,11 +53,13 @@ namespace entity
                 RaisePropertyChanged("status");
             }
         }
+
         private Status.Documents_General _status;
         public string number { get; set; }
 
         [Required]
         public _impex_type impex_type { get; set; }
+
         public DateTime etd { get; set; }
         public DateTime eta { get; set; }
         public bool is_active { get; set; }
@@ -71,6 +74,7 @@ namespace entity
 
         [NotMapped]
         public app_currencyfx Currencyfx { get; set; }
+
         public virtual impex_incoterm impex_incoterm { get; set; }
         public virtual contact contact { get; set; }
         public virtual ICollection<impex_expense> impex_expense { get; set; }

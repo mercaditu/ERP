@@ -2,7 +2,7 @@
 
 namespace entity.Brillo
 {
-    class General
+    internal class General
     {
         public int Get_Currency(int id_company)
         {

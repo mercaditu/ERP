@@ -9,13 +9,14 @@
         public hr_contract()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
 
             start_date = DateTime.Now;
             end_date = DateTime.Now.AddYears(1);
         }
+
         public enum WorkTypes
         {
             Monthly,
@@ -25,23 +26,27 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_hr_contract { get; set; }
+
         public int id_contact { get; set; }
         public int? id_branch { get; set; }
         public int? id_department { get; set; }
         public int? id_currency { get; set; }
-        public decimal base_salary 
-        { 
-            get { return _base_salary; } 
-            set {
+
+        public decimal base_salary
+        {
+            get { return _base_salary; }
+            set
+            {
                 if (_base_salary != value)
-	            {
+                {
                     _base_salary = value;
                     RaisePropertyChanged("base_salary");
                     RaisePropertyChanged("Hourly");
                     RaisePropertyChanged("Daily");
-	            } 
+                }
             }
         }
+
         private decimal _base_salary;
 
         [NotMapped]
@@ -73,12 +78,13 @@
         }
 
         public string codigo { get { return _codigo; } set { _codigo = value; RaisePropertyChanged("codigo"); } }
-        private  string _codigo;
+        private string _codigo;
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime end_trial_period { get; set; }
         public string comment { get; set; }
         public WorkTypes work_type { get; set; }
+
         [Required]
         public bool is_active { get; set; }
 

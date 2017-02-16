@@ -1,5 +1,6 @@
 using entity.Class;
 using System.ComponentModel;
+
 namespace entity
 {
     public static class Status
@@ -9,27 +10,34 @@ namespace entity
         {
             [LocalizedDescription("ItemDefect")]
             ItemDefect = 1,
+
             [LocalizedDescription("ItemExpired")]
             ItemExpired = 2,
+
             [LocalizedDescription("Discount")]
             Discount = 3,
+
             [LocalizedDescription("Bonus")]
             Bonus = 4,
+
             [LocalizedDescription("Error")]
             Error = 5,
+
             [LocalizedDescription("Freight")]
             Freight = 6
         }
+
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum PackingTypes
         {
             [LocalizedDescription("Sample")]
             Sample = 1,
+
             [LocalizedDescription("Sale")]
             Sale = 2,
+
             [LocalizedDescription("Repair")]
             Repair = 3,
-           
         }
 
         //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
@@ -48,12 +56,16 @@ namespace entity
         {
             [LocalizedDescription("Continent")]
             Continent,
+
             [LocalizedDescription("Country")]
             Country,
+
             [LocalizedDescription("State")]
             State,
+
             [LocalizedDescription("City")]
             City,
+
             [LocalizedDescription("Zone")]
             Zone
         }
@@ -101,14 +113,16 @@ namespace entity
             Executed = 4,
             Rejected = 5
         }
-        
+
         public enum Stock
         {
-          //  [LocalizedDescription("OnTheWay")]
+            //  [LocalizedDescription("OnTheWay")]
             OnTheWay = 1,
-           // [LocalizedDescription("InStock")]
+
+            // [LocalizedDescription("InStock")]
             InStock = 2,
-           // [LocalizedDescription("Reserved")]
+
+            // [LocalizedDescription("Reserved")]
             Reserved = 3
         }
     }

@@ -112,10 +112,10 @@ namespace Cognitivo.Project.Development
             ProjectDB.CancelAllChanges();
         }
 
-        private async void Project_Loaded(object sender, RoutedEventArgs e)
+        private async void Project_Loaded(object sender, EventArgs e)
         {
-            ProjectDB.projects.Where(a => a.id_company == CurrentSession.Id_Company
-                                            && (a.is_head == true)).Include(y => y.contact).ToList();
+            await ProjectDB.projects.Where(a => a.id_company == CurrentSession.Id_Company
+                                            && (a.is_head == true)).Include(y => y.contact).ToListAsync();
 
             ProjectViewSource = ((CollectionViewSource)(FindResource("ProjectViewSource")));
             ProjectViewSource.Source = ProjectDB.projects.Local;

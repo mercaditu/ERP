@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using entity.Brillo;
@@ -21,6 +20,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_tender_detail { get; set; }
+
         public int id_purchase_tender_contact { get; set; }
         public int id_purchase_tender_item { get; set; }
 
@@ -29,7 +29,8 @@ namespace entity
             get { return _status; }
             set { _status = value; RaisePropertyChanged("status"); }
         }
-        Status.Documents_General _status;
+
+        private Status.Documents_General _status;
 
         public string item_description { get; set; }
 
@@ -49,6 +50,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _quantity;
 
         [NotMapped]
@@ -70,6 +72,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _Quantity_Factored;
 
         [NotMapped]
@@ -92,14 +95,15 @@ namespace entity
                 {
                     _OrderQuantity = value;
                 }
-                
+
                 RaisePropertyChanged("OrderQuantity");
             }
         }
+
         private decimal _OrderQuantity;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -118,9 +122,9 @@ namespace entity
                         update_UnitPriceVAT();
                     }
                 }
-
             }
         }
+
         private int _id_vat_group;
 
         public decimal unit_cost
@@ -138,6 +142,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _unit_cost;
 
         [NotMapped]
@@ -155,6 +160,7 @@ namespace entity
                 update_SubTotalVAT();
             }
         }
+
         private decimal _UnitCost_Vat;
 
         [NotMapped]
@@ -168,6 +174,7 @@ namespace entity
                 update_SubTotalVAT();
             }
         }
+
         private decimal _SubTotal;
 
         [NotMapped]
@@ -182,6 +189,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _SubTotal_Vat;
 
         [NotMapped]
@@ -204,7 +212,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public int CurrencyFX_ID
@@ -217,7 +225,6 @@ namespace entity
             {
                 if (_CurrencyFX_ID != value)
                 {
-
                     unit_cost = Currency.convert_Values(unit_cost, _CurrencyFX_ID, value, App.Modules.Purchase);
                     RaisePropertyChanged("unit_cost");
 
@@ -225,9 +232,11 @@ namespace entity
                 }
             }
         }
+
         private int _CurrencyFX_ID;
 
         public virtual purchase_tender_contact purchase_tender_contact { get; set; }
+
         public virtual purchase_tender_item purchase_tender_item
         {
             get
@@ -242,7 +251,8 @@ namespace entity
                 }
             }
         }
-        purchase_tender_item _purchase_tender_item;
+
+        private purchase_tender_item _purchase_tender_item;
 
         public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
@@ -262,9 +272,8 @@ namespace entity
             return Dimension;
         }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
@@ -273,7 +282,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_UnitPriceVAT()
         {
@@ -282,7 +291,7 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_SubTotal()
         {
@@ -290,13 +299,13 @@ namespace entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void update_SubTotalVAT()
         {
             SubTotal_Vat = _UnitCost_Vat * _quantity;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

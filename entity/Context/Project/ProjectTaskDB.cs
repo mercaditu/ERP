@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace entity
 {
-
     public class ProjectTaskDB : BaseDB
     {
         public override int SaveChanges()

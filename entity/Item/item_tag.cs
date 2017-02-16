@@ -6,13 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
+
     public partial class item_tag : Audit, IDataErrorInfo
     {
         public item_tag()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_tag_detail = new List<item_tag_detail>();
             is_active = true;
@@ -24,6 +24,7 @@ namespace entity
 
         [Required]
         public string name { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -36,6 +37,7 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
 
         public virtual ICollection<item_tag_detail> item_tag_detail { get; set; }
@@ -46,7 +48,7 @@ namespace entity
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {

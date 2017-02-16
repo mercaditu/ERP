@@ -1,6 +1,5 @@
 namespace entity
 {
-    using Brillo;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -23,32 +22,26 @@ namespace entity
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
-          
+
             //Get Status.
             status = Status.Documents_General.Pending;
-            using(db db = new db())
+            using (db db = new db())
             {
-                if (db.app_condition.Where(x => x.is_active).FirstOrDefault()!=null)
+                if (db.app_condition.Where(x => x.is_active).FirstOrDefault() != null)
                 {
                     id_condition = db.app_condition.Where(x => x.is_active).FirstOrDefault().id_condition;
                     if (db.app_contract.Where(x => x.is_default && x.id_condition == id_condition).FirstOrDefault() != null)
                     {
                         id_contract = db.app_contract.Where(x => x.is_default && x.id_condition == id_condition).FirstOrDefault().id_contract;
-
                     }
-                    
                 }
-               
-             
             }
-         
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_return { get; set; }
 
-        
         public int? id_purchase_invoice { get; set; }
 
         [NotMapped]
@@ -56,7 +49,7 @@ namespace entity
         {
             get
             {
-                if (id_purchase_invoice>0)
+                if (id_purchase_invoice > 0)
                 {
                     return false;
                 }
@@ -70,6 +63,7 @@ namespace entity
                 _AllowUpdateReturn = value;
             }
         }
+
         public bool _AllowUpdateReturn;
 
         public Status.ReturnTypes return_type { get; set; }
@@ -98,6 +92,7 @@ namespace entity
                 }
             }
         }
+
         private int _id_currencyfx;
 
         public bool is_accounted { get; set; }
@@ -107,9 +102,8 @@ namespace entity
         {
             get
             {
-                
                 _GrandTotal = purchase_return_detail.Sum(x => x.SubTotal_Vat);
-              
+
                 return Math.Round(_GrandTotal, 2);
             }
             set
@@ -129,6 +123,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _GrandTotal;
 
         /// <summary>
@@ -156,7 +151,9 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {
@@ -172,7 +169,6 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / purchase_return_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in purchase_return_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
@@ -182,15 +178,14 @@ namespace entity
                 {
                     foreach (var item in purchase_return_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
                         RaisePropertyChanged("GrandTotal");
                     }
                 }
-
             }
         }
+
         private decimal _DiscountWithoutPercentage;
 
         public new System.Data.Entity.EntityState State
@@ -210,22 +205,24 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
+
+        private System.Data.Entity.EntityState _State;
+
         //TimeCapsule
         public ICollection<purchase_return> older { get; set; }
+
         public purchase_return newer { get; set; }
 
         public virtual ICollection<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }
-        
-        
+
         public string Error
         {
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -249,7 +246,7 @@ namespace entity
                     if (id_contact == 0)
                         return "Contact needs to be selected";
                 }
-           
+
                 if (columnName == "id_currencyfx")
                 {
                     if (id_currencyfx == 0)

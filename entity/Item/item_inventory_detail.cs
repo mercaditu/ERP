@@ -4,7 +4,7 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
+
     public partial class item_inventory_detail : Audit
     {
         public item_inventory_detail()
@@ -13,49 +13,48 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             item_inventory_dimension = new List<item_inventory_dimension>();
-
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_inventory_detail { get; set; }
+
         public int id_inventory { get; set; }
         public int id_location { get; set; }
+
         public int id_item_product
         {
             get
             {
-
-
                 return _id_item_product;
             }
             set
             {
                 _id_item_product = value;
-
-
             }
         }
-        int _id_item_product;
+
+        private int _id_item_product;
+
         [NotMapped]
         public string currency { get; set; }
+
         public Status.Documents status { get; set; }
+
         public decimal value_system
         {
             get
             {
-               
-                    return _value_system;
-                
+                return _value_system;
             }
             set
             {
-
                 _value_system = value;
-
             }
         }
-        decimal _value_system = 0;
+
+        private decimal _value_system = 0;
+
         public decimal? value_counted
         {
             get
@@ -72,18 +71,19 @@ namespace entity
                     {
                         if (item_product.item != null)
                         {
-                            if (value_counted!=null)
+                            if (value_counted != null)
                             {
                                 _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, Convert.ToDecimal(value_counted), GetDimensionValue());
                                 RaisePropertyChanged("_Quantity_Factored");
                             }
-                       
                         }
                     }
                 }
             }
         }
-        decimal? _value_counted;
+
+        private decimal? _value_counted;
+
         [NotMapped]
         public decimal Quantity_Factored
         {
@@ -102,18 +102,19 @@ namespace entity
                             _value_counted = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, Quantity_Factored, GetDimensionValue());
                             RaisePropertyChanged("value_counted");
                         }
-
                     }
-
                 }
             }
         }
+
         private decimal _Quantity_Factored;
+
         public string comment
         {
             get { return _comment; }
             set { _comment = value; RaisePropertyChanged("comment"); }
         }
+
         private string _comment;
 
         public int id_currencyfx { get; set; }
@@ -123,6 +124,7 @@ namespace entity
             get { return _unit_value; }
             set { _unit_value = value; RaisePropertyChanged("unit_value"); }
         }
+
         private decimal _unit_value;
 
         public DateTime? expire_date { get; set; }
@@ -132,6 +134,7 @@ namespace entity
             get { return _batch_code; }
             set { _batch_code = value; RaisePropertyChanged("batch_code"); }
         }
+
         private string _batch_code;
 
         public virtual item_inventory item_inventory { get; set; }
@@ -145,8 +148,6 @@ namespace entity
             decimal Dimension = 1M;
             if (item_inventory_dimension != null)
             {
-
-
                 foreach (item_inventory_dimension _item_inventory_dimension in item_inventory_dimension)
                 {
                     Dimension = Dimension * _item_inventory_dimension.value;

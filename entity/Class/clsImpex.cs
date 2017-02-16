@@ -5,6 +5,7 @@ namespace entity.Class
     public class Impex_ItemDetail : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         public string number { get; set; }
         public int? id_item { get; set; }
         public int id_invoice { get; set; }
@@ -21,24 +22,24 @@ namespace entity.Class
         private decimal _prorated_cost;
         public string incoterm { get; set; }
         public decimal fx_rate { get; set; }
-        public decimal unit_costfx { get;  set; }
-        public decimal sub_totalfx { get;  set; }
-        public decimal unit_Importcostfx { get;  set; }
-        public decimal prorated_costfx { get;  set; }
+        public decimal unit_costfx { get; set; }
+        public decimal sub_totalfx { get; set; }
+        public decimal unit_Importcostfx { get; set; }
+        public decimal prorated_costfx { get; set; }
 
         public void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
+
     public class CostDetail
     {
         public string CostName { get; set; }
         public decimal Cost { get; set; }
         public decimal Costfx { get; set; }
-
     }
+
     public class Impex_Products
     {
         public int? id_item { get; set; }

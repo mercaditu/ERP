@@ -5,8 +5,8 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
+    using System.Text;
 
     public partial class sales_invoice : CommercialHead, IDataErrorInfo
     {
@@ -20,11 +20,11 @@ namespace entity
             payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
             payment_withholding_detail = new List<payment_withholding_detail>();
-                
+
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
-            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; } 
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
         }
 
         [NotMapped]
@@ -46,29 +46,30 @@ namespace entity
                 }
             }
         }
-        System.Data.Entity.EntityState _State;
+
+        private System.Data.Entity.EntityState _State;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_invoice { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_sales_order { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int id_opportunity { get; set; }
 
         public bool is_accounted { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
@@ -98,6 +99,7 @@ namespace entity
                 }
             }
         }
+
         private int _id_currencyfx;
 
         /// <summary>
@@ -117,6 +119,7 @@ namespace entity
                 RaisePropertyChanged("GrandTotal");
             }
         }
+
         private decimal _GrandTotal;
 
         /// <summary>
@@ -136,6 +139,7 @@ namespace entity
                 RaisePropertyChanged("TotalVat");
             }
         }
+
         private decimal _TotalVat;
 
         /// <summary>
@@ -168,6 +172,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountPercentage;
 
         [NotMapped]
@@ -181,7 +186,6 @@ namespace entity
 
                 if (State > 0)
                 {
-
                     decimal DiscountValue = value;
 
                     if (DiscountValue >= 0)
@@ -206,11 +210,15 @@ namespace entity
                 }
             }
         }
+
         private decimal _DiscountWithoutPercentage;
+
         [NotMapped]
         public decimal vatwithholdingpercentage { get; set; }
+
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }
+
         public sales_invoice newer { get; set; }
 
         public void UpdateVAT_Totals()
@@ -224,15 +232,18 @@ namespace entity
         }
 
         #region "Foreign Key"
+
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual sales_order sales_order { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual ICollection<sales_return> sales_return { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
-        #endregion
+
+        #endregion "Foreign Key"
 
         #region "Validations"
+
         public string Error
         {
             get
@@ -251,6 +262,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -289,7 +301,7 @@ namespace entity
                 return "";
             }
         }
-        #endregion
 
+        #endregion "Validations"
     }
 }

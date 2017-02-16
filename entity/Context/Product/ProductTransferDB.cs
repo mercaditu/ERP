@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Linq;
+﻿using entity.Brillo;
+using System;
 using System.Collections.Generic;
-using entity.Brillo;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace entity
 {
@@ -62,96 +62,95 @@ namespace entity
         /// </summary>
         public int ApproveOrigin(item_transfer item_transfer, bool MoveByTruck)
         {
-
             NumberOfRecords = 0;
-            if (item_transfer.id_transfer==0)
-           {
+            if (item_transfer.id_transfer == 0)
+            {
                 SaveChanges();
             }
 
             //Run foreach on all Transfers that are selected and that Item Transfer Detail is still pending.
             //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.item_transfer_detail.Where(y => y.status == Status.Documents_General.Pending).Count() > 0))
             //{
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Pending))
-                {
-                    Discount_Items_Origin(item_transfer_detail, MoveByTruck);
+            foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Pending))
+            {
+                Discount_Items_Origin(item_transfer_detail, MoveByTruck);
 
-                    //transit
-                    NumberOfRecords += 1;
-                    item_transfer.status = Status.Transfer.Transit;
-                    item_transfer.RaisePropertyChanged("status");
-                }
-          //  }
+                //transit
+                NumberOfRecords += 1;
+                item_transfer.status = Status.Transfer.Transit;
+                item_transfer.RaisePropertyChanged("status");
+            }
+            //  }
 
             base.SaveChanges();
 
             return NumberOfRecords;
         }
 
-        public int ApproveDestination(item_transfer item_transfer,bool MoveByTruck)
+        public int ApproveDestination(item_transfer item_transfer, bool MoveByTruck)
         {
             NumberOfRecords = 0;
 
             //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             //{
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
+            foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
+            {
+                if (item_transfer_detail.item_product != null)
                 {
-                    if (item_transfer_detail.item_product != null)
-                    {
-                        Credit_Items_Destination(item_transfer_detail, MoveByTruck);
+                    Credit_Items_Destination(item_transfer_detail, MoveByTruck);
 
-                        NumberOfRecords += 1;
-                        item_transfer_detail.timestamp = DateTime.Now;
-                        item_transfer_detail.status = Status.Documents_General.Approved;
-                        item_transfer_detail.RaisePropertyChanged("status");
-                        item_transfer.status = Status.Transfer.Approved;
-                        item_transfer.RaisePropertyChanged("status");
+                    NumberOfRecords += 1;
+                    item_transfer_detail.timestamp = DateTime.Now;
+                    item_transfer_detail.status = Status.Documents_General.Approved;
+                    item_transfer_detail.RaisePropertyChanged("status");
+                    item_transfer.status = Status.Transfer.Approved;
+                    item_transfer.RaisePropertyChanged("status");
+                }
+            }
+
+            ///Print Document only if
+            if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)
+            {
+                if (item_transfer.id_branch > 0)
+                {
+                    if (CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                    {
+                        Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
                     }
                 }
 
-                ///Print Document only if 
-                if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)
+                if (item_transfer.id_terminal > 0)
                 {
-                    if (item_transfer.id_branch > 0)
+                    if (CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
                     {
-                        if (CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
-                        {
-                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
-                        }
+                        Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
                     }
-
-                    if (item_transfer.id_terminal > 0)
-                    {
-                        if (CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
-                        {
-                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
-                        }
-                    }
-
-                    if (item_transfer.id_user > 0)
-                    {
-                        security_user security_user = base.security_user.Find(item_transfer.id_user);
-                        if (security_user != null)
-                        {
-                            Brillo.Logic.Range.user_Code = security_user.code;
-                        }
-                    }
-
-                    if (item_transfer.id_project > 0)
-                    {
-                        project projects = base.projects.Find(item_transfer.id_project);
-                        if (projects != null)
-                        {
-                            Brillo.Logic.Range.project_Code = projects.code;
-                        }
-                    }
-
-                    app_document_range app_document_range = base.app_document_range.Find(item_transfer.id_range);
-                    item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                    item_transfer.RaisePropertyChanged("number");
                 }
 
-           // }
+                if (item_transfer.id_user > 0)
+                {
+                    security_user security_user = base.security_user.Find(item_transfer.id_user);
+                    if (security_user != null)
+                    {
+                        Brillo.Logic.Range.user_Code = security_user.code;
+                    }
+                }
+
+                if (item_transfer.id_project > 0)
+                {
+                    project projects = base.projects.Find(item_transfer.id_project);
+                    if (projects != null)
+                    {
+                        Brillo.Logic.Range.project_Code = projects.code;
+                    }
+                }
+
+                app_document_range app_document_range = base.app_document_range.Find(item_transfer.id_range);
+                item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                item_transfer.RaisePropertyChanged("number");
+            }
+
+            // }
 
             base.SaveChanges();
 
@@ -175,7 +174,7 @@ namespace entity
                 Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product);
 
                 List<item_movement> item_movement_LIST = new List<item_movement>();
-                ///Discount From Destination. 
+                ///Discount From Destination.
                 ///Because merchendice is returned to Origin, so it must be discounted from Destintation.
                 item_movement_LIST =
                     stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,
@@ -283,7 +282,7 @@ namespace entity
                         app_locationdest.id_location,
                             item_transfer_detail.quantity_origin,
                             item_transfer_detail.item_transfer.trans_date,
-                            item_movement_originList.FirstOrDefault().item_movement_value.Sum(x=>x.unit_value),
+                            item_movement_originList.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
                             stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                             null, null, null);
 
@@ -302,7 +301,7 @@ namespace entity
                         Stock stockBrillo = new Stock();
                         Items_InStockLIST = stockBrillo.List(LocationOrigin.id_branch, LocationOrigin.id_location, item_transfer_detail.id_item_product);
                     }
-                    
+
                     ///Debit Movement from Origin.
                     List<item_movement> item_movement_originList;
                     item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, LocationOrigin.id_location,

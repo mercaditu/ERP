@@ -4,7 +4,6 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class production_execution_detail : Audit
     {
@@ -26,6 +25,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_execution_detail { get; set; }
+
         public int? id_order_detail { get; set; }
         public int? id_project_task { get; set; }
         public int? id_service_account { get; set; }
@@ -39,6 +39,7 @@ namespace entity
 
         [Required]
         public decimal quantity { get; set; }
+
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
 
@@ -58,6 +59,7 @@ namespace entity
                 }
             }
         }
+
         private DateTime _start_date = DateTime.Now;
 
         public DateTime end_date
@@ -94,6 +96,7 @@ namespace entity
 
         public decimal unit_cost { get; set; }
         public bool is_accounted { get; set; }
+
         [NotMapped]
         public decimal hours
         {
@@ -106,7 +109,8 @@ namespace entity
                 _hour = value;
             }
         }
-        decimal _hour;
+
+        private decimal _hour;
 
         [Required]
         public bool is_input { get; set; }
@@ -119,6 +123,7 @@ namespace entity
 
         //Heirarchy
         public virtual production_execution_detail parent { get; set; }
+
         public virtual ICollection<production_execution_detail> child { get; set; }
         public virtual ICollection<production_execution_dimension> production_execution_dimension { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }

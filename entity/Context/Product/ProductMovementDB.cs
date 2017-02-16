@@ -1,8 +1,6 @@
-﻿using entity.Brillo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,7 +73,7 @@ namespace entity
             }
 
             ///Purchase
-          
+
             using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
             {
                 List<purchase_invoice> purchaseLIST = PurchaseDB.purchase_invoice
@@ -88,7 +86,6 @@ namespace entity
 
                 foreach (purchase_invoice purchase in purchaseLIST)
                 {
-
                     try
                     {
                         purchase.IsSelected = true;

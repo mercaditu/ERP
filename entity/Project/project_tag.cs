@@ -24,11 +24,10 @@
 
         [Required]
         public string name { get; set; }
+
         public bool is_active { get; set; }
 
         public virtual ICollection<project_tag_detail> project_tag_detail { get; set; }
-
-
 
         public string Error
         {

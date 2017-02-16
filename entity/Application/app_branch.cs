@@ -6,19 +6,19 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-    
 
     public partial class app_branch : Audit, IDataErrorInfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_branch { get; set; }
+
         public int? id_geography { get; set; }
         public int? id_vat { get; set; }
-        
+
         [Required]
         public string name { get; set; }
-        
+
         [Required]
         public string code { get; set; }
 
@@ -32,6 +32,7 @@ namespace entity
 
         public bool can_stock { get; set; }
         public bool can_invoice { get; set; }
+
         public bool is_active
         {
             get { return _is_active; }
@@ -44,7 +45,9 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
+
         public app_branch()
         {
             id_company = CurrentSession.Id_Company;
@@ -65,17 +68,20 @@ namespace entity
         public virtual IEnumerable<item_branch_safety> item_branch_safety { get; set; }
 
         public virtual IEnumerable<payment_promissory_note> payment_promissory_note { get; set; }
+
         //Stock
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }
 
         //Purchase
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }
+
         public virtual IEnumerable<purchase_tender> purchase_tender { get; set; }
         public virtual IEnumerable<purchase_order> purchase_order { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
 
         //Sales
         public virtual ICollection<sales_budget> sales_budget { get; set; }
+
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<sales_order> sales_order { get; set; }
         public virtual IEnumerable<sales_return> sales_return { get; set; }
@@ -102,6 +108,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

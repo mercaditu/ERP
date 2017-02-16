@@ -2,7 +2,7 @@ namespace entity
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;    
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class app_branch_walkins : Audit
     {
@@ -19,6 +19,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_branch_walkin { get; set; }
+
         public int id_branch { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }

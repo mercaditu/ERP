@@ -6,16 +6,19 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-  
+
     public partial class app_contract : Audit, IDataErrorInfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_contract { get; set; } 
+        public int id_contract { get; set; }
+
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_condition { get; set; }
+
         [Required]
         public string name { get; set; }
+
         [Required]
         public bool is_active
         {
@@ -29,11 +32,15 @@ namespace entity
                 }
             }
         }
+
         private bool _is_active;
+
         [Required]
         public bool is_default { get; set; }
+
         [Required]
         public bool is_promissory { get; set; }
+
         public decimal? surcharge { get; set; }
 
         public bool is_purchase { get; set; }
@@ -42,7 +49,7 @@ namespace entity
         public app_contract()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             app_contract_detail = new List<app_contract_detail>();
@@ -80,6 +87,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

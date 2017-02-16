@@ -4,7 +4,6 @@ namespace entity.Reporting
 {
     public class EmployeeInProduction
     {
-
         public string Employee { get; set; }
         public string Project { get; set; }
         public string ProductionOrder { get; set; }

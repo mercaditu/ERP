@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace entity
@@ -65,7 +64,7 @@ namespace entity
             {
                 item_transfer item_transfer = new item_transfer();
                 item_transfer.status = Status.Transfer.Pending;
-               // entity.Properties.Settings setting = new Properties.Settings();
+                // entity.Properties.Settings setting = new Properties.Settings();
                 item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 item_transfer.id_item_request = item_request.id_item_request;
                 if (base.app_department.FirstOrDefault() != null)
@@ -114,7 +113,6 @@ namespace entity
 
                 // production_execution production_execution = new production_execution();
 
-
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
                 {
                     foreach (item_request_decision item in item_request_detail.item_request_decision)
@@ -126,13 +124,10 @@ namespace entity
                                 Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == item_request.id_branch).FirstOrDefault().code;
                             }
 
-
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
-
 
                             item_request.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             item_request.RaisePropertyChanged("number");
-                           
                         }
 
                         //if (item.IsSelected == true)
@@ -163,7 +158,6 @@ namespace entity
                             item_transfer.app_branch_origin = app_location.app_branch;
 
                             item_transfer.comment = "Transfer item Request from " + item.decision.ToString();
-
 
                             //Create Transfer Detail in DB.
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
@@ -217,7 +211,6 @@ namespace entity
 
                             base.item_transfer.Add(item_transfer);
                         }
-
                         else if (item.decision == entity.item_request_decision.Decisions.Transfer)
                         {
                             int id_location = (int)item.id_location;
@@ -233,12 +226,11 @@ namespace entity
                             }
                             if (item_request_detail.id_sales_order_detail != null)
                             {
-
                                 item_transfertrans.app_location_destination = item_request.sales_order.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
                                 item_transfertrans.app_branch_destination = item_request.sales_order.app_branch;
                             }
                             if (item_request_detail.id_order_detail != null)
-                            { 
+                            {
                                 //Get Production Line
                                 int id_production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.id_production_line;
                                 //Get Location based on Line
@@ -255,7 +247,6 @@ namespace entity
                                 item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
                             }
 
-
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
                             {
                                 item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
@@ -269,7 +260,6 @@ namespace entity
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);
 
                             item_transfertrans.transfer_type = entity.item_transfer.Transfer_type.transfer;
-
                         }
                         else if (item.decision == entity.item_request_decision.Decisions.Production)
                         {
@@ -283,7 +273,6 @@ namespace entity
                             if (item.item_request_detail.id_project_task != null)
                             {
                                 production_order_detail.id_project_task = item.item_request_detail.id_project_task;
-
                             }
 
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
@@ -301,7 +290,7 @@ namespace entity
                             //production_execution.id_production_line = production_order.id_production_line;
                             //production_execution.trans_date = DateTime.Now;
                         }
-                        else if (item.decision==entity.item_request_decision.Decisions.Internal)
+                        else if (item.decision == entity.item_request_decision.Decisions.Internal)
                         {
                             List<entity.Brillo.StockList> Items_InStockLIST;
                             entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
@@ -309,7 +298,7 @@ namespace entity
                             app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
                             if (item_product != null && app_location != null)
                             {
-                                Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x=>x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
+                                Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
                                 entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
                                 List<item_movement> item_movement_originList;
                                 item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail,
@@ -319,11 +308,9 @@ namespace entity
 
                                 base.item_movement.AddRange(item_movement_originList);
                             }
-                          
                         }
                         else
                         {
-
                             if (item_request_detail.id_project_task != null)
                             {
                                 if (base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch != null)
@@ -335,11 +322,9 @@ namespace entity
                                 {
                                     purchase_tender.app_branch = base.app_branch.Where(x => x.can_invoice == true && x.can_stock == true).FirstOrDefault();
                                 }
-
                             }
                             if (item_request_detail.id_sales_order_detail != null)
                             {
-
                                 purchase_tender.app_branch = item_request.sales_order.app_branch;
                             }
 
@@ -359,10 +344,7 @@ namespace entity
                                                 purchase_tender.id_project = item_request_detail.project_task.id_project;
                                                 purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                                             }
-
                                         }
-
-
                                     }
                                 }
                             }
@@ -371,12 +353,10 @@ namespace entity
                                 purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                             }
 
-
                             purchase_tender_item purchase_tender_item = new purchase_tender_item();
                             purchase_tender_item.id_item = item_request_detail.id_item;
                             purchase_tender_item.item_description = item_request_detail.comment;
                             purchase_tender_item.quantity = item.quantity;
-
 
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
                             {
@@ -388,10 +368,6 @@ namespace entity
                             }
 
                             purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
-
-
-
-
                         }
                         item_request.status = Status.Documents_General.Approved;
 
@@ -400,7 +376,6 @@ namespace entity
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
                             Brillo.Document.Start.Automatic(item_request, app_document_range);
                         }
-
                     }
                 }
                 if (purchase_tender.purchase_tender_item_detail.Count() > 0)
@@ -422,7 +397,7 @@ namespace entity
                 }
             }
             orderdb.SaveChanges();
-           
+
             SaveChanges();
         }
     }

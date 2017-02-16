@@ -6,11 +6,10 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using System.Threading;
 
     public partial class project_task : Audit
     {
-        Project.clsproject objclsproject = new Project.clsproject();
+        private Project.clsproject objclsproject = new Project.clsproject();
 
         public project_task()
         {
@@ -30,6 +29,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_task { get; set; }
+
         public int id_project { get; set; }
 
         public Status.Project? status { get; set; }
@@ -41,24 +41,21 @@ namespace entity
             {
                 if (value != null)
                 {
-
-
                     if (_id_item != value)
                     {
                         _id_item = value;
-                       
-
-
                     }
                 }
             }
         }
+
         private int? _id_item;
 
         public string item_description
         {
             get { return _item_description; }
-            set {
+            set
+            {
                 if (_item_description != value)
                 {
                     _item_description = value;
@@ -66,6 +63,7 @@ namespace entity
                 }
             }
         }
+
         private string _item_description;
 
         public string code
@@ -73,6 +71,7 @@ namespace entity
             get { return _code; }
             set { _code = value; RaisePropertyChanged("code"); }
         }
+
         private string _code;
 
         public decimal? quantity_est
@@ -86,7 +85,7 @@ namespace entity
                     RaisePropertyChanged("quantity_est");
 
                     //Sum Parent, check if not recepie so as not to create an infinite loop.
-                    if (parent != null && parent.items != null && parent.items.item_recepie.Count()==0)
+                    if (parent != null && parent.items != null && parent.items.item_recepie.Count() == 0)
                     {
                         //This stops the Recepie from Adding
                         //Also stops the Rejected Tasks from Adding
@@ -113,7 +112,7 @@ namespace entity
                                         if (item_recepie_detail != null)
                                         {
                                             _child.quantity_est = item_recepie_detail.quantity * this.quantity_est;
-                                            _child.RaisePropertyChanged("quantity_est");                      
+                                            _child.RaisePropertyChanged("quantity_est");
                                         }
                                     }
                                 }
@@ -123,6 +122,7 @@ namespace entity
                 }
             }
         }
+
         private decimal? _quantity_est;
 
         [NotMapped]
@@ -142,15 +142,13 @@ namespace entity
 
                     if (this.items != null)
                     {
-                           _quantity_est = Brillo.ConversionFactor.Factor_Quantity_Back(this.items, Quantity_Factored, GetDimensionValue());
-                            RaisePropertyChanged("value_counted");
-                      
-
+                        _quantity_est = Brillo.ConversionFactor.Factor_Quantity_Back(this.items, Quantity_Factored, GetDimensionValue());
+                        RaisePropertyChanged("value_counted");
                     }
-
                 }
             }
         }
+
         private decimal _Quantity_Factored;
 
         public decimal? unit_cost_est
@@ -162,7 +160,9 @@ namespace entity
                 RaisePropertyChanged("unit_cost_est");
             }
         }
+
         private decimal? _unit_cost_est;
+
         [NotMapped]
         public decimal? UnitPrice_Vat
         {
@@ -173,6 +173,7 @@ namespace entity
                 RaisePropertyChanged("UnitPrice_Vat");
             }
         }
+
         private decimal? _unit_price_vat;
         public DateTime? start_date_est { get; set; }
         public DateTime? end_date_est { get; set; }
@@ -203,7 +204,7 @@ namespace entity
                 {
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
-                    if (Parent_selected==false)
+                    if (Parent_selected == false)
                     {
                         foreach (var task in child)
                         {
@@ -216,15 +217,15 @@ namespace entity
                             project.Update_SelectedCount();
                         }
                     }
-                  
-
                 }
             }
         }
+
         private bool _is_selected;
 
         [NotMapped]
         private bool Parent_selected;
+
         public virtual project project { get; set; }
 
         public virtual item items
@@ -248,11 +249,10 @@ namespace entity
             }
         }
 
-        item _items;
-
+        private item _items;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int? id_range
         {
@@ -264,29 +264,27 @@ namespace entity
             {
                 if (_id_range != value)
                 {
-
                     _id_range = value;
-                 
                 }
             }
         }
+
         private int? _id_range;
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string number { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
 
         #region Document Range => Navigation
         public virtual app_document_range app_document_range { get; set; }
-        #endregion
+        #endregion Document Range => Navigation
 
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
@@ -305,7 +303,8 @@ namespace entity
                 }
             }
         }
-        ICollection<production_execution_detail> _production_execution_detail;
+
+        private ICollection<production_execution_detail> _production_execution_detail;
 
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }
@@ -315,6 +314,7 @@ namespace entity
         public virtual ICollection<purchase_tender_item> purchase_tender_item { get; set; }
         public virtual sales_order_detail sales_detail { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
+
         public decimal get_SalesPrice(int id_item, contact Contact, int CurrencyFX_ID)
         {
             int PriceList_ID = 0;
@@ -345,7 +345,6 @@ namespace entity
                 }
 
                 //Step 1 1/2. Check if Quantity gets us a better Price List.
-
 
                 //Step 2. Get Price in Currency.
                 using (db db = new db())
@@ -381,11 +380,13 @@ namespace entity
 
             return 0;
         }
+
         public virtual ICollection<project_task> child
         {
             get { return _child; }
             set { _child = value; }
         }
+
         private ICollection<project_task> _child;
 
         //TreeView Heirarchy Fields
@@ -400,7 +401,6 @@ namespace entity
                     RaisePropertyChanged("parent");
                     if (parent != null && parent.items != null)
                     {
-                     
                         if (!parent.items.is_autorecepie)
                         {
                             parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
@@ -409,7 +409,6 @@ namespace entity
                         }
                     }
                 }
-
             }
         }
 
@@ -434,13 +433,10 @@ namespace entity
             { }
         }
 
-
-
         public void CalcSalePrice_TimerTaks()
         {
             if (project != null)
             {
-
                 if (project.CurrecyFx_ID != null)
                 {
                     if (_unit_price_vat == null || _unit_price_vat == 0)
@@ -450,24 +446,21 @@ namespace entity
 
                     RaisePropertyChanged("unit_cost_est");
                 }
-
             }
         }
+
         public void CalcSalePrice_TimerParentTaks()
         {
             if (child != null)
             {
-
                 _unit_price_vat = child.Sum(x => x._unit_price_vat);
-
             }
         }
-       
+
         public void CalcRange_TimerTaks()
         {
             if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
             {
-
                 using (db db = new db())
                 {
                     if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
@@ -505,11 +498,10 @@ namespace entity
                     this.Parent_selected = true;
 
                     this.IsSelected = true;
-                    if (this.parent!=null)
+                    if (this.parent != null)
                     {
                         this.parent.Parent_Selection();
                     }
-                  
                 }
             }
         }
@@ -519,8 +511,6 @@ namespace entity
             decimal Dimension = 1M;
             if (project_task_dimension != null)
             {
-
-
                 foreach (project_task_dimension project_task_dimension in project_task_dimension)
                 {
                     Dimension = Dimension * project_task_dimension.value;
@@ -528,6 +518,7 @@ namespace entity
             }
             return Dimension;
         }
+
         #endregion
     }
 }

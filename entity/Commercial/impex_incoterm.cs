@@ -6,12 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+
     public partial class impex_incoterm : Audit, IDataErrorInfo
     {
         public impex_incoterm()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             impex_incoterm_detail = new List<impex_incoterm_detail>();
         }
@@ -19,11 +20,13 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_incoterm { get; set; }
+
         [Required]
         public string name { get; set; }
+
         public string code_iso { get; set; }
         public bool is_priority { get; set; }
-    
+
         public virtual ICollection<impex_incoterm_detail> impex_incoterm_detail { get; set; }
 
         public string Error
@@ -31,7 +34,7 @@ namespace entity
             get
             {
                 StringBuilder error = new StringBuilder();
-                
+
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {
@@ -45,6 +48,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

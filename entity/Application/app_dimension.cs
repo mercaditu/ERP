@@ -12,9 +12,9 @@
         public app_dimension()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
-            item_dimension =new List<item_dimension>();
+            item_dimension = new List<item_dimension>();
             project_task_dimension = new List<project_task_dimension>();
             item_movement_dimension = new List<item_movement_dimension>();
         }
@@ -22,6 +22,7 @@
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_dimension { get; set; }
+
         [Required]
         public string name { get; set; }
 
@@ -48,6 +49,7 @@
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get

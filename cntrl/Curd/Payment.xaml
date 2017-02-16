@@ -51,118 +51,121 @@
 		</Grid>
 		
 		<!-- Body -->
-		<Grid Grid.Column="1" Grid.Row="1"  Background="White" >
-			<ScrollViewer Margin="0,0,0,30">
+        <Grid Grid.Column="1" Grid.Row="1"  Background="White" >
+            <ScrollViewer Margin="0,0,0,30">
                 <StackPanel>
-					<Label Content="{Binding contact.name}" Style="{StaticResource H3}"/>
-					<!-- Header -->
-					<WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
-						<StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
-							<Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
-							<DatePicker Style="{DynamicResource input_datepicker}"
+                    <Label Content="{Binding contact.name}" Style="{StaticResource H3}"/>
+                    <!-- Header -->
+                    <WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
+                        <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
+                            <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
+                            <DatePicker Style="{DynamicResource input_datepicker}"
 										SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
-							<Label Content="{lex:Loc CollectionAgent}" Style="{DynamicResource input_label}"/>
-							<ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
+                            <Label Content="{lex:Loc CollectionAgent}" Style="{DynamicResource input_label}"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
 									  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  Style="{StaticResource input_combobox}"/>
-							<!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
-						</StackPanel>
-						<StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">
-							<StackPanel x:Name="stackDocument" Visibility="Collapsed">
-								<Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-								<ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                            <!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+                        </StackPanel>
+                        <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">
+                            <StackPanel x:Name="stackDocument" Visibility="Collapsed">
+                                <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
 									  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 									  Style="{StaticResource input_combobox}"
 									  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-							</StackPanel>
-							<Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-							<TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+                            </StackPanel>
+                            <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
+                            <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 									 metro:TextBoxHelper.SelectAllOnFocus="True"
 									 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 									 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 									 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-						</StackPanel>
-					</WrapPanel>
-					
-					<Rectangle Style="{StaticResource line_Bar}"/>
-					
-					<Grid>
-						<Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
+                        </StackPanel>
+                    </WrapPanel>
+
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+
+                    <Grid>
+                        <Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
 									Content="+" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue"/>
-							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
 									Content="e" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue"/>
-							<Rectangle Width="0.3" Fill="Black" Margin="8"/>
-							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White" Click="btnDeleteDetail_Click"
+                            <Rectangle Width="0.3" Fill="Black" Margin="8"/>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White" Click="btnDeleteDetail_Click"
 									Content="d" Cursor="Hand" FontFamily="cognitivo" Foreground="Crimson"/>
-						</StackPanel>
-					</Grid>
-					<!-- Detail -->
-					<StackPanel Orientation="Horizontal">
-						<StackPanel Width="256" Margin="4" >
-							<ListBox Background="{StaticResource AccentColor_Introvert}" x:Name="dgvPaymentDetail"
+                        </StackPanel>
+                    </Grid>
+                    <!-- Detail -->
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="256" Margin="4" >
+                            <ListBox Background="{StaticResource AccentColor_Introvert}" x:Name="dgvPaymentDetail"
 									 ScrollViewer.VerticalScrollBarVisibility="Auto"
 									 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 									 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 									 ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1" Height="288">
-								<ListBox.ItemTemplate>
-									<DataTemplate>
-										<cntrl:navList recordCode="{Binding app_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <cntrl:navList recordCode="{Binding app_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
 													   recordSecondaryName="{Binding payment_type.name, FallbackValue=Payment, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
 													   recordName="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
 													   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
 													   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-									</DataTemplate>
-								</ListBox.ItemTemplate>
-							</ListBox>
-							<StackPanel Orientation="Horizontal">
-								<Label Content="{lex:Loc Total}" VerticalContentAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-								<Label Content="{Binding GrandTotalDetail, StringFormat=N2, Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Total}" VerticalContentAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+                                <Label Content="{Binding GrandTotalDetail, StringFormat=N2, Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
 									   ContentStringFormat="N2" Style="{StaticResource H2}"/>
-							</StackPanel>
-						</StackPanel>
+                            </StackPanel>
+                        </StackPanel>
                         <StackPanel>
-							<Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
-							<ComboBox x:Name="cbxPamentType"
+                            <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
+                            <ComboBox x:Name="cbxPamentType"
+                                      IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 									  DisplayMemberPath="name" SelectedValuePath="id_payment_type"
 									  ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 									  SelectedValue="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
 									  Style="{StaticResource input_combobox}" 
 									  SelectionChanged="cbxPamentType_SelectionChanged">
-								<ComboBox.ItemsPanel>
-									<ItemsPanelTemplate>
-										<VirtualizingStackPanel/>
-									</ItemsPanelTemplate>
-								</ComboBox.ItemsPanel>
-							</ComboBox>
-							<StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Introvert}">
-								<Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}"/>
-								<TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Introvert}">
+                                <Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}"/>
+                                <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 										 metro:TextBoxHelper.SelectAllOnFocus="True"
 										 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 										 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 										 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-							</StackPanel>
-							<StackPanel x:Name="stpaccount">
-								<Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-								<ComboBox DisplayMemberPath="name" SelectedValuePath="id_account"
+                            </StackPanel>
+                            <StackPanel x:Name="stpaccount">
+                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                                <ComboBox DisplayMemberPath="name" SelectedValuePath="id_account"
+                                          IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 										  Style="{StaticResource input_combobox}"
 										  ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
 										  SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}">
-								</ComboBox>
+                                </ComboBox>
 
-								<Label Content="{lex:Loc Currency}" Style="{DynamicResource input_label}"/>
-								<Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="PaymentUtility" 
+                                <Label Content="{lex:Loc Currency}" Style="{DynamicResource input_label}"/>
+                                <Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="PaymentUtility" 
+                                                      IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 													  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-							</StackPanel>
-							<StackPanel x:Name="stpcreditpurchase" Visibility="Collapsed">
-								<TextBlock Style="{StaticResource text_Label}" FontWeight="Medium">
+                            </StackPanel>
+                            <StackPanel x:Name="stpcreditpurchase" Visibility="Collapsed">
+                                <TextBlock Style="{StaticResource text_Label}" FontWeight="Medium">
 									<Run Text="{lex:Loc ReturnNumber}"/> | 
 									<Run Text="{lex:Loc Purchase}"/>
-								</TextBlock>
-								<!--<cntrl:SearchableTextbox x:Name="purchasereturnComboBox" KeyDown="purchasereturnComboBox_KeyDown" MouseDoubleClick="purchasereturnComboBox_MouseDoubleClick"
+                                </TextBlock>
+                                <!--<cntrl:SearchableTextbox x:Name="purchasereturnComboBox" KeyDown="purchasereturnComboBox_KeyDown" MouseDoubleClick="purchasereturnComboBox_MouseDoubleClick"
 														 CollectionViewSource="{StaticResource purchase_returnViewSource}"
 														 Width="256" HorizontalAlignment="Left">
 									<cntrl:SearchableTextbox.Columns>
@@ -175,11 +178,11 @@
                                 <Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="sbxPurchaseReturn_Select"/>
                             </StackPanel>
 
-							<StackPanel x:Name="stpcreditsales" Visibility="Collapsed">
-								<TextBlock  Style="{StaticResource text_Label}" FontWeight="Medium">
+                            <StackPanel x:Name="stpcreditsales" Visibility="Collapsed">
+                                <TextBlock  Style="{StaticResource text_Label}" FontWeight="Medium">
 							<Run Text="{lex:Loc ReturnNumber}"/> | <Run Text="{lex:Loc Sales}"/>
-								</TextBlock>
-								<!--<cntrl:SearchableTextbox x:Name="salesreturnComboBox" KeyDown="salesreturnComboBox_KeyDown" MouseDoubleClick="salesreturnComboBox_MouseDoubleClick"
+                                </TextBlock>
+                                <!--<cntrl:SearchableTextbox x:Name="salesreturnComboBox" KeyDown="salesreturnComboBox_KeyDown" MouseDoubleClick="salesreturnComboBox_MouseDoubleClick"
 												 CollectionViewSource="{StaticResource sales_returnViewSource}" 
 												 Width="256" HorizontalAlignment="Left">
 									<cntrl:SearchableTextbox.Columns>
@@ -190,32 +193,32 @@
 								</cntrl:SearchableTextbox>-->
                                 <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="sbxReturn_Select"/>
                             </StackPanel>
-							
-							<Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
-							<TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
+
+                            <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
+                            <TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
+                                     IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 									 Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, 
 									 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"/>
-							<Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-							<TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                            <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
 									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
-						</StackPanel>
-					</StackPanel>
-				</StackPanel>
-			</ScrollViewer>
-			<Grid Background="WhiteSmoke" Height="32" VerticalAlignment="Bottom" >
-				<!--<Button Content="{lex:Loc Delete}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Foreground="Crimson" FontWeight="Medium"></Button>-->
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<Button Click="SaveChanges" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+            <Grid Background="WhiteSmoke" Height="32" VerticalAlignment="Bottom" >
+                <!--<Button Content="{lex:Loc Delete}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Foreground="Crimson" FontWeight="Medium"></Button>-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Click="SaveChanges" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
 							BorderThickness="0" FontWeight="Medium">
-						<Button.Content>
-							<TextBlock>
+                        <Button.Content>
+                            <TextBlock>
 								<Run Text="{lex:Loc Save}"/>
-							</TextBlock>
-						</Button.Content>
-					</Button>
-				</StackPanel>
-			</Grid>
-		</Grid>
-
-	</Grid>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

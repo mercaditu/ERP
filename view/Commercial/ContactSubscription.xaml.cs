@@ -138,13 +138,16 @@ namespace Cognitivo.Commercial
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             List<contact> ContactList = contactViewSource.View.OfType<contact>().ToList();
-            DateTime InvoiceDate = (DateTime)dtpTrans_Date.SelectedDate;
-            progBar.Minimum = 1;
-            progBar.Value = 1;
-            progBar.Maximum = ContactList.Count() + 1;
-            //SyncSalesInvoice(ContactList, InvoiceDate);
+            if (dtpTrans_Date.SelectedDate != null)
+            {
+                DateTime InvoiceDate = (DateTime)dtpTrans_Date.SelectedDate;
+                progBar.Minimum = 1;
+                progBar.Value = 1;
+                progBar.Maximum = ContactList.Count() + 1;
+                //SyncSalesInvoice(ContactList, InvoiceDate);
 
-            Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
+                Task taskAuth = Task.Factory.StartNew(() => SyncSalesInvoice(ContactList, InvoiceDate));
+            }
         }
 
         private void SyncSalesInvoice(List<contact> ContactList, DateTime InvoiceDate)

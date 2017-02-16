@@ -45,6 +45,8 @@ namespace entity.Brillo
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
             string query = @"select
+                                loc.id_location as LocationID,
+                                loc.name as Location,
                                 parent.id_movement as MovementID,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance,
@@ -77,6 +79,7 @@ namespace entity.Brillo
         public List<StockList> ScalarMovement(item_movement item_movement)
         {
             string query = @"select
+                                
                                 parent.id_movement as MovementID,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.credit  as QtyBalance,
@@ -150,12 +153,18 @@ namespace entity.Brillo
                     StockList Stock = new StockList();
                     Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
                     Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
+
                     if (!(DataRow["expire_date"] is DBNull))
                     {
                         Stock.ExpirationDate = Convert.ToDateTime(DataRow["expire_date"]);
                     }
-                    Stock.Location = Convert.ToString(DataRow["Location"]);
-                    Stock.LocationID = Convert.ToInt32(DataRow["LocationID"]);
+
+                    if (dt.Columns.Contains("Location"))
+                    {
+                        Stock.Location = Convert.ToString(DataRow["Location"]);
+                        Stock.LocationID = Convert.ToInt32(DataRow["LocationID"]);
+                    }
+
                     Stock.code = Convert.ToString(DataRow["code"]);
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);

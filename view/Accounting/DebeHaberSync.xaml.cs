@@ -79,7 +79,7 @@ namespace Cognitivo.Accounting
                 Get_SalesReturn();
                 Get_Payment();
                 //Get_ItemAsset();
-                //Get_ProductionExecution();
+                Get_ProductionExecution();
 
             }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
@@ -154,16 +154,17 @@ namespace Cognitivo.Accounting
         private async void Get_ProductionExecution()
         {
             //If we bring only low level items, it's easy to calculate the higher level items.
-            await db.production_order_detail.Where
+            await db.production_order.Where
                 (x =>
-                x.id_company == CurrentSession.Id_Company &&
-                x.production_execution_detail.Where(y => y.is_accounted == false && x.child.Count() == 0).Count() > 0
+                x.id_company == CurrentSession.Id_Company
+                //x.production_order_detail.Where(y => y.product == false).Count() > 0
+                //x.child.Count() == 0
                 )
-                .Include(z => z.production_order)
-                .Include(a => a.production_execution_detail)
+                .Include(z => z.production_order_detail)
+                //.Include(a => a.production_execution_detail)
                 .ToListAsync();
 
-            item_assetViewSource.Source = db.item_asset.Local;
+            production_order_detailViewSource.Source = db.production_order.Local;
         }
 
         #endregion LoadData
@@ -176,7 +177,7 @@ namespace Cognitivo.Accounting
             SalesReturn_Sync();
             PurchaseReturn_Sync();
             PaymentSync();
-            //Production_Sync();
+            Production_Sync();
         }
 
         #region Sales Sync
@@ -559,7 +560,7 @@ namespace Cognitivo.Accounting
 
         private void Production_Sync()
         {
-            List<production_order> OrderList = db.production_order.Local.Where(x => x.production_order_detail.Where(y => y.IsSelected).Count() > 0).ToList();
+            List<production_order> OrderList = db.production_order.Local.Where(x => x.IsSelected).ToList();
 
             foreach (production_order ProductionOrder in OrderList)
             {
@@ -572,63 +573,49 @@ namespace Cognitivo.Accounting
                 Production.branch = ProductionOrder.id_branch > 0 ? db.app_branch.Find(ProductionOrder.id_branch).name : "";
                 Production.name = ProductionOrder.name;
                 Production.trans_date = ProductionOrder.trans_date;
-
-                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.IsSelected))
+                
+                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.child.Count() == 0))
                 {
+                    if (Detail.production_execution_detail.Where(x => x.is_accounted == false).Count() > 0)
+                    {
+                        DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
+                        Production_Detail.Fill_ByExecution(Detail, db);
+                        Production.Production_Detail.Add(Production_Detail);
+                    }
+                }
 
+                Transaction.Production.Add(Production);
+                Integration.Transactions.Add(Transaction);
+
+                try
+                {
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                    Send2API(Sales_Json);
+
+                    ProductionOrder.IsSelected = false;
+
+                    foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.IsSelected && x.child.Count() == 0))
+                    {
+                        foreach (production_execution_detail production_execution_detail in Detail.production_execution_detail)
+                        {
+                            production_execution_detail.is_accounted = true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    {
+                        MessageBox.Show(ex.Message, "Error Message");
+                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                    }
+                }
+                finally
+                {
+                    fill();
+                    db.SaveChanges();
                 }
             }
-
-            ////Loop through
-            //foreach (production_order_detail production_order_detail in OrderDetailList)
-            //{
-
-            //    // Project Name to be used in case there is not obvious Output.
-            //    string ProjectName = "";
-            //    if (production_order_detail.production_order.project != null)
-            //    {
-            //        ProjectName = production_order_detail.production_order.project.name;
-            //    }
-
-            //    ///Loop through Details. Check for Is Accounted, because this Production Order could have 1 Accounted, and 1 Non Accounted Execution. Only use the Non Accounted.
-            //    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
-            //    {
-            //        DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
-            //        //Fill and Detail SalesDetail
-            //        Production_Detail.Fill_ByExecution(production_execution_detail, db, ProjectName);
-            //        Production.Production_Detail.Add(Production_Detail);
-            //    }
-
-            //    Transaction.Production.Add(Production);
-            //    Integration.Transactions.Add(Transaction);
-
-            //    try
-            //    {
-            //        var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-            //        Send2API(Sales_Json);
-            //        db.SaveChanges();
-
-            //        production_order_detail.IsSelected = false;
-
-            //        foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.is_accounted == false))
-            //        {
-            //            production_execution_detail.is_accounted = true;
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
-            //        {
-            //            MessageBox.Show(ex.Message, "Error Message");
-            //            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
-            //        }
-            //    }
-            //    finally
-            //    {
-            //        fill();
-            //        db.SaveChanges();
-            //    }
-            //}
         }
 
         #endregion

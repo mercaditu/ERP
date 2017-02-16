@@ -148,15 +148,22 @@ namespace entity
                                 if (OrderedQuantity < purchase_tender_detail.quantity)
                                 {
                                     //Gets balance of remaining amount. Balance can never be 0?
-                                    decimal Balance = OrderedQuantity - purchase_tender_detail.quantity;
+                                    decimal Balance = purchase_tender_detail.quantity - OrderedQuantity;
 
                                     if (Balance > purchase_tender_detail.OrderQuantity)
-                                    { //If balance is greater than Order Quantity. Order the OrderQuantity only.
+                                    { //If balance is greater than Order Quantity. Order the OrderQuantity only. Keep status pending to allow future buying.
                                         purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
                                     }
+                                    else if (Balance == purchase_tender_detail.OrderQuantity)
+                                    {
+                                        //If Quantity is exactly the same, then use quantity and approve, to stop further buying.
+                                        purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
+                                        purchase_tender_detail.status = Status.Documents_General.Approved;
+                                    }
                                     else
-                                    { //If balance is smaller than OrdeRQuantity, Order the Balance only.
+                                    { //If balance is smaller than OrdeRQuantity, Order the Balance only. Approve to stop further buying.
                                         purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity - Balance;
+                                        purchase_tender_detail.status = Status.Documents_General.Approved;
                                     }
                                 }
                                 else
@@ -177,7 +184,6 @@ namespace entity
 
                                 purchase_order.purchase_order_detail.Add(purchase_order_detail);
                                 purchase_tender_detail.IsSelected = false;
-                                purchase_tender_detail.status = Status.Documents_General.Approved;
                             }
                         }
 

@@ -19,7 +19,7 @@
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="payment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
-        <CollectionViewSource x:Key="production_order_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}" />
+        <CollectionViewSource x:Key="production_order_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
     </Page.Resources>
     <Grid>
         <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
@@ -130,10 +130,9 @@
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
                     <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding production_order.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Task}" IsReadOnly="True" Binding="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Status}" IsReadOnly="True" Binding="{Binding state, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -155,78 +154,5 @@
                 </Grid>
             </TabItem>
         </TabControl>
-
-        <!--<WrapPanel HorizontalAlignment="Center" Margin="0,64">
-			<Border CornerRadius="5" Background="White" Width="256" Margin="16">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="8,4">
-						<Image Source="/Cognitivo;component/Images/Application/128/Sales.png" Height="32" />
-						<Label Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}" />
-					</StackPanel>
-					<TextBlock Style="{StaticResource text_Instructions}">
-						<Run x:Name="salesValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}" />
-						<Run Text="/" />
-						<Run x:Name="salesMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}" />
-					</TextBlock>
-					<ProgressBar VerticalAlignment="Bottom" Margin="4" Value="0" x:Name="progSales" Maximum="1" />
-				</StackPanel>
-			</Border>
-			<Border CornerRadius="5" Background="White" Width="256" Margin="16">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="8,4">
-						<Image Source="/Cognitivo;component/Images/Application/128/SalesReturn.png" Height="32" />
-						<Label Content="{lex:Loc SalesReturn}" Style="{StaticResource H3}" />
-					</StackPanel>
-					<TextBlock Style="{StaticResource text_Instructions}">
-						<Run x:Name="salesreturnValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}" />
-						<Run Text="/" />
-						<Run x:Name="salesreturnMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}" />
-					</TextBlock>
-					<ProgressBar VerticalAlignment="Bottom" Margin="4" Value="0" x:Name="progSalesReturn" Maximum="1" />
-				</StackPanel>
-			</Border>
-			<Border CornerRadius="5" Background="White" Width="256" Margin="16">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="8,4">
-						<Image Source="/Cognitivo;component/Images/Application/128/Purchase.png" Height="32" />
-						<Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource H3}" />
-					</StackPanel>
-					<TextBlock Style="{StaticResource text_Instructions}">
-						<Run x:Name="purchaseValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}" />
-						<Run Text="/" />
-						<Run x:Name="purchaseMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}" />
-					</TextBlock>
-					<ProgressBar VerticalAlignment="Bottom" Margin="4" Value="0" x:Name="progPurchase" Maximum="1" />
-				</StackPanel>
-			</Border>
-			<Border CornerRadius="5" Background="White" Width="256" Margin="16">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="8,4">
-						<Image Source="/Cognitivo;component/Images/Application/128/PurchaseReturn.png" Height="32" />
-						<Label Content="{lex:Loc PurchaseReturn}" Style="{StaticResource H3}" />
-					</StackPanel>
-					<TextBlock Style="{StaticResource text_Instructions}">
-						<Run x:Name="purchasereturnValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}" />
-						<Run Text="/" />
-						<Run x:Name="purchasereturnMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}" />
-					</TextBlock>
-					<ProgressBar VerticalAlignment="Bottom" Margin="4" Value="0" x:Name="progPurchaseReturn" Maximum="1" />
-				</StackPanel>
-			</Border>
-			<Border CornerRadius="5" Background="White" Width="256" Margin="16">
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="8,4">
-						<Image Source="/Cognitivo;component/Images/Application/128/Money.png" Height="32" />
-						<Label Content="{lex:Loc Payment}" Style="{StaticResource H3}" />
-					</StackPanel>
-					<TextBlock Style="{StaticResource text_Instructions}">
-						<Run x:Name="paymentsValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}" />
-						<Run Text="/" />
-						<Run x:Name="paymentsMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}" />
-					</TextBlock>
-					<ProgressBar VerticalAlignment="Bottom" Margin="4" Value="0" x:Name="progPayments" Maximum="1" />
-				</StackPanel>
-			</Border>
-		</WrapPanel>-->
     </Grid>
 </Page>

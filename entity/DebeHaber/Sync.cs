@@ -31,6 +31,7 @@ namespace DebeHaber
             Commercial_Invoices = new List<Commercial_Invoice>();
             Payments = new List<Payments>();
             FixedAssetGroups = new List<FixedAssetGroup>();
+            Production = new List<Production>();
         }
 
         public virtual ICollection<Commercial_Invoice> Commercial_Invoices { get; set; }
@@ -516,6 +517,12 @@ namespace DebeHaber
 
     public class Production_Detail
     {
+        public Production_Detail()
+        {
+            CCListInput = new List<CostCenter>();
+            CCListOutput = new List<CostCenter>();
+        }
+
         public CostCenter cost_center_input { get; set; }
         public CostCenter cost_center_output { get; set; }
         public decimal value { get; set; }
@@ -527,41 +534,36 @@ namespace DebeHaber
         //Collection Property
         public virtual ICollection<CostCenter> CCListOutput { get; set; }
 
-        public void Fill_ByExecution(production_execution_detail Detail, db db, string ProjectName)
+        public void Fill_ByExecution(production_order_detail Detail, db db)
         {
-            value = Detail.unit_cost * Detail.quantity;
+            //Loop through each Execution multiplying Quantity by Unit Cost.
+            foreach (production_execution_detail exe in Detail.production_execution_detail.Where(x => x.is_accounted == false))
+            {
+                value += exe.quantity * exe.unit_cost;
+            }
+
             comment = Detail.name;
             trans_date = Detail.trans_date;
 
             CostCenter CCOutput = new CostCenter();
             CostCenter CCInput = new CostCenter();
 
-            //Check if Execution has Item. If not its an expense.
             if (Detail.item != null)
             {
-                // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                //Run code for Input First. Most Common.
+                if (Detail.is_input)
                 {
-                    if (Detail.is_input)
+                    //Input Code.
+                    if (Detail.item.id_item_type == item.item_type.FixedAssets)
                     {
                         CCInput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                         CCInput.Type = CostCenterTypes.FixedAsset;
                         CCListInput.Add(CCInput);
                     }
-                    else
+                    else if (Detail.item.id_item_type == item.item_type.Product || Detail.item.id_item_type == item.item_type.RawMaterial || Detail.item.id_item_type == item.item_type.Supplies)
                     {
-                        CCOutput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                        CCOutput.Type = CostCenterTypes.FixedAsset;
-                        CCListOutput.Add(CCOutput);
-                    }
-                }
-                // If Item being sold is a Service, Contract, or Task. Take it as Direct Expense.
-                else if (Detail.item.id_item_type == item.item_type.Product || Detail.item.id_item_type == item.item_type.RawMaterial || Detail.item.id_item_type == item.item_type.Supplies)
-                {
-                    app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
+                        app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
 
-                    if (Detail.is_input)
-                    {
                         if (app_cost_center != null)
                         {
                             CCInput.Name = app_cost_center.name;
@@ -578,6 +580,30 @@ namespace DebeHaber
                     }
                     else
                     {
+                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        { CCInput.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                        else
+                        { CCInput.Name = Detail.name; }
+
+                        CCInput.Type = CostCenterTypes.Expense;
+
+                        //Add CostCenter into Detail.
+                        CCListInput.Add(CCInput);
+                    }
+
+                    ///Get Output for this Input
+                    ///Run same code again.
+                    production_order_detail parent_order = Detail.parent;
+                    if (parent_order.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        CCOutput.Name = db.item_asset.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CCOutput.Type = CostCenterTypes.FixedAsset;
+                        CCListOutput.Add(CCOutput);
+                    }
+                    else if (parent_order.item.id_item_type == item.item_type.Product || parent_order.item.id_item_type == item.item_type.RawMaterial || parent_order.item.id_item_type == item.item_type.Supplies)
+                    {
+                        app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
+
                         if (app_cost_center != null)
                         {
                             CCOutput.Name = app_cost_center.name;
@@ -592,21 +618,45 @@ namespace DebeHaber
                         //Add CostCenter into Detail.
                         CCListOutput.Add(CCOutput);
                     }
-                }
-                // Finally if all else fails, assume Item being sold is Expense -- General.
-                else
-                {
-                    if (Detail.is_input)
+                    else
                     {
-                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                        { CCInput.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                        if (db.items.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        { CCOutput.Name = db.items.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                         else
-                        { CCInput.Name = Detail.name; }
+                        { CCOutput.Name = parent_order.name; }
 
-                        CCInput.Type = CostCenterTypes.Expense;
+                        CCOutput.Type = CostCenterTypes.Expense;
 
                         //Add CostCenter into Detail.
-                        CCListInput.Add(CCInput);
+                        CCListOutput.Add(CCOutput);
+                    }
+                }
+                else
+                {
+                    //Output Code.
+                    if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        CCOutput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CCOutput.Type = CostCenterTypes.FixedAsset;
+                        CCListOutput.Add(CCOutput);
+                    }
+                    else if (Detail.item.id_item_type == item.item_type.Product || Detail.item.id_item_type == item.item_type.RawMaterial || Detail.item.id_item_type == item.item_type.Supplies)
+                    {
+                        app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
+
+                        if (app_cost_center != null)
+                        {
+                            CCOutput.Name = app_cost_center.name;
+                            CCOutput.Type = CostCenterTypes.Merchendice;
+                        }
+                        else
+                        {
+                            CCOutput.Name = "Mercaderia";
+                            CCOutput.Type = CostCenterTypes.Merchendice;
+                        }
+
+                        //Add CostCenter into Detail.
+                        CCListOutput.Add(CCOutput);
                     }
                     else
                     {
@@ -619,6 +669,46 @@ namespace DebeHaber
 
                         //Add CostCenter into Detail.
                         CCListOutput.Add(CCOutput);
+                    }
+
+                    ///Get Output for this Input
+                    ///Run same code again.
+                    production_order_detail parent_order = Detail.parent;
+                    if (parent_order.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        CCInput.Name = db.item_asset.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CCInput.Type = CostCenterTypes.FixedAsset;
+                        CCListInput.Add(CCInput);
+                    }
+                    else if (parent_order.item.id_item_type == item.item_type.Product || parent_order.item.id_item_type == item.item_type.RawMaterial || parent_order.item.id_item_type == item.item_type.Supplies)
+                    {
+                        app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
+
+                        if (app_cost_center != null)
+                        {
+                            CCInput.Name = app_cost_center.name;
+                            CCInput.Type = CostCenterTypes.Merchendice;
+                        }
+                        else
+                        {
+                            CCInput.Name = "Mercaderia";
+                            CCInput.Type = CostCenterTypes.Merchendice;
+                        }
+
+                        //Add CostCenter into Detail.
+                        CCListInput.Add(CCInput);
+                    }
+                    else
+                    {
+                        if (db.items.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        { CCInput.Name = db.items.Where(x => x.id_item == parent_order.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                        else
+                        { CCInput.Name = parent_order.name; }
+
+                        CCInput.Type = CostCenterTypes.Expense;
+
+                        //Add CostCenter into Detail.
+                        CCListInput.Add(CCInput);
                     }
                 }
             }

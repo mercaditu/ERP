@@ -29,7 +29,7 @@
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
-        <!--<CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}" />-->
+        <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}" />
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" />
         <CollectionViewSource x:Key="purchase_tender_detail_dimensionViewSource" Source="{Binding purchase_tender_detail_dimension, Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" />
@@ -339,8 +339,8 @@
                                                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto" />
-                                <DataGridTextColumn Binding="{Binding QuantityOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto" />
+                                <DataGridTextColumn Binding="{Binding OrderQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Order}" Width="auto" />
                                 <DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                                      Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=ShowFactorQty, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                     Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />

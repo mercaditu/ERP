@@ -34,8 +34,11 @@ namespace cntrl.PanelAdv
                 Class.CostCalculation CostCalculation = new Class.CostCalculation();
                 inputViewSource = FindResource("inputViewSource") as CollectionViewSource;
 
-                outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
-                outputViewSource.Source = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList, Inputproduction_order_detailList);
+                if (Outputproduction_order_detailList != null && Inputproduction_order_detailList != null)
+                {
+                    outputViewSource = FindResource("outputViewSource") as CollectionViewSource;
+                    outputViewSource.Source = CostCalculation.CalculateOutputOrder(Outputproduction_order_detailList, Inputproduction_order_detailList);
+                }
             }
         }
     }

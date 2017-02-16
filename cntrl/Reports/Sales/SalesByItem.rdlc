@@ -1204,7 +1204,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>= Fields!Code.Value + "-" + Fields!Items.Value</Value>
+                              <Value>=Fields!Items.Value</Value>
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>

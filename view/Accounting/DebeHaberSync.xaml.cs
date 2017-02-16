@@ -79,7 +79,7 @@ namespace Cognitivo.Accounting
                 Get_SalesReturn();
                 Get_Payment();
                 //Get_ItemAsset();
-                Get_ProductionExecution();
+                //Get_ProductionExecution();
 
             }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
@@ -176,7 +176,7 @@ namespace Cognitivo.Accounting
             SalesReturn_Sync();
             PurchaseReturn_Sync();
             PaymentSync();
-            Production_Sync();
+            //Production_Sync();
         }
 
         #region Sales Sync

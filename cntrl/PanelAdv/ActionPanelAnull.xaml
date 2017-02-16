@@ -23,7 +23,7 @@
     </UserControl.Resources>
     <Grid DataContext="{StaticResource payment_schedualViewSource}">
         <Grid Background="{StaticResource AccentColor_Brush}" VerticalAlignment="Top">
-            <Label Content="{lex:Loc Anull}" Style="{StaticResource H2}" Foreground="White" />
+            <Label Content="{lex:Loc Annul}" Style="{StaticResource H2}" Foreground="White" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Foreground="White" Margin="5"
 				   HorizontalAlignment="Right" MouseUp="btnCancel_Click"
 				   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
@@ -40,17 +40,17 @@
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										    Header="{lex:Loc Cognitivo:local:Sales}" IsReadOnly="True"
+                        <DataGridTextColumn x:Name="SalesFColumn" Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+										    Header="{lex:Loc Cognitivo:local:Sales}" IsReadOnly="True" Visibility="Collapsed"
 										    ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										    Header="{lex:Loc Cognitivo:local:Purchase}" IsReadOnly="True"
+                        <DataGridTextColumn x:Name="PurchaseFColumn" Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+										    Header="{lex:Loc Cognitivo:local:Purchase}" IsReadOnly="True" Visibility="Collapsed"
 										    ElementStyle="{StaticResource RightAlignStyle}" />
                         <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										    Header="{lex:Loc Cognitivo:local:Paid}"  IsReadOnly="True"  Width="auto"
+										    Header="{lex:Loc Cognitivo:local:AmountPaid}"  IsReadOnly="True"  Width="auto"
 										    ElementStyle="{StaticResource RightAlignStyle}" />
                         <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										    Header="{lex:Loc Cognitivo:local:Balance}" IsReadOnly="True"  Width="auto"
+										    Header="{lex:Loc Cognitivo:local:AccountBalance}" IsReadOnly="True"  Width="auto"
 										    ElementStyle="{StaticResource RightAlignStyle}" />
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True" />
                         <DataGridComboBoxColumn x:Name="cbxStatusPayment" Header="{lex:Loc Cognitivo:local:Status}" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
@@ -67,16 +67,16 @@
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										Header="{lex:Loc Cognitivo:local:Sales}" IsReadOnly="True"
+                        <DataGridTextColumn x:Name="SalesSColumn" Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+										Header="{lex:Loc Cognitivo:local:Sales}" IsReadOnly="True" Visibility="Collapsed"
 										ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										Header="{lex:Loc Cognitivo:local:Purchase}" IsReadOnly="True"
+                        <DataGridTextColumn x:Name="PurchaseSFColumn" Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+										Header="{lex:Loc Cognitivo:local:Purchase}" IsReadOnly="True" Visibility="Collapsed"
 										ElementStyle="{StaticResource RightAlignStyle}" />
                         <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-										Header="{lex:Loc Cognitivo:local:Paid}"  IsReadOnly="True"  Width="auto"
+										Header="{lex:Loc Cognitivo:local:AccountBalance}"  IsReadOnly="True"  Width="auto"
 										ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridComboBoxColumn x:Name="cbxStatus" Header="{lex:Loc Cognitivo:local:Status}" SelectedValueBinding="{Binding Action,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridComboBoxColumn x:Name="cbxStatus" Header="{lex:Loc Cognitivo:local:Status}" SelectedValueBinding="{Binding Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

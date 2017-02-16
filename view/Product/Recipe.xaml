@@ -62,7 +62,7 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="0,8">
-                    <Label Style="{StaticResource input_label}" Content="Item" />
+                    <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}" />
                     <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
 												 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Text="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -73,16 +73,16 @@
                 <StackPanel Grid.Column="1">
                     <Label Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc QuickAction}" />
                     <TextBlock Style="{StaticResource text_Label}">
-						<Hyperlink Click="btnCalculateCost_Click"><TextBlock x:Name="tbxCalculateCost" Text="Calculate Cost" /></Hyperlink>
+						<Hyperlink Click="btnCalculateCost_Click"><TextBlock x:Name="tbxCalculateCost" Text="{lex:Loc CostCalculation}"/></Hyperlink>
 					</TextBlock>
                 </StackPanel>
             </Grid>
 
             <TabControl Grid.Row="1" Margin="0,0,-0.5,0">
-                <TabItem Header="Direct">
+                <TabItem Header="{lex:Loc DirectCost}">
                     <Grid>
                         <StackPanel>
-                            <Label Style="{StaticResource input_label}" Content="Item" />
+                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}" />
                             <Controls:SmartBox_Item x:Name="sbxItemDetail" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select_detail"
 												 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                         </StackPanel>
@@ -90,13 +90,13 @@
 								  ItemsSource="{Binding Source={StaticResource item_recepieitem_recepie_detailViewSource}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}"
-												Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128" />
+												    Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128" />
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}"
-												Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256" />
+												    Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256" />
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N8}}"
-												Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*" />
+												    Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*" />
                                 <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-										 Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
+										 Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

@@ -241,7 +241,7 @@ namespace Cognitivo.Purchase
                 {
                     entity.Class.Impex_Products ImpexImportProductDetails = new entity.Class.Impex_Products();
                     ImpexImportProductDetails.id_item = 0;
-                    ImpexImportProductDetails.item = "ALL";
+                    ImpexImportProductDetails.item = entity.Brillo.Localize.StringText("General");
                     Impex_ProductsLIST.Add(ImpexImportProductDetails);
                 }
 

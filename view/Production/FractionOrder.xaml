@@ -265,17 +265,16 @@
                                     <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_order_detaillProductViewSource}">
                                         <Grid.Resources>
                                             <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}"
-															  ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
-                                                <Panels:pnl_TreeView   StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
-											 HorizontalAlignment="Stretch"
-											 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-											 TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-											 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" />
+															          ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
+                                                <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											                         IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
+											                         HorizontalAlignment="Stretch"
+											                         Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+											                         TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											                         Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+											                         QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" />
                                             </HierarchicalDataTemplate>
                                         </Grid.Resources>
-
                                         <cntrl:ExtendedTreeView x:Name="treeProduct" ItemsSource="{Binding}" SelectedItemChanged="treeProduct_SelectedItemChanged"
 										  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                                             <TreeView.ItemContainerStyle>
@@ -496,8 +495,8 @@
 									DataContext="{StaticResource production_execution_detailServiceContractViewSource}"
 									IsEnabled="{Binding SelectedItem, ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}">
                                     <StackPanel Orientation="Horizontal" Margin="4">
-                                        <RadioButton Content="Hours" IsChecked="True" x:Name="rbtnHours" />
-                                        <RadioButton Content="Quantity" x:Name="rbtnQuantity" />
+                                        <RadioButton Content="{lex:Loc Hour}" IsChecked="True" x:Name="rbtnHours" />
+                                        <RadioButton Content="{lex:Loc Quantity}" x:Name="rbtnQuantity" />
                                     </StackPanel>
                                     <StackPanel x:Name="stpquantity" Visibility="{Binding IsChecked,ElementName=rbtnHours,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}">
                                         <StackPanel Orientation="Horizontal" Margin="8">
@@ -513,7 +512,7 @@
 														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 														Width="100" />
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"
-														Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+														Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														Width="100" />
                                                 <DataGridTemplateColumn Width="Auto" Header="">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -573,7 +572,7 @@
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}"
 													Binding="{Binding end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
 																	  StringFormat={}{0:g}}" Width="Auto" />
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"
+                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
 													Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto" />
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Hour}" IsReadOnly="True"
 													Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto" />

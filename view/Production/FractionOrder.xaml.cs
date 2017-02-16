@@ -867,9 +867,12 @@ namespace Cognitivo.Production
                 if (production_orderViewSource.View != null)
                 {
                     production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-                    foreach (production_order_detail production_order_detail in production_order.production_order_detail)
+                    if (production_order != null)
                     {
-                        production_order_detail.CalcExecutedQty_TimerTaks();
+                        foreach (production_order_detail production_order_detail in production_order.production_order_detail)
+                        {
+                            production_order_detail.CalcExecutedQty_TimerTaks();
+                        }
                     }
                 }
             }

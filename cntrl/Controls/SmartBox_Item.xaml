@@ -92,14 +92,14 @@
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </Button.Effect>
                 </Button>
-                <ToggleButton x:Name="toggleButton" Width="28" Height="28" Content="" ToolTip="In Stock Search" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
+                <ToggleButton x:Name="toggleButton" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchonlyavailable}" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
                               Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
                               IsChecked="{Binding Exclude_OutOfStock, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>
                 </ToggleButton>
-                <ToggleButton x:Name="toggleButton1" Width="28" Height="28" Content="" ToolTip="Exact Code Search" Foreground="Black" Background="Gold" BorderBrush="Black"
+                <ToggleButton x:Name="toggleButton1" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchexactcode}" Foreground="Black" Background="Gold" BorderBrush="Black"
                               Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
                               IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=ExactSearch, Mode=TwoWay}">
                     <ToggleButton.Effect>
@@ -165,7 +165,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" MinWidth="64" MaxWidth="128" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" MinWidth="128" MaxWidth="256" />
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Marca}" Binding="{Binding Brand}" FontWeight="Bold" MinWidth="64" MaxWidth="128" />
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Brand}" Binding="{Binding Brand}" FontWeight="Bold" MinWidth="64" MaxWidth="128" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Stock}" Binding="{Binding InStock, StringFormat=N2}" Width="32" />
                     </DataGrid.Columns>
                 </DataGrid>

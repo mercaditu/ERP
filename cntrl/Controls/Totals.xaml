@@ -25,7 +25,7 @@
         </Storyboard>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-        <Label Content="TOTAL" Style="{StaticResource generic_Label}"
+        <Label Content="{lex:Loc Total}" Style="{StaticResource generic_Label}"
                    Foreground="{StaticResource AccentColor_Introvert}" VerticalAlignment="Center" />
         <Label Content="{Binding GrandTotal, FallbackValue=1000,  NotifyOnTargetUpdated=True, StringFormat={}{0:N}, ElementName=_Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                    Style="{StaticResource H2}" x:Name="lblTotal" VerticalAlignment="Center" ContentStringFormat="N2"
@@ -48,9 +48,9 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc VAT}" Foreground="White" HorizontalAlignment="Center" />
                     <DataGrid HeadersVisibility="None" Margin="2" Background="Transparent" RowBackground="Transparent" Foreground="White" />
                     <Rectangle Style="{StaticResource line_Bar}" />
-                    <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center" />
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Discount}" Foreground="White" HorizontalAlignment="Center" />
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
+                        <Label Content="{lex:Loc Discount}" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
                         <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
@@ -64,7 +64,7 @@
                         <Label Content="%" Style="{StaticResource generic_Label}" Foreground="White" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
+                        <Label Content="{lex:Loc Discount}" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
                         <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
@@ -78,7 +78,7 @@
                     </StackPanel>
                     <Rectangle Style="{StaticResource line_Bar}" />
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc QuickAction}" Foreground="White" HorizontalAlignment="Center" />
-                    <Button Content="Clean Decimals" Click="btnClean_btnClick" HorizontalAlignment="Center" Margin="2" Padding="8,0" />
+                    <Button Content="{lex:Loc Calculate}"/>
                 </StackPanel>
             </Border>
         </Popup>

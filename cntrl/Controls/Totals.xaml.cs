@@ -72,17 +72,9 @@ namespace cntrl.Controls
             }
         }
 
-        //Clean Decimals
-        public event btnClean_ClickedEventHandler btnClean_Click;
-
-        public delegate void btnClean_ClickedEventHandler(object sender);
-
         public void btnClean_btnClick(object sender, RoutedEventArgs e)
         {
-            if (btnClean_Click != null)
-            {
-                btnClean_Click(this);
-            }
+            //Do nothing. Just for Lost Focus.
         }
     }
 }

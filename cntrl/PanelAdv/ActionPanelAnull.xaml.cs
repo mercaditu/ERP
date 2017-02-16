@@ -34,8 +34,11 @@ namespace cntrl.PanelAdv
 
             if (Application == App.Names.SalesInvoice)
             {
-                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                SalesFColumn.Visibility = Visibility.Visible;
+                SalesSColumn.Visibility = Visibility.Visible;
 
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                
                 PaymentSchedualList = sales_invoice.payment_schedual.Where(x => x.debit > 0).ToList();
                 payment_schedualViewSource.Source = PaymentSchedualList;
                 foreach (payment_schedual payment_schedual in PaymentSchedualList)
@@ -54,6 +57,9 @@ namespace cntrl.PanelAdv
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
+                PurchaseFColumn.Visibility = Visibility.Visible;
+                PurchaseSFColumn.Visibility = Visibility.Visible;
+
                 purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
 
                 PaymentSchedualList = purchase_invoice.payment_schedual.Where(x => x.credit > 0).ToList();

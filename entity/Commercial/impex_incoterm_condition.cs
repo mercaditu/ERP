@@ -1,5 +1,6 @@
 namespace entity
 {
+    using Class;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -16,12 +17,18 @@ namespace entity
             is_head = true;
         }
 
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum incoterm_Types
         {
+            [LocalizedDescription("Shipping")]
             Shipping,
+            [LocalizedDescription("Insurance")]
             Insurance,
+            [LocalizedDescription("CustomsDuty")]
             CustomsDuty,
+            [LocalizedDescription("Legal")]
             Legal,
+            [LocalizedDescription("Others")]
             Others
         }
 

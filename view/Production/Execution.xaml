@@ -183,7 +183,7 @@
                 <TabControl IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                     <TabItem x:Name="tabBlank" IsSelected="True">
                         <Grid Background="WhiteSmoke">
-                            <Label Content="Please Select" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource H1}" />
+                            <Label Content="{lex:Loc PleaseSelect}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource H1}" />
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tabProduct">
@@ -429,7 +429,7 @@
 																	  StringFormat={}{0:g}}" Width="Auto" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"
 													Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Width="Auto" />
-                                        <DataGridTextColumn Header="Hours" IsReadOnly="True"
+                                        <DataGridTextColumn Header="{Binding Cognitivo:local:Hour}" IsReadOnly="True"
 													Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" />
@@ -533,7 +533,7 @@
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,150,0">
-            <Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25" />
+            <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center" Width="90" Height="25" />
         </StackPanel>
     </Grid>
 </Page>

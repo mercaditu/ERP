@@ -125,12 +125,12 @@
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
             <StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
                 <Label x:Name="lblForm" Foreground="OrangeRed" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
-                <Label Content="FORM" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
+                <Label Content="{lex:Loc Form}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
             </StackPanel>
 
             <StackPanel x:Name="borderGrid" Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
                 <Label x:Name="lblGrid" Foreground="Gold" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
-                <Label Content="GRID" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
+                <Label Content="{lex:Loc Grid}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
             </StackPanel>
         </StackPanel>
     </Grid>

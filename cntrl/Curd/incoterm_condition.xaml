@@ -34,7 +34,6 @@
                        HorizontalAlignment="Right" MouseDown="Image_MouseDown"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <TextBlock Text="Define incoterm condition." Style="{StaticResource text_Instructions}" />
         <StackPanel HorizontalAlignment="Center">
             <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
             <AdornerDecorator>

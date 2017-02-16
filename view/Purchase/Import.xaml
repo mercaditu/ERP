@@ -106,7 +106,7 @@
                     </TextBlock>
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal" VerticalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <Label Content="{Binding Currency.name,Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Currency}" />
+                    <Label Content="{Binding Currency.name, Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Curr}" />
                     <TextBox Text="{Binding fx_rate,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
                 </StackPanel>
             </StackPanel>
@@ -114,24 +114,24 @@
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch" />
 
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True" SelectionChanged="TabControl_SelectionChanged">
-                <TabItem Header="{lex:Loc Impex}">
+                <TabItem Header="{lex:Loc Date}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc EstimatedDateofDeparture}" Style="{StaticResource input_label}" />
                             <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding est_shipping_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}" />
-                            <Label Content="{lex:Loc LandedDate}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}" />
                             <DatePicker SelectedDate="{Binding est_landed_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}" />
                         </StackPanel>
                         <StackPanel  Grid.Column="1">
-                            <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc EstimatedDateofArrival}" Style="{StaticResource input_label}" />
                             <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding est_landed_date, Mode=TwoWay,
                                  UpdateSourceTrigger=PropertyChanged}"
                                 Style="{StaticResource input_datepicker}" />
-                            <Label Content="{lex:Loc LandedArrivalDate}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}" />
                             <DatePicker SelectedDate="{Binding real_landed_date, Mode=TwoWay,
                               UpdateSourceTrigger=PropertyChanged}"
                                 Style="{StaticResource input_datepicker}" />
@@ -164,7 +164,7 @@
 
                                 <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="Landed" ElementStyle="{StaticResource RightAlignStyle}" />
+                                                Header="{lex:Loc Cognitivo:local:FinalCost}" ElementStyle="{StaticResource RightAlignStyle}" />
 
                                 <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
@@ -195,7 +195,7 @@
                                                             DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"
                                                             SelectedValueBinding="{Binding number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
                                     <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                                        Header="Value" ElementStyle="{StaticResource RightAlignStyle}" />
+                                                        Header="{lex:Loc Cognitivo:local:Value}" ElementStyle="{StaticResource RightAlignStyle}" />
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource currencyfxViewSource}}"
                                                             DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
                                                             SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

@@ -59,7 +59,7 @@
 						  ItemsSource="{Binding Source={StaticResource impex_incotermimpex_incoterm_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionUnit="Cell"
 						  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <DataGrid.Columns>
-                    <DataGridComboBoxColumn Header="condition" Width="*"
+                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
 												ItemsSource="{Binding Source={StaticResource incoterm_conditionViewSource}}"
 												DisplayMemberPath="name" SelectedValuePath="id_incoterm_condition" SelectedValueBinding="{Binding id_incoterm_condition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                     <DataGridCheckBoxColumn Binding="{Binding buyer, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Buyer}" Width="*" />

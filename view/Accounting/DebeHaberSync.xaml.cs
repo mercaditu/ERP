@@ -100,7 +100,7 @@ namespace Cognitivo.Accounting
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
-                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).Include(x => x.contact).ToListAsync();
+                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).Include(x => x.sales_invoice_detail).Include(x => x.contact).ToListAsync();
         }
 
         public async void Get_Payment()
@@ -110,7 +110,7 @@ namespace Cognitivo.Accounting
                 x.payment.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.payment.is_accounted == false &&
-                x.payment.status == Status.Documents_General.Approved).ToListAsync();
+                x.payment.status == Status.Documents_General.Approved).Include(x => x.payment).ToListAsync();
         }
 
         public async void Get_SalesReturn()

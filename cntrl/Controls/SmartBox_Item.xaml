@@ -12,7 +12,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
-             MinWidth="128" GotFocus="SmartBoxItem_Focus"
+             MinWidth="128" GotFocus="SmartBoxItem_Focus" Focusable="True"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />

@@ -205,20 +205,19 @@ namespace entity
         public static void Start(security_user Sec_User, security_role Role)
         {
             Brillo.Licence Licence = new Brillo.Licence();
-            try
-            {
+
                 CurrentSession.UserRole = Role;
 
                 string licensekey = "";
                 app_company app_company;
 
-                using (db db = new db())
+            using (db db = new db())
+            {
+                app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
+                try
                 {
-                    app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-
                     if (app_company != null)
                     {
-                        if (app_company.version != null || app_company.version == "")
                         {
                             Licence.VerifyCompanyLicence(app_company.version);
                             if (Licence.CompanyLicence.versions.Count() == 0)
@@ -226,7 +225,8 @@ namespace entity
                                 licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
                                 app_company.version = licensekey;
                                 db.SaveChanges();
-                            }
+                           
+                        if (app_company.version != null || app_company.version == "") }
                         }
                         else
                         {
@@ -235,10 +235,14 @@ namespace entity
                             db.SaveChanges();
                         }
                     }
+
+                    Licence.VerifyCompanyLicence(licensekey);
                 }
+                catch (Exception)
+                {
 
-                Licence.VerifyCompanyLicence(licensekey);
-
+                }
+            }
                 //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
                 //{
                 //    Version = Versions.Lite;
@@ -256,12 +260,18 @@ namespace entity
                     {
                         security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
 
-                        if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
+                        if (Licence != null)
                         {
-                            if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
+                            if (Licence.CompanyLicence != null)
                             {
-                                security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
-                                Version = Role.Version;
+                                if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
+                                {
+                                    if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
+                                    {
+                                        security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
+                                        Version = Role.Version;
+                                    }
+                                }
                             }
                         }
                         else
@@ -301,11 +311,6 @@ namespace entity
                     myTimer.Interval = 60000;
                     myTimer.Start();
                 }
-            }
-            catch
-            {
-                //  System.Windows.Forms.MessageBox.Show(e.ToString());
-            }
         }
 
         public static void Load_Security()

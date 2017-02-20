@@ -206,10 +206,10 @@ namespace entity
         {
             Brillo.Licence Licence = new Brillo.Licence();
 
-                CurrentSession.UserRole = Role;
+            CurrentSession.UserRole = Role;
 
-                string licensekey = "";
-                app_company app_company;
+            string licensekey = "";
+            app_company app_company;
 
             using (db db = new db())
             {
@@ -218,99 +218,101 @@ namespace entity
                 {
                     if (app_company != null)
                     {
-                        {
-                            Licence.VerifyCompanyLicence(app_company.version);
-                            if (Licence.CompanyLicence.versions.Count() == 0)
-                            {
-                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
-                                app_company.version = licensekey;
-                                db.SaveChanges();
-                           
-                        if (app_company.version != null || app_company.version == "") }
-                        }
-                        else
+
+                        Licence.VerifyCompanyLicence(app_company.version);
+                        if (Licence.CompanyLicence.versions.Count() == 0)
                         {
                             licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
                             app_company.version = licensekey;
                             db.SaveChanges();
-                        }
-                    }
 
-                    Licence.VerifyCompanyLicence(licensekey);
+                            if (app_company.version != null || app_company.version == "")
+                            {
+                            }
+                            else
+                            {
+                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
+                                app_company.version = licensekey;
+                                db.SaveChanges();
+                            }
+                        }
+
+                        Licence.VerifyCompanyLicence(licensekey);
+                    }
                 }
                 catch (Exception)
                 {
 
                 }
             }
-                //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
-                //{
-                //    Version = Versions.Lite;
-                //}
+            //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
+            //{
+            //    Version = Versions.Lite;
+            //}
 
-                Security_CurdList = new List<security_crud>();
-                Security_role_privilageList = new List<security_role_privilage>();
+            Security_CurdList = new List<security_crud>();
+            Security_role_privilageList = new List<security_role_privilage>();
 
-                if (Sec_User != null)
+            if (Sec_User != null)
+            {
+                User = Sec_User;
+                Id_User = User.id_user;
+                UserRole = Role;
+                using (db db = new db())
                 {
-                    User = Sec_User;
-                    Id_User = User.id_user;
-                    UserRole = Role;
-                    using (db db = new db())
-                    {
-                        security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
+                    security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
 
-                        if (Licence != null)
+                    if (Licence != null)
+                    {
+                        if (Licence.CompanyLicence != null)
                         {
-                            if (Licence.CompanyLicence != null)
+                            if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
                             {
-                                if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).Count() > 0)
+                                if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
                                 {
-                                    if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
-                                    {
-                                        security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
-                                        Version = Role.Version;
-                                    }
+                                    security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
+                                    Version = Role.Version;
                                 }
                             }
                         }
-                        else
-                        {
-                            security_role.Version = Versions.Lite;
-                            Version = Versions.Lite;
-                            MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
-                                            "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
-                                            , "Cognitivo");
-                        }
-
-                        db.SaveChanges();
                     }
-
-                    if (Id_Branch == 0)
+                    else
                     {
-                        using (db db = new db())
-                        {
-                            Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).Select(y => y.id_branch).FirstOrDefault();
-                        }
-
-                        Properties.Settings.Default.branch_ID = Id_Branch;
-                        Properties.Settings.Default.Save();
+                        security_role.Version = Versions.Lite;
+                        Version = Versions.Lite;
+                        MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
+                                        "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
+                                        , "Cognitivo");
                     }
 
-                    Properties.Settings.Default.user_Name = User.name_full;
-                    Properties.Settings.Default.Save();
-
-                    //Setting Security, once CurrentSession Data is set.
-                    Load_Security();
-
-                    //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
-                    Load_BasicData(null, null);
-                    //Load Basic Data into Timer.
-                    Timer myTimer = new Timer();
-                    myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                    myTimer.Interval = 60000;
-                    myTimer.Start();
+                    db.SaveChanges();
                 }
+
+                if (Id_Branch == 0)
+                {
+                    using (db db = new db())
+                    {
+                        Id_Branch = db.app_branch.Where(x => x.id_company == _Id_Company && x.is_active).Select(y => y.id_branch).FirstOrDefault();
+                    }
+
+                    Properties.Settings.Default.branch_ID = Id_Branch;
+                    Properties.Settings.Default.Save();
+                }
+
+                Properties.Settings.Default.user_Name = User.name_full;
+                Properties.Settings.Default.Save();
+
+                //Setting Security, once CurrentSession Data is set.
+                Load_Security();
+
+                //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
+                Load_BasicData(null, null);
+                //Load Basic Data into Timer.
+                Timer myTimer = new Timer();
+                myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
+                myTimer.Interval = 60000;
+                myTimer.Start();
+            }
         }
 
         public static void Load_Security()

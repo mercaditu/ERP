@@ -80,12 +80,14 @@ namespace entity.Brillo
         {
             string query = @"select
                                 
-                                parent.id_movement as MovementID,
+                                parent.id_movement as MovementID,parent.id_location as LocationID,Loc.name as Location,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.credit  as QtyBalance,
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
+                                inner join  app_location Loc on parent.id_location=Loc.id_location
+
 
                                 where parent.id_movement={0}
                                 group by parent.id_movement

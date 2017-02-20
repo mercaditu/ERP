@@ -277,10 +277,18 @@ namespace Cognitivo.Product
                 entity.Brillo.Document.Start.Automatic(item_transfer, item_transfer.app_document_range);
             }
 
-            if (ProductTransferDB.SaveChanges() > 0)
+            try
             {
-                toolBar.msgSaved(ProductTransferDB.NumberOfRecords);
+                if (ProductTransferDB.SaveChanges() > 0)
+                {
+                    toolBar.msgSaved(ProductTransferDB.NumberOfRecords);
+                }
             }
+            catch(Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+            }
+          
         }
 
         private void cbxItem_KeyDown(object sender, RoutedEventArgs e)

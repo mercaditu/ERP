@@ -792,7 +792,10 @@ namespace entity.Brillo.Logic
                         movement_debit_quantity = parent_Movement.QtyBalance;
                     }
 
+
                     item_movement.id_location = parent_Movement.LocationID;
+
+
                     item_movement.comment = Comment;
                     item_movement.id_item_product = item_product.id_item_product;
                     item_movement.debit = movement_debit_quantity;

@@ -240,7 +240,7 @@
                                 <DataGrid x:Name="item_ProductDataGrid"
 											  VerticalScrollBarVisibility="Auto"
 											  AutoGenerateColumns="False"
-											  EnableRowVirtualization="True"
+											  EnableRowVirtualization="True" CanUserAddRows="False"
 											  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="Logistics_SelectionChanged">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
@@ -262,7 +262,7 @@
                                 </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_RawDataGrid"
 											  VerticalScrollBarVisibility="Auto"
-											  AutoGenerateColumns="False"
+											  AutoGenerateColumns="False" CanUserAddRows="False"
 											  EnableRowVirtualization="True"  SelectionChanged="Logistics_SelectionChanged"
 											  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
                                     <DataGrid.Columns>
@@ -285,7 +285,7 @@
                                 </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_CapitalDataGrid"
 										VerticalScrollBarVisibility="Auto"
-										AutoGenerateColumns="False" Grid.Column="1"
+										AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False"
 										EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="Logistics_SelectionChanged"
 										RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
                                     <DataGrid.Columns>
@@ -306,7 +306,7 @@
                                 </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_SupplierDataGrid"
 											  VerticalScrollBarVisibility="Auto"
-											  AutoGenerateColumns="False" Grid.Column="1"
+											  AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False"
 											  EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="Logistics_SelectionChanged"
 											  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
                                     <DataGrid.Columns>
@@ -328,7 +328,7 @@
                                     </Binding>
                                 </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_ServiceContractDataGrid"
-										  VerticalScrollBarVisibility="Auto"
+										  VerticalScrollBarVisibility="Auto" CanUserAddRows="False"
 										  AutoGenerateColumns="False" Grid.Column="1"
 										  EnableRowVirtualization="True" Grid.Row="1"
 										  SelectionChanged="Logistics_SelectionChanged"

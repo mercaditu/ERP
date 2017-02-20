@@ -14,5 +14,7 @@ namespace entity.Reporting
         public string Coefficient { get; set; }
         public decimal Hours { get; set; }
         public decimal ComputeHours { get; set; }
+        public decimal Diff { get; set; }
+        public decimal DiffPer { get; set; }
     }
 }

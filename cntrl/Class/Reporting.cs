@@ -493,6 +493,14 @@ namespace cntrl.Class
                 Query =Reports.Production.EmployeesInProduction.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
+            , new Report
+                {
+                Application = entity.App.Names.ProductionOrder,
+                Name =entity.Brillo.Localize.StringText("HR")!= string.Empty ? entity.Brillo.Localize.StringText("HR") :"HR",
+                Path = "cntrl.Reports.Productions.HR.rdlc",
+                Query =Reports.Production.EmployeesInProduction.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
+            }
             };
         }
     }

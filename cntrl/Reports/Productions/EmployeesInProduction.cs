@@ -6,12 +6,13 @@
 										pt.item_description as Task,
 										p.name as Project,
                                         pod.name as ProductionOrder,
-											 start_date as StartDate,
+										start_date as StartDate,
 										end_date as EndDate,
 										  htc.name as Coefficient,
 										sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
-										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours
-
+										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
+                                        (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,
+(1-( (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(end_date,start_date)) / 3600))) as diffPer
 									from production_execution_detail as ped
 
 									inner join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient

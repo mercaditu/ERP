@@ -362,6 +362,7 @@ namespace Cognitivo.Production
                         data.IsSelected = false;
 
                         item_request_detail item_request_detail = new item_request_detail();
+                  
                         item_request_detail.date_needed_by = ItemRequest.neededDate;
                         item_request_detail.id_order_detail = data.id_order_detail;
                         item_request_detail.urgency = ItemRequest.Urgencies;

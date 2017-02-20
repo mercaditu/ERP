@@ -241,6 +241,33 @@ namespace cntrl.Class
                 }
             }
         }
+        //public void BranchChange(db db, int ID, App.Names Application)
+        //{
+        //    if (Application == App.Names.SalesInvoice)
+        //    {
+        //        sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+
+        //        foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+        //        {
+        //            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
+        //            {
+        //                item_movement.trans_date = Local_SalesInvoice.trans_date;
+        //            }
+        //        }
+        //    }
+        //    else if (Application == App.Names.PurchaseInvoice)
+        //    {
+        //        purchase_invoice Local_purchase_invoice = db.purchase_invoice.Find(ID);
+
+        //        foreach (purchase_invoice_detail purchase_invoice_detail in Local_purchase_invoice.purchase_invoice_detail)
+        //        {
+        //            foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+        //            {
+        //                item_movement.trans_date = Local_purchase_invoice.trans_date;
+        //            }
+        //        }
+        //    }
+        //}
 
         //add new item movemt for the new detail inserted
         public void NewMovement(db db, int ID, App.Names Application)
@@ -406,5 +433,7 @@ namespace cntrl.Class
                 }
             }
         }
+
+     
     }
 }

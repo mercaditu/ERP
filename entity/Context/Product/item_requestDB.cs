@@ -102,9 +102,16 @@ namespace entity
                 purchase_tender.comment = item_request.comment;
 
                 int Line = 0;
-                if (production_line.FirstOrDefault() != null)
+                if (item_request.production_order.production_line != null)
                 {
-                    Line = production_line.FirstOrDefault().id_production_line;
+                    Line = item_request.production_order.production_line.id_production_line;
+                }
+                else
+                {
+                    if (production_line.FirstOrDefault() != null)
+                    {
+                        Line = production_line.FirstOrDefault().id_production_line;
+                    }
                 }
 
                 production_order production_order = orderdb.New(item_request.name, production_order.ProductionOrderTypes.Fraction, Line);
@@ -283,7 +290,7 @@ namespace entity
                                 production_order_dimension.value = item_request_dimension.value;
                                 production_order_detail.production_order_dimension.Add(production_order_dimension);
                             }
-
+                         
                             production_order.production_order_detail.Add(production_order_detail);
 
                             //production_execution.production_order = production_order;

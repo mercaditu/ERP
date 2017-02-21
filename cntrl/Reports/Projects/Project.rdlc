@@ -317,7 +317,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Factor</Value>
+                              <Value>M2</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -346,6 +346,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1161,7 +1162,7 @@ Fields!status.Value=6,"Management_Approved"
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.51366cm</Height>
-        <Width>30.04032cm</Width>
+        <Width>30.04031cm</Width>
         <Style>
           <Border>
             <Style>None</Style>

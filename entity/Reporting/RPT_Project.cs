@@ -28,5 +28,9 @@ namespace entity.Reporting
         public decimal TotalInvoiced { get; set; }
         public decimal TotalPaid { get; set; }
         public decimal Balance { get; set; }
+        public decimal Hours { get; set; }
+        public decimal ComputeHours { get; set; }
+        public decimal Diff { get; set; }
+        public decimal DiffPer { get; set; }
     }
 }

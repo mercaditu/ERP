@@ -275,6 +275,10 @@ namespace entity
                                 }
                             }
                         }
+                        else
+                        {
+                            Version = Role.Version;
+                        }
                     }
                     else
                     {

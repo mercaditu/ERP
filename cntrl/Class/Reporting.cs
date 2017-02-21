@@ -495,10 +495,10 @@ namespace cntrl.Class
             }
             , new Report
                 {
-                Application = entity.App.Names.ProductionOrder,
+                Application = entity.App.Names.ActivityPlan,
                 Name =entity.Brillo.Localize.StringText("HR")!= string.Empty ? entity.Brillo.Localize.StringText("HR") :"HR",
-                Path = "cntrl.Reports.Productions.HR.rdlc",
-                Query =Reports.Production.EmployeesInProduction.query,
+                Path = "cntrl.Reports.Projects.HR.rdlc",
+                Query =Reports.Project.Project.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
             };

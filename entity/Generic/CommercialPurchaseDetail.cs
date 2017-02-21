@@ -294,10 +294,12 @@ namespace entity
                     {
                         ApplyDiscount_UnitPrice(_discount, value, unit_cost);
                     }
-                    _discount = value;
-                    RaisePropertyChanged("discount");
                     Calculate_UnitVatDiscount(value);
                     Calculate_SubTotalDiscount(value);
+
+                    _discount = value;
+                    RaisePropertyChanged("discount");
+                   
                 }
             }
         }
@@ -315,14 +317,15 @@ namespace entity
             {
                 if (_DiscountVat != value)
                 {
-                    _DiscountVat = value;
-                    RaisePropertyChanged("DiscountVat");
+                 
 
                     if (State > 0)
                     {
                         Calculate_UnitDiscount(value);
                         Calculate_SubTotalVatDiscount(value);
                     }
+                    _DiscountVat = value;
+                    RaisePropertyChanged("DiscountVat");
                 }
             }
         }
@@ -412,7 +415,7 @@ namespace entity
         /// <param name="discount"></param>
         public void Calculate_SubTotalDiscount(decimal discount)
         {
-            _Discount_SubTotal = _discount * _quantity;
+            Discount_SubTotal = discount * _quantity;
             RaisePropertyChanged("Discount_SubTotal");
         }
 
@@ -422,7 +425,7 @@ namespace entity
         /// <param name="DiscountVat"></param>
         public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
         {
-            _Discount_SubTotal_Vat = _DiscountVat * _quantity;
+            _Discount_SubTotal_Vat = DiscountVat * _quantity;
             RaisePropertyChanged("Discount_SubTotal_Vat");
         }
 

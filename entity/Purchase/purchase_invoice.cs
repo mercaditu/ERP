@@ -145,6 +145,7 @@ namespace entity
                         detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
                         detail.RaisePropertyChanged("DiscountVat");
                     }
+                    RaisePropertyChanged("GrandTotal");
                 }
             }
         }

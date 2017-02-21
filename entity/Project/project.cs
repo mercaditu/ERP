@@ -102,12 +102,15 @@ namespace entity
         public int priority { get; set; }
         public bool is_active { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         [NotMapped]
         public int SelectedCount { get; set; }
 
         [NotMapped]
         public bool is_Executable { get; set; }
-
+        
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
         public virtual app_currency app_currency { get; set; }

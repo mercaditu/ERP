@@ -111,6 +111,9 @@
         [NotMapped]
         public int TotalSelected { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public virtual sales_order sales_order { get; set; }
         public virtual project project { get; set; }
         public virtual production_order production_order { get; set; }

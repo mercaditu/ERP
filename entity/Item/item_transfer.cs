@@ -146,6 +146,9 @@ namespace entity
 
         #endregion Branch => Navigation
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public virtual ICollection<item_transfer_detail> item_transfer_detail { get; set; }
 
         public virtual app_document_range app_document_range { get; set; }

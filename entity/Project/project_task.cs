@@ -226,6 +226,12 @@ namespace entity
         [NotMapped]
         private bool Parent_selected;
 
+        /// <summary>
+        /// Percentage of Task Completion.
+        /// </summary>
+        public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
+        private decimal _completed;
+
         public virtual project project { get; set; }
 
         public virtual item items

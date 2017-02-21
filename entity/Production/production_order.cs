@@ -132,6 +132,9 @@ namespace entity
 
         public DateTime? end_date_est { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public ProductionOrderTypes type { get; set; }
 
         public virtual production_line production_line { get; set; }

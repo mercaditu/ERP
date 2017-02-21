@@ -72,6 +72,9 @@ namespace entity
         public DateTime? real_landed_date { get; set; }
         public DateTime? real_arrival_date { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         [NotMapped]
         public app_currencyfx Currencyfx { get; set; }
 

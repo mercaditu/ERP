@@ -41,6 +41,9 @@ namespace entity
 
         private Status.Documents _status;
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public virtual app_branch app_branch { get; set; }
         public virtual ICollection<item_inventory_detail> item_inventory_detail { get; set; }
     }

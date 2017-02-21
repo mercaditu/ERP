@@ -9,7 +9,7 @@ namespace DebeHaber
 
     public enum States { Approved = 1, Annuled = 2 }
 
-    public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
+    public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4, Production = 5 }
 
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
@@ -633,9 +633,24 @@ namespace DebeHaber
                 }
                 else
                 {
-                    //Output Code.
-                    if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                    string ProjectName = "";
+
+                    if (Detail.project_task != null || Detail.id_project_task != null)
                     {
+                        ProjectName = db.project_task.Where(x => x.id_project_task == Detail.id_project_task).Select(x => x.project.name).FirstOrDefault();
+                    }
+
+                    if (string.IsNullOrEmpty(ProjectName))
+                    {   
+                        //If linked with Project, show project value.
+                        project_task task = Detail.project_task;
+                        project project = task.project;
+                        CCOutput.Name = task.project.name;
+                        CCOutput.Type = CostCenterTypes.Production;
+                    }
+                    else if(Detail.item.id_item_type == item.item_type.FixedAssets)
+                    {   
+                        //Output Code.
                         CCOutput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                         CCOutput.Type = CostCenterTypes.FixedAsset;
                         CCListOutput.Add(CCOutput);

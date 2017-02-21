@@ -192,6 +192,7 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 item_transfer.IsSelected = true;
+                ProductTransferDB.ApproveOrigin(item_transfer, false);
                 ProductTransferDB.ApproveDestination(item_transfer, false);
             }
         }
@@ -308,25 +309,31 @@ namespace Cognitivo.Product
                     item_transfer_detail.quantity_origin = 1;
 
                     item_transfer_detail.timestamp = DateTime.Now;
-                    item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
+                  
+                  
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                     item_transfer_detail.Quantity_InStock = sbxItem.QuantityInStock; //(decimal)StockCalculations.Count_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
                     item_transfer_detail.RaisePropertyChanged("item_product");
 
-                    foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
+                    if (itemMovement.item_movement != null)
                     {
-                        item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                        item_transfer_dimension.item_transfer_detail = item_transfer_detail;
-                        item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
-                        if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+                        item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
+                        foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                         {
-                            item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
-                        }
+                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                            item_transfer_dimension.item_transfer_detail = item_transfer_detail;
+                            item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
+                            if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+                            {
+                                item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+                            }
 
-                        item_transfer_dimension.value = item_movement_dimension.value;
-                        item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            item_transfer_dimension.value = item_movement_dimension.value;
+                            item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                        }
                     }
+                    
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
                 }
                 else

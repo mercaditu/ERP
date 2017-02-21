@@ -152,10 +152,10 @@
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" VerticalAlignment="Top">
+                        <!--<Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" VerticalAlignment="Top">
 
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                        </Grid>
+                        </Grid>-->
                         <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Exclude_OutOfStock="True" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" />
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable, Converter={StaticResource True2False}}"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"

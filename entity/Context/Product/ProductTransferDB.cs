@@ -71,14 +71,14 @@ namespace entity
             //Run foreach on all Transfers that are selected and that Item Transfer Detail is still pending.
             //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.item_transfer_detail.Where(y => y.status == Status.Documents_General.Pending).Count() > 0))
             //{
-            foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Pending))
+            foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
             {
                 Discount_Items_Origin(item_transfer_detail, MoveByTruck);
 
                 //transit
                 NumberOfRecords += 1;
-                item_transfer.status = Status.Transfer.Transit;
-                item_transfer.RaisePropertyChanged("status");
+                //item_transfer.status = Status.Transfer.Transit;
+                //item_transfer.RaisePropertyChanged("status");
             }
             //  }
 
@@ -103,10 +103,16 @@ namespace entity
                     item_transfer_detail.timestamp = DateTime.Now;
                     item_transfer_detail.status = Status.Documents_General.Approved;
                     item_transfer_detail.RaisePropertyChanged("status");
-                    item_transfer.status = Status.Transfer.Approved;
-                    item_transfer.RaisePropertyChanged("status");
+
                 }
             }
+            if (item_transfer.item_transfer_detail.Count() == item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved).Count())
+            {
+                item_transfer.status = Status.Transfer.Approved;
+                item_transfer.RaisePropertyChanged("status");
+            }
+
+
 
             ///Print Document only if
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)

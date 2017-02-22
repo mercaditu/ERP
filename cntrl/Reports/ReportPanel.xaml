@@ -33,7 +33,10 @@
                 </WindowsFormsHost>
             </TabItem>
             <TabItem Header="Data">
-            <syncfusion:SfDataGrid x:Name="sfdatagrid" />
+                <StackPanel>
+                <Button Content="Export to Excel" Click="Export_Click"/>
+                <syncfusion:SfDataGrid x:Name="sfdatagrid"   AllowGrouping="True"  ShowGroupDropArea="True" />
+                </StackPanel>
             </TabItem>
         </TabControl>
 

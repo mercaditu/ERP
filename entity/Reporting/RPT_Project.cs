@@ -33,5 +33,6 @@ namespace entity.Reporting
         public decimal Diff { get; set; }
         public decimal DiffPer { get; set; }
         public decimal Completed { get; set; }
+        public decimal CompletedHours { get; set; }
     }
 }

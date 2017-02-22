@@ -399,7 +399,7 @@ namespace Cognitivo.Product
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
                     item_movement item_movement = ProductTransferDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                    if (item_transfer_detail != null)
+                    if (item_movement != null)
                     {
                         item_transfer_detail.movement_id = (int)item_movement.id_movement;
                         item_transfer_detail.batch_code = item_movement.code;
@@ -419,6 +419,7 @@ namespace Cognitivo.Product
                     item_transfer_detail.RaisePropertyChanged("item_product");
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
                 }
+                item_transferitem_transfer_detailViewSource.View.Refresh();
             }
         }
     }

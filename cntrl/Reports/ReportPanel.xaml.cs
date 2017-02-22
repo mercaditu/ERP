@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
 
+
 namespace cntrl
 {
     public partial class ReportPanel : UserControl
@@ -318,6 +319,15 @@ namespace cntrl
             RefreshPanel = true;
 
             Fill();
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            //var options = new ExcelExportingOptions();
+            //options.AllowOutlining = true;
+            //var excelEngine = sfdatagrid.Export(sfdatagrid.View, options);
+            //var workBook = excelEngine.Excel.Workbooks[0];
+            //workBook.SaveAs("Sample.xlsx");
         }
     }
 

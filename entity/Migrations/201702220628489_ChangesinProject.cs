@@ -20,6 +20,7 @@ namespace entity.Migrations
             AddColumn("item_transfer_detail", "verified_by", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("purchase_packing_detail", "verified_quantity", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("purchase_packing_detail", "verified_by", c => c.Decimal(precision: 20, scale: 9));
+            AddColumn("production_order_detail", "completed", c => c.Decimal(nullable: false, precision: 20, scale: 9));
             AddColumn("purchase_order", "is_archived", c => c.Boolean(nullable: false));
             AddColumn("sales_packing_detail", "verified_quantity", c => c.Decimal(precision: 20, scale: 9));
             AddColumn("sales_packing_detail", "verified_by", c => c.Decimal(precision: 20, scale: 9));
@@ -44,6 +45,7 @@ namespace entity.Migrations
             DropColumn("sales_packing_detail", "verified_by");
             DropColumn("sales_packing_detail", "verified_quantity");
             DropColumn("purchase_order", "is_archived");
+            DropColumn("production_order_detail", "completed");
             DropColumn("purchase_packing_detail", "verified_by");
             DropColumn("purchase_packing_detail", "verified_quantity");
             DropColumn("item_transfer_detail", "verified_by");

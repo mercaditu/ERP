@@ -175,8 +175,8 @@ namespace entity
         /// <summary>
         /// Percentage of Task Completion.
         /// </summary>
-        //public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
-        //private decimal _completed;
+        public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
+        private decimal _completed;
 
         //Self Referencing
         public virtual production_order_detail parent { get; set; }

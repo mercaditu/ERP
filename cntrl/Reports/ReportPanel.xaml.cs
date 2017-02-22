@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
-using Syncfusion.UI.Xaml.Grid.Converter;
+
 namespace cntrl
 {
     public partial class ReportPanel : UserControl
@@ -163,6 +163,31 @@ namespace cntrl
             }
         }
 
+        public void Filter()
+        {
+            this.reportViewer.Reset();
+
+            ReportDataSource reportDataSource1 = new ReportDataSource();
+            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+
+            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            // translate the report
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
+            reportViewer.LocalReport.LoadReportDefinition(reportStream);
+
+            ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
+            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+
+            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
+        }
+
         public void Fill()
         {
             this.reportViewer.Reset();
@@ -205,31 +230,6 @@ namespace cntrl
             // translate the report
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
-            reportViewer.LocalReport.LoadReportDefinition(reportStream);
-
-            ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
-
-            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
-
-            reportViewer.Refresh();
-            reportViewer.RefreshReport();
-        }
-
-        public void Filter()
-        {
-            this.reportViewer.Reset();
-
-            ReportDataSource reportDataSource1 = new ReportDataSource();
-            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
-
-            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
-            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-            // translate the report
-            reportStream = RdlcReportHelper.TranslateReport(reportStream);
             reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
             ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
@@ -316,7 +316,6 @@ namespace cntrl
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             RefreshPanel = true;
-
             Fill();
         }
 
@@ -326,16 +325,17 @@ namespace cntrl
             options.AllowOutlining = false;
             var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
             var workBook = excelEngine.Excel.Workbooks[0];
+            //Add code to show save panel.
             workBook.SaveAs("Sample.xlsx");
         }
 
-        private void ExportPDF_Click(object sender, RoutedEventArgs e)
-        {
-            PdfExportingOptions options = new PdfExportingOptions();
-            options.ExportGroups = true;
-            var document = sfdatagrid.ExportToPdf(options);
-            document.Save("Sample.pdf");
-        }
+        //private void ExportPDF_Click(object sender, RoutedEventArgs e)
+        //{
+        //    PdfExportingOptions options = new PdfExportingOptions();
+        //    options.ExportGroups = true;
+        //    var document = sfdatagrid.ExportToPdf(options);
+        //    document.Save("Sample.pdf");
+        //}
     }
 
     public static class RdlcReportHelper

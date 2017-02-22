@@ -10,7 +10,6 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
-              xmlns:sf="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.Data.WPF"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
@@ -34,9 +33,9 @@
             </TabItem>
             <TabItem Header="Data">
                 <StackPanel>
-                <Button Content="Export to Excel" Click="Export_Click"/>
-                    <Button Content="Export to PDF" Click="ExportPDF_Click"/>
-                    <syncfusion:SfDataGrid x:Name="sfdatagrid"   AllowGrouping="True"  ShowGroupDropArea="True" />
+                <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click"/>
+                    <!--<Button Content="Export to PDF" Click="ExportPDF_Click"/>-->
+                    <syncfusion:SfDataGrid x:Name="sfdatagrid" Background="White" AllowGrouping="True" ShowGroupDropArea="True" />
                 </StackPanel>
             </TabItem>
         </TabControl>

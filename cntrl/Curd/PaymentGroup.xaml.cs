@@ -64,7 +64,7 @@ namespace cntrl.Curd
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            //cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
@@ -119,8 +119,6 @@ namespace cntrl.Curd
                     {
                         //If payment behaviour is WithHoldingVAT, hide everything.
                         stpaccount.Visibility = Visibility.Collapsed;
-                        stpcreditpurchase.Visibility = Visibility.Collapsed;
-                        stpcreditsales.Visibility = Visibility.Collapsed;
                     }
                     else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
                     {
@@ -131,8 +129,6 @@ namespace cntrl.Curd
                         if (Mode == Modes.Payable)
                         {
                             //If Payable, then Hide->Sales and Show->Payment
-                            stpcreditsales.Visibility = Visibility.Collapsed;
-                            stpcreditpurchase.Visibility = Visibility.Visible;
 
                             CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Load();
@@ -141,8 +137,6 @@ namespace cntrl.Curd
                         else
                         {
                             //If Recievable, then Hide->Payment and Show->Sales
-                            stpcreditpurchase.Visibility = Visibility.Collapsed;
-                            stpcreditsales.Visibility = Visibility.Visible;
 
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
                             PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Load();
@@ -153,8 +147,6 @@ namespace cntrl.Curd
                     {
                         //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
                         stpaccount.Visibility = Visibility.Visible;
-                        stpcreditpurchase.Visibility = Visibility.Collapsed;
-                        stpcreditsales.Visibility = Visibility.Collapsed;
                     }
 
                     //If PaymentType has Document to print, then show Document. Example, Checks or Bank Transfers.
@@ -171,95 +163,6 @@ namespace cntrl.Curd
                 }
             }
         }
-
-        #region Purchase and Sales Returns
-
-        private void purchasereturnComboBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                purchasereturnComboBox_MouseDoubleClick(null, null);
-            }
-        }
-
-        private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                try
-                {
-                    if (purchasereturnComboBox.Data != null)
-                    {
-                        CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                        purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
-                        purchasereturnComboBox.Text = purchase_return.number;
-                        decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).Sum(x => x.debit));
-                        payment_detail.id_purchase_return = purchase_return.id_purchase_return;
-
-                        if (payment_detail.value > return_value)
-                        {
-                            payment_detail.value = return_value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-                        else
-                        {
-                            payment_detail.value = payment_detail.value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private void salesreturnComboBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                salesreturnComboBox_MouseDoubleClick(null, null);
-            }
-        }
-
-        private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                if (salesreturnComboBox.Data != null)
-                {
-                    CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-                    payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                    sales_return sales_return = (sales_return)salesreturnComboBox.Data;
-                    salesreturnComboBox.Text = sales_return.number;
-                    decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
-                    payment_detail.id_sales_return = sales_return.id_sales_return;
-
-                    if (payment_detail.value > return_value)
-                    {
-                        payment_detail.value = return_value;
-                        payment_detail.RaisePropertyChanged("value");
-                    }
-                    else
-                    {
-                        payment_detail.value = payment_detail.value;
-                        payment_detail.RaisePropertyChanged("value");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        #endregion Purchase and Sales Returns
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

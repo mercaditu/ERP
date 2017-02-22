@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
 using Syncfusion.UI.Xaml.Grid.Converter;
+using Syncfusion.UI.Xaml.Grid;
 //using System.Windows.Forms;
 
 namespace cntrl
@@ -116,7 +117,7 @@ namespace cntrl
             if (RefreshPanel)
             {
                 stpFilter.Children.Clear();
-                foreach (DataColumn item in ReportDt.Columns)
+                foreach (System.Data.DataColumn item in ReportDt.Columns)
                 {
                     if (item.DataType == typeof(string))
                     {
@@ -222,6 +223,12 @@ namespace cntrl
 
             ReportDt = dt;
             sfdatagrid.ItemsSource = dt;
+            //Iterate through the list of Columns and localize the names.
+            foreach (GridColumn item in sfdatagrid.Columns)
+            {
+                item.HeaderText =  string.IsNullOrEmpty(entity.Brillo.Localize.StringText(item.HeaderText)) ? entity.Brillo.Localize.StringText(item.HeaderText) : item.HeaderText ;
+            }
+
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             //dgvData.ItemsSource = dt; //DataGrid (BETA).

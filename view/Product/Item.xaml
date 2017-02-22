@@ -155,9 +155,26 @@
                 </AdornerDecorator>
             </StackPanel>
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" Margin="0,180,0,0">
-                <TabItem Header="{lex:Loc Tags}">
+                <TabItem Header="{lex:Loc Basic}">
                     <StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-
+                        <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                        <AdornerDecorator>
+                            <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
+							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
+							 metro:TextBoxHelper.SelectAllOnFocus="True"
+							 Text="{Binding supplier_name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        </AdornerDecorator>
+                        <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                        <AdornerDecorator>
+                            <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
+							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
+							 metro:TextBoxHelper.SelectAllOnFocus="True"
+							 Text="{Binding supplier_code, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                        </AdornerDecorator>
                         <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}" />
                         <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

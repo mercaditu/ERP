@@ -95,6 +95,9 @@ namespace cntrl.Curd
                 detail.id_payment_type = (int)cbxPamentType.SelectedItem;
 
                 //Only one detail per customer. see if you can group by customer.
+
+
+            //Payment approval code so that it inserts into Schedual (Balance) and into Account Detail.
             }
         }
 

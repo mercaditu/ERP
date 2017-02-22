@@ -85,6 +85,13 @@ namespace entity
 
         private decimal _quantity_destination;
 
+        public decimal? verified_by
+        {
+            get { return _verified_by; }
+            set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
+        }
+        private decimal? _verified_by;
+
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 

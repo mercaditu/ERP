@@ -79,13 +79,22 @@ namespace entity
 
         private bool _user_verified;
 
-        public decimal? user_quantity
+        public decimal? verified_quantity
         {
-            get { return _user_quantity; }
-            set { _user_quantity = value; RaisePropertyChanged("user_quantity"); }
+            get { return _verified_quantity; }
+            set { _verified_quantity = value; RaisePropertyChanged("verified_quantity"); }
         }
 
-        private decimal? _user_quantity;
+        private decimal? _verified_quantity;
+
+
+        public decimal? verified_by
+        {
+            get { return _verified_by; }
+            set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
+        }
+        private decimal? _verified_by;
+
 
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }

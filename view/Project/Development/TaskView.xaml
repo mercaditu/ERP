@@ -163,6 +163,8 @@
                                       Width="128" />
                         <Button Content="Link" Click="cbxproperty_SelectionChanged" />
                     </StackPanel>
+                    <Label Content="{lex:Loc Completed%}" Style="{StaticResource input_label}" />
+                    <TextBox x:Name="txtCompleted" Text="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}" Style="{StaticResource input_textbox}" />
                     <Label Content="{lex:Loc description}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
 

@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201702131313179_ItemSupplier_Name_and_Code.Designer.cs">
       <DependentUpon>201702131313179_ItemSupplier_Name_and_Code.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702211314281_ChangesinProject.cs" />
+    <Compile Include="Migrations\201702211314281_ChangesinProject.Designer.cs">
+      <DependentUpon>201702211314281_ChangesinProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account_.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
@@ -735,6 +739,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702131313179_ItemSupplier_Name_and_Code.resx">
       <DependentUpon>201702131313179_ItemSupplier_Name_and_Code.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211314281_ChangesinProject.resx">
+      <DependentUpon>201702211314281_ChangesinProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

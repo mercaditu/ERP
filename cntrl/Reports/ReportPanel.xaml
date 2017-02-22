@@ -9,7 +9,8 @@
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+            xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+              xmlns:sf="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.Data.WPF"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
@@ -32,7 +33,7 @@
                 </WindowsFormsHost>
             </TabItem>
             <TabItem Header="Data">
-                <!--<syncfusion:SfDataGrid x:Name="dgvData" />-->
+            <syncfusion:SfDataGrid x:Name="sfdatagrid" />
             </TabItem>
         </TabControl>
 

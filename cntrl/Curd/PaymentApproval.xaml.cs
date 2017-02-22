@@ -41,10 +41,10 @@ namespace cntrl.Curd
             payment_approve.status = Status.Documents_General.Pending;
             payment_approve.State = EntityState.Added;
 
-            if (Mode == Modes.Recievable)
-            {
-                payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-            }
+            //if (Mode == Modes.Recievable)
+            //{
+            //    payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            //}
 
             payment_approve.IsSelected = true;
 
@@ -61,11 +61,11 @@ namespace cntrl.Curd
                 payment_approve.contact = contacts;
             }
 
-            foreach (payment_schedual payment_schedual in payment_schedualList)
-            {
-                //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
-                Add_PaymentDetail(payment_schedual);
-            }
+            //foreach (payment_schedual payment_schedual in payment_schedualList)
+            //{
+            //    //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
+            //    Add_PaymentDetail(payment_schedual);
+            //}
 
             payment_approve.RaisePropertyChanged("GrandTotal");
             payment_approve.RaisePropertyChanged("GrandTotalDetail");
@@ -290,60 +290,5 @@ namespace cntrl.Curd
         }
 
         #endregion Purchase and Sales Returns
-
-        private void Add_PaymentDetail(payment_schedual payment_schedual)
-        {
-            payment_approve payment_approve = payment_approveViewSource.View.CurrentItem as payment_approve;
-            int CurrencyID = payment_schedual.app_currencyfx.id_currency;
-            if (payment_approve != null)
-            {
-                payment_approve_detail payment_approve_detail = new payment_approve_detail();
-                payment_approve_detail.payment_approve = payment_approve;
-
-                //Get current Active Rate of selected Currency.
-                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-
-                if (app_currencyfx != null)
-                {
-                    payment_approve_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_approve_detail.id_currency = app_currencyfx.id_currency;
-                    payment_approve_detail.id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_approve_detail.payment_approve.id_currencyfx = app_currencyfx.id_currencyfx;
-                    payment_approve_detail.payment_schedual = payment_schedual;
-                    // payment_approve_detail.app_currencyfx = app_currencyfx;
-                }
-
-                payment_approve_detail.IsSelected = true;
-
-                //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
-                if (Mode == Modes.Recievable)
-                {
-                    payment_approve_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
-                                                                           - payment_approve.payment_approve_detail.Where(x => x.id_currency == CurrencyID).Sum(x => x.value);
-                }
-                else
-                {
-                    payment_approve_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountPayableBalance)
-                                                                            - payment_approve.payment_approve_detail.Where(x => x.id_currency == CurrencyID).Sum(x => x.value);
-                }
-
-                payment_schedual.payment_approve_detail = payment_approve_detail;
-                payment_schedual.status = Status.Documents_General.Approved;
-                payment_approve.payment_approve_detail.Add(payment_approve_detail);
-                payment_approvepayment_approve_detailViewSource.View.Refresh();
-            }
-        }
-
-        private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
-        {
-            payment_approve payment_approve = payment_approveViewSource.View.CurrentItem as payment_approve;
-            payment_approve_detail payment_approve_detail = payment_approvepayment_approve_detailViewSource.View.CurrentItem as payment_approve_detail;
-            PaymentDB.payment_approve_detail.Remove(payment_approve_detail);
-            payment_approvepayment_approve_detailViewSource.View.Refresh();
-        }
-
-        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }

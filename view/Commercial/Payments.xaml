@@ -52,6 +52,9 @@
                 <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" CanUserAddRows="False">
                     <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24"
+                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                         <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True" />
                         <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"

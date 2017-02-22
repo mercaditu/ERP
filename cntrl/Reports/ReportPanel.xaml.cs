@@ -11,8 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
-
-
+using Syncfusion.UI.Xaml.Grid.Converter;
 namespace cntrl
 {
     public partial class ReportPanel : UserControl
@@ -323,11 +322,19 @@ namespace cntrl
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            //var options = new ExcelExportingOptions();
-            //options.AllowOutlining = true;
-            //var excelEngine = sfdatagrid.Export(sfdatagrid.View, options);
-            //var workBook = excelEngine.Excel.Workbooks[0];
-            //workBook.SaveAs("Sample.xlsx");
+            var options = new ExcelExportingOptions();
+            options.AllowOutlining = false;
+            var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
+            var workBook = excelEngine.Excel.Workbooks[0];
+            workBook.SaveAs("Sample.xlsx");
+        }
+
+        private void ExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            PdfExportingOptions options = new PdfExportingOptions();
+            options.ExportGroups = true;
+            var document = sfdatagrid.ExportToPdf(options);
+            document.Save("Sample.pdf");
         }
     }
 

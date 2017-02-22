@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\panke\Desktop\13.1\</PublishUrl>
+    <PublishUrl>C:\Users\panke\Desktop\13.2\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -182,6 +182,10 @@
     <Reference Include="Syncfusion.Data.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\precompiledassemblies\14.4.0.15\4.5\Syncfusion.Data.WPF.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.GridConverter.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.GridConverter.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\precompiledassemblies\14.4.0.15\4.5\Syncfusion.SfGrid.WPF.dll</HintPath>

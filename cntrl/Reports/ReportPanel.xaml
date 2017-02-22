@@ -35,7 +35,8 @@
             <TabItem Header="Data">
                 <StackPanel>
                 <Button Content="Export to Excel" Click="Export_Click"/>
-                <syncfusion:SfDataGrid x:Name="sfdatagrid"   AllowGrouping="True"  ShowGroupDropArea="True" />
+                    <Button Content="Export to PDF" Click="ExportPDF_Click"/>
+                    <syncfusion:SfDataGrid x:Name="sfdatagrid"   AllowGrouping="True"  ShowGroupDropArea="True" />
                 </StackPanel>
             </TabItem>
         </TabControl>

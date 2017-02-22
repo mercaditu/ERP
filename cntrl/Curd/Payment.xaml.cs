@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
+
 namespace cntrl.Curd
 {
     public partial class Payment : UserControl

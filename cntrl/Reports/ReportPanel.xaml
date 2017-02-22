@@ -34,12 +34,10 @@
             <TabItem Header="Data">
                 <Grid Background="WhiteSmoke">
                 <Button Content="Excel" Style="{StaticResource btn_green}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4" Click="Export_Click"/>
-                    <!--<Button Content="Export
- to PDF" Click="ExportPDF_Click"/>-->
-                <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch" Margin="0,36,0,0"
+                    <!--<Button Content="Export to PDF" Click="ExportPDF_Click"/>-->
+                    <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch" Margin="0,36,0,0"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"
-                                       SelectionMode="Multiple"
-                                       Background="White" 
+                                       SelectionMode="Multiple" Background="White" 
                                        AllowGrouping="True" AllowFiltering="True"
                                        ShowGroupDropArea="True" />
                 </Grid>

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 
 namespace cntrl.Curd
 {
@@ -21,7 +20,7 @@ namespace cntrl.Curd
 
         private Modes Mode;
         private CollectionViewSource paymentpayment_detailViewSource;
-        private CollectionViewSource paymentViewSource;
+        private CollectionViewSource paymentViewSource, payment_schedualViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
@@ -29,7 +28,6 @@ namespace cntrl.Curd
         {
             InitializeComponent();
 
-            //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
             PaymentDB = _PaymentDB;
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
@@ -54,8 +52,19 @@ namespace cntrl.Curd
             }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
+            await PaymentDB.payment_schedual
+                    .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
+                        && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                        .Include(x => x.sales_invoice)
+                        .Include(x => x.contact)
+                        .OrderBy(x => x.expire_date)
+                        .LoadAsync();
+                payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
@@ -64,164 +73,56 @@ namespace cntrl.Curd
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            //cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
-
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
         }
 
-        #region Events
-
-        private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
-            Grid parentGrid = (Grid)this.Parent;
-            parentGrid.Children.Clear();
-            parentGrid.Visibility = Visibility.Hidden;
-        }
-
-        #endregion Events
-
-        private void SaveChanges()
-        {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            foreach (payment_detail payment_detail in payment.payment_detail)
+            foreach (payment_schedual schedual in PaymentDB.payment_schedual.Local.Where(x => x.IsSelected))
             {
-                if (PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault() != null)
-                {
-                    payment_schedual payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
-                    if (payment_detail.value != payment_schedual.credit)
-                    {
-                        payment_schedual.credit = payment_detail.value;
-                    }
-                }
-                if (PaymentDB.app_account_detail.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault() != null)
-                {
-                    app_account_detail app_account_detail = PaymentDB.app_account_detail.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
-                    if (payment_detail.value != app_account_detail.credit)
-                    {
-                        app_account_detail.credit = payment_detail.value;
-                    }
-                }
+                payment payment = new payment();
+                payment.trans_date = DateTime.Now;
+                payment.id_contact = schedual.id_contact;
+                payment.id_branch = CurrentSession.Id_Branch;
+                payment.id_user = CurrentSession.Id_User;
+
+                payment_detail detail = new payment_detail();
+                detail.value = schedual.AccountReceivableBalance;
+                //Change this. We should get current active FX Rate for the same currency in Schedual. But not same fx rate as schedual.
+                detail.id_currencyfx = 1;
+                detail.id_account = (int)cbxPamentType.SelectedItem; //this is wrong. give Account Cbx a Name and Linked it here.
+                detail.id_payment_type = (int)cbxPamentType.SelectedItem;
+
+                //Only one detail per customer. see if you can group by customer.
             }
-
-            lblCancel_MouseDown(null, null);
         }
 
-        private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            if (cbxPamentType.SelectedItem != null)
+            int ConditionID = Convert.ToInt32(cbxCondition.SelectedIndex);
+
+            if (payment_schedualViewSource.View != null && ConditionID > 0)
             {
-                entity.payment_type payment_type = cbxPamentType.SelectedItem as entity.payment_type;
-                if (payment_type != null)
+                payment_schedualViewSource.View.Filter = i =>
                 {
-                    if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.WithHoldingVAT)
+                    payment_schedual payment_schedual = i as payment_schedual;
+                    if (payment_schedual.AccountReceivableBalance > 0 &&
+                        payment_schedual.sales_invoice.id_condition == ConditionID)
                     {
-                        //If payment behaviour is WithHoldingVAT, hide everything.
-                        stpaccount.Visibility = Visibility.Collapsed;
-                    }
-                    else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
-                    {
-                        //If payment behaviour is Credit Note, then hide Account.
-                        stpaccount.Visibility = Visibility.Collapsed;
-
-                        //Check Mode.
-                        if (Mode == Modes.Payable)
-                        {
-                            //If Payable, then Hide->Sales and Show->Payment
-
-                            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
-                            PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Load();
-                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.purchase_invoice.GrandTotal - x.GrandTotal) > 0);
-                        }
-                        else
-                        {
-                            //If Recievable, then Hide->Payment and Show->Sales
-
-                            CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
-                            PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Load();
-                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x => (x.sales_invoice.GrandTotal - x.GrandTotal) > 0);
-                        }
+                        return true;
                     }
                     else
                     {
-                        //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
-                        stpaccount.Visibility = Visibility.Visible;
+                        return false;
                     }
-
-                    //If PaymentType has Document to print, then show Document. Example, Checks or Bank Transfers.
-                    if (payment_type.id_document > 0 && paymentpayment_detailViewSource != null && paymentpayment_detailViewSource.View != null)
-                    {
-                        stpDetailDocument.Visibility = Visibility.Visible;
-                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                        payment_detail.id_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault().id_range;
-                    }
-                    else
-                    {
-                        stpDetailDocument.Visibility = Visibility.Collapsed;
-                    }
-                }
+                };
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SaveChanges();
-        }
-
-        private void btnAddDetail_Click(object sender, RoutedEventArgs e)
-        {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detailold = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            payment_detail payment_detail = new payment_detail();
-            payment_detail.payment = payment;
-            payment_detail.value = 0;
-
-            int id_currencyfx = payment_detailold.payment_schedual.FirstOrDefault().id_currencyfx;
-            if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
-            {
-                payment_detail.id_currencyfx = id_currencyfx;
-                payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
-            }
-            int id_payment_schedual = payment_detailold.payment_schedual.FirstOrDefault().id_payment_schedual;
-            if (PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault() != null)
-            {
-                payment_schedual _payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
-                payment_detail.payment_schedual.Add(_payment_schedual);
-            }
-
-            payment.payment_detail.Add(payment_detail);
-            paymentpayment_detailViewSource.View.Refresh();
-        }
-
-        private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
-        {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            payment.payment_detail.Remove(payment_detail);
-            paymentpayment_detailViewSource.View.Refresh();
-        }
-
-        private void cbxPaymentSchedual_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            //if (payment_detail != null)
-            //{
-            //    if (cbxPaymentSchedual.SelectedItem != null)
-            //    {
-            //        payment_detail.payment_schedual.Add(cbxPaymentSchedual.SelectedItem as payment_schedual);
-            //    }
-            //}
-        }
-
-        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-
             paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
     }

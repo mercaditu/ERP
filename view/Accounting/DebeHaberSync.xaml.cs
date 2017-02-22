@@ -227,7 +227,6 @@ namespace Cognitivo.Accounting
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Sales_Json);
-                    db.SaveChanges();
 
                     sales_invoice.IsSelected = false;
                     sales_invoice.is_accounted = true;
@@ -239,6 +238,7 @@ namespace Cognitivo.Accounting
                             schedual.payment_detail.payment.is_accounted = true;
                         }
                     }
+                    db.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -253,8 +253,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }
@@ -307,7 +307,6 @@ namespace Cognitivo.Accounting
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Sales_Json);
-                    db.SaveChanges();
 
                     purchase_invoice.IsSelected = false;
                     purchase_invoice.is_accounted = true;
@@ -333,8 +332,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }
@@ -387,7 +386,6 @@ namespace Cognitivo.Accounting
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Sales_Json);
-                    db.SaveChanges();
 
                     //This will make the Sales Invoice hide from the next load.
                     sales_return.IsSelected = false;
@@ -414,8 +412,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }
@@ -468,7 +466,6 @@ namespace Cognitivo.Accounting
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Sales_Json);
-                    db.SaveChanges();
 
                     //Marks Is Accounted True so that it does not appear again on next load.
                     purchase_return.IsSelected = false;
@@ -496,8 +493,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }
@@ -530,7 +527,6 @@ namespace Cognitivo.Accounting
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
                     Send2API(Sales_Json);
-                    db.SaveChanges();
 
                     payment_detail.IsSelected = false;
                     payment_detail.payment.is_accounted = true;
@@ -548,8 +544,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }
@@ -612,8 +608,8 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    fill();
                     db.SaveChanges();
+                    fill();
                 }
             }
         }

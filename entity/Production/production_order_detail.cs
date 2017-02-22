@@ -173,10 +173,27 @@ namespace entity
         public DateTime? end_date_est { get; set; }
 
         /// <summary>
-        /// Percentage of Task Completion.
+        /// Percentage of Order Completion.
         /// </summary>
-        public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
+        public decimal completed
+        {
+            get
+            {
+                return _completed;
+            }
+            set
+            {
+                _completed = value;
+                RaisePropertyChanged("completed");
+
+                percent = (_completed * 100).ToString() + " %";
+                RaisePropertyChanged("percent");
+            }
+        }
         private decimal _completed;
+
+        [NotMapped]
+        public string percent { get; set; }
 
         //Self Referencing
         public virtual production_order_detail parent { get; set; }

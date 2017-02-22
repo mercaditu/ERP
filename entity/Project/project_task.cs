@@ -229,8 +229,25 @@ namespace entity
         /// <summary>
         /// Percentage of Task Completion.
         /// </summary>
-        public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
+        public decimal completed
+        {
+            get
+            {
+                return _completed;
+            }
+            set
+            {
+                _completed = value;
+                RaisePropertyChanged("completed");
+
+                percent = (_completed * 100).ToString() + " %";
+                RaisePropertyChanged("percent");
+            }
+        }
         private decimal _completed;
+
+        [NotMapped]
+        public string percent { get; set; }
 
         public virtual project project { get; set; }
 

@@ -148,9 +148,9 @@
                                     <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}" />
                                     <ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}"
-							  DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							  SelectedValuePath="id_production_line"
-							  ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
+							                  DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							                  SelectedValuePath="id_production_line"
+							                  ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
                                         <ComboBox.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel />
@@ -159,7 +159,7 @@
                                     </ComboBox>
                                     <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
                                     <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}"
-								  SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+								                SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                     </ComboBox>
                                     <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
                                     <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
@@ -183,6 +183,9 @@
 													btnParent_Click="btnAddParentTask_Click" />
                                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                         <StackPanel x:Name="stpcode" IsEnabled="False">
+                                            <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
+                                            <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
+                                                    Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}"/>
                                             <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
                                             <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"
 												  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"

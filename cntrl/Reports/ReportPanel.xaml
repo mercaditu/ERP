@@ -32,11 +32,13 @@
                 </WindowsFormsHost>
             </TabItem>
             <TabItem Header="Data">
-                <StackPanel>
-                <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click"/>
-                    <!--<Button Content="Export to PDF" Click="ExportPDF_Click"/>-->
-                    <syncfusion:SfDataGrid x:Name="sfdatagrid" Background="White" AllowGrouping="True" ShowGroupDropArea="True" />
-                </StackPanel>
+                <Grid Background="WhiteSmoke">
+                <Button Content="Excel" Style="{StaticResource btn_green}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4" Click="Export_Click"/>
+                    <!--<Button Content="Export
+ to PDF" Click="ExportPDF_Click"/>-->
+                <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch" Margin="0,36,0,0"
+                                       Background="White" AllowGrouping="True" ShowGroupDropArea="True" />
+                </Grid>
             </TabItem>
         </TabControl>
 

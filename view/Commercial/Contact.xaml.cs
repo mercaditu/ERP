@@ -357,6 +357,7 @@ namespace Cognitivo.Commercial
             if (contactChildListViewSource != null)
             {
                 contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == _contact.id_contact || x.id_contact == _contact.id_contact).ToList();
+                contactChildListViewSource.View.Refresh();
             }
         }
 
@@ -427,9 +428,9 @@ namespace Cognitivo.Commercial
             if (contact != null && cbxRelation.ContactID > 0)
             {
                 contact relatedto_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
-                contact.parent = relatedto_contact;
+                relatedto_contact.parent = contact;
 
-                LoadRelatedContactOnThread(relatedto_contact);
+                LoadRelatedContactOnThread(contact);
             }
         }
 

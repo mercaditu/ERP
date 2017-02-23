@@ -28,7 +28,7 @@
                                         (sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)-(sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient)) as diff,
 (1-( (sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)-(sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600))) * 100 as diffPer,
 pod.completed as Completed,pod.completed*100 as Percentage,
-(((sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient) *100)/pod.completed) as CompletedHours,
+(((sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient) *100)/pod.completed) as CompletedHours
 										from production_order as po
 
 										left join projects as p on po.id_project = p.id_project

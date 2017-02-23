@@ -57,15 +57,18 @@
                     <ComboBox x:Name="cbxCondition" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
 						                ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
-                                      
                               SelectionChanged="cbxCondition_SelectionChanged"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
+                    <DatePicker x:Name="dpDate" SelectedDateChanged="dpDate_Changed" Style="{StaticResource input_datepicker}"/>
                 </StackPanel>
             </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}" />
 
                 <!-- Detail -->
-                <Grid Margin="0,120,0,0">
+                <Grid Margin="0,64,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="1*"/>
@@ -95,33 +98,9 @@
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 										Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True" />
                     </DataGrid.Columns>
-                    <DataGrid.RowDetailsTemplate>
-                        <DataTemplate>
-                            <DataGrid Margin="4" MaxHeight="256"
-							ItemsSource="{Binding sales_invoice.sales_invoice_detail}"
-							CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
-							VirtualizingPanel.VirtualizationMode="Recycling">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}"
-														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100" />
-                                    <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-														Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128" />
-                                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
-                                    <!-- UnitPrice_Vat -->
-                                    <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-														Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" />
-
-                                    <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, Mode=OneWay, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}"
-														Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DataTemplate>
-                    </DataGrid.RowDetailsTemplate>
                 </DataGrid>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="1" Background="{StaticResource appConfig}">
+                    <CheckBox Content="{lex:Loc SelectAll}" Style="{StaticResource input_checkbox}" Checked="chbxSelectAll_Checked"/>
                     <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
                     <Label Content="{Binding trans_date, Mode=OneTime, FallbackValue=2016}"/>
                     <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}" />

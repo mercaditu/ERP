@@ -13,10 +13,10 @@ namespace cntrl.Curd
     public partial class PaymentGroup : UserControl
     {
         //  PaymentDB PaymentDB = new PaymentDB();
-        
 
-     
-        private CollectionViewSource  payment_schedualViewSource;
+
+
+        private CollectionViewSource payment_schedualViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
@@ -24,9 +24,9 @@ namespace cntrl.Curd
         {
             InitializeComponent();
 
-          
+
             PaymentDB = _PaymentDB;
-          
+
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -64,11 +64,11 @@ namespace cntrl.Curd
                 payment.id_user = CurrentSession.Id_User;
 
                 payment_detail payment_detail = new payment_detail();
-               //Only one detail per customer. see if you can group by customer.
+                //Only one detail per customer. see if you can group by customer.
                 payment_detail.payment = payment;
+
                 //Get current Active Rate of selected Currency.
                 app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == schedual.app_currencyfx.id_currency && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-
                 if (app_currencyfx != null)
                 {
                     payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
@@ -76,6 +76,7 @@ namespace cntrl.Curd
                     payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
                     payment_detail.app_currencyfx = app_currencyfx;
                 }
+
                 payment_detail.value = schedual.AccountReceivableBalance;
                 payment_detail.IsLocked = false;
                 payment_detail.id_account = (int)cbxAccount.SelectedValue;
@@ -84,14 +85,9 @@ namespace cntrl.Curd
 
                 payment.payment_detail.Add(payment_detail);
                 PaymentDB.payments.Add(payment);
-               
-
-                //Payment approval code so that it inserts into Schedual (Balance) and into Account Detail.
-                
             }
-            PaymentDB.Approve(payment_schedualList, true,true);
 
-          
+            PaymentDB.Approve(payment_schedualList, true, false);
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -116,12 +112,42 @@ namespace cntrl.Curd
             }
         }
 
-      
+        private void dpDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime Date = Convert.ToDateTime(dpDate.SelectedDate);
+
+            if (payment_schedualViewSource.View != null && Date != null)
+            {
+                payment_schedualViewSource.View.Filter = i =>
+                {
+                    payment_schedual payment_schedual = i as payment_schedual;
+                    if (payment_schedual.AccountReceivableBalance > 0 &&
+                        payment_schedual.expire_date.Date == Date.Date)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+        }
+
+
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void chbxSelectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (payment_schedual schedual in PaymentDB.payment_schedual.Local)
+            {
+                schedual.IsSelected = true;
+            }
         }
     }
 }

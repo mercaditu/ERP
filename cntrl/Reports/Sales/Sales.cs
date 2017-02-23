@@ -14,15 +14,16 @@
       WHEN sales_invoice.trans_type=0 THEN '" + entity.Brillo.Localize.StringText("Normal") + @"'
       WHEN sales_invoice.trans_type=1 THEN '" + entity.Brillo.Localize.StringText("Bonificacion") + @"'
       WHEN sales_invoice.trans_type=2 THEN '" + entity.Brillo.Localize.StringText("Change") + @"'
-        WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Marketing") + @"'
-        WHEN sales_invoice.trans_type=2 THEN '" + entity.Brillo.Localize.StringText("Sample") + @"'
-        WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Other") + @"'
+      WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Marketing") + @"'
+      WHEN sales_invoice.trans_type=2 THEN '" + entity.Brillo.Localize.StringText("Sample") + @"'
+      WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Other") + @"'
     END
  as Type,
 sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												sales_invoice.number as Number,
 												sales_invoice.is_impex as Exports,
-												Date(sales_invoice.trans_date) as Date,
+												-- Date(sales_invoice.trans_date) as Date,
+                                                sales_invoice.trans_date as Date,
 												sales_invoice.timestamp as TimeStamp,
 												app_branch.name as Branch,
 												app_terminal.name as Terminal,

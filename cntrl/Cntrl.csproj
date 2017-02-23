@@ -272,6 +272,9 @@
     <Compile Include="Controls\ImpexCurrencyBox.xaml.cs">
       <DependentUpon>ImpexCurrencyBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InventoryFlowDataGrid.xaml.cs">
+      <DependentUpon>InventoryFlowDataGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
     </Compile>
@@ -524,9 +527,6 @@
     </Compile>
     <Compile Include="navPagination.xaml.cs">
       <DependentUpon>navPagination.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="navTransaction.xaml.cs">
-      <DependentUpon>navTransaction.xaml</DependentUpon>
     </Compile>
     <Compile Include="PanelAdv\pnlCostCalculationReceipe.xaml.cs">
       <DependentUpon>pnlCostCalculationReceipe.xaml</DependentUpon>
@@ -874,6 +874,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\InventoryFlowDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NotificationButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1155,10 +1159,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="navPagination.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="navTransaction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

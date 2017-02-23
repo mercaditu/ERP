@@ -507,6 +507,9 @@
     <Compile Include="Product\FixedAssets.xaml.cs">
       <DependentUpon>FixedAssets.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\InventoryFlow.xaml.cs">
+      <DependentUpon>InventoryFlow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\MobileBranch.xaml.cs">
       <DependentUpon>MobileBranch.xaml</DependentUpon>
     </Compile>
@@ -1329,6 +1332,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Product\FixedAssets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Product\InventoryFlow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

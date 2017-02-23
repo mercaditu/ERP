@@ -12,11 +12,8 @@ namespace entity.Brillo
         public static string StringText(string key)
         {
             string s = LocExtension.GetLocalizedValue<string>("Cognitivo:local:" + key);
-            if (s == null)
-            {
-                s = key;
-            }
-            return s;
+            //In case "s" or localized text is not found, then return same key. Or else 
+            return s != null ? s : key;
         }
     }
 }

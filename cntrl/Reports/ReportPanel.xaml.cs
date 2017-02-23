@@ -226,7 +226,7 @@ namespace cntrl
             //Iterate through the list of Columns and localize the names.
             foreach (Syncfusion.UI.Xaml.Grid.GridColumn item in sfdatagrid.Columns)
             {
-                item.HeaderText =  string.IsNullOrEmpty(entity.Brillo.Localize.StringText(item.HeaderText)) ? entity.Brillo.Localize.StringText(item.HeaderText) : item.HeaderText ;
+                item.HeaderText = entity.Brillo.Localize.StringText(item.HeaderText);
             }
 
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file

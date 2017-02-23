@@ -3,20 +3,20 @@
     public static class Sales
     {
         public static string query = @" 	select
-												   CASE
-      WHEN sales_invoice.status=1 THEN 'Pending'
-      WHEN sales_invoice.status=2 THEN  'Approved'
-      WHEN sales_invoice.status=3 THEN  'Anulled'
- WHEN sales_invoice.status=4 THEN  'Rejected'
-    END
- as Status,
+	    CASE
+      WHEN sales_invoice.status=1 THEN '" + entity.Brillo.Localize.StringText("Pending") + @"'
+      WHEN sales_invoice.status=2 THEN '" + entity.Brillo.Localize.StringText("Approved") + @"'
+      WHEN sales_invoice.status=3 THEN '" + entity.Brillo.Localize.StringText("Anulled") + @"'
+      WHEN sales_invoice.status=4 THEN '" + entity.Brillo.Localize.StringText("Rejected") + @"'
+        END
+      as Status,
 	CASE
-      WHEN sales_invoice.trans_type=0 THEN 'Normal'
-      WHEN sales_invoice.trans_type=1 THEN  'Bonificacion'
-      WHEN sales_invoice.trans_type=2 THEN  'Change'
-        WHEN sales_invoice.trans_type=3 THEN  'Marketing'
-        WHEN sales_invoice.trans_type=2 THEN  'Sample'
-        WHEN sales_invoice.trans_type=3 THEN  'Other'
+      WHEN sales_invoice.trans_type=0 THEN '" + entity.Brillo.Localize.StringText("Normal") + @"'
+      WHEN sales_invoice.trans_type=1 THEN '" + entity.Brillo.Localize.StringText("Bonificacion") + @"'
+      WHEN sales_invoice.trans_type=2 THEN '" + entity.Brillo.Localize.StringText("Change") + @"'
+        WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Marketing") + @"'
+        WHEN sales_invoice.trans_type=2 THEN '" + entity.Brillo.Localize.StringText("Sample") + @"'
+        WHEN sales_invoice.trans_type=3 THEN '" + entity.Brillo.Localize.StringText("Other") + @"'
     END
  as Type,
 sales_invoice_detail.id_sales_invoice_detail as DetailID,
@@ -95,5 +95,7 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 											  where sales_invoice.trans_date between '@StartDate' and '@EndDate' and sales_invoice.id_company = @CompanyID
 
 												   order by sales_invoice.trans_date";
+
+
     }
 }

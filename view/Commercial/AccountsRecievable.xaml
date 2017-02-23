@@ -111,7 +111,7 @@
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
                 <Button Content="{lex:Loc ReArrange}" Style="{StaticResource btn_green}" Background="White" Margin="0,4"
 						Click="Rearrange_Click" Visibility="Collapsed" />
-                <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="PaymentGroup_Click" />
+                <Button Content="{lex:Loc PaymentGroup}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="PaymentGroup_Click" />
                 <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Payment_Click" />
                 <Button Content="{lex:Loc Interest}" x:Name="BtnInterest" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Interest_Click" Visibility="Collapsed" />
                 <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click" />

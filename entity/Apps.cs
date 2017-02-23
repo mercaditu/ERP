@@ -172,8 +172,8 @@ namespace entity
             [LocalizedDescription("Transfer")]
             Transfer = 30,
 
-            [LocalizedDescription("TransferByBranch")]
-            TransferByBranch = 139,
+            [LocalizedDescription("MobileBranch")]
+            MobileBranch = 139,
 
             [LocalizedDescription("Recipe")]
             Recipe = 32,

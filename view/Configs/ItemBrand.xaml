@@ -20,12 +20,12 @@
     </Page.Resources>
     <Grid DataContext="{StaticResource item_brandViewSource}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Background="{StaticResource appConfig}">
             <Image Width="83" Height="83" Margin="0,50,0,0" VerticalAlignment="Center"
-                   Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
+                   Source="/Cognitivo;component/Images/Application/128/Brand.png" />
 
             <Label Content="{lex:Loc Brand}" HorizontalAlignment="Center"
                    Style="{StaticResource H1}" />

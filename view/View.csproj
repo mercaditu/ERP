@@ -881,6 +881,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\Application\128\PackingListRecieve.png" />
+    <Resource Include="Images\Application\128\PackingListSend.png" />
+    <Resource Include="Images\Application\128\Logistics.png" />
+    <Resource Include="Images\Application\128\Brand.png" />
+    <Resource Include="Images\Application\128\Request.png" />
+    <Resource Include="Images\Application\128\MobileBranch.png" />
+    <Resource Include="Images\Application\128\Transfer.png" />
     <Resource Include="Images\Application\128\PaymentType.png" />
     <Resource Include="Images\Application\128\BankReconciliation.png" />
     <Resource Include="Images\Application\128\PaymentMade.png" />
@@ -1681,7 +1688,6 @@
     <Resource Include="Images\Application\128\Import.png" />
     <Resource Include="Images\Application\128\Language.png" />
     <Resource Include="Images\Application\128\Location.png" />
-    <Resource Include="Images\Application\128\Logistics.png" />
     <Resource Include="Images\Application\128\Measurement.png" />
     <Resource Include="Images\Application\128\Message.png" />
     <Resource Include="Images\Application\128\Money.png" />

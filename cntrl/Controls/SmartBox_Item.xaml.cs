@@ -130,7 +130,7 @@ namespace cntrl.Controls
                     else
                     {
                         ItemID = 0;
-                        Quantity = 0;
+                        Quantity = 1;
                         Text = tbxSearch.Text;
                     }
 

@@ -22,8 +22,13 @@
 										ped.unit_cost as CostExecuted,
                                         pt.unit_cost_est as CostEstimated,
 										pod.start_date_est as StartDate,
-										pod.end_date_est as EndDate
-
+										pod.end_date_est as EndDate,
+                                        sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)  as Hours,
+										(sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient)  as ComputeHours,
+                                        (sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)-(sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient)) as diff,
+(1-( (sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)-(sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600))) * 100 as diffPer,
+pod.completed as Completed,pod.completed*100 as Percentage,
+(((sum(time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient) *100)/pod.completed) as CompletedHours,
 										from production_order as po
 
 										left join projects as p on po.id_project = p.id_project
@@ -32,6 +37,7 @@
 										inner join production_order_detail as pod on po.id_production_order = pod.id_production_order
                                         inner join project_task pt on pt.id_project_task=pod.id_project_task
 										left join production_execution_detail as ped on pod.id_order_detail = ped.id_order_detail
+                                        left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
 										where po.id_company = @CompanyID and pod.trans_date between '@StartDate' and '@EndDate'";
     }
 }

@@ -408,6 +408,14 @@ namespace Cognitivo.Commercial
             PaymentDB.SaveChanges();
         }
 
+        private void PaymentGroup_Click(object sender, RoutedEventArgs e)
+        {
+            cntrl.Curd.PaymentGroup Payment = new cntrl.Curd.PaymentGroup(ref PaymentDB);
+
+            crud_modal.Visibility = Visibility.Visible;
+            crud_modal.Children.Add(Payment);
+        }
+
         private void Rearrange_Click(object sender, RoutedEventArgs e)
         {
             PaymentDB.Rearrange_Payment();

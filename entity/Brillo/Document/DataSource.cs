@@ -605,7 +605,7 @@ namespace entity.Brillo.Document
 
                     transfer_number = g.item_transfer.number,
                     location_origin_name = g.item_transfer != null ? g.item_transfer.app_location_origin != null ? g.item_transfer.app_location_origin.name : "" : "",
-                    location_destination_name = g.item_transfer.app_location_destination.name,
+                    location_destination_name = g.item_transfer != null ? g.item_transfer.app_location_destination != null ? g.item_transfer.app_location_destination.name : "" : "",
                     item_code = g.item_product.item.code,
                     quantity_origin = g.quantity_origin,
                     quantity_destination = g.quantity_destination,

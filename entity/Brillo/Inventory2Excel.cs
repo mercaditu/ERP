@@ -20,7 +20,7 @@ namespace entity.Brillo
                 {
                     List<InventoryDetail> DetailList = new List<InventoryDetail>();
 
-                    foreach (var inv_detail in item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location))
+                    foreach (var inv_detail in item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).ToList())
                     {
                         InventoryDetail Detail = new InventoryDetail();
 
@@ -60,7 +60,7 @@ namespace entity.Brillo
 
                     //Save File
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    string full_file = "/Inventory " + item_inventory.app_branch.name + " " + DateTime.Now.ToShortDateString() + ".xlsx";
+                    string full_file = "/Inventory " + item_inventory.app_branch.name + " " + DateTime.Now.ToShortDateString();
                     //Excel has an issue with file names being more than 31 characters long. So we need to remove excess.
                     string final_file = full_file.Length > 30 ? full_file.Remove(30) : full_file;
                     wb.SaveAs(path + final_file + ".xlsx");

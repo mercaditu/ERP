@@ -18,18 +18,19 @@
              BorderBrush="Purple" BorderThickness="2">
 
     <UserControl.Resources>
-        <!--<Converters:ActiveValueConverter x:Key="ActiveValueConverter" />-->
+        <Converters:ActiveValueConverter x:Key="ActiveValueConverter" />
+        <Converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter" />
+        <Converters:TrueToFalseConverter x:Key="True2False" />
+        <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" /> 
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}" />
-        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+              <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
-    <Grid DataContext="{StaticResource paymentpayment_detailViewSource}" Margin="0,1,0,-1">
+    <Grid DataContext="{StaticResource payment_schedualViewSource}" Margin="0,1,0,-1">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
@@ -56,7 +57,7 @@
                     <ComboBox x:Name="cbxCondition" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
 						                ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
-                                        SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}"
+                                      
                               SelectionChanged="cbxCondition_SelectionChanged"/>
                 </StackPanel>
             </StackPanel>
@@ -127,8 +128,7 @@
                         <ComboBox x:Name="cbxPamentType"
 					                DisplayMemberPath="name" SelectedValuePath="id_payment_type"
 				   	                ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-						            SelectedValue="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
-						            Style="{StaticResource input_combobox}">
+						            Style="{StaticResource input_combobox}" Margin="4,0,0,4" Width="134">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
@@ -137,17 +137,17 @@
                         </ComboBox>
                         <StackPanel x:Name="stpaccount">
                             <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}" />
-                            <ComboBox DisplayMemberPath="name" SelectedValuePath="id_account"
+                            <ComboBox x:Name="cbxAccount" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
 						                ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
-                                        SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}">
+                                    Margin="4,0,0,4" Width="135">
                             </ComboBox>
 
                             <!--<Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="AccountsPayable"
                                                     SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
                         </StackPanel>
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                        <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
+                        <TextBox  MinHeight="64"
                                     Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
                     <Button Content="{lex:Loc Payment}" Click="btnPayment_Click" Style="{StaticResource btn_green}" />
                 </StackPanel>

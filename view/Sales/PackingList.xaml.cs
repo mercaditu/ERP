@@ -284,7 +284,7 @@ namespace Cognitivo.Sales
                 contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 pnlSalesOrder._contact = contact;
             }
-            pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
+            pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.packing_list;
             pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;
             crud_modal.Children.Add(pnlSalesOrder);
         }
@@ -305,6 +305,15 @@ namespace Cognitivo.Sales
                         sales_packing_detail.item = _sales_order_detail.item;
                         sales_packing_detail.id_movement = _sales_order_detail.movement_id;
                         sales_packing_detail.quantity = _sales_order_detail.quantity;
+                        if (_sales_order_detail.batch_code!="")
+                        {
+                            sales_packing_detail.batch_code = _sales_order_detail.batch_code;
+                        }
+                        if (_sales_order_detail.expire_date!=null)
+                        {
+                            sales_packing_detail.expire_date = _sales_order_detail.expire_date;
+                        }
+                     
                         sales_packing.sales_packing_detail.Add(sales_packing_detail);
                     }
 

@@ -26,7 +26,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
                     purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
-
+                    purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
                     if (purchase_return.id_purchase_invoice > 0)
                     {
                         Brillo.Stock stock = new Brillo.Stock();
@@ -38,6 +38,9 @@ namespace entity.Brillo.Logic
                             Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
                             Stock.QtyBalance = Convert.ToDecimal(_item_movement.credit);
                             Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
+                            Stock.LocationID = _item_movement.id_location;
+                            Stock.ExpirationDate = _item_movement.expire_date;
+                            Stock.code = _item_movement.code;
 
                             Items_InStockLIST.Add(Stock);
                         }
@@ -94,6 +97,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                     packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
+                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
                     List<StockList> Items_InStockLIST = null;
                     if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
                     {
@@ -131,6 +135,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                     packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
+                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
                     item_movementList.Add(
                          CreditOnly_Movement(
                               Status.Stock.InStock,
@@ -793,7 +798,11 @@ namespace entity.Brillo.Logic
                     }
 
 
-                    item_movement.id_location = parent_Movement.LocationID;
+                    if (parent_Movement.LocationID>0)
+                    {
+                        item_movement.id_location = parent_Movement.LocationID;
+                    }
+                   
 
 
                     item_movement.comment = Comment;

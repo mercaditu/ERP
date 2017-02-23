@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
 using Syncfusion.UI.Xaml.Grid.Converter;
-using Syncfusion.UI.Xaml.Grid;
+
 //using System.Windows.Forms;
 
 namespace cntrl
@@ -224,7 +224,7 @@ namespace cntrl
             ReportDt = dt;
             sfdatagrid.ItemsSource = dt;
             //Iterate through the list of Columns and localize the names.
-            foreach (GridColumn item in sfdatagrid.Columns)
+            foreach (Syncfusion.UI.Xaml.Grid.GridColumn item in sfdatagrid.Columns)
             {
                 item.HeaderText =  string.IsNullOrEmpty(entity.Brillo.Localize.StringText(item.HeaderText)) ? entity.Brillo.Localize.StringText(item.HeaderText) : item.HeaderText ;
             }

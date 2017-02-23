@@ -82,7 +82,7 @@ namespace cntrl.PanelAdv
 
             sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
 
-            sales_orderViewSource.Source = _entity.sales_order.Where(x => order.Contains(x.id_sales_order)).ToList();
+            sales_orderViewSource.Source = _entity.sales_order.Where(x => order.Contains(x.id_sales_order) ).ToList();
             filter_sales();
         }
 

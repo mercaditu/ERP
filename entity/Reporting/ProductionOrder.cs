@@ -24,5 +24,12 @@ namespace entity.Reporting
         public decimal CostEstimated { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public decimal Hours { get; set; }
+        public decimal ComputeHours { get; set; }
+        public decimal Diff { get; set; }
+        public decimal DiffPer { get; set; }
+        public decimal Completed { get; set; }
+        public decimal CompletedHours { get; set; }
+        public decimal Percentage { get; set; }
     }
 }

@@ -177,12 +177,11 @@ namespace cntrl.Curd
                 }
             }
 
-            foreach (payment_detail payment_detail in payment.payment_detail.ToList())
-            {
-                bool IsRecievable = Mode == Modes.Recievable ? true : false;
-                bool IsPrintable = Mode == Modes.Recievable ? true : false;
-                PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable);
-            }
+
+            bool IsRecievable = Mode == Modes.Recievable ? true : false;
+            bool IsPrintable = Mode == Modes.Recievable ? true : false;
+            PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable);
+
             lblCancel_MouseDown(null, null);
         }
 

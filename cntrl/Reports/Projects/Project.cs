@@ -31,8 +31,8 @@ exe.Quantity as QuantityReal,
 										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
                                         (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,
 (1-( (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(end_date,start_date)) / 3600))) * 100 as diffPer,
-pod.completed as Completed,
-(((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient) *100)/pod.completed) as CompletedHours,
+task.completed as Completed,task.completed*100 as Percentage,
+(((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient) *100)/task.completed) as CompletedHours,
 task.unit_cost_est as CostEst,
 exe.unit_cost as CostReal,
 task.start_date_est as StartDate,
@@ -51,7 +51,6 @@ inner join contacts   on proj.id_contact = contacts.id_contact
 inner join items as item on task.id_item = item.id_item
 left join  item_product on item_product.id_item=item.id_item
 left join item_conversion_factor on item_conversion_factor.id_item_product = item_product.id_item_product
-left join  production_order_detail as pod on task.id_project_task = pod.id_project_task
 left join  production_execution_detail as exe on pod.id_order_detail = exe.id_order_detail
 left join hr_time_coefficient as htc on exe.id_time_coefficient = htc.id_time_coefficient
 left join sales_budget as sb on proj.id_project = sb.id_project

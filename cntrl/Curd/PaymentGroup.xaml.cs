@@ -1,55 +1,32 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace cntrl.Curd
 {
     public partial class PaymentGroup : UserControl
     {
         //  PaymentDB PaymentDB = new PaymentDB();
+        
 
-        public enum Modes
-        {
-            Recievable,
-            Payable
-        }
-
-        private Modes Mode;
-        private CollectionViewSource paymentpayment_detailViewSource;
-        private CollectionViewSource paymentViewSource, payment_schedualViewSource;
+     
+        private CollectionViewSource  payment_schedualViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
-        public PaymentGroup(Modes App_Mode, payment _payment, PaymentDB _PaymentDB)
+        public PaymentGroup(ref PaymentDB _PaymentDB)
         {
             InitializeComponent();
 
-            Mode = App_Mode;
+          
             PaymentDB = _PaymentDB;
-            paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
-            paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-
-            paymentViewSource.Source = PaymentDB.payments.Local;
-
-            if (paymentViewSource != null)
-            {
-                if (paymentViewSource.View != null)
-                {
-                    paymentViewSource.View.Filter = i =>
-                    {
-                        int id_payment = _payment.id_payment;
-                        payment payment = (payment)i;
-                        if (payment.id_payment == id_payment)
-                            return true;
-                        else
-                            return false;
-                    };
-                }
-            }
+          
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -63,7 +40,7 @@ namespace cntrl.Curd
                         .Include(x => x.contact)
                         .OrderBy(x => x.expire_date)
                         .LoadAsync();
-                payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
 
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
@@ -73,13 +50,12 @@ namespace cntrl.Curd
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            paymentViewSource.View.Refresh();
-            paymentpayment_detailViewSource.View.Refresh();
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
-            foreach (payment_schedual schedual in PaymentDB.payment_schedual.Local.Where(x => x.IsSelected))
+            List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Local.Where(x => x.IsSelected).ToList();
+            foreach (payment_schedual schedual in payment_schedualList)
             {
                 payment payment = new payment();
                 payment.trans_date = DateTime.Now;
@@ -87,18 +63,35 @@ namespace cntrl.Curd
                 payment.id_branch = CurrentSession.Id_Branch;
                 payment.id_user = CurrentSession.Id_User;
 
-                payment_detail detail = new payment_detail();
-                detail.value = schedual.AccountReceivableBalance;
-                //Change this. We should get current active FX Rate for the same currency in Schedual. But not same fx rate as schedual.
-                detail.id_currencyfx = 1;
-                detail.id_account = (int)cbxPamentType.SelectedItem; //this is wrong. give Account Cbx a Name and Linked it here.
-                detail.id_payment_type = (int)cbxPamentType.SelectedItem;
+                payment_detail payment_detail = new payment_detail();
+               //Only one detail per customer. see if you can group by customer.
+                payment_detail.payment = payment;
+                //Get current Active Rate of selected Currency.
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == schedual.app_currencyfx.id_currency && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
 
-                //Only one detail per customer. see if you can group by customer.
+                if (app_currencyfx != null)
+                {
+                    payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
+                    payment_detail.app_currencyfx = app_currencyfx;
+                }
+                payment_detail.value = schedual.AccountReceivableBalance;
+                payment_detail.IsLocked = false;
+                payment_detail.id_account = (int)cbxAccount.SelectedValue;
+                payment_detail.id_payment_type = (int)cbxPamentType.SelectedValue;
+                payment_detail.IsSelected = true;
 
+                payment.payment_detail.Add(payment_detail);
+                PaymentDB.payments.Add(payment);
+               
 
-            //Payment approval code so that it inserts into Schedual (Balance) and into Account Detail.
+                //Payment approval code so that it inserts into Schedual (Balance) and into Account Detail.
+                
             }
+            PaymentDB.Approve(payment_schedualList, true,true);
+
+          
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -123,10 +116,12 @@ namespace cntrl.Curd
             }
         }
 
-        private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
+      
+        private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
+            Grid parentGrid = (Grid)this.Parent;
+            parentGrid.Children.Clear();
+            parentGrid.Visibility = Visibility.Hidden;
         }
     }
 }

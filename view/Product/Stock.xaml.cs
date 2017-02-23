@@ -112,12 +112,13 @@ namespace Cognitivo.Product
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-                    item_movementViewSource.Source = await db.item_movement.Where(x => x.id_company == CurrentSession.Id_Company
+                    item_movementViewSource.Source = await db.item_movement
+                        .Where(x => x.id_company == CurrentSession.Id_Company
                                                         && x.id_item_product == id_item_product
                                                         && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
-                                                        ).OrderByDescending(x => x.trans_date).ToListAsync();
+                                                        ).OrderByDescending(x => x.trans_date).Take(100).Include(x => x.item_product).ToListAsync();
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {

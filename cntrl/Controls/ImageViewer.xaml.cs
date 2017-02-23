@@ -5,9 +5,6 @@ using System.Windows.Data;
 
 namespace cntrl.Controls
 {
-    /// <summary>
-    /// Interaction logic for ImageViewer.xaml
-    /// </summary>
     public partial class ImageViewer : UserControl
     {
         public ImageViewer()
@@ -84,6 +81,7 @@ namespace cntrl.Controls
 
         private void MenuItem_New(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)

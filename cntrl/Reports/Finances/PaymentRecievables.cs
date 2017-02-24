@@ -42,6 +42,6 @@
                                         left join app_currency as c on cfx.id_currency = c.id_currency
                                         left join sales_rep as sr on si.id_sales_rep = sr.id_sales_rep
                                         
-                                        where ps.id_sales_invoice > 0 and ps.parent_id_payment_schedual is null and ps.id_company = @CompanyID and ";
+                                        where ps.id_sales_invoice > 0 and ps.parent_id_payment_schedual is null and ps.id_company = @CompanyID and ps.trans_date between '@StartDate' and '@EndDate'";
 }
 }

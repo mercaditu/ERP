@@ -173,8 +173,9 @@
 									   Content="{Binding parent.name, FallbackValue=---}" />
                                     <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
 										   Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center" />
+                                    <Label Content="{lex:Loc Percentage}" Style="{StaticResource generic_Label}" FontSize="10" HorizontalAlignment="Center" />
                                     <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
-                                                    Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}"/>
+                                            LostFocus="slider_LostFocus" Margin="16,0"  Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" ToolTip="{Binding percent, Mode=OneWay}"/>
                                     <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													btnNew_Click="btnNewTask_Click"
@@ -185,8 +186,6 @@
 													btnParent_Click="btnAddParentTask_Click" />
                                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                         <StackPanel x:Name="stpcode" IsEnabled="False">
-                                            <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
-                                           
                                             <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
                                             <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"
 												  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"
@@ -393,6 +392,9 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Top" Margin="5">
+                <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center"/>
+            </StackPanel>
         </Grid>
 
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar"
@@ -408,9 +410,5 @@
 					   appName="ProductionOrder"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,150,0">
-            <Button x:Name="btncost" Click="Button_Click" Content="Cost Calculation" VerticalAlignment="Center" Width="90" Height="25" />
-        </StackPanel>
     </Grid>
 </Page>

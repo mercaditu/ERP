@@ -4,28 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Controls"
-             xmlns:entity="clr-namespace:entity;assembly=entity"
-                xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		        lex:ResxLocalizationProvider.DefaultDictionary="local"
 		        lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}" />
+        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-        <DataGrid Width="256" FontSize="10" Margin="2" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}">
+        <DataGrid Width="256" FontSize="10" Margin="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"/>
-            <DataGridTextColumn Binding="{Binding app_location.name}" Header="{lex:Loc Cognitivo:local:Location}" Width="*"/>
-            <DataGridTextColumn Binding="{Binding debit}" Header="{lex:Loc Cognitivo:local:Debit}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
-            <DataGridTextColumn Binding="{Binding credit}" Header="{lex:Loc Cognitivo:local:Credit}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
-            <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
+                <DataGridTextColumn Binding="{Binding Date}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"/>
+            <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" Width="*"/>
+            <DataGridTextColumn Binding="{Binding Quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
+            <DataGridTextColumn Binding="{Binding Cost}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Grid Background="WhiteSmoke" Margin="4">
-                    
-                    </Grid>
+                    <StackPanel Background="WhiteSmoke" Margin="4" DataContext="{StaticResource item_movementViewSource}">
+                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding Comment, Mode=OneWay}"/>
+                        <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding ExpiryDate, Mode=OneWay, StringFormat=d}"/>
+                        <Label Content="{lex:Loc BatchCode}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding BatchCode, Mode=OneWay}"/>
+                </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

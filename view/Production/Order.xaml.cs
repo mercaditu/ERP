@@ -184,10 +184,13 @@ namespace Cognitivo.Production
         private void toolBar_btnApprove_Click(object sender)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            production_order.status = Status.Production.Executed;
-            if (OrderDB.SaveChanges() > 0)
+            if (production_order != null)
             {
-                toolBar.msgApproved(1);
+                production_order.status = Status.Production.Executed;
+                if (OrderDB.SaveChanges() > 0)
+                {
+                    toolBar.msgApproved(1);
+                }
             }
         }
 
@@ -566,10 +569,13 @@ namespace Cognitivo.Production
             if (OrderDB.SaveChanges() > 0)
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-                production_order.State = EntityState.Modified;
-                Update_Logistics();
-                stpcode.IsEnabled = false;
-                toolBar.msgSaved(OrderDB.NumberOfRecords);
+                if (production_order != null)
+                {
+                    production_order.State = EntityState.Modified;
+                    Update_Logistics();
+                    stpcode.IsEnabled = false;
+                    toolBar.msgSaved(OrderDB.NumberOfRecords);
+                }
             }
         }
 
@@ -687,14 +693,17 @@ namespace Cognitivo.Production
             stpcode.IsEnabled = true;
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            production_order_detail n_production_order_detail = new production_order_detail();
-            n_production_order_detail.status = Status.Production.Pending;
-            production_order.production_order_detail.Add(n_production_order_detail);
+            if (production_order != null)
+            {
+                production_order_detail n_production_order_detail = new production_order_detail();
+                n_production_order_detail.status = Status.Production.Pending;
+                production_order.production_order_detail.Add(n_production_order_detail);
 
-            production_orderproduction_order_detailViewSource.View.Refresh();
-            production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
-            filter_task();
-            treeProject.SelectedItem_ = n_production_order_detail;
+                production_orderproduction_order_detailViewSource.View.Refresh();
+                production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+                filter_task();
+                treeProject.SelectedItem_ = n_production_order_detail;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -738,6 +747,11 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update_Logistics();
+        }
+
+        private async void slider_LostFocus(object sender, EventArgs e)
+        {
+            await OrderDB.SaveChangesAsync();
         }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)

@@ -126,7 +126,7 @@
                                                     SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
                         </StackPanel>
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                        <TextBox  MinHeight="64"
+                        <TextBox x:Name="txtComment" MinHeight="64"
                                     Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
                     <Button Content="{lex:Loc Payment}" Click="btnPayment_Click" Style="{StaticResource btn_green}" />
                 </StackPanel>

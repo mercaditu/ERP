@@ -24,5 +24,7 @@ namespace entity.Reporting
         public DateTime PaymentDate { get; set; }
         public decimal PaymentRate { get; set; }
         public string PaymentCurrency { get; set; }
+        public string ItemName { get; set; }
+        public decimal Cost { get; set; }
     }
 }

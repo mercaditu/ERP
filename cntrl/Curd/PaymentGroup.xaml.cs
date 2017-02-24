@@ -82,7 +82,7 @@ namespace cntrl.Curd
                 payment_detail.id_account = (int)cbxAccount.SelectedValue;
                 payment_detail.id_payment_type = (int)cbxPamentType.SelectedValue;
                 payment_detail.IsSelected = true;
-
+                payment_detail.comment = txtComment.Text;
                 payment.payment_detail.Add(payment_detail);
                 PaymentDB.payments.Add(payment);
             }

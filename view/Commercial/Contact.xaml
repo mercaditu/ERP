@@ -359,7 +359,7 @@
                         </StackPanel>
 
                         <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
-									  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+									  SelectedValue="{Binding id_sales_rep,Source={StaticResource contactViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  Style="{StaticResource input_combobox}" />
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{lex:Loc Bank}" Style="{StaticResource input_label}" />
@@ -380,12 +380,12 @@
 										Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
-                        <Label Content="{lex:Loc Payment}" Style="{StaticResource H2}" />
+                        <!--<Label Content="{lex:Loc Payment}" Style="{StaticResource H2}" />
                         <Label Content="{lex:Loc CollectionAgent}" Style="{StaticResource input_label}" />
 
                         <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
 									  SelectedValue="{Binding id_collection_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-									  Style="{StaticResource input_combobox}" />
+									  Style="{StaticResource input_combobox}" />-->
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

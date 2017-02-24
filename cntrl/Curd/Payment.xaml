@@ -14,7 +14,7 @@
 			 xmlns:cntrl="clr-namespace:cntrl"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
 			 mc:Ignorable="d" VerticalAlignment="Center"
-			 Width="550" Height="600" Loaded="UserControl_Loaded"
+			 Width="550" Height="660" Loaded="UserControl_Loaded"
 			 BorderBrush="RoyalBlue" BorderThickness="2">
 
     <UserControl.Resources>
@@ -202,6 +202,11 @@
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
 									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
+                            <StackPanel x:Name="stptransdate" Visibility="Collapsed">
+                                <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
+                                <DatePicker Style="{DynamicResource input_datepicker}"
+										SelectedDate="{Binding trans_date,Source={StaticResource paymentpayment_detailViewSource}, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

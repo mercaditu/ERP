@@ -152,12 +152,26 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnSave_Click(object sender)
         {
-            //Abhi> in Brillo, add logic to add for validations
-            if (ContactDB.SaveChanges() > 0)
+            if (listContacts.SelectedItem != null)
             {
-                toolBar.msgSaved(ContactDB.NumberOfRecords);
-                contactViewSource.View.Refresh();
+                contact contact = (contact)listContacts.SelectedItem;
+                if (ContactDB.contacts.Any(x => x.code == contact.code && x.id_contact != contact.id_contact))
+                {
+                    if (System.Windows.Forms.MessageBox.Show("Contact: " + contact.name + " Already Exists.. Are You Want To Continue...", "Cognitivo", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                    { return; }
+
+
+                }
+
+                //Abhi> in Brillo, add logic to add for validations
+                if (ContactDB.SaveChanges() > 0)
+                {
+                    toolBar.msgSaved(ContactDB.NumberOfRecords);
+                    contactViewSource.View.Refresh();
+                }
+
             }
+
         }
 
         private void toolBar_btnCancel_Click(object sender)

@@ -200,12 +200,13 @@ namespace cntrl.Curd
                         stpaccount.Visibility = Visibility.Collapsed;
                         stpcreditpurchase.Visibility = Visibility.Collapsed;
                         stpcreditsales.Visibility = Visibility.Collapsed;
+                        stptransdate.Visibility = Visibility.Visible;
                     }
                     else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
                     {
                         //If payment behaviour is Credit Note, then hide Account.
                         stpaccount.Visibility = Visibility.Collapsed;
-
+                        stptransdate.Visibility = Visibility.Visible;
                         //Check Mode.
                         if (Mode == Modes.Payable)
                         {
@@ -231,6 +232,7 @@ namespace cntrl.Curd
                     {
                         //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
                         stpaccount.Visibility = Visibility.Visible;
+                        stptransdate.Visibility = Visibility.Collapsed;
                         stpcreditpurchase.Visibility = Visibility.Collapsed;
                         stpcreditsales.Visibility = Visibility.Collapsed;
                     }

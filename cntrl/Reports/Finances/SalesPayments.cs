@@ -25,11 +25,15 @@
             pd.trans_date as PaymentDate,
             fx2.buy_value as PaymentRate,
             curr2.name as Currency,
-            ps.parent_id_payment_schedual as Parent
+            ps.parent_id_payment_schedual as Parent,
+            items.name as ItemName,
+            sid.unit_cost as Cost
 
             from payment_schedual as ps
 
             inner join sales_invoice as si on ps.id_sales_invoice = si.id_sales_invoice
+            left join sales_invoice_detail as sid on sid.id_sales_invoice = si.id_sales_invoice
+            inner join items on items.id_item = sid.id_item
             inner join app_contract as contract on si.id_contract = contract.id_contract
             inner join app_condition as conditions on contract.id_condition = conditions.id_condition
             inner join contacts as c on ps.id_contact = c.id_contact

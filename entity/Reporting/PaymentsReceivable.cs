@@ -10,12 +10,12 @@ namespace entity.Reporting
         public string Code { get; set; }
         public string GovCode { get; set; }
         public string Branch { get; set; }
-        public string Condition { get; set; }
+        public string Conditions { get; set; }
         public string Contract { get; set; }
         public string Number { get; set; }
-        public DateTime SalesDate { get; set; }
-        public decimal Salesman { get; set; }
         public DateTime Date { get; set; }
+        public decimal Salesman { get; set; }
+        public DateTime PaymentDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public Decimal Debit { get; set; }
         public Decimal Credit { get; set; }

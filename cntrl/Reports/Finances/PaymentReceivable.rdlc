@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>5.675cm</Width>
+              <Width>6.09833cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.5cm</Width>
@@ -43,7 +43,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>Currency</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -259,7 +259,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Condition</Value>
+                              <Value>Conditions</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -615,14 +615,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="PaymentType">
+                    <Textbox Name="Currency1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PaymentType.Value</Value>
+                              <Value>=Fields!Currency.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -634,7 +634,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>PaymentType</rd:DefaultName>
+                      <rd:DefaultName>Currency1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -901,14 +901,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Currency">
+                    <Textbox Name="PaymentType">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Currency.Value</Value>
+                              <Value>=Fields!PaymentType.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -920,7 +920,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Currency</rd:DefaultName>
+                      <rd:DefaultName>PaymentType</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>White</Color>
@@ -1216,6 +1216,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1385,14 +1386,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Condition">
+                    <Textbox Name="Conditions">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Condition.Value</Value>
+                              <Value>=Fields!Conditions.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Color>#4d4d4d</Color>
@@ -1402,7 +1403,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Condition</rd:DefaultName>
+                      <rd:DefaultName>Conditions</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#e5e5e5</Color>
@@ -1447,7 +1448,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1768,14 +1768,14 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember>
-                  <Group Name="PaymentType">
+                  <Group Name="Currency">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!PaymentType.Value</GroupExpression>
+                      <GroupExpression>=Fields!Currency.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!PaymentType.Value</Value>
+                      <Value>=Fields!Currency.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
@@ -1783,14 +1783,14 @@
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
                     <TablixMember>
-                      <Group Name="Currency">
+                      <Group Name="PaymentType">
                         <GroupExpressions>
-                          <GroupExpression>=Fields!Currency.Value</GroupExpression>
+                          <GroupExpression>=Fields!PaymentType.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
-                          <Value>=Fields!Currency.Value</Value>
+                          <Value>=Fields!PaymentType.Value</Value>
                         </SortExpression>
                       </SortExpressions>
                       <TablixMembers>
@@ -1801,13 +1801,13 @@
                           <Group Name="Details" />
                           <Visibility>
                             <Hidden>true</Hidden>
-                            <ToggleItem>Currency</ToggleItem>
+                            <ToggleItem>PaymentType</ToggleItem>
                           </Visibility>
                         </TablixMember>
                       </TablixMembers>
                       <Visibility>
                         <Hidden>true</Hidden>
-                        <ToggleItem>PaymentType</ToggleItem>
+                        <ToggleItem>Currency1</ToggleItem>
                       </Visibility>
                     </TablixMember>
                   </TablixMembers>
@@ -1823,7 +1823,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>3.6cm</Height>
-        <Width>23.175cm</Width>
+        <Width>23.59833cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1834,7 +1834,7 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>9.12402in</Width>
+  <Width>9.29068in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -1874,8 +1874,8 @@
           <DataField>Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Condition">
-          <DataField>Condition</DataField>
+        <Field Name="Conditions">
+          <DataField>Conditions</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Contract">
@@ -1930,6 +1930,10 @@
           <DataField>Payment</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="PaymentDate">
+          <DataField>PaymentDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
         <Field Name="PaymentType">
           <DataField>PaymentType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1937,10 +1941,6 @@
         <Field Name="Rate">
           <DataField>Rate</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SalesDate">
-          <DataField>SalesDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="Salesman">
           <DataField>Salesman</DataField>

@@ -350,14 +350,6 @@ namespace cntrl
                 workBook.SaveAs(dlg.FileName);
             }
         }
-
-        //private void ExportPDF_Click(object sender, RoutedEventArgs e)
-        //{
-        //    PdfExportingOptions options = new PdfExportingOptions();
-        //    options.ExportGroups = true;
-        //    var document = sfdatagrid.ExportToPdf(options);
-        //    document.Save("Sample.pdf");
-        //}
     }
 
     public static class RdlcReportHelper

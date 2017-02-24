@@ -441,8 +441,9 @@ namespace Cognitivo.Commercial
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (contact != null && cbxRelation.ContactID > 0)
             {
-                contact relatedto_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
-                relatedto_contact.parent = contact;
+                contact main_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
+                //contact is not main contact. so contact.parent should be main contact.
+                contact.parent = main_contact;
 
                 LoadRelatedContactOnThread(contact);
             }

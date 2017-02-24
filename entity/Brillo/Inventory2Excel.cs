@@ -31,6 +31,7 @@ namespace entity.Brillo
 
                         Detail.Brand = inv_detail.item_product.item.item_brand != null ? inv_detail.item_product.item.item_brand.name : "";
                         Detail.Code = inv_detail.item_product.item.code;
+                        //Probably Trim item name if it is too long
                         Detail.Product = inv_detail.item_product.item.name;
 
                         Detail.ExpiryDate = inv_detail.expire_date;
@@ -45,27 +46,38 @@ namespace entity.Brillo
                         DetailList.Add(Detail);
                     }
 
-                    var ws = wb.Worksheets.Add(app_location.name);
-                    //Insert Class into Data
-                    ws.Cell(2, 1).InsertData(DetailList);
-                    //Hide ID Columns
-                    ws.Columns(1, 3).Hide();
-                    //Create Headers
-                    PropertyInfo[] properties = DetailList.First().GetType().GetProperties();
-                    List<string> headerNames = properties.Select(prop => prop.Name).ToList();
-                    for (int i = 0; i < headerNames.Count; i++)
+                    if (DetailList.Count() > 0)
                     {
-                        ws.Cell(1, i + 1).Value = headerNames[i];
+                        var ws = wb.Worksheets.Add(app_location.name);
+                        //Insert Class into Data
+                        ws.Cell(2, 1).InsertData(DetailList);
+                        //Hide ID Columns
+                        ws.Columns(1, 3).Hide();
+                        //Create Headers
+                        PropertyInfo[] properties = DetailList.First().GetType().GetProperties();
+                        List<string> headerNames = properties.Select(prop => prop.Name).ToList();
+                        for (int i = 0; i < headerNames.Count; i++)
+                        {
+                            ws.Cell(1, i + 1).Value = headerNames[i];
+                        }
                     }
+                }
 
-                    //Save File
-                    string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    string full_file = "/Inventory " + item_inventory.app_branch.name + " " + DateTime.Now.ToShortDateString();
-                    //Excel has an issue with file names being more than 31 characters long. So we need to remove excess.
-                    string final_file = full_file.Length > 30 ? full_file.Remove(30) : full_file;
+                //Save File
+                //Add code to show save panel.
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Inventory " + item_inventory.app_branch.name + " " + DateTime.Now.Month; // Default file name
+                dlg.DefaultExt = ".xlsx"; // Default file extension
+                dlg.Filter = "Text documents (.xlsx)|*.xlsx"; // Filter files by extension
 
+                // Show save file dialog box
+                bool? result = dlg.ShowDialog();
 
-                    wb.SaveAs(path + final_file + ".xlsx");
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    wb.SaveAs(dlg.FileName);
                     return true;
                 }
             }

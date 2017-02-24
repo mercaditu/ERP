@@ -43,7 +43,7 @@ namespace entity
                     if (item != null)
                     {
                         _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, Convert.ToDecimal(quantity), 1);
-                        RaisePropertyChanged("_Quantity_Factored");
+                        RaisePropertyChanged("Quantity_Factored");
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace entity
                     RaisePropertyChanged("Quantity_Factored");
 
                     _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, 1);
-                    RaisePropertyChanged("value_counted");
+                    RaisePropertyChanged("quantity");
                 }
             }
         }

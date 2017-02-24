@@ -694,21 +694,33 @@ namespace Cognitivo.Sales
 
                 foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
                 {
-                    if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
+                    sales_order_detail sales_order_detail = _sales_packing_detail.sales_order_detail;
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
+                    sales_packing_relation sales_packing_relation = new sales_packing_relation();
+                    sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
+                    sales_packing_relation.sales_packing_detail = _sales_packing_detail;
+                    sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
+
+                    //if SalesOrder Exists, use it for Price and VAT.
+                    if (sales_order_detail != null)
                     {
-                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                         sales_invoice_detail.sales_invoice = _sales_invoice;
-                        sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();// sbxContact.Contact;
+                        sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Find(sbxContact.ContactID);// sbxContact.Contact;
                         sales_invoice_detail.item = _sales_packing_detail.item;
                         sales_invoice_detail.id_item = _sales_packing_detail.id_item;
                         sales_invoice_detail.quantity = _sales_packing_detail.quantity;
+                        sales_invoice_detail.id_vat_group = sales_order_detail.id_vat_group;
+                        sales_invoice_detail.State = EntityState.Added;
+                        sales_invoice_detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
+                        sales_invoice_detail.discount = sales_order_detail.discount;
 
-                        sales_packing_relation sales_packing_relation = new sales_packing_relation();
-                        sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
-                        sales_packing_relation.sales_packing_detail = _sales_packing_detail;
-
-                        sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    }
+                    else
+                    {
+                        //If Sales Order does not exist, use Price and VAT From standard of the company.
+                        SalesInvoiceDB.AddDetail(ref _sales_invoice, _sales_packing_detail.item, 0, null, (decimal)_sales_packing_detail.verified_quantity);
                     }
                 }
 
@@ -716,7 +728,9 @@ namespace Cognitivo.Sales
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
             }
+
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == _sales_invoice.id_sales_invoice).ToList();
@@ -725,6 +739,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
+
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Collapsed;
             _sales_invoice.RaisePropertyChanged("GrandTotal");

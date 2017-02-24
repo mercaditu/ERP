@@ -67,6 +67,8 @@ namespace Cognitivo.Production
             OrderDB.production_order.Add(production_order);
 
             production_orderViewSource.View.MoveCurrentToLast();
+            Update_Logistics();
+            filter_task();
         }
 
         private void toolBar_btnDelete_Click(object sender)

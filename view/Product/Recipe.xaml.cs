@@ -160,6 +160,35 @@ namespace Cognitivo.Product
         {
         }
 
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                item_recepieViewSource.View.Filter = i =>
+                {
+                    item_recepie item = i as item_recepie;
+                    item it = item.item;
+
+                    if (item.Error == null && it != null)
+                    {
+                        if (it.name.ToLower().Contains(query.ToLower()) || it.code.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    return false;
+                };
+            }
+            else
+            {
+                item_recepieViewSource.View.Filter = null;
+            }
+        }
+
         private void btnCalculateCost_Click(object sender, RoutedEventArgs e)
         {
             item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;

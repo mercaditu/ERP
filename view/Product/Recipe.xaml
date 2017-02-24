@@ -119,6 +119,7 @@
 					   btnSave_Click="btnSave_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
+                       btnSearch_Click="toolBar_btnSearch_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					appName="Recipe"

@@ -570,9 +570,9 @@ namespace Cognitivo.Accounting
                 Production.name = ProductionOrder.name;
                 Production.trans_date = ProductionOrder.trans_date;
                 
-                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.child.Count() == 0))
+                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
                 {
-                    if (Detail.production_execution_detail.Where(x => x.is_accounted == false).Count() > 0)
+                    if (Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed).Count() > 0)
                     {
                         DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
                         Production_Detail.Fill_ByExecution(Detail, db);
@@ -590,11 +590,11 @@ namespace Cognitivo.Accounting
 
                     ProductionOrder.IsSelected = false;
 
-                    foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.IsSelected && x.child.Count() == 0))
+                    foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
                     {
-                        foreach (production_execution_detail production_execution_detail in Detail.production_execution_detail)
+                        foreach (production_execution_detail Exe in Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed))
                         {
-                            production_execution_detail.is_accounted = true;
+                            Exe.is_accounted = true;
                         }
                     }
                 }

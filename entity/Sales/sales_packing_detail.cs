@@ -81,7 +81,14 @@ namespace entity
 
         public decimal? verified_quantity
         {
-            get { return _verified_quantity; }
+            get
+            {
+                if (_verified_quantity == null)
+                {
+                    _verified_quantity = quantity;
+                }
+                return _verified_quantity;
+            }
             set { _verified_quantity = value; RaisePropertyChanged("verified_quantity"); }
         }
 

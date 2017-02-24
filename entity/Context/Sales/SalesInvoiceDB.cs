@@ -284,6 +284,9 @@ namespace entity
                 sales_invoice.app_contract = base.app_contract.Find(sales_invoice.id_contract);
             }
 
+            //Assign first in case, and then over wright if necesary
+            sales_invoice_detail.unit_price = sales_invoice_detail.unit_price;
+
             if (sales_invoice.app_contract != null)
             {
                 if (sales_invoice.app_contract.surcharge != null)

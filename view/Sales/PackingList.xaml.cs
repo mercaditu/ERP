@@ -120,26 +120,26 @@ namespace Cognitivo.Sales
             Sales.Settings.Default.Save();
             popupCustomize.IsOpen = false;
         }
-        private void filterVerifiedDetail()
-        {
-            if (sales_packingsales_packing_detailVerifiedViewSource != null)
-            {
-                if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
-                {
-                    if (sales_packingsales_packing_detailVerifiedViewSource.View.Cast<sales_packing_detail>().Count() > 0)
-                    {
-                        sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
-                        {
-                            sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
-                            if (sales_packing_detail.user_verified == true)
-                                return true;
-                            else
-                                return false;
-                        };
-                    }
-                }
-            }
-        }
+        //private void filterVerifiedDetail()
+        //{
+        //    if (sales_packingsales_packing_detailVerifiedViewSource != null)
+        //    {
+        //        if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
+        //        {
+        //            if (sales_packingsales_packing_detailVerifiedViewSource.View.Cast<sales_packing_detail>().Count() > 0)
+        //            {
+        //                sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
+        //                {
+        //                    sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
+        //                    if (sales_packing_detail.user_verified == true)
+        //                        return true;
+        //                    else
+        //                        return false;
+        //                };
+        //            }
+        //        }
+        //    }
+        //}
         private void item_Select(object sender, EventArgs e)
         {
             app_branch app_branch = null;
@@ -182,7 +182,6 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.quantity = 1;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
-                _sales_packing_detail.verified_by = CurrentSession.User.id_user;
                 if (item_movement != null)
                 {
                     _sales_packing_detail.batch_code = item_movement.code;

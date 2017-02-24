@@ -138,6 +138,11 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
+                            <StackPanel x:Name="stptransdate" Visibility="Collapsed">
+                                <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
+                                <DatePicker Style="{DynamicResource input_datepicker}"
+										SelectedDate="{Binding trans_date, Source={StaticResource paymentpayment_detailViewSource}, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
+                            </StackPanel>
                             <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Introvert}">
                                 <Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}" />
                                 <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
@@ -202,11 +207,6 @@
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
 									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
-                            <StackPanel x:Name="stptransdate" Visibility="Collapsed">
-                                <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                                <DatePicker Style="{DynamicResource input_datepicker}"
-										SelectedDate="{Binding trans_date,Source={StaticResource paymentpayment_detailViewSource}, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
-                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

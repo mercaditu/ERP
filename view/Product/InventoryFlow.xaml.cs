@@ -23,9 +23,19 @@ namespace Cognitivo.Product
         public InventoryFlow()
         {
             InitializeComponent();
+
+            using (entity.db db = new entity.db())
+            {
+                //db.item_product.
+            }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void dgvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

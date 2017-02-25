@@ -26,7 +26,7 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
-            await PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
 
             sales_packingsales_packinglist_detailViewSource = FindResource("sales_packingsales_packing_detailViewSource") as CollectionViewSource;
@@ -73,24 +73,13 @@ namespace Cognitivo.Sales
             {
                 sales_packing sales_packing = (sales_packing)sales_packingDataGrid.SelectedItem;
                 sales_packing.IsSelected = true;
-                sales_packing.State = System.Data.Entity.EntityState.Unchanged;
+                sales_packing.State = EntityState.Unchanged;
                 PackingListDB.Entry(sales_packing).State = EntityState.Modified;
                 sales_packingViewSource.View.Refresh();
             }
             else
             {
                 toolBar.msgWarning("Please Select an Item");
-            }
-        }
-
-        private void toolBar_btnDelete_Click(object sender)
-        {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (res == MessageBoxResult.Yes)
-            {
-                PackingListDB.sales_packing.Remove((sales_packing)sales_packingDataGrid.SelectedItem);
-                sales_packingViewSource.View.MoveCurrentToFirst();
-                toolBar_btnSave_Click(sender);
             }
         }
 
@@ -120,27 +109,6 @@ namespace Cognitivo.Sales
             Sales.Settings.Default.Save();
             popupCustomize.IsOpen = false;
         }
-
-        //private void filterVerifiedDetail()
-        //{
-        //    if (sales_packingsales_packing_detailVerifiedViewSource != null)
-        //    {
-        //        if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
-        //        {
-        //            if (sales_packingsales_packing_detailVerifiedViewSource.View.Cast<sales_packing_detail>().Count() > 0)
-        //            {
-        //                sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
-        //                {
-        //                    sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
-        //                    if (sales_packing_detail.user_verified == true)
-        //                        return true;
-        //                    else
-        //                        return false;
-        //                };
-        //            }
-        //        }
-        //    }
-        //}
 
         private void item_Select(object sender, EventArgs e)
         {
@@ -184,12 +152,14 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.quantity = 1;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
+
                 if (item_movement != null)
                 {
                     _sales_packing_detail.batch_code = item_movement.code;
                     _sales_packing_detail.expire_date = item_movement.expire_date;
                     _sales_packing_detail.id_movement = (int)item_movement.id_movement;
                 }
+
                 if (app_branch != null)
                 {
                     _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;

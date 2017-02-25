@@ -72,11 +72,6 @@
                                  Style="{StaticResource input_textbox}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" IsEnabled="{Binding ElementName=pagePackingList, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
-                        <Label Content="{lex:Loc Warning}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
-                        <StackPanel Orientation="Horizontal" Margin="4,0" Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource Bool2Visibility}}">
-                            <TextBlock Text="" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="4" Foreground="Crimson" />
-                            <TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}" />
-                        </StackPanel>
                         <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                         <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
                             <Label Content="A" Style="{StaticResource btn_Label}" />
@@ -120,7 +115,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="" Style="{StaticResource ico_Label}" />
+                            <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnpurchaseOrder_Click">
                                     <Run Text="{lex:Loc purchaseOrder}" />

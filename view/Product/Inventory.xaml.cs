@@ -290,6 +290,62 @@ namespace Cognitivo.Product
             }
         }
 
+        private void item_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxItem.ItemID>0)
+            {
+                add_item(sbxItem.ItemID);
+            }
+        }
+        public void add_item(int id_item)
+        {
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            if (item_inventory!=null)
+            {
+                item_product item_product = InventoryDB.item_product.Where(x => x.id_item == id_item).FirstOrDefault();
+                if (item_product!=null)
+                {
+                    app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+                   item_inventory_detail _item_inventory_detail=item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
+                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
+                    if (item_inventory_detail==null)
+                    {
+                        Class.StockCalculations Stock = new Class.StockCalculations();
+                        List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
+                        item_inventory_detail.value_system = StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Quantity;
+                        item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Cost;
+                    }
+                    else
+                    {
+                      item_inventory_detail.value_system = _item_inventory_detail.value_system;
+                       
+                    }
+                    item_inventory_detail.id_inventory = item_inventory.id_inventory;
+                    item_inventory_detail.value_system = _item_inventory_detail.value_system;
+                    item_inventory_detail.id_item_product = item_product.id_item_product;
+                    item_inventory_detail.item_product = item_product;
+                    item_inventory_detail.id_location = app_location.id_location;
+                
+                    item_inventory_detail.State = EntityState.Added;
+                    item_inventory_detail.timestamp = item_inventory.trans_date;
+
+                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                    {
+                        item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                    }
+
+                   item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                    //if (txtsearch.Text!="")
+                    //{
+                    //    item_inventoryitem_inventory_detailViewSource.View.Filter = null;
+                    //}
+                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                }
+            }
+         
+
+        }
+
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             crud_modal.Children.Clear();
@@ -326,15 +382,15 @@ namespace Cognitivo.Product
                 }
                 if (item_inventory_detail.item_product.can_expire)
                 {
-                    crud_modal.Visibility = Visibility.Visible;
-                    objpnl_Inventory = new cntrl.Panels.pnl_Inventory();
-                    item_inventory_detail.IsSelected = true;
-                    objpnl_Inventory.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
-                    objpnl_Inventory.InventoryDB = InventoryDB;
-                    crud_modal.Children.Add(objpnl_Inventory);
-                    //crud_modalExpire.Visibility = Visibility.Visible;
-                    //pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
-                    //crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    //crud_modal.Visibility = Visibility.Visible;
+                    //objpnl_Inventory = new cntrl.Panels.pnl_Inventory();
+                    //item_inventory_detail.IsSelected = true;
+                    //objpnl_Inventory.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
+                    //objpnl_Inventory.InventoryDB = InventoryDB;
+                    //crud_modal.Children.Add(objpnl_Inventory);
+                    crud_modalExpire.Visibility = Visibility.Visible;
+                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
+                    crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
             }
         }

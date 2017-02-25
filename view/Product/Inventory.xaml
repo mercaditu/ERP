@@ -7,6 +7,7 @@
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:cls="clr-namespace:Cognitivo.Class"
+        xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  mc:Ignorable="d"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -146,11 +147,14 @@
                     <TextBox x:Name="txtsearch" Width="256" Height="26" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" Margin="-71,0,0,0" />
                     <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Foreground="Silver" />
                 </Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2,35,2,2">
+                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
 
+                </Grid>
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 													   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,65,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 												ElementStyle="{DynamicResource MetroDataGridCheckBox}"

@@ -156,8 +156,7 @@ namespace Cognitivo.Purchase
 
         private void btnApprove_Click(object sender)
         {
-            Cognitivo.Purchase.InvoiceSetting PurchaseSettings = new Cognitivo.Purchase.InvoiceSetting();
-            PurchasePackingListDB.Approve(PurchaseSettings.DiscountStock_Packing);
+            PurchasePackingListDB.Approve();
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -260,6 +259,11 @@ namespace Cognitivo.Purchase
                     crud_modal.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+
+        private void Border_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
 
         #region Filter Data

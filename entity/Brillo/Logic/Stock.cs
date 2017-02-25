@@ -92,12 +92,26 @@ namespace entity.Brillo.Logic
             {
                 sales_packing sales_packing = (sales_packing)obj_entity;
 
-                foreach (sales_packing_detail packing_detail in sales_packing.sales_packing_detail
-                    .Where(x => x.item.item_product != null))
+                //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
+                //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
+                foreach (sales_packing_detail packing_detail in 
+                    sales_packing.sales_packing_detail
+                    .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-                    packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+
+                    int LocationID = 0;
+                    if (packing_detail.id_location == null)
+                    {
+                        LocationID = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
+                        // detail.app_location = db.app_location.Find(detail.id_location);
+                    }
+                    else
+                    {
+                        packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                        LocationID = (int)packing_detail.id_location;
+                    }
+
                     List<StockList> Items_InStockLIST = null;
                     if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
                     {
@@ -107,16 +121,16 @@ namespace entity.Brillo.Logic
                     else
                     {
                         Brillo.Stock stock = new Brillo.Stock();
-                        Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, (int)packing_detail.id_location, item_product.id_item_product);
+                        Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, LocationID, item_product.id_item_product);
                     }
                   
-                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
+                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                              App.Names.PackingList,
                                              packing_detail.id_sales_packing,
                                              packing_detail.id_sales_packing_detail,
                                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                              item_product,
-                                             (int)packing_detail.id_location,
+                                             LocationID,
                                              packing_detail.quantity,
                                              sales_packing.trans_date,
                                              comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
@@ -131,7 +145,7 @@ namespace entity.Brillo.Logic
                 purchase_packing purchase_packing = (purchase_packing)obj_entity;
 
                 foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                    .Where(x => x.item.item_product != null))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                     packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
@@ -142,7 +156,7 @@ namespace entity.Brillo.Logic
                               App.Names.PurchasePacking,
                               packing_detail.id_purchase_packing,
                               packing_detail.id_purchase_packing_detail,
-                             CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                               packing_detail.item.item_product.FirstOrDefault().id_item_product,
                               (int)packing_detail.id_location,
                               (decimal)packing_detail.verified_quantity,
@@ -410,7 +424,7 @@ namespace entity.Brillo.Logic
                 {
                     if (sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0).Count() > 0)
                     {
-                        Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product != null).ToList());
+                        Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0).ToList());
                     }
                 }
             }
@@ -452,7 +466,7 @@ namespace entity.Brillo.Logic
                                 else
                                 {
                                     Brillo.Stock stock = new Brillo.Stock();
-                                    Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, (int)detail.id_location, item_productSub.id_item_product);
+                                    Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, LocationID, item_productSub.id_item_product);
                                 }
 
                                 item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -471,6 +485,7 @@ namespace entity.Brillo.Logic
                     }
                 }
                 else
+                //If NOT Auto Recpie
                 {
                     int LocationID = 0;
                     item_product item_product = detail.item.item_product.FirstOrDefault();
@@ -486,6 +501,7 @@ namespace entity.Brillo.Logic
                             detail.app_location = db.app_location.Find(detail.id_location);
                             LocationID = (int)detail.id_location;
                         }
+
                         List<StockList> Items_InStockLIST = null;
                         if (detail.movement_id != null && detail.movement_id > 0)
                         {

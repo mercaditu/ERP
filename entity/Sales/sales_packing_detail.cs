@@ -100,8 +100,6 @@ namespace entity
         }
         private decimal? _verified_by;
 
-
-
         public virtual sales_packing sales_packing { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }

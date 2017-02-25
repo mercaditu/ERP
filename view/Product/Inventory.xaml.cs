@@ -21,7 +21,6 @@ namespace Cognitivo.Product
 
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
-        private int CurrencyID = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
 
         public Inventory()
         {
@@ -127,9 +126,9 @@ namespace Cognitivo.Product
                                 item_inventory_detail.value_system = 0;
                             }
 
-                            if (CurrencyID > 0)
+                            if (CurrentSession.Get_Currency_Default_Rate() != null)
                             {
-                                item_inventory_detail.id_currencyfx = CurrencyID;
+                                item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                             }
                             item_inventory_detail.item_inventory = item_inventory;
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);

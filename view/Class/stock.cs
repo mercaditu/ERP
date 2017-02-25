@@ -15,6 +15,8 @@ namespace Cognitivo.Class
         public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
         public string Measurement { get; set; }
+        public string BatchCode { get; set; }
+        public DateTime? ExpiryDate { get; set; }
     }
 
     public class StockCalculations
@@ -26,7 +28,9 @@ namespace Cognitivo.Class
                              (sum(mov.credit) - sum(mov.debit)) as Quantity,
                              measure.name as Measurement,
                              (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
-                             brand.name as Brand
+                             brand.name as Brand,
+                                 mov.code as BatchCode,
+                                 mov.expire_date as ExpiryDate
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -45,7 +49,9 @@ namespace Cognitivo.Class
         {
             string query = @" select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
-                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
+                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
+                                 mov.code as BatchCode,
+                                 mov.expire_date as ExpiryDate
                                  from item_movement as mov
                                  inner join app_location as loc on mov.id_location = loc.id_location
                                  inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -72,6 +78,12 @@ namespace Cognitivo.Class
                 Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
                 Stock.Measurement = DataRow["Measurement"].ToString();
                 Stock.ProductID = Convert.ToInt16(DataRow["ProductID"]);
+                Stock.BatchCode = DataRow["BatchCode"].ToString();
+
+                if (!DataRow.IsNull("ExpiryDate"))
+                {
+                    Stock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
+                }
 
                 if (!DataRow.IsNull("Quantity"))
                 {
@@ -81,6 +93,7 @@ namespace Cognitivo.Class
                 {
                     Stock.Quantity = 0;
                 }
+
                 if (!DataRow.IsNull("Cost"))
                 {
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);

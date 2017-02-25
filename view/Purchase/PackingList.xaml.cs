@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -112,7 +113,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-     
+
         private void toolBar_btnSave_Click(object sender)
         {
             if (PurchasePackingListDB.SaveChanges() > 0)
@@ -245,14 +246,11 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                         purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                         purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                        purchase_packing_detail.verified_quantity = _purchase_order_detail.quantity;
-                        purchase_packing_detail.user_verified =true;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
                     }
 
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                    filterVerifiedDetail();
-                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                
                     PurchasePackingListDB.Entry(purchase_packing).Entity.State = EntityState.Added;
 
                     crud_modal.Children.Clear();
@@ -264,6 +262,36 @@ namespace Cognitivo.Purchase
         private void Border_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxItem.ItemID > 0)
+            {
+
+
+                purchase_packing purchase_packing = (purchase_packing)purchase_packingViewSource.View.CurrentItem;
+                if (purchase_packing != null)
+                {
+                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    if (_purchase_packing_detail != null)
+                    {
+                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                        purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
+                        purchase_packing_detail.id_item = (int)_purchase_packing_detail.id_item;
+                        purchase_packing_detail.item = _purchase_packing_detail.item;
+                        purchase_packing_detail.verified_quantity = 1;
+                        purchase_packing_detail.user_verified = true;
+                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
+                        filterVerifiedDetail();
+                        purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                        var VerifiedItemList = purchase_packing.purchase_packing_detail.Where(x=>x.user_verified).GroupBy(x => x.id_item).Select(x => new { ItemName = x.Max(y => y.item.name), ItemCode = x.Max(y => y.item.code), VerifiedQuantity = x.Sum(y => y.verified_quantity), Quantity = x.Max(y => y.quantity) }).ToList();
+                        GridVerifiedList.ItemsSource = VerifiedItemList;
+                    }
+
+                }
+
+            }
         }
 
         #region Filter Data
@@ -304,5 +332,14 @@ namespace Cognitivo.Purchase
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();
             }
         }
+    }
+    public class VerifiedItem
+    {
+        public int id_item;
+
+        public string ItemName { get; set; }
+        public string ItemCode { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal VerifiedQuantity { get; set; }
     }
 }

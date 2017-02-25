@@ -236,26 +236,28 @@
                     <TabItem Header="{lex:Loc Approve}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="119*"/>
+                                <ColumnDefinition Width="158*"/>
+                                <ColumnDefinition Width="21*"/>
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Column="0"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
-                                  ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}"
+ x:Name="GridVerifiedList"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
+                                    <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding ItemCode, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DataGrid Grid.Column="1"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected">
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
-                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+
                                     <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Accounted}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding batch_code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Batch}" MinWidth="64" Width="Auto"/>
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
@@ -269,11 +271,11 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-                        
+
                     </TabItem>
                 </TabControl>
-                <Controls:SmartBox_Item
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8"/>
+                <Controls:SmartBox_Item x:Name="sbxItem"
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select"/>
             </Grid>
         </Grid>
 

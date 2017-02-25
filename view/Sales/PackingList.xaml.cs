@@ -210,6 +210,8 @@ namespace Cognitivo.Sales
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 filterVerifiedDetail();
                 sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
+                var VerifiedItemList = sales_packing.sales_packing_detail.Where(x => x.user_verified).GroupBy(x => x.id_item).Select(x => new { ItemName = x.Max(y => y.item.name), ItemCode = x.Max(y => y.item.code), VerifiedQuantity = x.Sum(y => y.verified_quantity), Quantity = x.Max(y => y.quantity) }).ToList();
+                GridVerifiedList.ItemsSource = VerifiedItemList;
             }));
         }
 

@@ -333,13 +333,5 @@ namespace Cognitivo.Purchase
             }
         }
     }
-    public class VerifiedItem
-    {
-        public int id_item;
-
-        public string ItemName { get; set; }
-        public string ItemCode { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal VerifiedQuantity { get; set; }
-    }
+   
 }

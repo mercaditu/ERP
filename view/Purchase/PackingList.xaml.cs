@@ -211,6 +211,7 @@ namespace Cognitivo.Purchase
 
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                     PurchasePackingListDB.Entry(purchase_packing).Entity.State = EntityState.Added;
+
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
                 }

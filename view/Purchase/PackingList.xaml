@@ -65,8 +65,7 @@
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
                                   IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
-                                  SelectionChanged="cbxDocument_SelectionChanged" />
+                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
                         <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -245,7 +244,7 @@
         </Grid>
 
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" x:Name="purchase_packingDataGrid" Background="{StaticResource AccentColor_Brush}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="purchase_packingDataGrid_SelectionChanged"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}"
                  ItemsSource="{Binding}">
             <ListBox.ItemTemplate>

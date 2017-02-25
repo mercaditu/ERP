@@ -59,10 +59,10 @@ namespace Cognitivo.Product
             }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ProductRecipeDB.item_recepie.Where(a => a.id_company == CurrentSession.Id_Company
-                                                       && (a.is_head == true)).Include(b => b.item).OrderBy(x => x.item.name).ToList();
+            await ProductRecipeDB.item_recepie.Where(a => a.id_company == CurrentSession.Id_Company
+                                                       && (a.is_head == true)).Include(b => b.item).OrderBy(x => x.item.name).ToListAsync();
 
             item_recepieViewSource = FindResource("item_recepieViewSource") as CollectionViewSource;
             item_recepieViewSource.Source = ProductRecipeDB.item_recepie.Local;
@@ -75,24 +75,6 @@ namespace Cognitivo.Product
             item_recepie item_recepie = ProductRecipeDB.New();
             ProductRecipeDB.Entry(item_recepie).State = EntityState.Added;
             item_recepieViewSource.View.MoveCurrentToLast();
-        }
-
-        private void btnDelete_Click(object sender)
-        {
-            try
-            {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    item_recepie item_recepie = (item_recepie)item_receipeDataGrid.SelectedItem;
-                    item_recepie.is_head = false;
-                    item_recepie.State = EntityState.Deleted;
-                    item_recepie.IsSelected = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
         }
 
         private void btnSave_Click(object sender)
@@ -154,10 +136,6 @@ namespace Cognitivo.Product
             {
                 toolBar.msgError(ex);
             }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

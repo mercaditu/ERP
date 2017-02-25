@@ -646,7 +646,7 @@
     <EmbeddedResource Include="Reports\Commercials\ContactsByGeography.rdlc" />
     <EmbeddedResource Include="Reports\Commercials\ContactsByTag.rdlc" />
     <EmbeddedResource Include="Reports\Finances\AccountBalance.rdlc" />
-    <EmbeddedResource Include="Reports\Finances\PaymentReceivable.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\RecievablesByDate.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />

@@ -55,7 +55,6 @@ namespace entity
                 if (value > 0)
                 {
                     _quantity = value;
-                    //RaisePropertyChanged("unit_price");
                 }
             }
         }
@@ -76,15 +75,20 @@ namespace entity
             get { return _user_verified; }
             set { _user_verified = value; RaisePropertyChanged("user_verified"); }
         }
-
         private bool _user_verified;
 
         public decimal? verified_quantity
         {
-            get { return _verified_quantity; }
+            get
+            {
+                if (_verified_quantity == null)
+                {
+                    _verified_quantity = quantity;
+                }
+                return _verified_quantity;
+            }
             set { _verified_quantity = value; RaisePropertyChanged("verified_quantity"); }
         }
-
         private decimal? _verified_quantity;
 
 
@@ -94,8 +98,7 @@ namespace entity
             set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
         }
         private decimal? _verified_by;
-
-
+        
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }

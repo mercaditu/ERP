@@ -13,7 +13,16 @@
                                         po.project_cost_center as CostCenter,
                                         pod.id_order_detail as OrderID,
                                         pod.parent_id_order_detail as ParentID,
-                                        pod.status as Status,
+	                            CASE
+                              WHEN pod.status=1 THEN '" + entity.Brillo.Localize.StringText("Pending") + @"'
+                              WHEN pod.status=2 THEN '" + entity.Brillo.Localize.StringText("Approved") + @"'
+                              WHEN pod.status=3 THEN '" + entity.Brillo.Localize.StringText("InProcess") + @"'
+                              WHEN pod.status=4 THEN '" + entity.Brillo.Localize.StringText("Executed") + @"'
+                              WHEN pod.status=5 THEN '" + entity.Brillo.Localize.StringText("QA_Check") + @"'
+                              WHEN pod.status=6 THEN '" + entity.Brillo.Localize.StringText("QA_Rejected") + @"'
+                              WHEN pod.status=7 THEN '" + entity.Brillo.Localize.StringText("Anulled") + @"'
+                                END
+                                    as Status,
                                         pod.is_input as Input,
                                         pod.code as Code,
                                         pod.name as Item,
@@ -23,12 +32,12 @@
                                         pt.unit_cost_est as CostEstimated,
                                         pod.start_date_est as StartDate,
                                         pod.end_date_est as EndDate,
-                                        time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600 as Hours,
-                                        (time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)* htc.coefficient as ComputeHours,
-                                        pod.quantity - ((time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600)* htc.coefficient) as diff,
-                                        ((time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * 100) / pod.quantity as diffPer,
-                                        pod.completed as Completed,pod.completed *100 as Percentage,
-                                        (((time_to_sec(timediff(ped.end_date,ped.start_date)) / 3600) * htc.coefficient) * 100)/pod.completed as CompletedHours
+                                        time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600 as Hours,
+                                        (time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient as ComputeHours,
+                                        pod.quantity - ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient) as diff,
+                                        ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * 100) / pod.quantity as diffPer,
+                                        pod.completed as Completed, pod.completed *100 as Percentage,
+                                        (((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient) * 100)/pod.completed as CompletedHours
                                         from production_order as po
 
                                         left join projects as p on po.id_project = p.id_project

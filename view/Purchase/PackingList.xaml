@@ -250,7 +250,8 @@
                                     <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid Grid.Column="1"
+                            <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2"/>
+                            <DataGrid Grid.Column="2"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">

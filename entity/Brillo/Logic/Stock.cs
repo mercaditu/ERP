@@ -109,7 +109,7 @@ namespace entity.Brillo.Logic
                         Brillo.Stock stock = new Brillo.Stock();
                         Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, (int)packing_detail.id_location, item_product.id_item_product);
                     }
-
+                  
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PackingList,
                                              packing_detail.id_sales_packing,
@@ -145,7 +145,7 @@ namespace entity.Brillo.Logic
                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                               packing_detail.item.item_product.FirstOrDefault().id_item_product,
                               (int)packing_detail.id_location,
-                              packing_detail.quantity,
+                              (decimal)packing_detail.verified_quantity,
                               purchase_packing.trans_date,
                               packing_detail.purchase_order_detail.unit_cost,
                               comment_Generator(App.Names.PurchaseInvoice, purchase_packing.number != null ? purchase_packing.number : "", purchase_packing.contact.name), null,

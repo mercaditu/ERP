@@ -21,7 +21,7 @@ namespace Cognitivo.Product
 
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
-
+        private cntrl.Panels.pnl_Inventory objpnl_Inventory;
         public Inventory()
         {
             InitializeComponent();
@@ -326,9 +326,15 @@ namespace Cognitivo.Product
                 }
                 if (item_inventory_detail.item_product.can_expire)
                 {
-                    crud_modalExpire.Visibility = Visibility.Visible;
-                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
-                    crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    crud_modal.Visibility = Visibility.Visible;
+                    objpnl_Inventory = new cntrl.Panels.pnl_Inventory();
+                    item_inventory_detail.IsSelected = true;
+                    objpnl_Inventory.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
+                    objpnl_Inventory.InventoryDB = InventoryDB;
+                    crud_modal.Children.Add(objpnl_Inventory);
+                    //crud_modalExpire.Visibility = Visibility.Visible;
+                    //pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
+                    //crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
             }
         }

@@ -444,6 +444,9 @@
     <Compile Include="PanelAdv\pnlAnull.xaml.cs">
       <DependentUpon>pnlAnull.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\pnl_Inventory.xaml.cs">
+      <DependentUpon>pnl_Inventory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\pnl_ItemMovementExpiry.xaml.cs">
       <DependentUpon>pnl_ItemMovementExpiry.xaml</DependentUpon>
     </Compile>
@@ -1063,6 +1066,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PanelAdv\pnlAnull.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\pnl_Inventory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

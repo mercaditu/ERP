@@ -429,7 +429,12 @@ namespace Cognitivo.Production
         {
             if (e.Parameter as production_execution_detail != null)
             {
-                e.CanExecute = true;
+                production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
+                if (production_execution_detail.status!=Status.Production.Executed)
+                {
+                    e.CanExecute = true;
+                }
+            
             }
         }
 

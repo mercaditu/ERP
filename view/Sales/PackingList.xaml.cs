@@ -51,8 +51,27 @@ namespace Cognitivo.Sales
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
             }));
+            filterVerifiedDetail();
         }
-
+        private void filterVerifiedDetail()
+        {
+            if (sales_packingsales_packing_detailVerifiedViewSource != null)
+            {
+                if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
+                {
+               
+                        sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
+                        {
+                            sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
+                            if (sales_packing_detail.user_verified == true)
+                                return true;
+                            else
+                                return false;
+                        };
+                    
+                }
+            }
+        }
         #region Toolbar Events
 
         private void toolBar_btnNew_Click(object sender)
@@ -82,7 +101,16 @@ namespace Cognitivo.Sales
                 toolBar.msgWarning("Please Select an Item");
             }
         }
-
+        private void toolBar_btnDelete_Click(object sender)
+        {
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                PackingListDB.purchase_packing.Remove((purchase_packing)sales_packingViewSource.View.CurrentItem);
+                sales_packingViewSource.View.MoveCurrentToFirst();
+                toolBar_btnSave_Click(sender);
+            }
+        }
         private void toolBar_btnSave_Click(object sender)
         {
             if (PackingListDB.SaveChanges() > 0)
@@ -138,6 +166,8 @@ namespace Cognitivo.Sales
                         Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
                     }
                 }
+                
+               
             }
         }
 
@@ -150,6 +180,7 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.sales_packing = sales_packing;
                 _sales_packing_detail.item = item;
                 _sales_packing_detail.quantity = 1;
+                _sales_packing_detail.verified_quantity = 1;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
@@ -177,6 +208,8 @@ namespace Cognitivo.Sales
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                filterVerifiedDetail();
+                sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
             }));
         }
 

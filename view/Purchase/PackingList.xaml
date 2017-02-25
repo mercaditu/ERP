@@ -29,6 +29,7 @@
         <CollectionViewSource x:Key="app_measurevolume" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measureweight" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_packingpurchase_packing_detailViewSource" Source="{Binding purchase_packing_detail, Source={StaticResource purchase_packingViewSource}}" />
+        <CollectionViewSource x:Key="purchase_packingpurchase_packing_detailApprovedViewSource" Source="{Binding purchase_packing_detail, Source={StaticResource purchase_packingViewSource}}" />
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
     </Page.Resources>
 
@@ -234,7 +235,7 @@
                     </TabItem>
                     <TabItem Header="{lex:Loc Approve}">
                         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
-                                  ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}"
+                                  ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -243,7 +244,7 @@
                                 <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding batch_code, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto"/>
+                                <DataGridTextColumn Binding="{Binding batch_code, UpdateSourceTrigger=PropertyChanged}" Header="Batch Code" IsReadOnly="True" MinWidth="256" Width="Auto"/>
 
                                 <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Accounted}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding verified_by}" Header="{lex:Loc Cognitivo:local:VerifiedBy}" MinWidth="128" Width="Auto" />

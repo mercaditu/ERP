@@ -45,10 +45,10 @@ namespace Cognitivo.Product
              .OrderBy(a => a.name).LoadAsync();
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
 
-            filetr_detail();
+            FilterDetail();
         }
 
-        private void filetr_detail()
+        private void FilterDetail()
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
@@ -112,7 +112,7 @@ namespace Cognitivo.Product
                             item_inventory_detail.State = EntityState.Added;
                             item_inventory_detail.item_product = item_product;
                             item_inventory_detail.id_item_product = i;
-
+                            //item_inventory_detail.batch_code = 
                             item_inventory_detail.app_location = app_location;
                             item_inventory_detail.id_location = app_location.id_location;
                             item_inventory_detail.timestamp = DateTime.Now;
@@ -138,15 +138,15 @@ namespace Cognitivo.Product
                 }
 
                 item_inventoryitem_inventory_detailViewSource.View.Refresh();
-                filetr_detail();
+                FilterDetail();
             }
         }
 
         private void toolBar_btnNew_Click(object sender)
         {
-            try
+            app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
+            if (app_branch != null)
             {
-                app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
                 item_inventory item_inventory = new item_inventory();
                 item_inventory.IsSelected = true;
                 item_inventory.id_branch = app_branch.id_branch;
@@ -157,10 +157,6 @@ namespace Cognitivo.Product
                 app_branchapp_locationViewSource.View.MoveCurrentToFirst();
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentToLast();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -191,11 +187,6 @@ namespace Cognitivo.Product
         private void toolBar_btnCancel_Click(object sender)
         {
             InventoryDB.CancelAllChanges();
-        }
-
-        private void toolBar_btnDelete_Click(object sender)
-        {
-            MessageBox.Show("Function Not Available");
         }
 
         private void toolBar_btnApprove_Click(object sender)
@@ -351,7 +342,7 @@ namespace Cognitivo.Product
                 {
                     if (app_branchapp_locationViewSource.View != null)
                     {
-                        filetr_detail();
+                        FilterDetail();
                     }
                 }
             }

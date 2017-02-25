@@ -11,9 +11,6 @@ using System.Windows.Input;
 
 namespace Cognitivo.Sales
 {
-    /// <summary>
-    /// Interaction logic for Return.xaml
-    /// </summary>
     public partial class Return : Page
     {
         private SalesReturnDB SalesReturnDB = new SalesReturnDB();

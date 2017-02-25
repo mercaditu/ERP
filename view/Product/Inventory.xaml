@@ -46,7 +46,6 @@
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
-					   btnDelete_Click="toolBar_btnDelete_Click"
 					   appName="Inventory"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

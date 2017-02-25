@@ -270,7 +270,7 @@ namespace entity
                         {
                             item_movement.AddRange(item_movementList);
 
-                            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null))
+                            foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail.Where(x => x.item.item_product != null && x.IsSelected))
                             {
                                 if (sales_return_detail.item_movement.FirstOrDefault() != null)
                                 {

@@ -236,18 +236,17 @@
                     <TabItem Header="{lex:Loc Approve}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="119*"/>
-                                <ColumnDefinition Width="158*"/>
-                                <ColumnDefinition Width="21*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2"/>
+                                <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            <DataGrid Grid.Column="0"
-                                AutoGenerateColumns="False" EnableRowVirtualization="True"
- x:Name="GridVerifiedList"
+                            <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                                AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding ItemCode, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2"/>
@@ -259,8 +258,12 @@
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
 
-                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Accounted}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding batch_code, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Batch}" MinWidth="64" Width="Auto"/>
+                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" 
+                                                        ElementStyle="{StaticResource RightAlignStyle}" 
+                                                        MinWidth="128" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Batch}" MinWidth="64" Width="Auto"/>
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
                                     <DataGridTemplateColumn Width="1*" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -281,7 +284,7 @@
         </Grid>
 
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" x:Name="purchase_packingDataGrid" Background="{StaticResource AccentColor_Brush}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="purchase_packingDataGrid_SelectionChanged"
                  ItemContainerStyle="{StaticResource nav_ListSelection}"
                  ItemsSource="{Binding}">
             <ListBox.ItemTemplate>

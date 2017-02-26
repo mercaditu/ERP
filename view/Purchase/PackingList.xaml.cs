@@ -54,6 +54,7 @@ namespace Cognitivo.Purchase
             }));
             cbxBranch.SelectedIndex = 0;
         }
+
         private void filterVerifiedDetail()
         {
             if (purchase_packingpurchase_packing_detailApprovedViewSource != null)
@@ -73,14 +74,15 @@ namespace Cognitivo.Purchase
                 }
             }
         }
+
         #region Toolbar Events
 
         private void toolBar_btnNew_Click(object sender)
         {
-            Purchase.InvoiceSetting PurchaseSettings = new InvoiceSetting();
+            InvoiceSetting PurchaseSettings = new InvoiceSetting();
             purchase_packing purchase_packing = PurchasePackingListDB.New();
             purchase_packing.trans_date = DateTime.Now.AddDays(PurchaseSettings.TransDate_OffSet);
-            purchase_packing.State = System.Data.Entity.EntityState.Added;
+            purchase_packing.State = EntityState.Added;
             PurchasePackingListDB.purchase_packing.Add(purchase_packing);
             purchase_packingViewSource.View.Refresh();
             purchase_packingViewSource.View.MoveCurrentToLast();
@@ -92,7 +94,7 @@ namespace Cognitivo.Purchase
             {
                 purchase_packing purchase_packing = (purchase_packing)purchase_packingDataGrid.SelectedItem;
                 purchase_packing.IsSelected = true;
-                purchase_packing.State = System.Data.Entity.EntityState.Modified;
+                purchase_packing.State = EntityState.Modified;
                 PurchasePackingListDB.Entry(purchase_packing).State = EntityState.Modified;
                 purchase_packingViewSource.View.Refresh();
             }
@@ -259,18 +261,11 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void Border_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
             if (sbxItem.ItemID > 0)
             {
-
-
-                purchase_packing purchase_packing = (purchase_packing)purchase_packingViewSource.View.CurrentItem;
+                purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
                 if (purchase_packing != null)
                 {
                     purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
@@ -280,18 +275,42 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
                         purchase_packing_detail.id_item = (int)_purchase_packing_detail.id_item;
                         purchase_packing_detail.item = _purchase_packing_detail.item;
-                        purchase_packing_detail.verified_quantity = 1;
+                        purchase_packing_detail.verified_quantity = sbxItem.Quantity;
                         purchase_packing_detail.user_verified = true;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
                         filterVerifiedDetail();
+
                         purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
-                        var VerifiedItemList = purchase_packing.purchase_packing_detail.Where(x=>x.user_verified).GroupBy(x => x.id_item).Select(x => new { ItemName = x.Max(y => y.item.name), ItemCode = x.Max(y => y.item.code), VerifiedQuantity = x.Sum(y => y.verified_quantity), Quantity = x.Max(y => y.quantity) }).ToList();
-                        GridVerifiedList.ItemsSource = VerifiedItemList;
+                        Refresh_GroupByGrid();
                     }
-
                 }
-
             }
+        }
+
+        private void Refresh_GroupByGrid()
+        {
+            purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
+            if (purchase_packing != null)
+            {
+                //This code should be in Selection Changed of DataGrid and after inserting new items.
+                var VerifiedItemList = purchase_packing.purchase_packing_detail
+                    .Where(x => x.user_verified == false)
+                    .GroupBy(x => x.id_item)
+                    .Select(x => new
+                    {
+                        ItemName = x.Max(y => y.item.name),
+                        ItemCode = x.Max(y => y.item.code),
+                        VerifiedQuantity = x.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                    Quantity = x.Max(y => y.quantity)
+                    })
+                    .ToList();
+                GridVerifiedList.ItemsSource = VerifiedItemList;
+            }
+        }
+
+        private void purchase_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Refresh_GroupByGrid();
         }
 
         #region Filter Data

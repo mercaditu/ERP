@@ -12,22 +12,29 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-        <DataGrid Width="256" FontSize="10" Margin="2" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Date}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"/>
-            <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" Width="*"/>
-            <DataGridTextColumn Binding="{Binding Quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
-            <DataGridTextColumn Binding="{Binding Cost}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
+        <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro"
+                  ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Quantity, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
+                <DataGridTextColumn Binding="{Binding Cost, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel Background="WhiteSmoke" Margin="4" DataContext="{StaticResource item_movementViewSource}">
+                    <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding Comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
-                    <Label Content="{Binding ExpiryDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
-                        <Label Content="{lex:Loc BatchCode}" Style="{StaticResource input_label}"/>
-                    <Label Content="{Binding BatchCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{Binding ExpiryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding BatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
                 </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>

@@ -125,6 +125,7 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.Chart.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Compression.Base, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.Compression.Base.dll</HintPath>
@@ -133,10 +134,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Gauge.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.GridCommon.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Linq.Base, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Pdf.Base, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.ReportControls.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.ReportDesigner.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.ReportViewer.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfGrid.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.SfGrid.WPF.dll</HintPath>
@@ -145,10 +153,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.SfGridConverter.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfMaps.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Tools.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.XlsIO.Base, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.XlsIO.Base.dll</HintPath>
@@ -159,7 +169,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -170,6 +183,7 @@
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
       <Private>True</Private>
@@ -604,6 +618,9 @@
     <Compile Include="Reports\Projects\ProjectFinance.cs" />
     <Compile Include="Reports\Purchases\Purchase.cs" />
     <Compile Include="Reports\Purchases\PurchaseTender.cs" />
+    <Compile Include="Reports\ReportDesigner.xaml.cs">
+      <DependentUpon>ReportDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Sales\Sales.cs" />
     <Compile Include="Reports\Sales\SalesAnalysis.cs" />
     <Compile Include="Reports\Stocks\CostBreakDown.cs" />
@@ -1230,6 +1247,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\ProjectTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\ReportDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

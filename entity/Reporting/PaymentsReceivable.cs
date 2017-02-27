@@ -12,14 +12,14 @@ namespace entity.Reporting
         public string Branch { get; set; }
         public string Conditions { get; set; }
         public string Contract { get; set; }
-        public string Number { get; set; }
+        public string SalesNumber { get; set; }
         public DateTime Date { get; set; }
         public decimal Salesman { get; set; }
         public DateTime PaymentDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public Decimal Debit { get; set; }
         public Decimal Credit { get; set; }
-        public string number { get; set; }
+        public string PaymentNumber { get; set; }
         public DateTime Payment { get; set; }
         public Decimal Paid { get; set; }
         public string PaymentType { get; set; }

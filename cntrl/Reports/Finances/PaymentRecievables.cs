@@ -3,7 +3,7 @@
     public static class PaymentRecievables
     {
         public static string query = @"
-                                        select
+                                         select
                                         contact.name as Customer, 
                                         contact.telephone as Telephone, 
                                         contact.address as Address, 
@@ -12,20 +12,23 @@
                                         branch.name as Branch,
                                         cond.name as Conditions, 
                                         contract.name as Contract,
-                                        si.number as Number, 
+                                        si.number as SalesNumber, 
                                         si.trans_date as Date, 
                                         sr.name as Salesman,
                                         ps.trans_date as PaymentDate, 
                                         ps.expire_date as ExpiryDate, 
                                         ps.debit as Debit, 
                                         pschild.credit as Credit,
-                                        payment.number, 
+                                        payment.number as PaymentNumber, 
                                         payment.trans_date as Payment,
                                         pd.value as Paid,
                                         pt.name as PaymentType, 
                                         c.name as Currency, 
                                         cfx.buy_value as Rate,
-                                        datediff(ps.expire_date, ifnull(payment.trans_date, Now())) as DateDiff
+                                        datediff(ps.expire_date, ifnull(payment.trans_date, Now())) as DateDiff,
+                                        ps.parent_id_payment_schedual,
+                                        ps.id_payment_schedual,
+									if(ps.id_payment_schedual=null,pschild.parent_id_payment_schedual,ps.id_payment_schedual) as Refrence
                                         
                                         from payment_schedual as ps
                                         left join payment_schedual as pschild on ps.id_payment_schedual = pschild.parent_id_payment_schedual

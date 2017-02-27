@@ -35,6 +35,7 @@
                         <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}"/>
                         <Label Content="{Binding BatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
+                    <local:ImageViewer  Margin="0,0,665,0" ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Movement" AllowDrop="True" />
                 </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>

@@ -50,8 +50,9 @@ namespace Cognitivo.Sales
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
+                filterVerifiedDetail();
             }));
-            filterVerifiedDetail();
+        
         }
         private void filterVerifiedDetail()
         {
@@ -209,9 +210,8 @@ namespace Cognitivo.Sales
             {
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 filterVerifiedDetail();
-                sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
-                var VerifiedItemList = sales_packing.sales_packing_detail.Where(x => x.user_verified).GroupBy(x => x.id_item).Select(x => new { ItemName = x.Max(y => y.item.name), ItemCode = x.Max(y => y.item.code), VerifiedQuantity = x.Sum(y => y.verified_quantity), Quantity = x.Max(y => y.quantity) }).ToList();
-                GridVerifiedList.ItemsSource = VerifiedItemList;
+                Refresh_GroupByGrid();
+           
             }));
         }
 
@@ -339,6 +339,9 @@ namespace Cognitivo.Sales
                         PackingListDB.Entry(sales_packing).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
+                        filterVerifiedDetail();
+                        Refresh_GroupByGrid();
+                        
                     }
                 }
             }
@@ -424,6 +427,26 @@ namespace Cognitivo.Sales
                     item_movement item_movement = PackingListDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                     Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement, sbxItem.Quantity));
                 }
+            }
+        }
+        private void Refresh_GroupByGrid()
+        {
+            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+            if (sales_packing != null)
+            {
+                //This code should be in Selection Changed of DataGrid and after inserting new items.
+                var VerifiedItemList = sales_packing.sales_packing_detail
+                    .Where(x => x.user_verified == false)
+                    .GroupBy(x => x.id_item)
+                    .Select(x => new
+                    {
+                        ItemName = x.Max(y => y.item.name),
+                        ItemCode = x.Max(y => y.item.code),
+                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        Quantity = x.Max(y => y.quantity)
+                    })
+                    .ToList();
+                GridVerifiedList.ItemsSource = VerifiedItemList;
             }
         }
     }

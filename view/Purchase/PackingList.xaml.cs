@@ -257,6 +257,7 @@ namespace Cognitivo.Purchase
 
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
+                    filterVerifiedDetail();
                 }
             }
         }
@@ -300,7 +301,7 @@ namespace Cognitivo.Purchase
                     {
                         ItemName = x.Max(y => y.item.name),
                         ItemCode = x.Max(y => y.item.code),
-                        VerifiedQuantity = x.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                     Quantity = x.Max(y => y.quantity)
                     })
                     .ToList();

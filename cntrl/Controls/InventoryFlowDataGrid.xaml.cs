@@ -14,14 +14,7 @@ namespace cntrl.Controls
         public int ProductID { get; set; }
         public long? MovementID { get; set; }
         CollectionViewSource item_movementViewSource;
-        public event btnSave_ClickedEventHandler Save_Click;
 
-        public delegate void btnSave_ClickedEventHandler(object sender);
-
-        public void btnSave_MouseUp(object sender, EventArgs e)
-        {
-             Save_Click?.Invoke(sender);
-        }
         public InventoryFlowDataGrid(long? InvParentID, int InvProductID)
         {
             InitializeComponent();
@@ -59,14 +52,15 @@ namespace cntrl.Controls
             }
         }
 
+        public event SelectionChangedEventHandler SelectionChanged;
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ItemMovement obj = item_movementViewSource.View.CurrentItem as ItemMovement;
             if (obj!=null)
             {
                 MovementID = obj.MovementID;
+                SelectionChanged(sender, e);
             }
-            btnSave_MouseUp(sender, e);
         }
     }
 

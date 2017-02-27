@@ -1,6 +1,5 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -86,6 +85,8 @@ namespace Cognitivo.Purchase
             PurchasePackingListDB.purchase_packing.Add(purchase_packing);
             purchase_packingViewSource.View.Refresh();
             purchase_packingViewSource.View.MoveCurrentToLast();
+
+            Refresh_GroupByGrid();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -114,7 +115,6 @@ namespace Cognitivo.Purchase
                 toolBar_btnSave_Click(sender);
             }
         }
-
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -306,6 +306,8 @@ namespace Cognitivo.Purchase
                     })
                     .ToList();
                 GridVerifiedList.ItemsSource = VerifiedItemList;
+
+                Refresh_GroupByGrid();
             }
         }
 
@@ -349,9 +351,11 @@ namespace Cognitivo.Purchase
             if (cbxBranch.SelectedItem != null)
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
-                cbxLocation.ItemsSource = app_branch.app_location.ToList();
+                if (app_branch != null)
+                {
+                    cbxLocation.ItemsSource = app_branch.app_location.ToList();
+                }
             }
         }
     }
-   
 }

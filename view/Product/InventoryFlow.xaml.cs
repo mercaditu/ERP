@@ -39,12 +39,11 @@ namespace Cognitivo.Product
 
         private void dgvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            stackFlow.Children.Clear();
-           item_product item_product = item_productViewSource.View.CurrentItem as item_product;
+            //stackFlow.Children.Clear();
+            item_product item_product = item_productViewSource.View.CurrentItem as item_product;
             if (item_product != null)
             {
                 cntrl.Controls.InventoryFlowDataGrid invnetoryflow = new cntrl.Controls.InventoryFlowDataGrid(null, item_product.id_item_product);
-                
                 stackFlow.Children.Add(invnetoryflow);
             }
         }

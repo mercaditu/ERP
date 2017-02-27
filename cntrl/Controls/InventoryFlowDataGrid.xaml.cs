@@ -64,7 +64,7 @@ namespace cntrl.Controls
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment
-                                    }).ToList();
+                                    }).OrderByDescending(x => x.Date).ToList();
 
                 item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
                 item_movementViewSource.Source = MovementList;

@@ -18,13 +18,30 @@ namespace Cognitivo.Product
             InitializeComponent();
             item_productViewSource = ((CollectionViewSource)(FindResource("item_productViewSource")));
 
-            item_productViewSource.Source = db.item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            item_productViewSource.Source = db.item_product.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.item.name).ToList();
             item_productViewSource.View.Refresh();
         }
 
         private void tbxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (txtsearch.Text != string.Empty)
+            {
+                if (item_productViewSource != null)
+                {
+                    if (item_productViewSource.View != null)
+                    {
+                        item_productViewSource.View.Filter = i =>
+                        {
+                            item_product TmpInventory = (item_product)i;
+                            if (TmpInventory.item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                                TmpInventory.item.code.ToUpper().Contains(txtsearch.Text.ToUpper()) )
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }
+            }
         }
 
 

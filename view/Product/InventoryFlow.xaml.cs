@@ -31,10 +31,13 @@ namespace Cognitivo.Product
         //First Time Selection Changed
         private void dgvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            stackFlow.Children.Clear();
             item_product item_product = item_productViewSource.View.CurrentItem as item_product;
             if (item_product != null)
             {
-                cntrl.Controls.InventoryFlowDataGrid invnetoryflow = new cntrl.Controls.InventoryFlowDataGrid(null, item_product.id_item_product);
+                cntrl.Controls.InventoryFlowDataGrid invnetoryflow = new cntrl.Controls.InventoryFlowDataGrid();
+                invnetoryflow.ParentID = null;
+                invnetoryflow.ProductID = item_product.id_item_product;
                 invnetoryflow.SelectionChanged += Invnetoryflow_SelectionChanged;
                 stackFlow.Children.Add(invnetoryflow);
             }
@@ -42,7 +45,8 @@ namespace Cognitivo.Product
 
         private void Invnetoryflow_SelectionChanged(object sender, System.Windows.RoutedEventArgs e)
         {
-            cntrl.Controls.InventoryFlowDataGrid invnetoryflow = sender as cntrl.Controls.InventoryFlowDataGrid;
+            DataGrid SelcetedGrid = sender as DataGrid;
+            cntrl.Controls.InventoryFlowDataGrid invnetoryflow = SelcetedGrid.Parent as cntrl.Controls.InventoryFlowDataGrid;
             if (invnetoryflow != null)
             {
                 stackFlow.Children.RemoveRange(stackFlow.Children.IndexOf(invnetoryflow) + 1, stackFlow.Children.Count - stackFlow.Children.IndexOf(invnetoryflow));
@@ -50,9 +54,16 @@ namespace Cognitivo.Product
                 item_product item_product = item_productViewSource.View.CurrentItem as item_product;
                 if (item_product != null)
                 {
-                    cntrl.Controls.InventoryFlowDataGrid invnetoryflownew = new cntrl.Controls.InventoryFlowDataGrid(invnetoryflow.MovementID, item_product.id_item_product);
-                    invnetoryflow.SelectionChanged += Invnetoryflow_SelectionChanged;
-                    stackFlow.Children.Add(invnetoryflow);
+                    cntrl.Controls.InventoryFlowDataGrid invnetoryflownew = new cntrl.Controls.InventoryFlowDataGrid();
+                    invnetoryflownew.ParentID = invnetoryflow.MovementID;
+                    invnetoryflownew.ProductID = item_product.id_item_product;
+                    invnetoryflownew.SelectionChanged += Invnetoryflow_SelectionChanged;
+
+                   
+                        stackFlow.Children.Add(invnetoryflownew);
+                  
+                 
+                   
                 }
             }
         }

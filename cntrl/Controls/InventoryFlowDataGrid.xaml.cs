@@ -15,13 +15,34 @@ namespace cntrl.Controls
         public long? MovementID { get; set; }
         CollectionViewSource item_movementViewSource;
 
-        public InventoryFlowDataGrid(long? InvParentID, int InvProductID)
+        public InventoryFlowDataGrid()
         {
             InitializeComponent();
 
-            ParentID = InvParentID;
-            ProductID = InvProductID;
+        
+             
+           
+        }
 
+        public event SelectionChangedEventHandler SelectionChanged;
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ItemMovement obj = item_movementViewSource.View.CurrentItem as ItemMovement;
+            if (obj!=null)
+            {
+                MovementID = obj.MovementID;
+                SelectionChanged(sender, e);
+            }
+        }
+
+        public void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            LoadData();
+           
+        }
+        public void LoadData()
+        {
             using (db db = new db())
             {
                 var MovementList = (from item in db.item_movement
@@ -48,21 +69,10 @@ namespace cntrl.Controls
                 item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
                 item_movementViewSource.Source = MovementList;
                 item_movementViewSource.View.Refresh();
-             
-            }
-        }
-
-        public event SelectionChangedEventHandler SelectionChanged;
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ItemMovement obj = item_movementViewSource.View.CurrentItem as ItemMovement;
-            if (obj!=null)
-            {
-                MovementID = obj.MovementID;
-                SelectionChanged(sender, e);
             }
         }
     }
+ 
 
     public class ItemMovement
     {

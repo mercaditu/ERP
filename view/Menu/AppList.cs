@@ -88,6 +88,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Configs.Promotion", entity.App.Names.SalesPromotion, "Promotion", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.BranchWalkin", entity.App.Names.FootTraffic, "FootTraffic", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Inventory", entity.App.Names.Inventory, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.InventoryFlow", entity.App.Names.InventoryFlow, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Movement", entity.App.Names.Movement, "BranchLocation", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Transfer", entity.App.Names.Transfer, "Transfer", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.MobileBranch", entity.App.Names.MobileBranch, "MobileBranch", entity.CurrentSession.Versions.Medium, "1");

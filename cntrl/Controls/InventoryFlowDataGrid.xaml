@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-        <DataGrid Width="256" FontSize="10" Margin="2">
+        <DataGrid Width="256" FontSize="10" Margin="2" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Date}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"/>
             <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" Width="*"/>
@@ -23,11 +23,11 @@
                 <DataTemplate>
                     <StackPanel Background="WhiteSmoke" Margin="4" DataContext="{StaticResource item_movementViewSource}">
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding Comment, Mode=OneWay}"/>
+                        <Label Content="{Binding Comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding ExpiryDate, Mode=OneWay, StringFormat=d}"/>
+                    <Label Content="{Binding ExpiryDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
                         <Label Content="{lex:Loc BatchCode}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding BatchCode, Mode=OneWay}"/>
+                    <Label Content="{Binding BatchCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -9,10 +10,19 @@ namespace cntrl.Controls
 {
     public partial class InventoryFlowDataGrid : UserControl
     {
-        public int? ParentID { get; set; }
+        public long? ParentID { get; set; }
         public int ProductID { get; set; }
+        public long? MovementID { get; set; }
+        CollectionViewSource item_movementViewSource;
+        public event btnSave_ClickedEventHandler Save_Click;
 
-        public InventoryFlowDataGrid(int? InvParentID, int InvProductID)
+        public delegate void btnSave_ClickedEventHandler(object sender);
+
+        public void btnSave_MouseUp(object sender, EventArgs e)
+        {
+             Save_Click?.Invoke(sender);
+        }
+        public InventoryFlowDataGrid(long? InvParentID, int InvProductID)
         {
             InitializeComponent();
 
@@ -21,7 +31,7 @@ namespace cntrl.Controls
 
             using (db db = new db())
             {
-                var MovementList = from item in db.item_movement
+                var MovementList = (from item in db.item_movement
                                     join loc in db.app_location on item.id_location equals loc.id_location
                                     join b in db.app_branch on loc.id_branch equals b.id_branch
                                     join ip in db.item_product on item.id_item_product equals ip.id_item_product
@@ -40,11 +50,23 @@ namespace cntrl.Controls
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment
-                                    };
+                                    }).ToList();
 
-                CollectionViewSource item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+                item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
                 item_movementViewSource.Source = MovementList;
+                item_movementViewSource.View.Refresh();
+             
             }
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ItemMovement obj = item_movementViewSource.View.CurrentItem as ItemMovement;
+            if (obj!=null)
+            {
+                MovementID = obj.MovementID;
+            }
+            btnSave_MouseUp(sender, e);
         }
     }
 

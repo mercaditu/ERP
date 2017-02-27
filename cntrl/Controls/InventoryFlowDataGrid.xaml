@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-        <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False"
+        <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                   ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*"/>

@@ -31,5 +31,8 @@ namespace entity.Reporting
         public decimal Completed { get; set; }
         public decimal CompletedHours { get; set; }
         public decimal Percentage { get; set; }
+        public string Dimension { get; set; }
+        public decimal value { get; set; }
+        public string Measurement { get; set; }
     }
 }

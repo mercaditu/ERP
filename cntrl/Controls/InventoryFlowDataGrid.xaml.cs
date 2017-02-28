@@ -1,6 +1,5 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,20 +16,17 @@ namespace cntrl.Controls
 
         public InventoryFlowDataGrid()
         {
-            InitializeComponent();
-
-        
-             
-           
+            InitializeComponent();           
         }
 
         public event SelectionChangedEventHandler SelectionChanged;
+        //public event SelectionChangedEventHandler Selection_WithOut_ChildChanged;
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ItemMovement obj = item_movementViewSource.View.CurrentItem as ItemMovement;
-            if (obj!=null)
+            ItemMovement ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
+            if (ItemMovement != null)
             {
-                MovementID = obj.MovementID;
+                MovementID = ItemMovement.MovementID;
                 SelectionChanged(sender, e);
             }
         }
@@ -41,6 +37,7 @@ namespace cntrl.Controls
             LoadData();
            
         }
+
         public void LoadData()
         {
             using (db db = new db())
@@ -60,7 +57,7 @@ namespace cntrl.Controls
                                         ProductName = i.name,
                                         Date = item.trans_date,
                                         ExpiryDate = item.expire_date,
-                                        Batch = item.code,
+                                        BatchCode = item.code,
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment
@@ -84,7 +81,7 @@ namespace cntrl.Controls
         public string ProductName { get; set; }
 
         public DateTime? ExpiryDate { get; set; }
-        public string Batch { get; set; }
+        public string BatchCode { get; set; }
         public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
 

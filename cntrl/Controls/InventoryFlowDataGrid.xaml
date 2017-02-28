@@ -22,21 +22,21 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <StackPanel Background="WhiteSmoke" Margin="4" DataContext="{StaticResource item_movementViewSource}">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel Background="WhiteSmoke" Margin="4" Width="auto" DataContext="{StaticResource item_movementViewSource}">
+                        <StackPanel Orientation="Horizontal" Width="auto">
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" Width="auto"/>
+                            <Label Content="{Binding Comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="auto">
+                            <Label Content="{lex:Loc ExpirationDate}" Style="{StaticResource input_label}" Width="auto"/>
+                            <Label Content="{Binding ExpiryDate, Mode=OneTime, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="auto">
+                            <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}" Width="auto"/>
+                            <Label Content="{Binding BatchCode, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <local:ImageViewer  Margin="0,0,665,0" ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Movement" AllowDrop="True" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding ExpiryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding BatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    <local:ImageViewer  Margin="0,0,665,0" ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ApplicationName="Movement" AllowDrop="True" />
-                </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

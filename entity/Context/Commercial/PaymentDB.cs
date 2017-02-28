@@ -148,6 +148,11 @@ namespace entity
                     payment_detail.id_payment_type = await payment_type.Where(x => x.is_default).Select(x => x.id_payment_type).FirstOrDefaultAsync();
                 }
 
+                if (payment_detail.payment.id_contact > 0 || payment_detail.payment.contact == null)
+                {
+                    payment_detail.payment.contact = await contacts.FindAsync(payment_detail.payment.id_contact);
+                }
+
                 ///Checks if Account ID is set.
                 if (payment_detail.id_account == 0 || payment_detail.id_account == null)
                 {
@@ -316,7 +321,6 @@ namespace entity
 
                     ///Comment with Module Name and Contact.
                     ///Insert AccountDetail into Context.
-                    ///
 
                     app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
@@ -324,16 +328,24 @@ namespace entity
                 }
 
                 ///Logic for Value in Balance Payment Schedual.
-
                 foreach (payment_schedual payment_schedual in schedualList)
                 {
+                    //Create a Parent Schedual Object.
+                    
                     payment_schedual _Parent_Schedual = payment_schedual.parent;
-                    payment_schedual.status = Status.Documents_General.Approved;
-                    payment_schedual.id_contact = _Parent_Schedual.id_contact;
-                    payment_schedual.id_currencyfx = _Parent_Schedual.id_currencyfx;
-                    payment_schedual.trans_date = payment_detail.trans_date;
-                    payment_schedual.expire_date = _Parent_Schedual.expire_date;
-                    payment_detail.payment_schedual.Add(payment_schedual);
+                    if (_Parent_Schedual != null)
+                    {
+                        payment_schedual.status = Status.Documents_General.Approved;
+                        payment_schedual.id_contact = _Parent_Schedual.id_contact;
+                        payment_schedual.id_currencyfx = _Parent_Schedual.id_currencyfx;
+                        payment_schedual.trans_date = payment_detail.trans_date;
+                        payment_schedual.expire_date = _Parent_Schedual.expire_date;
+                        payment_detail.payment_schedual.Add(payment_schedual);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Check Payments, No Parent Found.");
+                    }
                 }
                 //pankeel
             }

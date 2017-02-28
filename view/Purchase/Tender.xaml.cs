@@ -552,16 +552,16 @@ namespace Cognitivo.Purchase
             decimal Count = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().Where(x => x.unit_cost == 0).Count();
             if (Count > 0)
             {
-
-                if (System.Windows.Forms.MessageBox.Show("Some item is without price...., Do You want to continue...", "Cogntitivo", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                if (System.Windows.Forms.MessageBox.Show("Items without Price, Do you wish to Continue?", "Cogntitivo ERP", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                 {
-                    if (PurchaseTenderDB.SaveChanges() > 0)
-                    {
-                        PurchaseTenderDB.Approve();
-                    }
+                    return;
                 }
             }
-           
+
+            if (PurchaseTenderDB.SaveChanges() > 0)
+            {
+                PurchaseTenderDB.Approve();
+            }
         }
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)

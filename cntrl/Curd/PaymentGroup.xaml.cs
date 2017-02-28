@@ -62,6 +62,8 @@ namespace cntrl.Curd
                 payment.id_contact = schedual.id_contact;
                 payment.id_branch = CurrentSession.Id_Branch;
                 payment.id_user = CurrentSession.Id_User;
+                payment.IsSelected = true;
+                payment.status = Status.Documents_General.Pending;
 
                 payment_detail payment_detail = new payment_detail();
                 //Only one detail per customer. see if you can group by customer.

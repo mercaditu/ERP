@@ -42,8 +42,7 @@ namespace Cognitivo.Menu
         private void load_Thread(string configName)
         {
             Dispatcher.BeginInvoke((Action)(() => Cursor = Cursors.AppStarting));
-            Page objPage = default(Page);
-            Type PageInstanceType = null;
+            Type Object = null;
 
             string _app = string.Empty;
             string _namespace = string.Empty;
@@ -59,8 +58,10 @@ namespace Cognitivo.Menu
             {
                 try
                 {
-                    PageInstanceType = Type.GetType(configName, true, true);
-                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                    Page objPage = default(Page);
+
+                    Object = Type.GetType(configName, true, true);
+                    objPage = (Page)Activator.CreateInstance(Object);
                     objPage.Tag = 0;
 
                     MainWindow rootWindow = Application.Current.MainWindow as MainWindow;

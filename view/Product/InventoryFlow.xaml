@@ -29,13 +29,13 @@
         <Label Grid.Column="1" HorizontalAlignment="Right" Content="{lex:Loc InventoryFlow}" Style="{StaticResource H3}"/>
         <Grid Grid.Column="0">
             <TextBox x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" Padding="14,0,0,0" TextChanged="tbxSearch_TextChanged" />
-            <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver" />
+            <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="WhiteSmoke" />
         </Grid>
         <DataGrid ItemsSource="{Binding Source={StaticResource item_productViewSource}}" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0" FontSize="10" Margin="2" 
                   SelectionChanged="dgvItems_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Code" Binding="{Binding item.code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Item" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Code" Binding="{Binding item.code, Mode=OneWay}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=OneWay}" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel x:Name="stackFlow" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Background="{StaticResource appConfig}">

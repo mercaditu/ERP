@@ -156,60 +156,71 @@
             </StackPanel>
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" Margin="0,180,0,0">
                 <TabItem Header="{lex:Loc Basic}">
-                    <StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
-                        <AdornerDecorator>
-                            <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
-							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
-							 metro:TextBoxHelper.SelectAllOnFocus="True"
-							 Text="{Binding supplier_name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
-                        </AdornerDecorator>
-                        <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
-                        <AdornerDecorator>
-                            <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
+                    <ScrollViewer>
+                        <StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                            <AdornerDecorator>
+                                <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
 							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
 							 metro:TextBoxHelper.SelectAllOnFocus="True"
 							 Text="{Binding supplier_code, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
-                        </AdornerDecorator>
-                        <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}" />
-                        <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
+                            </AdornerDecorator>
+                            <Label Content="SKU" Style="{StaticResource input_label}" />
+                            <AdornerDecorator>
+                                <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
+							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
+							 metro:TextBoxHelper.SelectAllOnFocus="True"
+							 Text="{Binding sku, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            </AdornerDecorator>
+                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                            <AdornerDecorator>
+                                <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
+							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
+							 metro:TextBoxHelper.SelectAllOnFocus="True"
+							 Text="{Binding supplier_name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+                            </AdornerDecorator>
+                            <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}" />
+                            <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 									  metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 									  DisplayMemberPath="name" SelectedValuePath="id_brand"
 									  ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
 									  SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
-                        <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
-                        <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center"
+                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
+                            <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center"
 												 CollectionViewSource="{StaticResource item_tagViewSource}"
 												 focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                            <cntrl:SearchableTextbox.Columns>
-                                <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+                                <cntrl:SearchableTextbox.Columns>
+                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
 														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
-                            </cntrl:SearchableTextbox.Columns>
-                        </cntrl:SearchableTextbox>
-                        <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                </cntrl:SearchableTextbox.Columns>
+                            </cntrl:SearchableTextbox>
+                            <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
 									  ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
-                                <DataGridTemplateColumn Width="Auto" Header="">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Command="customcmd:CustomCommands.Delete"
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
+                                    <DataGridTemplateColumn Width="Auto" Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="customcmd:CustomCommands.Delete"
 													Style="{StaticResource btnDeleteChildStyle}"
 													CommandParameter="{Binding}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{lex:Loc Commercial}">
                     <StackPanel>

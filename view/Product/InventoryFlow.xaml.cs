@@ -5,9 +5,6 @@ using entity;
 
 namespace Cognitivo.Product
 {
-    /// <summary>
-    /// Interaction logic for InventoryFlow.xaml
-    /// </summary>
     public partial class InventoryFlow : Page
     {
         db db = new db();
@@ -75,12 +72,7 @@ namespace Cognitivo.Product
                     invnetoryflownew.ParentID = invnetoryflow.MovementID;
                     invnetoryflownew.ProductID = item_product.id_item_product;
                     invnetoryflownew.SelectionChanged += Invnetoryflow_SelectionChanged;
-
-                   
-                        stackFlow.Children.Add(invnetoryflownew);
-                  
-                 
-                   
+                    stackFlow.Children.Add(invnetoryflownew);
                 }
             }
         }

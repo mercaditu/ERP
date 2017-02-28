@@ -15,7 +15,7 @@
     <Grid>
         <Reporting:ReportDesigner DesignMode="RDLC" VisualStyle="Office2013" 
                                   EnableMDIDesigner="True"
-                                  ApplicationMenuButtonImage="/Cognitivo;component/Images/Cognitivo-32.png" />
+                                  />
 
     </Grid>
 </Page>

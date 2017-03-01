@@ -560,7 +560,11 @@ namespace DebeHaber
                         CCInput.Type = CostCenterTypes.FixedAsset;
                         CCListInput.Add(CCInput);
                     }
-                    else if (Detail.item.id_item_type == item.item_type.Product || Detail.item.id_item_type == item.item_type.RawMaterial || Detail.item.id_item_type == item.item_type.Supplies)
+                    else if (
+                        Detail.item.id_item_type == item.item_type.Product || 
+                        Detail.item.id_item_type == item.item_type.RawMaterial || 
+                        Detail.item.id_item_type == item.item_type.Supplies
+                        )
                     {
                         app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
 

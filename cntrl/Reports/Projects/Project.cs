@@ -9,13 +9,13 @@ task.parent_id_project_task as ParentTask,
 item.name as  Item,
 item.code as ItemCode,
 CASE
-      WHEN item.id_item_type=1 THEN 'Product'
-      WHEN item.id_item_type=2 THEN  'RawMaterial'
-      WHEN item.id_item_type=3 THEN  'Service'
-        WHEN item.id_item_type=4 THEN  'FixedAssets'
-        WHEN item.id_item_type=5 THEN  'Task'
-        WHEN item.id_item_type=6 THEN  'Supplies'
-   WHEN item.id_item_type=7 THEN  'ServiceContract'
+      WHEN item.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN item.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"' 
+      WHEN item.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"' 
+        WHEN item.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"' 
+        WHEN item.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+        WHEN item.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"' 
+   WHEN item.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
     END as ItemType,
 task.code as TaskCode,
 task.item_description as Task,
@@ -32,7 +32,7 @@ exe.Quantity as QuantityReal,
                                         (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,
 (1-( (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(end_date,start_date)) / 3600))) * 100 as diffPer,
 task.completed as Completed,task.completed*100 as Percentage,
-(((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient) *100)/task.completed) as CompletedHours,
+(((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/task.completed) as CompletedHours,
 task.unit_cost_est as CostEst,
 exe.unit_cost as CostReal,
 task.start_date_est as StartDate,

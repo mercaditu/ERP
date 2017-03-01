@@ -23,6 +23,15 @@
                               WHEN pod.status=7 THEN '" + entity.Brillo.Localize.StringText("Anulled") + @"'
                                 END
                                     as Status,
+CASE
+      WHEN i.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN i.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"' 
+      WHEN i.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"' 
+        WHEN i.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"' 
+        WHEN i.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+        WHEN i.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"' 
+   WHEN i.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+    END as Type,
                                         pod.is_input as Input,
                                         pod.code as Code,
                                         pod.name as Item,
@@ -32,19 +41,27 @@
                                         pt.unit_cost_est as CostEstimated,
                                         pod.start_date_est as StartDate,
                                         pod.end_date_est as EndDate,
-                                        time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600 as Hours,
+                                                                ped.quantity * icf.value * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail) as ConversionQuantity,
+                                (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail)  * ped.quantity as Factor,
+                                
+                                time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600 as Hours,
                                         (time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient as ComputeHours,
                                         pod.quantity - ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient) as diff,
                                         ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)) / pod.quantity as diffPer,
                                         pod.completed as Completed, pod.completed * 100 as Percentage,
-                                        (((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient) * 100)/pod.completed as CompletedHours,
+                                        (((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed as CompletedHours,
                                       ad.name as Dimension,pd.value,am.name as Measurement
+                                        
                                         from production_order as po
 
                                         left join projects as p on po.id_project = p.id_project
                                         left join contacts as c on p.id_contact = c.id_contact
                                         inner join production_line as l on po.id_production_line = l.id_production_line
                                         inner join production_order_detail as pod on po.id_production_order = pod.id_production_order
+                                        inner join items as i on pod.id_item = i.id_item
+                                        left join item_product as ip on i.id_item = ip.id_item
+                                        left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product
+                                        
                                         left join production_execution_detail as ped on pod.id_order_detail = ped.id_order_detail
 
                                         left join production_execution_dimension as pd on pd.id_execution_detail = ped.id_execution_detail

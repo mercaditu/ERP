@@ -18,6 +18,8 @@ namespace entity.Reporting
         public bool Input { get; set; }
         public string Code { get; set; }
         public string Item { get; set; }
+        public decimal Factor { get; set; }
+        public decimal ConversionQuantity { get; set; }
         public decimal QuantityOrdered { get; set; }
         public decimal QuantityExecuted { get; set; }
         public decimal CostExecuted { get; set; }

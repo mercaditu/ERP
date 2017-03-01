@@ -246,7 +246,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding quantityverified, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2"/>
@@ -259,7 +259,7 @@
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
 
                                     <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" 
-                                                        Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" 
+                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" 
                                                         ElementStyle="{StaticResource RightAlignStyle}" 
                                                         MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -275,7 +275,6 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-
                     </TabItem>
                 </TabControl>
                 <Controls:SmartBox_Item x:Name="sbxItem"

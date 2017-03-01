@@ -84,9 +84,9 @@ namespace Cognitivo.Purchase
             purchase_packing.State = EntityState.Added;
             PurchasePackingListDB.purchase_packing.Add(purchase_packing);
             purchase_packingViewSource.View.Refresh();
-            purchase_packingViewSource.View.MoveCurrentToLast();
+            //purchase_packingViewSource.View.MoveCurrentToLast();
 
-            Refresh_GroupByGrid();
+            //Refresh_GroupByGrid();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -239,17 +239,14 @@ namespace Cognitivo.Purchase
             {
                 foreach (purchase_order_detail _purchase_order_detail in item.purchase_order_detail)
                 {
-                    if (purchase_packing.purchase_packing_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
-                    {
-                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
-                        purchase_packing_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
-                        purchase_packing_detail.id_item = (int)_purchase_order_detail.id_item;
-                        purchase_packing_detail.item = _purchase_order_detail.item;
-                        purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
-                        purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
-                        purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
-                    }
+                    purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                    purchase_packing_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
+                    purchase_packing_detail.id_item = (int)_purchase_order_detail.id_item;
+                    purchase_packing_detail.item = _purchase_order_detail.item;
+                    purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
+                    purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
+                    purchase_packing_detail.quantity = _purchase_order_detail.quantity;
+                    purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                 
@@ -283,6 +280,8 @@ namespace Cognitivo.Purchase
 
                         purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                         Refresh_GroupByGrid();
+
+                        //Filter UserVerified True.
                     }
                 }
             }
@@ -293,21 +292,24 @@ namespace Cognitivo.Purchase
             purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
             if (purchase_packing != null)
             {
-                //This code should be in Selection Changed of DataGrid and after inserting new items.
-                var VerifiedItemList = purchase_packing.purchase_packing_detail
-                    .Where(x => x.user_verified == false)
-                    .GroupBy(x => x.id_item)
-                    .Select(x => new
-                    {
-                        ItemName = x.Max(y => y.item.name),
-                        ItemCode = x.Max(y => y.item.code),
-                        VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                    Quantity = x.Max(y => y.quantity)
-                    })
-                    .ToList();
-                GridVerifiedList.ItemsSource = VerifiedItemList;
+                if (purchase_packing.purchase_packing_detail.Count() > 0)
+                {
+                    //This code should be in Selection Changed of DataGrid and after inserting new items.
+                    var VerifiedItemList = purchase_packing.purchase_packing_detail
+                        .Where(x => x.user_verified == false)
+                        .GroupBy(x => x.id_item)
+                        .Select(x => new
+                        {
+                            ItemName = x.Max(y => y.item.name),
+                            ItemCode = x.Max(y => y.item.code),
+                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        Quantity = x.Max(y => y.quantity)
+                        })
+                        .ToList();
 
-                Refresh_GroupByGrid();
+                    GridVerifiedList.ItemsSource = VerifiedItemList;
+                    Refresh_GroupByGrid();
+                }
             }
         }
 

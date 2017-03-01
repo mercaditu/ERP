@@ -20,7 +20,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.22917in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -31,16 +31,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Credit</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>Debit</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox2</rd:DefaultName>
@@ -55,7 +50,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -67,16 +61,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Debit</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>Credit</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox3</rd:DefaultName>
@@ -91,7 +80,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -103,11 +91,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Payment Date</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>Expiry Date</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -136,16 +121,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Expiry</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>Date Diff</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
@@ -176,16 +156,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Debit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox29</rd:DefaultName>
@@ -200,7 +175,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -212,16 +186,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox30</rd:DefaultName>
@@ -236,7 +205,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -249,10 +217,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -281,16 +246,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Avg(Fields!DateDiff.Value))</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value />
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox32</rd:DefaultName>
@@ -321,16 +281,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Debit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox36</rd:DefaultName>
@@ -345,7 +300,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -357,16 +311,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox37</rd:DefaultName>
@@ -381,7 +330,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -394,10 +342,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -419,26 +364,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DateDiff1">
+                    <Textbox Name="Textbox39">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Avg(Fields!DateDiff.Value))</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value />
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DateDiff1</rd:DefaultName>
+                      <rd:DefaultName>Textbox39</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -466,16 +406,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Debit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox42</rd:DefaultName>
@@ -490,7 +425,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -502,16 +436,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox43</rd:DefaultName>
@@ -526,7 +455,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -539,10 +467,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -572,15 +497,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -611,16 +531,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Debit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox47</rd:DefaultName>
@@ -635,7 +550,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -647,16 +561,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox48</rd:DefaultName>
@@ -671,7 +580,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -684,10 +592,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -717,15 +622,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox50</rd:DefaultName>
@@ -749,42 +649,6 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Credit">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Credit</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                    <rd:Selected>true</rd:Selected>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="Debit">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -793,15 +657,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Debit</rd:DefaultName>
@@ -816,29 +675,55 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="PaymentDate">
+                    <Textbox Name="Credit">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PaymentDate.Value</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>PaymentDate</rd:DefaultName>
+                      <rd:DefaultName>Credit</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ExpiryDate">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!ExpiryDate.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ExpiryDate</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -862,15 +747,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DateDiff.Value</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>DateDiff</rd:DefaultName>
@@ -901,16 +781,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Debit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox21</rd:DefaultName>
@@ -925,7 +800,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -937,16 +811,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Debit.Value)</Value>
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox22</rd:DefaultName>
@@ -961,7 +830,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -974,10 +842,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1007,15 +872,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style>
-                                <FontFamily>Courier New</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox24</rd:DefaultName>
@@ -1058,10 +918,7 @@
                         <TextRuns>
                           <TextRun>
                             <Value>Currency</Value>
-                            <Style>
-                              <FontFamily>Courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
-                            </Style>
+                            <Style />
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -1093,11 +950,8 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Branch</Value>
-                                <Style>
-                                  <FontFamily>Courier New</FontFamily>
-                                  <FontSize>8pt</FontSize>
-                                </Style>
+                                <Value>Salesman</Value>
+                                <Style />
                               </TextRun>
                             </TextRuns>
                             <Style />
@@ -1129,11 +983,8 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>Expiry Date</Value>
-                                    <Style>
-                                      <FontFamily>Courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
+                                    <Value>Conditions</Value>
+                                    <Style />
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -1166,10 +1017,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value>Sales Number</Value>
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1222,10 +1070,7 @@
                         <TextRuns>
                           <TextRun>
                             <Value>=Fields!Currency.Value</Value>
-                            <Style>
-                              <FontFamily>Courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
-                            </Style>
+                            <Style />
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -1258,10 +1103,7 @@
                             <TextRuns>
                               <TextRun>
                                 <Value>Total</Value>
-                                <Style>
-                                  <FontFamily>Courier New</FontFamily>
-                                  <FontSize>8pt</FontSize>
-                                </Style>
+                                <Style />
                               </TextRun>
                             </TextRuns>
                             <Style />
@@ -1294,10 +1136,7 @@
                                 <TextRuns>
                                   <TextRun>
                                     <Value />
-                                    <Style>
-                                      <FontFamily>Courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
+                                    <Style />
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -1330,10 +1169,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value />
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1360,37 +1196,34 @@
                   <KeepWithGroup>After</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="Branch">
+                  <Group Name="Salesman">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Branch.Value</GroupExpression>
+                      <GroupExpression>=Fields!Salesman.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Branch.Value</Value>
+                      <Value>=Fields!Salesman.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
                     <Size>1in</Size>
                     <CellContents>
-                      <Textbox Name="Branch">
+                      <Textbox Name="Salesman">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Branch.Value</Value>
-                                <Style>
-                                  <FontFamily>Courier New</FontFamily>
-                                  <FontSize>8pt</FontSize>
-                                </Style>
+                                <Value>=Fields!Salesman.Value</Value>
+                                <Style />
                               </TextRun>
                             </TextRuns>
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Branch</rd:DefaultName>
+                        <rd:DefaultName>Salesman</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
@@ -1417,10 +1250,7 @@
                                 <TextRuns>
                                   <TextRun>
                                     <Value>Total</Value>
-                                    <Style>
-                                      <FontFamily>Courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
+                                    <Style />
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -1453,10 +1283,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value />
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1481,37 +1308,34 @@
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
                     <TablixMember>
-                      <Group Name="ExpiryDate">
+                      <Group Name="Conditions">
                         <GroupExpressions>
-                          <GroupExpression>=Fields!ExpiryDate.Value</GroupExpression>
+                          <GroupExpression>=Fields!Conditions.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
-                          <Value>=Fields!ExpiryDate.Value</Value>
+                          <Value>=Fields!Conditions.Value</Value>
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
                         <Size>1in</Size>
                         <CellContents>
-                          <Textbox Name="ExpiryDate">
+                          <Textbox Name="Conditions">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!ExpiryDate.Value</Value>
-                                    <Style>
-                                      <FontFamily>Courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
+                                    <Value>=Fields!Conditions.Value</Value>
+                                    <Style />
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>ExpiryDate</rd:DefaultName>
+                            <rd:DefaultName>Conditions</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Color>LightGrey</Color>
@@ -1538,10 +1362,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value>Total</Value>
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1585,10 +1406,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value>=Fields!SalesNumber.Value</Value>
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1622,13 +1440,13 @@
                           </TablixMembers>
                           <Visibility>
                             <Hidden>true</Hidden>
-                            <ToggleItem>ExpiryDate</ToggleItem>
+                            <ToggleItem>Conditions</ToggleItem>
                           </Visibility>
                         </TablixMember>
                       </TablixMembers>
                       <Visibility>
                         <Hidden>true</Hidden>
-                        <ToggleItem>Branch</ToggleItem>
+                        <ToggleItem>Salesman</ToggleItem>
                       </Visibility>
                     </TablixMember>
                   </TablixMembers>
@@ -1651,10 +1469,7 @@
                         <TextRuns>
                           <TextRun>
                             <Value>Total</Value>
-                            <Style>
-                              <FontFamily>Courier New</FontFamily>
-                              <FontSize>8pt</FontSize>
-                            </Style>
+                            <Style />
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -1687,10 +1502,7 @@
                             <TextRuns>
                               <TextRun>
                                 <Value />
-                                <Style>
-                                  <FontFamily>Courier New</FontFamily>
-                                  <FontSize>8pt</FontSize>
-                                </Style>
+                                <Style />
                               </TextRun>
                             </TextRuns>
                             <Style />
@@ -1723,10 +1535,7 @@
                                 <TextRuns>
                                   <TextRun>
                                     <Value />
-                                    <Style>
-                                      <FontFamily>Courier New</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
+                                    <Style />
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -1759,10 +1568,7 @@
                                     <TextRuns>
                                       <TextRun>
                                         <Value />
-                                        <Style>
-                                          <FontFamily>Courier New</FontFamily>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
+                                        <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
@@ -1793,7 +1599,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.72917in</Height>
+        <Height>1.75in</Height>
         <Width>8in</Width>
         <Style>
           <Border>
@@ -1802,7 +1608,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.11458in</Height>
+    <Height>2in</Height>
     <Style />
   </Body>
   <Width>8in</Width>
@@ -1820,7 +1626,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>2005bb68-4af9-40cb-a3a0-d9ec92e4880b</rd:DataSourceID>
+      <rd:DataSourceID>ce164709-900d-4653-9c0e-4343556d7e35</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -1927,5 +1733,5 @@
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>64287f34-b1c5-4c07-b82c-e356645d40e1</rd:ReportID>
+  <rd:ReportID>3aacacd6-5c9a-47e8-a61c-5df3cc1b5abc</rd:ReportID>
 </Report>

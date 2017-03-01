@@ -161,19 +161,23 @@ namespace Cognitivo.Sales
 
         private void btnDelete_Click(object sender)
         {
-            try
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            if (sales_invoice != null)
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (sales_invoice.status == Status.Documents_General.Pending)
                 {
-                    sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-                    sales_invoice.is_head = false;
-                    sales_invoice.State = EntityState.Deleted;
-                    sales_invoice.IsSelected = true;
+                    if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        using (db db = new db())
+                        {
+                            db.sales_invoice.Attach(sales_invoice);
+
+                            db.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail);
+                            db.sales_invoice.Remove(sales_invoice);
+                            db.SaveChanges();
+                        }
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 

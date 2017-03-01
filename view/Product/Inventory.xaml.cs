@@ -307,10 +307,10 @@ namespace Cognitivo.Product
                 if (item_product!=null)
                 {
                     app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-                    item_inventory_detail _item_inventory_detail=item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
+                    item_inventory_detail _item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
                     item_inventory_detail item_inventory_detail = new item_inventory_detail();
 
-                    if (item_inventory_detail==null)
+                    if (item_inventory_detail == null)
                     {
                         Class.StockCalculations Stock = new Class.StockCalculations();
                         List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
@@ -332,9 +332,9 @@ namespace Cognitivo.Product
                     item_inventory_detail.State = EntityState.Added;
                     item_inventory_detail.timestamp = item_inventory.trans_date;
 
-                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                    if (CurrentSession.Get_Currency_Default_Rate() != null)
                     {
-                        item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                        item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                     }
 
                    item_inventory.item_inventory_detail.Add(item_inventory_detail);

@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>حساب</value>
+    <value>الحساب</value>
   </data>
   <data name="Accountant" xml:space="preserve">
     <value>محاسب</value>
+  </data>
+  <data name="AccountBalance" xml:space="preserve">
+    <value>رصيد الحساب</value>
   </data>
   <data name="Accounted" xml:space="preserve">
     <value>استأثرت</value>
@@ -148,7 +151,7 @@
     <value>تفعيل</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>نشط</value>
+    <value>نشيط</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
     <value>خطة النشاط</value>
@@ -160,7 +163,7 @@
     <value>القيمة يضيف</value>
   </data>
   <data name="Adjust" xml:space="preserve">
-    <value>ضبط</value>
+    <value>يعدل</value>
   </data>
   <data name="Administrative" xml:space="preserve">
     <value>إداري</value>
@@ -169,7 +172,7 @@
     <value>بالغ</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>متقدم</value>
+    <value>المتقدمة</value>
   </data>
   <data name="Alias" xml:space="preserve">
     <value>الاسم المستعار</value>
@@ -190,25 +193,25 @@
     <value>ألغى</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>تطبيق</value>
+    <value>الوضعية</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
     <value>سيطلب إعادة تشغيل التطبيق</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>وافق</value>
+    <value>يوافق</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>منطقة</value>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
-    <value>تاريخ وصول</value>
+    <value>تاريخ الوصول</value>
   </data>
   <data name="Assets" xml:space="preserve">
     <value>الأصول</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>التدقيق</value>
+    <value>تدقيق</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
     <value>المحاسبة التلقائي</value>
@@ -237,11 +240,14 @@
   <data name="Basic" xml:space="preserve">
     <value>الأساسية</value>
   </data>
+  <data name="Batch" xml:space="preserve">
+    <value>دفعة</value>
+  </data>
   <data name="Behavior" xml:space="preserve">
     <value>سلوك</value>
   </data>
   <data name="BelongsTo" xml:space="preserve">
-    <value>ينتمي ل</value>
+    <value>ينتمي إلى</value>
   </data>
   <data name="BloodType" xml:space="preserve">
     <value>فصيلة الدم</value>
@@ -253,7 +259,7 @@
     <value>كتاب الدخل</value>
   </data>
   <data name="Branch" xml:space="preserve">
-    <value>فرع</value>
+    <value>فرع شجرة</value>
   </data>
   <data name="Brand" xml:space="preserve">
     <value>علامة تجارية</value>
@@ -298,7 +304,7 @@
     <value>فهرس</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>فئة</value>
+    <value>الفئة</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
     <value>الرسم البياني للحساب</value>
@@ -310,7 +316,7 @@
     <value>مدينة</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>رمز</value>
+    <value>الشفرة</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
     <value>معامل</value>
@@ -319,7 +325,7 @@
     <value>وكيل جمع</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>التعليق</value>
+    <value>تعليق</value>
   </data>
   <data name="Commercial" xml:space="preserve">
     <value>تجاري</value>
@@ -343,7 +349,7 @@
     <value>ترتيب</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>ربط</value>
+    <value>الاتصال</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
     <value>باني اتصال</value>
@@ -358,7 +364,7 @@
     <value>تستهلك المدى التالي</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>اتصال</value>
+    <value>اتصل</value>
   </data>
   <data name="ContactPerson" xml:space="preserve">
     <value>الشخص الذي يمكن الاتصال به</value>
@@ -381,6 +387,9 @@
   <data name="Cost" xml:space="preserve">
     <value>كلفة</value>
   </data>
+  <data name="CostCalculation" xml:space="preserve">
+    <value>قدر العملية الحسابية</value>
+  </data>
   <data name="CostCenter" xml:space="preserve">
     <value>مركز تقييم الكلفة، مركز التسعير، مركز التثمين</value>
   </data>
@@ -397,7 +406,7 @@
     <value>إنشاء أو تحديث</value>
   </data>
   <data name="Credit" xml:space="preserve">
-    <value>رصيد</value>
+    <value>ائتمان</value>
   </data>
   <data name="CreditDays" xml:space="preserve">
     <value>يوم الائتمان</value>
@@ -409,7 +418,7 @@
     <value>خط ائتمان</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>عملة</value>
+    <value>دقة</value>
   </data>
   <data name="Current" xml:space="preserve">
     <value>تيار</value>
@@ -436,7 +445,13 @@
     <value>العملاء قائمة تسليم</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>تخصيص</value>
+    <value>يعدل أو يكيف</value>
+  </data>
+  <data name="CustomsDuty" xml:space="preserve">
+    <value>الرسوم الجمركية</value>
+  </data>
+  <data name="DailyGoal" xml:space="preserve">
+    <value>الهدف اليومي</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>قاعدة البيانات</value>
@@ -444,14 +459,20 @@
   <data name="Date" xml:space="preserve">
     <value>تاريخ</value>
   </data>
+  <data name="DateofArrival" xml:space="preserve">
+    <value>موعد الوصول</value>
+  </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>تاريخ الولادة</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>يوم</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
     <value>التكامل DebeHaber</value>
   </data>
   <data name="Debit" xml:space="preserve">
-    <value>دين</value>
+    <value>مدين</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>افتراضي</value>
@@ -463,7 +484,7 @@
     <value>تاريخ التسليم او الوصول</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>قسم</value>
+    <value> قسم، أقسام</value>
   </data>
   <data name="DepartureDate" xml:space="preserve">
     <value>تاريخ المغادرة</value>
@@ -541,19 +562,22 @@
     <value>تفاصيل</value>
   </data>
   <data name="DeveloperMode" xml:space="preserve">
-    <value>وضعيةالمطور</value>
+    <value>وضع المطور</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
     <value>الفرق في تاريخ</value>
   </data>
   <data name="Dimension" xml:space="preserve">
-    <value>بعد</value>
+    <value>البعد</value>
   </data>
   <data name="DirectCost" xml:space="preserve">
     <value>التكلفة المباشرة</value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>خصم</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>مسافه: بعد</value>
   </data>
   <data name="Divisible" xml:space="preserve">
     <value>قابل للقسمة</value>
@@ -567,6 +591,9 @@
   <data name="DownTime" xml:space="preserve">
     <value>أسفل الوقت</value>
   </data>
+  <data name="Driver" xml:space="preserve">
+    <value>سائق</value>
+  </data>
   <data name="Duplicate" xml:space="preserve">
     <value>مكرر</value>
   </data>
@@ -574,7 +601,7 @@
     <value>الحقول الحيوية</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>تحرير</value>
+    <value>تصحيح</value>
   </data>
   <data name="Education" xml:space="preserve">
     <value>التعليم</value>
@@ -601,10 +628,22 @@
     <value>أدخل</value>
   </data>
   <data name="Equity" xml:space="preserve">
-    <value>إنصاف</value>
+    <value>القيمة المالية</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
+  </data>
+  <data name="EstimatedDateofArrival" xml:space="preserve">
+    <value>التاريخ المتوقع للوصول</value>
+  </data>
+  <data name="EstimatedDateofDeparture" xml:space="preserve">
+    <value>الموعد المقدر للالمغادرة</value>
+  </data>
+  <data name="EstimatedTimeofArrival" xml:space="preserve">
+    <value>الوقت المقدر للوصول</value>
+  </data>
+  <data name="EstimatedTimeofDeparture" xml:space="preserve">
+    <value>الوقت المتوقع للمغادرة</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
     <value>أدارة الحدث</value>
@@ -613,7 +652,10 @@
     <value>نوع الحدث</value>
   </data>
   <data name="Expenses" xml:space="preserve">
-    <value>مصاريف</value>
+    <value>نفقات</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>تاريخ إنتهاء الصلاحية</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>تصدير</value>
@@ -637,16 +679,19 @@
     <value>المفضل</value>
   </data>
   <data name="Female" xml:space="preserve">
-    <value>أنثى</value>
+    <value>إناثا</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>فلتر</value>
+    <value>منقي</value>
+  </data>
+  <data name="FinalCost" xml:space="preserve">
+    <value>التكلفة النهائية</value>
   </data>
   <data name="Finance" xml:space="preserve">
-    <value>تمويل</value>
+    <value>المالية</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>مالي</value>
+    <value>الأمور المالية</value>
   </data>
   <data name="Finished" xml:space="preserve">
     <value>تم الانتهاء من</value>
@@ -661,7 +706,10 @@
     <value>أصول ثابتة</value>
   </data>
   <data name="FootTraffic" xml:space="preserve">
-    <value>قدم المرور</value>
+    <value>السير على الاقدام</value>
+  </data>
+  <data name="Forced" xml:space="preserve">
+    <value>قسري</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>شكل</value>
@@ -685,16 +733,22 @@
     <value>الحصول على تفاصيل</value>
   </data>
   <data name="Gift" xml:space="preserve">
-    <value>هدية</value>
+    <value>هدية مجانية</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
     <value>معرف الحكومة</value>
   </data>
+  <data name="GracePeriod" xml:space="preserve">
+    <value>فترة سماح</value>
+  </data>
   <data name="Grid" xml:space="preserve">
     <value>شبكة</value>
   </data>
+  <data name="GrossWeight" xml:space="preserve">
+    <value>الوزن الإجمالي</value>
+  </data>
   <data name="Guest" xml:space="preserve">
-    <value>ضيف</value>
+    <value>زائر</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
     <value>لديها ترويج</value>
@@ -759,8 +813,14 @@
   <data name="Insert" xml:space="preserve">
     <value>إدراج</value>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>تأمين</value>
+  </data>
   <data name="Integration" xml:space="preserve">
     <value>دمج</value>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>فائدة</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>التجارة الدولية</value>
@@ -834,6 +894,9 @@
   <data name="Latitude" xml:space="preserve">
     <value>خط العرض</value>
   </data>
+  <data name="Legal" xml:space="preserve">
+    <value>قانوني</value>
+  </data>
   <data name="LegalRepresentative" xml:space="preserve">
     <value>الممثل القانوني</value>
   </data>
@@ -841,13 +904,16 @@
     <value>الطول</value>
   </data>
   <data name="Liabilities" xml:space="preserve">
-    <value>التزامات</value>
+    <value>المطلوبات</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>رخصة</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>خط</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>صلة</value>
+    <value>حلقة الوصل</value>
   </data>
   <data name="List" xml:space="preserve">
     <value>قائمة</value>
@@ -856,7 +922,7 @@
     <value>تحديد موقع خادم</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>موقع</value>
+    <value>موقعك</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -865,7 +931,7 @@
     <value>الخدمات اللوجستية</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>خروج</value>
+    <value>الخروج</value>
   </data>
   <data name="Longitud" xml:space="preserve">
     <value>Longitud</value>
@@ -876,23 +942,32 @@
   <data name="Maintainance" xml:space="preserve">
     <value>صيانة</value>
   </data>
+  <data name="MakeaGroupPayment" xml:space="preserve">
+    <value>جعل مجموعة الدفع</value>
+  </data>
   <data name="MakePayment" xml:space="preserve">
     <value>قم بالدفع</value>
   </data>
   <data name="Male" xml:space="preserve">
-    <value>ذكر</value>
+    <value>الذكر</value>
   </data>
   <data name="ManufacturingDate" xml:space="preserve">
     <value>تاريخ التصنيع</value>
   </data>
+  <data name="Margin" xml:space="preserve">
+    <value>حافة</value>
+  </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value>الحالة الحالة الإجتماعية</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>وضع علامة على</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>قناع</value>
   </data>
   <data name="Master" xml:space="preserve">
-    <value>رئيسي</value>
+    <value>رئيسي - سيد</value>
   </data>
   <data name="Measurement" xml:space="preserve">
     <value>قياس</value>
@@ -900,11 +975,26 @@
   <data name="MeasurementType" xml:space="preserve">
     <value>قياس نوع</value>
   </data>
+  <data name="MerchandisewithCredits" xml:space="preserve">
+    <value>البضائع مع قروض</value>
+  </data>
+  <data name="MerchandisewithDebits" xml:space="preserve">
+    <value>البضائع مع الأرصدة المدينة</value>
+  </data>
   <data name="MigrationType" xml:space="preserve">
     <value>نوع الهجرة</value>
   </data>
+  <data name="MobilePointofSale" xml:space="preserve">
+    <value>نقطة المتنقلة بيع</value>
+  </data>
   <data name="Module" xml:space="preserve">
     <value>وحدة</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="MonthlyGoal" xml:space="preserve">
+    <value>الهدف الشهري</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>حركة</value>
@@ -918,14 +1008,17 @@
   <data name="NeededbyDate" xml:space="preserve">
     <value>مطلوب حسب التاريخ</value>
   </data>
+  <data name="NetWeight" xml:space="preserve">
+    <value>الوزن الصافي</value>
+  </data>
   <data name="New" xml:space="preserve">
-    <value>جديد</value>
+    <value>الجديد</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>لا</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>عدد</value>
+    <value>رقم</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>طلب</value>
@@ -936,14 +1029,20 @@
   <data name="Origin" xml:space="preserve">
     <value>الأصل</value>
   </data>
+  <data name="Others" xml:space="preserve">
+    <value>الآخرين</value>
+  </data>
   <data name="Output" xml:space="preserve">
-    <value>الناتج</value>
+    <value>انتاج |</value>
   </data>
   <data name="PackingList" xml:space="preserve">
     <value>قائمة التعبئة</value>
   </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>المعلمات</value>
+  </data>
   <data name="Parent" xml:space="preserve">
-    <value>أصل</value>
+    <value>الأبوين</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمه السر</value>
@@ -958,10 +1057,10 @@
     <value>تاريخ الدفع</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>استمارة الدفع</value>
+    <value>نموذج الدفع</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
-    <value>تم التسديد</value>
+    <value>دفع صنع</value>
   </data>
   <data name="PaymentReceipt" xml:space="preserve">
     <value>إيصال الدفع</value>
@@ -999,6 +1098,9 @@
   <data name="PlaceofBirth" xml:space="preserve">
     <value>مكان الولادة</value>
   </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>الرجاء الإختيار</value>
+  </data>
   <data name="PointofSale" xml:space="preserve">
     <value>نقطة البيع</value>
   </data>
@@ -1029,8 +1131,11 @@
   <data name="PrinterValues" xml:space="preserve">
     <value>قيم طابعة</value>
   </data>
+  <data name="PrintingCheques" xml:space="preserve">
+    <value>الشيكات الطباعة</value>
+  </data>
   <data name="PrintingPress" xml:space="preserve">
-    <value>مطبعة</value>
+    <value>طباعة الصحيفه</value>
   </data>
   <data name="Privilege" xml:space="preserve">
     <value>امتياز</value>
@@ -1060,7 +1165,10 @@
     <value>إنتاج ترتيب أوضاع</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>مركز الإنتاج</value>
+    <value>وضع الإنتاج</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>ربح</value>
   </data>
   <data name="Project" xml:space="preserve">
     <value>مشروع</value>
@@ -1069,19 +1177,19 @@
     <value>تنفيذ المشروع</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>تمويل المشروع</value>
+    <value>تمويل المشاريع</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
     <value>إذني</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>الترويج</value>
+    <value>رقية</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>الخصائص</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>الملكية</value>
+    <value>خاصية</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
     <value>التكلفة التناسبية</value>
@@ -1102,7 +1210,7 @@
     <value>وثائق شراء</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>فاتورة الشراء</value>
+    <value>شراء الفاتورة</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
     <value>شراء فاتورة موجز</value>
@@ -1128,6 +1236,9 @@
   <data name="Quantity" xml:space="preserve">
     <value>كمية</value>
   </data>
+  <data name="quantityverified" xml:space="preserve">
+    <value>كمية التحقق منها</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>سؤال</value>
   </data>
@@ -1138,7 +1249,7 @@
     <value>حذف! هل أنت واثق؟</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>حركة سريعة</value>
+    <value>عمل سريعة</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
     <value>تطبيقات سريعة</value>
@@ -1174,7 +1285,7 @@
     <value>إعادة تمويل</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>اعادة تنشيط</value>
+    <value>تحديث</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>متعلق ب</value>
@@ -1197,6 +1308,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>طبع</value>
   </data>
+  <data name="Requested" xml:space="preserve">
+    <value>طلب</value>
+  </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>إدارة الطلب</value>
   </data>
@@ -1209,11 +1323,17 @@
   <data name="ReturnNumber" xml:space="preserve">
     <value>عودة عدد</value>
   </data>
+  <data name="Rounding" xml:space="preserve">
+    <value>التقريب</value>
+  </data>
   <data name="Sale" xml:space="preserve">
     <value>تخفيض السعر</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>مبيعات</value>
+  </data>
+  <data name="SalesAnalysis" xml:space="preserve">
+    <value>تحليل المبيعات</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
     <value>ميزانية المبيعات</value>
@@ -1221,8 +1341,14 @@
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>ملخص الميزانية المبيعات</value>
   </data>
+  <data name="SalesbyBranch" xml:space="preserve">
+    <value>المبيعات عن طريق فرع</value>
+  </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>المبيعات عن طريق العلامة التجارية</value>
+  </data>
+  <data name="SalesbyCustomer" xml:space="preserve">
+    <value>مبيعات من قبل العميل</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>مبيعات حسب التاريخ</value>
@@ -1255,7 +1381,7 @@
     <value>نوع البائع</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
-    <value>ترتيب المبيعات</value>
+    <value>طلب المبيعات</value>
   </data>
   <data name="SalesOrderSummary" xml:space="preserve">
     <value>ملخص ترتيب المبيعات</value>
@@ -1284,23 +1410,32 @@
   <data name="Search" xml:space="preserve">
     <value>بحث</value>
   </data>
+  <data name="Searchexactcode" xml:space="preserve">
+    <value>بحث كود المحدد</value>
+  </data>
+  <data name="Searchonlyavailable" xml:space="preserve">
+    <value>البحث المتوفرة فقط</value>
+  </data>
   <data name="SeatsAvailable" xml:space="preserve">
-    <value>المقاعد المتوفرة</value>
+    <value>مقاعد متوفرة</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>أمن</value>
+    <value>الأمان</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>أمن يجيب</value>
+    <value>جواب الامن</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>اختر الكل</value>
   </data>
   <data name="Seller" xml:space="preserve">
-    <value>بائع</value>
+    <value>تاجر</value>
   </data>
   <data name="SellRate" xml:space="preserve">
     <value>بيع السعر</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>خدمة</value>
+    <value>الخدمات</value>
   </data>
   <data name="ServiceContract" xml:space="preserve">
     <value>عقد الخدمة</value>
@@ -1316,6 +1451,12 @@
   </data>
   <data name="Sex" xml:space="preserve">
     <value>جنس</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>شارك</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>الشحن</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>متجر</value>
@@ -1383,6 +1524,9 @@
   <data name="Supplies" xml:space="preserve">
     <value>اللوازم</value>
   </data>
+  <data name="Surcharge" xml:space="preserve">
+    <value>ضريبة إضافية</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>الكلمات</value>
   </data>
@@ -1405,7 +1549,7 @@
     <value>قالب</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>محطة</value>
+    <value>طرفية</value>
   </data>
   <data name="Terms" xml:space="preserve">
     <value>شروط</value>
@@ -1431,17 +1575,20 @@
   <data name="Transfer" xml:space="preserve">
     <value>تحويل</value>
   </data>
+  <data name="TransferbetweenWarehouse" xml:space="preserve">
+    <value>نقل بين المستودعات</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>اكتب</value>
   </data>
   <data name="Urgency" xml:space="preserve">
-    <value>إلحاح</value>
+    <value>الاستعجال</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>استعمال</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>مستخدم</value>
+    <value>المستعمل</value>
   </data>
   <data name="UserRole" xml:space="preserve">
     <value>دور المستخدم</value>
@@ -1459,13 +1606,13 @@
     <value>ضريبة</value>
   </data>
   <data name="VATExcluded" xml:space="preserve">
-    <value>VAT استبعاد</value>
+    <value>غير مشمولة الضرائب</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
     <value>ضريبة القيمة المضافة التجمع</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
-    <value>متضمن ضريبة القيمة المضافة</value>
+    <value>وشملت الضريبة على القيمة المضافة</value>
   </data>
   <data name="VATPurchase" xml:space="preserve">
     <value>شراء ضريبة القيمة المضافة</value>
@@ -1476,17 +1623,23 @@
   <data name="VATWithholding" xml:space="preserve">
     <value>حجب ضريبة القيمة المضافة</value>
   </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>أكد عن طريق</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>الإصدار</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>رأي</value>
   </data>
+  <data name="Volume" xml:space="preserve">
+    <value>الصوت</value>
+  </data>
   <data name="Warning" xml:space="preserve">
     <value>تحذير</value>
   </data>
   <data name="Weekend" xml:space="preserve">
-    <value>نهاية الأسبوع</value>
+    <value>عطلة نهاية الاسبوع</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>عرض</value>
@@ -1499,6 +1652,9 @@
   </data>
   <data name="WorkType" xml:space="preserve">
     <value>نوع العمل</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>عام</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>نعم فعلا</value>

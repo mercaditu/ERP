@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>חֶשְׁבּוֹן</value>
+    <value>חֶשְׁבּוֹן</value>
   </data>
   <data name="Accountant" xml:space="preserve">
     <value>רואת חשבון</value>
@@ -151,7 +151,7 @@
     <value>לְהַפְעִיל</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>פָּעִיל</value>
+    <value>פָּעִיל</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
     <value>תוכנית פעילות</value>
@@ -199,7 +199,7 @@
     <value>הפעל מחדש את היישום יידרש</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>לְאַשֵׁר</value>
+    <value>לְאַשֵׁר</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>אֵזוֹר</value>
@@ -211,7 +211,7 @@
     <value>נכסים</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>בְּדִיקָה</value>
+    <value>בְּדִיקָה</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
     <value>ספירה אוטומטית</value>
@@ -229,7 +229,7 @@
     <value>תמונת רקע</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>בַּנק</value>
+    <value>בַּנק</value>
   </data>
   <data name="BankReconciliation" xml:space="preserve">
     <value>בנק פיוס</value>
@@ -239,6 +239,9 @@
   </data>
   <data name="Basic" xml:space="preserve">
     <value>בסיסי</value>
+  </data>
+  <data name="Batch" xml:space="preserve">
+    <value>קְבוּצָה</value>
   </data>
   <data name="Behavior" xml:space="preserve">
     <value>הִתְנַהֲגוּת</value>
@@ -280,7 +283,7 @@
     <value>לחשב</value>
   </data>
   <data name="Calculated" xml:space="preserve">
-    <value>מְחוֹשָׁב</value>
+    <value>מְחוֹשָׁב</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>לְבַטֵל</value>
@@ -346,7 +349,7 @@
     <value>תְצוּרָה</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>לְחַבֵּר</value>
+    <value>לְחַבֵּר</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
     <value>בונה חיבור</value>
@@ -384,6 +387,9 @@
   <data name="Cost" xml:space="preserve">
     <value>עֲלוּת</value>
   </data>
+  <data name="CostCalculation" xml:space="preserve">
+    <value>חישוב עלות</value>
+  </data>
   <data name="CostCenter" xml:space="preserve">
     <value>מרכז עלות</value>
   </data>
@@ -412,7 +418,7 @@
     <value>קו אשראי</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>מַטְבֵּעַ</value>
+    <value>מַטְבֵּעַ</value>
   </data>
   <data name="Current" xml:space="preserve">
     <value>נוֹכְחִי</value>
@@ -441,6 +447,9 @@
   <data name="Customize" xml:space="preserve">
     <value>התאמה אישית</value>
   </data>
+  <data name="CustomsDuty" xml:space="preserve">
+    <value>מכס</value>
+  </data>
   <data name="DailyGoal" xml:space="preserve">
     <value>יעד יומי</value>
   </data>
@@ -466,7 +475,7 @@
     <value>חוֹבָה</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>בְּרִירַת מֶחדָל</value>
+    <value>בְּרִירַת מֶחדָל</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>לִמְחוֹק</value>
@@ -586,7 +595,7 @@
     <value>נהג</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>לְשַׁכְפֵּל</value>
+    <value>לְשַׁכְפֵּל</value>
   </data>
   <data name="DynamicFields" xml:space="preserve">
     <value>שדות דינמיים</value>
@@ -595,7 +604,7 @@
     <value>לַעֲרוֹך</value>
   </data>
   <data name="Education" xml:space="preserve">
-    <value>הַשׂכָּלָה</value>
+    <value>הַשׂכָּלָה</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>אֶלֶקטרוֹנִי</value>
@@ -622,7 +631,7 @@
     <value>הון עצמי</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>שְׁגִיאָה</value>
+    <value>שְׁגִיאָה</value>
   </data>
   <data name="EstimatedDateofArrival" xml:space="preserve">
     <value>תאריך הגעה משוער</value>
@@ -664,7 +673,7 @@
     <value>גורם</value>
   </data>
   <data name="Family" xml:space="preserve">
-    <value>מִשׁפָּחָה</value>
+    <value>מִשׁפָּחָה</value>
   </data>
   <data name="Favorite" xml:space="preserve">
     <value>הכי אהוב</value>
@@ -675,11 +684,14 @@
   <data name="Filter" xml:space="preserve">
     <value>לְסַנֵן</value>
   </data>
+  <data name="FinalCost" xml:space="preserve">
+    <value>עלות סופית</value>
+  </data>
   <data name="Finance" xml:space="preserve">
     <value>לְמַמֵן</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>כַּספִּי</value>
+    <value>כַּספִּי</value>
   </data>
   <data name="Finished" xml:space="preserve">
     <value>גָמוּר</value>
@@ -695,6 +707,9 @@
   </data>
   <data name="FootTraffic" xml:space="preserve">
     <value>תנועת הולכי רגל</value>
+  </data>
+  <data name="Forced" xml:space="preserve">
+    <value>כָּפוּי</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>טופס</value>
@@ -723,8 +738,14 @@
   <data name="GovernmentID" xml:space="preserve">
     <value>הממשלה מזהה</value>
   </data>
+  <data name="GracePeriod" xml:space="preserve">
+    <value>תקופת חסד</value>
+  </data>
   <data name="Grid" xml:space="preserve">
-    <value>רֶשֶׁת</value>
+    <value>רֶשֶׁת</value>
+  </data>
+  <data name="GrossWeight" xml:space="preserve">
+    <value>משקל ברוטו</value>
   </data>
   <data name="Guest" xml:space="preserve">
     <value>אוֹרֵחַ</value>
@@ -748,7 +769,7 @@
     <value>ערכי Stock הסטוריים</value>
   </data>
   <data name="Hour" xml:space="preserve">
-    <value>שָׁעָה</value>
+    <value>שָׁעָה</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
     <value>שעה מקדמת</value>
@@ -792,8 +813,14 @@
   <data name="Insert" xml:space="preserve">
     <value>לְהַכנִיס</value>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>ביטוח</value>
+  </data>
   <data name="Integration" xml:space="preserve">
     <value>שילוב</value>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>ריבית</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>המסחר הבינלאומי</value>
@@ -867,6 +894,9 @@
   <data name="Latitude" xml:space="preserve">
     <value>קו רוחב</value>
   </data>
+  <data name="Legal" xml:space="preserve">
+    <value>משפטי</value>
+  </data>
   <data name="LegalRepresentative" xml:space="preserve">
     <value>נציג משפטי</value>
   </data>
@@ -912,6 +942,9 @@
   <data name="Maintainance" xml:space="preserve">
     <value>תחזוקה</value>
   </data>
+  <data name="MakeaGroupPayment" xml:space="preserve">
+    <value>בצע תשלום קבוצה</value>
+  </data>
   <data name="MakePayment" xml:space="preserve">
     <value>לשלם</value>
   </data>
@@ -934,7 +967,7 @@
     <value>מסכה</value>
   </data>
   <data name="Master" xml:space="preserve">
-    <value>לִשְׁלוֹט</value>
+    <value>לִשְׁלוֹט</value>
   </data>
   <data name="Measurement" xml:space="preserve">
     <value>מדידה</value>
@@ -967,13 +1000,16 @@
     <value>תְנוּעָה</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>שֵׁם</value>
+    <value>שֵׁם</value>
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>לאום</value>
   </data>
   <data name="NeededbyDate" xml:space="preserve">
     <value>דרוש לפי תאריך</value>
+  </data>
+  <data name="NetWeight" xml:space="preserve">
+    <value>משקל נטו</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>חָדָשׁ</value>
@@ -992,6 +1028,9 @@
   </data>
   <data name="Origin" xml:space="preserve">
     <value>מָקוֹר</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>אחרים</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>תְפוּקָה</value>
@@ -1012,7 +1051,7 @@
     <value>זכאי</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>תַשְׁלוּם</value>
+    <value>תַשְׁלוּם</value>
   </data>
   <data name="PaymentDate" xml:space="preserve">
     <value>תאריך תשלום</value>
@@ -1058,6 +1097,9 @@
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
     <value>מקום לידה</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>בבקשה תבחר</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
     <value>נקודת המכירה</value>
@@ -1192,10 +1234,13 @@
     <value>ערך הרכישה</value>
   </data>
   <data name="Quantity" xml:space="preserve">
-    <value>כַּמוּת</value>
+    <value>כַּמוּת</value>
+  </data>
+  <data name="quantityverified" xml:space="preserve">
+    <value>כמות אומה</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>שְׁאֵלָה</value>
+    <value>שְׁאֵלָה</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
     <value>ביטול שינויים! האם אתה בטוח?</value>
@@ -1225,7 +1270,7 @@
     <value>חומר גולמי</value>
   </data>
   <data name="Receipt" xml:space="preserve">
-    <value>קַבָּלָה</value>
+    <value>קַבָּלָה</value>
   </data>
   <data name="Receivable" xml:space="preserve">
     <value>חייב</value>
@@ -1261,7 +1306,7 @@
     <value>דיווחים</value>
   </data>
   <data name="Reprint" xml:space="preserve">
-    <value>הֶדפֵּס</value>
+    <value>הֶדפֵּס</value>
   </data>
   <data name="Requested" xml:space="preserve">
     <value>מגיש הבקשה</value>
@@ -1277,6 +1322,9 @@
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>מספר השבות</value>
+  </data>
+  <data name="Rounding" xml:space="preserve">
+    <value>עיגול</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>מְכִירָה</value>
@@ -1348,7 +1396,7 @@
     <value>חזור מכירות</value>
   </data>
   <data name="Saloon" xml:space="preserve">
-    <value>מִסְבָּאָה</value>
+    <value>מִסְבָּאָה</value>
   </data>
   <data name="Sample" xml:space="preserve">
     <value>לִטעוֹם</value>
@@ -1362,14 +1410,23 @@
   <data name="Search" xml:space="preserve">
     <value>חפש</value>
   </data>
+  <data name="Searchexactcode" xml:space="preserve">
+    <value>חפש קוד מדויק</value>
+  </data>
+  <data name="Searchonlyavailable" xml:space="preserve">
+    <value>חיפוש רק זמין</value>
+  </data>
   <data name="SeatsAvailable" xml:space="preserve">
     <value>מקומות פנויים</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>בִּטָחוֹן</value>
+    <value>בִּטָחוֹן</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
     <value>תשובת אבטחה</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>בחר הכל</value>
   </data>
   <data name="Seller" xml:space="preserve">
     <value>מוֹכֵר</value>
@@ -1378,7 +1435,7 @@
     <value>למכור דרג</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>שֵׁרוּת</value>
+    <value>שֵׁרוּת</value>
   </data>
   <data name="ServiceContract" xml:space="preserve">
     <value>חוזה שירות</value>
@@ -1397,6 +1454,9 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>לַחֲלוֹק</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>משלוח</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>לִקְנוֹת</value>
@@ -1464,14 +1524,17 @@
   <data name="Supplies" xml:space="preserve">
     <value>אספקה</value>
   </data>
+  <data name="Surcharge" xml:space="preserve">
+    <value>תַשׁלוּם נוֹסָף</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>תגיות</value>
   </data>
   <data name="Talent" xml:space="preserve">
-    <value>כִּשָׁרוֹן</value>
+    <value>כִּשָׁרוֹן</value>
   </data>
   <data name="Task" xml:space="preserve">
-    <value>מְשִׁימָה</value>
+    <value>מְשִׁימָה</value>
   </data>
   <data name="TaskList" xml:space="preserve">
     <value>רשימת מטלות</value>
@@ -1480,7 +1543,7 @@
     <value>טֵלֵפוֹן</value>
   </data>
   <data name="Temperature" xml:space="preserve">
-    <value>טֶמפֶּרָטוּרָה</value>
+    <value>טֶמפֶּרָטוּרָה</value>
   </data>
   <data name="Template" xml:space="preserve">
     <value>תבנית</value>
@@ -1560,11 +1623,17 @@
   <data name="VATWithholding" xml:space="preserve">
     <value>במקור מע"מ</value>
   </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>מאושר על ידי</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>גִרְסָה</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>נוף</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>כֶּרֶך</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>אַזהָרָה</value>
@@ -1585,7 +1654,7 @@
     <value>סוג העבודה</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value>שָׁנָה</value>
+    <value>שָׁנָה</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>כן</value>

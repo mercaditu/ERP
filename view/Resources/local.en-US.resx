@@ -240,6 +240,9 @@
   <data name="Basic" xml:space="preserve">
     <value>Basic</value>
   </data>
+  <data name="Batch" xml:space="preserve">
+    <value>Batch</value>
+  </data>
   <data name="Behavior" xml:space="preserve">
     <value>Behavior</value>
   </data>
@@ -384,6 +387,9 @@
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
   </data>
+  <data name="CostCalculation" xml:space="preserve">
+    <value>Cost Calculation</value>
+  </data>
   <data name="CostCenter" xml:space="preserve">
     <value>Cost Center</value>
   </data>
@@ -440,6 +446,9 @@
   </data>
   <data name="Customize" xml:space="preserve">
     <value>Customize</value>
+  </data>
+  <data name="CustomsDuty" xml:space="preserve">
+    <value>Customs Duty</value>
   </data>
   <data name="DailyGoal" xml:space="preserve">
     <value>Daily Goal</value>
@@ -675,6 +684,9 @@
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
+  <data name="FinalCost" xml:space="preserve">
+    <value>Final Cost</value>
+  </data>
   <data name="Finance" xml:space="preserve">
     <value>Finance</value>
   </data>
@@ -695,6 +707,9 @@
   </data>
   <data name="FootTraffic" xml:space="preserve">
     <value>Foot Traffic</value>
+  </data>
+  <data name="Forced" xml:space="preserve">
+    <value>Forced</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>Form</value>
@@ -723,8 +738,14 @@
   <data name="GovernmentID" xml:space="preserve">
     <value>Government ID</value>
   </data>
+  <data name="GracePeriod" xml:space="preserve">
+    <value>Grace Period</value>
+  </data>
   <data name="Grid" xml:space="preserve">
     <value>Grid</value>
+  </data>
+  <data name="GrossWeight" xml:space="preserve">
+    <value>Gross Weight</value>
   </data>
   <data name="Guest" xml:space="preserve">
     <value>Guest</value>
@@ -792,8 +813,14 @@
   <data name="Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>Insurance</value>
+  </data>
   <data name="Integration" xml:space="preserve">
     <value>Integration</value>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>Interest</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>International Commerce</value>
@@ -867,6 +894,9 @@
   <data name="Latitude" xml:space="preserve">
     <value>Latitude</value>
   </data>
+  <data name="Legal" xml:space="preserve">
+    <value>Legal</value>
+  </data>
   <data name="LegalRepresentative" xml:space="preserve">
     <value>Legal Representative</value>
   </data>
@@ -911,6 +941,9 @@
   </data>
   <data name="Maintainance" xml:space="preserve">
     <value>Maintainance</value>
+  </data>
+  <data name="MakeaGroupPayment" xml:space="preserve">
+    <value>Make a Group Payment</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
     <value>Make Payment</value>
@@ -975,6 +1008,9 @@
   <data name="NeededbyDate" xml:space="preserve">
     <value>Needed by Date</value>
   </data>
+  <data name="NetWeight" xml:space="preserve">
+    <value>Net Weight</value>
+  </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
@@ -992,6 +1028,9 @@
   </data>
   <data name="Origin" xml:space="preserve">
     <value>Origin</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Output</value>
@@ -1058,6 +1097,9 @@
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
     <value>Place of Birth</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>Please Select</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
     <value>Point of Sale</value>
@@ -1194,6 +1236,9 @@
   <data name="Quantity" xml:space="preserve">
     <value>Quantity</value>
   </data>
+  <data name="quantityverified" xml:space="preserve">
+    <value>quantity verified</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>Question</value>
   </data>
@@ -1277,6 +1322,9 @@
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Return Number</value>
+  </data>
+  <data name="Rounding" xml:space="preserve">
+    <value>Rounding</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>Sale</value>
@@ -1362,6 +1410,12 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Searchexactcode" xml:space="preserve">
+    <value>Search exact code</value>
+  </data>
+  <data name="Searchonlyavailable" xml:space="preserve">
+    <value>Search only available</value>
+  </data>
   <data name="SeatsAvailable" xml:space="preserve">
     <value>Seats Available</value>
   </data>
@@ -1370,6 +1424,9 @@
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
     <value>Security Answer</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select All</value>
   </data>
   <data name="Seller" xml:space="preserve">
     <value>Seller</value>
@@ -1397,6 +1454,9 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>Shipping</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>Shop</value>
@@ -1463,6 +1523,9 @@
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>Supplies</value>
+  </data>
+  <data name="Surcharge" xml:space="preserve">
+    <value>Surcharge</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
@@ -1560,11 +1623,17 @@
   <data name="VATWithholding" xml:space="preserve">
     <value>VAT Withholding</value>
   </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Verified By</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>

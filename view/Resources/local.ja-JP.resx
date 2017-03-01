@@ -240,6 +240,9 @@
   <data name="Basic" xml:space="preserve">
     <value>基本</value>
   </data>
+  <data name="Batch" xml:space="preserve">
+    <value>バッチ</value>
+  </data>
   <data name="Behavior" xml:space="preserve">
     <value>動作</value>
   </data>
@@ -384,6 +387,9 @@
   <data name="Cost" xml:space="preserve">
     <value>コスト</value>
   </data>
+  <data name="CostCalculation" xml:space="preserve">
+    <value>原価計算</value>
+  </data>
   <data name="CostCenter" xml:space="preserve">
     <value>コストセンター</value>
   </data>
@@ -440,6 +446,9 @@
   </data>
   <data name="Customize" xml:space="preserve">
     <value>カスタマイズ</value>
+  </data>
+  <data name="CustomsDuty" xml:space="preserve">
+    <value>関税</value>
   </data>
   <data name="DailyGoal" xml:space="preserve">
     <value>デイリーゴール</value>
@@ -675,6 +684,9 @@
   <data name="Filter" xml:space="preserve">
     <value>フィルタ</value>
   </data>
+  <data name="FinalCost" xml:space="preserve">
+    <value>最終原価</value>
+  </data>
   <data name="Finance" xml:space="preserve">
     <value>ファイナンス</value>
   </data>
@@ -695,6 +707,9 @@
   </data>
   <data name="FootTraffic" xml:space="preserve">
     <value>フットトラフィック</value>
+  </data>
+  <data name="Forced" xml:space="preserve">
+    <value>強制的な</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>形</value>
@@ -723,8 +738,14 @@
   <data name="GovernmentID" xml:space="preserve">
     <value>政府ID</value>
   </data>
+  <data name="GracePeriod" xml:space="preserve">
+    <value>猶予期間</value>
+  </data>
   <data name="Grid" xml:space="preserve">
     <value>グリッド</value>
+  </data>
+  <data name="GrossWeight" xml:space="preserve">
+    <value>総重量</value>
   </data>
   <data name="Guest" xml:space="preserve">
     <value>ゲスト</value>
@@ -792,8 +813,14 @@
   <data name="Insert" xml:space="preserve">
     <value>インサート</value>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>保険</value>
+  </data>
   <data name="Integration" xml:space="preserve">
     <value>統合</value>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>関心</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>国際通商</value>
@@ -867,6 +894,9 @@
   <data name="Latitude" xml:space="preserve">
     <value>緯度</value>
   </data>
+  <data name="Legal" xml:space="preserve">
+    <value>法的</value>
+  </data>
   <data name="LegalRepresentative" xml:space="preserve">
     <value>法定代理人</value>
   </data>
@@ -911,6 +941,9 @@
   </data>
   <data name="Maintainance" xml:space="preserve">
     <value>メンテナンス</value>
+  </data>
+  <data name="MakeaGroupPayment" xml:space="preserve">
+    <value>グループの支払いを作ります</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
     <value>支払う</value>
@@ -975,6 +1008,9 @@
   <data name="NeededbyDate" xml:space="preserve">
     <value>日によって必要</value>
   </data>
+  <data name="NetWeight" xml:space="preserve">
+    <value>正味重量</value>
+  </data>
   <data name="New" xml:space="preserve">
     <value>新しい</value>
   </data>
@@ -992,6 +1028,9 @@
   </data>
   <data name="Origin" xml:space="preserve">
     <value>原点</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>他人</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>出力</value>
@@ -1058,6 +1097,9 @@
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
     <value>出生地</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>選んでください</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
     <value>販売時点管理</value>
@@ -1194,6 +1236,9 @@
   <data name="Quantity" xml:space="preserve">
     <value>量</value>
   </data>
+  <data name="quantityverified" xml:space="preserve">
+    <value>数量検証</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>質問</value>
   </data>
@@ -1277,6 +1322,9 @@
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>戻り数</value>
+  </data>
+  <data name="Rounding" xml:space="preserve">
+    <value>丸め</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>販売</value>
@@ -1362,6 +1410,12 @@
   <data name="Search" xml:space="preserve">
     <value>サーチ</value>
   </data>
+  <data name="Searchexactcode" xml:space="preserve">
+    <value>正確なコードを検索します</value>
+  </data>
+  <data name="Searchonlyavailable" xml:space="preserve">
+    <value>のみ利用可能な検索</value>
+  </data>
   <data name="SeatsAvailable" xml:space="preserve">
     <value>空席</value>
   </data>
@@ -1370,6 +1424,9 @@
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
     <value>セキュリティ回答</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>すべて選択</value>
   </data>
   <data name="Seller" xml:space="preserve">
     <value>売り手</value>
@@ -1397,6 +1454,9 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>シェア</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>運送</value>
   </data>
   <data name="Shop" xml:space="preserve">
     <value>ショップ</value>
@@ -1463,6 +1523,9 @@
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>用品</value>
+  </data>
+  <data name="Surcharge" xml:space="preserve">
+    <value>サーチャージ</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>タグ</value>
@@ -1560,11 +1623,17 @@
   <data name="VATWithholding" xml:space="preserve">
     <value>付加価値税の源泉徴収</value>
   </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>〜によって検証されました</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>バージョン</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>ビュー</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>ボリューム</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>

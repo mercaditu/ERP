@@ -3,7 +3,8 @@
     public static class PaymentRecievables
     {
         public static string query = @"
-                                         select
+										select
+										if(ps.id_payment_schedual is null, pschild.parent_id_payment_schedual, ps.id_payment_schedual) as Refrence,
                                         contact.name as Customer, 
                                         contact.telephone as Telephone, 
                                         contact.address as Address, 
@@ -25,11 +26,8 @@
                                         pt.name as PaymentType, 
                                         c.name as Currency, 
                                         cfx.buy_value as Rate,
-                                        datediff(ps.expire_date, ifnull(payment.trans_date, Now())) as DateDiff,
-                                        ps.parent_id_payment_schedual,
-                                        ps.id_payment_schedual,
-									if(ps.id_payment_schedual=null,pschild.parent_id_payment_schedual,ps.id_payment_schedual) as Refrence
-                                        
+                                        datediff(ps.expire_date, ifnull(payment.trans_date, Now())) as DateDiff
+                                   
                                         from payment_schedual as ps
                                         left join payment_schedual as pschild on ps.id_payment_schedual = pschild.parent_id_payment_schedual
 
@@ -46,5 +44,5 @@
                                         left join sales_rep as sr on si.id_sales_rep = sr.id_sales_rep
                                         
                                         where ps.id_sales_invoice > 0 and ps.parent_id_payment_schedual is null and ps.id_company = @CompanyID and ps.trans_date between '@StartDate' and '@EndDate'";
-}
+    }
 }

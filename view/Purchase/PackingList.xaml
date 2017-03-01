@@ -211,7 +211,7 @@
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Binding="{Binding item.supplier_name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
+                                <DataGridTextColumn Binding="{Binding item.supplier_name, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" MinWidth="256" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                             Header="{lex:Loc Cognitivo:local:GrossWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}" />
@@ -244,9 +244,12 @@
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding quantityverified, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding quantityverified, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2"/>

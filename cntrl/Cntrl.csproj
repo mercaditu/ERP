@@ -703,8 +703,8 @@
     <EmbeddedResource Include="Reports\Commercials\ContactsByGeography.rdlc" />
     <EmbeddedResource Include="Reports\Commercials\ContactsByTag.rdlc" />
     <EmbeddedResource Include="Reports\Finances\AccountBalance.rdlc" />
-    <EmbeddedResource Include="Reports\Finances\RecievablesByDate.rdlc" />
-    <EmbeddedResource Include="Reports\Finances\RecievablesBySalesman.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\PaymentRecievableByDate.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\PaymentRecievablesBySalesman.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
@@ -891,6 +891,9 @@
     <None Include="Properties\DataSources\entity.security_role_privilage.datasource" />
     <None Include="Properties\DataSources\entity.security_user.datasource" />
     <None Include="Properties\DataSources\entity.security_user_field.datasource" />
+    <None Include="Properties\DataSources\Reports.PaymentsReceivable.datasource" />
+    <None Include="Properties\DataSources\Reports.Purchase.datasource" />
+    <None Include="Properties\DataSources\Reports.Sales.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1359,6 +1362,10 @@
     <ProjectReference Include="..\entity\Entity.csproj">
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{92db3bc1-f8f2-468c-983f-8c99136dd6b9}</Project>
+      <Name>Reports</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

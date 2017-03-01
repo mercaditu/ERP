@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace entity.Reporting
+namespace Reports
 {
     public class PaymentsReceivable
     {

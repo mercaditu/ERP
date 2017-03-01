@@ -389,13 +389,11 @@
     <Compile Include="Reporting\CostBreakDown.cs" />
     <Compile Include="Reporting\ContactBalnace.cs" />
     <Compile Include="Reporting\EmployeeInProduction.cs" />
-    <Compile Include="Reporting\PendingReceivable.cs" />
     <Compile Include="Reporting\ProductionStatus.cs" />
     <Compile Include="Reporting\ProductionOrder.cs" />
     <Compile Include="Reporting\RPT_Project.cs" />
     <Compile Include="Reporting\Contacts.cs" />
     <Compile Include="Reporting\RPT_Purchase.cs" />
-    <Compile Include="Reporting\PendingPayable.cs" />
     <Compile Include="Reporting\RPT_Sales.cs" />
     <Compile Include="Reporting\StockAnalysis.cs" />
     <Compile Include="Reporting\StockByBranch.cs" />

@@ -297,6 +297,7 @@ namespace Cognitivo.Product
                 add_item(sbxItem.ItemID);
             }
         }
+
         public void add_item(int id_item)
         {
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
@@ -306,13 +307,15 @@ namespace Cognitivo.Product
                 if (item_product!=null)
                 {
                     app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-                   item_inventory_detail _item_inventory_detail=item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
+                    item_inventory_detail _item_inventory_detail=item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
                     item_inventory_detail item_inventory_detail = new item_inventory_detail();
+
                     if (item_inventory_detail==null)
                     {
                         Class.StockCalculations Stock = new Class.StockCalculations();
                         List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
-                        item_inventory_detail.value_system = StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Quantity;
+                        //Bring 0 Value into view since this is a new Item, it won't have any stock. OR else the System will assume same quantity for the rest.
+                        item_inventory_detail.value_system = 0;
                         item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Cost;
                     }
                     else
@@ -335,11 +338,7 @@ namespace Cognitivo.Product
                     }
 
                    item_inventory.item_inventory_detail.Add(item_inventory_detail);
-                    //if (txtsearch.Text!="")
-                    //{
-                    //    item_inventoryitem_inventory_detailViewSource.View.Filter = null;
-                    //}
-                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                   item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 }
             }
          

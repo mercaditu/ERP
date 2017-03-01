@@ -10,4 +10,14 @@ namespace Documents
     {
 
     }
+
+    public class LoadSalesInvoice
+    {
+        List<SalesInvoice> SalesInvoiceList = new List<SalesInvoice>();
+
+        public LoadSalesInvoice()
+        {
+            //Load Data into List.
+        }
+    }
 }

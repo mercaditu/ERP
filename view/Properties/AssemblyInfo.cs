@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cognitivo Paraguay")]
 [assembly: AssemblyProduct("Cognitivo ERP")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("The Science of Business")]
 [assembly: AssemblyCulture("")]
 

@@ -12,7 +12,7 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
 
-	  MinWidth="300" MinHeight="500"
+	  MinWidth="300" MinHeight="500" Loaded="Page_Loaded"
 	  Title="LogIn">
     <Page.Resources>
         <Storyboard x:Key="shake">
@@ -160,7 +160,6 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <Label x:Name="lblVersion" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource generic_Label}" />
         </Grid>
     </Grid>
 </Page>

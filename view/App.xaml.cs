@@ -1,6 +1,9 @@
-﻿using System.Data.Entity;
+﻿using Cognitivo.Menu;
+using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -8,7 +11,7 @@ using System.Windows.Threading;
 
 namespace Cognitivo
 {
-    public partial class App
+    public partial class App : Application
     {
         public App()
         {
@@ -74,6 +77,42 @@ namespace Cognitivo
                 Cognitivo.Properties.Settings.Default.Upgrade();
                 Cognitivo.Properties.Settings.Default.UpgradeRequired = false;
                 Cognitivo.Properties.Settings.Default.Save();
+            }
+
+            Menu.SplashScreen splash = new Menu.SplashScreen();
+            splash.Show();
+            Task taskAuth = Task.Factory.StartNew(() => check_createdb(splash));
+        }
+
+        private async void check_createdb(Menu.SplashScreen splash)
+        {
+            using (entity.db db = new entity.db())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                db.Configuration.AutoDetectChangesEnabled = false;
+
+                MainWindow MainWin = null;
+                await Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    MainWin = new MainWindow();
+                }));
+                
+
+                if (db.Database.Exists() == false)
+                {
+                    await Dispatcher.BeginInvoke((Action)(() => { MainWin.mainFrame.Navigate(new StartUp()); }));
+                }
+                else
+                {
+                    await db.app_company.FirstOrDefaultAsync();
+                    await Dispatcher.BeginInvoke((Action)(() => { MainWin.mainFrame.Navigate(new mainLogIn()); }));
+                }
+
+                await Dispatcher.BeginInvoke((Action)(() => 
+                {
+                    splash.Close();
+                    MainWin.Show();
+                }));
             }
         }
     }

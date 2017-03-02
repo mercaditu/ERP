@@ -13,7 +13,7 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		WindowState="Maximized" GlowBrush="Black" KeyUp="Window_KeyUp"
-		Style="{DynamicResource MyCleanWindowStyle}">
+		Style="{DynamicResource MyCleanWindowStyle}" Closing="winMain_Closing">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="flyout_Panel" Header="Flyout" Background="{StaticResource AccentColor_Introvert}" Theme="Dark" Position="Right" Width="256">
@@ -133,21 +133,19 @@
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Branch}" HorizontalAlignment="Center" />
                             <ComboBox x:Name="cbxBranch" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
 									  SelectedValue="{Binding branch_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}"
-									  Width="128" SelectionChanged="cbxBranch_SelectionChanged"
+									  Width="128"
 									  ItemsSource="{Binding Source={x:Static entity:CurrentSession.Branches}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 										Text="{Binding branch_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}"
 										DisplayMemberPath="name"  SelectedValuePath="id_branch" />
 
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Terminal}" HorizontalAlignment="Center" />
                             <ComboBox x:Name="cbxTerminal" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
-								DisplayMemberPath="name" SelectedValuePath="id_terminal"
-									  SelectionChanged="cbxTerminal_SelectionChanged" Width="128"
+								DisplayMemberPath="name" SelectedValuePath="id_terminal" Width="128"
 								SelectedValue="{Binding terminal_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}"
 								Text="{Binding terminal_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}" />
 
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Account}" HorizontalAlignment="Center" />
-                            <ComboBox x:Name="cbxAccount" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
-									  SelectionChanged="cbxAccount_SelectionChanged" Width="128"
+                            <ComboBox x:Name="cbxAccount" Style="{StaticResource input_combobox}" HorizontalAlignment="Center" Width="128"
 										DisplayMemberPath="name" SelectedValuePath="id_account"
 										Text="{Binding account_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}"
 										SelectedValue="{Binding account_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}" />

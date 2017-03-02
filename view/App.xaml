@@ -3,8 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:my="clr-namespace:System;assembly=mscorlib"
 			 xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
-			 StartupUri="Menu/MainWindow.xaml"
-			 ShutdownMode="OnMainWindowClose"
+			 StartupUri="Menu/SplashScreen.xaml"
+			 ShutdownMode="OnExplicitShutdown"
 			 Startup="Application_Startup"
 			 DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <Application.Resources>

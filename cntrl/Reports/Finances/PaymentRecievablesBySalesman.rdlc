@@ -731,6 +731,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N1</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1101,6 +1102,7 @@
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N1</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1164,7 +1166,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1459,6 +1460,7 @@
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N1</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1601,7 +1603,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Sum(Fields!Salesman.Value)</Value>
+                                <Value>=Fields!Salesman.Value</Value>
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1816,7 +1818,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.98958in</Height>
-        <Width>12.34375in</Width>
+        <Width>12.34376in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1827,7 +1829,7 @@
     <Height>0.98958in</Height>
     <Style />
   </Body>
-  <Width>12.34375in</Width>
+  <Width>12.34376in</Width>
   <Page>
     <PageHeight>8.27in</PageHeight>
     <PageWidth>11.69in</PageWidth>

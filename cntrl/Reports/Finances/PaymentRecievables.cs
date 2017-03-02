@@ -17,7 +17,7 @@
                                         si.trans_date as Date, 
                                         sr.name as Salesman,
                                         ps.trans_date as PaymentDate, 
-                                        ps.expire_date as ExpiryDate, 
+                                        Date(ps.expire_date) as ExpiryDate, 
                                         ps.debit as Debit, 
                                         pschild.credit as Credit,
                                         payment.number as PaymentNumber, 

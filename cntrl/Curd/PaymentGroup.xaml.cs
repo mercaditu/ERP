@@ -24,10 +24,7 @@ namespace cntrl.Curd
         public PaymentGroup(ref PaymentDB _PaymentDB)
         {
             InitializeComponent();
-
-
             PaymentDB = _PaymentDB;
-
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -47,10 +44,9 @@ namespace cntrl.Curd
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
-            CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
-            app_accountViewSource.Source = PaymentDB.app_account.Local;
-
+            CollectionViewSource app_conditionViewSource = (CollectionViewSource)this.FindResource("app_conditionViewSource");
+            await PaymentDB.app_condition.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_conditionViewSource.Source = PaymentDB.app_condition.Local;
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)

@@ -25,7 +25,8 @@
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
-              <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}" />
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
@@ -56,7 +57,7 @@
                     <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
                     <ComboBox x:Name="cbxCondition" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
-						                ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
+						                ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"
                               SelectionChanged="cbxCondition_SelectionChanged"/>
                 </StackPanel>
                 <StackPanel>

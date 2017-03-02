@@ -2028,7 +2028,7 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Sum(Fields!Status.Value)</Value>
+                                    <Value>=Fields!Status.Value</Value>
                                     <Style>
                                       <FontFamily>Courier New</FontFamily>
                                       <FontSize>8pt</FontSize>
@@ -2396,8 +2396,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.34375in</Height>
-        <Width>10.49066in</Width>
+        <Height>1.34376in</Height>
+        <Width>10.49067in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2405,10 +2405,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.34375in</Height>
+    <Height>1.34376in</Height>
     <Style />
   </Body>
-  <Width>10.49066in</Width>
+  <Width>10.49067in</Width>
   <Page>
     <PageFooter>
       <Height>0.24306in</Height>

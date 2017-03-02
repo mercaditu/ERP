@@ -254,29 +254,31 @@ namespace Cognitivo.Purchase
         public void PurchaseOrder_Click(object sender)
         {
             purchase_packing purchase_packing = (purchase_packing)purchase_packingViewSource.View.CurrentItem;
-
-            foreach (purchase_order item in pnlPurchaseOrder.selected_purchase_order)
+            if (purchase_packing != null)
             {
-                foreach (purchase_order_detail _purchase_order_detail in item.purchase_order_detail)
+                foreach (purchase_order item in pnlPurchaseOrder.selected_purchase_order)
                 {
-                    purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
-                    purchase_packing_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
-                    purchase_packing_detail.id_item = (int)_purchase_order_detail.id_item;
-                    purchase_packing_detail.item = _purchase_order_detail.item;
-                    purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
-                    purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
-                    purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                    purchase_packing_detail.user_verified = false;
-                    purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
+                    foreach (purchase_order_detail _purchase_order_detail in item.purchase_order_detail)
+                    {
+                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                        purchase_packing_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
+                        purchase_packing_detail.id_item = (int)_purchase_order_detail.id_item;
+                        purchase_packing_detail.item = _purchase_order_detail.item;
+                        purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
+                        purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
+                        purchase_packing_detail.quantity = _purchase_order_detail.quantity;
+                        purchase_packing_detail.user_verified = false;
+                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                    purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                
-                    PurchasePackingListDB.Entry(purchase_packing).Entity.State = EntityState.Added;
+                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
 
-                    crud_modal.Children.Clear();
-                    crud_modal.Visibility = Visibility.Collapsed;
-                    filterDetail();
-                    filterVerifiedDetail();
+                        PurchasePackingListDB.Entry(purchase_packing).Entity.State = EntityState.Added;
+
+                        crud_modal.Children.Clear();
+                        crud_modal.Visibility = Visibility.Collapsed;
+                        filterDetail();
+                        filterVerifiedDetail();
+                    }
                 }
             }
         }

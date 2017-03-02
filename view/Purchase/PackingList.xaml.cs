@@ -279,6 +279,7 @@ namespace Cognitivo.Purchase
                         filterDetail();
                         filterVerifiedDetail();
                     }
+                    Refresh_GroupByGrid();
                 }
             }
         }

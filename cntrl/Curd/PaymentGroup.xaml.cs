@@ -64,7 +64,7 @@ namespace cntrl.Curd
                 payment.id_user = CurrentSession.Id_User;
                 payment.IsSelected = true;
                 payment.status = Status.Documents_General.Pending;
-
+                
                 payment_detail payment_detail = new payment_detail();
                 //Only one detail per customer. see if you can group by customer.
                 payment_detail.payment = payment;
@@ -85,11 +85,24 @@ namespace cntrl.Curd
                 payment_detail.id_payment_type = (int)cbxPamentType.SelectedValue;
                 payment_detail.IsSelected = true;
                 payment_detail.comment = txtComment.Text;
+                payment_detail.id_payment_schedual = schedual.id_payment_schedual;
                 payment.payment_detail.Add(payment_detail);
                 PaymentDB.payments.Add(payment);
+                List<payment_schedual> listschedual = new List<payment_schedual>();
+                listschedual.Add(schedual);
+                PaymentDB.Approve(listschedual, true, false);
             }
+            payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
+             PaymentDB.payment_schedual
+                    .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
+                        && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                        .Include(x => x.sales_invoice)
+                        .Include(x => x.contact)
+                        .OrderBy(x => x.expire_date)
+                        .Load();
+            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
 
-            PaymentDB.Approve(payment_schedualList, true, false);
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -34,9 +34,9 @@ namespace Cognitivo.Setup.Migration
             //Task accounting_Task = Task.Factory.StartNew(() => accounting());
             //accounting_Task.Wait();
             //////  Start Sales and Purchase
-            //Task purchase_Task = Task.Factory.StartNew(() => purchase());
+            Task purchase_Task = Task.Factory.StartNew(() => purchase());
 
-            //purchase_Task.Wait();
+            purchase_Task.Wait();
             //sales();
             Task sales_Task = Task.Factory.StartNew(() => sales());
             sales_Task.Wait();
@@ -394,6 +394,7 @@ namespace Cognitivo.Setup.Migration
                 if (_dias == 0)
                 {
                     app_contract.id_condition = dbContext.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault().id_condition;
+                    app_contract.is_default = true;
                 }
                 else
                 {

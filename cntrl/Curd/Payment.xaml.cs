@@ -232,27 +232,18 @@ namespace cntrl.Curd
                     {
                         //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
                         stpaccount.Visibility = Visibility.Visible;
-                        stptransdate.Visibility = Visibility.Collapsed;
+                        if (payment_type.is_direct)
+                        {
+                            stptransdate.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            stptransdate.Visibility = Visibility.Visible;
+                        }
+                        
                         stpcreditpurchase.Visibility = Visibility.Collapsed;
                         stpcreditsales.Visibility = Visibility.Collapsed;
                     }
-
-                    //If PaymentType has Document to print, then show Document. Example, Checks or Bank Transfers.
-                    //if (payment_type.id_document > 0 && paymentpayment_detailViewSource != null && paymentpayment_detailViewSource.View != null)
-                    //{
-                    //    stpDetailDocument.Visibility = Visibility.Visible;
-                    //    payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-
-                    //    app_document_range app_document_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).FirstOrDefault();
-                    //    if (app_document_range != null && payment_detail != null)
-                    //    {
-                    //        payment_detail.id_range = app_document_range.id_range;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    stpDetailDocument.Visibility = Visibility.Collapsed;
-                    //}
                 }
             }
         }

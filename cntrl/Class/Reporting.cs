@@ -508,14 +508,14 @@ namespace cntrl.Class
                 Query =Reports.Production.EmployeesInProduction.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
-            , new Report
-                {
-                Application = entity.App.Names.ActivityPlan,
-                Name =entity.Brillo.Localize.StringText("HR")!= string.Empty ? entity.Brillo.Localize.StringText("HR") :"HR",
-                Path = "cntrl.Reports.Projects.HR.rdlc",
-                Query =Reports.Project.Project.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
-            }
+            //, new Report
+            //    {
+            //    Application = entity.App.Names.ActivityPlan,
+            //    Name =entity.Brillo.Localize.StringText("HR")!= string.Empty ? entity.Brillo.Localize.StringText("HR") :"HR",
+            //    Path = "cntrl.Reports.Projects.HR.rdlc",
+            //    Query =Reports.Project.Project.query,
+            //    Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
+            //}
             };
         }
     }

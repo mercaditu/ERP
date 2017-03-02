@@ -709,7 +709,6 @@
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionStatus.rdlc" />
-    <EmbeddedResource Include="Reports\Projects\HR.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Project.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectFinance.rdlc" />

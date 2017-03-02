@@ -12,11 +12,11 @@ CASE
       WHEN item.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
       WHEN item.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"' 
       WHEN item.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"' 
-        WHEN item.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"' 
-        WHEN item.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
-        WHEN item.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"' 
-   WHEN item.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
-    END as ItemType,
+      WHEN item.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"' 
+      WHEN item.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+      WHEN item.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"' 
+      WHEN item.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+END as ItemType,
 task.code as TaskCode,
 task.item_description as Task,
 task.status,
@@ -24,6 +24,10 @@ contacts.name as Contact,
 contacts.code as ContactCode,
 contacts.gov_code as GovermentId,
 task.quantity_est as QuantityEst,
+
+(SELECT GROUP_CONCAT(value SEPARATOR ' x ')
+ from project_task_dimension where id_project_task = task.id_project_task GROUP BY id_project_task) as Dimension,
+
 task.quantity_est *item_conversion_factor.value * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
 ((select ROUND(EXP(SUM(LOG(`value`))),4) as value from project_task_dimension where id_project_task = task.id_project_task)  * task.quantity_est) as Factor,
 exe.Quantity as QuantityReal,

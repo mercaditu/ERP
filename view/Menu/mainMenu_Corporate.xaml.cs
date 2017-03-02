@@ -133,7 +133,10 @@ namespace Cognitivo.Menu
                             cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                             appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                             appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
-
+                            if (appIcon.HasReport)
+                            {
+                                appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                            }
                             stck.Children.Add(appIcon);
                         }
                         else
@@ -154,6 +157,11 @@ namespace Cognitivo.Menu
                             cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                             appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                             appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+
+                            if (appIcon.HasReport)
+                            {
+                                appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
+                            }
 
                             stck.Children.Add(appIcon);
                             wrapApps.Children.Add(stck);
@@ -215,6 +223,7 @@ namespace Cognitivo.Menu
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                         appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                         appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+
                         if (appIcon.HasReport)
                         {
                             appIcon.ReportClick += new cntrl.applicationIcon.ReportClickEventHandler(open_Report);
@@ -234,7 +243,20 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
 
-            if (Properties.Settings.Default.open_Window)
+            if (name.Contains("ReportDesigner"))
+            {
+                Window objWin = default(Window);
+                Type WinInstanceType = null;
+
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    WinInstanceType = Type.GetType(name, true, true);
+                    objWin = (Window)Activator.CreateInstance(WinInstanceType);
+                    objWin.Show();
+                    Cursor = Cursors.Arrow;
+                }));
+            }
+            else if (Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.PagePath = name;
@@ -245,7 +267,18 @@ namespace Cognitivo.Menu
             }
             else
             {
-                dynamic taskAuth = Task.Factory.StartNew(() => open_PageThread(name));
+                Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
+                MainWindow rootWindow = App.Current.MainWindow as MainWindow;
+                Page objPage = default(Page);
+                Type PageInstanceType = null;
+                PageInstanceType = Type.GetType(name, true, true);
+
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                    rootWindow.mainFrame.Navigate(objPage);
+                    this.Cursor = Cursors.Arrow;
+                }));
             }
 
             e.Handled = true;
@@ -272,22 +305,6 @@ namespace Cognitivo.Menu
             catch { }
 
             e.Handled = true;
-        }
-
-        private void open_PageThread(string appName)
-        {
-            Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
-            MainWindow rootWindow = App.Current.MainWindow as MainWindow;
-            Page objPage = default(Page);
-            Type PageInstanceType = null;
-            PageInstanceType = Type.GetType(appName, true, true);
-
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                objPage = (Page)Activator.CreateInstance(PageInstanceType);
-                rootWindow.mainFrame.Navigate(objPage);
-                this.Cursor = Cursors.Arrow;
-            }));
         }
     }
 }

@@ -30,24 +30,17 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
 
-            try
-            {
-                Page objPage = default(Page);
-                Type PageInstanceType = null;
+            Page objPage = default(Page);
+            Type PageInstanceType = null;
 
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    PageInstanceType = Type.GetType(PagePath, true, true);
-                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
-                    objPage.Tag = apptag;
-                    mainFrame.Navigate(objPage);
-                    Cursor = Cursors.Arrow;
-                }));
-            }
-            catch (Exception ex)
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
-            }
+                PageInstanceType = Type.GetType(PagePath, true, true);
+                objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                objPage.Tag = apptag;
+                mainFrame.Navigate(objPage);
+                Cursor = Cursors.Arrow;
+            }));
         }
 
         private void mainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)

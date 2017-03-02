@@ -422,7 +422,7 @@ namespace cntrl.Class
                 Query = Reports.Finance.PendingPayables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-                      new Report
+            new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
                 Name =entity.Brillo.Localize.StringText("AccountReceivable")!= string.Empty ? entity.Brillo.Localize.StringText("AccountReceivable") :"AccountReceivable",
@@ -430,17 +430,25 @@ namespace cntrl.Class
                 Query = Reports.Finance.PendingReceivables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-                         new Report
+            new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
-                Name =entity.Brillo.Localize.StringText("ReceivePayment")!= string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
-                Path = "cntrl.Reports.Finances.PaymentReceivable.rdlc",
+                Name = entity.Brillo.Localize.StringText("PaymentRecievableByDate") != string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
+                Path = "cntrl.Reports.Finances.PaymentRecievableByDate.rdlc",
+                Query = Reports.Finance.PaymentRecievables.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+            new Report
+            {
+                Application = entity.App.Names.AccountsReceivable,
+                Name = entity.Brillo.Localize.StringText("PaymentRecievablesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
+                Path = "cntrl.Reports.Finances.PaymentRecievablesBySalesman.rdlc",
                 Query = Reports.Finance.PaymentRecievables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
 
              //projects and Production
-                          new Report
+            new Report
             {
                 Application = entity.App.Names.ActivityPlan,
                 Name =entity.Brillo.Localize.StringText("ActivityPlan")!= string.Empty ? entity.Brillo.Localize.StringText("ActivityPlan") :"ActivityPlan",

@@ -14,10 +14,11 @@ namespace cntrl.Controls
         public long? MovementID { get; set; }
      
         CollectionViewSource item_movementViewSource;
-
+        public entity.App.Names ApplicationName { get; set; }
         public InventoryFlowDataGrid()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            ApplicationName = App.Names.Movement;
         }
 
         public event SelectionChangedEventHandler SelectionChanged;

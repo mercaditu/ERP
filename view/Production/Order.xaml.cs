@@ -222,21 +222,22 @@ namespace Cognitivo.Production
             if (production_order != null)
             {
                 int _id_production_order = production_order.id_production_order;
-
+                List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
                 if (_id_production_order > 0)
                 {
                     Class.Production Production = new Class.Production();
-                    List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
+                 
 
                     LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
 
-                    item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
-                    item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
-                    item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
-
-                    item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
-                    item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
+                   
                 }
+                item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
+                item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
+                item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
+
+                item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
+                item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
             }
         }
 

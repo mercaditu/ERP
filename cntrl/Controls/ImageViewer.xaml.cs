@@ -18,6 +18,13 @@ namespace cntrl.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+        public static DependencyProperty ApplicationNameProperty = DependencyProperty.Register("ApplicationName", typeof(entity.App.Names), typeof(ImageViewer));
+
+        public entity.App.Names ApplicationName
+        {
+            get { return (entity.App.Names)GetValue(ApplicationNameProperty); }
+            set { SetValue(ApplicationNameProperty, value); }
+        }
         public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
 
         public int ReferenceID
@@ -35,8 +42,8 @@ namespace cntrl.Controls
             }
         }
 
-        public entity.App.Names ApplicationName { get; set; }
-
+       
+      
         private void GetImage()
         {
             CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));

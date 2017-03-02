@@ -50,12 +50,12 @@ namespace Cognitivo.Purchase
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchasePackingListDB, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
-                filterVerifiedDetail();
+                filterVerifiedDetail(0);
             }));
             cbxBranch.SelectedIndex = 0;
         }
 
-        private void filterVerifiedDetail()
+        private void filterVerifiedDetail(int id_item)
         {
             if (purchase_packingpurchase_packing_detailApprovedViewSource != null)
             {
@@ -65,10 +65,20 @@ namespace Cognitivo.Purchase
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Filter = i =>
                     {
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
-                        if (purchase_packing_detail.user_verified == true)
-                            return true;
+                        if (id_item > 0)
+                        {
+                            if (purchase_packing_detail.user_verified == true && purchase_packing_detail.id_item==id_item) 
+                                return true;
+                            else
+                                return false;
+                        }
                         else
-                            return false;
+                        {
+                            if (purchase_packing_detail.user_verified == true)
+                                return true;
+                            else
+                                return false;
+                        }
                     };
 
                 }
@@ -277,9 +287,10 @@ namespace Cognitivo.Purchase
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                         filterDetail();
-                        filterVerifiedDetail();
+                       // filterVerifiedDetail();
                     }
                     Refresh_GroupByGrid();
+                    GridVerifiedList.SelectedIndex = 0;
                 }
             }
         }
@@ -307,7 +318,7 @@ namespace Cognitivo.Purchase
                             purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                             filterDetail();
                             Refresh_GroupByGrid();
-                            filterVerifiedDetail();
+                            //filterVerifiedDetail();
                      
 
                         //Filter UserVerified True.
@@ -333,7 +344,8 @@ namespace Cognitivo.Purchase
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
                             VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                             Quantity = x.Max(y => y.quantity)
+                            Quantity = x.Max(y => y.quantity),
+                            id_item= x.Max(y => y.item.id_item)
                         })
                         .ToList();
 
@@ -348,7 +360,16 @@ namespace Cognitivo.Purchase
             Refresh_GroupByGrid();
         }
 
-     
+        private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+             dynamic obj = GridVerifiedList.SelectedItem;
+            if (obj!=null)
+            {
+               filterVerifiedDetail(obj.id_item);
+            }
+        }
+
+
 
         #region Filter Data
 

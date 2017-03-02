@@ -241,7 +241,7 @@
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
-                                AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList"
+                                AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList" SelectionChanged="GridVerifiedList_SelectionChanged"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" 
@@ -265,9 +265,9 @@
                                                         Header="{lex:Loc Cognitivo:local:quantityverified}" 
                                                         ElementStyle="{StaticResource RightAlignStyle}" 
                                                         MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Batch}" MinWidth="64" Width="Auto"/>
+                                 
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
+                                  
                                     <DataGridTemplateColumn Width="1*" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -276,6 +276,28 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                                                <StackPanel>
+                                                    <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
+                                                    <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
+                                                </StackPanel>
+                                                <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
+                                                    <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
+                                                    <TextBox Style="{StaticResource input_textbox}"
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                                    <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
+                                                    <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
+								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
                             </DataGrid>
                         </Grid>
                     </TabItem>

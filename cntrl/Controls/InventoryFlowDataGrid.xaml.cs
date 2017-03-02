@@ -29,6 +29,7 @@ namespace cntrl.Controls
             {
                 MovementID = ItemMovement.MovementID;
                 SelectionChanged(sender, e);
+
             }
         }
 

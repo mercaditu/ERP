@@ -2,16 +2,22 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.ComponentModel;
 
 namespace cntrl.Controls
 {
-    public partial class ImageViewer : UserControl
+    public partial class ImageViewer : UserControl, INotifyPropertyChanged
     {
         public ImageViewer()
         {
             InitializeComponent();
         }
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
         public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
 
         public int ReferenceID

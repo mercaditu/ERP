@@ -49,7 +49,7 @@ namespace Cognitivo.Purchase
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchasePackingListDB, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
-              //  filterDetail();
+                filterDetail();
                 filterVerifiedDetail();
             }));
             cbxBranch.SelectedIndex = 0;
@@ -74,25 +74,25 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-        //private void filterDetail()
-        //{
-        //    if (purchase_packingpurchase_packinglist_detailViewSource != null)
-        //    {
-        //        if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
-        //        {
+        private void filterDetail()
+        {
+            if (purchase_packingpurchase_packinglist_detailViewSource != null)
+            {
+                if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
+                {
 
-        //            purchase_packingpurchase_packinglist_detailViewSource.View.Filter = i =>
-        //            {
-        //                purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
-        //                if (purchase_packing_detail.user_verified == false)
-        //                    return true;
-        //                else
-        //                    return false;
-        //            };
+                    purchase_packingpurchase_packinglist_detailViewSource.View.Filter = i =>
+                    {
+                        purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
+                        if (purchase_packing_detail.user_verified == false)
+                            return true;
+                        else
+                            return false;
+                    };
 
-        //        }
-        //    }
-        //}
+                }
+            }
+        }
 
         #region Toolbar Events
 
@@ -275,7 +275,7 @@ namespace Cognitivo.Purchase
 
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
-                    //filterDetail();
+                    filterDetail();
                     filterVerifiedDetail();
                 }
             }
@@ -288,25 +288,28 @@ namespace Cognitivo.Purchase
                 purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
                 if (purchase_packing != null)
                 {
-                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID ).FirstOrDefault();
                     if (_purchase_packing_detail != null)
                     {
-                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
-                        purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
-                        purchase_packing_detail.id_item = (int)_purchase_packing_detail.id_item;
-                        purchase_packing_detail.item = _purchase_packing_detail.item;
-                        purchase_packing_detail.verified_quantity = sbxItem.Quantity;
-                        purchase_packing_detail.user_verified = true;
-                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
+                      
+                            purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                            purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
+                            purchase_packing_detail.id_item = (int)_purchase_packing_detail.id_item;
+                            purchase_packing_detail.item = _purchase_packing_detail.item;
+                            purchase_packing_detail.verified_quantity = sbxItem.Quantity;
+                            purchase_packing_detail.user_verified = true;
+                            purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                        purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
-                        //filterDetail();
-                        Refresh_GroupByGrid();
-                        filterVerifiedDetail();
+                            purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                            purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                            filterDetail();
+                            Refresh_GroupByGrid();
+                            filterVerifiedDetail();
+                     
 
                         //Filter UserVerified True.
                     }
+                   
                 }
             }
         }

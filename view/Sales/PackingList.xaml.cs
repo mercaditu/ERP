@@ -51,29 +51,29 @@ namespace Cognitivo.Sales
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterVerifiedDetail();
-              //  filterDetail();
+                filterDetail();
             }));
         
         }
-        //private void filterDetail()
-        //{
-        //    if (sales_packingsales_packinglist_detailViewSource != null)
-        //    {
-        //        if (sales_packingsales_packinglist_detailViewSource.View != null)
-        //        {
+        private void filterDetail()
+        {
+            if (sales_packingsales_packinglist_detailViewSource != null)
+            {
+                if (sales_packingsales_packinglist_detailViewSource.View != null)
+                {
 
-        //            sales_packingsales_packinglist_detailViewSource.View.Filter = i =>
-        //            {
-        //                sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
-        //                if (sales_packing_detail.user_verified == false)
-        //                    return true;
-        //                else
-        //                    return false;
-        //            };
+                    sales_packingsales_packinglist_detailViewSource.View.Filter = i =>
+                    {
+                        sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
+                        if (sales_packing_detail.user_verified == false)
+                            return true;
+                        else
+                            return false;
+                    };
 
-        //        }
-        //    }
-        //}
+                }
+            }
+        }
 
         private void filterVerifiedDetail()
         {
@@ -231,7 +231,7 @@ namespace Cognitivo.Sales
             {
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 filterVerifiedDetail();
-                //filterDetail();
+                filterDetail();
                 Refresh_GroupByGrid();
            
             }));
@@ -363,7 +363,7 @@ namespace Cognitivo.Sales
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                         filterVerifiedDetail();
-                        //filterDetail();
+                        filterDetail();
                         Refresh_GroupByGrid();
                         
                     }

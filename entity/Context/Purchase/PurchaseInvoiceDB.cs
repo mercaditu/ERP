@@ -149,6 +149,7 @@ namespace entity
                 }
                 else // Pending
                 {
+               
                     List<item_movement> item_movementList = new List<item_movement>();
 
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();

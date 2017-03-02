@@ -49,6 +49,7 @@ namespace Cognitivo.Purchase
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchasePackingListDB, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
+              //  filterDetail();
                 filterVerifiedDetail();
             }));
             cbxBranch.SelectedIndex = 0;
@@ -73,6 +74,25 @@ namespace Cognitivo.Purchase
                 }
             }
         }
+        //private void filterDetail()
+        //{
+        //    if (purchase_packingpurchase_packinglist_detailViewSource != null)
+        //    {
+        //        if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
+        //        {
+
+        //            purchase_packingpurchase_packinglist_detailViewSource.View.Filter = i =>
+        //            {
+        //                purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
+        //                if (purchase_packing_detail.user_verified == false)
+        //                    return true;
+        //                else
+        //                    return false;
+        //            };
+
+        //        }
+        //    }
+        //}
 
         #region Toolbar Events
 
@@ -246,6 +266,7 @@ namespace Cognitivo.Purchase
                     purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                     purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                     purchase_packing_detail.quantity = _purchase_order_detail.quantity;
+                    purchase_packing_detail.user_verified = false;
                     purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
@@ -254,6 +275,7 @@ namespace Cognitivo.Purchase
 
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
+                    //filterDetail();
                     filterVerifiedDetail();
                 }
             }
@@ -276,10 +298,12 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.verified_quantity = sbxItem.Quantity;
                         purchase_packing_detail.user_verified = true;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
-                        filterVerifiedDetail();
 
+                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                         purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                        //filterDetail();
                         Refresh_GroupByGrid();
+                        filterVerifiedDetail();
 
                         //Filter UserVerified True.
                     }
@@ -303,12 +327,12 @@ namespace Cognitivo.Purchase
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
                             VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                        Quantity = x.Max(y => y.quantity)
+                             Quantity = x.Max(y => y.quantity)
                         })
                         .ToList();
 
                     GridVerifiedList.ItemsSource = VerifiedItemList;
-                    Refresh_GroupByGrid();
+                   
                 }
             }
         }
@@ -317,6 +341,8 @@ namespace Cognitivo.Purchase
         {
             Refresh_GroupByGrid();
         }
+
+     
 
         #region Filter Data
 

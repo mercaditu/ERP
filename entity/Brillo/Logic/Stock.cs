@@ -355,15 +355,19 @@ namespace entity.Brillo.Logic
 
             if (purchase_invoice != null)
             {
-                if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() > 0)
                 {
-                    if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
+                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
                     {
-                        foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
+                        if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
                         {
-                            if (purchase_invoice_detail.item != null)
+                            foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
                             {
-                                Invoice_WithProducts.Add(purchase_invoice_detail);
+                                if (purchase_invoice_detail.item != null)
+                                {
+
+                                    Invoice_WithProducts.Add(purchase_invoice_detail);
+                                }
                             }
                         }
                     }

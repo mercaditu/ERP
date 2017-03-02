@@ -12,6 +12,7 @@ namespace cntrl.Controls
         public long? ParentID { get; set; }
         public int ProductID { get; set; }
         public long? MovementID { get; set; }
+     
         CollectionViewSource item_movementViewSource;
 
         public InventoryFlowDataGrid()
@@ -60,7 +61,8 @@ namespace cntrl.Controls
                                         BatchCode = item.code,
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
-                                        Comment = item.comment
+                                        Comment = item.comment,
+                                        DisplayImage = item.credit>0?true:false
                                     }).OrderByDescending(x => x.Date).ToList();
 
                 item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
@@ -86,5 +88,6 @@ namespace cntrl.Controls
         public decimal Cost { get; set; }
 
         public string Comment { get; set; }
+        public bool DisplayImage { get;  set; }
     }
 }

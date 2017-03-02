@@ -38,7 +38,7 @@
                 <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=OneWay}" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel x:Name="stackFlow" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Background="{StaticResource appConfig}">
+        <StackPanel x:Name="stackFlow" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Background="{StaticResource appConfig}" >
           
         </StackPanel>
     </Grid>

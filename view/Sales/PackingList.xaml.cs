@@ -51,9 +51,30 @@ namespace Cognitivo.Sales
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterVerifiedDetail();
+              //  filterDetail();
             }));
         
         }
+        //private void filterDetail()
+        //{
+        //    if (sales_packingsales_packinglist_detailViewSource != null)
+        //    {
+        //        if (sales_packingsales_packinglist_detailViewSource.View != null)
+        //        {
+
+        //            sales_packingsales_packinglist_detailViewSource.View.Filter = i =>
+        //            {
+        //                sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
+        //                if (sales_packing_detail.user_verified == false)
+        //                    return true;
+        //                else
+        //                    return false;
+        //            };
+
+        //        }
+        //    }
+        //}
+
         private void filterVerifiedDetail()
         {
             if (sales_packingsales_packing_detailVerifiedViewSource != null)
@@ -210,6 +231,7 @@ namespace Cognitivo.Sales
             {
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 filterVerifiedDetail();
+                //filterDetail();
                 Refresh_GroupByGrid();
            
             }));
@@ -319,6 +341,7 @@ namespace Cognitivo.Sales
                             sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
                             sales_packing_detail.id_item = sales_order_detail.id_item;
                             sales_packing_detail.item = sales_order_detail.item;
+                            sales_packing_detail.user_verified = false;
                             sales_packing_detail.id_movement = sales_order_detail.movement_id;
                             sales_packing_detail.quantity = sales_order_detail.quantity;
 
@@ -340,6 +363,7 @@ namespace Cognitivo.Sales
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                         filterVerifiedDetail();
+                        //filterDetail();
                         Refresh_GroupByGrid();
                         
                     }
@@ -398,6 +422,11 @@ namespace Cognitivo.Sales
             {
                 toolBar.msgWarning("Please select");
             }
+        }
+
+        private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Refresh_GroupByGrid();
         }
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)

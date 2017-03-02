@@ -320,9 +320,6 @@
     <Compile Include="Controls\ImpexCurrencyBox.xaml.cs">
       <DependentUpon>ImpexCurrencyBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\InventoryFlowSalesPanel.xaml.cs">
-      <DependentUpon>InventoryFlowSalesPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\InventoryFlowDataGrid.xaml.cs">
       <DependentUpon>InventoryFlowDataGrid.xaml</DependentUpon>
     </Compile>
@@ -930,10 +927,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImpexCurrencyBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\InventoryFlowSalesPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

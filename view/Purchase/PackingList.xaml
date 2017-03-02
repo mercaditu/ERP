@@ -248,7 +248,7 @@
                                                         Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" 
                                                         Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding quantityverified, StringFormat={}{0:N}}" 
+                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" 
                                                         Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>

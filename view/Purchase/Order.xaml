@@ -119,10 +119,6 @@
 										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                     <Label Content="Show Purchase Detail" Foreground="Purple" />
                                 </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkshowcode"
-										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="Show Supplier Code" Foreground="Purple" />
-                                </CheckBox>
                             </StackPanel>
                         </Border>
                     </Popup>
@@ -329,7 +325,6 @@
 												DisplayMemberPath="name" SelectedValuePath="id_cost_center"
 												SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"
-                                            Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowCode, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											Binding="{Binding item.supplier_code, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128"
 											Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

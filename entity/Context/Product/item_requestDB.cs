@@ -308,17 +308,22 @@ namespace entity
                             List<Brillo.StockList> Items_InStockLIST;
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             item_product item_product = item.item_request_detail.item.item_product.FirstOrDefault();
-                            //Do not specify Default Location. Keep it 0, so that Query gets the Location that has the stock.
-                            //app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+
+                            Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
+                            //If Item_InStockLIST does not have enough 
+                            int LocationID = 0;
+                            if (Items_InStockLIST.Sum(x => x.QtyBalance) < item.quantity)
+                            {
+                                LocationID = item_request.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault();
+                            }
 
                             if (item_product != null)
                             {
-                                Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
                                 Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
                                 List<item_movement> item_movement_originList;
                                 item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail,
                                                                 CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                                                item_product, 0,
+                                                                item_product, LocationID,
                                                                 item.quantity, item_request.timestamp, 
                                                                 stock.comment_Generator(App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
 

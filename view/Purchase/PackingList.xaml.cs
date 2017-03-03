@@ -302,7 +302,7 @@ namespace Cognitivo.Purchase
                 purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
                 if (purchase_packing != null)
                 {
-                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID ).FirstOrDefault();
+                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                     if (_purchase_packing_detail != null)
                     {
                       
@@ -343,7 +343,7 @@ namespace Cognitivo.Purchase
                         {
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
-                            VerifiedQuantity = x.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                             Quantity = x.Max(y => y.quantity),
                             id_item= x.Max(y => y.item.id_item)
                         })

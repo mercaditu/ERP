@@ -22,6 +22,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible"/>
         <CollectionViewSource x:Key="purchase_packingViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_packing}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_terminalViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_terminal}, CreateList=True}" />
@@ -285,7 +286,7 @@
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                                 </StackPanel>
-                                                <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
+                                                <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
                                                     <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                     <TextBox Style="{StaticResource input_textbox}"
 						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

@@ -9,7 +9,7 @@
         Title="SplashScreen" Height="256" Width="512">
     
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Image Source="/Cognitivo;component/Images/CognitivoLogo.png" Width="128" Margin="16"/>
+        <Image Source="/Cognitivo;component/Images/Cognitivo-128.png" Width="128" Margin="16"/>
 
         <Label HorizontalAlignment="Center" Content="Loading" Style="{StaticResource generic_Label}" FontSize="16"/>
         <Label x:Name="lblVersion" Foreground="Silver" HorizontalAlignment="Center" FontSize="8" Style="{StaticResource generic_Label}" />

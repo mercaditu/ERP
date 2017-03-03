@@ -80,13 +80,12 @@ namespace Cognitivo
             Menu.SplashScreen splash = new Menu.SplashScreen();
             splash.Show();
             //Task taskAuth = Task.Factory.StartNew(() => check_createdb(splash));
+            MainWindow MainWin = new MainWindow();
 
             using (entity.db db = new entity.db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
-
-                MainWindow MainWin = new MainWindow();
                 
                 if (db.Database.Exists() == false)
                 {
@@ -97,10 +96,10 @@ namespace Cognitivo
                     await db.app_company.Select(x => x.name).FirstOrDefaultAsync();
                     MainWin.mainFrame.Navigate(new mainLogIn());// }));
                 }
-
-                MainWin.Show();
-                splash.Close();
             }
+
+            MainWin.Show();
+            splash.Close();
         }
     }
 }

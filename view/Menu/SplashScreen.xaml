@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cognitivo.Menu" WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d"
-        ResizeMode="NoResize" WindowStyle="None"
-        
+        mc:Ignorable="d" BorderBrush="Silver" BorderThickness="2"
+        ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False"
         Title="SplashScreen" Height="256" Width="512">
+    
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
         <Image Source="/Cognitivo;component/Images/CognitivoLogo.png" Width="128" Margin="16"/>
 
         <Label HorizontalAlignment="Center" Content="Loading" Style="{StaticResource generic_Label}" FontSize="16"/>
-        <Label x:Name="lblVersion" Content="Version 1.1.1.0" Foreground="Silver" HorizontalAlignment="Center" FontSize="8" Style="{StaticResource generic_Label}" />
+        <Label x:Name="lblVersion" Foreground="Silver" HorizontalAlignment="Center" FontSize="8" Style="{StaticResource generic_Label}" />
     </StackPanel>
 </Window>

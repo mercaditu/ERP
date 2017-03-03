@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Deployment.Application;
 using System.Reflection;
-using System.Windows;
 
 namespace Cognitivo.Menu
 {
-    public partial class SplashScreen : Window
+    public partial class SplashScreen
     {
         public Version AssemblyVersion
         {

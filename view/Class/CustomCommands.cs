@@ -5,7 +5,7 @@ namespace Cognitivo.Class
 {
     public static class CustomCommands
     {
-        private static GestureSettings propGesture = new GestureSettings();
+        private static Cognitivo.GestureSettings propGesture = new Cognitivo.GestureSettings();
 
         //Used For Delete Operation in Child DataGrid.
         public static readonly RoutedUICommand Delete =
@@ -75,5 +75,9 @@ namespace Cognitivo.Class
 
         public static RoutedUICommand Pending =
             new RoutedUICommand("Pending", "Pending", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, PendingModifier) });
+        
+
+        public static RoutedUICommand New =
+            new RoutedUICommand("New", "New", typeof(CustomCommands));
     }
 }

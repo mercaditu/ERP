@@ -294,12 +294,14 @@ namespace entity
                     if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         ApplyDiscount_UnitPrice(_discount, value, unit_cost);
+                       
                     }
+                    _discount = value;
+                    RaisePropertyChanged("discount");
                     Calculate_UnitVatDiscount(value);
                     Calculate_SubTotalDiscount(value);
 
-                    _discount = value;
-                    RaisePropertyChanged("discount");
+                  
                    
                 }
             }
@@ -320,13 +322,13 @@ namespace entity
                 {
                  
 
-                    if (State > 0)
-                    {
+                 
                         Calculate_UnitDiscount(value);
+                        _DiscountVat = value;
+                        RaisePropertyChanged("DiscountVat");
                         Calculate_SubTotalVatDiscount(value);
-                    }
-                    _DiscountVat = value;
-                    RaisePropertyChanged("DiscountVat");
+                   
+                 
                 }
             }
         }

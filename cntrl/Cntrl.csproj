@@ -296,7 +296,6 @@
       <DependentUpon>Gauge180.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class\CheckMovementReApprove.cs" />
-    <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\UpdatePaymentReApprove.cs" />
     <Compile Include="Class\clsBarcode.cs" />

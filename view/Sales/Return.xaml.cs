@@ -341,7 +341,7 @@ namespace Cognitivo.Sales
             {
                 crud_modal.Visibility = Visibility.Visible;
                 pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
-                pnlSalesInvoice.ImpexDB = new ImpexDB();
+                pnlSalesInvoice.db = new ImpexDB();
 
                 if (sbxContact.ContactID > 0)
                 {

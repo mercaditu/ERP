@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +14,7 @@ namespace Cognitivo.Menu
     public partial class mainMenu_Corporate : Page
     {
         private AppList appList = new AppList();
-        private MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
+        private MainWindow rootWindow;// = Application.Current.MainWindow as MainWindow;
 
         public bool SearchMode
         {
@@ -37,6 +36,11 @@ namespace Cognitivo.Menu
             Icon.Tag = "Fav";
             Icon.ModuleName = "Favorite";
             get_Apps(Icon, null);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            rootWindow = Window.GetWindow(this) as MainWindow;
         }
 
         private void Add2Favorites(object sender, RoutedEventArgs e)

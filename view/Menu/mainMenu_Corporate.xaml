@@ -8,7 +8,7 @@
       xmlns:chart="clr-namespace:cntrl.Chart;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-      lex:LocalizeDictionary.DesignCulture="en-US"
+      lex:LocalizeDictionary.DesignCulture="en-US" Loaded="Page_Loaded"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"

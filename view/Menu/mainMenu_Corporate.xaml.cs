@@ -272,7 +272,7 @@ namespace Cognitivo.Menu
             else
             {
                 Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
-                MainWindow rootWindow = App.Current.MainWindow as MainWindow;
+                MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow; 
                 Page objPage = default(Page);
                 Type PageInstanceType = null;
                 PageInstanceType = Type.GetType(name, true, true);

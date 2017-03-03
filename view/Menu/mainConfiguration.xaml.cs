@@ -64,7 +64,7 @@ namespace Cognitivo.Menu
                     objPage = (Page)Activator.CreateInstance(Object);
                     objPage.Tag = 0;
 
-                    MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
+                    MainWindow rootWindow =  Window.GetWindow(this) as MainWindow; 
                     rootWindow.mainFrame.Navigate(objPage);
                 }
                 catch
@@ -80,7 +80,7 @@ namespace Cognitivo.Menu
 
         private void showMenu_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
+            MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow; 
             rootWindow.mainFrame.Navigate(null);
         }
     }

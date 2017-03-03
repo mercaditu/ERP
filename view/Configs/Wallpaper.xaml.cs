@@ -50,7 +50,7 @@ namespace Cognitivo.Configs
 
         private void Image_MouseUp(object sender, EventArgs e)
         {
-            Cognitivo.Menu.MainWindow MainWindow = App.Current.MainWindow as Cognitivo.Menu.MainWindow;
+            Cognitivo.Menu.MainWindow MainWindow = Window.GetWindow(this) as Menu.MainWindow;
             Image imageSelected = sender as Image;
 
             if (MainWindow != null)

@@ -10,7 +10,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
-
+Loaded="Page_Loaded"
       mc:Ignorable="d">
     <Page.Resources>
         <CollectionViewSource x:Key="app_companyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_company}, CreateList=True}" />

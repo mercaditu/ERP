@@ -200,7 +200,7 @@ namespace Cognitivo.Menu
 
         private void Image_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow myWindow = App.Current.MainWindow as MainWindow;
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow; 
             Frame myFrame = myWindow.mainFrame;
             myFrame.Navigate(new mainLogIn());
         }

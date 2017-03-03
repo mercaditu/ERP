@@ -9,7 +9,7 @@ namespace Cognitivo.Configs
     {
         private CollectionViewSource app_companyViewSource;
 
-        private Menu.MainWindow mainWindow = App.Current.MainWindow as Menu.MainWindow;
+        private Menu.MainWindow mainWindow ;
 
         private entity.db db = new entity.db();
 
@@ -51,6 +51,11 @@ namespace Cognitivo.Configs
                     mainWindow.mainFrame.NavigationService.GoBack();
                 }
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+              mainWindow= Window.GetWindow(this) as Menu.MainWindow; 
         }
     }
 }

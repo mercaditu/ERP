@@ -87,6 +87,7 @@ namespace entity
         ///
         /// </summary>
         [Required]
+  
         public decimal quantity
         {
             get { return _quantity; }

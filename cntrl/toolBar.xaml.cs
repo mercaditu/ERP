@@ -34,7 +34,7 @@ namespace cntrl
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Edit", "e");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Save", "s");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Cancel", "c");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Delete", "d");
+            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Archived", "Y");
 
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Approve", "j");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Annul", "k");
@@ -119,13 +119,13 @@ namespace cntrl
             set { SetValue(IsEditabledProperty, value); }
         }
 
-        private static readonly DependencyProperty Delete_IsEnabledProperty
-            = DependencyProperty.Register("Delete_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+        private static readonly DependencyProperty Archived_IsEnabledProperty
+            = DependencyProperty.Register("Archived_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
 
-        public bool Delete_IsEnabled
+        public bool Archived_IsEnabled
         {
-            get { return (bool)GetValue(Delete_IsEnabledProperty); }
-            set { SetValue(Delete_IsEnabledProperty, value); }
+            get { return (bool)GetValue(Archived_IsEnabledProperty); }
+            set { SetValue(Archived_IsEnabledProperty, value); }
         }
 
         private static readonly DependencyProperty Edit_IsEnabledProperty
@@ -180,7 +180,7 @@ namespace cntrl
             {
                 //IsEditable = false;
                 Edit_IsEnabled = true;
-                Delete_IsEnabled = true;
+                Archived_IsEnabled = true;
                 Approve_IsEnabled = true;
                 Annul_IsEnabled = false;
             }
@@ -196,7 +196,7 @@ namespace cntrl
                     Edit_IsEnabled = true;
                 }
 
-                Delete_IsEnabled = false;
+                Archived_IsEnabled = true;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = true;
             }
@@ -204,7 +204,7 @@ namespace cntrl
             {
                 IsEditable = false;
                 Edit_IsEnabled = false;
-                Delete_IsEnabled = false;
+                Archived_IsEnabled = true;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = false;
             }
@@ -480,7 +480,7 @@ namespace cntrl
             {
                 toolIcon.Click += btnNew_MouseUp;
             }
-            else if (btnDelete_Click != null & iconName == "Delete" && security.delete)
+            else if (btnDelete_Click != null & iconName == "Archived" && security.delete)
             {
                 toolIcon.Click += btnDelete_MouseUp;
                 toolIcon = bind_toolIcon(toolIcon, "Delete_IsEnabled", false);

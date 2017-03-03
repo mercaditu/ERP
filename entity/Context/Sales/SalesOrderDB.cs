@@ -181,7 +181,7 @@ namespace entity
 
                             item_request.id_sales_order = sales_order.id_sales_order;
                             item_request.id_branch = sales_order.id_branch;
-
+                            //item_request.request_user = sales_order.security_user != null ? sales_order.security_user : base.security_user.Find(sales_order.id_user);
                             item_request.request_date = (DateTime)sales_order.delivery_date;
 
                             foreach (sales_order_detail data in sales_order.sales_order_detail.Where(x => x.IsSelected))
@@ -192,7 +192,8 @@ namespace entity
                                 item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
                                 int idItem = data.item.id_item;
                                 item_request_detail.id_item = idItem;
-                                item item = base.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                                item item = base.items.Find(idItem);
+
                                 if (item != null)
                                 {
                                     item_request_detail.item = item;
@@ -215,6 +216,7 @@ namespace entity
                                 item_request.item_request_detail.Add(item_request_detail);
                             }
                             base.item_request.Add(item_request);
+
                         }
 
                         SaveChanges();

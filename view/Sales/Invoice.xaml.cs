@@ -87,6 +87,7 @@ namespace Cognitivo.Sales
             var predicate = PredicateBuilder.True<sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
+            predicate = predicate.And(x => x.is_archived == false);
 
             if (start_Range != Convert.ToDateTime("1/1/0001"))
             {
@@ -97,6 +98,8 @@ namespace Cognitivo.Sales
                 predicate = predicate.And(x => x.trans_date <= end_Range.Date);
             }
 
+            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
@@ -106,7 +109,6 @@ namespace Cognitivo.Sales
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
 
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             if (SalesInvoiceDB.sales_invoice.Local.Count() > 0)
             {
@@ -162,22 +164,17 @@ namespace Cognitivo.Sales
         private void btnDelete_Click(object sender)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            if (sales_invoice != null)
+            if (sales_invoice != null && sales_invoice.State != EntityState.Added)
             {
-                if (sales_invoice.status == Status.Documents_General.Pending)
-                {
-                    if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        using (db db = new db())
-                        {
-                            db.sales_invoice.Attach(sales_invoice);
+                sales_invoice.is_archived = true;
+                sales_invoice.State = EntityState.Modified;
+                SalesInvoiceDB.SaveChanges();
 
-                            db.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail);
-                            db.sales_invoice.Remove(sales_invoice);
-                            db.SaveChanges();
-                        }
-                    }
-                }
+                load_PrimaryDataThread(null, null);
+            }
+            else if (sales_invoice != null && sales_invoice.State == EntityState.Added)
+            {
+                toolBar_btnCancel_Click(sender);
             }
         }
 
@@ -195,7 +192,6 @@ namespace Cognitivo.Sales
                     CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
 
                     string Message = CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
                     if (Message != "")
                     {
                         Message += "\n" + "Are You Sure Want To Change The Data..";

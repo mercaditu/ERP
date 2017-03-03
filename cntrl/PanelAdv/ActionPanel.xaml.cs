@@ -7,15 +7,11 @@ using System.Windows.Input;
 
 namespace cntrl.PanelAdv
 {
-    /// <summary>
-    /// Interaction logic for ActionPanel.xaml
-    /// </summary>
     public partial class ActionPanel : UserControl
     {
         public List<item_movement> item_movementOldList { get; set; }
         public List<item_movement> item_movementList { get; set; }
-        private CollectionViewSource item_movementOldViewSource, item_movementViewSource;
-
+        
         public ActionPanel()
         {
             InitializeComponent();

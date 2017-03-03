@@ -69,12 +69,13 @@ namespace entity
                 item_transfer.id_item_request = item_request.id_item_request;
                 if (base.app_department.FirstOrDefault() != null)
                 {
-                    item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
+                    item_transfer.id_department = base.app_department.Select(x => x.id_department).FirstOrDefault();
                 }
 
-                if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
+                int RangeID = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).Select(x => x.id_range).FirstOrDefault();
+                if (RangeID > 0)
                 {
-                    item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
+                    item_transfer.id_range = RangeID;
                 }
 
                 item_transfer item_transfertrans = new item_transfer();
@@ -102,21 +103,26 @@ namespace entity
                 purchase_tender.comment = item_request.comment;
 
                 int Line = 0;
-                if (item_request.production_order.production_line != null)
+
+                production_order production_order = new production_order();
+
+                if (item_request.production_order != null)
                 {
-                    Line = item_request.production_order.production_line.id_production_line;
-                }
-                else
-                {
-                    if (production_line.FirstOrDefault() != null)
+                    production_order = orderdb.New(item_request.name, production_order.ProductionOrderTypes.Fraction, Line);
+                    production_order.id_project = item_request.id_project;
+
+                    if (item_request.production_order.production_line != null)
                     {
-                        Line = production_line.FirstOrDefault().id_production_line;
+                        Line = item_request.production_order.production_line.id_production_line;
+                    }
+                    else
+                    {
+                        if (production_line.FirstOrDefault() != null)
+                        {
+                            Line = production_line.FirstOrDefault().id_production_line;
+                        }
                     }
                 }
-
-                production_order production_order = orderdb.New(item_request.name, production_order.ProductionOrderTypes.Fraction, Line);
-
-                production_order.id_project = item_request.id_project;
 
                 // production_execution production_execution = new production_execution();
 
@@ -299,19 +305,22 @@ namespace entity
                         }
                         else if (item.decision == entity.item_request_decision.Decisions.Internal)
                         {
-                            List<entity.Brillo.StockList> Items_InStockLIST;
-                            entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+                            List<Brillo.StockList> Items_InStockLIST;
+                            Brillo.Stock stockBrillo = new Brillo.Stock();
                             item_product item_product = item.item_request_detail.item.item_product.FirstOrDefault();
-                            app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
-                            if (item_product != null && app_location != null)
+                            //Do not specify Default Location. Keep it 0, so that Query gets the Location that has the stock.
+                            //app_location app_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+
+                            if (item_product != null)
                             {
                                 Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, item.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
-                                entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
+                                Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
                                 List<item_movement> item_movement_originList;
-                                item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail,
-                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                    item_product, app_location.id_location,
-                                        item.quantity, item_request.timestamp, stock.comment_Generator(entity.App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
+                                item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Movement, item_request.id_item_request, item.item_request_detail.id_item_request_detail,
+                                                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                                item_product, 0,
+                                                                item.quantity, item_request.timestamp, 
+                                                                stock.comment_Generator(App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
 
                                 base.item_movement.AddRange(item_movement_originList);
                             }
@@ -320,14 +329,15 @@ namespace entity
                         {
                             if (item_request_detail.id_project_task != null)
                             {
-                                if (base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch != null)
+                                int? BranchID = base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).Select(x => x.id_branch).FirstOrDefault();
+                                if (BranchID != null && BranchID > 0)
                                 {
-                                    int id_branch = (int)base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch;
-                                    purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                    int id_branch = (int)BranchID;
+                                    purchase_tender.app_branch = base.app_branch.Find(id_branch);
                                 }
                                 else
                                 {
-                                    purchase_tender.app_branch = base.app_branch.Where(x => x.can_invoice == true && x.can_stock == true).FirstOrDefault();
+                                    purchase_tender.app_branch = base.app_branch.Where(x => x.can_stock == true).FirstOrDefault();
                                 }
                             }
                             if (item_request_detail.id_sales_order_detail != null)
@@ -337,11 +347,17 @@ namespace entity
 
                             if (item_request_detail.id_order_detail != null)
                             {
-                                if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault() != null)
+                                production_order_detail production_order_detail = base.production_order_detail
+                                    .Where(x => x.id_order_detail == item_request_detail.id_order_detail)
+                                    .Include(x => x.project_task)
+                                    .FirstOrDefault();
+
+                                if (production_order_detail != null)
                                 {
-                                    if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task != null)
+                                    if (production_order_detail.project_task != null)
                                     {
-                                        int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
+                                        int id_project = production_order_detail.project_task.id_project;
+
                                         if (base.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
                                         {
                                             int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
@@ -385,22 +401,25 @@ namespace entity
                         }
                     }
                 }
+
                 if (purchase_tender.purchase_tender_item_detail.Count() > 0)
                 {
                     base.purchase_tender.Add(purchase_tender);
                 }
+
                 if (item_transfer.item_transfer_detail.Count() > 0)
                 {
                     base.item_transfer.Add(item_transfer);
                 }
+
                 if (item_transfertrans.item_transfer_detail.Count() > 0)
                 {
                     base.item_transfer.Add(item_transfertrans);
                 }
+
                 if (production_order.production_order_detail.Count() > 0)
                 {
                     orderdb.production_order.Add(production_order);
-                    //orderdb.production_execution.Add(production_execution);
                 }
             }
             orderdb.SaveChanges();

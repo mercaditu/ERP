@@ -818,7 +818,7 @@ namespace entity.Brillo.Logic
                     }
 
 
-                    if (parent_Movement.LocationID>0)
+                    if (parent_Movement.LocationID > 0)
                     {
                         item_movement.id_location = parent_Movement.LocationID;
                     }

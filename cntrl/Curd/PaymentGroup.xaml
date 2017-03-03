@@ -101,7 +101,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Grid.Column="1" Background="{StaticResource appConfig}">
-                    <CheckBox Content="{lex:Loc SelectAll}" Style="{StaticResource input_checkbox}" Click="chbxSelectAll_Checked"/>
+                    <CheckBox Content="{lex:Loc SelectAll}" Width="auto" Style="{StaticResource input_checkbox}" Click="chbxSelectAll_Checked"/>
                     <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
                     <Label Content="{Binding trans_date, Mode=OneTime, FallbackValue=2016}"/>
                     <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}" />

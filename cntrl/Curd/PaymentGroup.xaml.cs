@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Threading.Tasks;
 
 namespace cntrl.Curd
 {
@@ -30,15 +29,15 @@ namespace cntrl.Curd
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            await PaymentDB.payment_schedual
+            payment_schedualViewSource.Source = PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                         .Include(x => x.sales_invoice)
                         .Include(x => x.contact)
                         .OrderBy(x => x.expire_date)
-                        .LoadAsync();
-            payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
+                        .ToList();
+            //PaymentDB.payment_schedual.Local;
 
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
@@ -94,27 +93,10 @@ namespace cntrl.Curd
                 {
                     schedual.IsSelected = false;
                 }));
-
             }
 
-            //dispatcher
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-                PaymentDB.payment_schedual
-                       .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
-                           && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
-                           && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                           .Include(x => x.sales_invoice)
-                           .Include(x => x.contact)
-                           .OrderBy(x => x.expire_date)
-                           .Load();
-                payment_schedualViewSource.Source = PaymentDB.payment_schedual.Local;
-                this.Cursor = Cursors.Arrow;
-            }));
-
-            //Task task = Task.Factory.StartNew(() => Payment_OnThread(payment_schedualList));
-            //this.Cursor = Cursors.AppStarting;
+            //Reloads all data again, to clean old values.
+            UserControl_Loaded(null, null);
         }
 
         private async void Payment_OnThread(List<payment_schedual> payment_schedualList)
@@ -161,7 +143,6 @@ namespace cntrl.Curd
                 {
                     schedual.IsSelected = false;
                 }));
-                
             }
 
             //dispatcher
@@ -183,15 +164,15 @@ namespace cntrl.Curd
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int ConditionID = Convert.ToInt32(cbxCondition.SelectedIndex);
+            app_condition app_condition = cbxCondition.SelectedItem as app_condition;
 
-            if (payment_schedualViewSource.View != null && ConditionID > 0)
+            if (payment_schedualViewSource.View != null && app_condition != null)
             {
                 payment_schedualViewSource.View.Filter = i =>
                 {
                     payment_schedual payment_schedual = i as payment_schedual;
                     if (payment_schedual.AccountReceivableBalance > 0 &&
-                        payment_schedual.sales_invoice.id_condition == ConditionID)
+                        payment_schedual.sales_invoice.id_condition == app_condition.id_condition)
                     {
                         return true;
                     }

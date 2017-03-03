@@ -114,7 +114,7 @@ namespace Cognitivo.Purchase
             purchase_packing.State = EntityState.Added;
             PurchasePackingListDB.purchase_packing.Add(purchase_packing);
             purchase_packingViewSource.View.Refresh();
-            //purchase_packingViewSource.View.MoveCurrentToLast();
+            purchase_packingViewSource.View.MoveCurrentToLast();
 
             //Refresh_GroupByGrid();
         }
@@ -343,9 +343,9 @@ namespace Cognitivo.Purchase
                         {
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
-                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified && y.id_item==x.Max(z=>z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                             Quantity = x.Max(y => y.quantity),
-                            id_item= x.Max(y => y.item.id_item)
+                            id_item= x.Max(y => y.id_item)
                         })
                         .ToList();
 

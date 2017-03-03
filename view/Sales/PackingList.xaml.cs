@@ -212,8 +212,7 @@ namespace Cognitivo.Sales
                 sales_packing_detail _sales_packing_detail = new sales_packing_detail();
                 _sales_packing_detail.sales_packing = sales_packing;
                 _sales_packing_detail.item = item;
-                _sales_packing_detail.quantity = 1;
-                _sales_packing_detail.verified_quantity = 1;
+                    _sales_packing_detail.verified_quantity = quantity;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
@@ -235,7 +234,7 @@ namespace Cognitivo.Sales
             else
             {
                 sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_packing_detail.quantity += 1;
+                sales_packing_detail.verified_quantity += 1;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -376,7 +375,7 @@ namespace Cognitivo.Sales
                         //filterVerifiedDetail();
                         filterDetail();
                         Refresh_GroupByGrid();
-                        
+                        GridVerifiedList.SelectedIndex = 0;
                     }
                 }
             }
@@ -491,8 +490,9 @@ namespace Cognitivo.Sales
                     {
                         ItemName = x.Max(y => y.item.name),
                         ItemCode = x.Max(y => y.item.code),
-                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                        Quantity = x.Max(y => y.quantity)
+                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item== x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        Quantity = x.Max(y => y.quantity),
+                        id_item = x.Max(y => y.id_item)
                     })
                     .ToList();
                 GridVerifiedList.ItemsSource = VerifiedItemList;

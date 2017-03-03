@@ -279,10 +279,10 @@
                                 </DataGrid.Columns>
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
-                                        <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                        <Grid Background="WhiteSmoke" Margin="4">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-                                                <StackPanel>
+                                                <StackPanel >
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                                 </StackPanel>

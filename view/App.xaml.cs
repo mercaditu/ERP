@@ -1,9 +1,7 @@
 ﻿using Cognitivo.Menu;
-using System;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -59,7 +57,7 @@ namespace Cognitivo
             else
             {
                 ExceptionBox eBox = new ExceptionBox();
-                Menu.ApplicationWindow AppWin = Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) as Menu.ApplicationWindow;
+                ApplicationWindow AppWin = Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) as ApplicationWindow;
                 eBox.ex = e.Exception;
 
                 eBox.Show();
@@ -96,7 +94,7 @@ namespace Cognitivo
                 }
                 else
                 {
-                    await db.app_company.FirstOrDefaultAsync();
+                    await db.app_company.Select(x => x.name).FirstOrDefaultAsync();
                     MainWin.mainFrame.Navigate(new mainLogIn());// }));
                 }
 

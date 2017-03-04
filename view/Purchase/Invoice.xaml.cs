@@ -47,11 +47,11 @@ namespace Cognitivo.Purchase
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
             if (InvoiceSetting.filterbyBranch)
             {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             else
             {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>

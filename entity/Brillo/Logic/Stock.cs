@@ -350,35 +350,33 @@ namespace entity.Brillo.Logic
         public List<item_movement> PurchaseInvoice_Approve(db db, purchase_invoice purchase_invoice)
         {
             List<item_movement> item_movementList = new List<item_movement>();
-
-            List<purchase_invoice_detail> Invoice_WithProducts = new List<purchase_invoice_detail>();
+            List<purchase_invoice_detail> Detail_List = new List<purchase_invoice_detail>();
 
             if (purchase_invoice != null)
             {
-                if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() > 0)
+                //If Purchase Invoice has Packing Relation, then skip the code. This is why if Count() = 0, then continue.
+                if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
                 {
-                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                    //Only insert Details that are Products, RawMaterials or Supplies
+                    foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail
+                        .Where(x => 
+                            x.item.id_item_type == item.item_type.Product ||
+                            x.item.id_item_type == item.item_type.RawMaterial ||
+                            x.item.id_item_type == item.item_type.Supplies))
                     {
-                        if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).Count() > 0)
-                        {
-                            foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
-                            {
-                                if (purchase_invoice_detail.item != null)
-                                {
-
-                                    Invoice_WithProducts.Add(purchase_invoice_detail);
-                                }
-                            }
-                        }
+                        Detail_List.Add(purchase_invoice_detail);
                     }
                 }
             }
 
-            foreach (purchase_invoice_detail purchase_invoice_detail in Invoice_WithProducts)
-            {
-                //item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
+            //Always insert Location into Default Location.
+            int LocationID = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Any() ? 
+                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Select(x => x.id_location).FirstOrDefault() : 
+                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch).Select(x => x.id_location).FirstOrDefault(); //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
 
-                purchase_invoice_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice_detail.purchase_invoice.id_branch).FirstOrDefault().id_location; //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
+            foreach (purchase_invoice_detail purchase_invoice_detail in Detail_List)
+            {
+                purchase_invoice_detail.id_location = LocationID;
 
                 List<item_movement_dimension> item_movement_dimensionLIST = null;
                 if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)

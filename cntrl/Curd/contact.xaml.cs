@@ -105,13 +105,14 @@ namespace cntrl.Curd
         public contact()
         {
             InitializeComponent();
-            ContactDB = new ContactDB();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
+                ContactDB = new ContactDB();
+
                 if (ContactDB != null)
                 {
                     ///Get Role List.

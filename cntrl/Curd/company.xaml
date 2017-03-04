@@ -80,7 +80,7 @@
                         <Label Content="{lex:Loc Interest}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding app_company_interest.interest, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
                          Style="{StaticResource input_textbox}" />
-                        <Label Content="{lex:Loc IsForced}" Style="{StaticResource input_label}" />
+                        <Label Content="{lex:Loc Forced}" Style="{StaticResource input_label}" />
                         <CheckBox IsChecked="{Binding app_company_interest.is_forced, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
                          Style="{StaticResource input_checkbox}" />
                     </StackPanel>

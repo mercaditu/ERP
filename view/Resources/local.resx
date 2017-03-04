@@ -201,6 +201,9 @@
   <data name="Approve" xml:space="preserve">
     <value>@Approve</value>
   </data>
+  <data name="Archived" xml:space="preserve">
+    <value>@Archived</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>@Area</value>
   </data>
@@ -819,8 +822,8 @@
   <data name="Integration" xml:space="preserve">
     <value>@Integration</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>@Interest</value>
+  <data name="Interests" xml:space="preserve">
+    <value>@Interests</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>@InternationalCommerce</value>

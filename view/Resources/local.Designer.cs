@@ -313,6 +313,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Archived.
+        /// </summary>
+        public static string Archived {
+            get {
+                return ResourceManager.GetString("Archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Area.
         /// </summary>
         public static string Area {
@@ -2167,11 +2176,11 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Interest.
+        ///   Looks up a localized string similar to @Interests.
         /// </summary>
-        public static string Interest {
+        public static string Interests {
             get {
-                return ResourceManager.GetString("Interest", resourceCulture);
+                return ResourceManager.GetString("Interests", resourceCulture);
             }
         }
         

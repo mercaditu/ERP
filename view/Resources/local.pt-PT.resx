@@ -201,6 +201,9 @@
   <data name="Approve" xml:space="preserve">
     <value>Aprovar</value>
   </data>
+  <data name="Archived" xml:space="preserve">
+    <value>Arquivado</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>Área</value>
   </data>
@@ -819,8 +822,8 @@
   <data name="Integration" xml:space="preserve">
     <value>Integração</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>Interesse</value>
+  <data name="Interests" xml:space="preserve">
+    <value>Interesses</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>Comércio Internacional</value>

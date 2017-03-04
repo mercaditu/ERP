@@ -285,7 +285,7 @@
                                         <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty, StringFormat={}{0:N2}}" IsReadOnly="True" Width="*" />
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Requests}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -297,7 +297,7 @@
                                         <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty, StringFormat={}{0:N2}}" IsReadOnly="True" Width="*" />
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Requests}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -307,7 +307,7 @@
                               RowEditEnding="item_request_decisionpurchaseDataGrid_RowEditEnding">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Requests}" Binding="{Binding decisionqty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -344,7 +344,7 @@
                               EnableRowVirtualization="True"
                               RowEditEnding="item_request_decisioninternalDataGrid_RowEditEnding">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Requests}" Binding="{Binding decisionqty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>

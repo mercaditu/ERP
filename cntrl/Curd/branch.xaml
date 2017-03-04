@@ -78,8 +78,8 @@
                     <TextBlock Text="Locations hold stock within a Branch" Style="{StaticResource text_Instructions}" />
                     <DataGrid x:Name="app_locationDataGrid" HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding app_location}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Location" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="*" />
-                            <DataGridTemplateColumn Header="Default" Width="SizeToHeader">
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Location}" Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="*" />
+                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Default}" Width="SizeToHeader">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox x:Name="chkIsDefault" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding is_default, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Checked="chkIsDefault_Checked" />
@@ -97,9 +97,9 @@
                     <TextBlock Text="Terminals allow to invoice within a Branch" Style="{StaticResource text_Instructions}" />
                     <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding app_terminal}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Terminal" Width="*"
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Terminal}" Width="*"
                                                 Binding="{Binding name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                            <DataGridTextColumn Header="Code" Width="80"
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="80"
                                                 Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </DataGrid.Columns>
                     </DataGrid>

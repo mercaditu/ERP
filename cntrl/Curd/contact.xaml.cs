@@ -69,10 +69,7 @@ namespace cntrl.Curd
 
         public void btnLoad_MouseUp(object sender, EventArgs e)
         {
-            if (LoadContact_Click != null)
-            {
-                LoadContact_Click();
-            }
+            LoadContact_Click?.Invoke();
         }
 
         public event btnSave_ClickedEventHandler btnSave_Click;
@@ -82,16 +79,19 @@ namespace cntrl.Curd
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {
             entity.contact contact = contactViewSource.View.CurrentItem as entity.contact;
+            if (contact != null && contact.Error == null)
+            {
+                contact.IsSelected = true;
+                contact.id_contact_role = ContactDB.contact_role.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_principal).Select(x => x.id_contact_role).FirstOrDefault();
+                contact.id_price_list = ContactDB.item_price_list.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_default).Select(x => x.id_price_list).FirstOrDefault();
 
-            if (ContactDB.SaveChanges() == 0)
-            {
-                MessageBox.Show("Saving Error");
-            }
-            //This is helpful when we want to Automate the search of contact when saving is done.
-            if (contact != null)
-            {
+                if (ContactDB.SaveChanges() == 0)
+                {
+                    MessageBox.Show("Saving Error");
+                }
+
+                //This is helpful when we want to Automate the search of contact when saving is done.
                 ContactName = contact.name;
-
                 btnSave_Click?.Invoke(sender);
                 //Reloads all Data.
                 CurrentSession.Load_BasicData(null, null);
@@ -107,7 +107,7 @@ namespace cntrl.Curd
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
@@ -116,18 +116,21 @@ namespace cntrl.Curd
                 if (ContactDB != null)
                 {
                     ///Get Role List.
-                    cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
-                    contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-                    ContactDB.contact_tag
-            .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
-            .OrderBy(x => x.name).Load();
-                    CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+                    //cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
+                    contactViewSource = this.FindResource("contactViewSource") as CollectionViewSource;
+                    await ContactDB.contact_tag
+                        .Where(x => 
+                        x.id_company == CurrentSession.Id_Company && 
+                        x.is_active == true)
+                        .OrderBy(x => x.name).LoadAsync();
+                    CollectionViewSource contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
                     contact_tagViewSource.Source = ContactDB.contact_tag.Local;
+                    
                     ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
                     if (ContactID > 0)
                     {
                         ///If Contact IsNot Null, then this form is in EDIT MODE. Must add Contact into Context.
-                        _contact = ContactDB.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+                        _contact = ContactDB.contacts.Find(ContactID);
                         ContactDB.contacts.Add(_contact);
                     }
                     else
@@ -142,7 +145,6 @@ namespace cntrl.Curd
 
                     if (IsCustomer)
                     {
-                        cbPriceList.ItemsSource = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
                         _contact.is_customer = true;
                         _contact.is_supplier = false;
                         _contact.is_employee = false;
@@ -167,37 +169,6 @@ namespace cntrl.Curd
                     contactViewSource.Source = ContactDB.contacts.Local;
                     contactViewSource.View.MoveCurrentTo(_contact);
                 }
-            }
-        }
-
-        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (e.Parameter as contact_tag_detail != null)
-            {
-                e.CanExecute = true;
-            }
-        }
-
-        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    if (e.Parameter as contact_tag_detail != null)
-                    {
-                        contact_tag_detailDataGrid.CancelEdit();
-                        ContactDB.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
-
-                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
-                        contactcontact_tag_detailViewSource.View.Refresh();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //throw;
             }
         }
 

@@ -23,9 +23,6 @@
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}" />
     </UserControl.Resources>
-    <UserControl.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
-    </UserControl.CommandBindings>
     <StackPanel Background="White" DataContext="{StaticResource contactViewSource}">
         <Grid Background="Gold">
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" FontSize="25"
@@ -84,23 +81,12 @@
                     <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" IsChecked="{Binding is_supplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="False" Margin="3" />
                     <CheckBox x:Name="chbxEmployee" Content="{lex:Loc Employee}" IsChecked="{Binding is_employee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="False" Margin="3" />
                 </StackPanel>
-                <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
-                               Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}" />
-                <ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}"
-                          SelectedValue="{Binding id_price_list, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
-                                  DisplayMemberPath="name" SelectedValuePath="id_price_list" />
                 <Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}"
                                    Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}" />
                 <ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
                           SelectedValue="{Binding id_cost_center, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                           Style="{StaticResource input_combobox}"
                                   DisplayMemberPath="name" SelectedValuePath="id_cost_center" />
-
-                <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" />
-                <ComboBox x:Name="cbxRole" Style="{StaticResource input_combobox}"
-                          DisplayMemberPath="name" SelectedValuePath="id_contact_role"
-                          SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
                 <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center"
 												 CollectionViewSource="{StaticResource contact_tagViewSource}"
@@ -117,15 +103,6 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 													IsReadOnly="True" Width="*" />
-                        <DataGridTemplateColumn Width="26" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.Delete"
-													Style="{StaticResource btnDeleteChildStyle}"
-													CommandParameter="{Binding}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

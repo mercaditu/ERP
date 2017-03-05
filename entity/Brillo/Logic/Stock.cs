@@ -60,13 +60,14 @@ namespace entity.Brillo.Logic
                     else
                     {
                         List<StockList> Items_InStockLIST = null;
+                        //Get specific Movement ID
                         if (purchase_return_detail.movement_id != null && purchase_return_detail.movement_id > 0)
                         {
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(purchase_return_detail.movement_id));
                         }
                         else
-                        {
+                        { // Get all Movements with Balance.
                             Brillo.Stock stock = new Brillo.Stock();
                             Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
                         }
@@ -203,8 +204,6 @@ namespace entity.Brillo.Logic
                                 Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_product.id_item_product);
                             }
 
-                            //MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
-
                             item_movementINPUT.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                     App.Names.ProductionExecution,
@@ -223,7 +222,6 @@ namespace entity.Brillo.Logic
                             if (item_movementINPUT.Count() > 0)
                             {
                                 item_movementList.AddRange(item_movementINPUT);
-
                                 production_execution_detail.unit_cost = item_movementINPUT.FirstOrDefault().item_movement_value.Sum(y => y.unit_value);
                             }
                         }
@@ -302,6 +300,7 @@ namespace entity.Brillo.Logic
                             {
                                 Cost = parent_order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
                             }
+
                             else if (production_execution_detail.production_order_detail.child.Count() > 0)
                             {
                                 if (production_execution_detail.quantity > 0)
@@ -343,7 +342,6 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
-
             return null;
         }
 
@@ -370,8 +368,10 @@ namespace entity.Brillo.Logic
             }
 
             //Always insert Location into Default Location.
-            int LocationID = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Any() ? 
-                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Select(x => x.id_location).FirstOrDefault() : 
+            int LocationID = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Any() 
+                ? 
+                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Select(x => x.id_location).FirstOrDefault() 
+                : 
                 CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch).Select(x => x.id_location).FirstOrDefault(); //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
 
             foreach (purchase_invoice_detail purchase_invoice_detail in Detail_List)

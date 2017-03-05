@@ -650,6 +650,7 @@ namespace Cognitivo.Purchase
                         purchase_invoice purchase_invoice = i as purchase_invoice;
                         string number = purchase_invoice.number != null ? purchase_invoice.number : "";
                         string contact = purchase_invoice.contact != null ? purchase_invoice.contact.name : "";
+
                         if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                         {
                             return true;

@@ -48,15 +48,18 @@ namespace entity
                 {
                     _id_range = value;
 
-                    using (db db = new db())
+                    if (State != System.Data.Entity.EntityState.Added || State != System.Data.Entity.EntityState.Modified)
                     {
-                        if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                        using (db db = new db())
                         {
-                            app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-                            Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                            // Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == app_terminal.id_terminal).FirstOrDefault().code;
-                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, true);
-                            RaisePropertyChanged("NumberWatermark");
+                            app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+                            if (app_document_range != null)
+                            {
+                                Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).Select(x => x.code).FirstOrDefault();
+                                Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Select(x => x.code).FirstOrDefault();
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                                RaisePropertyChanged("NumberWatermark");
+                            }
                         }
                     }
                 }

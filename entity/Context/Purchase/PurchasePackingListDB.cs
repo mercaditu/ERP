@@ -13,11 +13,40 @@ namespace entity
             purchase_packing purchase_packing = new purchase_packing();
             purchase_packing.State = EntityState.Added;
             purchase_packing.status = Status.Documents_General.Pending;
+
             app_document_range app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             if (app_document_range != null)
             {
                 purchase_packing.id_range = app_document_range.id_range;
             }
+
+            //try
+            //{
+            //    app_document_range app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            //    purchase_packing.id_range = app_document_range.id_range;
+            //}
+            //catch
+            //{
+            //    //Since document range 
+            //    using (db db = new db())
+            //    {
+            //        app_document document = new app_document();
+            //        document.name = Brillo.Localize.StringText(App.Names.PackingList.ToString());
+            //        document.id_application = App.Names.PackingList;
+            //        document.style_printer = true;
+
+            //        app_document_range _app_document_range = new app_document_range();
+            //        _app_document_range.range_start = 0;
+            //        _app_document_range.range_end = 100;
+            //        _app_document_range.range_template = "@Range";
+            //        document.app_document_range.Add(_app_document_range);
+            //        db.app_document.Add(document);
+            //        db.SaveChanges();
+            //    }
+
+            //    app_document_range app_document_range = Brillo.Logic.Range.List_Range(this, App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            //    purchase_packing.id_range = app_document_range.id_range;
+            //}
 
             purchase_packing.IsSelected = true;
             purchase_packing.app_branch = app_branch.Find(CurrentSession.Id_Branch);

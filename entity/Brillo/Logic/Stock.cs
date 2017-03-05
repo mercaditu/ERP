@@ -424,9 +424,9 @@ namespace entity.Brillo.Logic
             {
                 if (sales_invoice.sales_invoice_detail.Count() > 0)
                 {
-                    if (sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0).Count() > 0)
+                    if (sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0).Count() > 0)
                     {
-                        Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0).ToList());
+                        Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0).ToList());
                     }
                 }
             }

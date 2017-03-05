@@ -311,6 +311,7 @@ namespace Cognitivo.Purchase
                             purchase_packing_detail.id_item = _purchase_packing_detail.id_item;
                             purchase_packing_detail.item = _purchase_packing_detail.item;
                             purchase_packing_detail.verified_quantity = sbxItem.Quantity;
+                            purchase_packing_detail.quantity = sbxItem.Quantity;
                             purchase_packing_detail.security_user = PurchasePackingListDB.security_user.Find(CurrentSession.Id_User);
                             purchase_packing_detail.app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
                             purchase_packing_detail.user_verified = true;

@@ -105,51 +105,46 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-            foreach (purchase_packing purchase_packing in base.purchase_packing.Local)
+            foreach (purchase_packing purchase_packing in 
+                base.purchase_packing.Local
+                .Where(x => 
+                x.IsSelected && 
+                x.Error == null
+                ))
             {
-                if (purchase_packing.IsSelected && purchase_packing.Error == null)
+                if (purchase_packing.id_purchase_packing == 0)
                 {
-                    if (purchase_packing.id_purchase_packing == 0)
-                    {
-                        SaveChanges();
-                    }
-
-                    if (purchase_packing.status != Status.Documents_General.Approved)
-                    {
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this, purchase_packing);
-
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            item_movement.AddRange(item_movementList);
-                        }
-
-                        if (purchase_packing.number == null && purchase_packing.id_range > 0)
-                        {
-                            Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_packing.id_branch).FirstOrDefault().code;
-
-                            if (purchase_packing.app_terminal != null)
-                            {
-                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_branch == purchase_packing.app_terminal.id_terminal).FirstOrDefault().code;
-                            }
-
-                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_packing.id_range).FirstOrDefault();
-                            purchase_packing.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                            purchase_packing.RaisePropertyChanged("number");
-                        }
-
-                        purchase_packing.status = Status.Documents_General.Approved;
-                        SaveChanges();
-                    }
-
-                    NumberOfRecords += 1;
+                    SaveChanges();
                 }
 
-                if (purchase_packing.Error != null)
+                if (purchase_packing.status != Status.Documents_General.Approved)
                 {
-                    purchase_packing.HasErrors = true;
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    List<item_movement> item_movementList = new List<item_movement>();
+                    item_movementList = _Stock.PurchasePacking_Approve(this, purchase_packing);
+
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        item_movement.AddRange(item_movementList);
+                    }
+
+                    if (purchase_packing.number == null && purchase_packing.id_range > 0)
+                    {
+                        Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_packing.id_branch).Select(x => x.code).FirstOrDefault();
+
+                        if (purchase_packing.app_terminal != null)
+                        { Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_packing.app_terminal.id_terminal).Select(x => x.code).FirstOrDefault(); }
+
+                        app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_packing.id_range).FirstOrDefault();
+                        purchase_packing.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                        purchase_packing.RaisePropertyChanged("number");
+                    }
+
+                    purchase_packing.status = Status.Documents_General.Approved;
+                    SaveChanges();
                 }
+
+                NumberOfRecords += 1;
             }
         }
 

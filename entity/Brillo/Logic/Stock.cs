@@ -140,36 +140,6 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
-            ///PURCHASE PACKING
-            else if (obj_entity.GetType().BaseType == typeof(purchase_packing) || obj_entity.GetType() == typeof(purchase_packing))
-            {
-                purchase_packing purchase_packing = (purchase_packing)obj_entity;
-
-                foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                    .Where(x => x.item.item_product.Count() > 0))
-                {
-                    item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-                    packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
-                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
-                    item_movementList.Add(
-                         CreditOnly_Movement(
-                              Status.Stock.InStock,
-                              App.Names.PurchasePacking,
-                              packing_detail.id_purchase_packing,
-                              packing_detail.id_purchase_packing_detail,
-                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                              packing_detail.item.item_product.FirstOrDefault().id_item_product,
-                              (int)packing_detail.id_location,
-                              (decimal)packing_detail.verified_quantity,
-                              purchase_packing.trans_date,
-                              packing_detail.purchase_order_detail.unit_cost,
-                              comment_Generator(App.Names.PurchaseInvoice, purchase_packing.number != null ? purchase_packing.number : "", purchase_packing.contact.name), null,
-                              packing_detail.expire_date, packing_detail.batch_code
-                      ));
-                }
-                //Return List so we can save into context.
-                return item_movementList;
-            }
             //PRODUCTION EXECUTION
             else if (obj_entity.GetType().BaseType == typeof(production_execution_detail) || obj_entity.GetType() == typeof(production_execution_detail))
             {
@@ -343,6 +313,36 @@ namespace entity.Brillo.Logic
                 return item_movementList;
             }
             return null;
+        }
+
+        public List<item_movement> PurchasePacking_Approve(db db, purchase_packing purchase_packing)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+
+            foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
+                .Where(x => x.item.item_product.Count() > 0 && x.user_verified))
+            {
+                item_product item_product = FindNFix_ItemProduct(packing_detail.item);
+                packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
+                packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                item_movementList.Add(
+                        CreditOnly_Movement(
+                            Status.Stock.InStock,
+                            App.Names.PurchasePacking,
+                            packing_detail.id_purchase_packing,
+                            packing_detail.id_purchase_packing_detail,
+                            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                            packing_detail.item.item_product.Select(x => x.id_item_product).FirstOrDefault(),
+                            (int)packing_detail.id_location,
+                            (decimal)packing_detail.verified_quantity,
+                            purchase_packing.trans_date,
+                            packing_detail.purchase_order_detail.unit_cost,
+                            comment_Generator(App.Names.PurchasePacking, purchase_packing.number != null ? purchase_packing.number : "", purchase_packing.contact.name), null,
+                            packing_detail.expire_date, packing_detail.batch_code
+                    ));
+            }
+            //Return List so we can save into context.
+            return item_movementList;
         }
 
         public List<item_movement> PurchaseInvoice_Approve(db db, purchase_invoice purchase_invoice)

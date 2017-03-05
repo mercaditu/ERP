@@ -739,14 +739,7 @@
     <Compile Include="Security\UserRole.xaml.cs">
       <DependentUpon>UserRole.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Migration\Cogent\Basic.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Setup\Migration\Ria\Basic.cs" />
-    <Compile Include="Setup\Migration\Cogent\Project.cs" />
-    <Compile Include="Setup\Migration\Cogent\MigrationGUI.xaml.cs">
-      <DependentUpon>MigrationGUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Setup\Migration\Ria\SalesReturn.cs" />
     <Compile Include="Setup\Migration\Ria\Sales.cs" />
     <Compile Include="Setup\Migration\Ria\Customer.cs" />
@@ -1731,10 +1724,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Menu\WaitPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Setup\Migration\Cogent\MigrationGUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

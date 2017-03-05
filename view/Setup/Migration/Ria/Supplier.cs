@@ -14,7 +14,7 @@ namespace Cognitivo.Setup.Migration
                         + " dbo.PROVEEDOR.EMAILCONT2, dbo.PROVEEDOR.TELCONT1, dbo.PROVEEDOR.TELCONT2, dbo.PROVEEDOR.CELCONT1, dbo.PROVEEDOR.CELCONT2, dbo.PROVEEDOR.DIRECCIONCONT1, dbo.PROVEEDOR.DIRECCIONCONT2, dbo.PROVEEDOR.FORMAPAGO,"
                         + " dbo.PROVEEDOR.ESTADO, dbo.PROVEEDOR.DIASVENCIMIENTO, "
                         + " dbo.CATEGORIAPROVEEDOR.DESCATEGORIAPROVEEDOR, dbo.CENTROCOSTO.DESCENTRO, dbo.MONEDA.DESMONEDA,"
-                         + " (select DESZONA from ZONA where ZONA.CODZONA=PROVEEDOR.CODZONA) as DESZONA,(select DESCIUDAD from CIUDAD where CIUDAD.CODCIUDAD=PROVEEDOR.CODCIUDAD) as DESCIUDAD,(select DESPAIS from PAIS where PAIS.CODPAIS=PROVEEDOR.CODPAIS) as DESPAIS"
+                        + " (select DESZONA from ZONA where ZONA.CODZONA=PROVEEDOR.CODZONA) as DESZONA,(select DESCIUDAD from CIUDAD where CIUDAD.CODCIUDAD=PROVEEDOR.CODCIUDAD) as DESCIUDAD,(select DESPAIS from PAIS where PAIS.CODPAIS=PROVEEDOR.CODPAIS) as DESPAIS"
                         + " FROM  dbo.PROVEEDOR LEFT OUTER JOIN"
                         + " dbo.CENTROCOSTO ON dbo.PROVEEDOR.CODCENTRO = dbo.CENTROCOSTO.CODCENTRO LEFT OUTER JOIN"
                         + " dbo.MONEDA ON dbo.PROVEEDOR.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
@@ -43,7 +43,7 @@ namespace Cognitivo.Setup.Migration
             DataTable dt_supplier = exeDT(sql);
             foreach (DataRow reader in dt_supplier.Rows)
             {
-                using (entity.db db = new entity.db())
+                using (db db = new db())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
 

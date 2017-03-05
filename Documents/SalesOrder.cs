@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Documents
 {
-    public class SalesInvoice
+    public class SalesOrder
     {
         public int Status { get; set; }
         public int DetailID { get; set; }
@@ -48,11 +48,11 @@ namespace Documents
 
     }
 
-    public class LoadSalesInvoice
+    public class LoadSalesOrder
     {
-        List<SalesInvoice> SalesInvoiceList = new List<SalesInvoice>();
+        List<SalesOrder> SalesInvoiceList = new List<SalesOrder>();
 
-        public LoadSalesInvoice(int SalesInvoiceID)
+        public LoadSalesOrder(int SalesOrderID)
         {
             //Load Data into List.
         }

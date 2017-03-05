@@ -14,7 +14,7 @@ namespace Cognitivo.Sales
     public partial class PackingList : Page
     {
         private PackingListDB PackingListDB = new PackingListDB();
-        private CollectionViewSource sales_packingViewSource, sales_packingsales_packinglist_detailViewSource, sales_packingsales_packing_detailVerifiedViewSource, sales_orderViewSource;
+        private CollectionViewSource sales_packingViewSource, sales_packingsales_packinglist_detailViewSource, sales_packingsales_packing_detailVerifiedViewSource;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
 
@@ -298,27 +298,27 @@ namespace Cognitivo.Sales
             PackingListDB.Annull();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int id_contact = sbxContact.ContactID;
-            if (sales_orderViewSource != null)
-            {
-                if (sales_orderViewSource.View != null)
-                {
-                    if (sales_orderViewSource.View.Cast<sales_order>().Count() > 0)
-                    {
-                        sales_orderViewSource.View.Filter = i =>
-                        {
-                            sales_order sales_order = (sales_order)i;
-                            if (sales_order.id_contact == id_contact)
-                                return true;
-                            else
-                                return false;
-                        };
-                    }
-                }
-            }
-        }
+        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    int id_contact = sbxContact.ContactID;
+        //    if (sales_orderViewSource != null)
+        //    {
+        //        if (sales_orderViewSource.View != null)
+        //        {
+        //            if (sales_orderViewSource.View.Cast<sales_order>().Count() > 0)
+        //            {
+        //                sales_orderViewSource.View.Filter = i =>
+        //                {
+        //                    sales_order sales_order = (sales_order)i;
+        //                    if (sales_order.id_contact == id_contact)
+        //                        return true;
+        //                    else
+        //                        return false;
+        //                };
+        //            }
+        //        }
+        //    }
+        //}
 
         private void btnSalesOrder_Click(object sender, RoutedEventArgs e)
         {

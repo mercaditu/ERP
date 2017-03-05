@@ -117,7 +117,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <Label Content="O" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnpurchaseOrder_Click">
                                     <Run Text="{lex:Loc purchaseOrder}" />
@@ -142,6 +142,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                <Hyperlink PreviewMouseUp="btnPurchaseInvoice_Click">
+                                    <Run Text="{lex:Loc PurchaseInvoice}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                         <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                         <StackPanel Margin="2,0,0,0" Orientation="Horizontal" VerticalAlignment="Center"
                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Telephone, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

@@ -14,7 +14,7 @@ namespace Cognitivo.Product
     public partial class Maintainance : Page
     {
         private db dbContext = new db();
-        private CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
+        private CollectionViewSource item_asset_maintainanceViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
         private cntrl.Curd.ItemRequest ItemRequest;
 
         public Maintainance()

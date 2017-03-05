@@ -50,7 +50,7 @@ namespace Documents
 
     public class LoadPurchaseInvoice
     {
-        List<SalesInvoice> SalesInvoiceList = new List<SalesInvoice>();
+        List<PurchaseInvoice> SalesInvoiceList = new List<PurchaseInvoice>();
 
         public LoadPurchaseInvoice(int PurchaseInvoiceID)
         {

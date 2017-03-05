@@ -21,7 +21,8 @@ namespace Cognitivo.Product
 
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
-        private cntrl.Panels.pnl_Inventory objpnl_Inventory;
+        //private cntrl.Panels.pnl_Inventory objpnl_Inventory;
+
         public Inventory()
         {
             InitializeComponent();

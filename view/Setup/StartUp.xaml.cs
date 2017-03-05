@@ -205,11 +205,6 @@ namespace Cognitivo.Menu
             myFrame.Navigate(new mainLogIn());
         }
 
-        private void migratesql_Click(object sender, RoutedEventArgs e)
-        {
-            frameConfig.Navigate(new Setup.Migration.Cogent.MigrationGUI());
-        }
-
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");

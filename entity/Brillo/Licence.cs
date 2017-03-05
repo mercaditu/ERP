@@ -62,7 +62,7 @@ namespace entity.Brillo
                     return responseString;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return "";
             }
@@ -87,7 +87,7 @@ namespace entity.Brillo
                     return responseString;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return "";
             }
@@ -111,7 +111,7 @@ namespace entity.Brillo
                     CompanyLicence = JsonConvert.DeserializeObject<licence>(jsondata);
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
         }

@@ -11,8 +11,8 @@ namespace Cognitivo.Purchase
 {
     public partial class PackingList : Page
     {
-        private PurchasePackingListDB PurchasePackingListDB = new entity.PurchasePackingListDB();
-        private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_packingpurchase_packing_detailApprovedViewSource, purchase_orderViewSource;
+        private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
+        private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_packingpurchase_packing_detailApprovedViewSource;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
 
         public PackingList()
@@ -42,9 +42,6 @@ namespace Cognitivo.Purchase
             app_measurevolume.Source = PurchasePackingListDB.app_measurement.Local;
             app_measureweight.Source = PurchasePackingListDB.app_measurement.Local;
 
-            //purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
-            //purchase_orderViewSource.Source = dbContext.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.status == Status.Documents_General.Approved).Include(a => a.purchase_order_detail).ToList();
-
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchasePackingListDB, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -61,7 +58,6 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_packingpurchase_packing_detailApprovedViewSource.View != null)
                 {
-
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Filter = i =>
                     {
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
@@ -222,29 +218,7 @@ namespace Cognitivo.Purchase
         {
             PurchasePackingListDB.Annull();
         }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int id_contact = sbxContact.ContactID;
-            if (purchase_orderViewSource != null)
-            {
-                if (purchase_orderViewSource.View != null)
-                {
-                    if (purchase_orderViewSource.View.Cast<purchase_order>().Count() > 0)
-                    {
-                        purchase_orderViewSource.View.Filter = i =>
-                        {
-                            purchase_order purchase_order = (purchase_order)i;
-                            if (purchase_order.id_contact == id_contact)
-                                return true;
-                            else
-                                return false;
-                        };
-                    }
-                }
-            }
-        }
-
+        
         private void btnpurchaseOrder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -381,6 +355,46 @@ namespace Cognitivo.Purchase
             if (e.Key == Key.Enter)
             {
                 set_ContactPref(sender, e);
+            }
+        }
+
+        private void btnPurchaseInvoice_Click(object sender, MouseButtonEventArgs e)
+        {
+            purchase_packing packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
+            if (packing != null)
+            {
+                if (packing.status == Status.Documents_General.Approved)
+                {
+                    purchase_invoice purchase_invoice = new purchase_invoice()
+                    {
+                        contact = packing.contact,
+                        app_branch = packing.app_branch,
+                    };
+
+                    //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
+                    //I would like to some how check for inconsistancies or let user check for them before approving.
+                    foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.user_verified == false))
+                    {
+                        purchase_invoice_detail detail = new purchase_invoice_detail()
+                        {
+                            item = PackingDetail.item,
+                            item_description = PackingDetail.purchase_order_detail.item_description,
+                            quantity = PackingDetail.quantity,
+                            unit_cost = PackingDetail.purchase_order_detail.unit_cost,
+                            discount = PackingDetail.purchase_order_detail.discount,
+                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group,
+                        };
+
+                        purchase_invoice.purchase_invoice_detail.Add(detail);
+                    }
+
+                    //Only if Details have been added, should we include the Purchase Invoice into Context.
+                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                    {
+                        PurchasePackingListDB.purchase_invoice.Add(purchase_invoice);
+                        PurchasePackingListDB.SaveChanges();
+                    }
+                }
             }
         }
 

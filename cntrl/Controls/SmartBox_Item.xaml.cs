@@ -147,7 +147,7 @@ namespace cntrl.Controls
 
         public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
 
-        private Task taskSearch;
+        //private Task taskSearch;
         private CancellationTokenSource tokenSource;
         private CancellationToken token;
 
@@ -261,13 +261,13 @@ namespace cntrl.Controls
 
                 if (SearchText.Count() >= 1)
                 {
-                    if (taskSearch != null)
-                    {
-                        if (taskSearch.Status == TaskStatus.Running)
-                        {
-                            tokenSource.Cancel();
-                        }
-                    }
+                    //if (taskSearch != null)
+                    //{
+                    //    if (taskSearch.Status == TaskStatus.Running)
+                    //    {
+                    //        tokenSource.Cancel();
+                    //    }
+                    //}
 
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;

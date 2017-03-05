@@ -14,7 +14,7 @@ namespace Cognitivo.Converters
             }
             else if (value != null && value.ToString() == System.Data.Entity.EntityState.Deleted.ToString())
             {
-                return "d";
+                return "Y";
             }
             else if (value != null && value.ToString() == System.Data.Entity.EntityState.Modified.ToString())
             {

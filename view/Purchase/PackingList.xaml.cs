@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -365,12 +366,7 @@ namespace Cognitivo.Purchase
             {
                 if (packing.status == Status.Documents_General.Approved)
                 {
-                    purchase_invoice purchase_invoice = new purchase_invoice()
-                    {
-                        contact = packing.contact,
-                        app_branch = packing.app_branch,
-                    };
-
+                    List<purchase_invoice_detail> DetailList = new List<purchase_invoice_detail>();
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
                     foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.user_verified == false))
@@ -382,17 +378,34 @@ namespace Cognitivo.Purchase
                             quantity = PackingDetail.quantity,
                             unit_cost = PackingDetail.purchase_order_detail.unit_cost,
                             discount = PackingDetail.purchase_order_detail.discount,
-                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group,
+                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group
                         };
-
-                        purchase_invoice.purchase_invoice_detail.Add(detail);
+                        DetailList.Add(detail);
                     }
 
                     //Only if Details have been added, should we include the Purchase Invoice into Context.
-                    if (purchase_invoice.purchase_invoice_detail.Count() > 0)
+                    if (DetailList.Count() > 0)
                     {
-                        PurchasePackingListDB.purchase_invoice.Add(purchase_invoice);
-                        PurchasePackingListDB.SaveChanges();
+                        purchase_order Order = PurchasePackingListDB.purchase_order.Find(DetailList.FirstOrDefault().purchase_order_detail.id_purchase_order);
+                        if (Order != null)
+                        {
+                            purchase_invoice _purchase_invoice = new purchase_invoice()
+                            {
+                                contact = packing.contact,
+                                app_branch = packing.app_branch,
+                                id_contract = Order.id_contract,
+                                id_condition = Order.id_condition,
+                                id_currencyfx = Order.id_currencyfx
+                            };
+
+                            foreach (var item in DetailList)
+                            {
+                                _purchase_invoice.purchase_invoice_detail.Add(item);
+                            }
+                            
+                            PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
+                            PurchasePackingListDB.SaveChanges();
+                        }
                     }
                 }
             }

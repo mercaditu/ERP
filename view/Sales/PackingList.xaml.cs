@@ -126,7 +126,7 @@ namespace Cognitivo.Sales
             {
                 sales_packing sales_packing = (sales_packing)sales_packingDataGrid.SelectedItem;
                 sales_packing.IsSelected = true;
-                sales_packing.State = EntityState.Unchanged;
+                sales_packing.State = EntityState.Modified;
                 PackingListDB.Entry(sales_packing).State = EntityState.Modified;
                 sales_packingViewSource.View.Refresh();
             }
@@ -208,7 +208,7 @@ namespace Cognitivo.Sales
         private void select_Item(sales_packing sales_packing, item item, app_branch app_branch, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
-            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement).FirstOrDefault() == null)
+            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified).FirstOrDefault() == null)
             {
                 sales_packing_detail _sales_packing_detail = new sales_packing_detail();
                 _sales_packing_detail.sales_packing = sales_packing;
@@ -508,7 +508,8 @@ namespace Cognitivo.Sales
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,
                                 id_currencyfx = Order.id_currencyfx,
-                                trans_date = Order.trans_date
+                                trans_date = Order.trans_date,
+                                timestamp=DateTime.Now
                             };
 
                             foreach (var item in DetailList)

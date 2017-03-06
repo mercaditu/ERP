@@ -56,6 +56,7 @@
                             <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" MaxWidth="500" IsReadOnly="True" MaxHeight="128" HorizontalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding avlquantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:AvailableQuantity}" Width="SizeToHeader" />
                                     <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" />
                                     <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" />

@@ -5,6 +5,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Linq;
 
     public partial class purchase_invoice_detail : CommercialPurchaseDetail, IDataErrorInfo
     {
@@ -24,6 +25,28 @@ namespace entity
 
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
+
+        [NotMapped]
+        public decimal avlquantity
+        {
+            get
+            {
+                if (item_movement.Count>0)
+                {
+                    return item_movement.Sum(x=>x.avlquantity);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                _avlquantity = value;
+            }
+        }
+
+        private decimal _avlquantity;
 
         #region "Navigation Properties"
 

@@ -47,7 +47,55 @@ namespace entity
 
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
+        [NotMapped]
+        public bool AllowedQuantity
+        {
+            get
+            {
+                if (CurrentSession.Allow_UpdateSalesDetail==false)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (this.sales_packing_relation.Count()>0)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            set
+            {
+                _AllowedQuantity=value;
+            }
+        }
+        bool _AllowedQuantity;
 
+        [NotMapped]
+        public bool AllowedPrice
+        {
+            get
+            {
+                if (CurrentSession.Allow_UpdateSalesDetail == false)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (this.sales_order_detail!=null)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            set
+            {
+                _AllowedPrice = value;
+            }
+        }
+        bool _AllowedPrice;
         #region "Nav Properties"
 
         public virtual sales_invoice sales_invoice

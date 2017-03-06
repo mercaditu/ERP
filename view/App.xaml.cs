@@ -1,4 +1,6 @@
 ﻿using Cognitivo.Menu;
+using InteractivePreGeneratedViews;
+using System;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -81,6 +83,14 @@ namespace Cognitivo
             splash.Show();
             //Task taskAuth = Task.Factory.StartNew(() => check_createdb(splash));
             MainWindow MainWin = new MainWindow();
+
+            using (entity.db ctx = new entity.db())
+            {
+                InteractiveViews
+                    .SetViewCacheFactory(
+                        ctx,
+                        new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\EFViews\\MyViews.xml")));
+            }
 
             using (entity.db db = new entity.db())
             {

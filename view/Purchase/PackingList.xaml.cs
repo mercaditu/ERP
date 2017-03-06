@@ -49,6 +49,8 @@ namespace Cognitivo.Purchase
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
                 filterVerifiedDetail(0);
+                purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
             }));
             cbxBranch.SelectedIndex = 0;
         }
@@ -378,7 +380,9 @@ namespace Cognitivo.Purchase
                             quantity = PackingDetail.quantity,
                             unit_cost = PackingDetail.purchase_order_detail.unit_cost,
                             discount = PackingDetail.purchase_order_detail.discount,
-                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group
+                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group,
+                            purchase_order_detail= PackingDetail.purchase_order_detail,
+                            id_cost_center= PackingDetail.purchase_order_detail.id_cost_center
                         };
                         DetailList.Add(detail);
                     }
@@ -404,7 +408,21 @@ namespace Cognitivo.Purchase
                             }
                             
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
-                            PurchasePackingListDB.SaveChanges();
+                            purchase_packing_relation purchase_packing_relation = new entity.purchase_packing_relation();
+                            purchase_packing_relation.id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
+                            purchase_packing_relation.purchase_invoice = _purchase_invoice;
+                            purchase_packing_relation.id_purchase_packing= packing.id_purchase_packing;
+                            purchase_packing_relation.purchase_packing = packing;
+                            PurchasePackingListDB.purchase_packing_relation.Add(purchase_packing_relation);
+                            try
+                            {
+                                PurchasePackingListDB.SaveChanges();
+                            }
+                            catch(Exception ex)
+                            {
+                                System.Windows.Forms.MessageBox.Show(ex.ToString()); 
+                            }
+                          
                         }
                     }
                 }

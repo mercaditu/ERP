@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace Cognitivo.Sales
                 filterVerifiedDetail(0);
                 filterDetail();
             }));
-        
+
         }
         private void filterDetail()
         {
@@ -81,27 +82,27 @@ namespace Cognitivo.Sales
             {
                 if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
                 {
-               
-                        sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
+
+                    sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
+                    {
+                        sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
+                        if (id_item > 0)
                         {
-                            sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
-                            if (id_item > 0)
-                            {
-                                if (sales_packing_detail.user_verified == true && sales_packing_detail.id_item == id_item)
-                                    return true;
-                                else
-                                    return false;
-                            }
+                            if (sales_packing_detail.user_verified == true && sales_packing_detail.id_item == id_item)
+                                return true;
                             else
-                            {
-                                if (sales_packing_detail.user_verified == true)
-                                    return true;
-                                else
-                                    return false;
-                            }
-                           
-                        };
-                    
+                                return false;
+                        }
+                        else
+                        {
+                            if (sales_packing_detail.user_verified == true)
+                                return true;
+                            else
+                                return false;
+                        }
+
+                    };
+
                 }
             }
         }
@@ -199,8 +200,8 @@ namespace Cognitivo.Sales
                         Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
                     }
                 }
-                
-               
+
+
             }
         }
 
@@ -212,7 +213,7 @@ namespace Cognitivo.Sales
                 sales_packing_detail _sales_packing_detail = new sales_packing_detail();
                 _sales_packing_detail.sales_packing = sales_packing;
                 _sales_packing_detail.item = item;
-                    _sales_packing_detail.verified_quantity = quantity;
+                _sales_packing_detail.verified_quantity = quantity;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
@@ -243,7 +244,7 @@ namespace Cognitivo.Sales
                 //filterVerifiedDetail();
                 filterDetail();
                 Refresh_GroupByGrid();
-           
+
             }));
         }
 
@@ -436,6 +437,7 @@ namespace Cognitivo.Sales
 
         private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            filterDetail();
             Refresh_GroupByGrid();
         }
 
@@ -456,6 +458,80 @@ namespace Cognitivo.Sales
                 if (app_branch != null)
                 {
                     cbxLocation.ItemsSource = app_branch.app_location.ToList();
+                }
+            }
+        }
+
+        private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
+        {
+            sales_packing packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+            if (packing != null)
+            {
+                if (packing.status == Status.Documents_General.Approved)
+                {
+                    List<sales_invoice_detail> DetailList = new List<sales_invoice_detail>();
+                    //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
+                    //I would like to some how check for inconsistancies or let user check for them before approving.
+                    foreach (sales_packing_detail PackingDetail in packing.sales_packing_detail.Where(x => x.user_verified == false))
+                    {
+                        sales_invoice_detail detail = new sales_invoice_detail()
+                        {
+                            item = PackingDetail.item,
+                            item_description = PackingDetail.sales_order_detail.item_description,
+                            quantity = PackingDetail.quantity,
+                            unit_cost = PackingDetail.sales_order_detail.unit_cost,
+                            discount = PackingDetail.sales_order_detail.discount,
+                            id_vat_group = PackingDetail.sales_order_detail.id_vat_group,
+                            sales_order_detail = PackingDetail.sales_order_detail,
+                            id_location = PackingDetail.sales_order_detail.id_location
+
+                        };
+                        sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
+                        sales_packing_relation.id_sales_invoice_detail = detail.id_sales_invoice_detail;
+                        sales_packing_relation.sales_invoice_detail = detail;
+                        sales_packing_relation.id_sales_packing_detail = PackingDetail.id_sales_packing_detail;
+                        sales_packing_relation.sales_packing_detail = PackingDetail;
+                        PackingListDB.sales_packing_relation.Add(sales_packing_relation);
+                        DetailList.Add(detail);
+                    }
+
+                    //Only if Details have been added, should we include the Purchase Invoice into Context.
+                    if (DetailList.Count() > 0)
+                    {
+                        sales_order Order = PackingListDB.sales_order.Find(DetailList.FirstOrDefault().sales_order_detail.id_sales_order);
+                        if (Order != null)
+                        {
+                            sales_invoice _sales_invoice = new sales_invoice()
+                            {
+                                contact = packing.contact,
+                                app_branch = packing.app_branch,
+                                id_contract = Order.id_contract,
+                                id_condition = Order.id_condition,
+                                id_currencyfx = Order.id_currencyfx,
+                                trans_date = Order.trans_date
+                            };
+
+                            foreach (var item in DetailList)
+                            {
+
+                                _sales_invoice.sales_invoice_detail.Add(item);
+
+                            }
+                            PackingListDB.sales_invoice.Add(_sales_invoice);
+                            crm_opportunity crm_opportunity = Order.crm_opportunity;
+                            crm_opportunity.sales_invoice.Add(_sales_invoice);
+                         
+                            try
+                            {
+                                PackingListDB.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -490,7 +566,7 @@ namespace Cognitivo.Sales
                     {
                         ItemName = x.Max(y => y.item.name),
                         ItemCode = x.Max(y => y.item.code),
-                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item== x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                         Quantity = x.Max(y => y.quantity),
                         id_item = x.Max(y => y.id_item)
                     })

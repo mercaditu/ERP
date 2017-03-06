@@ -180,6 +180,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                <Hyperlink PreviewMouseUp="btnSalesInvoice_Click">
+                                    <Run Text="{lex:Loc SalesInvoice}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap" Margin="4,0" Height="64" />

@@ -122,9 +122,12 @@ namespace Cognitivo.Purchase
             if (purchase_invoiceDataGrid.SelectedItem != null)
             {
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-                purchase_invoice.IsSelected = true;
-                purchase_invoice.State = EntityState.Modified;
-                PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Modified;
+                //if (PurchaseInvoiceDB.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+                //{
+                    purchase_invoice.IsSelected = true;
+                    purchase_invoice.State = EntityState.Modified;
+                    PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Modified;
+              //  }
             }
             else
             {
@@ -672,8 +675,10 @@ namespace Cognitivo.Purchase
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+
             if (e.Parameter as purchase_invoice_detail != null)
             {
+
                 e.CanExecute = true;
             }
         }
@@ -682,17 +687,29 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+                if (purchase_invoice != null)
                 {
-                    purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
 
-                    //DeleteDetailGridRow
-                    dgvPurchaseDetail.CancelEdit();
 
-                    PurchaseInvoiceDB.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
-                    purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+                    if (PurchaseInvoiceDB.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+                    {
+                        MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.Yes)
+                        {
+
+
+                            //DeleteDetailGridRow
+                            dgvPurchaseDetail.CancelEdit();
+
+                            PurchaseInvoiceDB.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
+
+
+                            purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+                        }
+                    }
                 }
+                purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
             }
             catch (Exception ex)
             {

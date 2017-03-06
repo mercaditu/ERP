@@ -451,7 +451,7 @@
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                            <Label Content="" Style="{StaticResource btn_Label}" />
+                                            <Label Content="O" Style="{StaticResource btn_Label}" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
 									<Hyperlink PreviewMouseUp="btnSalesOrder_Click">
 										<Run Text="{lex:Loc SalesOrder}" />
@@ -552,7 +552,7 @@
 
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
 
-                                            <Label Content="" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
+                                            <Label Content="O" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
 												<Hyperlink PreviewMouseUp="btnPackingList_Click">
 													<Run Text="{lex:Loc PackingList}" />

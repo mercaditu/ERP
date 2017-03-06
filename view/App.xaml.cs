@@ -84,19 +84,14 @@ namespace Cognitivo
             //Task taskAuth = Task.Factory.StartNew(() => check_createdb(splash));
             MainWindow MainWin = new MainWindow();
 
-            using (entity.db ctx = new entity.db())
-            {
-                InteractiveViews
-                    .SetViewCacheFactory(
-                        ctx,
-                        new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\EFViews\\MyViews.xml")));
-            }
-
             using (entity.db db = new entity.db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
-                
+
+               // InteractiveViews.SetViewCacheFactory(db,
+               //     new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\EFViews\\MyViews.xml")));
+
                 if (db.Database.Exists() == false)
                 {
                     MainWin.mainFrame.Navigate(new StartUp()); //}));

@@ -55,5 +55,10 @@ namespace Documents
         {
             //Load Data into List.
         }
+
+        public void ConvertRDLC(object OldFile)
+        {
+
+        }
     }
 }

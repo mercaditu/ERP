@@ -1,4 +1,5 @@
-﻿using Syncfusion.Windows.Shared;
+﻿using Syncfusion.Windows.Reports.Designer;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,22 @@ namespace cntrl.Reports
     /// <summary>
     /// Interaction logic for ReportDesigner.xaml
     /// </summary>
-    public partial class ReportDesigner : Window
+    public partial class ReportDesigner 
     {
+        public string path { get; set; }
         public ReportDesigner()
         {
             InitializeComponent();
 
             SkinStorage.SetVisualStyle(this, "Office2013");
+
+        }
+
+        private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ReportDesignerControl.DesignMode = DesignMode.RDLC;
+         
+
         }
     }
 }

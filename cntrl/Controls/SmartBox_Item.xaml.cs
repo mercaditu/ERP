@@ -207,7 +207,7 @@ namespace cntrl.Controls
             {
                 if (QuantityIntegration)
                 {
-                    Quantity = 1;
+                  //  Quantity = 1;
                     popQuantity.IsOpen = false;
                     ItemGrid_MouseDoubleClick(sender, e);
                     FocusManager.SetFocusedElement(tbxSearch.Parent, tbxSearch);

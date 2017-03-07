@@ -91,6 +91,7 @@
                 <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
+              
             </StackPanel>
         </StackPanel>
         <ScrollViewer MaxHeight="256"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Bottom">

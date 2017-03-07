@@ -350,6 +350,18 @@ namespace cntrl
                 workBook.SaveAs(dlg.FileName);
             }
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+            cntrl.Reports.ReportDesigner window = new cntrl.Reports.ReportDesigner
+            {
+                Title = "Report",
+                path= Report.Path
+            };
+
+            window.ShowDialog();
+        }
     }
 
     public static class RdlcReportHelper

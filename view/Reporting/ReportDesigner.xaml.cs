@@ -13,6 +13,7 @@ namespace Cognitivo.Reporting
             InitializeComponent();
             //This updates the UI to Office 2013 Design.
             SkinStorage.SetVisualStyle(this, "Office2013");
+            
         }
 
 

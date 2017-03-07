@@ -51,8 +51,10 @@ namespace Cognitivo.Sales
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
-                filterVerifiedDetail(0);
                 filterDetail();
+                filterVerifiedDetail(0);
+                sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
             }));
 
         }
@@ -172,81 +174,7 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = false;
         }
 
-        private void item_Select(object sender, EventArgs e)
-        {
-            app_branch app_branch = null;
-            if (sbxItem.ItemID > 0)
-            {
-                sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
-
-                item item = PackingListDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-
-                if (item != null && item.id_item > 0 && sales_packing != null)
-                {
-                    if (cbxBranch.SelectedItem != null)
-                    { app_branch = cbxBranch.SelectedItem as app_branch; }
-
-                    item_product item_product = item.item_product.FirstOrDefault();
-
-                    if (item_product != null && item_product.can_expire)
-                    {
-                        crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_packing.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
-
-                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-                    }
-                    else
-                    {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
-                    }
-                }
-
-
-            }
-        }
-
-        private void select_Item(sales_packing sales_packing, item item, app_branch app_branch, item_movement item_movement, decimal quantity)
-        {
-            long id_movement = item_movement != null ? item_movement.id_movement : 0;
-            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified).FirstOrDefault() == null)
-            {
-                sales_packing_detail _sales_packing_detail = new sales_packing_detail();
-                _sales_packing_detail.sales_packing = sales_packing;
-                _sales_packing_detail.item = item;
-                _sales_packing_detail.verified_quantity = quantity;
-                _sales_packing_detail.id_item = item.id_item;
-                _sales_packing_detail.user_verified = true;
-
-                if (item_movement != null)
-                {
-                    _sales_packing_detail.batch_code = item_movement.code;
-                    _sales_packing_detail.expire_date = item_movement.expire_date;
-                    _sales_packing_detail.id_movement = (int)item_movement.id_movement;
-                }
-
-                if (app_branch != null)
-                {
-                    _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
-                    _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
-                }
-
-                sales_packing.sales_packing_detail.Add(_sales_packing_detail);
-            }
-            else
-            {
-                sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_packing_detail.verified_quantity += 1;
-            }
-
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                sales_packingsales_packinglist_detailViewSource.View.Refresh();
-                //filterVerifiedDetail();
-                filterDetail();
-                Refresh_GroupByGrid();
-
-            }));
-        }
+    
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -346,28 +274,28 @@ namespace Cognitivo.Sales
                 {
                     foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
                     {
-                        if (sales_packing.sales_packing_detail.Where(x => x.id_item == sales_order_detail.id_item).Count() == 0)
+
+                        sales_packing_detail sales_packing_detail = new sales_packing_detail();
+                        sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
+                        sales_packing_detail.id_item = sales_order_detail.id_item;
+                        sales_packing_detail.app_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
+                        sales_packing_detail.item = sales_order_detail.item;
+                        sales_packing_detail.user_verified = false;
+                        sales_packing_detail.id_movement = sales_order_detail.movement_id;
+                        sales_packing_detail.quantity = sales_order_detail.quantity;
+
+                        if (sales_order_detail.batch_code != "")
                         {
-                            sales_packing_detail sales_packing_detail = new sales_packing_detail();
-                            sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
-                            sales_packing_detail.id_item = sales_order_detail.id_item;
-                            sales_packing_detail.item = sales_order_detail.item;
-                            sales_packing_detail.user_verified = false;
-                            sales_packing_detail.id_movement = sales_order_detail.movement_id;
-                            sales_packing_detail.quantity = sales_order_detail.quantity;
-
-                            if (sales_order_detail.batch_code != "")
-                            {
-                                sales_packing_detail.batch_code = sales_order_detail.batch_code;
-                            }
-
-                            if (sales_order_detail.expire_date != null)
-                            {
-                                sales_packing_detail.expire_date = sales_order_detail.expire_date;
-                            }
-
-                            sales_packing.sales_packing_detail.Add(sales_packing_detail);
+                            sales_packing_detail.batch_code = sales_order_detail.batch_code;
                         }
+
+                        if (sales_order_detail.expire_date != null)
+                        {
+                            sales_packing_detail.expire_date = sales_order_detail.expire_date;
+                        }
+
+                        sales_packing.sales_packing_detail.Add(sales_packing_detail);
+
 
                         sales_packingsales_packinglist_detailViewSource.View.Refresh();
                         PackingListDB.Entry(sales_packing).Entity.State = EntityState.Added;
@@ -375,13 +303,127 @@ namespace Cognitivo.Sales
                         crud_modal.Visibility = Visibility.Collapsed;
                         //filterVerifiedDetail();
                         filterDetail();
-                        Refresh_GroupByGrid();
-                        GridVerifiedList.SelectedIndex = 0;
+
                     }
+                    Refresh_GroupByGrid();
+                    GridVerifiedList.SelectedIndex = 0;
                 }
             }
         }
 
+        private void item_Select(object sender, EventArgs e)
+        {
+            app_branch app_branch = null;
+            if (sbxItem.ItemID > 0)
+            {
+                sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+
+                item item = PackingListDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+
+                if (item != null && item.id_item > 0 && sales_packing != null)
+                {
+                    if (cbxBranch.SelectedItem != null)
+                    { app_branch = cbxBranch.SelectedItem as app_branch; }
+
+                    item_product item_product = item.item_product.FirstOrDefault();
+
+                    if (item_product != null && item_product.can_expire)
+                    {
+                        crud_modalExpire.Visibility = Visibility.Visible;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_packing.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
+
+                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    }
+                    else
+                    {
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
+                    }
+                }
+
+
+            }
+        }
+
+        private void select_Item(sales_packing sales_packing, item item, app_branch app_branch, item_movement item_movement, decimal quantity)
+        {
+            long id_movement = item_movement != null ? item_movement.id_movement : 0;
+            if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified).FirstOrDefault() == null)
+            {
+                sales_packing_detail _sales_packing_detail = new sales_packing_detail();
+                _sales_packing_detail.sales_packing = sales_packing;
+                _sales_packing_detail.item = item;
+                _sales_packing_detail.verified_quantity = quantity;
+                _sales_packing_detail.id_item = item.id_item;
+                _sales_packing_detail.user_verified = true;
+
+                if (item_movement != null)
+                {
+                    _sales_packing_detail.batch_code = item_movement.code;
+                    _sales_packing_detail.expire_date = item_movement.expire_date;
+                    _sales_packing_detail.id_movement = (int)item_movement.id_movement;
+                }
+
+                if (app_branch != null)
+                {
+                    _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
+                    _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+                }
+
+                sales_packing.sales_packing_detail.Add(_sales_packing_detail);
+            }
+            else
+            {
+                sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                sales_packing_detail.verified_quantity += 1;
+            }
+
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
+                //filterVerifiedDetail();
+                filterDetail();
+                Refresh_GroupByGrid();
+
+            }));
+        }
+        private void Refresh_GroupByGrid()
+        {
+            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+            if (sales_packing != null)
+            {
+                if (sales_packing.sales_packing_detail.Count() > 0)
+                {
+                    //This code should be in Selection Changed of DataGrid and after inserting new items.
+                    var VerifiedItemList = sales_packing.sales_packing_detail
+                    .Where(x => x.user_verified == false)
+                    .GroupBy(x => x.id_item)
+                    .Select(x => new
+                    {
+                        ItemName = x.Max(y => y.item.name),
+                        ItemCode = x.Max(y => y.item.code),
+                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                        Quantity = x.Max(y => y.quantity),
+                        id_item = x.Max(y => y.id_item)
+                    })
+                    .ToList();
+                    GridVerifiedList.ItemsSource = VerifiedItemList;
+                }
+            }
+        }
+        private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+       
+            Refresh_GroupByGrid();
+        }
+        private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dynamic obj = GridVerifiedList.SelectedItem;
+            if (obj != null)
+            {
+                filterVerifiedDetail(obj.id_item);
+            }
+        }
         #region Filter Data
 
         private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
@@ -435,20 +477,9 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            filterDetail();
-            Refresh_GroupByGrid();
-        }
+     
 
-        private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            dynamic obj = GridVerifiedList.SelectedItem;
-            if (obj != null)
-            {
-                filterVerifiedDetail(obj.id_item);
-            }
-        }
+       
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -554,26 +585,6 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private void Refresh_GroupByGrid()
-        {
-            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
-            if (sales_packing != null)
-            {
-                //This code should be in Selection Changed of DataGrid and after inserting new items.
-                var VerifiedItemList = sales_packing.sales_packing_detail
-                    .Where(x => x.user_verified == false)
-                    .GroupBy(x => x.id_item)
-                    .Select(x => new
-                    {
-                        ItemName = x.Max(y => y.item.name),
-                        ItemCode = x.Max(y => y.item.code),
-                        VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                        Quantity = x.Max(y => y.quantity),
-                        id_item = x.Max(y => y.id_item)
-                    })
-                    .ToList();
-                GridVerifiedList.ItemsSource = VerifiedItemList;
-            }
-        }
+     
     }
 }

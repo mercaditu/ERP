@@ -49,14 +49,15 @@ namespace entity
         {
             get
             {
-                if (id_purchase_invoice > 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                //if (id_purchase_invoice > 0)
+                //{
+                //    return false;
+                //}
+                //else
+                //{
+                //    return true;
+                //}
+                return true;
             }
             set
             {

@@ -105,7 +105,7 @@ namespace entity.Brillo.Logic
                     if (packing_detail.id_location == null)
                     {
                         LocationID = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-                        // detail.app_location = db.app_location.Find(detail.id_location);
+                        packing_detail.app_location = db.app_location.Find(LocationID);
                     }
                     else
                     {

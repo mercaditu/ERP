@@ -869,6 +869,7 @@ namespace Cognitivo.Purchase
 
             PurchaseInvoiceDB.Entry(purchase_invoice).Entity.State = EntityState.Added;
             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+            calculate_vat(sender, null);
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Collapsed;
         }

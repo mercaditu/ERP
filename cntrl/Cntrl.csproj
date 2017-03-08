@@ -296,6 +296,7 @@
       <DependentUpon>Gauge180.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class\CheckMovementReApprove.cs" />
+    <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\UpdatePaymentReApprove.cs" />
     <Compile Include="Class\clsBarcode.cs" />
@@ -717,7 +718,6 @@
     <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseTender.rdlc" />
     <EmbeddedResource Include="Reports\Sales\CostOfGoodsSold.rdlc" />
-    <EmbeddedResource Include="Reports\Sales\SalesAnalysistemp.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByCustomer.rdlc" />

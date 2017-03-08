@@ -49,8 +49,16 @@ namespace Cognitivo.Purchase
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
                 filterVerifiedDetail(0);
-                purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                if (purchase_packingpurchase_packinglist_detailViewSource.View!=null)
+                {
+                    purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                }
+                if (purchase_packingpurchase_packing_detailApprovedViewSource.View != null)
+                {
+                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                }
+
+             
             }));
             cbxBranch.SelectedIndex = 0;
         }

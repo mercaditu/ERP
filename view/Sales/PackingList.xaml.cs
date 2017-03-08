@@ -53,8 +53,15 @@ namespace Cognitivo.Sales
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
                 filterVerifiedDetail(0);
-                sales_packingsales_packinglist_detailViewSource.View.Refresh();
-                sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
+                if (sales_packingsales_packinglist_detailViewSource.View!=null)
+                {
+                    sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                }
+                if (sales_packingsales_packing_detailVerifiedViewSource.View!=null)
+                {
+                    sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
+                }
+              
             }));
 
         }

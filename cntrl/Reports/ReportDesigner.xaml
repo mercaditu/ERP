@@ -9,5 +9,5 @@
     xmlns:Reporting="clr-namespace:Syncfusion.Windows.Reports.Designer;assembly=Syncfusion.ReportDesigner.WPF"
       mc:Ignorable="d" Loaded="RibbonWindow_Loaded"
       d:DesignHeight="600" d:DesignWidth="700" Background="White"  ShowActivated="False">
-    <Reporting:ReportDesigner  Grid.Row="0"  x:Name="ReportDesignerControl"/>
+    <Reporting:ReportDesigner  Grid.Row="0" DesignMode="RDLC"  x:Name="ReportDesignerControl"/>
 </syncfusion:RibbonWindow>

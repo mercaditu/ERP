@@ -50,6 +50,7 @@ namespace cntrl.Reports
                 Directory.CreateDirectory(path + SubFolder);
             }
             this.ReportDesignerControl.OpenReport(path + SubFolder+"/SalesAnalysis.rdlc");
+            
         }
     }
 }

@@ -89,8 +89,8 @@ namespace Cognitivo
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-               // InteractiveViews.SetViewCacheFactory(db,
-               //     new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\EFViews\\MyViews.xml")));
+               InteractiveViews.SetViewCacheFactory(db,
+                    new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Entity\\View.xml")));
 
                 if (db.Database.Exists() == false)
                 {

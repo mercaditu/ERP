@@ -183,7 +183,7 @@ namespace entity
 
                             payment_detail payment_detail = new payment_detail();
                             payment_detail.id_currencyfx = purchase_return.id_currencyfx;
-                            payment_detail.id_sales_return = purchase_return.id_purchase_return;
+                            payment_detail.id_purchase_return = purchase_return.id_purchase_return;
                             payment_detail.payment_type = payment_type != null ? payment_type : Fix_PaymentType();
 
                             payment_detail.value = PaymentValue;

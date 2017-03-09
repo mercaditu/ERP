@@ -8,9 +8,9 @@ namespace entity.Brillo.Document
 {
     public class DataSource
     {
-        private ReportDataSource reportDataSource = new ReportDataSource();
+        private Syncfusion.Windows.Reports.ReportDataSource reportDataSource = new Syncfusion.Windows.Reports.ReportDataSource();
 
-        public ReportDataSource Create(object Document)
+        public Syncfusion.Windows.Reports.ReportDataSource Create(object Document)
         {
             string BaseName = Document.GetType().BaseType.ToString();
             string AppName = Document.GetType().ToString();
@@ -104,7 +104,7 @@ namespace entity.Brillo.Document
             return null;
         }
 
-        public ReportDataSource SalesBudget(sales_budget sales_budget)
+        public Syncfusion.Windows.Reports.ReportDataSource SalesBudget(sales_budget sales_budget)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
@@ -160,7 +160,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource SalesOrder(sales_order sales_order)
+        public Syncfusion.Windows.Reports.ReportDataSource SalesOrder(sales_order sales_order)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_order_detail> sales_order_detail = sales_order.sales_order_detail.ToList();
@@ -220,7 +220,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource SalesInvoice(sales_invoice sales_invoice)
+        public Syncfusion.Windows.Reports.ReportDataSource SalesInvoice(sales_invoice sales_invoice)
         {
             reportDataSource.Name = "DataSet1";
             List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
@@ -310,7 +310,7 @@ namespace entity.Brillo.Document
             return PackingList;
         }
 
-        public ReportDataSource Sales_PackingList(sales_packing sales_packing)
+        public Syncfusion.Windows.Reports.ReportDataSource Sales_PackingList(sales_packing sales_packing)
         {
             reportDataSource.Name = "DataSet1";
             List<sales_packing_detail> sales_packing_detail = sales_packing.sales_packing_detail.ToList();
@@ -360,7 +360,7 @@ namespace entity.Brillo.Document
             return PackingList;
         }
 
-        public ReportDataSource SalesReturn(sales_return sales_return)
+        public Syncfusion.Windows.Reports.ReportDataSource SalesReturn(sales_return sales_return)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
@@ -422,7 +422,7 @@ namespace entity.Brillo.Document
         /// </summary>
         /// <param name="purchase_tender"></param>
         /// <returns></returns>
-        public ReportDataSource PurchaseTender(purchase_tender_contact purchase_tender_contact)
+        public Syncfusion.Windows.Reports.ReportDataSource PurchaseTender(purchase_tender_contact purchase_tender_contact)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<purchase_tender_detail> purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.ToList();
@@ -468,7 +468,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource PurchaseOrder(purchase_order purchase_order)
+        public Syncfusion.Windows.Reports.ReportDataSource PurchaseOrder(purchase_order purchase_order)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
@@ -518,7 +518,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource PurchaseInvoice(purchase_invoice purchase_invoice)
+        public Syncfusion.Windows.Reports.ReportDataSource PurchaseInvoice(purchase_invoice purchase_invoice)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();
@@ -579,12 +579,12 @@ namespace entity.Brillo.Document
         /// </summary>
         /// <param name="purchase_return"></param>
         /// <returns></returns>
-        public ReportDataSource PurchaseReturn(purchase_return purchase_return)
+        public Syncfusion.Windows.Reports.ReportDataSource PurchaseReturn(purchase_return purchase_return)
         {
             return reportDataSource;
         }
 
-        public ReportDataSource ItemTransfer(item_transfer item_transfer)
+        public Syncfusion.Windows.Reports.ReportDataSource ItemTransfer(item_transfer item_transfer)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<item_transfer_detail> item_transfer_detail = item_transfer.item_transfer_detail.ToList();
@@ -627,7 +627,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource ItemRequest(item_request item_request)
+        public Syncfusion.Windows.Reports.ReportDataSource ItemRequest(item_request item_request)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<item_request_detail> item_request_detail = item_request.item_request_detail.ToList();
@@ -654,10 +654,10 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public List<ReportDataSource> Impex(impex impex)
+        public List<Syncfusion.Windows.Reports.ReportDataSource> Impex(impex impex)
         {
-            List<ReportDataSource> ReportDataSourceList = new List<Microsoft.Reporting.WinForms.ReportDataSource>();
-            ReportDataSource reportDataSourceCost = new ReportDataSource();
+            List<Syncfusion.Windows.Reports.ReportDataSource> ReportDataSourceList = new List<Syncfusion.Windows.Reports.ReportDataSource>();
+            Syncfusion.Windows.Reports.ReportDataSource reportDataSourceCost = new Syncfusion.Windows.Reports.ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             reportDataSourceCost.Name = "DataSet2";
             if (impex != null && impex.impex_expense.FirstOrDefault() != null)
@@ -724,7 +724,7 @@ namespace entity.Brillo.Document
             return ReportDataSourceList;
         }
 
-        public ReportDataSource PaymentDetail_Print(payment_detail payment_detail)
+        public Syncfusion.Windows.Reports.ReportDataSource PaymentDetail_Print(payment_detail payment_detail)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
@@ -752,7 +752,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource PromissoryNote(payment_promissory_note payment_promissory_note)
+        public Syncfusion.Windows.Reports.ReportDataSource PromissoryNote(payment_promissory_note payment_promissory_note)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             reportDataSource.Value = payment_promissory_note.payment_schedual
@@ -783,7 +783,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource PaymentSchedual(List<payment_schedual> SchedualList)
+        public Syncfusion.Windows.Reports.ReportDataSource PaymentSchedual(List<payment_schedual> SchedualList)
         {
             /// Pankeel we need to change some things here.
             /// 1) Create query based on Payment Schedual.
@@ -821,7 +821,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource Payment(payment payment)
+        public Syncfusion.Windows.Reports.ReportDataSource Payment(payment payment)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<payment_detail> payment_detail = payment.payment_detail.ToList();
@@ -855,7 +855,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource Project(project project)
+        public Syncfusion.Windows.Reports.ReportDataSource Project(project project)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<project_task> project_task = project.project_task.ToList();
@@ -881,7 +881,7 @@ namespace entity.Brillo.Document
             return reportDataSource;
         }
 
-        public ReportDataSource Inventory(item_inventory item_inventory)
+        public Syncfusion.Windows.Reports.ReportDataSource Inventory(item_inventory item_inventory)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<item_inventory_detail> item_inventory_detail = item_inventory.item_inventory_detail.ToList();

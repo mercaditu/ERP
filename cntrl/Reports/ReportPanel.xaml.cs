@@ -166,36 +166,36 @@ namespace cntrl
             }
         }
 
-        public void Filter()
-        {
-            this.reportViewer.Reset();
+        //public void Filter()
+        //{
+        //    this.reportViewer.Reset();
 
-            ReportDataSource reportDataSource1 = new ReportDataSource();
-            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+        //    ReportDataSource reportDataSource1 = new ReportDataSource();
+        //    Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
-            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
-            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-            // translate the report
-            reportStream = RdlcReportHelper.TranslateReport(reportStream);
-            reportViewer.LocalReport.LoadReportDefinition(reportStream);
+        //    reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
+        //    reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
+        //    reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+        //    Assembly assembly = Assembly.GetExecutingAssembly();
+        //    Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+        //    // translate the report
+        //    reportStream = RdlcReportHelper.TranslateReport(reportStream);
+        //    reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
-            ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+        //    ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
+        //    ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
 
-            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+        //    reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
 
-            reportViewer.Refresh();
-            reportViewer.RefreshReport();
-        }
+        //    reportViewer.Refresh();
+        //    reportViewer.RefreshReport();
+        //}
 
         public void Fill()
         {
             this.reportViewer.Reset();
 
-            ReportDataSource reportDataSource1 = new ReportDataSource();
+            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
             if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
@@ -233,19 +233,35 @@ namespace cntrl
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             //dgvData.ItemsSource = dt; //DataGrid (BETA).
 
-            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-            // translate the report
-            reportStream = RdlcReportHelper.TranslateReport(reportStream);
+            reportViewer.DataSources.Add(reportDataSource1);
+            //Assembly assembly = Assembly.GetExecutingAssembly();
+            //Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            //// translate the report
+            //reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
-            reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            //reportViewer.LoadReportDefinition(reportStream);
 
-            ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            //ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
+            //ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
 
-            reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            //reportViewer.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
+            //If path (CognitivoERP) does not exist, create path.
+            if (Directory.Exists(path) == false)
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string SubFolder = "\\TemplateFiles";
+
+            //If path (TemplateFiles) does not exist, create path
+            if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+            }
+            
+            reportViewer.ReportPath = path + SubFolder + "/SalesAnalysis.rdlc";
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
@@ -319,7 +335,7 @@ namespace cntrl
                 }
             }
 
-            Filter();
+            //Filter();
         }
 
         private void Filter_Click(object sender, RoutedEventArgs e)

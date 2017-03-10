@@ -59,7 +59,7 @@
                     <WrapPanel Height="110" DataContext="{StaticResource paymentViewSource}">
                         <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}">
                             <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                            <DatePicker Style="{DynamicResource input_datepicker}"
+                            <DatePicker x:Name="dtptransdate" Style="{DynamicResource input_datepicker}" SelectedDateChanged="DatePicker_SelectedDateChanged"
 										SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
                             <Label Content="{lex:Loc CollectionAgent}" Style="{DynamicResource input_label}" />
                             <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSourceCollector}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"

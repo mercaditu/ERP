@@ -17,7 +17,7 @@ namespace cntrl.Curd
 
 
         private CollectionViewSource payment_schedualViewSource;
-
+        CollectionViewSource app_accountViewSource;
         public PaymentDB PaymentDB { get; set; }
 
         public PaymentGroup(ref PaymentDB _PaymentDB)
@@ -43,7 +43,7 @@ namespace cntrl.Curd
             await PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
-            CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
+            app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
                     a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account).LoadAsync();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
@@ -146,7 +146,20 @@ namespace cntrl.Curd
                     }
                 };
             }
-        }
+
+
+       
+           
+          
+                if (dpDate.SelectedDate != null)
+                {
+                    List<int> app_account_sessionList = PaymentDB.app_account_session.Where(y => y.is_active && y.op_date < dpDate.SelectedDate).Select(x => x.id_account).ToList();
+                    List<app_account> app_accountList = PaymentDB.app_account.Where(x => app_account_sessionList.Contains(x.id_account)).ToList();
+                    app_accountViewSource.Source = app_accountList;
+                }
+            
+       
+    }
 
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
@@ -174,5 +187,7 @@ namespace cntrl.Curd
                 }
             }
         }
+
+      
     }
 }

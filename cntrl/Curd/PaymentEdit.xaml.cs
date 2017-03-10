@@ -22,6 +22,7 @@ namespace cntrl.Curd
         private Modes Mode;
         private CollectionViewSource paymentpayment_detailViewSource;
         private CollectionViewSource paymentViewSource;
+        CollectionViewSource app_accountViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
@@ -60,9 +61,9 @@ namespace cntrl.Curd
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
-            CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
+            app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
-            app_accountViewSource.Source = PaymentDB.app_account.Local;
+            app_accountViewSource.Source = PaymentDB.app_account.ToList();
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
@@ -321,5 +322,6 @@ namespace cntrl.Curd
 
             paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
+
     }
 }

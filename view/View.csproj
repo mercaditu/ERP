@@ -1027,9 +1027,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="bin\Debug\Carnetmovement.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="bin\Debug\CarnetContact.rdlc" />
     <EmbeddedResource Include="bin\Debug\Import.rdlc" />
     <EmbeddedResource Include="bin\Debug\Inventory.rdlc" />

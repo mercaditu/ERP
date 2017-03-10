@@ -24,6 +24,7 @@ namespace cntrl.Curd
         private Modes Mode;
         private CollectionViewSource paymentpayment_detailViewSource;
         private CollectionViewSource paymentViewSource;
+        CollectionViewSource app_accountViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
 
         public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList, ref PaymentDB PaymentDB)
@@ -96,7 +97,7 @@ namespace cntrl.Curd
             }
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
-            CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
+            app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
             (a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account)).LoadAsync();
 
@@ -240,7 +241,7 @@ namespace cntrl.Curd
                         {
                             stptransdate.Visibility = Visibility.Visible;
                         }
-                        
+
                         stpcreditpurchase.Visibility = Visibility.Collapsed;
                         stpcreditsales.Visibility = Visibility.Collapsed;
                     }
@@ -363,6 +364,16 @@ namespace cntrl.Curd
 
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dtptransdate.SelectedDate != null)
+            {
+                List<int> app_account_sessionList = PaymentDB.app_account_session.Where(y => y.is_active && y.op_date < dtptransdate.SelectedDate).Select(x => x.id_account).ToList();
+                List<app_account> app_accountList = PaymentDB.app_account.Where(x => app_account_sessionList.Contains(x.id_account)).ToList();
+                app_accountViewSource.Source = app_accountList;
+            }
         }
     }
 }

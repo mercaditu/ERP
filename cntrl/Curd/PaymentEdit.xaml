@@ -55,7 +55,7 @@
                     <WrapPanel Height="120" DataContext="{StaticResource paymentViewSource}">
                         <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}">
                             <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                            <DatePicker Style="{DynamicResource input_datepicker}"
+                            <DatePicker Style="{DynamicResource input_datepicker}" 
 					    	            SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
                             <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}" />
                             <Controls:SmartBox_Contact x:Name="sbxContact"

@@ -90,8 +90,18 @@ namespace entity.Brillo.Document
 
             DocumentViewr DocumentViewr = new DocumentViewr();
             DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
-            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
-            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
+            string BaseName = Document.GetType().BaseType.ToString();
+            string AppName = Document.GetType().ToString();
+
+            if (AppName == typeof(impex).ToString() || BaseName == typeof(impex).ToString())
+            {
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
+            }
+            else
+            {
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.ItemMovementLabel((item_movement)Document));
+            }
             DocumentViewr.reportViewer.RefreshReport();
 
             Window window = new Window

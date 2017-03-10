@@ -658,6 +658,23 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
+        public ReportDataSource ItemMovementLabel(item_movement item_movement)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_movement> item_movementList = new List<entity.item_movement>();
+            item_movementList.Add(item_movement);
+
+            reportDataSource.Value = item_movementList
+                .Select(g => new
+                {
+                    item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code :"": "",
+                    item_name = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name : "" : "",
+                    lot_number=g.code,
+                    exp_date=g.expire_date
+                }).ToList();
+
+            return reportDataSource;
+        }
 
         public List<ReportDataSource> Impex(impex impex)
         {

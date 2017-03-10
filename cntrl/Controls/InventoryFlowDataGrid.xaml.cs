@@ -72,8 +72,21 @@ namespace cntrl.Controls
                 item_movementViewSource.View.Refresh();
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ItemMovement ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
+            if (ItemMovement != null)
+            {
+                MovementID = ItemMovement.MovementID;
+                using (db db = new db())
+                {
+                    entity.Brillo.Document.Start.Automatic(db.item_movement.Find(MovementID), "MovementLabel");
+                }
+            }
+        }
     }
- 
+
 
     public class ItemMovement
     {

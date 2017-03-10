@@ -346,6 +346,7 @@ namespace Cognitivo.Purchase
         private void purchase_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh_GroupByGrid();
+            GridVerifiedList.SelectedIndex = 0;
         }
 
         private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)

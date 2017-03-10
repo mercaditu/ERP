@@ -436,16 +436,16 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private async void cbxRelation_Select(object sender, RoutedEventArgs e)
+        private void cbxRelation_Select(object sender, RoutedEventArgs e)
         {
-            contact contact = (contact)contactViewSource.View.CurrentItem;
-            if (contact != null && cbxRelation.ContactID > 0)
+            contact main_contact = (contact)contactViewSource.View.CurrentItem;
+            if (main_contact != null && cbxRelation.ContactID > 0)
             {
-                contact main_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
-                //contact is not main contact. so contact.parent should be main contact.
+                contact contact = ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefault();
                 contact.parent = main_contact;
+                main_contact.child.Add(main_contact);
 
-                LoadRelatedContactOnThread(contact);
+                LoadRelatedContactOnThread(main_contact);
             }
         }
 

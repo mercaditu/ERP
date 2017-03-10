@@ -13,10 +13,10 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button Content="Edit" Click="Button_Click"/>
-        <syncfusion:ReportViewer x:Name="reportViewer" Grid.Row="1" />
+        <!--<syncfusion:ReportViewer x:Name="reportViewer" Grid.Row="1" />-->
        
-        <!--<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
             <rv:ReportViewer x:Name="reportViewer" ShowBackButton="False" ShowRefreshButton="False" ShowStopButton="False" KeepSessionAlive="False" />
-        </WindowsFormsHost>-->
+        </WindowsFormsHost>
     </Grid>
 </UserControl>

@@ -275,7 +275,7 @@
 							  SelectionChanged="cbxContactRole_SelectionChanged" />
                     <Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}" />
                     <cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
-											 Text="{Binding parent.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+											 />
                     <Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}" />
                     <DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True"
 							  ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">

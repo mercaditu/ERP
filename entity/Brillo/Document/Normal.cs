@@ -54,18 +54,16 @@ namespace entity.Brillo.Document
                     LocalReport LocalReport = new LocalReport();
                     PrintInvoice PrintInvoice = new PrintInvoice();
                     LocalReport.ReportPath = PathFull; // Path of the rdlc file
-                    //LocalReport.DataSources.Add(DataSource.Create(Document));
+                   LocalReport.DataSources.Add(DataSource.Create(Document));
                     PrintInvoice.Export(LocalReport);
                     PrintInvoice.Print(app_range.printer_name);
                 }
                 else
                 {
                     DocumentViewr DocumentViewr = new DocumentViewr();
-                    DocumentViewr.reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
                     
-                    DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
-                    DocumentViewr.reportViewer.DataSources.Clear();
-                    DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
+                    DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                    DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
                     DocumentViewr.reportViewer.RefreshReport();
 
                     Window window = new Window
@@ -91,9 +89,9 @@ namespace entity.Brillo.Document
             DataSource DataSource = new DataSource();
 
             DocumentViewr DocumentViewr = new DocumentViewr();
-            //DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
-            //DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
-            //DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
+            DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
+            DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
             DocumentViewr.reportViewer.RefreshReport();
 
             Window window = new Window
@@ -257,8 +255,8 @@ namespace entity.Brillo.Document
                 }
 
                 DocumentViewr DocumentViewr = new DocumentViewr();
-                //DocumentViewr.reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
-                //DocumentViewr.reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                DocumentViewr.reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(reportDataSource);
                 DocumentViewr.reportViewer.RefreshReport();
 
                 Window window = new Window

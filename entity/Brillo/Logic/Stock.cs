@@ -20,7 +20,7 @@ namespace entity.Brillo.Logic
             if (obj_entity.GetType().BaseType == typeof(purchase_return) || obj_entity.GetType() == typeof(purchase_return))
             {
                 purchase_return purchase_return = (purchase_return)obj_entity;
-                List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0 && x.IsSelected).ToList();
+                List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0 ).ToList();
                 foreach (purchase_return_detail purchase_return_detail in Listpurchase_return_detail
                     .Where(x => x.item.item_product.Count() > 0))
                 {

@@ -35,16 +35,14 @@ namespace cntrl.Curd
             payment_approveViewSource = (CollectionViewSource)FindResource("payment_approveViewSource");
             payment_approvepayment_approve_detailViewSource = (CollectionViewSource)FindResource("payment_approvepayment_approve_detailViewSource");
             payment_schedualList = _payment_schedualList;
-
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             payment_approve payment_approve = new payment_approve();
 
             payment_approve.status = Status.Documents_General.Pending;
             payment_approve.State = EntityState.Added;
 
-            //if (Mode == Modes.Recievable)
-            //{
-            //    payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-            //}
+            payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+
 
             payment_approve.IsSelected = true;
 
@@ -174,6 +172,12 @@ namespace cntrl.Curd
             try
             {
                 PaymentDB.SaveChanges();
+                app_document_range app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_approve.id_range).FirstOrDefault();
+                if (app_document_range != null)
+                {
+                    entity.Brillo.Document.Start.Automatic(payment_approve, app_document_range);
+                }
+
             }
             catch (Exception ex)
             {

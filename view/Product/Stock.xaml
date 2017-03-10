@@ -16,10 +16,10 @@
 	  Title="{lex:Loc Stock}">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
-        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}" />
-        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Stock:StockList}, CreateList=True}" />
+        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Stock:StockList}, CreateList=True}" />-->
     </Page.Resources>
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>

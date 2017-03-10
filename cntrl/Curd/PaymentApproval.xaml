@@ -67,7 +67,7 @@
                             <!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />-->
                         </StackPanel>
                         <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource payment_approveViewSource}">
-                            <StackPanel x:Name="stackDocument" Visibility="Collapsed">
+                            <StackPanel x:Name="stackDocument" >
                                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"

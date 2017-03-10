@@ -14,7 +14,7 @@ namespace entity
             entity.Reports.ReportDesigner window = new entity.Reports.ReportDesigner
             {
                 Title = "Report",
-                path = reportViewer.ReportPath
+                path = reportViewer.LocalReport.ReportPath
             };
 
             window.ShowDialog();

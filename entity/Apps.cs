@@ -48,7 +48,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 138
+            /// Last Used : 140
             /// </summary>
 
             [LocalizedDescription("DocumentRange")]
@@ -116,6 +116,9 @@ namespace entity
 
             [LocalizedDescription("Payment")]
             Payment = 93,
+
+            [LocalizedDescription("PaymentOrder")]
+            PaymentOrder = 140,
 
             [LocalizedDescription("PaymentType")]
             PaymentType = 51,

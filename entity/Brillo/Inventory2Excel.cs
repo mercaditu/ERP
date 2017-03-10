@@ -102,13 +102,18 @@ namespace entity.Brillo
 
                         if (detail != null)
                         {
-                            detail.value_counted = row.Cell(11).GetValue<decimal>();
+
+                            if (row.Cell(11).Value != null && row.Cell(11).Value.ToString()!="")
+                            {
+                                detail.value_counted = row.Cell(11).GetValue<decimal>();
+                            }
                             detail.unit_value = row.Cell(12).GetValue<decimal>();
                             detail.comment = row.Cell(13).GetValue<string>();
 
-                            if (row.Cell(8).Value != null)
+                            if (row.Cell(8).Value != null && row.Cell(8).Value.ToString() != "")
                             {
-                                //detail.expire_date = row.Cell(8).GetValue<DateTime>();
+                                detail.expire_date = row.Cell(8).GetValue<DateTime>();
+                                detail.RaisePropertyChanged("expire_date");
                             }
 
                             if (row.Cell(5).Value != null)

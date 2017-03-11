@@ -89,8 +89,11 @@ namespace Cognitivo
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-               InteractiveViews.SetViewCacheFactory(db,
-                    new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Entity\\View.xml")));
+                if (entity.Brillo.IO.FileExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Entity\\View.xml") == false)
+                {
+                    InteractiveViews.SetViewCacheFactory(db,
+                        new FileViewCacheFactory(entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Entity\\View.xml")));
+                }
 
                 if (db.Database.Exists() == false)
                 {
@@ -98,7 +101,7 @@ namespace Cognitivo
                 }
                 else
                 {
-                    await db.app_company.Select(x => x.name).FirstOrDefaultAsync();
+                    await db.app_company.Select(x => x.id_company).FirstOrDefaultAsync();
                     MainWin.mainFrame.Navigate(new mainLogIn());// }));
                 }
             }

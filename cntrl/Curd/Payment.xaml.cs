@@ -370,9 +370,18 @@ namespace cntrl.Curd
         {
             if (dtptransdate.SelectedDate != null)
             {
-                List<int> app_account_sessionList = PaymentDB.app_account_session.Where(y => y.is_active && y.op_date < dtptransdate.SelectedDate).Select(x => x.id_account).ToList();
+                List<int> app_account_sessionList = PaymentDB.app_account_session
+                    .Where(y => y.is_active 
+                    && y.cl_date != null 
+                    && y.op_date < dtptransdate.SelectedDate)
+                    .Select(x => x.id_account)
+                    .ToList();
                 List<app_account> app_accountList = PaymentDB.app_account.Where(x => app_account_sessionList.Contains(x.id_account)).ToList();
-                app_accountViewSource.Source = app_accountList;
+
+                if (app_accountList.Count() > 0)
+                {
+                    app_accountViewSource.Source = app_accountList;
+                }
             }
         }
     }

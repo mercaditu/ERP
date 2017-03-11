@@ -23,12 +23,14 @@ namespace entity.Brillo
                 DirectoryInfo di = Directory.CreateDirectory(directory);
             }
 
-            //DirectoryInfo dInfo = new DirectoryInfo(directory);
-            //DirectorySecurity dSecurity = dInfo.GetAccessControl();
-            //dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
-            //dInfo.SetAccessControl(dSecurity);
-
             return path;
+        }
+
+        public static bool FileExists(string path)
+        {
+            if (!Directory.Exists(path))
+                return true;
+            return false;
         }
     }
 }

@@ -166,30 +166,34 @@ namespace cntrl
             }
         }
 
-        //public void Filter()
-        //{
-        //    this.reportViewer.Reset();
+        public void Filter()
+        {
+            this.reportViewer.Reset();
 
-        //    ReportDataSource reportDataSource1 = new ReportDataSource();
-        //    Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
+            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
-        //    reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
-        //    reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
-        //    reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-        //    Assembly assembly = Assembly.GetExecutingAssembly();
-        //    Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-        //    // translate the report
-        //    reportStream = RdlcReportHelper.TranslateReport(reportStream);
-        //    reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
+            reportViewer.DataSources.Add(reportDataSource1);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            // translate the report
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
-        //    ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-        //    ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            reportViewer.LoadReport(reportStream);
 
-        //    reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter();
+            ParametersCost.Name = "ParameterCost";
+            ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
+            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter();
+            ParametersCost.Name = "Parameters";
+            ParametersCost.Values.Add(_StartDate.ToString() + _EndDate.ToString());
+            reportViewer.SetParameters(new Syncfusion.Windows.Reports.ReportParameter[] { Parameters, ParametersCost });
 
-        //    reportViewer.Refresh();
-        //    reportViewer.RefreshReport();
-        //}
+            reportViewer.Refresh();
+            reportViewer.RefreshReport();
+        }
 
         public void Fill()
         {
@@ -234,34 +238,21 @@ namespace cntrl
             //dgvData.ItemsSource = dt; //DataGrid (BETA).
 
             reportViewer.DataSources.Add(reportDataSource1);
-            //Assembly assembly = Assembly.GetExecutingAssembly();
-            //Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-            //// translate the report
-            //reportStream = RdlcReportHelper.TranslateReport(reportStream);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+            // translate the report
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
-            //reportViewer.LoadReportDefinition(reportStream);
+            reportViewer.LoadReport(reportStream);
 
-            //ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-            //ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter();
+            ParametersCost.Name = "ParameterCost";
+            ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
+            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter();
+            ParametersCost.Name = "Parameters";
+            ParametersCost.Values.Add(_StartDate.ToString() + _EndDate.ToString());
+            reportViewer.SetParameters(new Syncfusion.Windows.Reports.ReportParameter[] { Parameters, ParametersCost });
 
-            //reportViewer.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
-
-            //If path (CognitivoERP) does not exist, create path.
-            if (Directory.Exists(path) == false)
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            string SubFolder = "\\TemplateFiles";
-
-            //If path (TemplateFiles) does not exist, create path
-            if (!Directory.Exists(path + SubFolder))
-            {
-                Directory.CreateDirectory(path + SubFolder);
-            }
-            
-            reportViewer.ReportPath = path + SubFolder + "/SalesAnalysis.rdlc";
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
@@ -335,7 +326,7 @@ namespace cntrl
                 }
             }
 
-            //Filter();
+            Filter();
         }
 
         private void Filter_Click(object sender, RoutedEventArgs e)
@@ -365,18 +356,6 @@ namespace cntrl
                 // Save document
                 workBook.SaveAs(dlg.FileName);
             }
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
-            cntrl.Reports.ReportDesigner window = new cntrl.Reports.ReportDesigner
-            {
-                Title = "Report",
-                path= Report.Path
-            };
-
-            window.ShowDialog();
         }
     }
 

@@ -84,6 +84,7 @@
                                               ItemsSource="{Binding child, Mode=TwoWay}">
                         <Panels:pnl_TreeView StatusColor="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource ProjectStatus2Color}}"
+                                             Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

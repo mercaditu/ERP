@@ -51,6 +51,21 @@ namespace entity.Brillo.Document
                 ///
                 if (PrintStyle == PrintStyles.Automatic && !app_range.use_default_printer && app_range.printer_name != null)
                 {
+                    //This block of code is wrong, but i have placed it until the following block, that is currently commented is fixed.
+                    DocumentViewr DocumentViewr = new DocumentViewr();
+
+                    DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
+                    DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
+                    DocumentViewr.reportViewer.RefreshReport();
+
+                    Window window = new Window
+                    {
+                        Title = "Report",
+                        Content = DocumentViewr
+                    };
+
+                    window.ShowDialog();
+
                     //Syncfusion.Reports.lo] LocalReport LocalReport = new LocalReport();
                     //PrintInvoice PrintInvoice = new PrintInvoice();
                     //LocalReport.ReportPath = PathFull; // Path of the rdlc file

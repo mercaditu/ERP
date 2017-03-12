@@ -12,10 +12,6 @@ namespace cntrl.Curd
 {
     public partial class PaymentGroup : UserControl
     {
-        //  PaymentDB PaymentDB = new PaymentDB();
-
-
-
         private CollectionViewSource payment_schedualViewSource;
         CollectionViewSource app_accountViewSource;
         public PaymentDB PaymentDB { get; set; }
@@ -29,15 +25,14 @@ namespace cntrl.Curd
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            payment_schedualViewSource.Source = PaymentDB.payment_schedual
+            payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                         .Include(x => x.sales_invoice)
                         .Include(x => x.contact)
                         .OrderBy(x => x.expire_date)
-                        .ToList();
-            //PaymentDB.payment_schedual.Local;
+                        .ToListAsync();
 
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             await PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
@@ -51,6 +46,8 @@ namespace cntrl.Curd
             CollectionViewSource app_conditionViewSource = (CollectionViewSource)this.FindResource("app_conditionViewSource");
             await PaymentDB.app_condition.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_conditionViewSource.Source = PaymentDB.app_condition.Local;
+
+            dtpPaymentDate.SelectedDate = DateTime.Now;
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
@@ -59,7 +56,7 @@ namespace cntrl.Curd
             foreach (payment_schedual schedual in payment_schedualList)
             {
                 payment payment = new payment();
-                payment.trans_date = DateTime.Now;
+                payment.trans_date = dtpPaymentDate.SelectedDate != null ? (DateTime)dtpPaymentDate.SelectedDate : DateTime.Now;
                 payment.id_contact = schedual.id_contact;
                 payment.id_branch = CurrentSession.Id_Branch;
                 payment.id_user = CurrentSession.Id_User;
@@ -106,14 +103,26 @@ namespace cntrl.Curd
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Filter_Changed();
+        }
+
+        private void dpDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            Filter_Changed();
+        }
+
+        private void Filter_Changed()
+        {
+            DateTime Date = Convert.ToDateTime(dpDate.SelectedDate);
             app_condition app_condition = cbxCondition.SelectedItem as app_condition;
 
-            if (payment_schedualViewSource.View != null && app_condition != null)
+            if (payment_schedualViewSource.View != null && Date != null && app_condition != null)
             {
                 payment_schedualViewSource.View.Filter = i =>
                 {
                     payment_schedual payment_schedual = i as payment_schedual;
                     if (payment_schedual.AccountReceivableBalance > 0 &&
+                        payment_schedual.expire_date.Date == Date.Date &&
                         payment_schedual.sales_invoice.id_condition == app_condition.id_condition)
                     {
                         return true;
@@ -125,42 +134,6 @@ namespace cntrl.Curd
                 };
             }
         }
-
-        private void dpDate_Changed(object sender, SelectionChangedEventArgs e)
-        {
-            DateTime Date = Convert.ToDateTime(dpDate.SelectedDate);
-
-            if (payment_schedualViewSource.View != null && Date != null)
-            {
-                payment_schedualViewSource.View.Filter = i =>
-                {
-                    payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.AccountReceivableBalance > 0 &&
-                        payment_schedual.expire_date.Date == Date.Date)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                };
-            }
-
-
-       
-           
-          
-                if (dpDate.SelectedDate != null)
-                {
-                    List<int> app_account_sessionList = PaymentDB.app_account_session.Where(y => y.is_active && y.op_date < dpDate.SelectedDate).Select(x => x.id_account).ToList();
-                    List<app_account> app_accountList = PaymentDB.app_account.Where(x => app_account_sessionList.Contains(x.id_account)).ToList();
-                    app_accountViewSource.Source = app_accountList;
-                }
-            
-       
-    }
-
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -188,6 +161,14 @@ namespace cntrl.Curd
             }
         }
 
-      
+        private void dtpPaymentDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (dtpPaymentDate.SelectedDate != null)
+            {
+                List<int> app_account_sessionList = PaymentDB.app_account_session.Where(y => y.is_active && y.op_date < dtpPaymentDate.SelectedDate).Select(x => x.id_account).ToList();
+                List<app_account> app_accountList = PaymentDB.app_account.Where(x => app_account_sessionList.Contains(x.id_account)).ToList();
+                app_accountViewSource.Source = app_accountList;
+            }
+        }
     }
 }

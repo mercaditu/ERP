@@ -140,12 +140,22 @@ namespace entity
                 if (columnName == "id_item")
                 {
                     if (id_item == 0)
-                        return "Item needs to be selected";
+                        return "Please select Item";
                 }
+
                 if (columnName == "quantity")
                 {
                     if (quantity == 0)
-                        return "Quantity cannot be zero.";
+                    {
+                        return "Quantity cannot be zero";
+                    }
+                    else if (sales_order_detail != null)
+                    {
+                        if (sales_order_detail.quantity < quantity)
+                        {
+                            return "Quantity exceded";
+                        }
+                    }
                 }
                 return "";
             }

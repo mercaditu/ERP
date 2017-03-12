@@ -133,6 +133,7 @@ namespace entity.Brillo
 
                                             //Different Context.
                                             detail.item_product.item.id_brand = item_brand.id_brand;
+                                            db.SaveChanges();
                                         }
                                     }
                                 }

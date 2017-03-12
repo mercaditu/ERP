@@ -143,7 +143,16 @@ namespace entity
                 if (columnName == "quantity")
                 {
                     if (quantity == 0)
-                        return "Quantity cannot be zero.";
+                    {
+                        return "Quantity cannot be zero";
+                    }
+                    else if (purchase_order_detail != null)
+                    {
+                        if (purchase_order_detail.quantity < quantity)
+                        {
+                            return "Quantity exceded";
+                        }
+                    }
                 }
                 return "";
             }

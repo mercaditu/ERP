@@ -70,10 +70,10 @@ namespace Cognitivo.Configs
             }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            app_documentViewSource = ((CollectionViewSource)(this.FindResource("app_documentViewSource")));
-            dbcontext.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
+            app_documentViewSource = FindResource("app_documentViewSource") as CollectionViewSource;
+            await dbcontext.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).LoadAsync();
             app_documentViewSource.Source = dbcontext.app_document.Local;
 
             cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names)).OfType<entity.App.Names>().ToList().OrderBy(x => x);

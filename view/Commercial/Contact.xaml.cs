@@ -154,16 +154,13 @@ namespace Cognitivo.Commercial
         {
             if (listContacts.SelectedItem != null)
             {
-                contact contact = (contact)listContacts.SelectedItem;
+                contact contact = listContacts.SelectedItem as contact;
                 if (ContactDB.contacts.Any(x => x.code == contact.code && x.id_contact != contact.id_contact))
                 {
-                    if (System.Windows.Forms.MessageBox.Show("Contact: " + contact.name + " Already Exists.. Are You Want To Continue...", "Cognitivo", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                    if (System.Windows.Forms.MessageBox.Show("Contact: " + contact.name + " Already Exists.. Are You Want To Continue...", "Cognitivo ERP", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                     { return; }
-
-
                 }
 
-                //Abhi> in Brillo, add logic to add for validations
                 if (ContactDB.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(ContactDB.NumberOfRecords);
@@ -366,12 +363,12 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void LoadRelatedContactOnThread(contact _contact)
+        private void LoadRelatedContactOnThread(contact ParentContact)
         {
             if (contactChildListViewSource != null)
             {
                 contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-                contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == _contact.id_contact || x.id_contact == _contact.id_contact).ToList();
+                contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == ParentContact.id_contact || x.id_contact == ParentContact.id_contact).ToList();
                 contactChildListViewSource.View.Refresh();
             }
         }
@@ -439,14 +436,19 @@ namespace Cognitivo.Commercial
 
         private void cbxRelation_Select(object sender, RoutedEventArgs e)
         {
-            contact main_contact = (contact)contactViewSource.View.CurrentItem;
-            if (main_contact != null && cbxRelation.ContactID > 0)
+            contact SelectedContact = (contact)contactViewSource.View.CurrentItem;
+            if (SelectedContact != null && cbxRelation.ContactID > 0)
             {
-                contact contact = ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefault();
-                contact.parent = main_contact;
-                main_contact.child.Add(main_contact);
+                contact ParentContact = ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefault();
+                if (ParentContact != null)
+                {
+                    //Clean these values to prevent Selected Contact from appearing in further reports or windows.
+                    SelectedContact.is_customer = false;
+                    SelectedContact.is_supplier = false;
 
-                LoadRelatedContactOnThread(main_contact);
+                    ParentContact.child.Add(SelectedContact);
+                    LoadRelatedContactOnThread(ParentContact);
+                }
             }
         }
 

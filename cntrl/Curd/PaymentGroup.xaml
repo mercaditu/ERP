@@ -103,7 +103,7 @@
                 <StackPanel Grid.Column="1" Background="{StaticResource appConfig}">
                     <CheckBox Content="{lex:Loc SelectAll}" Width="auto" Style="{StaticResource input_checkbox}" Click="chbxSelectAll_Checked"/>
                     <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                    <Label Content="{Binding trans_date, Mode=OneTime, FallbackValue=2016}"/>
+                    <DatePicker x:Name="dtpPaymentDate" SelectedDateChanged="dtpPaymentDate_Changed" Width="134" Style="{StaticResource input_datepicker}"/>
                     <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}" />
                         <ComboBox x:Name="cbxPamentType"
 					                DisplayMemberPath="name" SelectedValuePath="id_payment_type"

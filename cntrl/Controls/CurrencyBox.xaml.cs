@@ -14,6 +14,8 @@ namespace cntrl.Controls
         public int id_currency { get; set; }
         public App.Names appName { get; set; }
 
+        public bool HasRounding { get; set; }
+
         public int SelectedValue
         {
             get
@@ -63,6 +65,9 @@ namespace cntrl.Controls
         {
             RaisePropertyChanged("id_currency");
             app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == id_currency).FirstOrDefault();
+
+            HasRounding = app_currencyfx.app_currency.has_rounding;
+            RaisePropertyChanged("HasRounding");
 
             if (app_currencyfx != null)
             {

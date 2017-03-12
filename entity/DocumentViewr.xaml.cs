@@ -11,7 +11,7 @@ namespace entity
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            entity.Reports.ReportDesigner window = new entity.Reports.ReportDesigner
+            Reports.ReportDesigner window = new Reports.ReportDesigner
             {
                 Title = "Report",
                 path = reportViewer.ReportPath
@@ -19,7 +19,5 @@ namespace entity
 
             window.ShowDialog();
         }
-
-      
     }
 }

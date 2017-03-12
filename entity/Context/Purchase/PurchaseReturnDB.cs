@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using WPFLocalizeExtension.Extensions;
 
 namespace entity
@@ -211,29 +212,37 @@ namespace entity
 
         public void Anull()
         {
-            foreach (purchase_return purchase_return in base.purchase_return.Local)
+            foreach (purchase_return purchase_return in base.purchase_return.Local.Where(x => x.IsSelected && x.Error == null && x.status == Status.Documents_General.Approved))
             {
-                if (purchase_return.IsSelected && purchase_return.Error == null)
+                List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+
+                //Clean the Payment Schedual. If Return has benn used, this will clean it from existance.
+                if (purchase_return.payment_schedual != null && purchase_return.payment_schedual.Count > 0)
                 {
-                    List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                    payment_schedualList = _Payment.revert_Schedual(purchase_return);
-
-                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                    List<item_movement> item_movementList = new List<item_movement>();
-                    item_movementList = _Stock.revert_Stock(this, App.Names.PurchaseReturn, purchase_return);
-
-                    if (payment_schedualList != null && payment_schedualList.Count > 0)
+                    foreach (payment_schedual payment_schedual in purchase_return.payment_schedual)
                     {
-                        base.payment_schedual.RemoveRange(payment_schedualList);
+                        if (payment_schedual.payment_detail != null)
+                        {
+                            //Remove Payment Detail from history.
+                            base.payment_detail.Remove(payment_schedual.payment_detail);
+                        }
                     }
-                    if (item_movementList != null && item_movementList.Count > 0)
-                    {
-                        base.item_movement.RemoveRange(item_movementList);
-                    }
-                    purchase_return.status = Status.Documents_General.Annulled;
-                    base.SaveChanges();
+                    //Remove Schedual from history.
+                    base.payment_schedual.RemoveRange(purchase_return.payment_schedual);
                 }
+
+                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                List<item_movement> item_movementList = new List<item_movement>();
+                item_movementList = _Stock.revert_Stock(this, App.Names.PurchaseReturn, purchase_return);
+
+                if (item_movementList != null && item_movementList.Count > 0)
+                {
+                    base.item_movement.RemoveRange(item_movementList);
+                }
+
+                //Finalize
+                purchase_return.status = Status.Documents_General.Annulled;
+                base.SaveChanges();
             }
         }
     }

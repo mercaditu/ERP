@@ -373,30 +373,34 @@ namespace entity
 
         public void Anull()
         {
-            foreach (sales_return sales_return in base.sales_return.Local)
+            foreach (sales_return sales_return in base.sales_return.Local.Where(x => x.IsSelected && x.Error == null && x.status == Status.Documents_General.Approved))
             {
-                if (sales_return.IsSelected && sales_return.Error == null)
+                //Clean the Payment Schedual. If Return has benn used, this will clean it from existance.
+                if (sales_return.payment_schedual != null && sales_return.payment_schedual.Count > 0)
                 {
-                    List<payment_schedual> payment_schedualList = new List<payment_schedual>();
-                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                    payment_schedualList = _Payment.revert_Schedual(sales_return);
-
-                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                    List<item_movement> item_movementList = new List<item_movement>();
-                    item_movementList = _Stock.revert_Stock(this, App.Names.SalesReturn, sales_return);
-
-                    if (payment_schedualList != null && payment_schedualList.Count > 0)
+                    foreach (payment_schedual payment_schedual in sales_return.payment_schedual)
                     {
-                        base.payment_schedual.RemoveRange(payment_schedualList);
+                        if (payment_schedual.payment_detail != null)
+                        {
+                            //Remove Payment Detail from history.
+                            base.payment_detail.Remove(payment_schedual.payment_detail);
+                        }
                     }
-                    if (item_movementList != null && item_movementList.Count > 0)
-                    {
-                        base.item_movement.RemoveRange(item_movementList);
-                    }
-
-                    sales_return.status = Status.Documents_General.Annulled;
-                    SaveChanges();
+                    //Remove Schedual from history.
+                    base.payment_schedual.RemoveRange(sales_return.payment_schedual);
                 }
+
+                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                List<item_movement> item_movementList = new List<item_movement>();
+                item_movementList = _Stock.revert_Stock(this, App.Names.SalesReturn, sales_return);
+
+                if (item_movementList != null && item_movementList.Count > 0)
+                {
+                    base.item_movement.RemoveRange(item_movementList);
+                }
+
+                sales_return.status = Status.Documents_General.Annulled;
+                SaveChanges();
             }
         }
     }

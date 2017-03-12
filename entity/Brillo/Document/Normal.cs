@@ -78,6 +78,7 @@ namespace entity.Brillo.Document
                     DocumentViewr DocumentViewr = new DocumentViewr();
                     
                     DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
+                    DocumentViewr.reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
                     DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
                     DocumentViewr.reportViewer.RefreshReport();
 

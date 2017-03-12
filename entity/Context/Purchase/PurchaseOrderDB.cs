@@ -105,6 +105,7 @@ namespace entity
                     purchase_order.app_condition = app_condition.Find(purchase_order.id_condition);
                     purchase_order.app_contract = app_contract.Find(purchase_order.id_contract);
                     purchase_order.app_currencyfx = app_currencyfx.Find(purchase_order.id_currencyfx);
+
                     if (purchase_order.status != Status.Documents_General.Approved)
                     {
                         if (purchase_order.number == null && purchase_order.id_range != null)
@@ -133,7 +134,7 @@ namespace entity
 
                         purchase_order.status = Status.Documents_General.Approved;
 
-                        foreach (purchase_order_detail purchase_order_detail in purchase_order.purchase_order_detail)
+                        foreach (purchase_order_detail purchase_order_detail in purchase_order.purchase_order_detail.Where(x => x.item != null))
                         {
                             if (purchase_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {

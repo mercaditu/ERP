@@ -1,5 +1,4 @@
 ﻿using entity.Class;
-using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -192,6 +192,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.DocIO.Base.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Gantt.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Gauge.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.Gauge.WPF.dll</HintPath>
@@ -216,6 +217,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.ProjIO.Base, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.PropertyGrid.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.PropertyGrid.WPF.dll</HintPath>
@@ -640,6 +642,9 @@
     </Compile>
     <Compile Include="Project\Development\ProjectFinance.xaml.cs">
       <DependentUpon>ProjectFinance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Project\Development\ProjectGantt.xaml.cs">
+      <DependentUpon>ProjectGantt.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\Events\EventCosting.xaml.cs">
       <DependentUpon>EventCosting.xaml</DependentUpon>
@@ -1484,6 +1489,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Project\Development\ProjectFinance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Project\Development\ProjectGantt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

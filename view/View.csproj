@@ -244,6 +244,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Assemblies\4.5\Syncfusion.SfMaps.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfRadialMenu.Wpf, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfSchedule.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfSkinManager.WPF, Version=14.4450.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.20\Assemblies\4.5\Syncfusion.SfSkinManager.WPF.dll</HintPath>
@@ -433,6 +435,9 @@
     </Compile>
     <Compile Include="Commercial\Reconciliation.xaml.cs">
       <DependentUpon>Reconciliation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\SchedualViewer.xaml.cs">
+      <DependentUpon>SchedualViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\Account.xaml.cs">
       <DependentUpon>Account.xaml</DependentUpon>
@@ -1255,6 +1260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Commercial\Reconciliation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commercial\SchedualViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

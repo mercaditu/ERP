@@ -6,7 +6,7 @@ namespace entity.Brillo.Logic
     {
         public void Document_PrintPaymentReceipt(payment payment)
         {
-            DocumentViewr MainWindow = new DocumentViewr();
+            DocumentViewer MainWindow = new DocumentViewer();
             //MainWindow.loadPaymentRecieptReport(payment.id_payment);
 
             Window window = new Window

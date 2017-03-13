@@ -2,9 +2,9 @@
 
 namespace entity
 {
-    public partial class DocumentViewr : UserControl
+    public partial class DocumentViewer : UserControl
     {
-        public DocumentViewr()
+        public DocumentViewer()
         {
             InitializeComponent();
         }
@@ -13,7 +13,7 @@ namespace entity
         {
             Reports.ReportDesigner window = new Reports.ReportDesigner
             {
-                Title = "Report",
+                Title = "Designer",
                 path = reportViewer.ReportPath
             };
 

@@ -1,0 +1,17 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Cognitivo.Commercial"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Cognitivo.Commercial.SchedualViewer"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      d:DesignHeight="500" d:DesignWidth="600"
+      Title="SchedualViewer">
+    <Grid>
+        <syncfusion:SfSchedule FocusedMonth="GhostWhite" 
+                               NonFocusedMonth="LightGray" 
+                               ScheduleType="Week" 
+                               WorkEndHour="18" WorkStartHour="8" />
+    </Grid>
+</Page>

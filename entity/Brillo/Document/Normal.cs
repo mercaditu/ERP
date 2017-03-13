@@ -1,5 +1,4 @@
-﻿using Microsoft.Reporting.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -52,7 +51,7 @@ namespace entity.Brillo.Document
                 if (PrintStyle == PrintStyles.Automatic && !app_range.use_default_printer && app_range.printer_name != null)
                 {
                     //This block of code is wrong, but i have placed it until the following block, that is currently commented is fixed.
-                    DocumentViewr DocumentViewr = new DocumentViewr();
+                    DocumentViewer DocumentViewr = new DocumentViewer();
 
                     DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
                     DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
@@ -60,7 +59,7 @@ namespace entity.Brillo.Document
 
                     Window window = new Window
                     {
-                        Title = "Report",
+                        Title = DocumentName,
                         Content = DocumentViewr
                     };
 
@@ -75,7 +74,7 @@ namespace entity.Brillo.Document
                 }
                 else
                 {
-                    DocumentViewr DocumentViewr = new DocumentViewr();
+                    DocumentViewer DocumentViewr = new DocumentViewer();
                     
                     DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
                     DocumentViewr.reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
@@ -84,7 +83,7 @@ namespace entity.Brillo.Document
 
                     Window window = new Window
                     {
-                        Title = "Report",
+                        Title = DocumentName,
                         Content = DocumentViewr
                     };
 
@@ -104,7 +103,7 @@ namespace entity.Brillo.Document
 
             DataSource DataSource = new DataSource();
 
-            DocumentViewr DocumentViewr = new DocumentViewr();
+            DocumentViewer DocumentViewr = new DocumentViewer();
             DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
             string BaseName = Document.GetType().BaseType.ToString();
             string AppName = Document.GetType().ToString();
@@ -280,7 +279,7 @@ namespace entity.Brillo.Document
                     File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Carnet_Contact.rdlc", path + SubFolder + "\\Carnet_Contact.rdlc");
                 }
 
-                DocumentViewr DocumentViewr = new DocumentViewr();
+                DocumentViewer DocumentViewr = new DocumentViewer();
                 DocumentViewr.reportViewer.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
                 DocumentViewr.reportViewer.DataSources.Add(reportDataSource);
                 DocumentViewr.reportViewer.RefreshReport();

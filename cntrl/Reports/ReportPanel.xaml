@@ -27,10 +27,9 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <TabItem Header="{lex:Loc Reports}">
-                <syncfusion:ReportViewer x:Name="reportViewer" />
-                <!--<WindowsFormsHost>
+                <WindowsFormsHost>
                     <rv:ReportViewer x:Name="reportViewer" />
-                </WindowsFormsHost>-->
+                </WindowsFormsHost>
             </TabItem>
             <TabItem Header="Data">
                 <Grid Background="WhiteSmoke">
@@ -92,9 +91,6 @@
                 <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
-                <!--<Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10"
-                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />-->
             </StackPanel>
         </StackPanel>
         <ScrollViewer MaxHeight="256"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Bottom">

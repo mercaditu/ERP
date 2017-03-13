@@ -842,13 +842,13 @@ namespace Cognitivo.Sales
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-            if (sales_invoice != null)
+            if (sales_invoice != null && sales_invoice.status == Status.Documents_General.Approved)
             {
                 entity.Brillo.Document.Start.Manual(sales_invoice, sales_invoice.app_document_range);
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning("Please a valid select record");
             }
         }
 

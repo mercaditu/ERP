@@ -157,8 +157,7 @@ namespace Cognitivo.Commercial
                 contact contact = listContacts.SelectedItem as contact;
                 if (ContactDB.contacts.Any(x => x.code == contact.code && x.id_contact != contact.id_contact))
                 {
-                    if (System.Windows.Forms.MessageBox.Show("Contact: " + contact.name + " Already Exists.. Are You Want To Continue...", "Cognitivo ERP", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
-                    { return; }
+                    toolBar.msgWarning("Duplicate Code");
                 }
 
                 if (ContactDB.SaveChanges() > 0)
@@ -166,9 +165,7 @@ namespace Cognitivo.Commercial
                     toolBar.msgSaved(ContactDB.NumberOfRecords);
                     contactViewSource.View.Refresh();
                 }
-
             }
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -492,12 +489,12 @@ namespace Cognitivo.Commercial
                 if (app_field == null)
                 {
                     app_field = new app_field();
-                    app_field.field_type = entity.app_field.field_types.Account;
-                    app_field.name = "EMail";
+                    app_field.field_type = app_field.field_types.Account;
+                    app_field.name = "Account";
                     ContactDB.app_field.Add(app_field);
 
                     app_fieldViewSource.View.Refresh();
-                    app_fieldViewSource.View.MoveCurrentToLast();
+                    app_fieldViewSource.View.MoveCurrentTo(app_field);
                 }
                 contact_field_value contact_field_value = new contact_field_value();
                 contact_field_value.app_field = app_field;
@@ -524,7 +521,7 @@ namespace Cognitivo.Commercial
                     ContactDB.app_field.Add(app_field);
 
                     app_fieldemailViewSource.View.Refresh();
-                    app_fieldemailViewSource.View.MoveCurrentToLast();
+                    app_fieldemailViewSource.View.MoveCurrentTo(app_field);
                 }
 
                 contact_field_value contact_field_value = new contact_field_value();
@@ -545,12 +542,12 @@ namespace Cognitivo.Commercial
                 if (app_field == null)
                 {
                     app_field = new app_field();
-                    app_field.field_type = entity.app_field.field_types.Telephone;
+                    app_field.field_type = app_field.field_types.Telephone;
                     app_field.name = "Work";
                     ContactDB.app_field.Add(app_field);
 
                     app_fieldphoneViewSource.View.Refresh();
-                    app_fieldphoneViewSource.View.MoveCurrentToLast();
+                    app_fieldphoneViewSource.View.MoveCurrentTo(app_field);
                 }
 
                 contact_field_value contact_field_value = new contact_field_value();
@@ -571,10 +568,6 @@ namespace Cognitivo.Commercial
                 contact.id_price_list = null;
                 contactViewSource.View.Refresh();
             }
-        }
-
-        private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
-        {
         }
 
         private void lblCancelCost_MouseUp(object sender, MouseButtonEventArgs e)
@@ -640,6 +633,93 @@ namespace Cognitivo.Commercial
             else
             {
                 MessageBox.Show("Please save Contact before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void CollectionViewSource_Account_Filter(object sender, FilterEventArgs e)
+        {
+            CollectionViewSource contactcontact_field_valueViewSource = FindResource("contactcontact_field_valueViewSource") as CollectionViewSource;
+            if (contactcontact_field_valueViewSource.View != null)
+            {
+                contactcontact_field_valueViewSource.View.Filter = i =>
+                {
+                    contact_field_value contact_field_value = i as contact_field_value;
+
+                    if (contact_field_value.app_field != null)
+                    {
+                        app_field app_field = contact_field_value.app_field;
+                        if (app_field.field_type == app_field.field_types.Account)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+        }
+
+        private void CollectionViewSource_Email_Filter(object sender, FilterEventArgs e)
+        {
+            CollectionViewSource contactcontact_field_valueemailViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueemailViewSource");
+            if (contactcontact_field_valueemailViewSource.View != null)
+            {
+                contactcontact_field_valueemailViewSource.View.Filter = i =>
+                {
+                    contact_field_value contact_field_value = i as contact_field_value;
+
+                    if (contact_field_value.app_field != null)
+                    {
+                        app_field app_field = contact_field_value.app_field;
+                        if (app_field.field_type == app_field.field_types.Email)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+        }
+
+        private void CollectionViewSource_Telephone_Filter(object sender, FilterEventArgs e)
+        {
+            CollectionViewSource contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
+            if (contactcontact_field_valuephoneViewSource.View != null)
+            {
+                contactcontact_field_valuephoneViewSource.View.Filter = i =>
+                {
+                    contact_field_value contact_field_value = i as contact_field_value;
+
+                    if (contact_field_value.app_field != null)
+                    {
+                        app_field app_field = contact_field_value.app_field;
+                        if (app_field.field_type == app_field.field_types.Telephone)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
         }
     }

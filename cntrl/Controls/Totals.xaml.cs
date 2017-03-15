@@ -10,7 +10,7 @@ namespace cntrl.Controls
     /// </summary>
     public partial class Totals : UserControl
     {
-        public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals));
+        public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals),new PropertyMetadata(false));
 
         public bool Has_Rounding
         {

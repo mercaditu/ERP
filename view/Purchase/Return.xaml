@@ -141,6 +141,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Controls:Totals Grid.Row="1" Grid.Column="1"
+                                  Has_Rounding="{Binding ElementName=cbxCurrency,Path=HasRounding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 					GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource purchase_returnViewSource}, StringFormat={}{0:N}}"
 											 Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											 VerticalAlignment="Top" HorizontalAlignment="Right" CanOpen="False" />

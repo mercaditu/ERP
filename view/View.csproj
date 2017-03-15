@@ -981,6 +981,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\Application\128\Inventory.png" />
     <Resource Include="Images\Cognitivo-128.png" />
     <Resource Include="Images\Application\128\MobileBranch.png" />
     <Resource Include="Images\Application\128\PackingListRecieve.png" />

@@ -1000,7 +1000,10 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_invoice.contact != null)
                 {
-                    purchase_invoice.contact.trans_code = purchase_invoice.code;
+                    if (purchase_invoice.contact.trans_code != purchase_invoice.code)
+                    {
+                        purchase_invoice.contact.trans_code = purchase_invoice.code;
+                    }
                 }
             }
         }

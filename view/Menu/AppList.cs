@@ -52,7 +52,7 @@ namespace Cognitivo.Menu
             dtApp.Columns.Add("HasReport");
 
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Lite, "1");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Customer, "Contact", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "SalesBudget", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
@@ -66,7 +66,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.SchedualViewer", entity.App.Names.SalesInvoice, "", entity.CurrentSession.Versions.Medium, "0");
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", entity.CurrentSession.Versions.Lite, "1");
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Form, "Commercial.Contact", entity.App.Names.Supplier, "Contact", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Inventory, "Purchase.PackingList", entity.App.Names.PackingList, "PackingListRecieve", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Tender", entity.App.Names.PurchaseTender, "PurchaseTender", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Transaction, "Purchase.Order", entity.App.Names.PurchaseOrder, "PurchaseOrder", entity.CurrentSession.Versions.Medium, "1");

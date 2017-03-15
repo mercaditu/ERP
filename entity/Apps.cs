@@ -51,6 +51,12 @@ namespace entity
             /// Last Used : 140
             /// </summary>
 
+            [LocalizedDescription("Customer")]
+            Customer = 141,
+
+            [LocalizedDescription("Supplier")]
+            Supplier = 142,
+
             [LocalizedDescription("DocumentRange")]
             DocumentRange = 110,
 

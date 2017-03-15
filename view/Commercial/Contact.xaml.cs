@@ -38,8 +38,21 @@ namespace Cognitivo.Commercial
             contactcontact_field_valueemailViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueemailViewSource");
             contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
 
+            Window Win = Window.GetWindow(this) as Window;
+
             //Contact
-            await ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            if (Win.Title == entity.Brillo.Localize.StringText("Customer"))
+            {
+                await ContactDB.contacts.Where(a => a.is_supplier == false && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            }
+            else if (Win.Title == entity.Brillo.Localize.StringText("Supplier"))
+            {
+                await ContactDB.contacts.Where(a => a.is_customer == false && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            }
+            else
+            {
+                await ContactDB.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            }
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;

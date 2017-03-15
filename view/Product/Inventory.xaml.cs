@@ -125,6 +125,7 @@ namespace Cognitivo.Product
                             else
                             {
                                 item_inventory_detail.value_system = 0;
+                                item_inventory_detail.unit_value = 0;
                             }
 
                             if (CurrentSession.Get_Currency_Default_Rate() != null)
@@ -137,7 +138,10 @@ namespace Cognitivo.Product
                     }
                 }
 
-                item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                item_inventoryViewSource.View.Refresh();
+                item_inventoryViewSource.View.MoveCurrentTo(item_inventory);
+                app_branchapp_locationViewSource.View.MoveCurrentTo(app_location);
+
                 FilterDetail();
             }
         }

@@ -157,7 +157,7 @@
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 													   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_detailViewSource}}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 												ElementStyle="{DynamicResource MetroDataGridCheckBox}"

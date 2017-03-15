@@ -34,7 +34,8 @@ namespace Cognitivo.Product
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
 
-            await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
+            await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).Include(x=>x.item_inventory_detail).OrderByDescending(x => x.trans_date).LoadAsync();
+
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
@@ -133,6 +134,7 @@ namespace Cognitivo.Product
                                 item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                             }
                             item_inventory_detail.item_inventory = item_inventory;
+                            item_inventory_detail.id_inventory = item_inventory.id_inventory;
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }
                     }
@@ -141,7 +143,7 @@ namespace Cognitivo.Product
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentTo(item_inventory);
                 app_branchapp_locationViewSource.View.MoveCurrentTo(app_location);
-
+                item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 FilterDetail();
             }
         }

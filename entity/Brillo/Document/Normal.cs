@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Reporting.WinForms;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,41 +51,25 @@ namespace entity.Brillo.Document
                 ///
                 if (PrintStyle == PrintStyles.Automatic && !app_range.use_default_printer && app_range.printer_name != null)
                 {
-                    //This block of code is wrong, but i have placed it until the following block, that is currently commented is fixed.
-                    DocumentViewer DocumentViewr = new DocumentViewer();
-
-                    DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
-                    DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
-                    DocumentViewr.reportViewer.RefreshReport();
-
-                    Window window = new Window
-                    {
-                        Title = DocumentName,
-                        Content = DocumentViewr
-                    };
-
-                    window.ShowDialog();
-
-                    //Syncfusion.Reports.lo] LocalReport LocalReport = new LocalReport();
-                    //PrintInvoice PrintInvoice = new PrintInvoice();
-                    //LocalReport.ReportPath = PathFull; // Path of the rdlc file
-                    //LocalReport.DataSources.Add(DataSource.Create(Document));
-                    //PrintInvoice.Export(LocalReport);
-                    //PrintInvoice.Print(app_range.printer_name);
+                    LocalReport LocalReport = new LocalReport();
+                    PrintInvoice PrintInvoice = new PrintInvoice();
+                    LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                    LocalReport.DataSources.Add(DataSource.Create(Document));
+                    PrintInvoice.Export(LocalReport);
+                    PrintInvoice.Print(app_range.printer_name);
                 }
                 else
                 {
-                    DocumentViewer DocumentViewr = new DocumentViewer();
-                    
-                    DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
-                    DocumentViewr.reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
-                    DocumentViewr.reportViewer.DataSources.Add(DataSource.Create(Document));
-                    DocumentViewr.reportViewer.RefreshReport();
+                    DocumentViewer DocumentViewer = new DocumentViewer();
+
+                    DocumentViewer.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                    DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
+                    DocumentViewer.reportViewer.RefreshReport();
 
                     Window window = new Window
                     {
-                        Title = DocumentName,
-                        Content = DocumentViewr
+                        Title = "Report",
+                        Content = DocumentViewer
                     };
 
                     window.ShowDialog();
@@ -103,26 +88,26 @@ namespace entity.Brillo.Document
 
             DataSource DataSource = new DataSource();
 
-            DocumentViewer DocumentViewr = new DocumentViewer();
-            DocumentViewr.reportViewer.ReportPath = PathFull; // Path of the rdlc file
+            DocumentViewer DocumentViewer = new DocumentViewer();
+            DocumentViewer.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
             string BaseName = Document.GetType().BaseType.ToString();
             string AppName = Document.GetType().ToString();
 
             if (AppName == typeof(impex).ToString() || BaseName == typeof(impex).ToString())
             {
-                DocumentViewr.reportViewer.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
-                DocumentViewr.reportViewer.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
             }
             else
             {
-                DocumentViewr.reportViewer.DataSources.Add(DataSource.ItemMovementLabel((item_movement)Document));
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.ItemMovementLabel((item_movement)Document));
             }
-            DocumentViewr.reportViewer.RefreshReport();
+            DocumentViewer.reportViewer.RefreshReport();
 
             Window window = new Window
             {
                 Title = "Report",
-                Content = DocumentViewr
+                Content = DocumentViewer
             };
 
             window.ShowDialog();
@@ -222,7 +207,7 @@ namespace entity.Brillo.Document
         {
             try
             {
-                Syncfusion.Windows.Reports.ReportDataSource reportDataSource = new Syncfusion.Windows.Reports.ReportDataSource();
+                ReportDataSource reportDataSource = new ReportDataSource();
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
 
                 if (contact.child.Count > 0)
@@ -280,8 +265,8 @@ namespace entity.Brillo.Document
                 }
 
                 DocumentViewer DocumentViewr = new DocumentViewer();
-                DocumentViewr.reportViewer.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
-                DocumentViewr.reportViewer.DataSources.Add(reportDataSource);
+                DocumentViewr.reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Carnet_Contact.rdlc"; // Path of the rdlc file
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(reportDataSource);
                 DocumentViewr.reportViewer.RefreshReport();
 
                 Window window = new Window

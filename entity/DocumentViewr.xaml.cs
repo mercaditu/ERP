@@ -9,15 +9,6 @@ namespace entity
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Reports.ReportDesigner window = new Reports.ReportDesigner
-            {
-                Title = "Designer",
-                path = reportViewer.ReportPath
-            };
-
-            window.ShowDialog();
-        }
+        
     }
 }

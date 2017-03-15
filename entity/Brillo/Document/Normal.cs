@@ -83,7 +83,7 @@ namespace entity.Brillo.Document
 
             if (Directory.Exists(PathFull) == false)
             {
-                CreateFile(DocumentName);
+                CreateFile(DocumentName); 
             }
 
             DataSource DataSource = new DataSource();

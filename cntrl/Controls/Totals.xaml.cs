@@ -10,13 +10,50 @@ namespace cntrl.Controls
     /// </summary>
     public partial class Totals : UserControl
     {
-        public static readonly DependencyProperty GrandTotalProperty = DependencyProperty.Register("GrandTotal", typeof(decimal), typeof(Totals));
+        public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals));
+
+        public bool Has_Rounding
+        {
+            get { return (bool)GetValue(Has_RoundingProperty); }
+            set { SetValue(Has_RoundingProperty, value); }
+        }
+
+        public static readonly DependencyProperty GrandTotalProperty = DependencyProperty.Register("GrandTotal", typeof(decimal), typeof(Totals), new PropertyMetadata(OnGrandTotalChangeCallBack));
+
 
         public decimal GrandTotal
         {
             get { return (decimal)GetValue(GrandTotalProperty); }
             set { SetValue(GrandTotalProperty, value); }
         }
+
+       
+        #region "INotifyPropertyChanged"
+
+        private static void OnGrandTotalChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Totals c = sender as Totals;
+            if (c != null)
+            {
+                c.OnGrandTotalChange((decimal)e.NewValue);
+            }
+        }
+
+        protected virtual void OnGrandTotalChange(decimal newvalue)
+        {
+            if (Has_Rounding)
+            {
+                lblTotal.Content = newvalue.ToString("N4");
+            }
+            else
+            {
+                lblTotal.Content = newvalue.ToString("N");
+            }
+           
+                            
+        }
+
+        #endregion "INotifyPropertyChanged"
 
         public static readonly DependencyProperty DiscountPercentageProperty = DependencyProperty.Register("DiscountPercentage", typeof(decimal), typeof(Totals));
 

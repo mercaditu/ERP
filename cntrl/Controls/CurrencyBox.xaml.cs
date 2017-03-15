@@ -14,7 +14,14 @@ namespace cntrl.Controls
         public int id_currency { get; set; }
         public App.Names appName { get; set; }
 
-        public bool HasRounding { get; set; }
+        public static readonly DependencyProperty HasRoundingProperty = DependencyProperty.Register("HasRounding", typeof(bool), typeof(CurrencyBox));
+
+        public bool HasRounding
+        {
+            get { return (bool)GetValue(HasRoundingProperty); }
+            set { SetValue(HasRoundingProperty, value); }
+        }
+       
 
         public int SelectedValue
         {

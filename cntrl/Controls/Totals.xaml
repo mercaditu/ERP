@@ -27,8 +27,8 @@
     <StackPanel Orientation="Horizontal">
         <Label Content="{lex:Loc Total}" Style="{StaticResource generic_Label}"
                    Foreground="{StaticResource AccentColor_Introvert}" VerticalAlignment="Center" />
-        <Label Content="{Binding GrandTotal, FallbackValue=1000,  NotifyOnTargetUpdated=True, StringFormat={}{0:N}, ElementName=_Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   Style="{StaticResource H2}" x:Name="lblTotal" VerticalAlignment="Center" ContentStringFormat="N2"
+        <Label
+                   Style="{StaticResource H2}" x:Name="lblTotal" VerticalAlignment="Center" 
                    RenderTransformOrigin="0.5,0.5" Foreground="Black" TargetUpdated="lblTotal_TargetUpdated">
             <Label.RenderTransform>
                 <TransformGroup>

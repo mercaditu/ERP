@@ -348,7 +348,7 @@ namespace entity.Brillo.Logic
         public List<item_movement> PurchaseInvoice_Approve(db db, purchase_invoice purchase_invoice)
         {
             List<item_movement> item_movementList = new List<item_movement>();
-            List<purchase_invoice_detail> Detail_List = new List<purchase_invoice_detail>();
+            List<purchase_invoice_detail> Detail_Product_List = new List<purchase_invoice_detail>();
 
             if (purchase_invoice != null)
             {
@@ -362,7 +362,7 @@ namespace entity.Brillo.Logic
                                                                     x.item.id_item_type == item.item_type.RawMaterial ||
                                                                     x.item.id_item_type == item.item_type.Supplies)))
                     {
-                        Detail_List.Add(purchase_invoice_detail);
+                        Detail_Product_List.Add(purchase_invoice_detail);
                     }
                 }
             }
@@ -374,7 +374,7 @@ namespace entity.Brillo.Logic
                 : 
                 CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch).Select(x => x.id_location).FirstOrDefault(); //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
 
-            foreach (purchase_invoice_detail purchase_invoice_detail in Detail_List)
+            foreach (purchase_invoice_detail purchase_invoice_detail in Detail_Product_List)
             {
                 purchase_invoice_detail.id_location = LocationID;
 

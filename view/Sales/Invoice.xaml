@@ -89,25 +89,6 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding tbxCondition, ElementName=SalesInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-
-                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding tbxContract, ElementName=SalesInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-
-                            <Rectangle Style="{StaticResource line_Bar}" />
-
-                            <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
-
-                            <!--<Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />-->
-                            <!--<Controls:SmartBox_Item x:Name="grid_sbxItem" />-->
-
-                            <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding tbxBrand, ElementName=SalesInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-
-                            <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding tbxTag, ElementName=SalesInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-
                             <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo"
 									Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch"
 									VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue" />
@@ -224,7 +205,7 @@
 											   recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+											   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CheckedChanged="navList_CheckedChanged"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

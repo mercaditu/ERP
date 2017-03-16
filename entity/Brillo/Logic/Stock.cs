@@ -357,10 +357,10 @@ namespace entity.Brillo.Logic
                 {
                     //Only insert Details that are Products, RawMaterials or Supplies
                     foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail
-                        .Where(x => 
-                            x.item.id_item_type == item.item_type.Product ||
-                            x.item.id_item_type == item.item_type.RawMaterial ||
-                            x.item.id_item_type == item.item_type.Supplies))
+                                                                .Where(x => x.item != null && (
+                                                                    x.item.id_item_type == item.item_type.Product ||
+                                                                    x.item.id_item_type == item.item_type.RawMaterial ||
+                                                                    x.item.id_item_type == item.item_type.Supplies)))
                     {
                         Detail_List.Add(purchase_invoice_detail);
                     }

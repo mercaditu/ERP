@@ -39,6 +39,6 @@
         <TextBlock x:Name="textBlock" FontSize="11" Margin="2"
                    Text="{Binding Number, ElementName=_NotificationIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontWeight="Medium" Foreground="White" />
+                   FontWeight="Bold" Foreground="White" />
     </Border>
 </UserControl>

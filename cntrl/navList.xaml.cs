@@ -59,9 +59,27 @@ namespace cntrl
             set { SetValue(recordSecondaryNameProperty, value); }
         }
 
+        // Event registers the Checked Changes of the Checkbox to be visible from outside.
+        public event RoutedEventHandler CheckedChanged;
+
+        private void Checked_Click(object sender, RoutedEventArgs e)
+        {
+            CheckedChanged?.Invoke(this, new RoutedEventArgs());
+        }
+
         public navList()
         {
             InitializeComponent();
+        }
+
+        private void chbxSelected_Checked(object sender, RoutedEventArgs e)
+        {
+            Checked_Click(sender, e);
+        }
+
+        private void chbxSelected_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Checked_Click(sender, e);
         }
     }
 }

@@ -37,7 +37,7 @@
                            Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
             </Grid>
         </Border>
-        <CheckBox Name="chbxSelected" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7,0"
+        <CheckBox Name="chbxSelected" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7,0" Checked="chbxSelected_Checked" Unchecked="chbxSelected_Unchecked"
                 IsChecked="{Binding IsChecked, ElementName=_navList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.8" ScaleY="1.8" />

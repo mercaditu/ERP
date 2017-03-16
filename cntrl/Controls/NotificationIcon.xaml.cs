@@ -9,6 +9,7 @@ namespace cntrl.Controls
         public NotificationIcon()
         {
             InitializeComponent();
+            this.Visibility = Visibility.Collapsed;
         }
 
         private static readonly DependencyProperty NumberProperty
@@ -24,10 +25,10 @@ namespace cntrl.Controls
         {
             NotificationIcon me = sender as NotificationIcon;
             int number = (int)e.NewValue;
-            me.AnimateLabelRotation(null, number);
+            me.AnimateLabelRotation(number);
         }
 
-        public void AnimateLabelRotation(object sender, int number)
+        public void AnimateLabelRotation(int number)
         {
             if (number == 0)
             {

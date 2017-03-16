@@ -21,6 +21,14 @@ namespace cntrl
             set { SetValue(icoNameProperty, value); }
         }
 
+        public static readonly DependencyProperty qtyNotificationProperty = DependencyProperty.Register("qtyNotification", typeof(int), typeof(toolIcon));
+
+        public int qtyNotification
+        {
+            get { return (int)GetValue(qtyNotificationProperty); }
+            set { SetValue(qtyNotificationProperty, value); }
+        }
+
         public toolIcon()
         {
             InitializeComponent();

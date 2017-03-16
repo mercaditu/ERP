@@ -354,6 +354,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnAnull_Click(object sender)
         {
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+
             if (sales_invoice != null)
             {
                 sales_invoice.status = Status.Documents_General.Annulled;
@@ -1077,6 +1078,27 @@ namespace Cognitivo.Sales
             }
         }
 
-    
+        private void navList_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            int TotalPending = 0;
+            int TotalApproved = 0;
+
+            foreach (sales_invoice item in SalesInvoiceDB.sales_invoice.Local.Where(x => x.IsSelected))
+            {
+                if (item.status == Status.Documents_General.Pending)
+                {
+                    TotalPending += 1;
+                    RaisePropertyChanged("TotalApproved");
+                }
+                else if (item.status == Status.Documents_General.Approved)
+                {
+                    TotalApproved += 1;
+                    RaisePropertyChanged("TotalApproved");
+                }
+            }
+
+            toolBar.TotalApproved = TotalApproved;
+            toolBar.TotalPending = TotalPending;   
+        }
     }
 }

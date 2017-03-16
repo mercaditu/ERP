@@ -54,6 +54,14 @@ namespace cntrl
 
         #endregion NotifyPropertyChanged
 
+        public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); RaisePropertyChanged("Total_PendingApproved"); } }
+        private int _TotalPending;
+
+        public int TotalApproved { get { return _TotalApproved; } set { _TotalApproved = value; RaisePropertyChanged("TotalApproved"); RaisePropertyChanged("Total_PendingApproved"); } }
+        private int _TotalApproved;
+
+        private int Total_PendingApproved { get { return TotalPending + TotalApproved; } }
+
         #region Window Style Tab Properites
 
         /// <summary>
@@ -473,6 +481,18 @@ namespace cntrl
             return toolIcon;
         }
 
+        private toolIcon bindNumber_toolIcon(toolIcon toolIcon, string property)
+        {
+            Binding Binding = new Binding();
+            Binding.Source = this;
+            Binding.Path = new PropertyPath(property);
+            Binding.Mode = BindingMode.TwoWay;
+
+            Binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            toolIcon.SetBinding(toolIcon.qtyNotificationProperty, Binding);
+            return toolIcon;
+        }
+
         private toolIcon check_Icons(toolIcon toolIcon, string iconName, ref entity.Brillo.Security security)
         {
             //Check if Icon should be shown, bind, and rout events.
@@ -483,7 +503,7 @@ namespace cntrl
             else if (btnDelete_Click != null & iconName == "Archived" && security.delete)
             {
                 toolIcon.Click += btnDelete_MouseUp;
-                toolIcon = bind_toolIcon(toolIcon, "Delete_IsEnabled", false);
+                toolIcon = bindNumber_toolIcon(toolIcon, "Total_PendingApproved");
             }
             else if (btnEdit_Click != null & iconName == "Edit" && security.edit)
             {
@@ -494,6 +514,7 @@ namespace cntrl
             {
                 toolIcon.Click += btnSave_MouseUp;
                 toolIcon = bind_toolIcon(toolIcon, "IsEditable", false);
+                //toolIcon = bindNumber_toolIcon(toolIcon, "TotalPending");
             }
             else if (btnCancel_Click != null & iconName == "Cancel")
             {
@@ -504,11 +525,13 @@ namespace cntrl
             {
                 toolIcon.Click += btnApprove_MouseUp;
                 toolIcon = bind_toolIcon(toolIcon, "Approve_IsEnabled", false);
+                toolIcon = bindNumber_toolIcon(toolIcon, "TotalPending");
             }
             else if (btnAnull_Click != null & iconName == "Annul" && security.annul)
             {
                 toolIcon.Click += btnAnull_MouseUp;
                 toolIcon = bind_toolIcon(toolIcon, "Annul_IsEnabled", false);
+                toolIcon = bindNumber_toolIcon(toolIcon, "TotalApproved");
             }
             else
             {

@@ -43,14 +43,12 @@ namespace cntrl.Controls
         {
             if (Has_Rounding)
             {
-                lblTotal.Content = newvalue.ToString("N4");
+                lblTotal.Content = newvalue.ToString("N0");
             }
             else
             {
-                lblTotal.Content = newvalue.ToString("N");
-            }
-           
-                            
+                lblTotal.Content = newvalue.ToString("N2");
+            }         
         }
 
         #endregion "INotifyPropertyChanged"

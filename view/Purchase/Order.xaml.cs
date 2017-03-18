@@ -389,25 +389,24 @@ namespace Cognitivo.Purchase
 
         private void item_Select(object sender, EventArgs e)
         {
-            purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
-            item item = null;
-            contact contact = null;
-
-            if (sbxItem.ItemID > 0)
+            purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
+            if (purchase_order != null)
             {
-                item = PurchaseOrderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = null;
+                contact contact = null;
 
-                //Sometimes Item can be null, due to Expenses that are not part of the System. This is only applicable in Purchase
-                if (purchase_order != null)
+                if (sbxItem.ItemID > 0)
                 {
-                    if (sbxContact.ContactID > 0)
-                    {
-                        contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                    }
-
-                    OrderSetting OrderSetting = new OrderSetting();
-                    Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, OrderSetting.AllowDuplicateItems, sbxItem.Quantity));
+                    item = PurchaseOrderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 }
+
+                if (purchase_order.id_contact > 0 || sbxContact.ContactID > 0)
+                {
+                    contact = PurchaseOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                }
+
+                InvoiceSetting InvoiceSetting = new InvoiceSetting();
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity));
             }
         }
 
@@ -415,6 +414,7 @@ namespace Cognitivo.Purchase
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
+
             //ItemLink
             if (item != null)
             {
@@ -652,11 +652,11 @@ namespace Cognitivo.Purchase
 
                 PurchaseOrderDB.purchase_invoice.Add(purchase_invoice);
                 PurchaseOrderDB.SaveChanges();
-                MessageBox.Show("Invoice Create Sucessfully");
+                toolBar.msgApproved(1);
             }
             else
             {
-                MessageBox.Show("Invoice Already Created Or Status is Not Approved...");
+                toolBar.msgWarning("Please check that Order is Approved.");
             }
         }
     }

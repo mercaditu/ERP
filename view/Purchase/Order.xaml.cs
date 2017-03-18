@@ -150,11 +150,17 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            if (PurchaseOrderDB.SaveChanges() > 0)
+            try
             {
-                toolBar.msgSaved(PurchaseOrderDB.NumberOfRecords);
-
-                purchase_orderViewSource.View.Refresh();
+                if (PurchaseOrderDB.SaveChanges() > 0)
+                {
+                    toolBar.msgSaved(PurchaseOrderDB.NumberOfRecords);
+                    purchase_orderViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
             }
         }
 

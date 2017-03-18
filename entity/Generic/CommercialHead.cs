@@ -162,17 +162,6 @@ namespace entity
                 {
                     _id_range = value;
                     RaisePropertyChanged("NumberWatermark");
-                    //if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
-                    //{
-                    //    using (db db = new db())
-                    //    {
-                    //        app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == value).FirstOrDefault();
-                    //        if (app_document_range != null)
-                    //        {
-                    //            code = app_document_range.code;
-                    //        }
-                    //    }
-                    //}
                 }
             }
         }

@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
+    using System;
 
     public partial class purchase_invoice_detail : CommercialPurchaseDetail, IDataErrorInfo
     {
@@ -17,6 +18,7 @@ namespace entity
             quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
             item_movement = new List<item_movement>();
+            timestamp = DateTime.Now;
         }
 
         [Key]

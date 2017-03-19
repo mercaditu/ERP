@@ -918,7 +918,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Fraction_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
 

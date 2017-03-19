@@ -82,18 +82,6 @@ namespace entity
             }
             set
             {
-                //decimal OriginalValue = value - _GrandTotal;
-                //if (OriginalValue != 0)
-                //{
-                //    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
-                //    foreach (var item in purchase_invoice_detail)
-                //    {
-                //        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
-                //        item.RaisePropertyChanged("UnitCost_Vat");
-                //    }
-
-                //}
-
                 _GrandTotal = value;
                 RaisePropertyChanged("GrandTotal");
             }

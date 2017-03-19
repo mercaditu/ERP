@@ -166,5 +166,17 @@ namespace Cognitivo.Purchase {
                 this["ShowCode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BatchCode {
+            get {
+                return ((bool)(this["BatchCode"]));
+            }
+            set {
+                this["BatchCode"] = value;
+            }
+        }
     }
 }

@@ -141,7 +141,7 @@
                     btnDelete_Click="btnDeleteTask_Click"
                     btnApprove_Click="btnApprove_Click"
                     btnAnull_Click="btnAnull_Click" />
-
+              
                 <StackPanel x:Name="stpcode" IsEnabled="False" HorizontalAlignment="Center" Margin="0,8">
                     <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
                     <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"

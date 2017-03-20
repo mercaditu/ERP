@@ -199,7 +199,7 @@ namespace entity
             set { _displayexpire = value; }
         }
 
-        private Boolean _displayexpire = false;
+        private bool _displayexpire = false;
 
         [NotMapped]
         public new System.Data.Entity.EntityState State
@@ -219,8 +219,29 @@ namespace entity
                 }
             }
         }
-
+        
         private System.Data.Entity.EntityState _State;
+
+        [NotMapped]
+        public string GroupBatchCode
+        {
+            get { return _GroupBatchCode; }
+            set
+            {
+                if (_GroupBatchCode != value)
+                {
+                    _GroupBatchCode = value;
+
+                    foreach (purchase_invoice_detail detail in purchase_invoice_detail)
+                    {
+                        detail.batch_code = _GroupBatchCode;
+                        detail.RaisePropertyChanged("batch_code");
+                    }
+                }
+            }
+        }
+
+        private string _GroupBatchCode;
 
         #region "Navigation Properties"
 

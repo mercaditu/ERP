@@ -254,6 +254,8 @@ namespace entity.Brillo.Document
                 currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
                 quantity = g.quantity,
+                BatchCode = g.batch_code,
+                ExpirationDate = g.expire_date,
                 sub_Total = g.SubTotal,
                 sub_Total_vat = g.SubTotal_Vat,
                 sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,

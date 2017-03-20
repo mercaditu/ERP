@@ -139,7 +139,8 @@ namespace entity.Brillo.Document
                     unit_price = g.unit_cost,
                     unit_price_vat = g.UnitPrice_Vat,
                     unit_price_discount = g.discount,
-
+                    BatchCode = g.batch_code,
+                    ExpirationDate = g.expire_date,
                     terminale_name = g.sales_budget != null ? (g.sales_budget.app_terminal != null ? g.sales_budget.app_terminal.name != null ? g.sales_budget.app_terminal.name : "" : "") : "",
                     code = g.sales_budget != null ? g.sales_budget.code != null ? g.sales_budget.code : "" : "",
                     contact_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
@@ -149,7 +150,7 @@ namespace entity.Brillo.Document
                     gov_id = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.gov_code != null ? g.sales_budget.contact.gov_code : "" : "" : "",
                     contract = g.sales_budget != null ? g.sales_budget.app_contract != null ? g.sales_budget.app_contract.name != null ? g.sales_budget.app_contract.name : "" : "" : "",
                     condition = g.sales_budget != null ? g.sales_budget.app_condition != null ? g.sales_budget.app_condition.name != null ? g.sales_budget.app_condition.name : "" : "" : "",
-                    Number = g.sales_budget != null ? g.sales_budget.number != null ? g.sales_budget.number : "" : "",
+                    number = g.sales_budget != null ? g.sales_budget.number != null ? g.sales_budget.number : "" : "",
                     comment = g.sales_budget != null ? g.sales_budget.comment != null ? g.sales_budget.comment : "" : "",
                     security_user_name = g.sales_budget != null ? g.sales_budget.security_user != null ? g.sales_budget.security_user.name != null ? g.sales_budget.security_user.name : "" : "" : "",
                     AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
@@ -203,7 +204,8 @@ namespace entity.Brillo.Document
                     item_code = g.item != null ? g.item.code : "",
                     item_description = g.item != null ? g.item.name : "",
                     item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
-
+                    BatchCode = g.batch_code,
+                    ExpirationDate = g.expire_date,
                     quantity = g.quantity,
                     sub_Total = g.SubTotal,
                     sub_Total_vat = g.SubTotal_Vat,

@@ -24,14 +24,14 @@
     </Page.CommandBindings>
     <Page.Resources>
         <converter:Bool2Color x:Key="Bool2Color" />
-        <converter:SecurityConverter x:Key="SecurityConverter" />
+        <!--<converter:SecurityConverter x:Key="SecurityConverter" />-->
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-        <converter:CustomStringFormatConverter x:Key="CustomStringFormat" />
+        <!--<converter:CustomStringFormatConverter x:Key="CustomStringFormat" />-->
         <converter:Status2Enable x:Key="Status2Enable" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
+        <!--<converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
-        <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
+        <!--<converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />-->
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}" />
@@ -209,9 +209,6 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
-                    <!--<cntrl:navPagination VerticalAlignment="Bottom" />-->
-
                     <!-- Sales Invoice Form -->
                     <Grid Grid.Column="1" Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -282,10 +279,7 @@
                                     <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice"
 										  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 										  LostFocus="cbxCurrency_LostFocus" />
-                                    <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}" />
-						<TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                                 </StackPanel>
-                                <!--sidepanel-->
                                 <StackPanel Grid.Column="1">
                                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                                     <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}" />
@@ -472,7 +466,6 @@
 													   UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}" />
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-
                                             <Label Content="Z" Style="{StaticResource ico_Label}" />
                                             <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked" />
                                         </StackPanel>
@@ -630,7 +623,10 @@
                             </Grid>
                         </ScrollViewer>
 
-                        <Grid Grid.ColumnSpan="2" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <Grid Grid.ColumnSpan="2" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource winBackground}">
+                            <Grid.Effect>
+                                <DropShadowEffect Direction="90" Opacity="0.32" ShadowDepth="4" BlurRadius="12" />
+                            </Grid.Effect>
                             <Rectangle Height="0.7" Fill="Black" VerticalAlignment="Top" Margin="8,0" />
                             <StackPanel VerticalAlignment="Top" Margin="8,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
 										Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
@@ -764,7 +760,7 @@
                                                 <StackPanel Visibility="{Binding item,Source={StaticResource sales_invoicesales_invoice_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                                                     <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                     <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						                                    Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                                                     <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
 								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,

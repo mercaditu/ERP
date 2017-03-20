@@ -328,7 +328,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Grid Grid.Column="1" Grid.Row="2" Background="White">
+        <Grid Grid.Row="2" Grid.Column="1" Margin="4" Background="{StaticResource winBackground}">
             <Grid.Effect>
                 <DropShadowEffect Direction="90" Opacity="0.32" ShadowDepth="4" BlurRadius="12" />
             </Grid.Effect>

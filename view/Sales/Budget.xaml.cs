@@ -17,7 +17,6 @@ namespace Cognitivo.Sales
         private SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
         private CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
-        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
 
         public Budget()
         {
@@ -223,17 +222,8 @@ namespace Cognitivo.Sales
                     {
                         item_product item_product = item.item_product.FirstOrDefault();
 
-                        if (item_product != null && item_product.can_expire)
-                        {
-                            crud_modalExpire.Visibility = Visibility.Visible;
-                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_budget.id_branch, null, item_product.id_item_product);
-                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-                        }
-                        else
-                        {
-                            Settings SalesSettings = new Settings();
-                            Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
-                        }
+                        Settings SalesSettings = new Settings();
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
                     }
 
                     sales_budget.RaisePropertyChanged("GrandTotal");
@@ -469,23 +459,6 @@ namespace Cognitivo.Sales
             else
             {
                 MessageBox.Show("Order already created or status is not Approved..");
-            }
-        }
-
-        private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
-            {
-                sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-                item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
-
-                if (item != null && item.id_item > 0 && sales_budget != null)
-                {
-                    item_movement item_movement = SalesBudgetDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-
-                    Settings SalesSettings = new Settings();
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, item_movement, sbxItem.Quantity));
-                }
             }
         }
     }

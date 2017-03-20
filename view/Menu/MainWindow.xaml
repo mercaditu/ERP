@@ -193,6 +193,11 @@
                 <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 							Stretch="UniformToFill" />
             </Grid.Background>
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{lex:Loc Save}" Click="MenuItem_Click" />
+                </ContextMenu>
+            </Grid.ContextMenu>
             <!--<Grid.Effect>
 				<BlurEffect Radius="25" />
 			</Grid.Effect>-->
@@ -200,7 +205,7 @@
 
         <!-- Frame -->
         <Frame x:Name="mainFrame" Focusable="False"
-			   Margin="0,42,0,0" NavigationUIVisibility="Hidden" Navigated="mainFrame_Navigated" />
+			   Margin="0,42,0,0" NavigationUIVisibility="Hidden" Navigated="mainFrame_Navigated"/>
 
         <!-- DataRectangle -->
         <Grid VerticalAlignment="Top" Height="42">

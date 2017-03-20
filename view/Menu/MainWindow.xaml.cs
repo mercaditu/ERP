@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Cognitivo.Menu
@@ -59,8 +61,7 @@ namespace Cognitivo.Menu
 
             if (Settings.Default.wallpaper_Image == "")
             {
-                string img = String.Format("https://source.unsplash.com/user/cognitivo/likes/{0}x{1}", width, height);
-                Settings.Default.wallpaper_Image = img;
+                Settings.Default.wallpaper_Image = String.Format("https://source.unsplash.com/user/cognitivo/likes/{0}x{1}", width, height);
                 Settings.Default.Save();
             }
         }
@@ -185,6 +186,19 @@ namespace Cognitivo.Menu
         private void winMain_Closing(object sender, CancelEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridBackground.Background != null)
+            {
+                ImageBrush IB = FindResource("Wallpaper") as ImageBrush;
+                if (IB != null)
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFile(IB.ImageSource.ToString(), entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Backgrounds\\Img.jpg"));
+                }
+            }
         }
     }
 }

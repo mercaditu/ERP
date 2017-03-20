@@ -47,8 +47,6 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
-			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="sales_budgetDataGrid" Style="{StaticResource nav_List}"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="sales_budgetDataGrid_SelectionChanged"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}"
@@ -303,8 +301,10 @@
                 </ScrollViewer>
             </Grid>
             <Rectangle Grid.Row="1" Fill="Silver" Height="1" Margin="32,0" VerticalAlignment="Top" />
-            <Grid Grid.Row="1">
-
+            <Grid Grid.Row="1" Background="{StaticResource winBackground}">
+                <Grid.Effect>
+                    <DropShadowEffect Direction="90" Opacity="0.32" ShadowDepth="4" BlurRadius="12" />
+                </Grid.Effect>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_budgetViewSource}, StringFormat={}{0:N}}"
                                       Has_Rounding="{Binding ElementName=cbxCurrency,Path=HasRounding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

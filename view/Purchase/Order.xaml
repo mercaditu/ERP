@@ -281,7 +281,9 @@
                 </StackPanel>
             </ScrollViewer>
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="4" Background="{StaticResource winBackground}">
-
+                <Grid.Effect>
+                    <DropShadowEffect Direction="90" Opacity="0.32" ShadowDepth="4" BlurRadius="12" />
+                </Grid.Effect>
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left"
 					  Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" HorizontalAlignment="Left" />

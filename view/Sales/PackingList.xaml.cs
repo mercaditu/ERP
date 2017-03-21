@@ -36,6 +36,9 @@ namespace Cognitivo.Sales
             CollectionViewSource app_branchViewSource = FindResource("app_branchViewSource") as CollectionViewSource;
             app_branchViewSource.Source = await PackingListDB.app_branch.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
 
+            CollectionViewSource item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
+            item_assetViewSource.Source = await PackingListDB.item_asset.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.item).OrderBy(a => a.item.name).ToListAsync();
+
             CollectionViewSource app_terminalViewSource = FindResource("app_terminalViewSource") as CollectionViewSource;
             app_terminalViewSource.Source = await PackingListDB.app_terminal.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await PackingListDB.app_measurement.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
@@ -485,10 +488,6 @@ namespace Cognitivo.Sales
             }
         }
 
-     
-
-       
-
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbxBranch.SelectedItem != null)
@@ -497,18 +496,6 @@ namespace Cognitivo.Sales
                 if (app_branch != null)
                 {
                     cbxLocation.ItemsSource = app_branch.app_location.ToList();
-                }
-            }
-        }
-
-        private void item_Select(object sender, RoutedEventArgs e)
-        {
-            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
-            if (sbxFixedasset.ItemID>0)
-            {
-                if (sales_packing!=null)
-                {
-                    sales_packing.id_item_asset = sbxFixedasset.ItemID;
                 }
             }
         }

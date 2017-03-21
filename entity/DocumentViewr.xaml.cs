@@ -8,7 +8,5 @@ namespace entity
         {
             InitializeComponent();
         }
-
-        
     }
 }

@@ -64,10 +64,9 @@ namespace Cognitivo.Sales
                 {
                     sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
                 }
-              
             }));
-
         }
+
         private void filterDetail()
         {
             if (sales_packingsales_packinglist_detailViewSource != null)

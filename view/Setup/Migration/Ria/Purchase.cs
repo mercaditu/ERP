@@ -91,6 +91,7 @@ namespace Cognitivo.Setup.Migration
                     {
                         string _customer = purchaserow["NOMBRE"].ToString();
                         contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
+                        purchase_invoice.contact = contact;
                         purchase_invoice.id_contact = contact.id_contact;
                     }
 
@@ -237,11 +238,18 @@ namespace Cognitivo.Setup.Migration
                         purchase_invoice.State = System.Data.Entity.EntityState.Added;
                         purchase_invoice.IsSelected = true;
 
-                        // db.purchase_invoice.Add(purchase_invoice);
+                        db.purchase_invoice.Add(purchase_invoice);
                         IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
                         if (validationresult.Count() == 0)
                         {
-                            db.SaveChanges();
+                            try
+                            {
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                            }
                         }
 
                         value += 1;

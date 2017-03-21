@@ -409,6 +409,12 @@ namespace Cognitivo.Setup.Migration
                 app_contract.app_contract_detail.Add(app_contract_detail);
                 dbContext.app_contract.Add(app_contract);
             }
+            if (dbContext.app_contract.Where(x=>x.is_default && x.id_company==id_company).Count()==0)
+            {
+                app_contract app_contract = dbContext.app_contract.Local.Where(x => x.id_company == id_company).FirstOrDefault();
+                app_contract.is_default = true;
+                
+            }
             dt.Clear();
             dbContext.SaveChanges();
         }

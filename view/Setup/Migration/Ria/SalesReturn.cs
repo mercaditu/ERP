@@ -75,10 +75,7 @@ namespace Cognitivo.Setup.Migration
             {
                 using (SalesReturnDB db = new SalesReturnDB())
                 {
-                    if (value == 3)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Test");
-                    }
+                 
 
                     db.Configuration.AutoDetectChangesEnabled = false;
 

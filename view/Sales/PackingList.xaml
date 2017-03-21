@@ -209,6 +209,9 @@
                             SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                            <Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" item_types="FixedAssets"
+												Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+												IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                             <TextBlock Text="{lex:Loc driver}" Style="{StaticResource text_Label}" />
                             <TextBox Style="{StaticResource input_textbox}"
                     Text="{Binding driver, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="126" />

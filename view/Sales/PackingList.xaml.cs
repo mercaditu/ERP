@@ -501,6 +501,18 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void item_Select(object sender, RoutedEventArgs e)
+        {
+            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+            if (sbxFixedasset.ItemID>0)
+            {
+                if (sales_packing!=null)
+                {
+                    sales_packing.id_item_asset = sbxFixedasset.ItemID;
+                }
+            }
+        }
+
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_packing packing = sales_packingViewSource.View.CurrentItem as sales_packing;

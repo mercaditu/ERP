@@ -350,7 +350,8 @@ namespace entity.Brillo.Document
                               etd = g.sales_packing.etd != null ? g.sales_packing.etd.ToString() : "",
                               driver = g.sales_packing.driver != null ? g.sales_packing.driver.ToString() : "",
                               licence = g.sales_packing.licence_no != null ? g.sales_packing.licence_no.ToString() : "",
-                              distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance.ToString() : ""
+                              distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance.ToString() : "",
+                              
                           }).ToList();
 
             return reportDataSource;

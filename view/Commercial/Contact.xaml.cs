@@ -43,11 +43,11 @@ namespace Cognitivo.Commercial
             //Contact
             if (Win.Title == entity.Brillo.Localize.StringText("Customer"))
             {
-                await ContactDB.contacts.Where(a => a.is_supplier == false && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+                await ContactDB.contacts.Where(a => (a.is_supplier == false || a.is_customer == true) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
             }
             else if (Win.Title == entity.Brillo.Localize.StringText("Supplier"))
             {
-                await ContactDB.contacts.Where(a => a.is_customer == false && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+                await ContactDB.contacts.Where(a => (a.is_supplier == true || a.is_customer == false) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
             }
             else
             {

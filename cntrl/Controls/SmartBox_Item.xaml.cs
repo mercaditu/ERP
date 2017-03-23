@@ -347,16 +347,9 @@ namespace cntrl.Controls
             LoadData();
         }
 
-        private void SmartBoxItem_Focus(object sender, RoutedEventArgs e)
+        public void SmartBoxItem_Focus()
         {
-            TextBox txt = e.OriginalSource as TextBox;
-            if (txt != null)
-            {
-                if (txt.Name != tbxQuantity.Name)
-                {
-                    tbxSearch.Focus();
-                }
-            }
+           tbxSearch.Focus();
         }
     }
 }

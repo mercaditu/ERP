@@ -413,7 +413,7 @@ namespace Cognitivo.Sales
 
                     if (cbxCondition.SelectedItem != null && cbxContract.SelectedItem != null && cbxCurrency.SelectedValue > 0)
                     {
-                        sbxItem.Focus();
+                        sbxItem.SmartBoxItem_Focus();
                     }
                 }));
             }

@@ -9,7 +9,7 @@
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-            xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+            xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
@@ -17,7 +17,6 @@
              d:DesignHeight="600" d:DesignWidth="800" Loaded="this_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}" />
-
         <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}" />
     </UserControl.Resources>
     <Grid Background="{StaticResource AccentColor_Brush}">
@@ -32,89 +31,104 @@
                 </WindowsFormsHost>
             </TabItem>
             <TabItem Header="Data">
-                <Grid Background="WhiteSmoke">
-                <Button Content="Excel" Style="{StaticResource btn_green}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4" Click="Export_Click"/>
-                    <!--<Button Content="Export to PDF" Click="ExportPDF_Click"/>-->
-                    <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch" Margin="0,36,0,0"
+                <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"
-                                       SelectionMode="Multiple" Background="White" 
+                                       SelectionMode="Multiple" Background="White"
                                        AllowGrouping="True" AllowFiltering="True"
                                        ShowGroupDropArea="True" />
-                </Grid>
             </TabItem>
             <TabItem Header="Matrix">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="1*"/>
-                        
-                    </Grid.ColumnDefinitions>
-                    <syncfusion:PivotGridControl x:Name="sfPivotTable" VisualStyle="Metro" Grid.Column="0"/>
-                    <GridSplitter Background="Green" Width="2" Grid.Column="1"/>
-                    <syncfusion:PivotSchemaDesigner x:Name="schemaDesigner1" VisualStyle="Metro" Grid.Column="2" HorizontalAlignment="Center" 
-                                                    Width="270" Margin="5" PivotControl="{Binding ElementName=sfPivotTable}" />
-                </Grid>
+                <syncfusion:PivotGridControl x:Name="sfPivotTable" VisualStyle="Metro" />
             </TabItem>
         </TabControl>
-
-        <StackPanel>
-            <Grid>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="&#xE8BC;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}" />
-                    <Label Content="{lex:Loc Reports}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}" />
-                </StackPanel>
-                <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Expander>
+                    <Expander.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="&#xE8BC;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
+                                        Style="{DynamicResource MetroCircleButtonStyle}" />
+                                <Label Content="{lex:Loc Reports}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                            </StackPanel>
+                            <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
                         FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
-            </Grid>
-            <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" Margin="4"
+                        </Grid>
+                    </Expander.Header>
+                    <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}"
                          DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged">
-                <ListBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0.64" />
-                </ListBox.Background>
-            </ListBox>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="&#xE81D;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}" />
-                <Label Content="{lex:Loc Parameters}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}" />
-            </StackPanel>
-            <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}" Margin="4"
+                        <ListBox.Background>
+                            <SolidColorBrush Color="White" Opacity="0.64" />
+                        </ListBox.Background>
+                    </ListBox>
+                </Expander>
+
+                <Expander IsExpanded="True">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="&#xE81D;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                                    FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
+                                    Style="{DynamicResource MetroCircleButtonStyle}" />
+                            <Label Content="{lex:Loc Parameters}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                        </StackPanel>
+                    </Expander.Header>
+                    <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}" 
                                  EndDate="{Binding EndDate, ElementName=this, Mode=TwoWay}" Visibility="Collapsed" />
+                </Expander>
 
-            <StackPanel x:Name="stpProject" Visibility="Collapsed" Margin="4">
-                <StackPanel.Background>
-                    <SolidColorBrush Color="White" Opacity="0.64" />
-                </StackPanel.Background>
-                <Label Style="{StaticResource input_label}" Content="{lex:Loc Project}" />
-                <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          x:Name="ComboProject" Style="{StaticResource input_combobox}" />
-            </StackPanel>
+                <Expander x:Name="stpProject" Visibility="Collapsed">
+                    <StackPanel  >
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="White" Opacity="0.64" />
+                        </StackPanel.Background>
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Project}" />
+                        <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  x:Name="ComboProject" Style="{StaticResource input_combobox}" />
+                    </StackPanel>
+                </Expander>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="&#xE842;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}" />
-                <Label Content="{lex:Loc Filter}" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource H3}" />
-                <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
-                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
-                <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
-                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
+                <Expander>
+                    <Expander.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="&#xE842;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
+                                        Style="{DynamicResource MetroCircleButtonStyle}" />
+                                <Label Content="{lex:Loc Filter}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
+                                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
+                                <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
+                                        Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
+                            </StackPanel>
+                        </Grid>
+                    </Expander.Header>
+                    <StackPanel x:Name="stpFilter">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="White" Opacity="0.64" />
+                        </StackPanel.Background>
+                    </StackPanel>
+                </Expander>
+
+                <Expander x:Name="expMatrix">
+                    <Expander.Header>
+                        <Label Content="Matrix" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                    </Expander.Header>
+                    <syncfusion:PivotSchemaDesigner x:Name="schemaDesigner1" VisualStyle="Metro" HorizontalAlignment="Center"
+                                                    MaxHeight="512" PivotControl="{Binding ElementName=sfPivotTable}" />
+                </Expander>
+                <Expander>
+                    <Expander.Header>
+                        <Label Content="{lex:Loc Share}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                    </Expander.Header>
+                    <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click" />
+                </Expander>
             </StackPanel>
-        </StackPanel>
-        <ScrollViewer MaxHeight="256"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Bottom">
-            <Grid Margin="8">
-                <StackPanel x:Name="stpFilter">
-                    <StackPanel.Background>
-                        <SolidColorBrush Color="White" Opacity="0.64" />
-                    </StackPanel.Background>
-                </StackPanel>
-            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

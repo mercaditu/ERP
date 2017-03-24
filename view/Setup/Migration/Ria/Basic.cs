@@ -198,7 +198,7 @@ namespace Cognitivo.Setup.Migration
                     _app_branch.name = row_Branch["DESSUCURSAL"].ToString();
                     _app_branch.code = row_Branch["SUCURSALTIMBRADO"].ToString();
                     _app_branch.can_invoice = (row_Branch["TIPOSUCURSAL"].ToString().Contains("Factura")) ? true : false;
-                    if (_DataBase.ToLower() == "fiparsa")
+                    if (_DataBase.ToLower() == "fiparsa" || _DataBase.ToLower() == "fipar")
                     {
                         _app_branch.can_stock = true;
                     }

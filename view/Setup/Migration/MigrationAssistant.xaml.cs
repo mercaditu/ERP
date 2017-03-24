@@ -119,6 +119,7 @@ namespace Cognitivo.Setup.Migration
                 SqlConnection sqlConn = new SqlConnection(_connString);
                 sqlConn.Open();
                 SqlCommand cmd = new SqlCommand(sql, sqlConn);
+                cmd.CommandTimeout = 200;
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 da.Fill(dt);

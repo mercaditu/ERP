@@ -1,4 +1,5 @@
-﻿using entity;
+﻿using Cognitivo.Menu;
+using entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,7 +26,6 @@ namespace Cognitivo.Sales
         /// CollectionViewSource
         /// </summary>
         private CollectionViewSource sales_invoiceViewSource;
-
         private CollectionViewSource paymentViewSource;
 
         public PointOfSale()
@@ -200,37 +200,18 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
             //This code helps protect wrong Terminal and Branch PC from making same invoice.
-            tabPOS.IsSelected = true;
-            if (CurrentSession.Id_Branch > 0)
+            if (CurrentSession.Id_Branch == 0 || CurrentSession.Id_Terminal == 0 || CurrentSession.Id_Account == 0)
             {
-                // Branch Exist, check if Terminal Exists.
-                if (CurrentSession.Id_Terminal > 0)
-                {
-                    //app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).Include(y => y.app_terminal).FirstOrDefault();
-                    //if (app_branch != null)
-                    //{
-                    //    if (app_branch.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Count() == 0)
-                    //    {
-                    //        cbxTerminal.ItemsSource = app_branch.app_terminal.Where(x => x.is_active).ToList();
-                    //        tabTerminal.IsSelected = true;
-                    //    }
-                    //}
-                }
-                else
-                {
-                    //Branch Exist, but Terminal Doesn't.
-                    cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
-                    tabTerminal.IsSelected = true;
-                }
-
-                stackBranch.Visibility = Visibility.Hidden;
+                myWindow.mainFrame.Navigate(new Configs.Settings());
+                return;
             }
             else
             {
-                tabTerminal.IsSelected = true;
-                cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
-                stackBranch.Visibility = Visibility.Visible;
+                string BranchName = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name;
+                string TerminalName = CurrentSession.Terminals.Where(x => x.id_branch == CurrentSession.Id_Terminal).FirstOrDefault().name;
+                myWindow.Title = myWindow.Title + " | " + BranchName + " | " + TerminalName;
             }
 
             New_Sale_Payment();
@@ -455,8 +436,8 @@ namespace Cognitivo.Sales
         private async void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
             List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
+
             if (promoList.Count() > 0)
             {
                 foreach (sales_invoice_detail sales_invoice_detail in promoList)
@@ -487,34 +468,6 @@ namespace Cognitivo.Sales
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
             sales_invoice.RaisePropertyChanged("GrandTotal");
-        }
-
-        private void btnSaveBranchTerminal_Click(object sender, RoutedEventArgs e)
-        {
-            app_terminal app_terminal = cbxTerminal.SelectedItem as app_terminal;
-            if (app_terminal != null)
-            {
-                CurrentSession.Id_Terminal = app_terminal.id_terminal;
-                CurrentSession.Id_Branch = app_terminal.id_branch;
-
-                entity.Properties.Settings Settings = new entity.Properties.Settings();
-                Settings.branch_ID = CurrentSession.Id_Branch;
-                Settings.terminal_ID = CurrentSession.Id_Terminal;
-                Settings.terminal_Name = app_terminal.name;
-                Settings.Save();
-
-                tabPOS.IsSelected = true;
-                tabContact.IsSelected = true;
-            }
-        }
-
-        private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            app_branch app_branch = (app_branch)cbxBranch.SelectedItem;
-            if (app_branch != null)
-            {
-                cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Where(x => x.id_branch == app_branch.id_branch).ToList();
-            }
         }
 
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

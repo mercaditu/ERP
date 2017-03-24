@@ -122,6 +122,7 @@ namespace entity
             set
             {
                 _Id_Terminal = value;
+
                 using (db db = new db())
                 {
                     app_terminal app_terminal = db.app_terminal.Where(x => x.id_terminal == value).FirstOrDefault();

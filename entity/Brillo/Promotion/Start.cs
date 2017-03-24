@@ -414,47 +414,50 @@ namespace entity.Brillo.Promotion
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onCustomerType)
             {
-                Invoice Invoice = new Invoice();
-                Invoice.Contact = SalesInvoice.contact;
-                Invoice.Date = SalesInvoice.trans_date;
-                Invoice.GrandTotal = SalesInvoice.GrandTotal;
-
-                foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                if (SalesInvoice.contact != null)
                 {
-                    Detail Detail = new Detail();
-                    Detail.sales_invoice_detail = _Detail;
-                    Detail.DetailID = _Detail.id_sales_invoice_detail;
-                    Detail.Item = _Detail.item;
-                    Detail.Quantity = _Detail.quantity;
-                    Detail.Price = _Detail.unit_price;
-                    Detail.PriceVAT = _Detail.UnitPrice_Vat;
-                    Detail.SubTotal = _Detail.SubTotal;
-                    Detail.SubTotalVAT = _Detail.SubTotal_Vat;
-                    Detail.is_promo = _Detail.IsPromo;
-                    Invoice.Details.Add(Detail);
-                }
-
-                if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
-                {
-                    SalesInvoice.DiscountPercentage = Promo.result_value;
+                    Invoice Invoice = new Invoice();
+                    Invoice.Contact = SalesInvoice.contact;
+                    Invoice.Date = SalesInvoice.trans_date;
+                    Invoice.GrandTotal = SalesInvoice.GrandTotal;
 
                     foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
                     {
                         Detail Detail = new Detail();
+                        Detail.sales_invoice_detail = _Detail;
                         Detail.DetailID = _Detail.id_sales_invoice_detail;
                         Detail.Item = _Detail.item;
                         Detail.Quantity = _Detail.quantity;
                         Detail.Price = _Detail.unit_price;
                         Detail.PriceVAT = _Detail.UnitPrice_Vat;
-                        Detail.Discount = _Detail.discount;
-                        Detail.DiscountVAT = _Detail.DiscountVat;
                         Detail.SubTotal = _Detail.SubTotal;
                         Detail.SubTotalVAT = _Detail.SubTotal_Vat;
-                        Detail.is_promo = false;
-                        Detail.Promotion = Promo;
-                        Detail.PromotionID = Promo.id_sales_promotion;
-                        Detail.sales_invoice_detail = _Detail;
-                        DetailLIST.Add(Detail);
+                        Detail.is_promo = _Detail.IsPromo;
+                        Invoice.Details.Add(Detail);
+                    }
+
+                    if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
+                    {
+                        SalesInvoice.DiscountPercentage = Promo.result_value;
+
+                        foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                        {
+                            Detail Detail = new Detail();
+                            Detail.DetailID = _Detail.id_sales_invoice_detail;
+                            Detail.Item = _Detail.item;
+                            Detail.Quantity = _Detail.quantity;
+                            Detail.Price = _Detail.unit_price;
+                            Detail.PriceVAT = _Detail.UnitPrice_Vat;
+                            Detail.Discount = _Detail.discount;
+                            Detail.DiscountVAT = _Detail.DiscountVat;
+                            Detail.SubTotal = _Detail.SubTotal;
+                            Detail.SubTotalVAT = _Detail.SubTotal_Vat;
+                            Detail.is_promo = false;
+                            Detail.Promotion = Promo;
+                            Detail.PromotionID = Promo.id_sales_promotion;
+                            Detail.sales_invoice_detail = _Detail;
+                            DetailLIST.Add(Detail);
+                        }
                     }
                 }
             }

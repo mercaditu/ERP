@@ -42,6 +42,20 @@
                                        ShowGroupDropArea="True" />
                 </Grid>
             </TabItem>
+            <TabItem Header="Matrix">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2"/>
+                        <ColumnDefinition Width="1*"/>
+                        
+                    </Grid.ColumnDefinitions>
+                    <syncfusion:PivotGridControl x:Name="sfPivotTable" VisualStyle="Metro" Grid.Column="0"/>
+                    <GridSplitter Background="Green" Width="2" Grid.Column="1"/>
+                    <syncfusion:PivotSchemaDesigner x:Name="schemaDesigner1" VisualStyle="Metro" Grid.Column="2" HorizontalAlignment="Center" 
+                                                    Width="270" Margin="5" PivotControl="{Binding ElementName=sfPivotTable}" />
+                </Grid>
+            </TabItem>
         </TabControl>
 
         <StackPanel>

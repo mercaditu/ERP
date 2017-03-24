@@ -223,6 +223,7 @@ namespace cntrl
 
             ReportDt = dt;
             sfdatagrid.ItemsSource = dt;
+            sfPivotTable.ItemSource = dt;
             //Iterate through the list of Columns and localize the names.
             foreach (Syncfusion.UI.Xaml.Grid.GridColumn item in sfdatagrid.Columns)
             {

@@ -176,7 +176,7 @@ namespace entity
             {
                 if (string.IsNullOrEmpty(_LongLat))
                 {
-                    _LongLat = geo_long + "," + geo_lat;
+                    _LongLat = geo_long.ToString() + "," + geo_lat.ToString();
                 }
                 return _LongLat;
             }

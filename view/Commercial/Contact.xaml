@@ -255,12 +255,12 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="2">
                         <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                         <Label Content="{lex:Loc Location}" />
-                        <TextBox Text="{Binding /comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="64" />
+                        <TextBox Text="{Binding LongLat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
                     </StackPanel>
                     <m:Map Margin="0,32,0,0" x:Name="myMap"
 						   CredentialsProvider="Asw032Mj8UBsgfD0LJU4_VILp3lA_8dJcraaYsy6Mdl6KfakTbWObzT7M0agiha2"
-						   ZoomLevel="12" Center="-25.298340,-57.622501" MouseDoubleClick="MapsDropPin_DoubleClick">
-                        <m:Pushpin Location="{Binding /comment}" />
+						   ZoomLevel="12" Center="{Binding LongLat, Mode=OneWay}" UseInertia="True" MouseDoubleClick="MapsDropPin_Click">
+                        <m:Pushpin Location="{Binding LongLat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="Red"/>
                     </m:Map>
                 </Grid>
             </TabItem>

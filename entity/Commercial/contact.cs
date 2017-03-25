@@ -6,8 +6,10 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Windows;
 
     public partial class contact : AuditGeneric, IDataErrorInfo, INotifyPropertyChanged
     {
@@ -166,6 +168,32 @@ namespace entity
         public int? lead_time { get; set; }
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
+
+        [NotMapped]
+        public string LongLat
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_LongLat))
+                {
+                    _LongLat = geo_long + "," + geo_lat;
+                }
+                return _LongLat;
+            }
+            set
+            {
+                if (_LongLat != value)
+                {
+                    _LongLat = value;
+                    RaisePropertyChanged("LongLat");
+
+                    var items = _LongLat.Split(',');
+                    geo_long = decimal.Parse(items[0].Trim(), CultureInfo.InvariantCulture);
+                    geo_lat = decimal.Parse(items[1].Trim(), CultureInfo.InvariantCulture);
+                }
+            }
+        }
+        private string _LongLat;
 
         public bool is_customer
         {

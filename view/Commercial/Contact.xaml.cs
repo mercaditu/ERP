@@ -467,7 +467,7 @@ namespace Cognitivo.Commercial
             // FilterSubscription();
         }
 
-        private void MapsDropPin_DoubleClick(object sender, MouseButtonEventArgs e)
+        private void MapsDropPin_Click(object sender, MouseButtonEventArgs e)
         {
             // Disables the default mouse double-click action.
             e.Handled = true;
@@ -475,7 +475,8 @@ namespace Cognitivo.Commercial
             // Determin the location to place the pushpin at on the map.
 
             //Get the mouse click coordinates
-            Point mousePosition = e.GetPosition(this);
+            var mousePosition = e.GetPosition((UIElement)sender);
+            
             //Convert the mouse coordinates to a locatoin on the map
             Location pinLocation = myMap.ViewportPointToLocation(mousePosition);
 
@@ -484,12 +485,13 @@ namespace Cognitivo.Commercial
             pin.Location = pinLocation;
 
             // Adds the pushpin to the map.
+            myMap.Children.Clear();
             myMap.Children.Add(pin);
 
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (contact != null)
             {
-                contact.comment = pinLocation.ToString();
+                contact.LongLat = pinLocation.ToString();
             }
         }
 

@@ -198,7 +198,7 @@
                                 </Border>
                             </Popup>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock VerticalAlignment="Center">
 												<Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
@@ -206,7 +206,7 @@
 												</Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource Status2Enable}}">
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TrueToFalse}}">
                             <Label Content="$" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center">
 							<Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
@@ -215,7 +215,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-													IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
+									IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TrueToFalse}}">
                             <Label Content="$" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center">
 												<Hyperlink PreviewMouseUp="Refinance_PreviewMouseUp">

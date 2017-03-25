@@ -946,7 +946,8 @@ namespace Cognitivo.Purchase
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
-            if (purchase_invoice != null)
+
+            if (purchase_invoice != null && purchase_invoice.status != Status.Documents_General.Pending)
             {
                 app_document_range app_document_range;
 

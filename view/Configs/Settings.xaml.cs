@@ -9,7 +9,7 @@ namespace Cognitivo.Configs
     {
         private CollectionViewSource app_companyViewSource;
 
-        private Menu.MainWindow mainWindow ;
+        private Menu.MainWindow mainWindow;
 
         private entity.db db = new entity.db();
 
@@ -48,7 +48,11 @@ namespace Cognitivo.Configs
                     entity.Properties.Settings.Default.Save();
 
                     //GoBack with changed data.
-                    mainWindow.mainFrame.NavigationService.GoBack();
+                    Frame frm = entity.Brillo.Parent.GetParent<Frame>(this);
+                    if (frm != null)
+                    {
+                        frm.NavigationService.GoBack();
+                    }
                 }
             }
         }

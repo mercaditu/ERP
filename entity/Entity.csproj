@@ -275,6 +275,7 @@
     </Compile>
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
+    <Compile Include="Brillo\Parent.cs" />
     <Compile Include="Brillo\ProductCost.cs" />
     <Compile Include="Brillo\Promotion\PromotionProduct.xaml.cs">
       <DependentUpon>PromotionProduct.xaml</DependentUpon>

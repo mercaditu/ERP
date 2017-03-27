@@ -8,20 +8,11 @@
     <Setting Name="company_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="branch_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="branch_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="terminal_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="terminal_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="account_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="account_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -40,6 +31,15 @@
     </Setting>
     <Setting Name="vatwithholding_Percentage" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="branch_ID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="terminal_ID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="account_ID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
     </Setting>
   </Settings>
 </SettingsFile>

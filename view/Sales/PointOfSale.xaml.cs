@@ -210,7 +210,7 @@ namespace Cognitivo.Sales
             else
             {
                 string BranchName = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name;
-                string TerminalName = CurrentSession.Terminals.Where(x => x.id_branch == CurrentSession.Id_Terminal).FirstOrDefault().name;
+                string TerminalName = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().name;
                 myWindow.Title = myWindow.Title + " | " + BranchName + " | " + TerminalName;
             }
 

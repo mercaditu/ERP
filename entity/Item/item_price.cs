@@ -64,20 +64,10 @@ namespace entity
             {
                 if (_valuewithVAT != value)
                 {
-                    //_valuewithVAT = value;
-
-                    if (_valuewithVAT == 0)
-                    {
-                        _valuewithVAT = value;
-                        RaisePropertyChanged("valuewithVAT");
-                    }
-                    else
-                    {
-                        _valuewithVAT = value;
-                        RaisePropertyChanged("valuewithVAT");
-                        _value = Brillo.Vat.return_ValueWithoutVAT(item.id_vat_group, _valuewithVAT);
-                        RaisePropertyChanged("value");
-                    }
+                    _valuewithVAT = value;
+                    RaisePropertyChanged("valuewithVAT");
+                    _value = Brillo.Vat.return_ValueWithoutVAT(item.id_vat_group, _valuewithVAT);
+                    RaisePropertyChanged("value");
                 }
             }
         }

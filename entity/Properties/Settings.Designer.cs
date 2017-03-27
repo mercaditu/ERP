@@ -145,7 +145,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int branch_ID {
             get {
                 return ((int)(this["branch_ID"]));
@@ -157,7 +157,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int terminal_ID {
             get {
                 return ((int)(this["terminal_ID"]));
@@ -169,7 +169,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int account_ID {
             get {
                 return ((int)(this["account_ID"]));

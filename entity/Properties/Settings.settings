@@ -33,13 +33,13 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="branch_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="terminal_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="account_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

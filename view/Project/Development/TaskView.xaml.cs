@@ -270,7 +270,7 @@ namespace Cognitivo.Project.Development
 
             if (project != null)
             {
-                if (project_task != null && project_task.items.item_recepie.Count() == 0)
+                if (project_task != null && project_task.items!=null && project_task.items.item_recepie.Count() == 0)
                 {
                     //Adding a Child Item.
                     if (project_task.items != null)

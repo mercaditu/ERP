@@ -28,11 +28,11 @@ contacts.code as ContactCode,
 contacts.gov_code as GovermentId,
 task.quantity_est as QuantityEst,
 
-(SELECT GROUP_CONCAT(value SEPARATOR ' x ')
+(SELECT round(GROUP_CONCAT(value SEPARATOR ' x '),2)
  from project_task_dimension where id_project_task = task.id_project_task GROUP BY id_project_task) as Dimension,
 
-task.quantity_est *item_conversion_factor.value * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
-((select ROUND(EXP(SUM(LOG(`value`))),4) as value from project_task_dimension where id_project_task = task.id_project_task)  * task.quantity_est) as Factor,
+ROUND(task.quantity_est,2) *ROUND(item_conversion_factor.value,2) * (select ROUND(EXP(SUM(LOG(`value`))),2) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
+round((select ROUND(EXP(SUM(LOG(`value`))),2 ) as value from project_task_dimension where id_project_task = task.id_project_task)  * ROUND(task.quantity_est,2),2) as Factor,
 exe.Quantity as QuantityReal,
 	sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
 										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
@@ -48,8 +48,8 @@ sum(sbd.quantity * sbd.unit_price) as TotalBudgeted,
 sum(sid.quantity * sid.unit_price) as TotalInvoiced,
 sum(ps.debit) as TotalPaid,
 sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
-task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional
-
+task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional,
+(task.quantity_est/(select sum(task.quantity_est) from project_task as task where id_project= @ProjectID)*100) as AveragePercentage
 from project_task as task
 
 inner join projects  as proj on proj.id_project = task.id_project

@@ -36,6 +36,6 @@ namespace entity.Reporting
         public decimal Completed { get; set; }
         public decimal CompletedHours { get; set; }
         public decimal Percentage { get; set; }
-        public decimal Average { get; set; }
+        public decimal AveragePercentage { get; set; }
     }
 }

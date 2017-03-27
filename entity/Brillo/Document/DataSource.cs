@@ -690,8 +690,10 @@ namespace entity.Brillo.Document
                 {
                     item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code :"": "",
                     item_name = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name : "" : "",
-                    lot_number=g.code,
-                    exp_date=g.expire_date
+                    lot_number = g.code,
+                    trans_date = g.trans_date,
+                    exp_date = g.expire_date,
+                    quantity = g.credit - g.debit
                 }).ToList();
 
             return reportDataSource;

@@ -209,8 +209,11 @@ namespace Cognitivo.Sales
             }
             else
             {
-                string BranchName = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name;
-                string TerminalName = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().name;
+                app_branch Branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                app_terminal Terminal = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
+
+                string BranchName = Branch != null ? Branch.name : "";
+                string TerminalName = Terminal != null ? Terminal.name : "";
                 myWindow.Title = myWindow.Title + " | " + BranchName + " | " + TerminalName;
             }
 

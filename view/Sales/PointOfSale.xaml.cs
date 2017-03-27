@@ -204,8 +204,8 @@ namespace Cognitivo.Sales
             //This code helps protect wrong Terminal and Branch PC from making same invoice.
             if (CurrentSession.Id_Branch == 0 || CurrentSession.Id_Terminal == 0 || CurrentSession.Id_Account == 0)
             {
-                myWindow.mainFrame.Navigate(new Configs.Settings());
-                return;
+                //myWindow.mainFrame.Navigate(new Configs.Settings());
+                //return;
             }
             else
             {

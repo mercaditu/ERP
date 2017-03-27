@@ -430,7 +430,6 @@ namespace Cognitivo.Commercial
         private async void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
-            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
 
             if (contact != null)
             {
@@ -438,6 +437,7 @@ namespace Cognitivo.Commercial
 
                 using (db db = new db())
                 {
+                    CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
                     app_attachmentViewSource.Source = await db.app_attachment
                         .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
                 }

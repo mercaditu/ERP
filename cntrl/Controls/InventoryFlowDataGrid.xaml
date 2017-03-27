@@ -23,7 +23,11 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel Background="WhiteSmoke" Margin="4" Width="auto" DataContext="{StaticResource item_movementViewSource}">
-                        <StackPanel Orientation="Horizontal" Width="auto">
+                    <StackPanel Orientation="Horizontal" Width="auto">
+                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" Width="auto"/>
+                        <Label Content="{Binding Location, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Width="auto">
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" Width="auto"/>
                             <Label Content="{Binding Comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
@@ -36,7 +40,7 @@
                             <Label Content="{Binding BatchCode, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
-                        <Label Content="{lex:Loc Image}" Style="{StaticResource input_label}" Width="auto"/>
+                        <Label Content="Image" Style="{StaticResource input_label}" Width="auto"/>
                         <local:ImageViewer   ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"  
                                             IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>

@@ -259,7 +259,7 @@
                     </StackPanel>
                     <m:Map Margin="0,32,0,0" x:Name="myMap"
 						   CredentialsProvider="Asw032Mj8UBsgfD0LJU4_VILp3lA_8dJcraaYsy6Mdl6KfakTbWObzT7M0agiha2"
-						   ZoomLevel="12" Center="{Binding LongLat, Mode=OneWay}" UseInertia="True" MouseDoubleClick="MapsDropPin_Click">
+						   ZoomLevel="12" Center="{Binding LongLat, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" UseInertia="True" MouseDoubleClick="MapsDropPin_Click">
                         <m:Pushpin Location="{Binding LongLat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="Red"/>
                     </m:Map>
                 </Grid>

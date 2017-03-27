@@ -126,6 +126,7 @@ namespace cntrl.Controls
                         QuantityInStock = Item.InStock;
                         ItemPopUp.IsOpen = false;
                         Text = Item.Name;
+                        Quantity = 1;
                     }
                     else
                     {
@@ -225,7 +226,6 @@ namespace cntrl.Controls
                     ItemPopUp.IsOpen = false;
                     popQuantity.IsOpen = true;
                     tbxQuantity.Focus();
-                    //FocusManager.SetFocusedElement(popQuantity, tbxQuantity);
                 }
                 else
                 {
@@ -261,14 +261,6 @@ namespace cntrl.Controls
 
                 if (SearchText.Count() >= 1)
                 {
-                    //if (taskSearch != null)
-                    //{
-                    //    if (taskSearch.Status == TaskStatus.Running)
-                    //    {
-                    //        tokenSource.Cancel();
-                    //    }
-                    //}
-
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
                     Search_OnThread(SearchText);

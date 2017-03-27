@@ -24,7 +24,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DebeHaberConnString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.debehaber.com</Value>
+      <Value Profile="(Default)">https://www.debehaber.com</Value>
     </Setting>
     <Setting Name="ModFavList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

@@ -109,7 +109,7 @@ namespace Cognitivo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://www.debehaber.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.debehaber.com")]
         public string DebeHaberConnString {
             get {
                 return ((string)(this["DebeHaberConnString"]));

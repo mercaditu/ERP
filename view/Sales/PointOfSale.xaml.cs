@@ -212,8 +212,8 @@ namespace Cognitivo.Sales
                 app_branch Branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                 app_terminal Terminal = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
 
-                string BranchName = Branch != null ? Branch.name : "";
-                string TerminalName = Terminal != null ? Terminal.name : "";
+                string BranchName = Branch != null ? Branch.name : "Falta Sucursal";
+                string TerminalName = Terminal != null ? Terminal.name : "Falta Terminal";
                 myWindow.Title = myWindow.Title + " | " + BranchName + " | " + TerminalName;
             }
 

@@ -98,15 +98,35 @@ namespace entity.Brillo
                         int LocationID = row.Cell(2).GetValue<int>();
                         int ProductID = row.Cell(3).GetValue<int>();
 
+                        //Reuse or Create the Detail.
                         item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_location == LocationID && x.id_item_product == ProductID).FirstOrDefault();
+
+                        //Allow you to create new rows into Excel and load that into the System.
+                        if (detail == null)
+                        {
+                            using (db db = new db())
+                            {
+                                string ItemCode = row.Cell(2).GetValue<string>();
+                                ProductID = db.item_product.Where(x => x.item.code == ItemCode).Select(x => x.id_item_product).FirstOrDefault();
+                            }
+
+                            detail = new item_inventory_detail();
+                            detail.id_item_product = ProductID;
+
+                            detail.unit_value = 0;
+                            detail.value_system = 0;
+                            detail.id_location = LocationID;
+                            item_inventory.item_inventory_detail.Add(detail);
+
+                        }
 
                         if (detail != null)
                         {
-
                             if (row.Cell(11).Value != null && row.Cell(11).Value.ToString()!="")
                             {
                                 detail.value_counted = row.Cell(11).GetValue<decimal>();
                             }
+
                             detail.unit_value = row.Cell(12).GetValue<decimal>();
                             detail.comment = row.Cell(13).GetValue<string>();
 
@@ -124,7 +144,7 @@ namespace entity.Brillo
                                 {
                                     using (db db = new db())
                                     {
-                                        if (db.item_brand.Where(x => x.name == Brand && x.id_company == CurrentSession.Id_Company).Count() == 0)
+                                        if (db.item_brand.Where(x => x.name == Brand && x.id_company == CurrentSession.Id_Company).Any())
                                         {
                                             item_brand item_brand = new item_brand();
                                             item_brand.name = row.Cell(5).GetValue<string>();

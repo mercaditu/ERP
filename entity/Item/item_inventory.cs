@@ -4,6 +4,7 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public partial class item_inventory : Audit
     {
@@ -43,6 +44,46 @@ namespace entity
 
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
         private bool _is_archived;
+
+        [NotMapped]
+        public string GroupBatchCode
+        {
+            get { return _GroupBatchCode; }
+            set
+            {
+                if (_GroupBatchCode != value)
+                {
+                    _GroupBatchCode = value;
+
+                    foreach (item_inventory_detail detail in item_inventory_detail.Where(x => x.IsSelected))
+                    {
+                        detail.batch_code = _GroupBatchCode;
+                        detail.RaisePropertyChanged("batch_code");
+                    }
+                }
+            }
+        }
+        private string _GroupBatchCode;
+
+        [NotMapped]
+        public DateTime GroupExpiryDate
+        {
+            get { return _GroupExpiryDate; }
+            set
+            {
+                if (_GroupExpiryDate != value)
+                {
+                    _GroupExpiryDate = value;
+
+                    foreach (item_inventory_detail detail in item_inventory_detail.Where(x => x.IsSelected))
+                    {
+                        detail.expire_date = _GroupExpiryDate;
+                        detail.RaisePropertyChanged("expire_date");
+                    }
+                }
+            }
+        }
+        private DateTime _GroupExpiryDate;
 
         public virtual app_branch app_branch { get; set; }
         public virtual ICollection<item_inventory_detail> item_inventory_detail { get; set; }

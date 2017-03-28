@@ -317,21 +317,20 @@ namespace Cognitivo.Product
                     item_inventory_detail _item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
                     item_inventory_detail item_inventory_detail = new item_inventory_detail();
 
-                    if (item_inventory_detail == null)
+                    if (_item_inventory_detail == null)
                     {
                         Class.StockCalculations Stock = new Class.StockCalculations();
-                        List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
+                        //List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
                         //Bring 0 Value into view since this is a new Item, it won't have any stock. OR else the System will assume same quantity for the rest.
                         item_inventory_detail.value_system = 0;
-                        item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Cost;
+                        item_inventory_detail.unit_value = 0; // StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Cost : 0;
                     }
                     else
                     {
                       item_inventory_detail.value_system = _item_inventory_detail.value_system;
-                       
                     }
+
                     item_inventory_detail.id_inventory = item_inventory.id_inventory;
-                    item_inventory_detail.value_system = _item_inventory_detail.value_system;
                     item_inventory_detail.id_item_product = item_product.id_item_product;
                     item_inventory_detail.item_product = item_product;
                     item_inventory_detail.id_location = app_location.id_location;
@@ -348,8 +347,6 @@ namespace Cognitivo.Product
                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 }
             }
-         
-
         }
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)

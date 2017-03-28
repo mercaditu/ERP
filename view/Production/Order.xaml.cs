@@ -138,6 +138,7 @@ namespace Cognitivo.Production
                     a.type != production_order.ProductionOrderTypes.Fraction &&
                     a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
                 .Include(z => z.project)
+                .OrderByDescending(x => x.trans_date)
                 .LoadAsync();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 

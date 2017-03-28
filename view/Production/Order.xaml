@@ -106,7 +106,7 @@
 												  Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked" />
                                 </Grid>
 
-                                <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="10,58,-10,-14"
+                                <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"  Margin="0,58,0,0"
 														VirtualizingPanel.VirtualizationMode="Recycling"
 														VirtualizingPanel.IsVirtualizing="True"
 														ScrollViewer.CanContentScroll="True">
@@ -173,9 +173,15 @@
 									   Content="{Binding parent.name, FallbackValue=---}" />
                                     <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
 										   Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center" />
-                                    <Label Content="{lex:Loc Percentage}" Style="{StaticResource generic_Label}" FontSize="10" HorizontalAlignment="Center" />
-                                    <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
-                                            LostFocus="slider_LostFocus" Margin="16,0"  Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" ToolTip="{Binding percent, Mode=OneWay}"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label Content="{lex:Loc Percentage}"/>
+                                        <Label Style="{StaticResource input_label}" 
+                                               Content="{Binding ElementName=sliderPercentage, 
+                                               Path=Value, StringFormat=p0, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            LostFocus="slider_LostFocus" Margin="16,0" Maximum="1" SmallChange="0.01" x:Name="sliderPercentage"
+                                            TickPlacement="TopLeft" ToolTip="{Binding percent, Mode=OneWay}" LargeChange="0.1" metro:SliderHelper.ChangeValueBy="LargeChange" TickFrequency="0.1"/>
                                     <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													btnNew_Click="btnNewTask_Click"

@@ -54,6 +54,7 @@ namespace Cognitivo.Menu
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.Contact", entity.App.Names.Customer, "Contact", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact", entity.CurrentSession.Versions.Full, "1");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Configs.Promotion", entity.App.Names.SalesPromotion, "Promotion", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "SalesBudget", entity.CurrentSession.Versions.Full, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales", entity.CurrentSession.Versions.Basic, "1");
@@ -85,22 +86,25 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Item", entity.App.Names.Items, "Item", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.FixedAssets", entity.App.Names.FixedAssets, "FixedAsset", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Recipe", entity.App.Names.Recipe, "Recipe", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Stock", entity.App.Names.Stock, "ProductStock", entity.CurrentSession.Versions.Lite, "1");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Configs.Promotion", entity.App.Names.SalesPromotion, "Promotion", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.BranchWalkin", entity.App.Names.FootTraffic, "FootTraffic", entity.CurrentSession.Versions.Basic, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.SuppliesRequest", entity.App.Names.RequestResource, "ProjectPlan", entity.CurrentSession.Versions.Basic, "0");
+
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Product.Stock", entity.App.Names.Stock, "ProductStock", entity.CurrentSession.Versions.Lite, "1");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Product.InventoryFlow", entity.App.Names.InventoryFlow, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");
+
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Inventory", entity.App.Names.Inventory, "Inventory", entity.CurrentSession.Versions.Basic, "1");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.InventoryFlow", entity.App.Names.InventoryFlow, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Movement", entity.App.Names.Movement, "BranchLocation", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Transfer", entity.App.Names.Transfer, "Transfer", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.MobileBranch", entity.App.Names.MobileBranch, "MobileBranch", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Request", entity.App.Names.RequestManagement, "Request", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.SuppliesRequest", entity.App.Names.RequestResource, "ProjectPlan", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Product.Maintainance", entity.App.Names.Maintainance, "Maintainance", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.ItemTag", entity.App.Names.ItemTag, "ProductTag", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Configs.ItemBrand", entity.App.Names.Brand, "Brand", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList", entity.CurrentSession.Versions.Lite, "1");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Inventory, "Sales.PackingList", "PackingList", "PackingListSend", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Inventory, "Purchase.PackingList", "PackingList", "PackingListRecieve", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.BranchWalkin", entity.App.Names.FootTraffic, "FootTraffic", entity.CurrentSession.Versions.Basic, "0");
+
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Sales.PackingList", "PackingList", "PackingListSend", entity.CurrentSession.Versions.Medium, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Transaction, "Purchase.PackingList", "PackingList", "PackingListRecieve", entity.CurrentSession.Versions.Medium, "0");
+            
             //Impex
             dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Exports, "Sales.Export", entity.App.Names.Export, "Export", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.InternationalCommerce, Namespaces.Importation, "Purchase.Import", entity.App.Names.Imports, "Import", entity.CurrentSession.Versions.Medium, "0");

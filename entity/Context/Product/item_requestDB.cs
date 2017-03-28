@@ -166,7 +166,7 @@ namespace entity
 
                             int id_location = (int)item.id_location;
 
-                            app_location app_location = base.app_location.Where(x => x.id_location == id_location && x.is_default).FirstOrDefault();
+                            app_location app_location = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
                             item_transfer.app_location_origin = app_location;
                             item_transfer.app_branch_origin = app_location.app_branch;
 
@@ -220,7 +220,7 @@ namespace entity
                             }
 
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
-                            item_transfer.transfer_type = item_transfer.Transfer_type.movemnent;
+                            item_transfer.transfer_type = item_transfer.Transfer_Types.Movement;
 
                             base.item_transfer.Add(item_transfer);
                         }
@@ -272,7 +272,7 @@ namespace entity
                             item_transfer_detail.movement_id = item.movement_id;
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);
 
-                            item_transfertrans.transfer_type = entity.item_transfer.Transfer_type.transfer;
+                            item_transfertrans.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
                         }
                         else if (item.decision == entity.item_request_decision.Decisions.Production)
                         {
@@ -424,6 +424,11 @@ namespace entity
 
                 if (production_order.production_order_detail.Count() > 0)
                 {
+                    if (production_order.production_line == null)
+                    {
+                        production_order.production_line = orderdb.production_line.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    }
+
                     orderdb.production_order.Add(production_order);
                 }
             }

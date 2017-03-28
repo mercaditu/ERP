@@ -10,10 +10,10 @@ namespace entity
 
     public partial class item_transfer : Audit, IDataErrorInfo
     {
-        public enum Transfer_type
+        public enum Transfer_Types
         {
-            movemnent = 0,
-            transfer = 1
+            Movement = 0,
+            Transfer = 1
         }
 
         public item_transfer()
@@ -127,7 +127,7 @@ namespace entity
 
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
-        public Transfer_type transfer_type { get; set; }
+        public Transfer_Types transfer_type { get; set; }
 
         public int? id_item_asset { get; set; }
         public DateTime? eta { get; set; }
@@ -193,8 +193,8 @@ namespace entity
                 // apply property level validation rules
                 if (columnName == "app_branch_origin" || columnName == "app_branch_destination")
                 {
-                    if (app_branch_origin == app_branch_destination)
-                        return "please select diffrent origin and destination";
+                    if (app_branch_origin == app_branch_destination && transfer_type == Transfer_Types.Transfer)
+                        return "Please select diffrent Origin and Destination";
                 }
                 return "";
             }

@@ -27,7 +27,7 @@ namespace Cognitivo.Product
         {
             item_transfer item_transfer = new item_transfer();
             item_transfer.State = EntityState.Added;
-            item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
+            item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
             item_transfer.IsSelected = true;
             item_transfer.status = Status.Transfer.Pending;
             item_transfer.app_branch_origin = ProductTransferDB.app_branch.Find(CurrentSession.Id_Branch);
@@ -77,7 +77,7 @@ namespace Cognitivo.Product
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
             await ProductTransferDB.item_transfer.Where(a =>
                     a.id_company == CurrentSession.Id_Company &&
-                    a.transfer_type == item_transfer.Transfer_type.transfer).Include(x => x.app_branch_destination).Include(y => y.app_branch_origin).OrderByDescending(x => x.trans_date)
+                    a.transfer_type == item_transfer.Transfer_Types.Transfer).Include(x => x.app_branch_destination).Include(y => y.app_branch_origin).OrderByDescending(x => x.trans_date)
                     .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 

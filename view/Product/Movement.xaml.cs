@@ -27,7 +27,7 @@ namespace Cognitivo.Product
             {
                 item_transfer item_transfer = new item_transfer();
                 item_transfer.State = EntityState.Added;
-                item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
+                item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Movement;
                 item_transfer.IsSelected = true;
                 item_transfer.status = Status.Transfer.Pending;
                 ProductTransferDB.item_transfer.Add(item_transfer);
@@ -92,7 +92,7 @@ namespace Cognitivo.Product
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_transferViewSource = ((CollectionViewSource)(FindResource("item_transferViewSource")));
-            await ProductTransferDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_type.movemnent).OrderByDescending(x => x.trans_date).LoadAsync();
+            await ProductTransferDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_Types.Movement).OrderByDescending(x => x.trans_date).LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
             await ProductTransferDB.app_document_range.Where(d => d.is_active == true

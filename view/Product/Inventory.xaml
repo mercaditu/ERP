@@ -129,7 +129,7 @@
 						  DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 						  SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}" />
 
-                <ListBox x:Name="location_ListBox" Background="{DynamicResource AccentColor_Introvert}" Margin="2,32,2,2"
+                <ListBox x:Name="location_ListBox" Background="{DynamicResource AccentColor_Introvert}" Margin="0,32,0,0"
 						 ScrollViewer.VerticalScrollBarVisibility="Auto"
 						 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 						 ItemContainerStyle="{StaticResource nav_ListSelection}"
@@ -165,7 +165,7 @@
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 													   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_detailViewSource}}">
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_detailViewSource}}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 												ElementStyle="{DynamicResource MetroDataGridCheckBox}"

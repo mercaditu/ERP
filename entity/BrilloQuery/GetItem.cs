@@ -33,7 +33,7 @@ namespace entity.BrilloQuery
 								 left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
 								 where (item.id_company = {0} or item.id_company is null)
-									and (loc.id_branch = {1} or loc.id_branch is null)
+									and (loc.id_branch = {1} or prod.id_item_product is null)
 									and item.is_active = 1
 
 								 group by item.id_item

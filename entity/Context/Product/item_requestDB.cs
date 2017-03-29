@@ -122,15 +122,11 @@ namespace entity
                         item_transfer.id_item_request = item_request.id_item_request;
 
                         if (base.app_department.FirstOrDefault() != null)
-                        {
-                            item_transfer.id_department = base.app_department.Select(x => x.id_department).FirstOrDefault();
-                        }
+                        { item_transfer.id_department = base.app_department.Select(x => x.id_department).FirstOrDefault(); }
 
                         int RangeID = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).Select(x => x.id_range).FirstOrDefault();
                         if (RangeID > 0)
-                        {
-                            item_transfer.id_range = RangeID;
-                        }
+                        { item_transfer.id_range = RangeID; }
 
 
                         foreach (item_request_decision decision in DecisionList

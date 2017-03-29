@@ -104,7 +104,10 @@ namespace entity
 
                 int Line = 0;
 
-                production_order production_order = new production_order();
+                app_location dest_location = null;//
+                app_location orig_location = null;//
+                project project = null;
+                production_line production_line = null;
 
                 if (item_request.production_order != null)
                 {
@@ -123,9 +126,6 @@ namespace entity
                         }
                     }
                 }
-
-                app_location dest_location = null;//
-                app_location orig_location = null;//
 
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
                 {

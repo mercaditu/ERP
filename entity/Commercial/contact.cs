@@ -406,6 +406,24 @@ namespace entity
                     if (id_contact_role == 0)
                         return "Contact role needs to be selected";
                 }
+
+                if (columnName == "code")
+                {
+                    if (string.IsNullOrEmpty(code) == false)
+                    {
+                        if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                        {
+                            using (db db = new db())
+                            {
+                                if (db.contacts.Any(x => x.code == code && x.id_contact != id_contact))
+                                {
+                                    return "Duplicate Contact Code";
+                                }
+                            }
+                        }
+                        
+                    }
+                }
                 return "";
             }
         }

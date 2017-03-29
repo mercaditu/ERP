@@ -165,19 +165,10 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (listContacts.SelectedItem != null)
+            if (ContactDB.SaveChanges() > 0)
             {
-                contact contact = listContacts.SelectedItem as contact;
-                if (ContactDB.contacts.Any(x => x.code == contact.code && x.id_contact != contact.id_contact))
-                {
-                    toolBar.msgWarning("Duplicate Code");
-                }
-
-                if (ContactDB.SaveChanges() > 0)
-                {
-                    toolBar.msgSaved(ContactDB.NumberOfRecords);
-                    contactViewSource.View.Refresh();
-                }
+                toolBar.msgSaved(ContactDB.NumberOfRecords);
+                contactViewSource.View.Refresh();
             }
         }
 

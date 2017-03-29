@@ -111,15 +111,16 @@ namespace entity
                         dest_location = base.production_line.Where(x => x.id_production_line == production_line.id_production_line).FirstOrDefault().app_location;
 
                     }
+
                     foreach (var grouped_decisionMovement in item_request_detail.item_request_decision
-                        .Where(x => x.decision == entity.item_request_decision.Decisions.Movement).GroupBy(x => x.id_location))
+                        .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null).GroupBy(x => x.id_location))
                     {
                         //create movement header
                         item_transfer item_transfer = new item_transfer();
                         item_transfer.status = Status.Transfer.Pending;
-                        // entity.Properties.Settings setting = new Properties.Settings();
                         item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                         item_transfer.id_item_request = item_request.id_item_request;
+
                         if (base.app_department.FirstOrDefault() != null)
                         {
                             item_transfer.id_department = base.app_department.Select(x => x.id_department).FirstOrDefault();
@@ -130,21 +131,13 @@ namespace entity
                         {
                             item_transfer.id_range = RangeID;
                         }
-
-
+                        
                         foreach (item_request_decision decision in item_request_detail.item_request_decision
                             .Where(x =>
                             x.decision == entity.item_request_decision.Decisions.Movement &&
                             x.id_location == grouped_decisionMovement.Key.Value))
 
                         {
-                            //create movement detail.
-
-                            //5 Items, 3 = 1nd Origin, 2 = 2nd Origin. Then create two movements.
-                            //Create new movement for each different origin.
-
-                            //  ProductTransferDB ProductTransferDB = new entity.ProductTransferDB();
-                            //  item_transfer _item_transfer = new entity.item_transfer();
                             item_transfer.status = Status.Transfer.Pending;
                             item_transfer.IsSelected = true;
 
@@ -210,13 +203,14 @@ namespace entity
 
 
                     foreach (var grouped_decisionTransfer in item_request_detail.item_request_decision
-                        .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer).GroupBy(x => x.id_location))
+                        .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer && x.id_location != null).GroupBy(x => x.id_location))
                     {
                         item_transfer item_transfertrans = new item_transfer();
                         item_transfertrans.status = Status.Transfer.Pending;
 
                         item_transfertrans.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                         item_transfertrans.id_item_request = item_request.id_item_request;
+
                         if (base.app_department.FirstOrDefault() != null)
                         {
                             item_transfertrans.id_department = base.app_department.FirstOrDefault().id_department;
@@ -267,9 +261,7 @@ namespace entity
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);
 
                             item_transfertrans.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
-
                         }
-
                     }
 
                     foreach (var grouped_decisionPurcahse in item_request_detail.item_request_decision
@@ -289,16 +281,11 @@ namespace entity
                             x.decision == entity.item_request_decision.Decisions.Movement &&
                             x.id_location == grouped_decisionPurcahse.Key.Value))
                         {
-
-
-
-
                             if (dest_location != null)
                             {
-
-
                                 purchase_tender.app_branch = dest_location.app_branch;
                             }
+
                             if (project != null)
                             {
                                 purchase_tender.id_project = project.id_project;
@@ -412,13 +399,7 @@ namespace entity
                         }
                     }
                 }
-
-
-
-
-
-
-
+                
                 item_request.status = Status.Documents_General.Approved;
 
                 if ((item_request.number == null || item_request.number == string.Empty) && item_request.id_range > 0)
@@ -426,8 +407,7 @@ namespace entity
                     app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
                     Brillo.Document.Start.Automatic(item_request, app_document_range);
                 }
-
-
+                
                 base.SaveChanges();
 
             }

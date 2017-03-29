@@ -176,12 +176,11 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Label Content="{lex:Loc Percentage}"/>
                                         <Label Style="{StaticResource input_label}" 
-                                               Content="{Binding ElementName=sliderPercentage, 
-                                               Path=Value, StringFormat=p0, Mode=OneWay}"/>
+                                               Content="{Binding completed, StringFormat=p0, Mode=OneWay}"/>
                                     </StackPanel>
                                     <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            LostFocus="slider_LostFocus" Margin="16,0" Maximum="1" SmallChange="0.01" x:Name="sliderPercentage"
-                                            TickPlacement="TopLeft" ToolTip="{Binding percent, Mode=OneWay}" LargeChange="0.1" metro:SliderHelper.ChangeValueBy="LargeChange" TickFrequency="0.1"/>
+                                            LostFocus="slider_LostFocus" Margin="16,0" Maximum="1" SmallChange="0.01"
+                                            TickPlacement="TopLeft" ToolTip="{Binding completed, Mode=OneWay}" LargeChange="0.1" metro:SliderHelper.ChangeValueBy="LargeChange" TickFrequency="0.1"/>
                                     <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													btnNew_Click="btnNewTask_Click"

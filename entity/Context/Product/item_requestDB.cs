@@ -89,7 +89,6 @@ namespace entity
                     {
                         //Transfer related to Project because there is a Project.
 
-
                         int id_branch = (int)base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch;
                         dest_location = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
                         project = item_request_detail.project_task.project;
@@ -111,9 +110,12 @@ namespace entity
                         dest_location = base.production_line.Where(x => x.id_production_line == production_line.id_production_line).FirstOrDefault().app_location;
 
                     }
+                }
 
+                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
+                {
                     foreach (var grouped_decisionMovement in item_request_detail.item_request_decision
-                        .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null).GroupBy(x => x.id_location))
+                    .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null).GroupBy(x => x.id_location))
                     {
                         //create movement header
                         item_transfer item_transfer = new item_transfer();
@@ -131,7 +133,7 @@ namespace entity
                         {
                             item_transfer.id_range = RangeID;
                         }
-                        
+
                         foreach (item_request_decision decision in item_request_detail.item_request_decision
                             .Where(x =>
                             x.decision == entity.item_request_decision.Decisions.Movement &&
@@ -197,11 +199,12 @@ namespace entity
                         }
                         base.item_transfer.Add(item_transfer);
                     }
+                }
 
 
 
-
-
+                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
+                {
                     foreach (var grouped_decisionTransfer in item_request_detail.item_request_decision
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer && x.id_location != null).GroupBy(x => x.id_location))
                     {
@@ -223,7 +226,7 @@ namespace entity
                         foreach (item_request_decision decision in item_request_detail.item_request_decision
                         .Where(x =>
                         x.decision == entity.item_request_decision.Decisions.Transfer &&
-                        x.id_location ==grouped_decisionTransfer.Key.Value))
+                        x.id_location == grouped_decisionTransfer.Key.Value))
                         {
                             int id_location = (int)decision.id_location;
                             item_transfertrans.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
@@ -263,7 +266,9 @@ namespace entity
                             item_transfertrans.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
                         }
                     }
-
+                }
+                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
+                {
                     foreach (var grouped_decisionPurcahse in item_request_detail.item_request_decision
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Purchase).GroupBy(x => x.id_location))
                     {
@@ -309,7 +314,9 @@ namespace entity
                         }
                         base.purchase_tender.Add(purchase_tender);
                     }
-
+                }
+                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
+                {
                     foreach (var grouped_decisionProduction in item_request_detail.item_request_decision
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Production).GroupBy(x => x.id_location))
                     {
@@ -369,7 +376,10 @@ namespace entity
                             orderdb.SaveChanges();
                         }
                     }
+                }
 
+                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
+                {
                     foreach (item_request_decision grouped_decisionInternal in item_request_detail.item_request_decision
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Internal))
                     {
@@ -399,7 +409,7 @@ namespace entity
                         }
                     }
                 }
-                
+
                 item_request.status = Status.Documents_General.Approved;
 
                 if ((item_request.number == null || item_request.number == string.Empty) && item_request.id_range > 0)
@@ -411,7 +421,6 @@ namespace entity
                 base.SaveChanges();
 
             }
-
         }
     }
 }

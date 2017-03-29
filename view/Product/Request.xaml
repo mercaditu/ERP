@@ -255,6 +255,7 @@
                                     </Grid>
                                 </TabItem.Header>
                                 <DataGrid x:Name="item_request_detailDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                          CanUserAddRows="False"
                                          ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}" SelectionMode="Single">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding item_request_detail.item.name_full, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -278,7 +279,7 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc Movement}" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource B2V}}">
-                                <DataGrid x:Name="item_request_decisionmovementDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisionDataGrid_RowEditEnding">
+                                <DataGrid x:Name="item_request_decisionmovementDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" EnableRowVirtualization="True" RowEditEnding="item_request_decisionDataGrid_RowEditEnding">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Location}" Binding="{Binding location}" IsReadOnly="True" Width="*" />

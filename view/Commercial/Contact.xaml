@@ -119,7 +119,7 @@
 								 Text="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox x:Name="txtCode" Style="{StaticResource input_textbox}"
-								 Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+								 Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=true}" />
 
                             <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
 								  IsChecked="{Binding is_person, FallbackValue=False}" />

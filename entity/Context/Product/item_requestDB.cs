@@ -82,13 +82,14 @@ namespace entity
                     item_request.RaisePropertyChanged("number");
                 }
 
-
+                List<item_request_decision> DecisionList = new List<item_request_decision>();
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
                 {
+                    DecisionList.AddRange(item_request_detail.item_request_decision.ToList());
+
                     if (item_request_detail.id_project_task != null)
                     {
                         //Transfer related to Project because there is a Project.
-
                         int id_branch = (int)base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch;
                         dest_location = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
                         project = item_request_detail.project_task.project;
@@ -98,7 +99,6 @@ namespace entity
                     if (item_request_detail.id_sales_order_detail != null)
                     {
                         dest_location = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-
                     }
 
                     //PRODUCTION ORDER
@@ -108,14 +108,12 @@ namespace entity
                         production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.production_line;
                         //Get Location based on Line
                         dest_location = base.production_line.Where(x => x.id_production_line == production_line.id_production_line).FirstOrDefault().app_location;
-
                     }
                 }
 
-                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
-                {
-                    foreach (var grouped_decisionMovement in item_request_detail.item_request_decision
-                    .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null).GroupBy(x => x.id_location))
+                foreach (var grouped_decisionMovement in DecisionList
+                    .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null)
+                    .GroupBy(x => x.id_location))
                     {
                         //create movement header
                         item_transfer item_transfer = new item_transfer();
@@ -134,22 +132,23 @@ namespace entity
                             item_transfer.id_range = RangeID;
                         }
 
-                        foreach (item_request_decision decision in item_request_detail.item_request_decision
+
+                        foreach (item_request_decision decision in DecisionList
                             .Where(x =>
                             x.decision == entity.item_request_decision.Decisions.Movement &&
                             x.id_location == grouped_decisionMovement.Key.Value))
-
                         {
                             item_transfer.status = Status.Transfer.Pending;
                             item_transfer.IsSelected = true;
-
                             item_transfer.State = EntityState.Added;
                             item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                             item_transfer.id_item_request = item_request.id_item_request;
+
                             if (base.app_department.FirstOrDefault() != null)
                             {
                                 item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
                             }
+
                             if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
                             {
                                 item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
@@ -165,7 +164,7 @@ namespace entity
 
                             //Create Transfer Detail in DB.
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                            item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                            item_transfer_detail.id_item_product = decision.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
                             item_transfer_detail.item_product = base.item_product.Where(x => x.id_item_product == item_transfer_detail.id_item_product).FirstOrDefault();
                             item_transfer_detail.quantity_origin = decision.quantity;
                             item_transfer_detail.quantity_destination = decision.quantity;
@@ -173,7 +172,6 @@ namespace entity
 
                             if (dest_location != null)
                             {
-
                                 item_transfer.app_location_destination = dest_location;
                                 item_transfer.app_branch_destination = dest_location.app_branch;
                             }
@@ -181,10 +179,8 @@ namespace entity
                             {
                                 item_transfer.id_project = project.id_project;
                             }
-
-
-
-                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {
                                 item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                                 item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
@@ -194,18 +190,12 @@ namespace entity
 
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
                             item_transfer.transfer_type = item_transfer.Transfer_Types.Movement;
-
-
                         }
+
                         base.item_transfer.Add(item_transfer);
                     }
-                }
 
-
-
-                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
-                {
-                    foreach (var grouped_decisionTransfer in item_request_detail.item_request_decision
+                    foreach (var grouped_decisionTransfer in DecisionList
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer && x.id_location != null).GroupBy(x => x.id_location))
                     {
                         item_transfer item_transfertrans = new item_transfer();
@@ -223,7 +213,8 @@ namespace entity
                         {
                             item_transfertrans.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
                         }
-                        foreach (item_request_decision decision in item_request_detail.item_request_decision
+
+                        foreach (item_request_decision decision in DecisionList
                         .Where(x =>
                         x.decision == entity.item_request_decision.Decisions.Transfer &&
                         x.id_location == grouped_decisionTransfer.Key.Value))
@@ -245,13 +236,13 @@ namespace entity
 
 
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                            item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                            if (item_request_detail.project_task != null)
+                            item_transfer_detail.id_item_product = decision.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                            if (decision.item_request_detail.project_task != null)
                             {
-                                item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
+                                item_transfer_detail.id_project_task = decision.item_request_detail.project_task.id_project_task;
                             }
 
-                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {
                                 item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                                 item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
@@ -266,10 +257,8 @@ namespace entity
                             item_transfertrans.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
                         }
                     }
-                }
-                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
-                {
-                    foreach (var grouped_decisionPurcahse in item_request_detail.item_request_decision
+
+                    foreach (var grouped_decisionPurcahse in DecisionList
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Purchase).GroupBy(x => x.id_location))
                     {
                         purchase_tender purchase_tender = new purchase_tender();
@@ -281,7 +270,7 @@ namespace entity
                         purchase_tender.trans_date = item_request.request_date;
                         purchase_tender.comment = item_request.comment;
 
-                        foreach (item_request_decision decision in item_request_detail.item_request_decision
+                        foreach (item_request_decision decision in DecisionList
                             .Where(x =>
                             x.decision == entity.item_request_decision.Decisions.Movement &&
                             x.id_location == grouped_decisionPurcahse.Key.Value))
@@ -297,11 +286,11 @@ namespace entity
                             }
 
                             purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                            purchase_tender_item.id_item = item_request_detail.id_item;
-                            purchase_tender_item.item_description = item_request_detail.comment;
+                            purchase_tender_item.id_item = decision.item_request_detail.id_item;
+                            purchase_tender_item.item_description = decision.item_request_detail.comment;
                             purchase_tender_item.quantity = decision.quantity;
 
-                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {
                                 purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
                                 purchase_tender_dimension.id_dimension = item_request_dimension.id_dimension;
@@ -314,10 +303,8 @@ namespace entity
                         }
                         base.purchase_tender.Add(purchase_tender);
                     }
-                }
-                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
-                {
-                    foreach (var grouped_decisionProduction in item_request_detail.item_request_decision
+
+                    foreach (var grouped_decisionProduction in DecisionList
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Production).GroupBy(x => x.id_location))
                     {
 
@@ -337,24 +324,24 @@ namespace entity
                             }
                         }
 
-                        foreach (item_request_decision decision in item_request_detail.item_request_decision
+                        foreach (item_request_decision decision in DecisionList
                      .Where(x =>
                      x.decision == entity.item_request_decision.Decisions.Movement &&
                      x.id_location == grouped_decisionProduction.Key.Value))
                         {
                             production_order_detail production_order_detail = new production_order_detail();
-                            production_order_detail.name = item_request_detail.item.name;
+                            production_order_detail.name = decision.item_request_detail.item.name;
                             production_order_detail.quantity = decision.quantity;
                             production_order_detail.status = Status.Production.Pending;
                             production_order_detail.is_input = false;
-                            production_order_detail.id_item = item_request_detail.item.id_item;
+                            production_order_detail.id_item = decision.item_request_detail.item.id_item;
 
                             if (decision.item_request_detail.id_project_task != null)
                             {
                                 production_order_detail.id_project_task = decision.item_request_detail.id_project_task;
                             }
 
-                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {
                                 production_order_dimension production_order_dimension = new production_order_dimension();
                                 production_order_dimension.id_dimension = item_request_dimension.id_dimension;
@@ -376,11 +363,8 @@ namespace entity
                             orderdb.SaveChanges();
                         }
                     }
-                }
 
-                foreach (item_request_detail item_request_detail in item_request.item_request_detail)
-                {
-                    foreach (item_request_decision grouped_decisionInternal in item_request_detail.item_request_decision
+                    foreach (item_request_decision grouped_decisionInternal in DecisionList
                         .Where(x => x.decision == entity.item_request_decision.Decisions.Internal))
                     {
                         List<Brillo.StockList> Items_InStockLIST;
@@ -408,7 +392,6 @@ namespace entity
                             base.item_movement.AddRange(item_movement_originList);
                         }
                     }
-                }
 
                 item_request.status = Status.Documents_General.Approved;
 

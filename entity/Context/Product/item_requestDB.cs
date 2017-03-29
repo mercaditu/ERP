@@ -145,14 +145,10 @@ namespace entity
                             item_transfer.id_item_request = item_request.id_item_request;
 
                             if (base.app_department.FirstOrDefault() != null)
-                            {
-                                item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
-                            }
+                            { item_transfer.id_department = base.app_department.FirstOrDefault().id_department; }
 
                             if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
-                            {
-                                item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
-                            }
+                            { item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range; }
 
                             int id_location = (int)decision.id_location;
 
@@ -175,10 +171,9 @@ namespace entity
                                 item_transfer.app_location_destination = dest_location;
                                 item_transfer.app_branch_destination = dest_location.app_branch;
                             }
+
                             if (project != null)
-                            {
-                                item_transfer.id_project = project.id_project;
-                            }
+                            { item_transfer.id_project = project.id_project; }
                             
                             foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {
@@ -205,42 +200,36 @@ namespace entity
                         item_transfertrans.id_item_request = item_request.id_item_request;
 
                         if (base.app_department.FirstOrDefault() != null)
-                        {
-                            item_transfertrans.id_department = base.app_department.FirstOrDefault().id_department;
-                        }
+                        { item_transfertrans.id_department = base.app_department.FirstOrDefault().id_department; }
 
                         if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
-                        {
-                            item_transfertrans.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
-                        }
+                        { item_transfertrans.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range; }
 
                         foreach (item_request_decision decision in DecisionList
-                        .Where(x =>
-                        x.decision == entity.item_request_decision.Decisions.Transfer &&
-                        x.id_location == grouped_decisionTransfer.Key.Value))
+                            .Where(x =>
+                                x.decision == entity.item_request_decision.Decisions.Transfer &&
+                                x.id_location == grouped_decisionTransfer.Key.Value))
                         {
                             int id_location = (int)decision.id_location;
                             item_transfertrans.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
                             item_transfertrans.app_branch_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
                             item_transfertrans.comment = "Transfer item Request from " + decision.decision.ToString();
+
                             if (dest_location != null)
                             {
-
                                 item_transfertrans.app_location_destination = dest_location;
                                 item_transfertrans.app_branch_destination = dest_location.app_branch;
                             }
+
                             if (project != null)
-                            {
-                                item_transfertrans.id_project = project.id_project;
-                            }
+                            { item_transfertrans.id_project = project.id_project; }
 
 
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
                             item_transfer_detail.id_item_product = decision.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+
                             if (decision.item_request_detail.project_task != null)
-                            {
-                                item_transfer_detail.id_project_task = decision.item_request_detail.project_task.id_project_task;
-                            }
+                            { item_transfer_detail.id_project_task = decision.item_request_detail.project_task.id_project_task; }
 
                             foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                             {

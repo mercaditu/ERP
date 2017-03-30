@@ -599,7 +599,12 @@ namespace Cognitivo.Purchase
             purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
             if (purchase_order != null)
             {
-                entity.Brillo.Document.Start.Manual(purchase_order, purchase_order.app_document_range);
+                purchase_order.app_document_range = purchase_order.app_document_range != null ? PurchaseOrderDB.app_document_range.Find(purchase_order.id_range) : purchase_order.app_document_range;
+
+                if (purchase_order.app_document_range != null)
+                {
+                    entity.Brillo.Document.Start.Manual(purchase_order, purchase_order.app_document_range);
+                }
             }
             else
             {

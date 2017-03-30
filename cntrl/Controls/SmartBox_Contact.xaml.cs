@@ -323,18 +323,18 @@ namespace cntrl.Controls
             }
             if (rbtnName.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
+                smartBoxContactSetting.Default.SearchFilter.Add("Name");
             }
             if (rbtnGov_ID.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+                smartBoxContactSetting.Default.SearchFilter.Add("GovID");
             }
             if (rbtnTel.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+                smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
 
-            Controls.smartBoxContactSetting.Default.Save();
+            smartBoxContactSetting.Default.Save();
         }
 
         private void _SmartBox_Contact_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -376,6 +376,11 @@ namespace cntrl.Controls
         }
 
         private void popCrud_Closed(object sender)
+        {
+            LoadData();
+        }
+
+        private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             LoadData();
         }

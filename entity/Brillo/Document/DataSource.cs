@@ -495,6 +495,7 @@ namespace entity.Brillo.Document
                     id_sales_return_detail = g.id_purchase_order,
                     sales_return = g.id_purchase_order_detail,
                     id_company = g.id_company,
+                    contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
                     add1 = g.purchase_order != null ? g.purchase_order.contact.address : "",
                     telephone = g.purchase_order != null ? g.purchase_order.contact.telephone : "",
                     email = g.purchase_order != null ? g.purchase_order.contact.email : "",
@@ -504,7 +505,7 @@ namespace entity.Brillo.Document
 
                     Bank = g.purchase_order != null ? g.purchase_order.contact != null ? g.purchase_order.contact.app_bank != null ? g.purchase_order.contact.app_bank.name : "" : "" : "",
                     Comment = g.comment,
-                    RefContact = g.purchase_order != null ? g.purchase_order.contact_ref.name : "",
+                    RefContact = g.purchase_order != null ? g.purchase_order.contact_ref != null ? g.purchase_order.contact_ref.name : "" : "",
 
                     SupplierCode = g.item != null ? g.item.supplier_code : "",
                     SKU = g.item != null ? g.item.sku : "",
@@ -524,7 +525,6 @@ namespace entity.Brillo.Document
                     Contract = g.purchase_order != null ? g.purchase_order.app_contract.name : "",
                     Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
                     code = g.purchase_order.code,
-                    contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
                     Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     trans_date = g.purchase_order.trans_date,
                     id_vat_group = g.id_vat_group,

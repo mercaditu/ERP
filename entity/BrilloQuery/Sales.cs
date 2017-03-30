@@ -18,7 +18,7 @@ namespace entity.BrilloQuery
             string query = @"
 						    SET sql_mode = '';
 							select
-							(srd.quantity * srd.unit_price * (vatco.vat + 1)) as SubTotalVAT,
+							sum(srd.quantity * srd.unit_price * (vatco.vat + 1)) as SubTotalVAT,
 							si.id_sales_invoice as InvoiceID,
 							srd.id_sales_return_detail as ReturnDetailID
 

@@ -369,7 +369,8 @@ namespace Cognitivo.Commercial
             if (contactChildListViewSource != null)
             {
                 contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-                contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == ParentContact.id_contact || x.id_contact == ParentContact.id_contact).ToList();
+                contactChildListViewSource.Source = ContactDB.contacts
+                    .Where(x => x.parent.id_contact == ParentContact.id_contact || x.id_contact == ParentContact.id_contact).OrderBy(x => x.name).ToList();
                 contactChildListViewSource.View.Refresh();
             }
         }

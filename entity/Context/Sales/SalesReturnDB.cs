@@ -316,19 +316,26 @@ namespace entity
             BrilloQuery.Sales Sales = new BrilloQuery.Sales();
             List<BrilloQuery.ReturnInvoice_Integration> ReturnList = Sales.Get_ReturnInvoice_Integration(sales_return.id_sales_return);
 
-            foreach (BrilloQuery.ReturnInvoice_Integration item in ReturnList)
+            foreach (BrilloQuery.ReturnInvoice_Integration Return in ReturnList)
             {
-                if (item.InvoiceID > 0)
+                if (Return.InvoiceID > 0)
                 {
                     //Sales Invoice Integrated.
-                    sales_invoice sales_invoice = base.sales_invoice.Find(item.InvoiceID);
-                    decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == item.InvoiceID).Sum(x => x.SubTotalVAT);
+                    sales_invoice sales_invoice = base.sales_invoice.Find(Return.InvoiceID);
+                    decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == Return.InvoiceID).Sum(x => x.SubTotalVAT);
 
                     foreach (payment_schedual payment_schedual in sales_invoice.payment_schedual.Where(x => x.AccountReceivableBalance > 0))
                     {
                         if (payment_schedual.AccountReceivableBalance > 0 && Return_GrandTotal_ByInvoice > 0)
                         {
-                            decimal PaymentValue = payment_schedual.AccountReceivableBalance < Return_GrandTotal_ByInvoice ? payment_schedual.AccountReceivableBalance : Return_GrandTotal_ByInvoice;
+
+                            decimal PaymentValue = 
+                                payment_schedual.AccountReceivableBalance < Return_GrandTotal_ByInvoice 
+                                ? 
+                                payment_schedual.AccountReceivableBalance 
+                                : 
+                                Return_GrandTotal_ByInvoice;
+
                             Return_GrandTotal_ByInvoice -= PaymentValue;
 
                             payment_schedual Schedual = new payment_schedual();
@@ -341,7 +348,7 @@ namespace entity
                             Schedual.status = Status.Documents_General.Approved;
                             Schedual.id_contact = sales_return.id_contact;
                             Schedual.can_calculate = true;
-                            Schedual.parent = payment_schedual; //base.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).FirstOrDefault();
+                            Schedual.parent = payment_schedual;
 
                             payment_detail payment_detail = new payment_detail();
                             payment_detail.id_currencyfx = sales_return.id_currencyfx;

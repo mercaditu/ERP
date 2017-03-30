@@ -69,7 +69,7 @@ namespace entity
                 {
                     if (item_request.id_branch > 0)
                     {
-                        Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == item_request.id_branch).FirstOrDefault().code;
+                        Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == item_request.id_branch).Select(x => x.code).FirstOrDefault();
                     }
 
                     app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
@@ -83,6 +83,7 @@ namespace entity
                 {
                     DecisionList.AddRange(item_request_detail.item_request_decision.ToList());
 
+                    //PROJECT LOGISTICS BASED
                     if (item_request_detail.id_project_task != null)
                     {
                         //Transfer related to Project because there is a Project.
@@ -94,16 +95,16 @@ namespace entity
                     //SALES ORDER
                     if (item_request_detail.id_sales_order_detail != null)
                     {
-                        dest_location = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
+                        dest_location = base.app_location.Where(x => x.is_default && x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault();
                     }
 
                     //PRODUCTION ORDER
                     if (item_request_detail.id_order_detail != null)
                     {
                         //Get Production Line
-                        production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.production_line;
+                        production_line = base.production_order_detail.Find(item_request_detail.id_order_detail).production_order.production_line;
                         //Get Location based on Line
-                        dest_location = base.production_line.Where(x => x.id_production_line == production_line.id_production_line).FirstOrDefault().app_location;
+                        dest_location = base.production_line.Find(production_line.id_production_line).app_location;
                     }
                 }
                 

@@ -27,7 +27,10 @@ namespace entity
 
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
+        public int? id_purchase_packing_detail { get; set; }
 
+        public decimal vat { get; set; }
+        
         [NotMapped]
         public decimal avlquantity
         {

@@ -135,14 +135,6 @@ namespace entity
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
         private bool _is_archived;
 
-        /// <summary>
-        /// Percentage of Production Completion.
-        /// </summary>
-        public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
-        private decimal _completed;
-
-        public decimal? importance_percent { get; set; }
-
         public ProductionOrderTypes type { get; set; }
 
         public virtual production_line production_line { get; set; }

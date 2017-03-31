@@ -9,10 +9,17 @@ namespace entity
 
     public partial class impex : Audit, IDataErrorInfo
     {
-        public enum _impex_type
+        public enum ImpexTypes
         {
             Import = 1,
             Export = 2
+        }
+
+        public enum CalculationMethods
+        {
+            Mixed,
+            Quantity,
+            Price
         }
 
         public impex()
@@ -58,7 +65,7 @@ namespace entity
         public string number { get; set; }
 
         [Required]
-        public _impex_type impex_type { get; set; }
+        public ImpexTypes impex_type { get; set; }
 
         public DateTime etd { get; set; }
         public DateTime eta { get; set; }
@@ -74,6 +81,8 @@ namespace entity
 
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
         private bool _is_archived;
+
+        public CalculationMethods? type { get; set; }
 
         [NotMapped]
         public app_currencyfx Currencyfx { get; set; }

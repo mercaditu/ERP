@@ -74,14 +74,14 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
                         if (id_item > 0)
                         {
-                            if (purchase_packing_detail.user_verified == true && purchase_packing_detail.id_item==id_item) 
+                            if (purchase_packing_detail.verified_by != null && purchase_packing_detail.id_item==id_item) 
                                 return true;
                             else
                                 return false;
                         }
                         else
                         {
-                            if (purchase_packing_detail.user_verified == true)
+                            if (purchase_packing_detail.verified_by != null)
                                 return true;
                             else
                                 return false;
@@ -101,7 +101,7 @@ namespace Cognitivo.Purchase
                     purchase_packingpurchase_packinglist_detailViewSource.View.Filter = i =>
                     {
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
-                        if (purchase_packing_detail.user_verified == false)
+                        if (purchase_packing_detail.verified_by == null)
                             return true;
                         else
                             return false;
@@ -262,7 +262,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                         purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                         purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                        purchase_packing_detail.user_verified = false;
+                        purchase_packing_detail.verified_by = CurrentSession.Id_User;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                         purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
@@ -299,7 +299,7 @@ namespace Cognitivo.Purchase
                             purchase_packing_detail.quantity = sbxItem.Quantity;
                             purchase_packing_detail.security_user = PurchasePackingListDB.security_user.Find(CurrentSession.Id_User);
                             purchase_packing_detail.app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
-                            purchase_packing_detail.user_verified = true;
+                            purchase_packing_detail.verified_by = CurrentSession.Id_User;
                             purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                             purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
@@ -325,13 +325,13 @@ namespace Cognitivo.Purchase
                 {
                     //This code should be in Selection Changed of DataGrid and after inserting new items.
                     var VerifiedItemList = purchase_packing.purchase_packing_detail
-                        .Where(x => x.user_verified == false)
+                        .Where(x => x.verified_by == null)
                         .GroupBy(x => x.id_item)
                         .Select(x => new
                         {
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
-                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.user_verified && y.id_item==x.Max(z=>z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.verified_by != null && y.id_item==x.Max(z=>z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                             Quantity = x.Max(y => y.quantity),
                             id_item= x.Max(y => y.id_item)
                         })
@@ -380,7 +380,7 @@ namespace Cognitivo.Purchase
                     List<purchase_invoice_detail> DetailList = new List<purchase_invoice_detail>();
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
-                    foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.user_verified == false))
+                    foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.verified_by == null))
                     {
                         purchase_invoice_detail detail = new purchase_invoice_detail()
                         {

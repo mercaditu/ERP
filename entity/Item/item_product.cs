@@ -35,7 +35,7 @@ namespace entity
         public COGS_Types cogs_type { get; set; }
 
 
-        public bool show_batch_code { get; set; }
+        public bool show_batch { get; set; }
 
         [NotMapped]
         public decimal stock

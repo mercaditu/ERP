@@ -58,7 +58,6 @@ namespace entity
                 }
             }
         }
-
         private decimal _quantity;
 
         public DateTime? expire_date { get; set; }
@@ -70,12 +69,12 @@ namespace entity
 
         public int? id_branch { get; set; }
 
-        public bool user_verified
-        {
-            get { return _user_verified; }
-            set { _user_verified = value; RaisePropertyChanged("user_verified"); }
-        }
-        private bool _user_verified;
+        //public bool user_verified
+        //{
+        //    get { return _user_verified; }
+        //    set { _user_verified = value; RaisePropertyChanged("user_verified"); }
+        //}
+        //private bool _user_verified;
 
         public decimal? verified_quantity
         {
@@ -92,12 +91,12 @@ namespace entity
         private decimal? _verified_quantity;
 
 
-        public decimal? verified_by
+        public int? verified_by
         {
             get { return _verified_by; }
             set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
         }
-        private decimal? _verified_by;
+        private int? _verified_by;
         
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }

@@ -245,7 +245,8 @@ namespace entity
             }
         }
         private decimal _completed;
-        public decimal? importance_percent { get; set; }
+
+        public decimal importance { get; set; }
 
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
         private bool _is_archived;

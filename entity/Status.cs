@@ -5,6 +5,12 @@ namespace entity
 {
     public static class Status
     {
+        public enum CommercialMethods
+        {
+            DiscountOnInvoice,
+            DiscountOnPacking   
+        }
+
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ReturnTypes
         {

@@ -195,6 +195,8 @@ namespace entity
         }
         private decimal _completed;
 
+        public decimal importance { get; set; }
+
         [NotMapped]
         public string percent { get; set; }
 

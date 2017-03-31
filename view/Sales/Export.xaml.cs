@@ -41,7 +41,7 @@ namespace Cognitivo.Sales
                 ImpexDB.impex
                     .Include(x => x.impex_export)
                     .Include(x => x.impex_expense)
-                    .Where(x => x.impex_type == impex._impex_type.Export && x.is_active == true && x.id_company == company_ID)
+                    .Where(x => x.impex_type == impex.ImpexTypes.Export && x.is_active == true && x.id_company == company_ID)
                     .Load();
                 impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = this.FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
@@ -76,7 +76,7 @@ namespace Cognitivo.Sales
         {
             sales_invoiceViewSource.Source = ImpexDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
             impex impex = new impex();
-            impex.impex_type = entity.impex._impex_type.Export;
+            impex.impex_type = entity.impex.ImpexTypes.Export;
             impex.eta = DateTime.Now;
             impex.etd = DateTime.Now;
             impex.is_active = true;
@@ -490,13 +490,13 @@ namespace Cognitivo.Sales
                     impex_incoterm impex_incoterm = id_incotermComboBox.SelectedItem as impex_incoterm;
                     List<impex_incoterm_detail> impex_incoterm_detail = null;
 
-                    if (impex.impex_type == entity.impex._impex_type.Import)
+                    if (impex.impex_type == entity.impex.ImpexTypes.Import)
                     {
                         //Only fetch buyer expence
                         impex_incoterm_detail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.buyer == true).ToList();
                     }
 
-                    if (impex.impex_type == entity.impex._impex_type.Export)
+                    if (impex.impex_type == entity.impex.ImpexTypes.Export)
                     {
                         //Only fetch seller expence
                         impex_incoterm_detail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.seller == true).ToList();

@@ -234,19 +234,16 @@ namespace Cognitivo.Production
             {
                 int _id_production_order = production_order.id_production_order;
                 List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
+
                 if (_id_production_order > 0)
                 {
                     Class.Production Production = new Class.Production();
-                 
-
                     LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
-
-                   
                 }
+
                 item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
                 item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
                 item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
-
                 item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
                 item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
             }
@@ -766,7 +763,7 @@ namespace Cognitivo.Production
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Update_Logistics();
+            //Update_Logistics();
         }
 
         private async void slider_LostFocus(object sender, EventArgs e)
@@ -774,12 +771,16 @@ namespace Cognitivo.Production
             await OrderDB.SaveChangesAsync();
         }
 
-      
-
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             ViewAll = !ViewAll;
-            RaisePropertyChanged("ViewAll");
+
+            foreach (production_order_detail production_order_detail in production_order.production_order_detail)
+            {
+                production_order_detail.is_read = ViewAll;
+                production_order_detail.RaisePropertyChanged("is_read");
+            }            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,4 +1,5 @@
 ﻿using cntrl;
+using Cognitivo.Properties;
 using entity;
 using System;
 using System.Collections.Generic;
@@ -569,7 +570,7 @@ namespace Cognitivo.Accounting
                 Production.branch = ProductionOrder.id_branch > 0 ? db.app_branch.Find(ProductionOrder.id_branch).name : "";
                 Production.name = ProductionOrder.name;
                 Production.trans_date = ProductionOrder.trans_date;
-                
+
                 foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
                 {
                     if (Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed).Count() > 0)
@@ -832,5 +833,13 @@ namespace Cognitivo.Accounting
         }
 
         #endregion IDisposable Support
+
+        private void tbxServer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Settings SalesSettings = new Settings();
+
+            Settings.Default.Save();
+            SalesSettings = Settings.Default;
+        }
     }
 }

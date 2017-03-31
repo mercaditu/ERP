@@ -117,7 +117,7 @@
                                     </TreeView.ItemsPanel>
                                     <TreeView.ItemContainerStyle>
                                         <Style TargetType="{x:Type TreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="{Binding ElementName=Productionorder, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Setter Property="IsExpanded" Value="{Binding is_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </Style>
                                     </TreeView.ItemContainerStyle>
                                 </cntrl:ExtendedTreeView>

@@ -27,6 +27,7 @@ namespace Cognitivo.Product
             {
                 item_transfer item_transfer = new item_transfer();
                 item_transfer.State = EntityState.Added;
+                item_transfer.trans_date = DateTime.Now;
                 item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Movement;
                 item_transfer.IsSelected = true;
                 item_transfer.status = Status.Transfer.Pending;

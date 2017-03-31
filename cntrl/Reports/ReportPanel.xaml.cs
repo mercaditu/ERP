@@ -202,6 +202,7 @@ namespace cntrl
             {
                 ShowProject = true;
             }
+
             if (Report.Parameters.Where(x => x == Class.Report.Types.StartDate || x == Class.Report.Types.EndDate).Count() > 0)
             {
                 ShowDateRange = true;

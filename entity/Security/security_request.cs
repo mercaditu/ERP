@@ -13,7 +13,7 @@ namespace entity
             Rejected
         }
 
-        public enum Types
+        public enum Request_Types
         {
             Discount,
             Credit,
@@ -32,7 +32,7 @@ namespace entity
         public App.Names id_application { get; set; }
         public States state { get; set; }
 
-        public Types type { get; set; }
+        public Request_Types type { get; set; }
         public decimal? value { get; set; }
         public DateTime request_date { get; set; }
         public DateTime approve_date { get; set; }

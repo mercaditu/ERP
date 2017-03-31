@@ -320,7 +320,7 @@ namespace entity.Brillo.Logic
             List<item_movement> item_movementList = new List<item_movement>();
 
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 && x.user_verified))
+                .Where(x => x.item.item_product.Count() > 0 && x.verified_by!=null))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                 packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);

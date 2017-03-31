@@ -483,7 +483,7 @@ namespace Cognitivo.Commercial
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (contact != null)
             {
-                contact.LongLat = pinLocation.ToString();
+                contact.geo_longlat = pinLocation.ToString();
             }
         }
 

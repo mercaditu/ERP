@@ -1,6 +1,6 @@
 namespace entity
 {
-    using entity.Class;
+    using Class;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -9,7 +9,6 @@ namespace entity
     using System.Globalization;
     using System.Linq;
     using System.Text;
-    using System.Windows;
 
     public partial class contact : AuditGeneric, IDataErrorInfo, INotifyPropertyChanged
     {

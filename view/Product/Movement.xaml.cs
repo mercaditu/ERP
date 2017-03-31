@@ -213,7 +213,11 @@ namespace Cognitivo.Product
                     if (item_transfer_detail.movement_id > 0)
                     {
                         entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-                        item_movement item_movement = ProductTransferDB.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
+
+                        item_movement item_movement = ProductTransferDB.item_movement
+                            .Where(x => x.id_movement == item_transfer_detail.movement_id)
+                            .FirstOrDefault();
+
                         Items_InStockLIST = stockBrillo.ScalarMovement(item_movement);
                     }
                 }
@@ -231,7 +235,6 @@ namespace Cognitivo.Product
                 ProductTransferDB.item_movement.AddRange(item_movement_originList);
 
                 //Credit Movement to Destination
-
                 foreach (item_movement item_movement in item_movement_originList)
                 {
                     item_movement item_movement_dest;

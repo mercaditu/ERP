@@ -331,9 +331,19 @@
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                        Width="32" Header="" />
+                                                        Width="32" Header="">
+                                    <DataGridCheckBoxColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsEditable, Mode=OneWay}" Value="false">
+                                                    <Setter Property="IsEnabled" Value="false" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridCheckBoxColumn.CellStyle>
+                                </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Binding="{Binding purchase_tender_item.item.supplier_code, Mode=OneWay}" IsReadOnly="True"
-                                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowCode, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                    Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowCode, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                     Header="{lex:Loc Cognitivo:local:Code}" Width="*" MinWidth="32" />
                                 <DataGridTextColumn Binding="{Binding purchase_tender_item.item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128" />

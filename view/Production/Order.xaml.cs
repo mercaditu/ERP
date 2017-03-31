@@ -79,9 +79,10 @@ namespace Cognitivo.Production
                 foreach (production_order production_order in OrderDB.production_order.Local.Where(x => x.IsSelected))
                 {
                     production_order.is_archived = true;
-                    toolBar_btnSave_Click(sender);
-                    production_orderViewSource.View.MoveCurrentToFirst();
                 }
+
+                toolBar_btnSave_Click(sender);
+                Load();
             }
         }
 
@@ -135,15 +136,7 @@ namespace Cognitivo.Production
                     x.id_company == CurrentSession.Id_Company &&
                     x.app_location.id_branch == CurrentSession.Id_Branch).ToListAsync();
 
-            production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            await OrderDB.production_order.Where(a =>
-                    a.id_company == CurrentSession.Id_Company &&
-                    a.type != production_order.ProductionOrderTypes.Fraction &&
-                    a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
-                .Include(z => z.project)
-                .OrderByDescending(x => x.trans_date)
-                .LoadAsync();
-            production_orderViewSource.Source = OrderDB.production_order.Local;
+            Load();
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             app_dimensionViewSource.Source = await OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
@@ -167,6 +160,20 @@ namespace Cognitivo.Production
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(OrderDB, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+        }
+
+        private async void Load()
+        {
+            production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
+            await OrderDB.production_order.Where(a =>
+                    a.id_company == CurrentSession.Id_Company &&
+                    a.type != production_order.ProductionOrderTypes.Fraction &&
+                    a.is_archived == false &&
+                    a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
+                .Include(z => z.project)
+                .OrderByDescending(x => x.trans_date)
+                .LoadAsync();
+            production_orderViewSource.Source = OrderDB.production_order.Local;
         }
 
         public void filter_task()

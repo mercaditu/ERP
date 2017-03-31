@@ -26,7 +26,7 @@ namespace Cognitivo.Product
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
-            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false).LoadAsync();
+            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false).OrderByDescending(x => x.request_date).LoadAsync();
             item_requestViewSource.Source = dbContext.item_request.Local;
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));

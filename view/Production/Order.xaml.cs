@@ -76,9 +76,12 @@ namespace Cognitivo.Production
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                OrderDB.production_order.Remove((production_order)production_orderDataGrid.SelectedItem);
-                production_orderViewSource.View.MoveCurrentToFirst();
-                toolBar_btnSave_Click(sender);
+                foreach (production_order production_order in OrderDB.production_order.Local.Where(x => x.IsSelected))
+                {
+                    production_order.is_archived = true;
+                    toolBar_btnSave_Click(sender);
+                    production_orderViewSource.View.MoveCurrentToFirst();
+                }
             }
         }
 

@@ -763,7 +763,7 @@ namespace Cognitivo.Production
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //Update_Logistics();
+            Update_Logistics();
         }
 
         private async void slider_LostFocus(object sender, EventArgs e)

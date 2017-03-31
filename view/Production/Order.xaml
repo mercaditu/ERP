@@ -124,7 +124,9 @@
                             </Grid>
                         </Grid>
 
-                        <TabControl Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling">
+                        <TabControl Grid.Column="1"
+                                    SelectionChanged="TabControl_SelectionChanged"
+                                    VirtualizingPanel.VirtualizationMode="Recycling">
                             <TabItem Header="Data">
                                 <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"
 											IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
@@ -231,14 +233,15 @@
                         </TabControl>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{lex:Loc RequestResource}" VirtualizingPanel.VirtualizationMode="Standard">
+                <TabItem Header="{lex:Loc RequestResource}"
+                         VirtualizingPanel.VirtualizationMode="Standard">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
+                        <TabControl metro:TabControlHelper.IsUnderlined="True" Grid.Column="0">
                             <TabItem Header="{lex:Loc Product}">
                                 <TabItem.IsEnabled>
                                     <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"

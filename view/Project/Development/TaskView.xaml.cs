@@ -731,5 +731,20 @@ namespace Cognitivo.Project.Development
                 }
             }
         }
+
+        private void Slider_LostFocus(object sender, RoutedEventArgs e)
+        {
+            project_task project_task = treeProject.SelectedItem_ as project_task;
+            if (project_task != null)
+            {
+                using (db db = new db())
+                {
+                    project_task _project_task = db.project_task.Find(project_task.id_project_task);
+                    _project_task.completed = project_task.completed;
+                    _project_task.importance = project_task.importance;
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

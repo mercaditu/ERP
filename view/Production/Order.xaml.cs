@@ -794,5 +794,26 @@ namespace Cognitivo.Production
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+
+        private void Slider_LostFocus(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = production_orderproduction_order_detailViewSource.View.CurrentItem as production_order_detail;
+            if (production_order_detail != null)
+            {
+                using (db db = new db())
+                {
+                    production_order_detail _production_order_detail = 
+                        db.production_order_detail
+                        .Where(x => x.id_production_order == production_order_detail.id_production_order)
+                        .FirstOrDefault();
+                    if (_production_order_detail != null)
+                    {
+                        _production_order_detail.completed = production_order_detail.completed;
+                        _production_order_detail.importance = production_order_detail.importance;
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
     }
 }

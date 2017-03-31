@@ -916,8 +916,9 @@ namespace entity.Brillo.Document
                                 payment_name = g.payment_type != null ? g.payment_type.name : "",
                                 trans_date = g.payment_approve != null ? g.payment_approve.trans_date : DateTime.Now,
                                 currency_name = g.app_currency != null ? g.app_currency != null ? g.app_currency.name : "" : "",
-                                 number = g.payment_approve != null ? g.payment_approve.number : "Not Ref",
-                                SalesNumber = g.payment_schedual != null ? g.payment_schedual.sales_invoice != null ? g.payment_schedual.sales_invoice.number : "" : "",
+                                number = g.payment_approve != null ? g.payment_approve.number : "Not Ref",
+                                //SalesNumber = g.payment_schedual != null ? g.payment_schedual.sales_invoice != null ? g.payment_schedual.sales_invoice.number : "" : "",
+                                PurchaseNumber = g.payment_schedual != null ? g.payment_schedual.purchase_invoice != null ? g.payment_schedual.purchase_invoice.number : "" : "",
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
                                 AmountWords = g != null ?  g.app_currency != null ? g.app_currency.has_rounding ?
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoreLinq;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -107,12 +108,11 @@ namespace entity
                         dest_location = base.production_line.Find(production_line.id_production_line).app_location;
                     }
                 }
-                
 
                 ///MOVEMENTS
                 foreach (item_request_decision grouped_decisionMovement in DecisionList
                     .Where(x => x.decision == entity.item_request_decision.Decisions.Movement && x.id_location != null)
-                    .GroupBy(x => x.id_location))
+                    .DistinctBy(x => x.id_location))
                 {
                     //create movement header
                     item_transfer item_transfer = new item_transfer();
@@ -174,10 +174,11 @@ namespace entity
                     base.item_transfer.Add(item_transfer);
                 }
 
-
+                var TransferGroup = DecisionList
+                    .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer && x.id_location != null)
+                    .GroupBy(x => x.id_location);
                 ///TRANSFERS
-                foreach (item_request_decision grouped_decisionTransfer in DecisionList
-                    .Where(x => x.decision == entity.item_request_decision.Decisions.Transfer && x.id_location != null).GroupBy(x => x.app_location.id_branch))
+                foreach (item_request_decision grouped_decisionTransfer in TransferGroup)
                 {
                     item_transfer item_transfer = new item_transfer();
                     item_transfer.transfer_type = item_transfer.Transfer_Types.Transfer;

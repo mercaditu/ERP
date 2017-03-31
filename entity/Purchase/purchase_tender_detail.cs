@@ -36,9 +36,7 @@ namespace entity
         public bool IsEditable
         {
             get { return status == Status.Documents_General.Approved ? false : true; }
-            //set { _IsEditable = value; RaisePropertyChanged("IsEditable"); }
         }
-        private bool _IsEditable;
 
         public string item_description { get; set; }
 

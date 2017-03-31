@@ -228,24 +228,29 @@ namespace Cognitivo.Production
 
         private void Calculate_Logistics()
         {
-            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-
-            if (production_order != null)
+            if (production_orderViewSource != null)
             {
-                int _id_production_order = production_order.id_production_order;
-                List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
 
-                if (_id_production_order > 0)
+
+                production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+
+                if (production_order != null)
                 {
-                    Class.Production Production = new Class.Production();
-                    LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
-                }
+                    int _id_production_order = production_order.id_production_order;
+                    List<Class.Logistics> LogisticsList = new List<Class.Logistics>();
 
-                item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
-                item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
-                item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
-                item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
-                item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
+                    if (_id_production_order > 0)
+                    {
+                        Class.Production Production = new Class.Production();
+                        LogisticsList.AddRange(Production.Return_OrderLogistics(_id_production_order));
+                    }
+
+                    item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
+                    item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
+                    item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
+                    item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
+                    item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
+                }
             }
         }
 

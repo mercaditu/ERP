@@ -8,6 +8,10 @@ namespace entity
 
     public partial class CommercialHead : Audit
     {
+        public enum Methods
+        {
+
+        }
         /// <summary>
         /// Contact ID
         /// </summary>
@@ -49,6 +53,8 @@ namespace entity
         private contact _contact_ref;
 
         #endregion Contact Ref => Navigation
+
+        public Methods? method { get; set; } 
 
         /// <summary>
         ///

@@ -24,6 +24,8 @@ namespace entity
 
         public string name { get; set; }
 
+        public bool is_active { get; set; }
+
         public virtual app_location app_location { get; set; }
 
         public virtual ICollection<production_order> production_order { get; set; }

@@ -185,7 +185,15 @@ namespace Cognitivo.Project.Development
                     }
 
                     ProjectTaskDB.SaveChanges();
-                    entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
+                    if (_project_task.FirstOrDefault()!=null)
+                    {
+                        if (_project_task.FirstOrDefault().app_document_range!=null)
+                        {
+                            entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
+                        }
+                    }
+                 
+                  
                     filter_task();
                 }
             }

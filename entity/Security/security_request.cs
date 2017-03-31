@@ -22,11 +22,16 @@ namespace entity
         public int id_request { get; set; }
 
         public App.Names id_application { get; set; }
-        public Privilage.Privilages id_privilage { get; set; }
         public States state { get; set; }
+
+       
         public decimal? value { get; set; }
         public DateTime request_date { get; set; }
         public DateTime approve_date { get; set; }
+
+        public string comment { get; set; }
+
+        public DateTime trans_date { get; set; }
 
         public virtual security_user request_user { get; set; }
         public virtual security_user approve_user { get; set; }

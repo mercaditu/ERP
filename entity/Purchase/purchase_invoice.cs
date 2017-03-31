@@ -35,6 +35,7 @@ namespace entity
 
         public int? id_purchase_order { get; set; }
         public int? id_department { get; set; }
+        
 
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]

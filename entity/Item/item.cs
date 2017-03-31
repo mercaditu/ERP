@@ -124,6 +124,9 @@ namespace entity
         public string description { get; set; }
         public decimal? unit_cost { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public bool is_autorecepie
         {
             get { return _is_autorecepie; }

@@ -50,6 +50,9 @@ namespace entity
         //Nav Properties
         public virtual item_asset item_asset { get; set; }
 
+        public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
+        private bool _is_archived;
+
         public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
 
         [NotMapped]

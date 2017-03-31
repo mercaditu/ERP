@@ -494,14 +494,22 @@ namespace Cognitivo.Production
             try
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-                foreach (production_order_detail production_order_detail in production_order.production_order_detail)
+                if (production_order!=null)
                 {
-                    production_order_detail.CalcExecutedQty_TimerTaks();
-                    production_order_detail.CalcExecutedCost_TimerTaks();
+                    foreach (production_order_detail production_order_detail in production_order.production_order_detail)
+                    {
+                        production_order_detail.CalcExecutedQty_TimerTaks();
+                        production_order_detail.CalcExecutedCost_TimerTaks();
+                    }
+
+                    production_orderViewSource.View.Refresh();
+                    if (production_order_detaillViewSource.View != null)
+                    {
+                        production_order_detaillViewSource.View.Refresh();
+                    }
+
                 }
 
-                production_orderViewSource.View.Refresh();
-                production_order_detaillViewSource.View.Refresh();
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }

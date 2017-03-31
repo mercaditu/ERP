@@ -141,6 +141,8 @@ namespace entity
         public decimal completed { get { return _completed; } set { _completed = value; RaisePropertyChanged("completed"); } }
         private decimal _completed;
 
+        public decimal? importance_percent { get; set; }
+
         public ProductionOrderTypes type { get; set; }
 
         public virtual production_line production_line { get; set; }

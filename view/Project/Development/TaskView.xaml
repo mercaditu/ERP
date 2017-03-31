@@ -163,6 +163,9 @@
                     <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
                     <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
                         Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}"/>
+                    <Label Content="{lex:Loc ImportancePercentage}" Style="{StaticResource input_label}" />
+                    <Slider Value="{Binding importance_percent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"  
+                        Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" />
                     <Label Content="{lex:Loc description}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
 

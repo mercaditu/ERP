@@ -633,7 +633,13 @@ namespace Cognitivo.Production
                     }
                 }
                 OrderDB = new OrderDB();
-                OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == production_order.ProductionOrderTypes.Production).Load();
+                OrderDB.production_order.Where(a =>
+                        a.id_company == CurrentSession.Id_Company &&
+                        a.type != production_order.ProductionOrderTypes.Fraction &&
+                        a.is_archived == false &&
+                        a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
+                    .Include(z => z.project)
+                    .OrderByDescending(x => x.trans_date).Load();
                 production_orderViewSource.Source = OrderDB.production_order.Local;
 
                 toolBar.msgSaved(OrderDB.NumberOfRecords);
@@ -767,6 +773,8 @@ namespace Cognitivo.Production
         {
             await OrderDB.SaveChangesAsync();
         }
+
+      
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {

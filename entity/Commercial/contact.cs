@@ -69,6 +69,11 @@ namespace entity
             ABn,
         }
 
+        public enum Methods
+        {
+
+        }
+
         public contact()
         {
             id_user = CurrentSession.Id_User;
@@ -103,6 +108,8 @@ namespace entity
         public int? id_sales_rep { get; set; }
         public int? id_geography { get; set; }
         public int? id_bank { get; set; }
+
+        public Methods? method { get; set; }
 
         [Required]
         public string name { get; set; }
@@ -169,7 +176,7 @@ namespace entity
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
 
-        [NotMapped]
+       public string verification_code { get; set; }
         public string LongLat
         {
             get

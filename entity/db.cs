@@ -131,6 +131,7 @@
         public virtual DbSet<sales_promotion> sales_promotion { get; set; }
         public virtual DbSet<sales_return_detail> sales_return_detail { get; set; }
         public virtual DbSet<security_user> security_user { get; set; }
+        public virtual DbSet<security_request> security_request { get; set; }
         public virtual DbSet<security_role> security_role { get; set; }
         public virtual DbSet<security_crud> security_curd { get; set; }
         public virtual DbSet<security_privilage> security_privilage { get; set; }

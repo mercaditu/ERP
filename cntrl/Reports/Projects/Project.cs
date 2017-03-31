@@ -49,7 +49,7 @@ sum(sid.quantity * sid.unit_price) as TotalInvoiced,
 sum(ps.debit) as TotalPaid,
 sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional,
-(task.quantity_est/(select sum(task.quantity_est) from project_task as task where id_project= @ProjectID)*100) as AveragePercentage
+importance_percent as AveragePercentage
 from project_task as task
 
 inner join projects  as proj on proj.id_project = task.id_project

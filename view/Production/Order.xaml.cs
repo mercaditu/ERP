@@ -173,7 +173,7 @@ namespace Cognitivo.Production
                 .Include(z => z.project)
                 .OrderByDescending(x => x.trans_date)
                 .LoadAsync();
-            production_orderViewSource.Source = OrderDB.production_order.Local;
+            production_orderViewSource.Source = OrderDB.production_order.Local.Where(x => x.is_archived == false);
         }
 
         public void filter_task()

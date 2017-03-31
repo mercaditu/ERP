@@ -529,6 +529,7 @@
 					   btnSearch_Click="toolBar_btnSearch_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
                        btnSync_Click="Page_Loaded"
+                       btnDelete_Click="toolBar_btnDelete_Click"
 					   appName="ProductionExecution"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />

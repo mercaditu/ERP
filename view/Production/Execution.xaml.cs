@@ -42,15 +42,7 @@ namespace Cognitivo.Production
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
-            production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            await ExecutionDB.production_order.Where(x =>
-                x.id_company == CurrentSession.Id_Company &&
-                x.type != production_order.ProductionOrderTypes.Fraction &&
-                x.production_line.app_location.id_branch == CurrentSession.Id_Branch)
-                .OrderByDescending(x => x.trans_date)
-                .Include(x => x.project)
-                .LoadAsync();
-            production_orderViewSource.Source = ExecutionDB.production_order.Local;
+            Load();
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
             await ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
@@ -68,6 +60,20 @@ namespace Cognitivo.Production
             dtpendtime.Text = DateTime.Now.ToString();
 
             filter_task();
+        }
+
+        private async void Load()
+        {
+            production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
+            await ExecutionDB.production_order.Where(a =>
+                    a.id_company == CurrentSession.Id_Company &&
+                    a.type != production_order.ProductionOrderTypes.Fraction &&
+                    a.is_archived == false &&
+                    a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
+                .Include(z => z.project)
+                .OrderByDescending(x => x.trans_date)
+                .LoadAsync();
+            production_orderViewSource.Source = ExecutionDB.production_order.Local.Where(x => x.is_archived == false);
         }
 
         private void toolBar_btnSave_Click(object sender)
@@ -425,6 +431,21 @@ namespace Cognitivo.Production
                 Button btn = new Button();
                 btn.Name = "Supp";
                 btnInsert_Click(btn, e);
+            }
+        }
+
+        private void toolBar_btnDelete_Click(object sender)
+        {
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Archive?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                foreach (production_order production_order in ExecutionDB.production_order.Local.Where(x => x.IsSelected))
+                {
+                    production_order.is_archived = true;
+                }
+
+                toolBar_btnSave_Click(sender);
+                Load();
             }
         }
 

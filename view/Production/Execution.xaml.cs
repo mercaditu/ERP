@@ -166,7 +166,7 @@ namespace Cognitivo.Production
             }
             else
             {
-                toolBar.msgWarning("select Production order for insert");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Cognitivo.Production
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -204,12 +204,14 @@ namespace Cognitivo.Production
         private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem;
+
             if (production_order_detail != null)
             {
+                production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
+
                 if (production_order_detail.item.id_item_type == item.item_type.Product)
                 {
                     tabProduct.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                     txtProduct.Text = (production_order_detail.quantity).ToString();
 
                     //ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToListAsync();
@@ -217,7 +219,6 @@ namespace Cognitivo.Production
                 else if (production_order_detail.item.id_item_type == item.item_type.RawMaterial)
                 {
                     tabRaw.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                     txtraw.Text = (production_order_detail.quantity).ToString();
 
                     if (production_order_detail.project_task != null)
@@ -230,24 +231,20 @@ namespace Cognitivo.Production
                 else if (production_order_detail.item.id_item_type == item.item_type.FixedAssets)
                 {
                     tabFixedAsset.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                     txtAsset.Text = (production_order_detail.quantity).ToString();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Supplies)
                 {
                     tabSupplies.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                     txtSupply.Text = (production_order_detail.quantity).ToString();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.Service)
                 {
                     tabService.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                 {
                     tabServiceContract.IsSelected = true;
-                    production_execution_detailViewSource.Source = production_order_detail.production_execution_detail.ToList();
                     txtServicecontract.Text = (production_order_detail.quantity).ToString();
                 }
                 else
@@ -435,7 +432,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Archive?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Archive?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 foreach (production_order production_order in ExecutionDB.production_order.Local.Where(x => x.IsSelected))
@@ -466,12 +463,11 @@ namespace Cognitivo.Production
             try
             {
                 DataGrid exexustiondetail = (DataGrid)e.Source;
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     production_order_detail production_order_detail = treeOrder.SelectedItem_ as production_order_detail;
-                    //production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
                     //DeleteDetailGridRow
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
@@ -506,9 +502,7 @@ namespace Cognitivo.Production
                     {
                         production_order_detaillViewSource.View.Refresh();
                     }
-
                 }
-
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
@@ -586,19 +580,16 @@ namespace Cognitivo.Production
                             {
                                 int ProductID = production_order_detail.item.item_product.FirstOrDefault().id_item_product;
 
-                                using (db db = new db())
-                                {
-                                    await ExecutionDB.item_movement.Where(x =>
-                                        x.id_item_product == ProductID &&
-                                        x.id_location == LocationID).LoadAsync();
+                                await ExecutionDB.item_movement.Where(x =>
+                                    x.id_item_product == ProductID &&
+                                    x.id_location == LocationID).LoadAsync();
 
-                                    QuantityAvaiable = ExecutionDB.item_movement.Local.Sum(x => x.credit) - ExecutionDB.item_movement.Local.Sum(x => x.debit);
-                                }
+                                QuantityAvaiable = ExecutionDB.item_movement.Local.Sum(x => x.credit) - ExecutionDB.item_movement.Local.Sum(x => x.debit);
                             }
 
                             if (QuantityAvaiable < (QuantityExe + Quantity))
                             {
-                                toolBar.msgWarning("Item is Not in Stock; Execution Quantity Is " + Math.Round(QuantityExe, 2) + " Stock Quantity Is " + Math.Round(QuantityAvaiable, 2));
+                                toolBar.msgWarning("Item is not in Stock; Execution Quantity Is " + Math.Round(QuantityExe, 2) + ", Stock Quantity Is " + Math.Round(QuantityAvaiable, 2));
                                 Quantity = (QuantityAvaiable - QuantityExe);
 
                                 //If quantity is zero, just ignore.
@@ -639,7 +630,7 @@ namespace Cognitivo.Production
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
             // production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-            production_execution_detail _production_execution_detail = new entity.production_execution_detail();
+            production_execution_detail _production_execution_detail = new production_execution_detail();
 
             //Adds Parent so that during approval, because it is needed for approval.
             if (production_order_detail.parent != null)
@@ -656,11 +647,7 @@ namespace Cognitivo.Production
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
 
-            if (production_order_detail.item.unit_cost != null)
-            {
-                _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
-            }
-
+            _production_execution_detail.unit_cost = production_order_detail.item.unit_cost != null ? (decimal)production_order_detail.item.unit_cost : 0;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
 

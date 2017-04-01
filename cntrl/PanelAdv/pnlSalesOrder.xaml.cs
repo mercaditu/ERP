@@ -24,7 +24,7 @@ namespace cntrl.PanelAdv
         private List<sales_order> _selected_sales_order = null;
         public List<sales_order> selected_sales_order { get { return _selected_sales_order; } set { _selected_sales_order = value; } }
         public contact _contact { get; set; }
-        public db _entity { get; set; }
+        public db db { get; set; }
 
         public pnlSalesOrder()
         {
@@ -40,11 +40,6 @@ namespace cntrl.PanelAdv
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // Do not load your data at design time.
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            {
-                // contactComboBox.CollectionViewSource = contactViewSource;
-            }
             if (_contact != null)
             {
                 sbxContact.Text = _contact.name;
@@ -54,7 +49,7 @@ namespace cntrl.PanelAdv
 
         private void ContactPref(object sender, RoutedEventArgs e)
         {
-            contact contact = _entity.contacts.Find(sbxContact.ContactID);
+            contact contact = db.contacts.Find(sbxContact.ContactID);
             if (contact != null)
             {
                 load_SalesOrder(contact.id_contact);
@@ -63,9 +58,9 @@ namespace cntrl.PanelAdv
 
         private void load_SalesOrder(int id_contact)
         {
-            var order = (from sales_order_detail in _entity.sales_order_detail
+            var order = (from sales_order_detail in db.sales_order_detail
                          where sales_order_detail.sales_order.id_contact == id_contact && sales_order_detail.sales_order.status == Status.Documents_General.Approved
-                         join sales_invoice_detail in _entity.sales_invoice_detail
+                         join sales_invoice_detail in db.sales_invoice_detail
                    on sales_order_detail.id_sales_order_detail equals sales_invoice_detail.id_sales_order_detail into lst
                          from list in lst.DefaultIfEmpty()
                          group list by new
@@ -80,9 +75,9 @@ namespace cntrl.PanelAdv
                              balance = grouped.Key.sales_order_detail != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity)
                          }).ToList().Select(x => x.id_sales_order);
 
-            sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
+            sales_orderViewSource = Resources["sales_orderViewSource"] as CollectionViewSource;
 
-            sales_orderViewSource.Source = _entity.sales_order.Where(x => order.Contains(x.id_sales_order) ).ToList();
+            sales_orderViewSource.Source = db.sales_order.Where(x => order.Contains(x.id_sales_order) ).ToList();
             filter_sales();
         }
 
@@ -142,11 +137,11 @@ namespace cntrl.PanelAdv
 
         private void LoadOrderDetail(int id, DataGridRowDetailsEventArgs e)
         {
-            if (_entity.sales_order_detail.Count() > 0)
+            if (db.sales_order_detail.Count() > 0)
             {
-                var salesOrder = (from sales_order_detail in _entity.sales_order_detail
+                var salesOrder = (from sales_order_detail in db.sales_order_detail
                                   where sales_order_detail.id_sales_order == id
-                                  join sales_invoice_detail in _entity.sales_invoice_detail
+                                  join sales_invoice_detail in db.sales_invoice_detail
                                   on sales_order_detail.id_sales_order_detail equals sales_invoice_detail.id_sales_order_detail into lst
                                   from list in lst.DefaultIfEmpty()
                                   group list by new

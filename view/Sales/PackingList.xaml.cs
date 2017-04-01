@@ -262,7 +262,7 @@ namespace Cognitivo.Sales
         {
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
-            pnlSalesOrder._entity = PackingListDB;
+            pnlSalesOrder.db = PackingListDB;
             if (sbxContact.ContactID > 0)
             {
                 contact contact = PackingListDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();

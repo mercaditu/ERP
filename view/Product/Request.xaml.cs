@@ -136,8 +136,8 @@ namespace Cognitivo.Product
                          select new
                          {
                              id_location = last.Key.app_location.id_location,
-                             location = last.Key.app_location.name,
-                             quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                             Location = last.Key.app_location.name,
+                             Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
                          }).ToList();
 
                 List<Decision> list_desion = new List<Decision>();
@@ -147,9 +147,9 @@ namespace Cognitivo.Product
                     Decision desion = new Decision();
                     desion.id_item = _item.id_item;
                     desion.id_location = movement.id_location;
-                    desion.location = movement.location;
+                    desion.location = movement.Location;
                     desion.name = _item.name;
-                    desion.avlqty = movement.quntitiy;
+                    desion.avlqty = movement.Quantity;
                     desion.Quantity = 0;
                     desion.State = state.Added;
                     list_desion.Add(desion);
@@ -165,7 +165,7 @@ namespace Cognitivo.Product
                      into last
                  select new
                  {
-                     id_location = last.Key.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
+                     id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
                      branch = last.Key.app_branch.name,
                      quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
                  }).ToList();

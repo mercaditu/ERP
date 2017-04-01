@@ -677,6 +677,7 @@ namespace Cognitivo.Sales
                 pnlPacking._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); //sbxContact.Contact as contact;
                 pnlPacking.Link_Click += Link_Click;
                 crud_modal.Children.Add(pnlPacking);
+
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
             }
@@ -750,7 +751,7 @@ namespace Cognitivo.Sales
         {
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
-            pnlSalesOrder._entity = SalesInvoiceDB;
+            pnlSalesOrder.db = SalesInvoiceDB;
             pnlSalesOrder._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); // sbxContact.Contact;
             pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
             pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;

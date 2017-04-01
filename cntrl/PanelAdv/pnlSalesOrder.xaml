@@ -39,10 +39,10 @@
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 										ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 										EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
-                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding GrandTotal, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding trans_date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="128" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="128" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding GrandTotal, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Total}" MinWidth="128" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="128" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

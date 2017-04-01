@@ -38,7 +38,6 @@ exe.Quantity as QuantityReal,
 										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
                                         (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,
 (1-( (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(end_date,start_date)) / 3600))) * 100 as diffPer,
-task.completed as Completed,task.completed*100 as Percentage,
 (((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/task.completed) as CompletedHours,
 task.unit_cost_est as CostEst,
 exe.unit_cost as CostReal,
@@ -49,7 +48,8 @@ sum(sid.quantity * sid.unit_price) as TotalInvoiced,
 sum(ps.debit) as TotalPaid,
 sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional,
-importance as AveragePercentage
+if(task.importance > 0, task.importance, null) as AveragePercentage,
+if(task.completed > 0, task.completed, null) as Percentage
 from project_task as task
 
 inner join projects  as proj on proj.id_project = task.id_project

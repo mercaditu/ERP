@@ -25,8 +25,18 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
+            app_departmentViewSource.Source = await dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
+
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
-            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false).OrderByDescending(x => x.request_date).LoadAsync();
+            await dbContext.item_request.Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false)
+                .Include(x => x.production_order)
+                .Include(x => x.sales_order)
+                .Include(x => x.project)
+                .Include(x => x.security_user)
+                .OrderByDescending(x => x.request_date)
+                .LoadAsync();
             item_requestViewSource.Source = dbContext.item_request.Local;
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
@@ -41,10 +51,6 @@ namespace Cognitivo.Product
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(FindResource("security_userViewSource")));
             await dbContext.security_user.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
             security_userViewSource.Source = dbContext.security_user.Local;
-
-            CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
-            app_departmentViewSource.Source = await dbContext.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
-            cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }

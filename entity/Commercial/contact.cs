@@ -174,10 +174,10 @@ namespace entity
         {
             get
             {
-                if (string.IsNullOrEmpty(_LongLat))
-                {
-                    _LongLat = geo_long.ToString().Replace(",", ".") + "," + geo_lat.ToString().Replace(",", ".");
-                }
+                //if (string.IsNullOrEmpty(_LongLat))
+                //{
+                //    _LongLat = geo_long.ToString().Replace(",", ".") + "," + geo_lat.ToString().Replace(",", ".");
+                //}
                 return _LongLat;
             }
             set
@@ -185,11 +185,11 @@ namespace entity
                 if (_LongLat != value)
                 {
                     _LongLat = value;
-                    RaisePropertyChanged("LongLat");
+                    RaisePropertyChanged("geo_longlat");
 
-                    var items = _LongLat.Split(',');
-                    geo_long = decimal.Parse(items[0].Trim(), CultureInfo.InvariantCulture);
-                    geo_lat = decimal.Parse(items[1].Trim(), CultureInfo.InvariantCulture);
+                    //var items = _LongLat.Split(',');
+                    //geo_long = decimal.Parse(items[0].Trim(), CultureInfo.InvariantCulture);
+                    //geo_lat = decimal.Parse(items[1].Trim(), CultureInfo.InvariantCulture);
                 }
             }
         }

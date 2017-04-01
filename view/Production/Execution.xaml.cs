@@ -774,14 +774,18 @@ namespace Cognitivo.Production
             {
                 List<production_service_account> production_accountList = pnl_ProductionAccount.production_accountList;
                 production_execution_detail production_execution_detail = pnl_ProductionAccount.production_execution_detail;
+
                 foreach (production_service_account _production_account in production_accountList)
                 {
                     production_service_account production_service_account = new entity.production_service_account();
+                    production_service_account.parent = _production_account;
+                    production_service_account.id_production_service_account = _production_account.id_production_service_account;
                     production_service_account.id_contact = production_execution_detail.id_contact;
+
                     production_service_account.id_item = (int)production_execution_detail.id_item;
-                    production_service_account.unit_cost = production_execution_detail.unit_cost;
-                    production_service_account.debit = 0;
-                    production_service_account.credit = production_execution_detail.quantity;
+                    production_service_account.unit_cost = _production_account.unit_cost;
+                    production_service_account.debit = production_execution_detail.quantity;
+                    production_service_account.credit = 0;
                     ExecutionDB.production_service_account.Add(production_service_account);
                     // production_execution_detail._production_account = production_account;
                 }

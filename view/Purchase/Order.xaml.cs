@@ -338,7 +338,7 @@ namespace Cognitivo.Purchase
                     {
                         purchase_order purchase_order = i as purchase_order;
                         string contact = purchase_order.contact != null ? purchase_order.contact.name : "";
-                        string number = purchase_order.number;
+                        string number = string.IsNullOrEmpty(purchase_order.number) ? "" : purchase_order.number;
 
                         if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                         {

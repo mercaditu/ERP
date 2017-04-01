@@ -714,11 +714,12 @@ namespace Cognitivo.Production
             {
                 contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeOrder);
+
                 production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem_;
+
                 if (production_order_detail != null)
                 {
                     production_execution_detailViewSource.Source = ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
-                    //production_order_detaillProductViewSource.View.MoveCurrentTo(production_order_detail);
                 }
             }
         }

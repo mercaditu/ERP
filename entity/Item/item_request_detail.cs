@@ -41,19 +41,14 @@
         public decimal quantity { get; set; }
 
         [NotMapped]
-        public decimal balance
+        public decimal Balance
         {
-            get
-            {
-                return quantity - item_request_decision.Sum(x => x.quantity);
-            }
-            set
-            {
-                _balance = value;
-            }
+            get { return quantity - item_request_decision.Sum(x => x.quantity); }
+            set { _Balance = value; }
         }
 
-        private decimal _balance;
+        private decimal _Balance;
+
         public DateTime date_needed_by { get; set; }
         public string comment { get; set; }
 

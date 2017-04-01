@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Background="{StaticResource appConfig}">
             <Image Style="{StaticResource img_Config}"
-                    Source="/Cognitivo;component/Images/Application/128/ProductPromotion.png" />
+                    Source="/Cognitivo;component/Images/Application/128/Promotion.png" />
             <Label Content="{lex:Loc SalesPromotion}" HorizontalAlignment="Center" Style="{StaticResource H1}" />
             <Button Content="{lex:Loc Create}" Margin="15"
                         Style="{StaticResource btn_green}" Click="btnNew_Click" />

@@ -142,15 +142,15 @@
                 </StackPanel>
 
                 <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}" />
-                <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                           SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True,
                           ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                           SelectedValuePath="id_branch"
                           ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" />
-                <Label Content="{lex:Loc ReceiveUser}"  Style="{StaticResource input_label}" />
-                <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                <Label Content="{lex:Loc Requested}"  Style="{StaticResource input_label}" />
+                <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                           SelectedItem="{Binding user_given, Mode=TwoWay, NotifyOnValidationError=True,
@@ -172,21 +172,21 @@
                     <DataGrid x:Name="item_request_detailMovementDataGrid" SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged"
                           AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                           ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
-                          RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
+                          RowDetailsVisibilityMode="Collapsed" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                     		                    Header="Item" Width="*" />
-                            <DataGridTemplateColumn Header="date needed by" Width="SizeToHeader">
+                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:NeededbyDate}" Width="SizeToHeader">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding date_needed_by, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="quantity" Width="SizeToHeader" IsReadOnly="True" />
-                            <DataGridComboBoxColumn  x:Name="cmburgency" Header="{lex:Loc Cognitivo:local:urgency}" Width="*" SelectedValueBinding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Binding="{Binding quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True" />
+                            <DataGridComboBoxColumn x:Name="cmburgency" Header="{lex:Loc Cognitivo:local:Urgency}" Width="*" SelectedValueBinding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="comment" Width="SizeToHeader" />
-                            <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="balance" Width="SizeToHeader" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Balance, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Available}" Width="SizeToHeader" IsReadOnly="True" />
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
@@ -196,11 +196,11 @@
                         		          RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="Dimension" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="value" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="Measurement" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DataTemplate>
@@ -220,10 +220,10 @@
                                       ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
                                       RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
-                    		                            Header="Item" Width="128" />
-                                    <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
-                                                        Header="balance" Width="64" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True" />
+                                    <DataGridTextColumn Binding="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                    		                            Header="{lex:Loc Cognitivo:local:Items}" Width="128" />
+                                    <DataGridTextColumn Binding="{Binding Balance, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
+                                                        Header="{lex:Loc Cognitivo:local:Available}" Width="64" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True" />
                                 </DataGrid.Columns>
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
@@ -233,11 +233,11 @@
                         		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="Dimension" Width="100" FontWeight="Bold" />
-                                                <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="value" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="256" FontWeight="Bold" />
+                                                <DataGridTextColumn Binding="{Binding value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
                                                 <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="Measurement" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </DataTemplate>
@@ -258,16 +258,16 @@
                                           CanUserAddRows="False"
                                          ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}" SelectionMode="Single">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding item_request_detail.item.name_full, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Items}" Width="Auto" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Module}" Width="*" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding app_location.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Origin}" Width="*" IsReadOnly="True" />
-                                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" IsReadOnly="True" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
-                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" />
+                                                Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" />
                                         <DataGridTemplateColumn Width="Auto" Header="">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -286,7 +286,7 @@
                                         <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty, StringFormat={}{0:N2}}" IsReadOnly="True" Width="*" />
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding Quantity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -298,7 +298,7 @@
                                         <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty, StringFormat={}{0:N2}}" IsReadOnly="True" Width="*" />
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding Quantity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -361,6 +361,7 @@
                        btnCancel_Click="toolBar_btnCancel_Click"
                        btnApprove_Click="toolBar_btnApprove_Click"
                        btnSave_Click="toolBar_btnSave_Click"
+                       btnDelete_Click="toolBar_btnDelete_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="RequestResource"
                                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

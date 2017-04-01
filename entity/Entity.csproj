@@ -379,7 +379,7 @@
       <DependentUpon>201703311224125_ProjectUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
-    <Compile Include="Production\production_service_account_.cs" />
+    <Compile Include="Production\production_service_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />

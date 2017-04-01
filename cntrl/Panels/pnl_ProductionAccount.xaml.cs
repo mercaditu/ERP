@@ -1,6 +1,6 @@
 ﻿using entity;
-using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,15 +9,14 @@ using System.Windows.Input;
 
 namespace cntrl.Panels
 {
-    /// <summary>
-    /// Interaction logic for pnl_ItemMovement.xaml
-    /// </summary>
     public partial class pnl_ProductionAccount : UserControl
     {
         private CollectionViewSource production_accountViewSource;
         public ExecutionDB ExecutionDB { get; set; }
+
         public production_execution_detail production_execution_detail { get; set; }
-        public List<production_service_account> production_accountList { get; set; }
+
+        public decimal Quantity_to_Execute { get; set; }
 
         public pnl_ProductionAccount()
         {
@@ -26,24 +25,53 @@ namespace cntrl.Panels
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            production_accountViewSource = ((CollectionViewSource)(FindResource("production_accountViewSource")));
-            List<production_service_account> production_service_accountList = ExecutionDB.production_service_account.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-            production_accountViewSource.Source = production_service_accountList.Where(a => a.Balance >= production_execution_detail.quantity).ToList();
+            production_accountViewSource = FindResource("production_accountViewSource") as CollectionViewSource;
+            
+                ExecutionDB.production_service_account
+                .Where
+                (
+                    x => 
+                    x.id_company == CurrentSession.Id_Company && 
+                    (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0 &&
+                    x.id_item == production_execution_detail.id_item
+                )
+                .Include(x => x.item)
+                .Load();
+            production_accountViewSource.Source = ExecutionDB.production_service_account.Local.Where(a => a.Balance >= production_execution_detail.quantity);
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             item_inventory_detailDataGrid.CancelEdit();
-            Grid parentGrid = (Grid)Parent;
-            parentGrid.Children.Clear();
-            parentGrid.Visibility = Visibility.Hidden;
+
+            Grid parentGrid = Parent as Grid;
+            if (parentGrid != null)
+            {
+                parentGrid.Children.Clear();
+                parentGrid.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            production_accountList = production_accountViewSource.View.OfType<production_service_account>().ToList();
-            //  quantity = item_inventoryList.Sum(y => y.value_counted);
-            //ProductMovementDB.SaveChanges();
+            //Make proper logic for Quantites
+            production_service_account SelectedAccount = ExecutionDB.production_service_account.Local.Where(x => x.IsSelected).FirstOrDefault();
+
+            if (SelectedAccount != null)
+            { SelectedAccount = ExecutionDB.production_service_account.Local.FirstOrDefault(); }
+
+            if (SelectedAccount != null)
+            {
+                production_service_account production_service_account = new production_service_account();
+                production_service_account.id_contact = production_execution_detail.id_contact;
+
+                production_service_account.id_item = (int)production_execution_detail.id_item;
+                production_service_account.unit_cost = SelectedAccount.unit_cost;
+                production_service_account.debit = production_execution_detail.quantity;
+                production_service_account.credit = 0;
+                SelectedAccount.child.Add(production_service_account);
+            }
+            
             btnCancel_Click(sender, null);
         }
     }

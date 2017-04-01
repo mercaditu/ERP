@@ -14,7 +14,7 @@
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
-             BorderBrush="#344C6B" BorderThickness="2" Background="White">
+             BorderBrush="{StaticResource AccentColor_Brush}" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />
         <CollectionViewSource x:Key="production_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_service_account}, CreateList=True}" />
@@ -26,33 +26,35 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMain">
-            <Grid Background="#344C6B">
-                <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png"
+            <Grid Background="{StaticResource AccentColor_Brush}">
+                <Image Source="/cntrl;component/Images/Outline_White/signature_filled-100.png"
                            Height="32" HorizontalAlignment="Left" Margin="4,0" />
-                <Label Content="{lex:Loc ProductionAccount}" FontSize="25" Margin="50,0,0,0" Foreground="White" />
-                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
-                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                <Label Content="{lex:Loc ServiceContract}" FontSize="25" Margin="50,0,0,0" Foreground="White" />
+                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" ToolTip="{lex:Loc Cancel}"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
             </Grid>
-            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource production_accountViewSource}">
+            <StackPanel Orientation="Horizontal" 
+                        DataContext="{StaticResource production_accountViewSource}">
                 <StackPanel x:Name="stpDisplay">
-                    <Label Content="{Binding items.name}" Style="{StaticResource input_label}" />
-                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340"
+                    <DataGrid x:Name="item_inventory_detailDataGrid" MinHeight="128" MaxHeight="256"
                               AutoGenerateColumns="False" ItemsSource="{Binding}"
-                              EnableRowVirtualization="True" CanUserAddRows="False"
-                              Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
+                              EnableRowVirtualization="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                              RowDetailsVisibilityMode="Collapsed" HeadersVisibility="Column" Width="355">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                            
+                            <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True" />
 
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Amount}" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" IsReadOnly="True"/>
 
                             <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Header="{lex:Loc Cognitivo:local:unit _value}" Width="*" />
-                            <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
+                                                Header="{lex:Loc Cognitivo:local:Cost}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

@@ -17,7 +17,6 @@ namespace Cognitivo.Production
         public bool ViewAll { get; set; }
 
         private ExecutionDB ExecutionDB = new ExecutionDB();
-        private cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
 
         //Production EXECUTION CollectionViewSource
         private CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
@@ -667,10 +666,13 @@ namespace Cognitivo.Production
 
             if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
             {
+                cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
+
                 pnl_ProductionAccount.ExecutionDB = ExecutionDB;
+                pnl_ProductionAccount.Quantity_to_Execute = Quantity;
                 pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
-                crud_modalAccount.Visibility = Visibility.Visible;
-                crud_modalAccount.Children.Add(pnl_ProductionAccount);
+                crud_modal.Visibility = Visibility.Visible;
+                crud_modal.Children.Add(pnl_ProductionAccount);
             }
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
@@ -764,30 +766,6 @@ namespace Cognitivo.Production
                     pnlCostCalculation.Outputproduction_order_detailList = production_order_detailOutputList;
                     crud_modal_cost.Visibility = Visibility.Visible;
                     crud_modal_cost.Children.Add(pnlCostCalculation);
-                }
-            }
-        }
-
-        private void crud_modalAccount_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (crud_modalAccount.Visibility == Visibility.Hidden || crud_modalAccount.Visibility == Visibility.Collapsed)
-            {
-                List<production_service_account> production_accountList = pnl_ProductionAccount.production_accountList;
-                production_execution_detail production_execution_detail = pnl_ProductionAccount.production_execution_detail;
-
-                foreach (production_service_account _production_account in production_accountList)
-                {
-                    production_service_account production_service_account = new entity.production_service_account();
-                    production_service_account.parent = _production_account;
-                    production_service_account.id_production_service_account = _production_account.id_production_service_account;
-                    production_service_account.id_contact = production_execution_detail.id_contact;
-
-                    production_service_account.id_item = (int)production_execution_detail.id_item;
-                    production_service_account.unit_cost = _production_account.unit_cost;
-                    production_service_account.debit = production_execution_detail.quantity;
-                    production_service_account.credit = 0;
-                    ExecutionDB.production_service_account.Add(production_service_account);
-                    // production_execution_detail._production_account = production_account;
                 }
             }
         }

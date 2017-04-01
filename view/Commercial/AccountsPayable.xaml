@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Commercial.AccountsPayable" x:Name="_AccountsPayable"
+﻿<Page x:Class="Cognitivo.Commercial.AccountsPayable" x:Name="this"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -151,7 +151,7 @@
         <Grid Grid.Column="1">
             <Grid Grid.Column="1" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Content="{Binding AccountDate, ElementName=_AccountsPayable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}" />
+                    <Label Content="{Binding AccountDate, ElementName=this, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}" />
                     <!--<Label Content="-" Style="{StaticResource generic_Label}" />
                 <Label Content="{Binding EndDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}" />-->
                 </StackPanel>

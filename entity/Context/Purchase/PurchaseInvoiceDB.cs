@@ -16,8 +16,8 @@ namespace entity
             purchase_invoice.trans_date = DateTime.Now.AddDays(DaysOffSet);
             purchase_invoice.State = EntityState.Added;
             purchase_invoice.IsSelected = true;
-            purchase_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
-            purchase_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+            purchase_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_condition).FirstOrDefault();
+            purchase_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_contract).FirstOrDefault();
 
             purchase_invoice.app_branch = app_branch.Find(CurrentSession.Id_Branch);
             base.Entry(purchase_invoice).State = EntityState.Added;
@@ -105,7 +105,7 @@ namespace entity
                     invoice.app_contract = app_contract.Find(invoice.id_contract);
                     invoice.app_currencyfx = app_currencyfx.Find(invoice.id_currencyfx);
 
-                    if (invoice.status != Status.Documents_General.Approved)
+                    if (invoice.status == Status.Documents_General.Pending)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();

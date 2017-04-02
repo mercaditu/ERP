@@ -380,10 +380,6 @@
                     </DataTemplate>
                 </DataGrid.Resources>-->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding id_purchase_invoice_detail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										Header="ID" Width="64" IsReadOnly="True"
-										Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
-
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:CostCenter}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource app_cost_centerViewSource}}"
 											DisplayMemberPath="name" SelectedValuePath="id_cost_center" SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 

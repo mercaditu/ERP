@@ -11,6 +11,30 @@ using System.Windows.Input;
 
 namespace Cognitivo.Product
 {
+    public enum state
+    {
+        Added, Modified
+    }
+
+    public class Decision : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public int id_item { get; set; }
+        public string name { get; set; }
+        public int id_location { get; set; }
+        public string location { get; set; }
+        public string branch { get; set; }
+        public decimal avlqty { get; set; }
+        public decimal Quantity { get; set; }
+        public state State { get; set; }
+    }
+
     public partial class Request : Page
     {
         private item_requestDB RequestDB = new item_requestDB();
@@ -40,7 +64,7 @@ namespace Cognitivo.Product
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(FindResource("security_userViewSource")));
-            await RequestDB.security_user.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            await RequestDB.security_user.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToListAsync();
             security_userViewSource.Source = RequestDB.security_user.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestDB, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -384,35 +408,11 @@ namespace Cognitivo.Product
             toolBar_btnEdit_Click(sender);
         }
 
-        public enum state
-        {
-            Added, Modified
-        }
-
-        public class Decision : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            public void RaisePropertyChanged(string prop)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-            }
-
-            public int id_item { get; set; }
-            public string name { get; set; }
-            public int id_location { get; set; }
-            public string location { get; set; }
-            public string branch { get; set; }
-            public decimal avlqty { get; set; }
-            public decimal Quantity { get; set; }
-            public state State { get; set; }
-        }
-
         private void item_request_detailMovementDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
-            CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
-            item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
-            CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
+            CollectionViewSource item_requestitem_request_detailViewSource = FindResource("item_requestitem_request_detailViewSource") as CollectionViewSource;
+            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+            CollectionViewSource project_task_dimensionViewSource = FindResource("project_task_dimensionViewSource") as CollectionViewSource;
             if (item_request_detail != null)
             {
                 if (item_request_detail.id_project_task > 0)
@@ -424,7 +424,7 @@ namespace Cognitivo.Product
 
         private void item_request_decisionproductionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
+            CollectionViewSource item_requestitem_request_detailViewSource = FindResource("item_requestitem_request_detailViewSource") as CollectionViewSource;
             item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
 
             if (item_request_decisionproductionDataGrid.SelectedItem != null)

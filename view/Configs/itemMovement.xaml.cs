@@ -23,6 +23,8 @@ namespace Cognitivo.Configs
             InitializeComponent();
         }
 
+        public item_request_decision.Decisions Decision { get; set; }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));

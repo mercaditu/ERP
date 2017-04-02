@@ -66,7 +66,7 @@ namespace Cognitivo.Product
         {
             RequestDB.Approve();
         }
-        
+
         private void toolBar_btnDelete_Click(object sender)
         {
             int i = 0;
@@ -233,6 +233,8 @@ namespace Cognitivo.Product
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
+                        itemMovement.Decision = item_request_decision.Decisions.Movement;
+                        itemMovement.Save += pnlMovement_SaveChanges;
 
                         crud_modal.Visibility = Visibility.Visible;
                         crud_modal.Children.Add(itemMovement);
@@ -311,21 +313,23 @@ namespace Cognitivo.Product
                 Decision desion = (Decision)item_request_decisiontransferDataGrid.SelectedItem;
                 if (desion.avlqty < desion.Quantity)
                 {
-                    toolBar.msgWarning("quantity is greater than available quantity");
+                    toolBar.msgWarning("Quantity is greater than Available");
                     return;
                 }
                 if (desion.State == state.Added)
                 {
                     if (RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
                     {
-                        crud_modalTransfer.Children.Clear();
+                        crud_modal.Children.Clear();
                         Configs.itemMovement itemMovement = new Configs.itemMovement();
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
+                        itemMovement.Decision = item_request_decision.Decisions.Transfer;
+                        itemMovement.Save += pnlMovement_SaveChanges;
 
-                        crud_modalTransfer.Visibility = Visibility.Visible;
-                        crud_modalTransfer.Children.Add(itemMovement);
+                        crud_modal.Visibility = Visibility.Visible;
+                        crud_modal.Children.Add(itemMovement);
                     }
                     else
                     {
@@ -334,7 +338,7 @@ namespace Cognitivo.Product
                         item_request_decision.IsSelected = true;
                         item_request_decision.id_location = desion.id_location;
                         item_request_decision.quantity = desion.Quantity;
-                        item_request_decision.decision = global::entity.item_request_decision.Decisions.Transfer;
+                        item_request_decision.decision = entity.item_request_decision.Decisions.Transfer;
                         item_request_detail.item_request_decision.Add(item_request_decision);
                     }
                 }
@@ -462,45 +466,33 @@ namespace Cognitivo.Product
             }
         }
 
-        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void pnlMovement_SaveChanges(object sender, RoutedEventArgs e)
         {
-            MovementTransfer_IsVisibleChanged(item_request_decision.Decisions.Movement);
-        }
+            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+            Configs.itemMovement itemMovement = sender as Configs.itemMovement;
 
-        private void crud_modalTransfer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            MovementTransfer_IsVisibleChanged(item_request_decision.Decisions.Transfer);
-        }
-
-        private void MovementTransfer_IsVisibleChanged(item_request_decision.Decisions Decision)
-        {
-            if (crud_modal.Visibility == Visibility.Hidden)
+            if (item_request_detail != null && itemMovement != null)
             {
-                item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+                Decision Decision = item_request_decisionmovementDataGrid.SelectedItem as Decision;
+                Decision.State = state.Modified;
 
-                if (item_request_detail != null)
-                {
-                    Decision desion = item_request_decisionmovementDataGrid.SelectedItem as Decision;
-                    desion.State = state.Modified;
+                item_request_decision item_request_decision = new item_request_decision();
+                item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
+                item_request_decision.IsSelected = true;
+                item_request_decision.id_location = Decision.id_location;
+                item_request_decision.quantity = Decision.Quantity;
+                item_request_decision.decision = itemMovement.Decision;
+                item_request_detail.item_request_decision.Add(item_request_decision);
 
-                    item_request_decision item_request_decision = new item_request_decision();
-                    item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.id_location = desion.id_location;
-                    item_request_decision.quantity = desion.Quantity;
-                    item_request_decision.decision = Decision;
-                    item_request_detail.item_request_decision.Add(item_request_decision);
+                item_request_detail.item_request.GetTotalDecision();
+                item_request_detail.RaisePropertyChanged("Balance");
 
-                    item_request_detail.item_request.GetTotalDecision();
-                    item_request_detail.RaisePropertyChanged("Balance");
+                RequestDB.SaveChangesAsync();
 
-                    RequestDB.SaveChangesAsync();
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
 
-                    item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-                    item_request_detailitem_request_decisionViewSource.View.Refresh();
-
-                    toolBar_btnEdit_Click(null);
-                }
+                toolBar_btnEdit_Click(null);
             }
         }
 
@@ -539,7 +531,7 @@ namespace Cognitivo.Product
                         }
                     };
                 }
-                catch {  }
+                catch { }
             }
             else
             {

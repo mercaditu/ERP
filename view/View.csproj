@@ -125,10 +125,6 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClosedXML, Version=0.86.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClosedXML.0.86.0\lib\net40\ClosedXML.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
@@ -179,8 +175,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
@@ -367,40 +363,40 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.Controls.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.Controls.6.1.16565.14160\lib\net40\Xceed.Wpf.Controls.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Controls.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Controls.6.2.17123.15050\lib\net40\Xceed.Wpf.Controls.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.DataGrid, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.1.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.1.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.ThemePack.1.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.1.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.1.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.ThemePack.1.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.2.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.2.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.ThemePack.2.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.2.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.2.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.ThemePack.2.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.3.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.3.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.ThemePack.3.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.3.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.3.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.ThemePack.3.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.4.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.4.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.ThemePack.4.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.4.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.4.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.ThemePack.4.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.5.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.5.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.ThemePack.5.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.ThemePack.5.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.ThemePack.5.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.ThemePack.5.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid.Views3D.v6.1, Version=6.1.16565.14160, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xceed.Wpf.DataGrid.Views3D.6.1.16565.14160\lib\net40\Xceed.Wpf.DataGrid.Views3D.v6.1.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid.Views3D.v6.2, Version=6.2.17123.15050, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Views3D.6.2.17123.15050\lib\net40\Xceed.Wpf.DataGrid.Views3D.v6.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">

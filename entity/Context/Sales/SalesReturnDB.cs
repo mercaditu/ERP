@@ -364,7 +364,10 @@ namespace entity
                 }
             }
 
-            base.payments.Add(payment);
+            if (payment.payment_detail.Count() > 0)
+            {
+                base.payments.Add(payment);
+            }
         }
 
         private payment_type Fix_PaymentType()

@@ -68,7 +68,7 @@
                 <RowDefinition Height="9*" />
             </Grid.RowDefinitions>
 
-            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True"
+            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True"      SelectionChanged="TabControl_SelectionChanged"
 						Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
                 <TabItem Header="{lex:Loc Order}">
                     <Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
@@ -125,7 +125,7 @@
                         </Grid>
 
                         <TabControl Grid.Column="1"
-                                    SelectionChanged="TabControl_SelectionChanged"
+                                
                                     VirtualizingPanel.VirtualizationMode="Recycling">
                             <TabItem Header="Data">
                                 <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"
@@ -238,7 +238,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TabControl metro:TabControlHelper.IsUnderlined="True" Grid.Column="0">
+                        <TabControl metro:TabControlHelper.IsUnderlined="True" Grid.Column="0" >
                             <TabItem Header="{lex:Loc Product}">
                                 <TabItem.IsEnabled>
                                     <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"

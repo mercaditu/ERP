@@ -254,7 +254,7 @@ namespace Cognitivo.Production
             }
         }
 
-        private async void Logistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Logistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int _id_production_order = 0;
             _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
@@ -290,14 +290,14 @@ namespace Cognitivo.Production
 
                 if (ItemID > 0)
                 {
-                    list = await OrderDB.production_order_detail
+                    list = OrderDB.production_order_detail
                         .Where(p =>
                         (
                         p.production_order.status != Status.Production.Pending || p.production_order.status != null) &&
                         p.id_production_order == _id_production_order &&
                         p.id_item == ItemID
                         )
-                        .ToListAsync();
+                        .ToList();
 
                     itemDataGrid.ItemsSource = list.ToList();
                 }
@@ -786,6 +786,11 @@ namespace Cognitivo.Production
                 production_order_detail.is_read = ViewAll;
                 production_order_detail.RaisePropertyChanged("is_read");
             }            
+        }
+
+        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

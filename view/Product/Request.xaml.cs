@@ -265,7 +265,7 @@ namespace Cognitivo.Product
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
-                        itemMovement.Quantity = desion.Quantity;
+                      
                         itemMovement.Decision = item_request_decision.Decisions.Movement;
                         itemMovement.Save += pnlMovement_SaveChanges;
 
@@ -364,7 +364,6 @@ namespace Cognitivo.Product
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
-                        itemMovement.Quantity = desion.Quantity;
                         itemMovement.Decision = item_request_decision.Decisions.Transfer;
                         itemMovement.Save += pnlMovement_SaveChanges;
 
@@ -496,7 +495,7 @@ namespace Cognitivo.Product
                 item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
                 item_request_decision.IsSelected = true;
                 item_request_decision.id_location = Decision.id_location;
-                item_request_decision.quantity = Convert.ToDecimal(itemMovement.Quantity);
+                item_request_decision.quantity = Decision.Quantity;
                 item_request_decision.decision = itemMovement.Decision;
                 item_request_detail.item_request_decision.Add(item_request_decision);
 

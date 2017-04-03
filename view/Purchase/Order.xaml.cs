@@ -642,6 +642,7 @@ namespace Cognitivo.Purchase
                 purchase_invoice.id_weather = purchase_order.id_weather;
                 purchase_invoice.is_impex = purchase_order.is_impex;
                 purchase_invoice.purchase_order = purchase_order;
+                purchase_invoice.id_department = purchase_order.id_department;
 
                 foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
                 {
@@ -658,12 +659,22 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.unit_cost = detail.unit_cost;
                     purchase_invoice_detail.batch_code = detail.batch_code;
                     purchase_invoice_detail.expire_date = detail.expire_date;
+
+                    foreach (purchase_order_dimension dim in detail.purchase_order_dimension)
+                    {
+                        purchase_invoice_dimension dimension = new purchase_invoice_dimension();
+                        dimension.id_dimension = dim.id_dimension;
+                        dimension.id_measurement = dim.id_measurement;
+                        dimension.value = dim.value;
+                        
+                        purchase_invoice_detail.purchase_invoice_dimension.Add(dimension);
+                    }
+
                     purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                 }
 
                 PurchaseOrderDB.purchase_invoice.Add(purchase_invoice);
-                PurchaseOrderDB.SaveChanges();
-                toolBar.msgApproved(1);
+                toolBar.msgApproved(PurchaseOrderDB.SaveChanges());
             }
             else
             {

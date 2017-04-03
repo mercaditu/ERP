@@ -96,7 +96,23 @@ namespace Cognitivo.HumanResource
         {
             contact contact = new contact();
             contact.is_employee = true;
-            contact.id_contact_role = dbContext.contact_role.Where(x => x.is_principal).FirstOrDefault().id_contact_role;
+
+            contact_role contact_role = dbContext.contact_role.Where(x => x.is_principal).FirstOrDefault();
+            if (contact_role != null)
+            {
+                contact.id_contact_role = contact_role.id_contact_role;
+            }
+            else
+            {
+                contact_role = new contact_role();
+                contact_role.name = "Principal";
+                contact_role.is_principal = true;
+                contact_role.can_transact = false;
+                dbContext.SaveChangesAsync();
+
+                contact.id_contact_role = contact_role.id_contact_role;
+            }
+
             contact.State = EntityState.Added;
             contact.IsSelected = true;
 
@@ -147,27 +163,35 @@ namespace Cognitivo.HumanResource
         {
             if (!string.IsNullOrEmpty(query) && employeeViewSource != null)
             {
-                try
+                employeeViewSource.View.Filter = i =>
                 {
-                    employeeViewSource.View.Filter = i =>
+                    string FirstName = "";
+                    string LastName = "";
+                    string code = "";
+
+                    contact contact = i as contact;
+                    if (contact != null)
                     {
-                        contact contact = i as contact;
-                        if ((contact.name.ToLower().Contains(query.ToLower())
-                            || contact.code.ToLower().Contains(query.ToLower()) && contact.is_employee)
-                           )
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                catch (Exception ex)
-                {
-                    toolBar.msgError(ex);
-                }
+                        FirstName = string.IsNullOrEmpty(contact.FirstName) ? "" : contact.FirstName ;
+                        LastName = string.IsNullOrEmpty(contact.LastName) ? "" : contact.LastName;
+                        code = string.IsNullOrEmpty(contact.code) ? "" : contact.code ;
+                    }
+
+                    if (
+                    FirstName.ToLower().Contains(query.ToLower())
+                    ||
+                    LastName.ToLower().Contains(query.ToLower())
+                        || 
+                        code.ToLower().Contains(query.ToLower())
+                        )
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
             else
             {

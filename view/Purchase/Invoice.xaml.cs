@@ -812,6 +812,7 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoice.contact = purchase_order.contact;
                 purchase_invoice.id_contact = purchase_order.id_contact;
+                purchase_invoice.RaisePropertyChanged("contact");
 
                 purchase_invoice.app_department = purchase_order.app_department;
                 purchase_invoice.id_department = purchase_order.id_department;
@@ -822,10 +823,11 @@ namespace Cognitivo.Purchase
                 purchase_invoice.app_contract = purchase_order.app_contract;
                 purchase_invoice.id_contract = purchase_order.id_contract;
 
-                if (purchase_order.project != null)
+                if (purchase_order.id_project != null)
                 {
                     purchase_invoice.project = purchase_order.project;
                     purchase_invoice.id_project = purchase_order.id_project;
+                    purchase_invoice.RaisePropertyChanged("project");
                 }
 
                 foreach (purchase_order_detail _purchase_order_detail in purchase_order.purchase_order_detail)

@@ -139,6 +139,7 @@ namespace Cognitivo.Project
             {
                 projectViewSource.View.Filter = null;
             }
+            filter_task();
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

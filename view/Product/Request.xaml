@@ -260,8 +260,8 @@
                                                 Header="{lex:Loc Cognitivo:local:Items}" Width="Auto" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Module}" Width="*" IsReadOnly="True" />
-                                        <DataGridTextColumn Binding="{Binding app_location.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                Header="{lex:Loc Cognitivo:local:Origin}" Width="*" IsReadOnly="True" />
+                                        <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															DisplayMemberPath="name" SelectedValuePath="id_location" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" IsReadOnly="True" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"

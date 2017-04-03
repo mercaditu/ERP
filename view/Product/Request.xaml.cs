@@ -68,6 +68,8 @@ namespace Cognitivo.Product
             security_userViewSource.Source = RequestDB.security_user.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestDB, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
+            cbxLocation.ItemsSource = CurrentSession.Locations.ToList();
         }
 
         private async void Load()

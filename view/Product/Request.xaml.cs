@@ -145,94 +145,102 @@ namespace Cognitivo.Product
         private void item_request_detailMovementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = FindResource("item_requestitem_request_detailViewSource") as CollectionViewSource;
-            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
 
-            if (item_request_detail != null)
+            if (item_requestitem_request_detailViewSource.View!=null)
             {
-                item _item = RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
-                var movements =
-                        (from items in RequestDB.item_movement
-                         where items.status == Status.Stock.InStock
-                         && items.item_product.id_item == item_request_detail.id_item
-                         && items.app_location.id_branch == CurrentSession.Id_Branch
-                         group items by new { items.app_location }
-                             into last
-                         select new
-                         {
-                             id_location = last.Key.app_location.id_location,
-                             Location = last.Key.app_location.name,
-                             Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                         }).ToList();
 
-                List<Decision> list_desion = new List<Decision>();
-
-                foreach (dynamic movement in movements)
+                item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+                if (item_request_detail != null)
                 {
-                    Decision desion = new Decision();
-                    desion.id_item = _item.id_item;
-                    desion.id_location = movement.id_location;
-                    desion.location = movement.Location;
-                    desion.name = _item.name;
-                    desion.avlqty = movement.Quantity;
-                    desion.Quantity = 0;
-                    desion.State = state.Added;
-                    list_desion.Add(desion);
+                    item _item = RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
+                    var movements =
+                            (from items in RequestDB.item_movement
+                             where items.status == Status.Stock.InStock
+                             && items.item_product.id_item == item_request_detail.id_item
+                             && items.app_location.id_branch == CurrentSession.Id_Branch
+                             group items by new { items.app_location }
+                                 into last
+                             select new
+                             {
+                                 id_location = last.Key.app_location.id_location,
+                                 Location = last.Key.app_location.name,
+                                 Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                             }).ToList();
+
+                    List<Decision> list_desion = new List<Decision>();
+
+                    foreach (dynamic movement in movements)
+                    {
+                        Decision desion = new Decision();
+                        desion.id_item = _item.id_item;
+                        desion.id_location = movement.id_location;
+                        desion.location = movement.Location;
+                        desion.name = _item.name;
+                        desion.avlqty = movement.Quantity;
+                        desion.Quantity = 0;
+                        desion.State = state.Added;
+                        list_desion.Add(desion);
+                    }
+                    item_request_decisionmovementDataGrid.ItemsSource = list_desion;
+
+                    var transfer =
+                    (from items in RequestDB.item_movement
+                     where items.status == Status.Stock.InStock
+                     && items.item_product.id_item == item_request_detail.id_item
+
+                     group items by new { items.app_location.app_branch }
+                         into last
+                     select new
+                     {
+                         id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
+                         branch = last.Key.app_branch.name,
+                         quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                     }).ToList();
+
+                    List<Decision> list_desion_transfer = new List<Decision>();
+                    foreach (dynamic item in transfer)
+                    {
+                        Decision desion = new Decision();
+                        desion.branch = item.branch;
+                        desion.id_location = item.id_location;
+                        desion.id_item = _item.id_item;
+                        desion.name = _item.name;
+                        desion.avlqty = item.quntitiy;
+                        desion.Quantity = 0;
+                        desion.State = state.Added;
+                        list_desion_transfer.Add(desion);
+                    }
+
+                    item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer;
+
+                    List<Decision> list_desion_purchase = new List<Decision>();
+                    Decision PurchaseDecision = new Decision();
+                    PurchaseDecision.State = state.Added;
+                    PurchaseDecision.Quantity = 0;
+                    list_desion_purchase.Add(PurchaseDecision);
+                    item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
+
+                    List<Decision> list_desion_internal = new List<Decision>();
+                    Decision InternalDecision = new Decision();
+                    InternalDecision.State = state.Added;
+                    InternalDecision.Quantity = 0;
+                    list_desion_internal.Add(InternalDecision);
+                    item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
+
+                    List<Decision> list_desion_production = new List<Decision>();
+                    Decision ProductionDecision = new Decision();
+                    ProductionDecision.name = item_request_detail.item.name;
+                    ProductionDecision.RaisePropertyChanged("name");
+                    ProductionDecision.Quantity = 0;
+                    ProductionDecision.State = state.Added;
+                    list_desion_production.Add(ProductionDecision);
+                    item_request_decisionproductionDataGrid.ItemsSource = list_desion_production;
                 }
-                item_request_decisionmovementDataGrid.ItemsSource = list_desion;
 
-                var transfer =
-                (from items in RequestDB.item_movement
-                 where items.status == Status.Stock.InStock
-                 && items.item_product.id_item == item_request_detail.id_item
-
-                 group items by new { items.app_location.app_branch }
-                     into last
-                 select new
-                 {
-                     id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
-                     branch = last.Key.app_branch.name,
-                     quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                 }).ToList();
-
-                List<Decision> list_desion_transfer = new List<Decision>();
-                foreach (dynamic item in transfer)
-                {
-                    Decision desion = new Decision();
-                    desion.branch = item.branch;
-                    desion.id_location = item.id_location;
-                    desion.id_item = _item.id_item;
-                    desion.name = _item.name;
-                    desion.avlqty = item.quntitiy;
-                    desion.Quantity = 0;
-                    desion.State = state.Added;
-                    list_desion_transfer.Add(desion);
-                }
-
-                item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer;
-
-                List<Decision> list_desion_purchase = new List<Decision>();
-                Decision PurchaseDecision = new Decision();
-                PurchaseDecision.State = state.Added;
-                PurchaseDecision.Quantity = 0;
-                list_desion_purchase.Add(PurchaseDecision);
-                item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
-
-                List<Decision> list_desion_internal = new List<Decision>();
-                Decision InternalDecision = new Decision();
-                InternalDecision.State = state.Added;
-                InternalDecision.Quantity = 0;
-                list_desion_internal.Add(InternalDecision);
-                item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
-
-                List<Decision> list_desion_production = new List<Decision>();
-                Decision ProductionDecision = new Decision();
-                ProductionDecision.name = item_request_detail.item.name;
-                ProductionDecision.RaisePropertyChanged("name");
-                ProductionDecision.Quantity = 0;
-                ProductionDecision.State = state.Added;
-                list_desion_production.Add(ProductionDecision);
-                item_request_decisionproductionDataGrid.ItemsSource = list_desion_production;
             }
+            
+
+
         }
 
         private void item_request_decisionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -257,6 +265,7 @@ namespace Cognitivo.Product
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
+                        itemMovement.Quantity = desion.Quantity;
                         itemMovement.Decision = item_request_decision.Decisions.Movement;
                         itemMovement.Save += pnlMovement_SaveChanges;
 
@@ -322,7 +331,8 @@ namespace Cognitivo.Product
         {
             if (RequestDB.SaveChanges() > 0)
             {
-                item_requestViewSource.View.Refresh();
+              
+                //item_requestViewSource.View.Refresh();
                 toolBar.msgSaved(RequestDB.NumberOfRecords);
             }
         }
@@ -330,6 +340,11 @@ namespace Cognitivo.Product
         private void item_request_decisiontransferDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
+            if (item_requestitem_request_detailViewSource.View!=null)
+            {
+
+            }
+        
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
 
             if (item_request_decisiontransferDataGrid.SelectedItem != null)
@@ -349,6 +364,7 @@ namespace Cognitivo.Product
                         itemMovement.id_item = item_request_detail.id_item;
                         itemMovement.id_location = desion.id_location;
                         itemMovement.db = RequestDB;
+                        itemMovement.Quantity = desion.Quantity;
                         itemMovement.Decision = item_request_decision.Decisions.Transfer;
                         itemMovement.Save += pnlMovement_SaveChanges;
 
@@ -480,7 +496,7 @@ namespace Cognitivo.Product
                 item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
                 item_request_decision.IsSelected = true;
                 item_request_decision.id_location = Decision.id_location;
-                item_request_decision.quantity = Decision.Quantity;
+                item_request_decision.quantity = Convert.ToDecimal(itemMovement.Quantity);
                 item_request_decision.decision = itemMovement.Decision;
                 item_request_detail.item_request_decision.Add(item_request_decision);
 

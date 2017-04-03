@@ -497,12 +497,13 @@ namespace Cognitivo.Production
                         production_order_detail.CalcExecutedCost_TimerTaks();
                     }
 
-                    production_orderViewSource.View.Refresh();
+                  
                     if (production_order_detaillViewSource.View != null)
                     {
                         production_order_detaillViewSource.View.Refresh();
                     }
                 }
+              //  production_orderViewSource.View.Refresh();
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
@@ -713,7 +714,7 @@ namespace Cognitivo.Production
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            crud_modal.Children.Clear();
+          //  crud_modal.Children.Clear();
             RefreshData();
         }
 

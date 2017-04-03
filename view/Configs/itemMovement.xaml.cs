@@ -12,6 +12,7 @@ namespace Cognitivo.Configs
     {
         private CollectionViewSource item_movementViewSource;
         public db db { get; set; }
+        public decimal? Quantity { get; set; }
         public int id_location { get; set; }
         public int id_item { get; set; }
         public item_movement item_movement { get; set; }

@@ -43,7 +43,6 @@ namespace cntrl.Curd
 
             payment_approve.app_document_range = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
-
             payment_approve.IsSelected = true;
 
             PaymentDB.payment_approve.Add(payment_approve);
@@ -177,7 +176,6 @@ namespace cntrl.Curd
                 {
                     entity.Brillo.Document.Start.Automatic(payment_approve, app_document_range);
                 }
-
             }
             catch (Exception ex)
             {
@@ -294,6 +292,7 @@ namespace cntrl.Curd
         }
 
         #endregion Purchase and Sales Returns
+
         private void Add_PaymentDetail(payment_schedual payment_schedual)
         {
             payment_approve payment_approve = payment_approveViewSource.View.CurrentItem as payment_approve;

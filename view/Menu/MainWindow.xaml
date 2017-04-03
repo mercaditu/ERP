@@ -205,7 +205,7 @@
 
         <!-- Frame -->
         <Frame x:Name="mainFrame" Focusable="False"
-			   Margin="0,42,0,0" NavigationUIVisibility="Hidden" Navigated="mainFrame_Navigated"/>
+			   Margin="0,42,0,0" NavigationUIVisibility="Hidden" Navigated="mainFrame_Navigated" />
 
         <!-- DataRectangle -->
         <Grid VerticalAlignment="Top" Height="42">

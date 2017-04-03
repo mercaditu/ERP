@@ -8,8 +8,8 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
-        
-        <!--<Button Content="Edit" Click="Button_Click"/>-->
+
+        <!--<Button Content="Edit" Click="Button_Click" />-->
         <!--<syncfusion:ReportViewer x:Name="reportViewer" Grid.Row="1" />-->
 
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">

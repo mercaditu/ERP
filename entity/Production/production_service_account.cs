@@ -21,6 +21,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_production_service_account { get; set; }
+
         public int? id_contact { get; set; }
         public int id_item { get; set; }
         public int? id_order_detail { get; set; }

@@ -26,17 +26,17 @@ namespace cntrl.Panels
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             production_accountViewSource = FindResource("production_accountViewSource") as CollectionViewSource;
-            
-                ExecutionDB.production_service_account
-                .Where
-                (
-                    x => 
-                    x.id_company == CurrentSession.Id_Company && 
-                    (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0 &&
-                    x.id_item == production_execution_detail.id_item
-                )
-                .Include(x => x.item)
-                .Load();
+
+            ExecutionDB.production_service_account
+            .Where
+            (
+                x =>
+                x.id_company == CurrentSession.Id_Company &&
+                (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0 &&
+                x.id_item == production_execution_detail.id_item
+            )
+            .Include(x => x.item)
+            .Load();
             production_accountViewSource.Source = ExecutionDB.production_service_account.Local.Where(a => a.Balance >= production_execution_detail.quantity);
         }
 
@@ -71,7 +71,7 @@ namespace cntrl.Panels
                 production_service_account.credit = 0;
                 SelectedAccount.child.Add(production_service_account);
             }
-            
+
             btnCancel_Click(sender, null);
         }
     }

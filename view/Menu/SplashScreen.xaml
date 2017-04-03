@@ -7,12 +7,12 @@
         mc:Ignorable="d" BorderBrush="Silver" BorderThickness="2"
         ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False"
         Title="SplashScreen" Height="256" Width="512">
-    
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Image Source="/Cognitivo;component/Images/Cognitivo-128.png" Width="128" Margin="16"/>
 
-        <Label HorizontalAlignment="Center" Content="Loading" Style="{StaticResource generic_Label}" FontSize="16"/>
-        <ProgressBar Height="4" IsIndeterminate="True"/>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Image Source="/Cognitivo;component/Images/Cognitivo-128.png" Width="128" Margin="16" />
+
+        <Label HorizontalAlignment="Center" Content="Loading" Style="{StaticResource generic_Label}" FontSize="16" />
+        <ProgressBar Height="4" IsIndeterminate="True" />
         <Label x:Name="lblVersion" Foreground="Silver" HorizontalAlignment="Center" FontSize="8" Style="{StaticResource generic_Label}" />
     </StackPanel>
 </Window>

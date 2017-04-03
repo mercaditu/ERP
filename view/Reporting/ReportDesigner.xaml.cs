@@ -1,5 +1,4 @@
 ﻿using Syncfusion.Windows.Shared;
-using System.Windows;
 
 namespace Cognitivo.Reporting
 {
@@ -13,9 +12,6 @@ namespace Cognitivo.Reporting
             InitializeComponent();
             //This updates the UI to Office 2013 Design.
             SkinStorage.SetVisualStyle(this, "Office2013");
-            
         }
-
-
     }
 }

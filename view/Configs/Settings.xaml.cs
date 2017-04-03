@@ -59,7 +59,7 @@ namespace Cognitivo.Configs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-              mainWindow= Window.GetWindow(this) as Menu.MainWindow; 
+            mainWindow = Window.GetWindow(this) as Menu.MainWindow;
         }
     }
 }

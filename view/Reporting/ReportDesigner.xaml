@@ -1,18 +1,18 @@
 ﻿<syncfusion:RibbonWindow x:Class="Cognitivo.Reporting.ReportDesigner"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cognitivo.Reporting"
-    xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     xmlns:synctools="clr-namespace:Syncfusion.Windows.Tools.Controls;assembly=Syncfusion.Tools.WPF"
     xmlns:Reporting="clr-namespace:Syncfusion.Windows.Reports.Designer;assembly=Syncfusion.ReportDesigner.WPF"
       mc:Ignorable="d" Icon="/Cognitivo;component/Images/Cognitivo-64.png"
       d:DesignHeight="600" d:DesignWidth="700" Background="White" Office2010Icon="/Cognitivo;component/Images/Cognitivo-64.png" ShowActivated="False">
-    <Reporting:ReportDesigner  Grid.Row="0"  x:Name="ReportDesignerControl"/>
+    <Reporting:ReportDesigner  Grid.Row="0"  x:Name="ReportDesignerControl" />
 </syncfusion:RibbonWindow>
 <!--x:Class="Company_Sales_2008.MainWindow"
-        
+
         xmlns:syncfusion="clr-namespace:Syncfusion.Windows.Tools.Controls;assembly=Syncfusion.Tools.WPF"
         xmlns:Reporting="clr-namespace:Syncfusion.Windows.Reports.Designer;assembly=Syncfusion.ReportDesigner.WPF"
         WindowStartupLocation="CenterScreen"

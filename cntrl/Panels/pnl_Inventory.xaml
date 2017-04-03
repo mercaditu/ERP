@@ -15,7 +15,6 @@
 			 BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_inventory_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory_detail}, CreateList=True}" />
-       
     </UserControl.Resources>
 
     <UserControl.Effect>
@@ -76,9 +75,7 @@
 												Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" />
                             <DataGridTextColumn Binding="{Binding Quantity_Factored,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
 												Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                           
                         </DataGrid.Columns>
-                    
                     </DataGrid>
                 </StackPanel>
             </StackPanel>

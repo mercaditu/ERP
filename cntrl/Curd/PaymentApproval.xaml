@@ -67,7 +67,7 @@
                             <!--<Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />-->
                         </StackPanel>
                         <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource payment_approveViewSource}">
-                            <StackPanel x:Name="stackDocument" >
+                            <StackPanel x:Name="stackDocument">
                                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
 									  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
@@ -89,13 +89,15 @@
                     <Grid>
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" />
                         <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            --><!--<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
+                            -->
+                        <!--<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
 									Content="+" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue" />-->
-                            <!--<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
+                        <!--<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
 									Content="e" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue" />
 							<Rectangle Width="0.3" Fill="Black" Margin="8" />
 							<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White" Click="btnDeleteDetail_Click"
-									Content="d" Cursor="Hand" FontFamily="cognitivo" Foreground="Crimson" />--><!--
+									Content="d" Cursor="Hand" FontFamily="cognitivo" Foreground="Crimson" />-->
+                        <!--
                         </StackPanel>-->
                     </Grid>
                     <!-- Detail -->

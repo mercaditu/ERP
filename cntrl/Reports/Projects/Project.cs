@@ -2,7 +2,7 @@
 {
     public static class Project
     {
-        public static string query = @" 	
+        public static string query = @"
 set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
@@ -13,11 +13,11 @@ item.name as  Item,
 item.code as ItemCode,
 CASE
       WHEN item.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
-      WHEN item.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"' 
-      WHEN item.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"' 
-      WHEN item.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"' 
+      WHEN item.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+      WHEN item.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+      WHEN item.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
       WHEN item.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
-      WHEN item.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"' 
+      WHEN item.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
       WHEN item.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
 END as ItemType,
 task.code as TaskCode,

@@ -96,7 +96,5 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 											  where sales_invoice.trans_date between '@StartDate' and '@EndDate' and sales_invoice.id_company = @CompanyID
 
 												   order by sales_invoice.trans_date";
-
-
     }
 }

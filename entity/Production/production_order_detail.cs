@@ -193,6 +193,7 @@ namespace entity
                 RaisePropertyChanged("percent");
             }
         }
+
         private decimal _completed;
 
         public decimal importance { get; set; }

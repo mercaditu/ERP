@@ -1,5 +1,4 @@
 ﻿using entity;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,14 +11,15 @@ namespace cntrl.Controls
         public long? ParentID { get; set; }
         public int ProductID { get; set; }
         public long? MovementID { get; set; }
-        CollectionViewSource item_movementViewSource;
+        private CollectionViewSource item_movementViewSource;
 
         public InventoryFlowSalesPanel()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         public event SelectionChangedEventHandler SelectionChanged;
+
         //public event SelectionChangedEventHandler Selection_WithOut_ChildChanged;
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -33,9 +33,7 @@ namespace cntrl.Controls
 
         public void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             LoadData();
-           
         }
 
         public void LoadData()

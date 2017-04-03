@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:cntrl.Curd" 
+             xmlns:local="clr-namespace:cntrl.Curd"
              xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -21,7 +21,7 @@
         <Converters:ActiveValueConverter x:Key="ActiveValueConverter" />
         <Converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter" />
         <Converters:TrueToFalseConverter x:Key="True2False" />
-        <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" /> 
+        <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" />
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
@@ -51,29 +51,29 @@
 
         <!-- Body -->
         <Grid Grid.Column="1" Grid.Row="1"  Background="White">
-                <!-- Header -->
+            <!-- Header -->
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                 <StackPanel HorizontalAlignment="Center" Width="265">
                     <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
                     <ComboBox x:Name="cbxCondition" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
 						                ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"
-                              SelectionChanged="cbxCondition_SelectionChanged"/>
+                              SelectionChanged="cbxCondition_SelectionChanged" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
-                    <DatePicker x:Name="dpDate" SelectedDateChanged="dpDate_Changed" Style="{StaticResource input_datepicker}"/>
+                    <DatePicker x:Name="dpDate" SelectedDateChanged="dpDate_Changed" Style="{StaticResource input_datepicker}" />
                 </StackPanel>
             </StackPanel>
 
-                <Rectangle Style="{StaticResource line_Bar}" />
+            <Rectangle Style="{StaticResource line_Bar}" />
 
-                <!-- Detail -->
-                <Grid Margin="0,64,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Detail -->
+            <Grid Margin="0,64,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
                 <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
 					  RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
@@ -101,33 +101,33 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Grid.Column="1" Background="{StaticResource appConfig}">
-                    <CheckBox Content="{lex:Loc SelectAll}" Width="auto" Style="{StaticResource input_checkbox}" Click="chbxSelectAll_Checked"/>
+                    <CheckBox Content="{lex:Loc SelectAll}" Width="auto" Style="{StaticResource input_checkbox}" Click="chbxSelectAll_Checked" />
                     <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                    <DatePicker x:Name="dtpPaymentDate" SelectedDateChanged="dtpPaymentDate_Changed" Width="134" Style="{StaticResource input_datepicker}"/>
+                    <DatePicker x:Name="dtpPaymentDate" SelectedDateChanged="dtpPaymentDate_Changed" Width="134" Style="{StaticResource input_datepicker}" />
                     <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}" />
-                        <ComboBox x:Name="cbxPamentType"
+                    <ComboBox x:Name="cbxPamentType"
 					                DisplayMemberPath="name" SelectedValuePath="id_payment_type"
 				   	                ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 						            Style="{StaticResource input_combobox}" Margin="4,0,0,4" Width="134">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>
-                        <StackPanel x:Name="stpaccount">
-                            <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}" />
-                            <ComboBox x:Name="cbxAccount" DisplayMemberPath="name" SelectedValuePath="id_account"
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <StackPanel x:Name="stpaccount">
+                        <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}" />
+                        <ComboBox x:Name="cbxAccount" DisplayMemberPath="name" SelectedValuePath="id_account"
 						                Style="{StaticResource input_combobox}"
 						                ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
                                     Margin="4,0,0,4" Width="135">
-                            </ComboBox>
+                        </ComboBox>
 
-                            <!--<Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="AccountsPayable"
+                        <!--<Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="AccountsPayable"
                                                     SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
-                        </StackPanel>
-                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="txtComment" MinHeight="64"
+                    </StackPanel>
+                    <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                    <TextBox x:Name="txtComment" MinHeight="64"
                                     Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
                     <Button Content="{lex:Loc Payment}" Click="btnPayment_Click" Style="{StaticResource btn_green}" />
                 </StackPanel>

@@ -230,8 +230,6 @@ namespace Cognitivo.Production
         {
             if (production_orderViewSource != null)
             {
-
-
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
 
                 if (production_order != null)
@@ -381,7 +379,7 @@ namespace Cognitivo.Production
                         data.IsSelected = false;
 
                         item_request_detail item_request_detail = new item_request_detail();
-                  
+
                         item_request_detail.date_needed_by = ItemRequest.neededDate;
                         item_request_detail.id_order_detail = data.id_order_detail;
                         item_request_detail.urgency = ItemRequest.Urgencies;
@@ -785,7 +783,7 @@ namespace Cognitivo.Production
             {
                 production_order_detail.is_read = ViewAll;
                 production_order_detail.RaisePropertyChanged("is_read");
-            }            
+            }
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -807,7 +805,7 @@ namespace Cognitivo.Production
             {
                 using (db db = new db())
                 {
-                    production_order_detail _production_order_detail = 
+                    production_order_detail _production_order_detail =
                         db.production_order_detail
                         .Where(x => x.id_production_order == production_order_detail.id_production_order)
                         .FirstOrDefault();

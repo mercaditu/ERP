@@ -1,8 +1,8 @@
 ﻿<UserControl x:Class="cntrl.Controls.InventoryFlowDataGrid" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:cntrl.Controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -12,44 +12,44 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-        <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+    <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                   ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
         <DataGrid.Columns>
-            <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Quantity, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
-                <DataGridTextColumn Binding="{Binding Cost, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
-            </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <StackPanel Background="WhiteSmoke" Margin="4" Width="auto" DataContext="{StaticResource item_movementViewSource}">
+            <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*" />
+            <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*" />
+            <DataGridTextColumn Binding="{Binding Quantity, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}" />
+            <DataGridTextColumn Binding="{Binding Cost, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}" />
+        </DataGrid.Columns>
+        <DataGrid.RowDetailsTemplate>
+            <DataTemplate>
+                <StackPanel Background="WhiteSmoke" Margin="4" Width="auto" DataContext="{StaticResource item_movementViewSource}">
                     <StackPanel Orientation="Horizontal" Width="auto">
-                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" Width="auto"/>
-                        <Label Content="{Binding Location, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" Width="auto" />
+                        <Label Content="{Binding Location, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
-                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" Width="auto"/>
-                            <Label Content="{Binding Comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Width="auto">
-                            <Label Content="{lex:Loc ExpirationDate}" Style="{StaticResource input_label}" Width="auto"/>
-                            <Label Content="{Binding ExpiryDate, Mode=OneTime, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Width="auto">
-                            <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}" Width="auto"/>
-                            <Label Content="{Binding BatchCode, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    <StackPanel Orientation="Horizontal" Width="auto">
-                        <Label Content="Image" Style="{StaticResource input_label}" Width="auto"/>
-                        <local:ImageViewer   ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"  
-                                            IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" Width="auto" />
+                        <Label Content="{Binding Comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
-                        
-                        <Button  Content="Print" IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Click="Button_Click"/>
+                        <Label Content="{lex:Loc ExpirationDate}" Style="{StaticResource input_label}" Width="auto" />
+                        <Label Content="{Binding ExpiryDate, Mode=OneTime, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Width="auto">
+                        <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}" Width="auto" />
+                        <Label Content="{Binding BatchCode, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Width="auto">
+                        <Label Content="Image" Style="{StaticResource input_label}" Width="auto" />
+                        <local:ImageViewer   ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"
+                                            IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Width="auto">
+
+                        <Button  Content="Print" IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Click="Button_Click" />
                     </StackPanel>
                 </StackPanel>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
-        </DataGrid>
+            </DataTemplate>
+        </DataGrid.RowDetailsTemplate>
+    </DataGrid>
 </UserControl>

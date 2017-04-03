@@ -34,7 +34,7 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
             </Grid>
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal"
                         DataContext="{StaticResource production_accountViewSource}">
                 <StackPanel x:Name="stpDisplay">
                     <DataGrid x:Name="item_inventory_detailDataGrid" MinHeight="128" MaxHeight="256"
@@ -44,16 +44,16 @@
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                            
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+
                             <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True" />
 
                             <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" IsReadOnly="True"/>
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" IsReadOnly="True" />
 
                             <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Cost}" Width="*" IsReadOnly="True"/>
+                                                Header="{lex:Loc Cognitivo:local:Cost}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>

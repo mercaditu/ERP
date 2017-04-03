@@ -130,6 +130,7 @@ namespace entity
                 }
             }
         }
+
         public int? movement_id { get; set; }
         private purchase_return _purchase_return;
         public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
@@ -158,8 +159,6 @@ namespace entity
             }
         }
 
-      
-
         public string this[string columnName]
         {
             get
@@ -170,9 +169,9 @@ namespace entity
                     {
                         return "Quantity can not be zero";
                     }
-                    if (purchase_invoice_detail!=null)
-                   {
-                        if (quantity> purchase_invoice_detail.quantity)
+                    if (purchase_invoice_detail != null)
+                    {
+                        if (quantity > purchase_invoice_detail.quantity)
                         {
                             return "Quantity is less than invoice quantity";
                         }

@@ -7,6 +7,7 @@ namespace Documents
     {
         //Supplier Data
         public string Supplier { get; set; }
+
         public string GovCode { get; set; }
         public string SupplierCode { get; set; }
         public string Address { get; set; }
@@ -19,6 +20,7 @@ namespace Documents
 
         //Invoice Header
         public int Status { get; set; }
+
         public string Number { get; set; }
         public bool Exports { get; set; }
         public DateTime Date { get; set; }
@@ -34,6 +36,7 @@ namespace Documents
 
         //Invoice Detail
         public int DetailID { get; set; }
+
         public string Code { get; set; }
         public string Items { get; set; }
         public string Vat { get; set; }
@@ -50,7 +53,7 @@ namespace Documents
 
     public class LoadPurchaseInvoice
     {
-        List<PurchaseInvoice> SalesInvoiceList = new List<PurchaseInvoice>();
+        private List<PurchaseInvoice> SalesInvoiceList = new List<PurchaseInvoice>();
 
         public LoadPurchaseInvoice(int PurchaseInvoiceID)
         {

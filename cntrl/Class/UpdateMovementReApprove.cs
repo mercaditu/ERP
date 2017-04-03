@@ -241,6 +241,7 @@ namespace cntrl.Class
                 }
             }
         }
+
         //public void BranchChange(db db, int ID, App.Names Application)
         //{
         //    if (Application == App.Names.SalesInvoice)
@@ -433,7 +434,5 @@ namespace cntrl.Class
                 }
             }
         }
-
-     
     }
 }

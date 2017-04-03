@@ -33,7 +33,7 @@ namespace Cognitivo.Product
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
 
-            await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).Include(x=>x.item_inventory_detail).OrderByDescending(x => x.trans_date).LoadAsync();
+            await InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.item_inventory_detail).OrderByDescending(x => x.trans_date).LoadAsync();
 
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
@@ -297,7 +297,7 @@ namespace Cognitivo.Product
 
         private void item_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxItem.ItemID>0)
+            if (sbxItem.ItemID > 0)
             {
                 add_item(sbxItem.ItemID);
             }
@@ -306,10 +306,10 @@ namespace Cognitivo.Product
         public void add_item(int id_item)
         {
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
-            if (item_inventory!=null)
+            if (item_inventory != null)
             {
                 item_product item_product = InventoryDB.item_product.Where(x => x.id_item == id_item).FirstOrDefault();
-                if (item_product!=null)
+                if (item_product != null)
                 {
                     app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
                     item_inventory_detail _item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
@@ -325,14 +325,14 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                      item_inventory_detail.value_system = _item_inventory_detail.value_system;
+                        item_inventory_detail.value_system = _item_inventory_detail.value_system;
                     }
 
                     item_inventory_detail.id_inventory = item_inventory.id_inventory;
                     item_inventory_detail.id_item_product = item_product.id_item_product;
                     item_inventory_detail.item_product = item_product;
                     item_inventory_detail.id_location = app_location.id_location;
-                
+
                     item_inventory_detail.State = EntityState.Added;
                     item_inventory_detail.timestamp = item_inventory.trans_date;
 
@@ -341,8 +341,8 @@ namespace Cognitivo.Product
                         item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                     }
 
-                   item_inventory.item_inventory_detail.Add(item_inventory_detail);
-                   item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                    item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 }
             }
         }

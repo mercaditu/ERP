@@ -468,7 +468,7 @@ namespace Cognitivo.Commercial
 
             //Get the mouse click coordinates
             var mousePosition = e.GetPosition((UIElement)sender);
-            
+
             //Convert the mouse coordinates to a locatoin on the map
             Location pinLocation = myMap.ViewportPointToLocation(mousePosition);
 

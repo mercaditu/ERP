@@ -694,7 +694,7 @@ namespace Cognitivo.Sales
             {
                 sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
 
-                foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail.Where(x=>x.user_verified))
+                foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail.Where(x => x.user_verified))
                 {
                     sales_order_detail sales_order_detail = _sales_packing_detail.sales_order_detail;
                     sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -1099,7 +1099,7 @@ namespace Cognitivo.Sales
             }
 
             toolBar.TotalApproved = TotalApproved;
-            toolBar.TotalPending = TotalPending;   
+            toolBar.TotalPending = TotalPending;
         }
     }
 }

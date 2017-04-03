@@ -216,7 +216,6 @@ namespace entity
                                 item_request.item_request_detail.Add(item_request_detail);
                             }
                             base.item_request.Add(item_request);
-
                         }
 
                         SaveChanges();

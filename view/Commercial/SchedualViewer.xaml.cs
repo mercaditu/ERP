@@ -11,7 +11,6 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-
         }
     }
 }

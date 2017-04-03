@@ -26,6 +26,7 @@ namespace Cognitivo.Sales
         /// CollectionViewSource
         /// </summary>
         private CollectionViewSource sales_invoiceViewSource;
+
         private CollectionViewSource paymentViewSource;
 
         public PointOfSale()

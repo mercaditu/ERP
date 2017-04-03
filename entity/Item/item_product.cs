@@ -34,7 +34,6 @@ namespace entity
         public bool is_weigted { get; set; }
         public COGS_Types cogs_type { get; set; }
 
-
         public bool show_batch { get; set; }
 
         [NotMapped]

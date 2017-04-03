@@ -331,7 +331,7 @@ namespace entity
                 foreach (payment_schedual payment_schedual in schedualList)
                 {
                     //Create a Parent Schedual Object.
-                    
+
                     payment_schedual _Parent_Schedual = payment_schedual.parent;
                     if (_Parent_Schedual != null)
                     {

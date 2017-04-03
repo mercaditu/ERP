@@ -12,9 +12,10 @@ namespace cntrl.Controls
         public long? ParentID { get; set; }
         public int ProductID { get; set; }
         public long? MovementID { get; set; }
-     
-        CollectionViewSource item_movementViewSource;
+
+        private CollectionViewSource item_movementViewSource;
         public entity.App.Names ApplicationName { get; set; }
+
         public InventoryFlowDataGrid()
         {
             InitializeComponent();
@@ -22,6 +23,7 @@ namespace cntrl.Controls
         }
 
         public event SelectionChangedEventHandler SelectionChanged;
+
         //public event SelectionChangedEventHandler Selection_WithOut_ChildChanged;
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -30,15 +32,12 @@ namespace cntrl.Controls
             {
                 MovementID = ItemMovement.MovementID;
                 SelectionChanged(sender, e);
-
             }
         }
 
         public void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             LoadData();
-           
         }
 
         public void LoadData()
@@ -64,7 +63,7 @@ namespace cntrl.Controls
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment,
-                                        DisplayImage = item.credit>0?true:false
+                                        DisplayImage = item.credit > 0 ? true : false
                                     }).OrderByDescending(x => x.Date).ToList();
 
                 item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
@@ -87,7 +86,6 @@ namespace cntrl.Controls
         }
     }
 
-
     public class ItemMovement
     {
         public long MovementID { get; set; }
@@ -103,6 +101,6 @@ namespace cntrl.Controls
         public decimal Cost { get; set; }
 
         public string Comment { get; set; }
-        public bool DisplayImage { get;  set; }
+        public bool DisplayImage { get; set; }
     }
 }

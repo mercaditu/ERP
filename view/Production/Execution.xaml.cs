@@ -450,11 +450,10 @@ namespace Cognitivo.Production
             if (e.Parameter as production_execution_detail != null)
             {
                 production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
-                if (production_execution_detail.status!=Status.Production.Executed)
+                if (production_execution_detail.status != Status.Production.Executed)
                 {
                     e.CanExecute = true;
                 }
-            
             }
         }
 
@@ -489,7 +488,7 @@ namespace Cognitivo.Production
             try
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-                if (production_order!=null)
+                if (production_order != null)
                 {
                     foreach (production_order_detail production_order_detail in production_order.production_order_detail)
                     {
@@ -575,7 +574,6 @@ namespace Cognitivo.Production
                             decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity);
                             decimal QuantityAvaiable = 0;
                             int LocationID = production_order_detail.production_order.production_line.id_location;
-                            
 
                             if (production_order_detail.item.item_product.Count() > 0)
                             {

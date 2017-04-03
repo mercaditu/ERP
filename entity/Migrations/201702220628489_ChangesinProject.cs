@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class ChangesinProject : DbMigration
     {
         public override void Up()
@@ -32,7 +31,7 @@ namespace entity.Migrations
             DropColumn("purchase_packing_detail", "user_quantity");
             DropColumn("sales_packing_detail", "user_quantity");
         }
-        
+
         public override void Down()
         {
             AddColumn("sales_packing_detail", "user_quantity", c => c.Decimal(precision: 20, scale: 9));

@@ -178,9 +178,9 @@
                                     <StackPanel Width="256">
                                         <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
                                         <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
-                                                LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}"/>
+                                                LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}" />
                                         <Label Content="{lex:Loc Importance}" Style="{StaticResource input_label}" />
-                                        <Slider Value="{Binding importance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"  
+                                        <Slider Value="{Binding importance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
                                                 LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" />
                                     </StackPanel>
                                     <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -401,7 +401,7 @@
                 </TabItem>
             </TabControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Top" Margin="5">
-                <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center"/>
+                <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
 

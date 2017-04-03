@@ -10,7 +10,7 @@
                 <Label Content="{Binding imgSource, ElementName=this}" FontFamily="/cntrl;component/Resources/#cognitivo"
                        Foreground="Black" FontSize="18" />
                 <Viewbox StretchDirection="Both" Stretch="Uniform" Width="14" Margin="10,-16, 0, 0">
-                    <local:NotificationIcon Number="{Binding qtyNotification, ElementName=this}"/>
+                    <local:NotificationIcon Number="{Binding qtyNotification, ElementName=this}" />
                 </Viewbox>
             </Grid>
             <Label Content="{Binding icoName, ElementName=this}" VerticalAlignment="Center"

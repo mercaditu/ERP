@@ -75,7 +75,6 @@ namespace Cognitivo.Class
 
         public static RoutedUICommand Pending =
             new RoutedUICommand("Pending", "Pending", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, PendingModifier) });
-        
 
         public static RoutedUICommand New =
             new RoutedUICommand("New", "New", typeof(CustomCommands));

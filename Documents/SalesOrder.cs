@@ -45,12 +45,11 @@ namespace Documents
         public string GeoLevel3 { get; set; }
         public string GeoLevel4 { get; set; }
         public string GeoLevel5 { get; set; }
-
     }
 
     public class LoadSalesOrder
     {
-        List<SalesOrder> SalesInvoiceList = new List<SalesOrder>();
+        private List<SalesOrder> SalesInvoiceList = new List<SalesOrder>();
 
         public LoadSalesOrder(int SalesOrderID)
         {

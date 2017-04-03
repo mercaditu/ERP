@@ -161,7 +161,7 @@
                     <Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
 						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
                     <Grid Name="crud_modalDuePaymnet" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
-						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" >
+						  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
@@ -205,7 +205,7 @@
 											   recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CheckedChanged="navList_CheckedChanged"/>
+											   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CheckedChanged="navList_CheckedChanged" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -636,7 +636,7 @@
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                             </StackPanel>
 
-                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}" 
+                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}"
                                              Has_Rounding="{Binding ElementName=cbxCurrency,Path=HasRounding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 											 Currency="{Binding app_currencyfx.app_currency.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"

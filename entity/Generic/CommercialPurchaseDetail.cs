@@ -87,7 +87,6 @@ namespace entity
         ///
         /// </summary>
         [Required]
-  
         public decimal quantity
         {
             get { return _quantity; }
@@ -294,15 +293,11 @@ namespace entity
                     if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         ApplyDiscount_UnitPrice(_discount, value, unit_cost);
-                       
                     }
                     _discount = value;
                     RaisePropertyChanged("discount");
                     Calculate_UnitVatDiscount(value);
                     Calculate_SubTotalDiscount(value);
-
-                  
-                   
                 }
             }
         }
@@ -320,15 +315,10 @@ namespace entity
             {
                 if (_DiscountVat != value)
                 {
-                 
-
-                 
-                        Calculate_UnitDiscount(value);
-                        _DiscountVat = value;
-                        RaisePropertyChanged("DiscountVat");
-                        Calculate_SubTotalVatDiscount(value);
-                   
-                 
+                    Calculate_UnitDiscount(value);
+                    _DiscountVat = value;
+                    RaisePropertyChanged("DiscountVat");
+                    Calculate_SubTotalVatDiscount(value);
                 }
             }
         }

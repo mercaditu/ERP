@@ -27,7 +27,7 @@ namespace entity
             //}
             //catch
             //{
-            //    //Since document range 
+            //    //Since document range
             //    using (db db = new db())
             //    {
             //        app_document document = new app_document();
@@ -105,10 +105,10 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-            foreach (purchase_packing purchase_packing in 
+            foreach (purchase_packing purchase_packing in
                 base.purchase_packing.Local
-                .Where(x => 
-                x.IsSelected && 
+                .Where(x =>
+                x.IsSelected &&
                 x.Error == null
                 ))
             {

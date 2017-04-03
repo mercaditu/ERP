@@ -11,7 +11,6 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
         }
-      
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,8 +18,6 @@ namespace entity
 
         public int id_impex { get; set; }
         public int id_sales_invoice { get; set; }
-
-      
 
         public virtual impex impex { get; set; }
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }

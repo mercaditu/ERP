@@ -38,7 +38,7 @@ namespace cntrl.PanelAdv
                 SalesSColumn.Visibility = Visibility.Visible;
 
                 sales_invoice sales_invoice = db.sales_invoice.Find(ID);
-                
+
                 PaymentSchedualList = sales_invoice.payment_schedual.Where(x => x.debit > 0).ToList();
                 payment_schedualViewSource.Source = PaymentSchedualList;
                 foreach (payment_schedual payment_schedual in PaymentSchedualList)

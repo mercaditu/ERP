@@ -110,7 +110,7 @@
                     </TreeView.ItemsPanel>
                 </cntrl:ExtendedTreeView>
             </Grid>
-            <ScrollViewer Grid.Column="2" Background="WhiteSmoke" >
+            <ScrollViewer Grid.Column="2" Background="WhiteSmoke">
                 <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
                     <StackPanel DataContext="{StaticResource projectViewSource}">
                         <ItemsControl x:Name="itemsource" ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}" Margin="0">
@@ -135,9 +135,9 @@
                     <StackPanel Width="256">
                         <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
                         <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
-                       LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}"/>
+                       LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}" />
                         <Label Content="{lex:Loc Importance}" Style="{StaticResource input_label}" />
-                        <Slider Value="{Binding importance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"  
+                        <Slider Value="{Binding importance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
                        LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" />
                     </StackPanel>
 
@@ -213,7 +213,6 @@
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
-            
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"

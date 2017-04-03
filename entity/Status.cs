@@ -8,7 +8,7 @@ namespace entity
         public enum CommercialMethods
         {
             DiscountOnInvoice,
-            DiscountOnPacking   
+            DiscountOnPacking
         }
 
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]

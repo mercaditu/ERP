@@ -49,7 +49,7 @@ namespace Cognitivo.Purchase
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
                 filterVerifiedDetail(0);
-                if (purchase_packingpurchase_packinglist_detailViewSource.View!=null)
+                if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
                 {
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                 }
@@ -57,8 +57,6 @@ namespace Cognitivo.Purchase
                 {
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
-
-             
             }));
             cbxBranch.SelectedIndex = 0;
         }
@@ -74,7 +72,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
                         if (id_item > 0)
                         {
-                            if (purchase_packing_detail.verified_by != null && purchase_packing_detail.id_item==id_item) 
+                            if (purchase_packing_detail.verified_by != null && purchase_packing_detail.id_item == id_item)
                                 return true;
                             else
                                 return false;
@@ -87,17 +85,16 @@ namespace Cognitivo.Purchase
                                 return false;
                         }
                     };
-
                 }
             }
         }
+
         private void filterDetail()
         {
             if (purchase_packingpurchase_packinglist_detailViewSource != null)
             {
                 if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
                 {
-
                     purchase_packingpurchase_packinglist_detailViewSource.View.Filter = i =>
                     {
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
@@ -106,7 +103,6 @@ namespace Cognitivo.Purchase
                         else
                             return false;
                     };
-
                 }
             }
         }
@@ -205,6 +201,7 @@ namespace Cognitivo.Purchase
                 e.CanExecute = true;
             }
         }
+
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
@@ -229,7 +226,7 @@ namespace Cognitivo.Purchase
         {
             PurchasePackingListDB.Annull();
         }
-        
+
         private void btnpurchaseOrder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -290,28 +287,25 @@ namespace Cognitivo.Purchase
                     purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                     if (_purchase_packing_detail != null)
                     {
-                      
-                            purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
-                            purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
-                            purchase_packing_detail.id_item = _purchase_packing_detail.id_item;
-                            purchase_packing_detail.item = _purchase_packing_detail.item;
-                            purchase_packing_detail.verified_quantity = sbxItem.Quantity;
-                            purchase_packing_detail.quantity = sbxItem.Quantity;
-                            purchase_packing_detail.security_user = PurchasePackingListDB.security_user.Find(CurrentSession.Id_User);
-                            purchase_packing_detail.app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
-                            purchase_packing_detail.verified_by = CurrentSession.Id_User;
-                            purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
+                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                        purchase_packing_detail.id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail;
+                        purchase_packing_detail.id_item = _purchase_packing_detail.id_item;
+                        purchase_packing_detail.item = _purchase_packing_detail.item;
+                        purchase_packing_detail.verified_quantity = sbxItem.Quantity;
+                        purchase_packing_detail.quantity = sbxItem.Quantity;
+                        purchase_packing_detail.security_user = PurchasePackingListDB.security_user.Find(CurrentSession.Id_User);
+                        purchase_packing_detail.app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
+                        purchase_packing_detail.verified_by = CurrentSession.Id_User;
+                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                            purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                            purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
-                            filterDetail();
-                            Refresh_GroupByGrid();
-                            //filterVerifiedDetail();
-                     
+                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                        purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                        filterDetail();
+                        Refresh_GroupByGrid();
+                        //filterVerifiedDetail();
 
                         //Filter UserVerified True.
                     }
-                   
                 }
             }
         }
@@ -331,14 +325,13 @@ namespace Cognitivo.Purchase
                         {
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
-                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.verified_by != null && y.id_item==x.Max(z=>z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
+                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.verified_by != null && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                             Quantity = x.Max(y => y.quantity),
-                            id_item= x.Max(y => y.id_item)
+                            id_item = x.Max(y => y.id_item)
                         })
                         .ToList();
 
                     GridVerifiedList.ItemsSource = VerifiedItemList;
-                   
                 }
             }
         }
@@ -351,14 +344,12 @@ namespace Cognitivo.Purchase
 
         private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-             dynamic obj = GridVerifiedList.SelectedItem;
-            if (obj!=null)
+            dynamic obj = GridVerifiedList.SelectedItem;
+            if (obj != null)
             {
-               filterVerifiedDetail(obj.id_item);
+                filterVerifiedDetail(obj.id_item);
             }
         }
-
-
 
         #region Filter Data
 
@@ -390,8 +381,8 @@ namespace Cognitivo.Purchase
                             unit_cost = PackingDetail.purchase_order_detail.unit_cost,
                             discount = PackingDetail.purchase_order_detail.discount,
                             id_vat_group = PackingDetail.purchase_order_detail.id_vat_group,
-                            purchase_order_detail= PackingDetail.purchase_order_detail,
-                            id_cost_center= PackingDetail.purchase_order_detail.id_cost_center
+                            purchase_order_detail = PackingDetail.purchase_order_detail,
+                            id_cost_center = PackingDetail.purchase_order_detail.id_cost_center
                         };
                         DetailList.Add(detail);
                     }
@@ -415,23 +406,22 @@ namespace Cognitivo.Purchase
                             {
                                 _purchase_invoice.purchase_invoice_detail.Add(item);
                             }
-                            
+
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
                             purchase_packing_relation purchase_packing_relation = new entity.purchase_packing_relation();
                             purchase_packing_relation.id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
                             purchase_packing_relation.purchase_invoice = _purchase_invoice;
-                            purchase_packing_relation.id_purchase_packing= packing.id_purchase_packing;
+                            purchase_packing_relation.id_purchase_packing = packing.id_purchase_packing;
                             purchase_packing_relation.purchase_packing = packing;
                             PurchasePackingListDB.purchase_packing_relation.Add(purchase_packing_relation);
                             try
                             {
                                 PurchasePackingListDB.SaveChanges();
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
-                                System.Windows.Forms.MessageBox.Show(ex.ToString()); 
+                                System.Windows.Forms.MessageBox.Show(ex.ToString());
                             }
-                          
                         }
                     }
                 }

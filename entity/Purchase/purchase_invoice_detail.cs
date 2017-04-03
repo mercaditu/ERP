@@ -1,12 +1,12 @@
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
-    using System;
+    using System.Text;
 
     public partial class purchase_invoice_detail : CommercialPurchaseDetail, IDataErrorInfo
     {
@@ -30,15 +30,15 @@ namespace entity
         public int? id_purchase_packing_detail { get; set; }
 
         public decimal vat { get; set; }
-        
+
         [NotMapped]
         public decimal avlquantity
         {
             get
             {
-                if (item_movement.Count>0)
+                if (item_movement.Count > 0)
                 {
-                    return item_movement.Sum(x=>x.avlquantity);
+                    return item_movement.Sum(x => x.avlquantity);
                 }
                 else
                 {

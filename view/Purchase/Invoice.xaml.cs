@@ -124,10 +124,10 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
                 //if (PurchaseInvoiceDB.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
                 //{
-                    purchase_invoice.IsSelected = true;
-                    purchase_invoice.State = EntityState.Modified;
-                    PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Modified;
-              //  }
+                purchase_invoice.IsSelected = true;
+                purchase_invoice.State = EntityState.Modified;
+                PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Modified;
+                //  }
             }
             else
             {

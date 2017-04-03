@@ -1,8 +1,8 @@
 ﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cognitivo.Project.Development"
       xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       xmlns:entity="clr-namespace:entity;assembly=entity"
@@ -49,11 +49,11 @@
                 <syncfusion:GanttControl.TaskAttributeMapping>
                     <syncfusion:TaskAttributeMapping TaskIdMapping="id_project_task"
                         TaskNameMapping="item_description"
-                        StartDateMapping="start_date_est"                                           
+                        StartDateMapping="start_date_est"
                         FinishDateMapping="end_date_est"
-                        ChildMapping="child"  
+                        ChildMapping="child"
                         ProgressMapping="completed"
-                        PredecessorMapping="parent" >
+                        PredecessorMapping="parent">
                     </syncfusion:TaskAttributeMapping>
                 </syncfusion:GanttControl.TaskAttributeMapping>
             </syncfusion:GanttControl>

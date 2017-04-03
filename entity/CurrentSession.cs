@@ -219,7 +219,6 @@ namespace entity
                 {
                     if (app_company != null)
                     {
-
                         Licence.VerifyCompanyLicence(app_company.version);
                         if (Licence.CompanyLicence.versions.Count() == 0)
                         {
@@ -243,7 +242,6 @@ namespace entity
                 }
                 catch (Exception)
                 {
-
                 }
             }
             //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)

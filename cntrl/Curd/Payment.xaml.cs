@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-
 namespace cntrl.Curd
 {
     public partial class Payment : UserControl
@@ -24,7 +23,7 @@ namespace cntrl.Curd
         private Modes Mode;
         private CollectionViewSource paymentpayment_detailViewSource;
         private CollectionViewSource paymentViewSource;
-        CollectionViewSource app_accountViewSource;
+        private CollectionViewSource app_accountViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
 
         public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList, ref PaymentDB PaymentDB)
@@ -177,7 +176,6 @@ namespace cntrl.Curd
                     return;
                 }
             }
-
 
             bool IsRecievable = Mode == Modes.Recievable ? true : false;
             bool IsPrintable = Mode == Modes.Recievable ? true : false;
@@ -371,8 +369,8 @@ namespace cntrl.Curd
             if (dtptransdate.SelectedDate != null)
             {
                 List<int> app_account_sessionList = PaymentDB.app_account_session
-                    .Where(y => y.is_active 
-                    && y.cl_date != null 
+                    .Where(y => y.is_active
+                    && y.cl_date != null
                     && y.op_date < dtptransdate.SelectedDate)
                     .Select(x => x.id_account)
                     .ToList();

@@ -110,7 +110,7 @@ namespace entity
 
         [NotMapped]
         public bool is_Executable { get; set; }
-        
+
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
         public virtual app_currency app_currency { get; set; }

@@ -74,12 +74,12 @@
                             <Label Content="{lex:Loc Parameters}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                         </StackPanel>
                     </Expander.Header>
-                    <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}" 
+                    <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}"
                                  EndDate="{Binding EndDate, ElementName=this, Mode=TwoWay}" Visibility="Collapsed" />
                 </Expander>
 
                 <Expander x:Name="stpProject" Visibility="Collapsed">
-                    <StackPanel  >
+                    <StackPanel>
                         <StackPanel.Background>
                             <SolidColorBrush Color="White" Opacity="0.64" />
                         </StackPanel.Background>

@@ -11,7 +11,7 @@ namespace Cognitivo.Project.Development
     /// </summary>
     public partial class ProjectGantt : Page
     {
-        entity.db db = new entity.db();
+        private entity.db db = new entity.db();
 
         public ProjectGantt()
         {

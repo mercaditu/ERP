@@ -29,7 +29,6 @@ namespace entity
         public int? id_weather { get; set; }
         public int? id_sales_rep { get; set; }
 
-
         /// <summary>
         ///
         /// </summary>

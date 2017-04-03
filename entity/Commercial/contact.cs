@@ -6,7 +6,6 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -193,6 +192,7 @@ namespace entity
                 }
             }
         }
+
         private string _LongLat;
 
         public string code_verif { get; set; }
@@ -423,7 +423,6 @@ namespace entity
                                 }
                             }
                         }
-                        
                     }
                 }
                 return "";

@@ -22,7 +22,7 @@ namespace cntrl.Curd
         private Modes Mode;
         private CollectionViewSource paymentpayment_detailViewSource;
         private CollectionViewSource paymentViewSource;
-        CollectionViewSource app_accountViewSource;
+        private CollectionViewSource app_accountViewSource;
 
         public PaymentDB PaymentDB { get; set; }
 
@@ -322,6 +322,5 @@ namespace cntrl.Curd
 
             paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
-
     }
 }

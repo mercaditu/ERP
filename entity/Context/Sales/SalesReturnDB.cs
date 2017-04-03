@@ -328,12 +328,11 @@ namespace entity
                     {
                         if (payment_schedual.AccountReceivableBalance > 0 && Return_GrandTotal_ByInvoice > 0)
                         {
-
-                            decimal PaymentValue = 
-                                payment_schedual.AccountReceivableBalance < Return_GrandTotal_ByInvoice 
-                                ? 
-                                payment_schedual.AccountReceivableBalance 
-                                : 
+                            decimal PaymentValue =
+                                payment_schedual.AccountReceivableBalance < Return_GrandTotal_ByInvoice
+                                ?
+                                payment_schedual.AccountReceivableBalance
+                                :
                                 Return_GrandTotal_ByInvoice;
 
                             Return_GrandTotal_ByInvoice -= PaymentValue;

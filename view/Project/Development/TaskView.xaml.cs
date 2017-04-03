@@ -185,15 +185,14 @@ namespace Cognitivo.Project.Development
                     }
 
                     ProjectTaskDB.SaveChanges();
-                    if (_project_task.FirstOrDefault()!=null)
+                    if (_project_task.FirstOrDefault() != null)
                     {
-                        if (_project_task.FirstOrDefault().app_document_range!=null)
+                        if (_project_task.FirstOrDefault().app_document_range != null)
                         {
                             entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
                         }
                     }
-                 
-                  
+
                     filter_task();
                 }
             }
@@ -278,7 +277,7 @@ namespace Cognitivo.Project.Development
 
             if (project != null)
             {
-                if (project_task != null && project_task.items!=null && project_task.items.item_recepie.Count() == 0)
+                if (project_task != null && project_task.items != null && project_task.items.item_recepie.Count() == 0)
                 {
                     //Adding a Child Item.
                     if (project_task.items != null)

@@ -21,7 +21,6 @@ namespace cntrl.Controls
             get { return (bool)GetValue(HasRoundingProperty); }
             set { SetValue(HasRoundingProperty, value); }
         }
-       
 
         public int SelectedValue
         {

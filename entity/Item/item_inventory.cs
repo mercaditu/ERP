@@ -63,6 +63,7 @@ namespace entity
                 }
             }
         }
+
         private string _GroupBatchCode;
 
         [NotMapped]
@@ -83,6 +84,7 @@ namespace entity
                 }
             }
         }
+
         private DateTime _GroupExpiryDate;
 
         public virtual app_branch app_branch { get; set; }

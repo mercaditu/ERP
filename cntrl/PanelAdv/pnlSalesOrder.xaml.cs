@@ -77,7 +77,7 @@ namespace cntrl.PanelAdv
 
             sales_orderViewSource = Resources["sales_orderViewSource"] as CollectionViewSource;
 
-            sales_orderViewSource.Source = db.sales_order.Where(x => order.Contains(x.id_sales_order) ).ToList();
+            sales_orderViewSource.Source = db.sales_order.Where(x => order.Contains(x.id_sales_order)).ToList();
             filter_sales();
         }
 

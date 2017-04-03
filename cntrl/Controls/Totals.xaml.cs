@@ -10,7 +10,7 @@ namespace cntrl.Controls
     /// </summary>
     public partial class Totals : UserControl
     {
-        public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals),new PropertyMetadata(false));
+        public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals), new PropertyMetadata(false));
 
         public bool Has_Rounding
         {
@@ -20,14 +20,12 @@ namespace cntrl.Controls
 
         public static readonly DependencyProperty GrandTotalProperty = DependencyProperty.Register("GrandTotal", typeof(decimal), typeof(Totals), new PropertyMetadata(OnGrandTotalChangeCallBack));
 
-
         public decimal GrandTotal
         {
             get { return (decimal)GetValue(GrandTotalProperty); }
             set { SetValue(GrandTotalProperty, value); }
         }
 
-       
         #region "INotifyPropertyChanged"
 
         private static void OnGrandTotalChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -48,7 +46,7 @@ namespace cntrl.Controls
             else
             {
                 lblTotal.Content = newvalue.ToString("N2");
-            }         
+            }
         }
 
         #endregion "INotifyPropertyChanged"

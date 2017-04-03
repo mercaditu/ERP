@@ -1,8 +1,7 @@
 namespace entity.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class ProjectUpdate : DbMigration
     {
         public override void Up()
@@ -10,25 +9,25 @@ namespace entity.Migrations
             CreateTable(
                 "security_request",
                 c => new
-                    {
-                        id_request = c.Int(nullable: false, identity: true),
-                        id_application = c.Int(nullable: false),
-                        state = c.Int(nullable: false),
-                        type = c.Int(nullable: false),
-                        value = c.Decimal(precision: 20, scale: 9),
-                        request_date = c.DateTime(nullable: false, precision: 0),
-                        approve_date = c.DateTime(nullable: false, precision: 0),
-                        comment = c.String(unicode: false),
-                        id_company = c.Int(nullable: false),
-                        id_user = c.Int(nullable: false),
-                        is_head = c.Boolean(nullable: false),
-                        timestamp = c.DateTime(nullable: false, precision: 0),
-                        is_read = c.Boolean(nullable: false),
-                        approve_user_id_user = c.Int(),
-                        request_user_id_user = c.Int(),
-                        security_user_id_user = c.Int(),
-                    })
-                .PrimaryKey(t => t.id_request)                
+                {
+                    id_request = c.Int(nullable: false, identity: true),
+                    id_application = c.Int(nullable: false),
+                    state = c.Int(nullable: false),
+                    type = c.Int(nullable: false),
+                    value = c.Decimal(precision: 20, scale: 9),
+                    request_date = c.DateTime(nullable: false, precision: 0),
+                    approve_date = c.DateTime(nullable: false, precision: 0),
+                    comment = c.String(unicode: false),
+                    id_company = c.Int(nullable: false),
+                    id_user = c.Int(nullable: false),
+                    is_head = c.Boolean(nullable: false),
+                    timestamp = c.DateTime(nullable: false, precision: 0),
+                    is_read = c.Boolean(nullable: false),
+                    approve_user_id_user = c.Int(),
+                    request_user_id_user = c.Int(),
+                    security_user_id_user = c.Int(),
+                })
+                .PrimaryKey(t => t.id_request)
                 .ForeignKey("app_company", t => t.id_company, cascadeDelete: true)
                 .ForeignKey("security_user", t => t.approve_user_id_user)
                 .ForeignKey("security_user", t => t.request_user_id_user)
@@ -37,7 +36,7 @@ namespace entity.Migrations
                 .Index(t => t.approve_user_id_user)
                 .Index(t => t.request_user_id_user)
                 .Index(t => t.security_user_id_user);
-            
+
             AddColumn("contacts", "method", c => c.Int());
             AddColumn("contacts", "geo_longlat", c => c.String(unicode: false));
             AddColumn("contacts", "code_verif", c => c.String(unicode: false));
@@ -69,7 +68,7 @@ namespace entity.Migrations
             DropColumn("production_order", "completed");
             DropColumn("purchase_packing_detail", "user_verified");
         }
-        
+
         public override void Down()
         {
             AddColumn("purchase_packing_detail", "user_verified", c => c.Boolean(nullable: false));

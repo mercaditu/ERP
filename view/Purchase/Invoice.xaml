@@ -279,8 +279,8 @@
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}" />
-                        <CheckBox Content="{lex:Loc LotNumber}" x:Name="cbxBatchCode"/>
-                        <TextBox Text="{Binding GroupBatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource input_textbox}" Width="64" VerticalAlignment="Center"/>
+                        <CheckBox Content="{lex:Loc LotNumber}" x:Name="cbxBatchCode" />
+                        <TextBox Text="{Binding GroupBatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource input_textbox}" Width="64" VerticalAlignment="Center" />
                     </StackPanel>
                     <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                     <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
@@ -340,7 +340,7 @@
 											 Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
 											 DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 VerticalAlignment="Top" HorizontalAlignment="Right"/>
+											 VerticalAlignment="Top" HorizontalAlignment="Right" />
                 <Popup x:Name="popupVAT" IsOpen="{Binding ElementName=lblVAT, Path=IsMouseOver, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							   Placement="Top">
                     <DataGrid x:Name="dgvvat" AutoGenerateColumns="False" EnableRowVirtualization="True"
@@ -370,11 +370,15 @@
 					  InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
 					  CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
                 <!--<DataGrid.Resources>
-                    --><!-- the non-editing cell --><!--
+                    -->
+                <!-- the non-editing cell -->
+                <!--
                     <DataTemplate x:Key="CellTemplate">
                         <DatePicker IsEnabled="False" SelectedDate="" />
                     </DataTemplate>
-                    --><!-- the editing cell --><!--
+                    -->
+                <!-- the editing cell -->
+                <!--
                     <DataTemplate x:Key="EditableCellTemplate">
                         <DatePicker IsEnabled="True" SelectedDate="{Binding expiration_date}" />
                     </DataTemplate>
@@ -385,7 +389,7 @@
 
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" MinWidth="64"
 										Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    
+
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128"
 										Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -394,7 +398,7 @@
 											DisplayMemberPath="name" SelectedValuePath="id_vat_group"
 											SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"
 										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
                     <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
 										Header="Factor" Width="Auto" MinWidth="64" ElementStyle="{StaticResource RightAlignStyle}"
@@ -414,14 +418,14 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpirationDate}" 
+                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpirationDate}"
                                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=BatchCode, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}"
                                             Width="100">
                         <DataGridTemplateColumn.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding item.item_product.can_expire}" Value="false">
-                                        <Setter Property="IsEnabled" Value="false"/>
+                                        <Setter Property="IsEnabled" Value="false" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

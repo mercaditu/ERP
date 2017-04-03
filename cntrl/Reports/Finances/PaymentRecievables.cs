@@ -5,29 +5,29 @@
         public static string query = @"
 										select
 										if(ps.id_payment_schedual is null, pschild.parent_id_payment_schedual, ps.id_payment_schedual) as Refrence,
-                                        contact.name as Customer, 
-                                        contact.telephone as Telephone, 
-                                        contact.address as Address, 
-                                        contact.code as Code, 
+                                        contact.name as Customer,
+                                        contact.telephone as Telephone,
+                                        contact.address as Address,
+                                        contact.code as Code,
                                         contact.gov_code as GovCode,
                                         branch.name as Branch,
-                                        cond.name as Conditions, 
+                                        cond.name as Conditions,
                                         contract.name as Contract,
-                                        si.number as SalesNumber, 
-                                        si.trans_date as Date, 
+                                        si.number as SalesNumber,
+                                        si.trans_date as Date,
                                         sr.name as Salesman,
-                                        ps.trans_date as PaymentDate, 
-                                        Date(ps.expire_date) as ExpiryDate, 
-                                        ps.debit as Debit, 
+                                        ps.trans_date as PaymentDate,
+                                        Date(ps.expire_date) as ExpiryDate,
+                                        ps.debit as Debit,
                                         pschild.credit as Credit,
-                                        payment.number as PaymentNumber, 
+                                        payment.number as PaymentNumber,
                                         payment.trans_date as Payment,
                                         pd.value as Paid,
-                                        pt.name as PaymentType, 
-                                        c.name as Currency, 
+                                        pt.name as PaymentType,
+                                        c.name as Currency,
                                         cfx.buy_value as Rate,
                                         datediff(ps.expire_date, ifnull(payment.trans_date, Now())) as DateDiff
-                                   
+
                                         from payment_schedual as ps
                                         left join payment_schedual as pschild on ps.id_payment_schedual = pschild.parent_id_payment_schedual
 
@@ -42,7 +42,7 @@
                                         left join app_currencyfx as cfx on pd.id_currencyfx = cfx.id_currencyfx
                                         left join app_currency as c on cfx.id_currency = c.id_currency
                                         left join sales_rep as sr on si.id_sales_rep = sr.id_sales_rep
-                                        
+
                                         where ps.id_sales_invoice > 0 and ps.parent_id_payment_schedual is null and ps.id_company = @CompanyID and ps.trans_date between '@StartDate' and '@EndDate'";
     }
 }

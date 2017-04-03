@@ -79,7 +79,7 @@ namespace entity.Brillo
         public List<StockList> ScalarMovement(item_movement item_movement)
         {
             string query = @"select
-                                
+
                                 parent.id_movement as MovementID,parent.id_location as LocationID,Loc.name as Location,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.credit  as QtyBalance,
@@ -87,7 +87,6 @@ namespace entity.Brillo
 
                                 from item_movement as parent
                                 inner join  app_location Loc on parent.id_location=Loc.id_location
-
 
                                 where parent.id_movement={0}
                                 group by parent.id_movement

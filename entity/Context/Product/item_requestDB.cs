@@ -78,7 +78,6 @@ namespace entity
                     item_request.RaisePropertyChanged("number");
                 }
 
-
                 List<item_request_decision> DecisionList = new List<item_request_decision>();
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
                 {
@@ -137,7 +136,7 @@ namespace entity
                     int RangeID = base.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == App.Names.Movement).Select(x => x.id_range).FirstOrDefault();
                     if (RangeID > 0)
                     { item_transfer.id_range = RangeID; }
-                    
+
                     foreach (item_request_decision decision in DecisionList
                         .Where(x =>
                         x.decision == entity.item_request_decision.Decisions.Movement &&
@@ -357,8 +356,8 @@ namespace entity
                     item_product item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault();
 
                     Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
-                    
-                    //If Item_InStockLIST does not have enough 
+
+                    //If Item_InStockLIST does not have enough
                     int LocationID = 0;
                     if (Items_InStockLIST.Sum(x => x.QtyBalance) < grouped_decisionInternal.quantity)
                     {
@@ -388,7 +387,6 @@ namespace entity
                 }
 
                 base.SaveChanges();
-
             }
         }
     }

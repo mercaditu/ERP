@@ -8,7 +8,7 @@ namespace entity.Brillo.Document
 {
     public class DataSource
     {
-        private ReportDataSource reportDataSource = new ReportDataSource(); 
+        private ReportDataSource reportDataSource = new ReportDataSource();
 
         public ReportDataSource Create(object Document)
         {
@@ -356,7 +356,6 @@ namespace entity.Brillo.Document
                               driver = g.sales_packing.driver != null ? g.sales_packing.driver.ToString() : "",
                               licence = g.sales_packing.licence_no != null ? g.sales_packing.licence_no.ToString() : "",
                               distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance.ToString() : "",
-                              
                           }).ToList();
 
             return reportDataSource;
@@ -679,6 +678,7 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
+
         public ReportDataSource ItemMovementLabel(item_movement item_movement)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -688,7 +688,7 @@ namespace entity.Brillo.Document
             reportDataSource.Value = item_movementList
                 .Select(g => new
                 {
-                    item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code :"": "",
+                    item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code : "" : "",
                     item_name = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name : "" : "",
                     lot_number = g.code,
                     trans_date = g.trans_date,
@@ -899,6 +899,7 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
+
         public ReportDataSource PaymentApprove(payment_approve payment_approve)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -920,14 +921,14 @@ namespace entity.Brillo.Document
                                 //SalesNumber = g.payment_schedual != null ? g.payment_schedual.sales_invoice != null ? g.payment_schedual.sales_invoice.number : "" : "",
                                 PurchaseNumber = g.payment_schedual != null ? g.payment_schedual.purchase_invoice != null ? g.payment_schedual.purchase_invoice.number : "" : "",
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
-                                AmountWords = g != null ?  g.app_currency != null ? g.app_currency.has_rounding ?
+                                AmountWords = g != null ? g.app_currency != null ? g.app_currency.has_rounding ?
 
                     // Text -> Words
                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment_approve.GrandTotal : 0))
                     :
-                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_approve.GrandTotal : 0))) : "" : "" ,
+                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_approve.GrandTotal : 0))) : "" : "",
 
-                                HasRounding = g != null ?  g.app_currency != null ? g.app_currency.has_rounding : false : false 
+                                HasRounding = g != null ? g.app_currency != null ? g.app_currency.has_rounding : false : false
                             }).ToList();
 
             return reportDataSource;

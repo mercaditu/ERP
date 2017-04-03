@@ -75,8 +75,6 @@ namespace Cognitivo.Setup.Migration
             {
                 using (SalesReturnDB db = new SalesReturnDB())
                 {
-                 
-
                     db.Configuration.AutoDetectChangesEnabled = false;
 
                     sales_return sales_return = db.New();

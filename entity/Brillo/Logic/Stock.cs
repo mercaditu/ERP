@@ -20,7 +20,7 @@ namespace entity.Brillo.Logic
             if (obj_entity.GetType().BaseType == typeof(purchase_return) || obj_entity.GetType() == typeof(purchase_return))
             {
                 purchase_return purchase_return = (purchase_return)obj_entity;
-                List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0 ).ToList();
+                List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0).ToList();
                 foreach (purchase_return_detail purchase_return_detail in Listpurchase_return_detail
                     .Where(x => x.item.item_product.Count() > 0))
                 {
@@ -95,7 +95,7 @@ namespace entity.Brillo.Logic
 
                 //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
                 //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
-                foreach (sales_packing_detail packing_detail in 
+                foreach (sales_packing_detail packing_detail in
                     sales_packing.sales_packing_detail
                     .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0))
                 {
@@ -124,7 +124,7 @@ namespace entity.Brillo.Logic
                         Brillo.Stock stock = new Brillo.Stock();
                         Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, LocationID, item_product.id_item_product);
                     }
-                  
+
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                              App.Names.PackingList,
                                              packing_detail.id_sales_packing,
@@ -270,7 +270,6 @@ namespace entity.Brillo.Logic
                             {
                                 Cost = parent_order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
                             }
-
                             else if (production_execution_detail.production_order_detail.child.Count() > 0)
                             {
                                 if (production_execution_detail.quantity > 0)
@@ -320,7 +319,7 @@ namespace entity.Brillo.Logic
             List<item_movement> item_movementList = new List<item_movement>();
 
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 && x.verified_by!=null))
+                .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
                 packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
@@ -368,10 +367,10 @@ namespace entity.Brillo.Logic
             }
 
             //Always insert Location into Default Location.
-            int LocationID = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Any() 
-                ? 
-                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Select(x => x.id_location).FirstOrDefault() 
-                : 
+            int LocationID = CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Any()
+                ?
+                CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch && x.is_default).Select(x => x.id_location).FirstOrDefault()
+                :
                 CurrentSession.Locations.Where(x => x.id_branch == purchase_invoice.id_branch).Select(x => x.id_location).FirstOrDefault(); //FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
 
             foreach (purchase_invoice_detail purchase_invoice_detail in Detail_Product_List)
@@ -815,13 +814,10 @@ namespace entity.Brillo.Logic
                         movement_debit_quantity = parent_Movement.QtyBalance;
                     }
 
-
                     if (parent_Movement.LocationID > 0)
                     {
                         item_movement.id_location = parent_Movement.LocationID;
                     }
-                   
-
 
                     item_movement.comment = Comment;
                     item_movement.id_item_product = item_product.id_item_product;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -273,7 +272,7 @@ namespace Cognitivo.Menu
             else
             {
                 Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
-                MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow; 
+                MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow;
                 Page objPage = default(Page);
                 Type PageInstanceType = null;
                 PageInstanceType = Type.GetType(name, true, true);

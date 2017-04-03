@@ -58,6 +58,7 @@ namespace entity
                 }
             }
         }
+
         private decimal _quantity;
 
         public DateTime? expire_date { get; set; }
@@ -88,16 +89,17 @@ namespace entity
             }
             set { _verified_quantity = value; RaisePropertyChanged("verified_quantity"); }
         }
-        private decimal? _verified_quantity;
 
+        private decimal? _verified_quantity;
 
         public int? verified_by
         {
             get { return _verified_by; }
             set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
         }
+
         private int? _verified_by;
-        
+
         public virtual purchase_packing purchase_packing { get; set; }
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual app_location app_location { get; set; }

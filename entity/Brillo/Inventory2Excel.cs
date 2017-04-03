@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -117,12 +116,11 @@ namespace entity.Brillo
                             detail.value_system = 0;
                             detail.id_location = LocationID;
                             item_inventory.item_inventory_detail.Add(detail);
-
                         }
 
                         if (detail != null)
                         {
-                            if (row.Cell(11).Value != null && row.Cell(11).Value.ToString()!="")
+                            if (row.Cell(11).Value != null && row.Cell(11).Value.ToString() != "")
                             {
                                 detail.value_counted = row.Cell(11).GetValue<decimal>();
                             }

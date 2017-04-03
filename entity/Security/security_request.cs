@@ -17,7 +17,6 @@ namespace entity
         {
             Discount,
             Credit,
-
         }
 
         public security_request()

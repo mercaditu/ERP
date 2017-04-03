@@ -93,11 +93,13 @@ namespace entity
         }
 
         private decimal? _verified_quantity;
+
         public decimal? verified_by
         {
             get { return _verified_by; }
             set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
         }
+
         private decimal? _verified_by;
 
         public virtual sales_packing sales_packing { get; set; }

@@ -11,7 +11,7 @@ namespace cntrl.PanelAdv
     {
         public List<item_movement> item_movementOldList { get; set; }
         public List<item_movement> item_movementList { get; set; }
-        
+
         public ActionPanel()
         {
             InitializeComponent();

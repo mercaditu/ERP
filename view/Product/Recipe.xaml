@@ -73,7 +73,7 @@
                 <StackPanel Grid.Column="1">
                     <Label Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc QuickAction}" />
                     <TextBlock Style="{StaticResource text_Label}">
-						<Hyperlink Click="btnCalculateCost_Click"><TextBlock x:Name="tbxCalculateCost" Text="{lex:Loc Calculate}"/></Hyperlink>
+						<Hyperlink Click="btnCalculateCost_Click"><TextBlock x:Name="tbxCalculateCost" Text="{lex:Loc Calculate}" /></Hyperlink>
 					</TextBlock>
                 </StackPanel>
             </Grid>

@@ -202,6 +202,7 @@ namespace DebeHaber
         public virtual ICollection<CostCenter> CostCenter { get; set; }
 
         #region Methods
+
         public void Fill_BySales(sales_invoice_detail Detail, db db)
         {
             VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
@@ -419,7 +420,8 @@ namespace DebeHaber
                 CostCenter.Add(CC);
             }
         }
-        #endregion
+
+        #endregion Methods
     }
 
     public class CostCenter
@@ -531,6 +533,7 @@ namespace DebeHaber
 
         //Collection Property
         public virtual ICollection<CostCenter> CCListInput { get; set; }
+
         //Collection Property
         public virtual ICollection<CostCenter> CCListOutput { get; set; }
 
@@ -561,8 +564,8 @@ namespace DebeHaber
                         CCListInput.Add(CCInput);
                     }
                     else if (
-                        Detail.item.id_item_type == item.item_type.Product || 
-                        Detail.item.id_item_type == item.item_type.RawMaterial || 
+                        Detail.item.id_item_type == item.item_type.Product ||
+                        Detail.item.id_item_type == item.item_type.RawMaterial ||
                         Detail.item.id_item_type == item.item_type.Supplies
                         )
                     {
@@ -645,15 +648,15 @@ namespace DebeHaber
                     }
 
                     if (string.IsNullOrEmpty(ProjectName))
-                    {   
+                    {
                         //If linked with Project, show project value.
                         project_task task = Detail.project_task;
                         project project = task.project;
                         CCOutput.Name = task.project.name;
                         CCOutput.Type = CostCenterTypes.Production;
                     }
-                    else if(Detail.item.id_item_type == item.item_type.FixedAssets)
-                    {   
+                    else if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
                         //Output Code.
                         CCOutput.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                         CCOutput.Type = CostCenterTypes.FixedAsset;

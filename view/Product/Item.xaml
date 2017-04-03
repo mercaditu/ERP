@@ -458,6 +458,6 @@
 					   btnNew_Click="toolBar_btnNew_Click"
                        btnSync_Click="load_PrimaryData"
 					   btnSearch_Click="toolBar_btnSearch_Click" IsEnabled="False"
-					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>
 </Page>

@@ -103,7 +103,6 @@ namespace entity
                     item_transfer_detail.timestamp = DateTime.Now;
                     item_transfer_detail.status = Status.Documents_General.Approved;
                     item_transfer_detail.RaisePropertyChanged("status");
-
                 }
             }
             if (item_transfer.item_transfer_detail.Count() == item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved).Count())
@@ -111,8 +110,6 @@ namespace entity
                 item_transfer.status = Status.Transfer.Approved;
                 item_transfer.RaisePropertyChanged("status");
             }
-
-
 
             ///Print Document only if
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)

@@ -288,11 +288,10 @@ namespace Cognitivo.Product
                     toolBar.msgSaved(ProductTransferDB.NumberOfRecords);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.ToString());
             }
-          
         }
 
         private void cbxItem_KeyDown(object sender, RoutedEventArgs e)

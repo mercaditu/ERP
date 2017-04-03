@@ -150,6 +150,7 @@ namespace cntrl.Controls
 
         //private Task taskSearch;
         private CancellationTokenSource tokenSource;
+
         private CancellationToken token;
 
         private CollectionViewSource itemViewSource;
@@ -208,7 +209,7 @@ namespace cntrl.Controls
             {
                 if (QuantityIntegration)
                 {
-                  //  Quantity = 1;
+                    //  Quantity = 1;
                     popQuantity.IsOpen = false;
                     ItemGrid_MouseDoubleClick(sender, e);
                     FocusManager.SetFocusedElement(tbxSearch.Parent, tbxSearch);
@@ -341,7 +342,7 @@ namespace cntrl.Controls
 
         public void SmartBoxItem_Focus()
         {
-           tbxSearch.Focus();
+            tbxSearch.Focus();
         }
     }
 }

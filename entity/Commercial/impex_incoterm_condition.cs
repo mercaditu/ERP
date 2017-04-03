@@ -22,12 +22,16 @@ namespace entity
         {
             [LocalizedDescription("Shipping")]
             Shipping,
+
             [LocalizedDescription("Insurance")]
             Insurance,
+
             [LocalizedDescription("CustomsDuty")]
             CustomsDuty,
+
             [LocalizedDescription("Legal")]
             Legal,
+
             [LocalizedDescription("Others")]
             Others
         }

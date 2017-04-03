@@ -29,7 +29,7 @@
         <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurevolume" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measureweight" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
-        <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_packingsales_packing_detailViewSource" Source="{Binding sales_packing_detail, Source={StaticResource sales_packingViewSource}}" />
         <CollectionViewSource x:Key="sales_packingsales_packing_detailVerifiedViewSource" Source="{Binding sales_packing_detail, Source={StaticResource sales_packingViewSource}}" />
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
@@ -70,7 +70,7 @@
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
                                   IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
+                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                         <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -210,10 +210,9 @@
                             SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-                            <ComboBox SelectedValue="{Binding id_item_asset,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                            <ComboBox SelectedValue="{Binding id_item_asset,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="item.name" SelectedValuePath="id_item_asset"
                                       ItemsSource="{Binding Source={StaticResource item_assetViewSource}}">
-                                
                             </ComboBox>
                             <!--<Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" item_types="FixedAssets"
 												Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -238,7 +237,7 @@
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2" IsEnabled="{Binding ElementName=pagePackingList, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}" />
                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
-                <TabControl >
+                <TabControl>
                     <TabItem  Header="{lex:Loc Items}">
                         <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                           ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailViewSource}}"
@@ -294,9 +293,9 @@
                     <TabItem  Header="{lex:Loc Approve}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="119*"/>
-                                <ColumnDefinition Width="158*"/>
-                                <ColumnDefinition Width="21*"/>
+                                <ColumnDefinition Width="119*" />
+                                <ColumnDefinition Width="158*" />
+                                <ColumnDefinition Width="21*" />
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" SelectionChanged="GridVerifiedList_SelectionChanged"
@@ -313,11 +312,11 @@
                           RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" 
-                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" 
-                                                        ElementStyle="{StaticResource RightAlignStyle}" 
+                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}"
+                                                        Header="{lex:Loc Cognitivo:local:quantityverified}"
+                                                        ElementStyle="{StaticResource RightAlignStyle}"
                                                         MinWidth="128" Width="Auto" />
-                                    
+
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
 
                                     <DataGridTemplateColumn Width="1*" Header="">
@@ -352,10 +351,8 @@
                                 </DataGrid.RowDetailsTemplate>
                             </DataGrid>
                         </Grid>
-                       
                     </TabItem>
                 </TabControl>
-            
             </StackPanel>
         </Grid>
 

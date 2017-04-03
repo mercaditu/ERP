@@ -56,11 +56,11 @@ namespace Cognitivo.Sales
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
                 filterVerifiedDetail(0);
-                if (sales_packingsales_packinglist_detailViewSource.View!=null)
+                if (sales_packingsales_packinglist_detailViewSource.View != null)
                 {
                     sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 }
-                if (sales_packingsales_packing_detailVerifiedViewSource.View!=null)
+                if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
                 {
                     sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
                 }
@@ -73,7 +73,6 @@ namespace Cognitivo.Sales
             {
                 if (sales_packingsales_packinglist_detailViewSource.View != null)
                 {
-
                     sales_packingsales_packinglist_detailViewSource.View.Filter = i =>
                     {
                         sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
@@ -82,7 +81,6 @@ namespace Cognitivo.Sales
                         else
                             return false;
                     };
-
                 }
             }
         }
@@ -93,7 +91,6 @@ namespace Cognitivo.Sales
             {
                 if (sales_packingsales_packing_detailVerifiedViewSource.View != null)
                 {
-
                     sales_packingsales_packing_detailVerifiedViewSource.View.Filter = i =>
                     {
                         sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
@@ -111,12 +108,11 @@ namespace Cognitivo.Sales
                             else
                                 return false;
                         }
-
                     };
-
                 }
             }
         }
+
         #region Toolbar Events
 
         private void toolBar_btnNew_Click(object sender)
@@ -146,6 +142,7 @@ namespace Cognitivo.Sales
                 toolBar.msgWarning("Please Select an Item");
             }
         }
+
         private void toolBar_btnDelete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -156,6 +153,7 @@ namespace Cognitivo.Sales
                 toolBar_btnSave_Click(sender);
             }
         }
+
         private void toolBar_btnSave_Click(object sender)
         {
             if (PackingListDB.SaveChanges() > 0)
@@ -182,8 +180,6 @@ namespace Cognitivo.Sales
             Sales.Settings.Default.Save();
             popupCustomize.IsOpen = false;
         }
-
-    
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -283,7 +279,6 @@ namespace Cognitivo.Sales
                 {
                     foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
                     {
-
                         sales_packing_detail sales_packing_detail = new sales_packing_detail();
                         sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
                         sales_packing_detail.id_item = sales_order_detail.id_item;
@@ -305,14 +300,12 @@ namespace Cognitivo.Sales
 
                         sales_packing.sales_packing_detail.Add(sales_packing_detail);
 
-
                         sales_packingsales_packinglist_detailViewSource.View.Refresh();
                         PackingListDB.Entry(sales_packing).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                         //filterVerifiedDetail();
                         filterDetail();
-
                     }
                     Refresh_GroupByGrid();
                     GridVerifiedList.SelectedIndex = 0;
@@ -348,8 +341,6 @@ namespace Cognitivo.Sales
                         Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
                     }
                 }
-
-
             }
         }
 
@@ -393,9 +384,9 @@ namespace Cognitivo.Sales
                 //filterVerifiedDetail();
                 filterDetail();
                 Refresh_GroupByGrid();
-
             }));
         }
+
         private void Refresh_GroupByGrid()
         {
             sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
@@ -420,12 +411,13 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
         private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-       
             Refresh_GroupByGrid();
             GridVerifiedList.SelectedIndex = 0;
         }
+
         private void GridVerifiedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dynamic obj = GridVerifiedList.SelectedItem;
@@ -434,6 +426,7 @@ namespace Cognitivo.Sales
                 filterVerifiedDetail(obj.id_item);
             }
         }
+
         #region Filter Data
 
         private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
@@ -521,7 +514,6 @@ namespace Cognitivo.Sales
                             id_vat_group = PackingDetail.sales_order_detail.id_vat_group,
                             sales_order_detail = PackingDetail.sales_order_detail,
                             id_location = PackingDetail.sales_order_detail.id_location
-
                         };
                         sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
                         sales_packing_relation.id_sales_invoice_detail = detail.id_sales_invoice_detail;
@@ -546,19 +538,17 @@ namespace Cognitivo.Sales
                                 id_condition = Order.id_condition,
                                 id_currencyfx = Order.id_currencyfx,
                                 trans_date = Order.trans_date,
-                                timestamp=DateTime.Now
+                                timestamp = DateTime.Now
                             };
 
                             foreach (var item in DetailList)
                             {
-
                                 _sales_invoice.sales_invoice_detail.Add(item);
-
                             }
                             PackingListDB.sales_invoice.Add(_sales_invoice);
                             crm_opportunity crm_opportunity = Order.crm_opportunity;
                             crm_opportunity.sales_invoice.Add(_sales_invoice);
-                         
+
                             try
                             {
                                 PackingListDB.SaveChanges();
@@ -567,7 +557,6 @@ namespace Cognitivo.Sales
                             {
                                 System.Windows.Forms.MessageBox.Show(ex.ToString());
                             }
-
                         }
                     }
                 }
@@ -591,6 +580,5 @@ namespace Cognitivo.Sales
                 }
             }
         }
-     
     }
 }

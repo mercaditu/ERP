@@ -22,7 +22,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible"/>
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <CollectionViewSource x:Key="purchase_packingViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_packing}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_terminalViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_terminal}, CreateList=True}" />
@@ -67,7 +67,7 @@
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
                                   IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
+                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                         <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -245,23 +245,23 @@
                     <TabItem Header="{lex:Loc Approve}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="2"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList" SelectionChanged="GridVerifiedList_SelectionChanged"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" 
+                                    <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}"
                                                         Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}" 
+                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}"
                                                         Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" 
+                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}"
                                                         Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2"/>
+                            <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
                             <DataGrid Grid.Column="2"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
@@ -270,13 +270,13 @@
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
 
-                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}" 
-                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" 
-                                                        ElementStyle="{StaticResource RightAlignStyle}" 
+                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}"
+                                                        Header="{lex:Loc Cognitivo:local:quantityverified}"
+                                                        ElementStyle="{StaticResource RightAlignStyle}"
                                                         MinWidth="128" Width="Auto" />
-                                 
+
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
-                                  
+
                                     <DataGridTemplateColumn Width="1*" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -290,7 +290,7 @@
                                         <Grid Background="WhiteSmoke" Margin="4">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-                                                <StackPanel >
+                                                <StackPanel>
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                                 </StackPanel>
@@ -312,7 +312,7 @@
                     </TabItem>
                 </TabControl>
                 <Controls:SmartBox_Item x:Name="sbxItem"
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select"/>
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select" />
             </Grid>
         </Grid>
 

@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using entity;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using entity;
 
 namespace Cognitivo.Product
 {
     public partial class InventoryFlow : Page
     {
-        db db = new db();
-        CollectionViewSource item_productViewSource;
+        private db db = new db();
+        private CollectionViewSource item_productViewSource;
 
         public InventoryFlow()
         {
@@ -31,7 +31,7 @@ namespace Cognitivo.Product
                         {
                             item_product TmpInventory = (item_product)i;
                             if (TmpInventory.item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
-                                TmpInventory.item.code.ToUpper().Contains(txtsearch.Text.ToUpper()) )
+                                TmpInventory.item.code.ToUpper().Contains(txtsearch.Text.ToUpper()))
                                 return true;
                             else
                                 return false;
@@ -40,7 +40,6 @@ namespace Cognitivo.Product
                 }
             }
         }
-
 
         //First Time Selection Changed
         private void dgvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)

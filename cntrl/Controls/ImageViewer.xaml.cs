@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.ComponentModel;
 
 namespace cntrl.Controls
 {
@@ -12,12 +12,14 @@ namespace cntrl.Controls
         {
             InitializeComponent();
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+
         public static DependencyProperty ApplicationNameProperty = DependencyProperty.Register("ApplicationName", typeof(entity.App.Names), typeof(ImageViewer));
 
         public entity.App.Names ApplicationName
@@ -25,6 +27,7 @@ namespace cntrl.Controls
             get { return (entity.App.Names)GetValue(ApplicationNameProperty); }
             set { SetValue(ApplicationNameProperty, value); }
         }
+
         public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
 
         public int ReferenceID
@@ -42,8 +45,6 @@ namespace cntrl.Controls
             }
         }
 
-       
-      
         private void GetImage()
         {
             CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
@@ -94,7 +95,6 @@ namespace cntrl.Controls
 
         private void MenuItem_New(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)

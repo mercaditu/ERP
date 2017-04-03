@@ -451,7 +451,7 @@ namespace Cognitivo.Purchase
                 {
                     purchase_return_detail purchase_return_detail = new purchase_return_detail();
                     purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
-                    purchase_return_detail.purchase_invoice_detail=dbContext.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+                    purchase_return_detail.purchase_invoice_detail = dbContext.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
                     purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
                     purchase_return_detail.id_location = _purchase_invoice_detail.id_location;
 

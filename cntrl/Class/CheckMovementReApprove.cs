@@ -321,6 +321,7 @@ namespace cntrl.Class
             }
             return "";
         }
+
         public string CheckDateMovement(db db, int ID, entity.App.Names Application)
         {
             using (db temp = new db())
@@ -328,7 +329,7 @@ namespace cntrl.Class
                 sales_invoice Oldsales_invoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
                 string movmessage = "";
                 sales_invoice sales_invoice = db.sales_invoice.Find(ID);
-                if (sales_invoice.id_branch!=Oldsales_invoice.id_branch)
+                if (sales_invoice.id_branch != Oldsales_invoice.id_branch)
                 {
                     movmessage += "Branch will Be Changed";
                 }
@@ -341,6 +342,5 @@ namespace cntrl.Class
             }
             return "";
         }
-
     }
 }

@@ -119,13 +119,13 @@ namespace cntrl.Curd
                     //cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
                     contactViewSource = this.FindResource("contactViewSource") as CollectionViewSource;
                     await ContactDB.contact_tag
-                        .Where(x => 
-                        x.id_company == CurrentSession.Id_Company && 
+                        .Where(x =>
+                        x.id_company == CurrentSession.Id_Company &&
                         x.is_active == true)
                         .OrderBy(x => x.name).LoadAsync();
                     CollectionViewSource contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
                     contact_tagViewSource.Source = ContactDB.contact_tag.Local;
-                    
+
                     ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
                     if (ContactID > 0)
                     {

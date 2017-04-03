@@ -41,9 +41,9 @@ namespace Cognitivo.HumanResource
 
                     if (hr_talent != null)
                     {
-                            //Protect the code against null values.
+                        //Protect the code against null values.
 
-                            string customer = hr_talent.name;
+                        string customer = hr_talent.name;
 
                         if ((customer.ToLower().Contains(query.ToLower()))
                             )

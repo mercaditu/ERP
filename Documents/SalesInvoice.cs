@@ -49,7 +49,7 @@ namespace Documents
 
     public class LoadSalesInvoice
     {
-        List<SalesInvoice> SalesInvoiceList = new List<SalesInvoice>();
+        private List<SalesInvoice> SalesInvoiceList = new List<SalesInvoice>();
 
         public LoadSalesInvoice(int SalesInvoiceID)
         {
@@ -58,7 +58,6 @@ namespace Documents
 
         public void ConvertRDLC(object OldFile)
         {
-
         }
     }
 }

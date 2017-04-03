@@ -13,7 +13,7 @@ namespace cntrl.Curd
     public partial class PaymentGroup : UserControl
     {
         private CollectionViewSource payment_schedualViewSource;
-        CollectionViewSource app_accountViewSource;
+        private CollectionViewSource app_accountViewSource;
         public PaymentDB PaymentDB { get; set; }
 
         public PaymentGroup(ref PaymentDB _PaymentDB)

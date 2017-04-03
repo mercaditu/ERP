@@ -309,8 +309,7 @@ namespace Cognitivo.Product
                     item_transfer_detail.quantity_origin = 1;
 
                     item_transfer_detail.timestamp = DateTime.Now;
-                  
-                  
+
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                     item_transfer_detail.Quantity_InStock = sbxItem.QuantityInStock; //(decimal)StockCalculations.Count_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
@@ -333,7 +332,7 @@ namespace Cognitivo.Product
                             item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                         }
                     }
-                    
+
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
                 }
                 else

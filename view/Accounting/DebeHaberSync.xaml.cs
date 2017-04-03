@@ -81,7 +81,6 @@ namespace Cognitivo.Accounting
                 Get_Payment();
                 //Get_ItemAsset();
                 Get_ProductionExecution();
-
             }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
@@ -615,7 +614,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        #endregion
+        #endregion Production_Sync
 
         private void FixedAsset(DebeHaber.Transaction Transaction)
         {

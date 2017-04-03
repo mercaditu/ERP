@@ -74,7 +74,7 @@ namespace Cognitivo.Setup.Migration
             int FloorValue = 0;
 
             //Run a Foreach Lap
-            for (int j = RoofValue; j < count; j=j+1000)
+            for (int j = RoofValue; j < count; j = j + 1000)
             {
                 for (int i = FloorValue; i < j; i++)
                 {

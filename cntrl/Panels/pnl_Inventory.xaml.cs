@@ -50,15 +50,12 @@ namespace cntrl.Panels
             }
 
             item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Add(item_inventory_detail);
-            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             item_inventory_detailViewSource = ((CollectionViewSource)(FindResource("item_inventory_detailViewSource")));
             item_inventory_detailViewSource.Source = item_inventoryList;
-
-          
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)

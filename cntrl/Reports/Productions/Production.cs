@@ -41,16 +41,19 @@ CASE
                                         pt.unit_cost_est as CostEstimated,
                                         pod.start_date_est as StartDate,
                                         pod.end_date_est as EndDate,
-                                                                ped.quantity * icf.value * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail) as ConversionQuantity,
-                                (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail)  * ped.quantity as Factor,
+                                        ped.quantity * icf.value * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail) as ConversionQuantity,
+                                        (select ROUND(EXP(SUM(LOG(`value`))),4) as value from production_execution_dimension where id_execution_detail = ped.id_execution_detail)  * ped.quantity as Factor,
 
-                                time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600 as Hours,
-                                        (time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient as ComputeHours,
-                                        pod.quantity - ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient) as diff,
-                                        ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)) / pod.quantity as diffPer,
-                                        pod.completed as Completed, pod.completed * 100 as Percentage,
-                                        (((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed as CompletedHours,
-                                      ad.name as Dimension,pd.value,am.name as Measurement
+                                        sum(time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) as Hours,
+                                        sum((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient) as ComputeHours,
+                                        sum(pod.quantity - ((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)* htc.coefficient)) as diff,
+                                        sum(((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600)) / pod.quantity) as diffPer,
+                                        pod.completed as Completed, 
+                                        pod.completed * 100 as Percentage,
+                                        sum((((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed) as CompletedHours,
+                                        ad.name as Dimension,
+                                        pd.value,
+                                        am.name as Measurement
 
                                         from production_order as po
 
@@ -65,10 +68,11 @@ CASE
                                         left join production_execution_detail as ped on pod.id_order_detail = ped.id_order_detail
 
                                         left join production_execution_dimension as pd on pd.id_execution_detail = ped.id_execution_detail
-                                         left join app_dimension as ad on ad.id_dimension = pd.id_dimension
-                                         left join app_measurement as am on am.id_measurement = pd.id_measurement
+                                        left join app_dimension as ad on ad.id_dimension = pd.id_dimension
+                                        left join app_measurement as am on am.id_measurement = pd.id_measurement
                                         left join project_task pt on pt.id_project_task=pod.id_project_task
                                         left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
-                                        where po.id_company = @CompanyID and pod.trans_date between '@StartDate' and '@EndDate'";
+                                        where po.id_company = @CompanyID and pod.trans_date between '@StartDate' and '@EndDate'
+                                        group by pod.id_order_detail;";
     }
 }

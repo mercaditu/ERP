@@ -13,8 +13,10 @@ namespace cntrl.Controls
         public int ProductID { get; set; }
         public long? MovementID { get; set; }
 
+        public ItemMovement ItemMovement { get; set; }
+
         private CollectionViewSource item_movementViewSource;
-        public entity.App.Names ApplicationName { get; set; }
+        public App.Names ApplicationName { get; set; }
 
         public InventoryFlowDataGrid()
         {
@@ -27,7 +29,9 @@ namespace cntrl.Controls
         //public event SelectionChangedEventHandler Selection_WithOut_ChildChanged;
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ItemMovement ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
+            ItemMovement = new ItemMovement();
+
+            ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
             if (ItemMovement != null)
             {
                 MovementID = ItemMovement.MovementID;
@@ -49,7 +53,10 @@ namespace cntrl.Controls
                                     join b in db.app_branch on loc.id_branch equals b.id_branch
                                     join ip in db.item_product on item.id_item_product equals ip.id_item_product
                                     join i in db.items on ip.id_item equals i.id_item
-                                    where item.parent.id_movement == ParentID && item.id_item_product == ProductID
+                                    where
+                                    item.parent.id_movement == ParentID
+                                    &&
+                                    item.id_item_product == ProductID
                                     select new ItemMovement
                                     {
                                         MovementID = item.id_movement,
@@ -63,7 +70,8 @@ namespace cntrl.Controls
                                         Quantity = item.credit - item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment,
-                                        DisplayImage = item.credit > 0 ? true : false
+                                        DisplayImage = item.credit > 0 ? true : false,
+                                        IsTransfer = item.id_transfer_detail != null ? true : false
                                     })
                                     .OrderByDescending(x => x.Date)
                                     .ToList();
@@ -71,6 +79,34 @@ namespace cntrl.Controls
                 item_movementViewSource = FindResource("item_movementViewSource") as CollectionViewSource;
                 item_movementViewSource.Source = MovementList;
                 item_movementViewSource.View.Refresh();
+
+                Filter_NegativeTransactions();
+            }
+        }
+
+        private void Filter_NegativeTransactions()
+        {
+            if (item_movementViewSource != null)
+            {
+                item_movementViewSource.View.Filter = i =>
+                {
+                    ItemMovement ItemMovement = i as ItemMovement;
+
+                    //If IsTransfer then hide negative quantities.
+                    if (ItemMovement.IsTransfer)
+                    {
+                        if (ItemMovement.Quantity < 0)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                };
+            }
+            else
+            {
+                item_movementViewSource.View.Filter = null;
             }
         }
 
@@ -104,5 +140,6 @@ namespace cntrl.Controls
 
         public string Comment { get; set; }
         public bool DisplayImage { get; set; }
+        public bool IsTransfer { get; set; }
     }
 }

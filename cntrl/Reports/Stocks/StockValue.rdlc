@@ -209,10 +209,10 @@
               <Width>1.07812in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.875in</Width>
+              <Width>0.98958in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.14583in</Width>
+              <Width>1.46875in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -228,7 +228,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -426,11 +426,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Credit.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                               </Style>
                             </TextRun>
@@ -990,7 +989,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Credit</Value>
+                                <Value />
                                 <Style>
                                   <FontFamily>Courier New</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -1639,7 +1638,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>1.18751in</Height>
-        <Width>9.28123in</Width>
+        <Width>9.71873in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1650,18 +1649,8 @@
     <Height>3.01628cm</Height>
     <Style />
   </Body>
-  <Width>23.57438cm</Width>
+  <Width>24.68557cm</Width>
   <Page>
-    <PageHeader>
-      <Height>0.7276cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageFooter>
       <Height>0.51153cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
@@ -1742,7 +1731,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
-          <Left>6.06768in</Left>
+          <Left>6.44268in</Left>
           <Height>0.1875in</Height>
           <Width>3.21355in</Width>
           <ZIndex>2</ZIndex>
@@ -1765,12 +1754,22 @@
     </PageFooter>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>1cm</LeftMargin>
-    <RightMargin>1cm</RightMargin>
-    <TopMargin>1cm</TopMargin>
-    <BottomMargin>1cm</BottomMargin>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>1.27cm</ColumnSpacing>
-    <Style />
+    <Style>
+      <Border>
+        <Style>Solid</Style>
+      </Border>
+      <LeftBorder>
+        <Color>Black</Color>
+      </LeftBorder>
+      <RightBorder>
+        <Color>Black</Color>
+      </RightBorder>
+    </Style>
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>

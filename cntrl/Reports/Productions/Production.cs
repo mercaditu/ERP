@@ -67,7 +67,7 @@ CASE
                                         left join production_execution_dimension as pd on pd.id_execution_detail = ped.id_execution_detail
                                          left join app_dimension as ad on ad.id_dimension = pd.id_dimension
                                          left join app_measurement as am on am.id_measurement = pd.id_measurement
-                                        inner join project_task pt on pt.id_project_task=pod.id_project_task
+                                        left join project_task pt on pt.id_project_task=pod.id_project_task
                                         left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
                                         where po.id_company = @CompanyID and pod.trans_date between '@StartDate' and '@EndDate'";
     }

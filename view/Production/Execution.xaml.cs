@@ -156,6 +156,16 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
+                            if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
+                            {
+                                cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
+
+                                pnl_ProductionAccount.ExecutionDB = ExecutionDB;
+                                pnl_ProductionAccount.Quantity_to_Execute = _production_execution_detail.quantity;
+                                pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
+                                crud_modal.Visibility = Visibility.Visible;
+                                crud_modal.Children.Add(pnl_ProductionAccount);
+                            }
 
                             production_order_detail.production_execution_detail.Add(_production_execution_detail);
                             ExecutionDB.SaveChangesWithoutValidation();

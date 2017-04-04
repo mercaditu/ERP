@@ -337,7 +337,12 @@ namespace cntrl.Curd
                                     x.payment_approve_detail.id_currency == CurrencyID &&
                                     x.payment_approve_detail.id_account == (int)AccountID &&
                                     x.payment_approve_detail.id_payment_type == PaymentTypeID)
-                        .Sum(x => x.payment_approve_detail.value);
+                        .Sum(x => x.payment_approve_detail.value) - payment_schedualList
+                        .Where(x => x.payment_approve_detail != null &&
+                                    x.payment_approve_detail.id_currency == CurrencyID &&
+                                    x.payment_approve_detail.id_account == (int)AccountID &&
+                                    x.payment_approve_detail.id_payment_type == PaymentTypeID)
+                        .Sum(x => (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0));
                 }
                 else
                 {

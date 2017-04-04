@@ -64,9 +64,11 @@ namespace cntrl.Controls
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment,
                                         DisplayImage = item.credit > 0 ? true : false
-                                    }).OrderByDescending(x => x.Date).ToList();
+                                    })
+                                    .OrderByDescending(x => x.Date)
+                                    .ToList();
 
-                item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+                item_movementViewSource = FindResource("item_movementViewSource") as CollectionViewSource;
                 item_movementViewSource.Source = MovementList;
                 item_movementViewSource.View.Refresh();
             }

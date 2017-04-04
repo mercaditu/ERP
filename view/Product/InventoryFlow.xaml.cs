@@ -46,6 +46,7 @@ namespace Cognitivo.Product
         {
             stackFlow.Children.Clear();
             item_product item_product = item_productViewSource.View.CurrentItem as item_product;
+
             if (item_product != null)
             {
                 cntrl.Controls.InventoryFlowDataGrid invnetoryflow = new cntrl.Controls.InventoryFlowDataGrid();

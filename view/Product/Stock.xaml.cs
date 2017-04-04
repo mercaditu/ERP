@@ -45,16 +45,14 @@ namespace Cognitivo.Product
 
         private void calc_Inventory()
         {
-            app_branch app_branch = (app_branch)dgvBranch.SelectedItem;
+            app_branch app_branch = dgvBranch.SelectedItem as app_branch;
 
-            if (app_branch != null && app_branch.id_branch > 0)
+            if (app_branch != null)
             {
-                int BranchID = app_branch.id_branch;
-
                 Class.StockCalculations StockCalculations = new Class.StockCalculations();
 
-                inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
-                inventoryViewSource.Source = StockCalculations.ByBranch(BranchID, InventoryDate);
+                inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
 
                 TextBox_TextChanged(null, null);
             }

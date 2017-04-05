@@ -13,7 +13,7 @@
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:local="clr-namespace:cntrl.Panels"
-             mc:Ignorable="d" Width="360"
+             mc:Ignorable="d" Width="512"
              BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />
@@ -36,8 +36,7 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
             </Grid>
-            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource ExpiryInStockViewSource}">
-                <StackPanel x:Name="stpDisplay">
+            <StackPanel x:Name="stpDisplay" DataContext="{StaticResource ExpiryInStockViewSource}">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
                         <Label Content="{Binding Code, FallbackValue=Code}" />
@@ -48,23 +47,20 @@
                         <Label Content="{Binding Location, FallbackValue=/}" />
                         <Label Content="{Binding Branch, FallbackValue=Branch}" />
                     </StackPanel>
-                    <DataGrid x:Name="item_inventory_detailDataGrid" Width="340" MaxHeight="256" CanUserAddRows="False"
+                    <DataGrid x:Name="item_inventory_detailDataGrid" MaxHeight="256" CanUserAddRows="False"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource ExpiryInStockViewSource}}"
                               EnableRowVirtualization="True" CanUserDeleteRows="False"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}"
-                                                Header="{lex:Loc Cognitivo:local:Code}" Width="100" IsReadOnly="True" />
+                                                Header="{lex:Loc Cognitivo:local:Code}" MinWidth="256" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"
-                                                Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="100" IsReadOnly="True" />
+                                                Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="128" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding Balance, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="70" IsReadOnly="True" />
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
-                <StackPanel x:Name="stpDisplayRight" HorizontalAlignment="Right">
-                </StackPanel>
-            </StackPanel>
 
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

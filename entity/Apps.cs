@@ -4,7 +4,6 @@ namespace entity
 {
     public class App
     {
-        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Modules
         {
             [LocalizedDescription("Sales")]
@@ -48,7 +47,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 140
+            /// Last Used : 143
             /// </summary>
 
             [LocalizedDescription("Customer")]
@@ -233,6 +232,9 @@ namespace entity
             InventoryAnalysis = 136,
 
             //Production
+            [LocalizedDescription("ServiceContract")]
+            ServiceContract = 143,
+
             [LocalizedDescription("ProductionExecution")]
             ProductionExecution = 17,
 

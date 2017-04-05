@@ -544,6 +544,9 @@
     <Compile Include="Menu\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Production\ServiceContract.xaml.cs">
+      <DependentUpon>ServiceContract.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Production\Execution.xaml.cs">
       <DependentUpon>Execution.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -1401,6 +1404,10 @@
     <Page Include="Menu\SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Production\ServiceContract.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Production\Execution.xaml">
       <SubType>Designer</SubType>

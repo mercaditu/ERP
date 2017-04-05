@@ -1,6 +1,5 @@
 ﻿using entity;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -19,18 +18,26 @@ namespace cntrl.Panels
 
         public pnl_ItemMovement()
         {
-            if (DesignerProperties.GetIsInDesignMode(this))
-            {
-                return;
-            }
-
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
+            item_inventory_detailViewSource.Source = item_inventoryList;
+
+            CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
+            InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;
         }
 
         private void item_transfer_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             item_inventory_detail item_inventory_detail = e.NewItem as item_inventory_detail;
-            add_item(item_inventory_detail);
+            if (item_inventory_detail != null)
+            {
+                add_item(item_inventory_detail);
+            }
         }
 
         public void add_item(item_inventory_detail item_inventory_detail)
@@ -68,16 +75,6 @@ namespace cntrl.Panels
                     }
                 }
             }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            item_inventory_detailViewSource = ((CollectionViewSource)(FindResource("item_inventory_detailViewSource")));
-            item_inventory_detailViewSource.Source = item_inventoryList;
-
-            CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)

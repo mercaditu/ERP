@@ -168,9 +168,10 @@ namespace entity
                     decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
-                        payment_schedual child_schedual = new payment_schedual();
+                     
                         if (ChildBalance > 0)
                         {
+                            payment_schedual child_schedual = new payment_schedual();
                             if (Math.Round(ChildBalance, 2) >= Math.Round(parent.credit))
                             {
                                 child_schedual.debit = parent.credit;
@@ -213,8 +214,9 @@ namespace entity
                                 child_schedual.id_purchase_return = payment_detail.id_purchase_return;
                                 ModuleName += " & Return";
                             }
+                            schedualList.Add(child_schedual);
                         }
-                        schedualList.Add(child_schedual);
+                     
                     }
                 }
                 else
@@ -223,9 +225,10 @@ namespace entity
                     decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
-                        payment_schedual child_schedual = new payment_schedual();
+                        
                         if (ChildBalance > 0)
                         {
+                            payment_schedual child_schedual = new payment_schedual();
                             //Payment Detail is greater or equal to Schedual
                             if (ChildBalance >= parent.debit)
                             {
@@ -262,8 +265,9 @@ namespace entity
                                 child_schedual.id_sales_order = Parent_Schedual.id_sales_order;
                                 ModuleName = "SalesOrder";
                             }
+                            schedualList.Add(child_schedual);
                         }
-                        schedualList.Add(child_schedual);
+                     
                     }
                     //End Mode IF
                 }

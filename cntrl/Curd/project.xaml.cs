@@ -141,6 +141,7 @@ namespace cntrl.Curd
                     db.SaveChanges();
                 }
             }
+
             btnCancel_Click(sender, e);
         }
 

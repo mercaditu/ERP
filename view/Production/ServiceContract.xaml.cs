@@ -72,10 +72,9 @@ namespace Cognitivo.Production
                                     .Where(
                                         x => x.id_company == CurrentSession.Id_Company
                                         && x.id_purchase_order_detail != null
-                                        && x.debit > 0
+                                        && x.credit > x.child.Where(z => z.id_purchase_invoice_detail == null).Sum(y => y.debit)
                                         )
                                         .Include(y => y.purchase_order_detail)
-                                        .Include(y => y.purchase_order_detail.purchase_order)
                                         .Include(z => z.contact)
                                         .OrderByDescending(x => x.trans_date)
                                     .ToListAsync();
@@ -180,6 +179,7 @@ namespace Cognitivo.Production
             }
 
             db.SaveChangesAsync();
+            load_Schedual();
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

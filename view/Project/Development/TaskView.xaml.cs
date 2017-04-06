@@ -296,6 +296,7 @@ namespace Cognitivo.Project.Development
                             project_taskViewSource.View.MoveCurrentTo(n_project_task);
 
                             treeProject.SelectedItem_ = n_project_task;
+
                         }
                     }
                 }
@@ -649,13 +650,12 @@ namespace Cognitivo.Project.Development
 
                         project_task_output.project_task_dimension.Add(project_task_dimension);
                         project_task_output.RaisePropertyChanged("project_task_dimension");
-                    }
 
-                    if (project_taskproject_task_dimensionViewSource.View != null)
-                    {
-                        project_taskproject_task_dimensionViewSource.View.Refresh();
+                        
                     }
+                   
                 }
+               
                 project_task_output.CalcSalePrice_TimerTaks();
 
                 //try

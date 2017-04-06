@@ -5,7 +5,7 @@ using System.Text;
 
 namespace entity
 {
-    public partial class project_task_dimension : Audit, IDataErrorInfo
+    public partial class project_task_dimension : Audit, IDataErrorInfo,INotifyPropertyChanged
     {
         public project_task_dimension()
         {

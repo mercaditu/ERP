@@ -196,10 +196,10 @@
                                 <TextBox x:Name="txtqtyexec" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
                                      Text="{Binding quantity_exe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}" />
                             </StackPanel>
-                            <StackPanel x:Name="stackDimension" DataContext="{Binding Source={StaticResource project_taskproject_task_dimensionViewSource}}">
+                            <StackPanel x:Name="stackDimension" DataContext="{Binding Path=SelectedItem_,ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <Label Content="{lex:Loc ByDimension}" Style="{StaticResource input_label}" />
                                 <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
-                                          ItemsSource="{Binding}" RowDetailsVisibilityMode="Collapsed"
+                                          ItemsSource="{Binding project_task_dimension,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" RowDetailsVisibilityMode="Collapsed"
                                           CanUserAddRows="False" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}">
                                     <DataGrid.Columns>
                                         <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"

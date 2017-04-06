@@ -206,7 +206,7 @@ namespace cntrl.Curd
                     db.SaveChanges();
                     project_tag_detail project_tag_detail = new project_tag_detail();
                     project_tag_detail.id_tag = project_tag.id_tag;
-                   // project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
+                   project_tag_detail.project_tag = project_tag;
                     project.project_tag_detail.Add(project_tag_detail);
                     CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
                     Projectproject_tag_detail.View.Refresh();

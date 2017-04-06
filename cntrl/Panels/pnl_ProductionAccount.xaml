@@ -60,7 +60,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <Grid Background="WhiteSmoke">
+            <Grid Background="WhiteSmoke" x:Name="gridSave">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click" />
             </Grid>

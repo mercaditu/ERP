@@ -24,6 +24,7 @@ namespace Cognitivo.Production
         #endregion INotifyPropertyChanged
 
         private CollectionViewSource contactViewSource, production_service_accountViewSource;
+        db db = new db();
 
         public ServiceContract()
         {
@@ -67,30 +68,105 @@ namespace Cognitivo.Production
                 contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
                 List<contact> contactLIST = new List<contact>();
 
-                using (db db = new db())
-                {
-                    production_service_accountViewSource.Source = await db.production_service_account
-                                        .Where(x => x.id_company == CurrentSession.Id_Company
-                                           && (x.id_purchase_order_detail > 0)
-                                           && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0)
-                                           .Include(y => y.purchase_order_detail.purchase_order)
-                                           .Include(z => z.contact)
-                                           .OrderByDescending(x => x.trans_date)
-                                        .ToListAsync();
+                production_service_accountViewSource.Source = await db.production_service_account
+                                    .Where(
+                                        x => x.id_company == CurrentSession.Id_Company
+                                        && x.id_purchase_order_detail != null
+                                        && x.debit > 0
+                                        )
+                                        .Include(y => y.purchase_order_detail)
+                                        .Include(y => y.purchase_order_detail.purchase_order)
+                                        .Include(z => z.contact)
+                                        .OrderByDescending(x => x.trans_date)
+                                    .ToListAsync();
 
-                    foreach (production_service_account service_account in db.production_service_account.Local.OrderBy(x => x.contact.name).ToList())
+                foreach (production_service_account service_account in db.production_service_account.Local.OrderBy(x => x.contact.name).ToList())
+                {
+                    if (contactLIST.Contains(service_account.contact) == false)
                     {
-                        if (contactLIST.Contains(service_account.contact) == false)
-                        {
-                            contact contact = new contact();
-                            contact = service_account.contact;
-                            contactLIST.Add(contact);
-                        }
+                        contact contact = new contact();
+                        contact = service_account.contact;
+                        contactLIST.Add(contact);
                     }
                 }
 
                 contactViewSource.Source = contactLIST;
             }
+        }
+
+        private void btnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            List<purchase_order> Order_List = new List<purchase_order>();
+            List<purchase_invoice> Invoice_List = new List<purchase_invoice>();
+
+            foreach (production_service_account ParentAccount in db.production_service_account.Local.Where(x => x.IsSelected))
+            {
+                if (ParentAccount.purchase_order_detail != null)
+                {
+                    if (ParentAccount.purchase_order_detail.purchase_order != null)
+                    {
+                        purchase_order order = ParentAccount.purchase_order_detail.purchase_order;
+                        
+                        if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
+                        {
+                            Order_List.Add(ParentAccount.purchase_order_detail.purchase_order);
+                            
+                            if (order != null)
+                            {
+                                purchase_invoice invoice = new purchase_invoice();
+
+                                invoice.status = Status.Documents_General.Pending;
+                                invoice.id_purchase_order = order.id_purchase_order;
+                                invoice.id_contact = order.id_contact;
+                                invoice.contact = order.contact;
+                                invoice.id_project = order.id_project;
+                                invoice.id_currencyfx = order.id_currencyfx; //Bad
+                                invoice.id_contract = order.id_contract;
+                                invoice.id_condition = order.id_condition;
+                                invoice.comment = order.comment;
+                                invoice.is_impex = order.is_impex;
+                                invoice.trans_date = DateTime.Now;
+                                invoice.id_branch = order.id_branch;
+                                invoice.id_terminal = order.id_terminal;
+                                invoice.id_department = order.id_department;
+
+                                db.purchase_invoice.Add(invoice);
+                                Invoice_List.Add(invoice);
+                            }
+                        }
+                    }
+                }
+            }
+
+                foreach (production_service_account ParentAccount in db.production_service_account.Local.Where(x => x.IsSelected))
+            {
+                purchase_order_detail purchase_order_detail = db.purchase_order_detail.Find(ParentAccount.id_purchase_order_detail);
+
+                purchase_invoice_detail detail = new purchase_invoice_detail();
+                detail.id_item = purchase_order_detail.id_item;
+                detail.id_vat_group = purchase_order_detail.id_vat_group;
+                detail.app_vat_group = purchase_order_detail.app_vat_group;
+                detail.batch_code = purchase_order_detail.batch_code;
+                detail.expire_date = purchase_order_detail.expire_date;
+                
+                detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
+                detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
+                detail.unit_cost = purchase_order_detail.unit_cost;
+
+                if (ParentAccount.purchase_order_detail != null)
+                {
+                    if (ParentAccount.purchase_order_detail.purchase_order != null)
+                    {
+                        if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
+                        {
+                            purchase_invoice invoice = Invoice_List.Where(x => x.id_purchase_order == ParentAccount.purchase_order_detail.id_purchase_order).FirstOrDefault();
+                            invoice.purchase_invoice_detail.Add(detail);
+                        }
+                    }
+                }
+            }
+
+            db.SaveChangesAsync();
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

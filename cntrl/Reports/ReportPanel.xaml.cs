@@ -182,7 +182,7 @@ namespace cntrl
             reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
             ReportParameter ParametersCost = new ReportParameter("ParameterCost", CurrentSession.UserRole.see_cost.ToString());
-            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + _EndDate.ToString());
+            ReportParameter Parameters = new ReportParameter("Parameters", _StartDate.ToString() + " - " + _EndDate.ToString());
 
             reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
 

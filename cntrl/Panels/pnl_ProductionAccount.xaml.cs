@@ -38,6 +38,11 @@ namespace cntrl.Panels
             .Include(x => x.item)
             .Load();
             production_accountViewSource.Source = ExecutionDB.production_service_account.Local.Where(a => a.Balance >= production_execution_detail.quantity);
+
+            if (ExecutionDB.production_service_account.Local.Count() == 0)
+            {
+                gridSave.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
@@ -57,7 +62,7 @@ namespace cntrl.Panels
             //Make proper logic for Quantites
             production_service_account SelectedAccount = ExecutionDB.production_service_account.Local.Where(x => x.IsSelected).FirstOrDefault();
 
-            if (SelectedAccount != null)
+            if (SelectedAccount == null)
             { SelectedAccount = ExecutionDB.production_service_account.Local.FirstOrDefault(); }
 
             if (SelectedAccount != null)

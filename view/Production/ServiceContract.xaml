@@ -56,11 +56,6 @@
                                             Header="" Width="32"
                                             ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                             EditingElementStyle="{DynamicResource MetroDataGridCheckBox}">
-                        <DataGridCheckBoxColumn.CellStyle>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
-                                <Setter Property="Background" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}" />
-                            </Style>
-                        </DataGridCheckBoxColumn.CellStyle>
                     </DataGridCheckBoxColumn>
                     <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True" />
@@ -98,6 +93,7 @@
         <StackPanel Grid.Column="2" Background="WhiteSmoke" Grid.Row="1">
             <StackPanel Margin="8,0">
                 <Label Content="{lex:Loc PurchaseInvoice}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
+                <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="btnPurchaseInvoice_Click"/>
             </StackPanel>
         </StackPanel>
 

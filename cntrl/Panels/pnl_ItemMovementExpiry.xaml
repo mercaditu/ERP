@@ -13,7 +13,7 @@
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:local="clr-namespace:cntrl.Panels"
-             mc:Ignorable="d" Width="512"
+             mc:Ignorable="d" Width="600"
              BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />

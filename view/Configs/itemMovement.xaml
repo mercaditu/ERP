@@ -6,7 +6,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  mc:Ignorable="d"
 		  xmlns:lex="http://wpflocalizeextension.codeplex.com"
-	  d:DesignHeight="300" d:DesignWidth="300"
+	  d:DesignHeight="300" d:DesignWidth="500"
 			 MaxHeight="512" MaxWidth="312"
 	 Loaded="Page_Loaded">
     <UserControl.Resources>
@@ -39,6 +39,7 @@
                     <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding avlquantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*" />
+                    <DataGridTextColumn Binding="{Binding item_product.item.timestamp, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>

@@ -195,6 +195,23 @@ namespace cntrl.Curd
                     }
                 }
             }
+            else
+            {
+                entity.project project = projectViewSource.View.CurrentItem as entity.project;
+                if (project != null)
+                {
+                    project_tag project_tag = new project_tag();
+                    project_tag.name = cbxTag.Text;
+                    db.project_tag.Add(project_tag);
+                    db.SaveChanges();
+                    project_tag_detail project_tag_detail = new project_tag_detail();
+                    project_tag_detail.id_tag = project_tag.id_tag;
+                   // project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
+                    project.project_tag_detail.Add(project_tag_detail);
+                    CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+                    Projectproject_tag_detail.View.Refresh();
+                }
+            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)

@@ -49,7 +49,7 @@ namespace Cognitivo.Configs
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
@@ -57,13 +57,15 @@ namespace Cognitivo.Configs
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             List<item_movement> Items_InStockLIST = null;
 
-            app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-            app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_dimensionViewSource.Source = await ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            app_measurementViewSource.Source = await ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
 
-            Items_InStockLIST = ExecutionDB.item_movement.Where(x => x.id_location == production_order_detail.production_order.production_line.id_location &&
+            Items_InStockLIST = await ExecutionDB.item_movement.Where(x => x.id_location == production_order_detail.production_order.production_line.id_location &&
                                                                      x.item_product.id_item == id_item &&
                                                                      x.status == entity.Status.Stock.InStock &&
-                                                                    (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0).ToList();
+                                                                    (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0)
+                                                                    .Include(x => x.item_product)
+                                                                    .ToListAsync();
 
             if (Items_InStockLIST.Count() > 0)
             {
@@ -159,6 +161,32 @@ namespace Cognitivo.Configs
             id_movement = 0;
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtsearch.Text != string.Empty)
+            {
+                if (item_movementViewSource != null)
+                {
+                    if (item_movementViewSource.View != null)
+                    {
+                        item_movementViewSource.View.Filter = i =>
+                        {
+                            item_movement item_movement = (item_movement)i;
+
+                            string comment = item_movement.comment != null ? item_movement.comment : " ";
+                            string code = item_movement.code != null ? item_movement.code : " ";
+
+                            if (comment.ToLower().Contains(txtsearch.Text.ToLower()) ||
+                                code.ToLower().Contains(txtsearch.Text.ToLower()))
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }
+            }
         }
     }
 }

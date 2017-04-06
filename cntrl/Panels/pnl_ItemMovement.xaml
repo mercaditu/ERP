@@ -36,7 +36,8 @@
             </Grid>
             <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource item_inventory_detailViewSource}">
                 <StackPanel x:Name="stpDisplay">
-                    <Label Content="{Binding items.name}" Style="{StaticResource input_label}" />
+                    <Label Content="{Binding item_product.items.name}" Style="{StaticResource input_label}" />
+                    
                     <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid"
 							  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
 							  EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"

@@ -109,6 +109,25 @@ namespace entity
         public DateTime trans_date { get; set; }
 
         [NotMapped]
+        public string DimensionComment
+        {
+            get
+            {
+                if (this.item_movement_dimension.Count() > 0)
+                {
+                    string i = " ";
+                    foreach (item_movement_dimension dimension in item_movement_dimension)
+                    {
+                        i += dimension.value.ToString("N2") + " x ";
+                    }
+
+                    return comment + i;
+                }
+                return comment;
+            }
+        }
+
+        [NotMapped]
         public Actions Action { get; set; }
 
         [NotMapped]

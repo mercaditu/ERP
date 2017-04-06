@@ -650,35 +650,10 @@ namespace Cognitivo.Project.Development
 
                         project_task_output.project_task_dimension.Add(project_task_dimension);
                         project_task_output.RaisePropertyChanged("project_task_dimension");
-
-                        
                     }
-                   
                 }
-               
-                project_task_output.CalcSalePrice_TimerTaks();
 
-                //try
-                //{
-                //    if (project_task_dimensionViewSource != null)
-                //    {
-                //        if (project_task_dimensionViewSource.View != null)
-                //        {
-                //            project_task_dimensionViewSource.View.Filter = i =>
-                //            {
-                //                project_task_dimension _project_task_dimension = (project_task_dimension)i;
-                //                if (_project_task_dimension.project_task == project_task_output)
-                //                    return true;
-                //                else
-                //                    return false;
-                //            };
-                //        }
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    toolBar.msgError(ex);
-                //}
+                project_task_output.CalcSalePrice_TimerTaks();
             }
         }
 

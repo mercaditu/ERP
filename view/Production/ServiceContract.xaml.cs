@@ -97,6 +97,7 @@ namespace Cognitivo.Production
         private void btnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
         {
             List<purchase_order> Order_List = new List<purchase_order>();
+            List<purchase_order_detail> OrderDetail_List = new List<purchase_order_detail>();
             List<purchase_invoice> Invoice_List = new List<purchase_invoice>();
 
             foreach (production_service_account ParentAccount in db.production_service_account.Local.Where(x => x.IsSelected))
@@ -138,29 +139,41 @@ namespace Cognitivo.Production
                 }
             }
 
-                foreach (production_service_account ParentAccount in db.production_service_account.Local.Where(x => x.IsSelected))
+            foreach (production_service_account ParentAccount in db.production_service_account.Local.Where(x => x.IsSelected))
             {
-                purchase_order_detail purchase_order_detail = db.purchase_order_detail.Find(ParentAccount.id_purchase_order_detail);
-
-                purchase_invoice_detail detail = new purchase_invoice_detail();
-                detail.id_item = purchase_order_detail.id_item;
-                detail.id_vat_group = purchase_order_detail.id_vat_group;
-                detail.app_vat_group = purchase_order_detail.app_vat_group;
-                detail.batch_code = purchase_order_detail.batch_code;
-                detail.expire_date = purchase_order_detail.expire_date;
-                
-                detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
-                detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
-                detail.unit_cost = purchase_order_detail.unit_cost;
-
                 if (ParentAccount.purchase_order_detail != null)
                 {
-                    if (ParentAccount.purchase_order_detail.purchase_order != null)
+                    if (OrderDetail_List.Contains(ParentAccount.purchase_order_detail) == false)
                     {
-                        if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
+                        OrderDetail_List.Add(ParentAccount.purchase_order_detail);
+                        purchase_order_detail purchase_order_detail = ParentAccount.purchase_order_detail;
+
+                        purchase_invoice_detail detail = new purchase_invoice_detail();
+                        detail.id_item = purchase_order_detail.id_item;
+                        detail.id_vat_group = purchase_order_detail.id_vat_group;
+                        detail.app_vat_group = purchase_order_detail.app_vat_group;
+                        detail.batch_code = purchase_order_detail.batch_code;
+                        detail.expire_date = purchase_order_detail.expire_date;
+
+                        detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
+                        detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
+                        detail.unit_cost = purchase_order_detail.unit_cost;
+
+                        if (ParentAccount.purchase_order_detail != null)
                         {
-                            purchase_invoice invoice = Invoice_List.Where(x => x.id_purchase_order == ParentAccount.purchase_order_detail.id_purchase_order).FirstOrDefault();
-                            invoice.purchase_invoice_detail.Add(detail);
+                            if (ParentAccount.purchase_order_detail.purchase_order != null)
+                            {
+                                if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
+                                {
+                                    purchase_invoice invoice = Invoice_List.Where(x => x.id_purchase_order == ParentAccount.purchase_order_detail.id_purchase_order).FirstOrDefault();
+                                    invoice.purchase_invoice_detail.Add(detail);
+                                }
+                            }
+                        }
+
+                        foreach (production_service_account child in ParentAccount.child.Where(x => x.purchase_invoice_detail == null))
+                        {
+                            child.purchase_invoice_detail = detail;
                         }
                     }
                 }

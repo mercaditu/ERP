@@ -148,7 +148,7 @@
                             <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center" />
                             <Label Content="{Binding project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
-                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Margin="2" Orientation="Horizontal">
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc CostCenter}" />
                             <Label Content="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" />
                         </StackPanel>

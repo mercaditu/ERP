@@ -95,7 +95,7 @@
                 </Grid.Resources>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}"
                                         VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
-                                        ScrollViewer.CanContentScroll="True">
+                                        ScrollViewer.CanContentScroll="True" >
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded"
@@ -196,10 +196,10 @@
                                 <TextBox x:Name="txtqtyexec" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
                                      Text="{Binding quantity_exe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}" />
                             </StackPanel>
-                            <StackPanel x:Name="stackDimension" DataContext="{Binding Path=SelectedItem_,ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel x:Name="stackDimension" DataContext="{Binding Path=SelectedItem_, ElementName=treeProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <Label Content="{lex:Loc ByDimension}" Style="{StaticResource input_label}" />
                                 <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
-                                          ItemsSource="{Binding project_task_dimension,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" RowDetailsVisibilityMode="Collapsed"
+                                          ItemsSource="{Binding project_task_dimension, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowDetailsVisibilityMode="Collapsed"
                                           CanUserAddRows="False" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}">
                                     <DataGrid.Columns>
                                         <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"

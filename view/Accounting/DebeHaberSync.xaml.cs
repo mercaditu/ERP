@@ -772,7 +772,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(object Json)
         {
-            var webAddr = Properties.Settings.Default.DebeHaberConnString + "/api/transactions";
+            var webAddr = Settings.Default.DebeHaberConnString + "/api/transactions";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";

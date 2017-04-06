@@ -163,18 +163,18 @@ namespace Cognitivo.Menu
                 if (generic)
                 {
                     //Generic ConnectionString without Database
-                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(Cognitivo.Properties.Settings.Default.MySQLconnString);
+                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(Properties.Settings.Default.MySQLconnString);
                     MySqlConnectionStringBuilder generic_connString = new MySqlConnectionStringBuilder();
                     generic_connString.Server = specific_connString.Server;
                     generic_connString.UserID = specific_connString.UserID;
                     generic_connString.Password = specific_connString.Password;
-                    generic_connString.ConnectionTimeout = 1;
+                    generic_connString.ConnectionTimeout = 30;
                     SQLConn = new MySqlConnection(generic_connString.ToString());
                 }
                 else
                 {
                     //Specific ConnectionString with Database
-                    SQLConn = new MySqlConnection(Cognitivo.Properties.Settings.Default.MySQLconnString);
+                    SQLConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
                 }
 
                 MySqlCommand SQLCmd = new MySqlCommand();

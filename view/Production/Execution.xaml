@@ -402,7 +402,7 @@
 																	  StringFormat={}{0:g}}" Width="Auto" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"
 													Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Width="Auto" />
-                                        <DataGridTextColumn Header="{Binding Cognitivo:local:Hour}" IsReadOnly="True"
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Hour}" IsReadOnly="True"
 													Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 														Binding="{Binding timestamp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" />

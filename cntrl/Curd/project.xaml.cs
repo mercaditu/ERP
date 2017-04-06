@@ -118,6 +118,29 @@ namespace cntrl.Curd
             }
 
             db.SaveChanges();
+
+            string[] tagsArray = tbxTag.Text.Split(',');
+            foreach (string strTag in tagsArray)
+            {
+                project_tag tag = db.project_tag.Where(x => x.name == strTag).FirstOrDefault();
+                if (tag == null)
+                {
+                    tag = new project_tag();
+                    tag.name = strTag;
+                    db.project_tag.Add(tag);
+                    db.SaveChanges();
+                }
+
+                project_tag_detail tag_detail = db.project_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_project == _project.id_project).FirstOrDefault();
+                if (tag_detail == null)
+                {
+                    tag_detail = new project_tag_detail();
+                    tag_detail.id_project = _project.id_project;
+                    tag_detail.id_tag = tag.id_tag;
+                    db.project_tag_detail.Add(tag_detail);
+                    db.SaveChanges();
+                }
+            }
             btnCancel_Click(sender, e);
         }
 
@@ -162,57 +185,57 @@ namespace cntrl.Curd
             }
         }
 
-        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Add_Tag();
-            }
-        }
+        //private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        Add_Tag();
+        //    }
+        //}
 
-        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Add_Tag();
-        }
+        //private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    Add_Tag();
+        //}
 
-        private void Add_Tag()
-        {
-            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
-            if (cbxTag.Data != null)
-            {
-                int id = Convert.ToInt32(((project_tag)cbxTag.Data).id_tag);
-                if (id > 0)
-                {
-                    entity.project project = projectViewSource.View.CurrentItem as entity.project;
-                    if (project != null)
-                    {
-                        project_tag_detail project_tag_detail = new project_tag_detail();
-                        project_tag_detail.id_tag = ((project_tag)cbxTag.Data).id_tag;
-                        project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
-                        project.project_tag_detail.Add(project_tag_detail);
-                        CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
-                        Projectproject_tag_detail.View.Refresh();
-                    }
-                }
-            }
-            else
-            {
-                entity.project project = projectViewSource.View.CurrentItem as entity.project;
-                if (project != null)
-                {
-                    project_tag project_tag = new project_tag();
-                    project_tag.name = cbxTag.Text;
-                    db.project_tag.Add(project_tag);
-                    db.SaveChanges();
-                    project_tag_detail project_tag_detail = new project_tag_detail();
-                    project_tag_detail.id_tag = project_tag.id_tag;
-                   project_tag_detail.project_tag = project_tag;
-                    project.project_tag_detail.Add(project_tag_detail);
-                    CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
-                    Projectproject_tag_detail.View.Refresh();
-                }
-            }
-        }
+        //private void Add_Tag()
+        //{
+        //    // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+        //    if (cbxTag.Data != null)
+        //    {
+        //        int id = Convert.ToInt32(((project_tag)cbxTag.Data).id_tag);
+        //        if (id > 0)
+        //        {
+        //            entity.project project = projectViewSource.View.CurrentItem as entity.project;
+        //            if (project != null)
+        //            {
+        //                project_tag_detail project_tag_detail = new project_tag_detail();
+        //                project_tag_detail.id_tag = ((project_tag)cbxTag.Data).id_tag;
+        //                project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
+        //                project.project_tag_detail.Add(project_tag_detail);
+        //                CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+        //                Projectproject_tag_detail.View.Refresh();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        entity.project project = projectViewSource.View.CurrentItem as entity.project;
+        //        if (project != null)
+        //        {
+        //            project_tag project_tag = new project_tag();
+        //            project_tag.name = cbxTag.Text;
+        //            db.project_tag.Add(project_tag);
+        //            db.SaveChanges();
+        //            project_tag_detail project_tag_detail = new project_tag_detail();
+        //            project_tag_detail.id_tag = project_tag.id_tag;
+        //           project_tag_detail.project_tag = project_tag;
+        //            project.project_tag_detail.Add(project_tag_detail);
+        //            CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+        //            Projectproject_tag_detail.View.Refresh();
+        //        }
+        //    }
+        //}
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -222,29 +245,29 @@ namespace cntrl.Curd
             }
         }
 
-        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    //DeleteDetailGridRow
+        //private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            //DeleteDetailGridRow
 
-                    if (e.Parameter as project_tag_detail != null)
-                    {
-                        project_tag_detailDataGrid.CancelEdit();
-                        db.project_tag_detail.Remove(e.Parameter as project_tag_detail);
+        //            if (e.Parameter as project_tag_detail != null)
+        //            {
+        //                project_tag_detailDataGrid.CancelEdit();
+        //                db.project_tag_detail.Remove(e.Parameter as project_tag_detail);
 
-                        CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
-                        Projectproject_tag_detail.View.Refresh();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //throw;
-            }
-        }
+        //                CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+        //                Projectproject_tag_detail.View.Refresh();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        //throw;
+        //    }
+        //}
     }
 }

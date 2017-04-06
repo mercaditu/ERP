@@ -17,10 +17,6 @@
               xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded">
-    <UserControl.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete"
-                        CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
-    </UserControl.CommandBindings>
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
@@ -81,31 +77,7 @@
                 <control:SmartBox_Contact x:Name="contactComboBox" HorizontalAlignment="Left"
                                           Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select" />
                 <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
-                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Left"
-                                                 CollectionViewSource="{StaticResource project_tagViewSource}"
-                                                 focusGrid="True" Height="27" Width="256"
-                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                    <cntrl:SearchableTextbox.Columns>
-                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
-                                                          Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
-                    </cntrl:SearchableTextbox.Columns>
-                </cntrl:SearchableTextbox>
-                <DataGrid x:Name="project_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-                                      HeadersVisibility="None"
-                                      ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
-                        <DataGridTemplateColumn Width="Auto" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.Delete"
-                                                    Style="{StaticResource btnDeleteChildStyle}"
-                                                    CommandParameter="{Binding}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TextBox x:Name="tbxTag" Text="{Binding TagList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                 <CheckBox IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                     Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}" />
 

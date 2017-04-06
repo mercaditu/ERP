@@ -12,6 +12,12 @@ namespace Cognitivo.Product
     public partial class Stock : Page, INotifyPropertyChanged
     {
         private CollectionViewSource item_movementViewSource, inventoryViewSource;
+        public bool ShowZeros
+        {
+            get { return _ShowZeros; }
+            set { _ShowZeros = value; HideZeros(); }
+        }
+        private bool _ShowZeros;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,6 +61,25 @@ namespace Cognitivo.Product
                 inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
 
                 TextBox_TextChanged(null, null);
+                HideZeros();
+            }
+        }
+
+        private void HideZeros()
+        {
+            if (inventoryViewSource != null)
+            {
+                if (inventoryViewSource.View != null)
+                {
+                    inventoryViewSource.View.Filter = i =>
+                    {
+                        dynamic TmpInventory = (dynamic)i;
+                        if (TmpInventory.Quantity == 0)
+                            return ShowZeros == true ? true : false;
+                        else
+                            return true;
+                    };
+                }
             }
         }
 

@@ -503,7 +503,7 @@ namespace entity.Brillo.Document
                     BranchAddress = g.purchase_order != null ? g.purchase_order.app_branch != null ? g.purchase_order.app_branch.address : "" : "",
 
                     Bank = g.purchase_order != null ? g.purchase_order.contact != null ? g.purchase_order.contact.app_bank != null ? g.purchase_order.contact.app_bank.name : "" : "" : "",
-                    Comment = g.comment,
+                    Comment = g.purchase_order != null ? g.purchase_order.comment : "",
                     RefContact = g.purchase_order != null ? g.purchase_order.contact_ref != null ? g.purchase_order.contact_ref.name : "" : "",
 
                     SupplierCode = g.item != null ? g.item.supplier_code : "",

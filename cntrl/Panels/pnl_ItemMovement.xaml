@@ -56,6 +56,7 @@
 												Header="{lex:Loc Cognitivo:local:unit_value}" Width="*" />
                             <DataGridTextColumn Binding="{Binding currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
 												Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
+                            
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>

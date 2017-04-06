@@ -7,7 +7,7 @@
 	  mc:Ignorable="d"
 		  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 	  d:DesignHeight="300" d:DesignWidth="500"
-			 MaxHeight="512" MaxWidth="312"
+			 MaxHeight="512" MaxWidth="512"
 	 Loaded="Page_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}" />
@@ -29,17 +29,23 @@
 					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
 
-        <StackPanel HorizontalAlignment="Center" Height="233">
+        <StackPanel HorizontalAlignment="Center" Height="233" DataContext="{Binding Source={StaticResource item_movementViewSource}}">
             <Rectangle Height="1" Margin="3" Fill="Silver" />
+            <Label Content="{Binding  item_product.item.name, UpdateSourceTrigger=PropertyChanged}"/>
             <DataGrid Height="227" x:Name="item_movement_detailDataGrid" Width="300" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
-							  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
+							  AutoGenerateColumns="False" ItemsSource="{Binding}"
 							  EnableRowVirtualization="True"
 							  RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+								Header="{lex:Loc Cognitivo:local:Comment}" IsReadOnly="True" Width="*" />
+                    <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged,StringFormat=d}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding avlquantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*" />
-                    <DataGridTextColumn Binding="{Binding item_product.item.timestamp, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+								Header="{lex:Loc Cognitivo:local:BatchCode}" IsReadOnly="True" Width="*" />
+                  
+
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>

@@ -4,14 +4,11 @@
 		xmlns:my="clr-namespace:entity.Properties;assembly=entity"
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 		xmlns:main="clr-namespace:Cognitivo.Properties"
-		xmlns:converter="clr-namespace:Cognitivo.Converters"
 		xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-		xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:LocalizeDictionary.DesignCulture="en"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		WindowState="Maximized" GlowBrush="Black" KeyUp="Window_KeyUp"
 		Style="{DynamicResource MyCleanWindowStyle}" Closing="winMain_Closing">
     <Controls:MetroWindow.Flyouts>

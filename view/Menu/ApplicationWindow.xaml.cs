@@ -61,5 +61,10 @@ namespace Cognitivo.Menu
             if (canClose != null && !canClose.CanClose())
                 e.Cancel = true;
         }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.cognitivo.in/?s=" + Title);
+        }
     }
 }

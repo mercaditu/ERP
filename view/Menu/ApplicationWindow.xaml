@@ -1,7 +1,6 @@
 ﻿<metro:MetroWindow x:Class="Cognitivo.Menu.ApplicationWindow" x:Name="winApplicationWindow"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:customcmd="clr-namespace:Cognitivo.Class"
                     xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     lex:LocalizeDictionary.DesignCulture="en-US"
@@ -12,6 +11,11 @@
                     Style="{DynamicResource MyCleanWindowStyle}"
                    Background="White"
                     Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <Button Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" Cursor="Hand" Click="btnHelp_Click" />
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
     <metro:MetroWindow.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Style x:Key="MyCleanWindowStyle" TargetType="{x:Type metro:MetroWindow}"

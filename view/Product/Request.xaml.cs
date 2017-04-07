@@ -52,9 +52,13 @@ namespace Cognitivo.Product
             app_departmentViewSource.Source = await RequestDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
             cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
+            CollectionViewSource itemsViewSource = FindResource("itemsViewSource") as CollectionViewSource;
+            
             await RequestDB.items.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            itemsViewSource.Source = RequestDB.items.Local;
             await RequestDB.app_dimension.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await RequestDB.app_measurement.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+
 
             Load();
 

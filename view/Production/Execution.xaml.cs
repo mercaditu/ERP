@@ -661,6 +661,7 @@ namespace Cognitivo.Production
                         production_execution_detail.movement_id = (int)item_movement.id_movement;
                     }
                 }
+                production_execution_detailViewSource.View.Refresh();
             }
         }
 

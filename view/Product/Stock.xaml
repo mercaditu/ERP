@@ -4,7 +4,6 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:Stock="clr-namespace:Cognitivo.Class"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"

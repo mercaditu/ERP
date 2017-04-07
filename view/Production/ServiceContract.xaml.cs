@@ -38,8 +38,8 @@ namespace Cognitivo.Production
             {
                 production_service_accountViewSource.View.Filter = i =>
                 {
-                    payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact)
+                    production_service_account production_service_account = i as production_service_account;
+                    if (production_service_account.id_contact == contact.id_contact)
                     {
                         return true;
                     }

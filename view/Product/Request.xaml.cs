@@ -52,6 +52,10 @@ namespace Cognitivo.Product
             app_departmentViewSource.Source = await RequestDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
             cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
+            await RequestDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.item).LoadAsync();
+            CollectionViewSource items_productViewSource = FindResource("items_productViewSource") as CollectionViewSource;
+            items_productViewSource.Source = RequestDB.item_product.Local;
+
             Load();
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
@@ -64,7 +68,7 @@ namespace Cognitivo.Product
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(FindResource("security_userViewSource")));
-            await RequestDB.security_user.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToListAsync();
+            await RequestDB.security_user.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).LoadAsync();
             security_userViewSource.Source = RequestDB.security_user.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestDB, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);

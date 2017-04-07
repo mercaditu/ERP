@@ -15,7 +15,7 @@ namespace Cognitivo.Product
         public bool ShowZeros
         {
             get { return _ShowZeros; }
-            set { _ShowZeros = value; HideZeros(); }
+            set { _ShowZeros = value; TextBox_TextChanged(null, null); }
         }
         private bool _ShowZeros;
 
@@ -61,25 +61,6 @@ namespace Cognitivo.Product
                 inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
 
                 TextBox_TextChanged(null, null);
-                HideZeros();
-            }
-        }
-
-        private void HideZeros()
-        {
-            if (inventoryViewSource != null)
-            {
-                if (inventoryViewSource.View != null)
-                {
-                    inventoryViewSource.View.Filter = i =>
-                    {
-                        dynamic TmpInventory = (dynamic)i;
-                        if (TmpInventory.Quantity == 0)
-                            return ShowZeros == true ? true : false;
-                        else
-                            return true;
-                    };
-                }
             }
         }
 
@@ -162,23 +143,25 @@ namespace Cognitivo.Product
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtsearch.Text != string.Empty)
+            if (inventoryViewSource != null)
             {
-                if (inventoryViewSource != null)
+                if (inventoryViewSource.View != null)
                 {
-                    if (inventoryViewSource.View != null)
+                    inventoryViewSource.View.Filter = i =>
                     {
-                        inventoryViewSource.View.Filter = i =>
-                        {
-                            dynamic TmpInventory = (dynamic)i;
-                            if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
-                                TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
-                                TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
-                                return true;
+                        dynamic TmpInventory = (dynamic)i;
+
+                        if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                            TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                            TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                            //This code checks for Quantity after checking for name. This will cause less loops.
+                            if (TmpInventory.Quantity == 0)
+                                return ShowZeros == true ? true : false;
                             else
-                                return false;
-                        };
-                    }
+                                return true;
+                        else
+                            return false;
+                    };
                 }
             }
         }

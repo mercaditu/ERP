@@ -37,7 +37,7 @@ namespace cntrl.Panels
             )
             .Include(x => x.item)
             .Load();
-            production_accountViewSource.Source = ExecutionDB.production_service_account.Local.Where(a => a.Balance >= production_execution_detail.quantity);
+            production_accountViewSource.Source = ExecutionDB.production_service_account.Local;
 
             if (ExecutionDB.production_service_account.Local.Count() == 0)
             {

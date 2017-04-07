@@ -9,11 +9,11 @@
       xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:data="clr-namespace:entity;assembly=entity"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
-        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
-        lex:ResxLocalizationProvider.DefaultDictionary="local"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+      lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>

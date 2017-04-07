@@ -236,12 +236,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox1.Designer.cs">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Application\app_company_interest.cs" />
     <Compile Include="Apps.cs" />
     <Compile Include="Application\app_account_session.cs" />
@@ -358,9 +352,6 @@
     <Compile Include="Context\Security\UserRoleDB.cs" />
     <Compile Include="Context\Security\UserDB.cs" />
     <Compile Include="dbContext.cs" />
-    <Compile Include="DocumentViewr.xaml.cs">
-      <DependentUpon>DocumentViewr.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Generic\CommercialPurchaseDetail.cs" />
     <Compile Include="Generic\CommercialSalesDetail.cs" />
     <Compile Include="Generic\Discount.cs" />
@@ -422,9 +413,6 @@
     <Compile Include="Purchase\purchase_tender_detail_dimension.cs" />
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ReportDesigner.xaml.cs">
-      <DependentUpon>ReportDesigner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\ContactSubscription.cs" />
     <Compile Include="Reporting\Inventory.cs" />
@@ -731,14 +719,6 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DocumentViewr.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ReportDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -749,10 +729,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutBox1.resx">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609131349079_INITIAL-MIGRATE.resx">
       <DependentUpon>201609131349079_INITIAL-MIGRATE.cs</DependentUpon>
       <SubType>Designer</SubType>

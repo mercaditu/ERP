@@ -1,0 +1,13 @@
+﻿<syncfusion:RibbonWindow x:Class="entity.Reports.ReportDesigner"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    xmlns:synctools="clr-namespace:Syncfusion.Windows.Tools.Controls;assembly=Syncfusion.Tools.WPF"
+    xmlns:Reporting="clr-namespace:Syncfusion.Windows.Reports.Designer;assembly=Syncfusion.ReportDesigner.WPF"
+      mc:Ignorable="d" Loaded="RibbonWindow_Loaded"
+      d:DesignHeight="600" d:DesignWidth="700" Background="White"  ShowActivated="False">
+    <Reporting:ReportDesigner  Grid.Row="0" DesignMode="RDLC"  x:Name="ReportDesignerControl" />
+</syncfusion:RibbonWindow>

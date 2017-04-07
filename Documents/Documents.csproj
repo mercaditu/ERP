@@ -88,6 +88,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
     <Compile Include="BrilloQuery\Finance.cs" />
     <Compile Include="BrilloQuery\GetContacts.cs" />
     <Compile Include="BrilloQuery\GetItem.cs" />
@@ -96,10 +102,16 @@
     <Compile Include="BrilloQuery\Sales.cs" />
     <Compile Include="BrilloQuery\SalesReturn.cs" />
     <Compile Include="DataSource.cs" />
+    <Compile Include="DocumentViewr.xaml.cs">
+      <DependentUpon>DocumentViewr.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Normal.cs" />
     <Compile Include="NumToWords.cs" />
     <Compile Include="PurchaseInvoice.cs" />
     <Compile Include="Reciept.cs" />
+    <Compile Include="ReportDesigner.xaml.cs">
+      <DependentUpon>ReportDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SalesOrder.cs" />
     <Compile Include="SalesInvoice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +126,21 @@
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DocumentViewr.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ReportDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

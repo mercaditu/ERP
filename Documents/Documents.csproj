@@ -88,6 +88,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrilloQuery\Finance.cs" />
+    <Compile Include="BrilloQuery\GetContacts.cs" />
+    <Compile Include="BrilloQuery\GetItem.cs" />
+    <Compile Include="BrilloQuery\Purchase.cs" />
+    <Compile Include="BrilloQuery\QueryExecutor.cs" />
+    <Compile Include="BrilloQuery\Sales.cs" />
+    <Compile Include="BrilloQuery\SalesReturn.cs" />
     <Compile Include="DataSource.cs" />
     <Compile Include="Normal.cs" />
     <Compile Include="NumToWords.cs" />

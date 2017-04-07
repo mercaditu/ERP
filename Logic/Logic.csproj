@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AA2882D5-9A0A-479F-A543-5C82925E20E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logic</RootNamespace>
+    <AssemblyName>Logic</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Brillo\Activation.cs" />
+    <Compile Include="Brillo\Attachment.cs" />
+    <Compile Include="Brillo\Byte2FileConverter.cs" />
+    <Compile Include="Brillo\ConversionFactor.cs" />
+    <Compile Include="Brillo\Currency.cs" />
+    <Compile Include="Brillo\Email.cs" />
+    <Compile Include="Brillo\EncryptDecrypt.cs" />
+    <Compile Include="Brillo\General.cs" />
+    <Compile Include="Brillo\ImportCostReport.cs" />
+    <Compile Include="Brillo\Inventory2Excel.cs" />
+    <Compile Include="Brillo\IO.cs" />
+    <Compile Include="Brillo\Licence.cs" />
+    <Compile Include="Brillo\Localize.cs" />
+    <Compile Include="Brillo\Location.cs" />
+    <Compile Include="Brillo\Logic\Document.cs" />
+    <Compile Include="Brillo\Logic\DocumentPos.cs" />
+    <Compile Include="Brillo\Logic\Payment.cs" />
+    <Compile Include="Brillo\Logic\ProductionExexustionStock.cs" />
+    <Compile Include="Brillo\Logic\Range.cs" />
+    <Compile Include="Brillo\Logic\Stock.cs" />
+    <Compile Include="Brillo\Parent.cs" />
+    <Compile Include="Brillo\ProductCost.cs" />
+    <Compile Include="Brillo\Promotion\PromotionProduct.xaml.cs">
+      <DependentUpon>PromotionProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Brillo\Promotion\Start.cs" />
+    <Compile Include="Brillo\Security.cs" />
+    <Compile Include="Brillo\Stock.cs" />
+    <Compile Include="Brillo\Vat.cs" />
+    <Compile Include="Brillo\VerificationCode.cs" />
+    <Compile Include="Brillo\Weather.cs" />
+    <Compile Include="Brillo\WeatherSettings.Designer.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Documents\Documents.csproj">
+      <Project>{7e70002c-dc45-4330-8f2b-5f3fdb280213}</Project>
+      <Name>Documents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entity\Entity.csproj">
+      <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Brillo\WeatherSettings.settings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Brillo\Promotion\PromotionProduct.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

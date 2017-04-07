@@ -255,35 +255,6 @@
     <Compile Include="BrilloQuery\QueryExecutor.cs" />
     <Compile Include="BrilloQuery\Purchase.cs" />
     <Compile Include="BrilloQuery\SalesReturn.cs" />
-    <Compile Include="Brillo\Activation.cs" />
-    <Compile Include="Brillo\Attachment.cs" />
-    <Compile Include="Brillo\Byte2FileConverter.cs" />
-    <Compile Include="Brillo\ConversionFactor.cs" />
-    <Compile Include="Brillo\Currency.cs" />
-    <Compile Include="Brillo\Document\DataSource.cs" />
-    <Compile Include="Brillo\Document\Normal.cs" />
-    <Compile Include="Brillo\Document\NumToWords.cs" />
-    <Compile Include="Brillo\Document\Start.cs" />
-    <Compile Include="Brillo\Email.cs" />
-    <Compile Include="Brillo\EncryptDecrypt.cs" />
-    <Compile Include="Brillo\ImportCostReport.cs" />
-    <Compile Include="Brillo\Inventory2Excel.cs" />
-    <Compile Include="Brillo\IO.cs" />
-    <Compile Include="Brillo\Licence.cs" />
-    <Compile Include="Brillo\Localize.cs" />
-    <Compile Include="Brillo\Logic\Payment.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Brillo\Logic\Range.cs" />
-    <Compile Include="Brillo\Document\Reciept.cs" />
-    <Compile Include="Brillo\Parent.cs" />
-    <Compile Include="Brillo\ProductCost.cs" />
-    <Compile Include="Brillo\Promotion\PromotionProduct.xaml.cs">
-      <DependentUpon>PromotionProduct.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Brillo\Promotion\Start.cs" />
-    <Compile Include="Brillo\Stock.cs" />
-    <Compile Include="Brillo\VerificationCode.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsMovement.cs" />
     <Compile Include="Class\clsImpex.cs" />
@@ -503,12 +474,6 @@
     <Compile Include="Application\app_vat_group.cs" />
     <Compile Include="Application\app_vat_group_details.cs" />
     <Compile Include="Application\app_weather.cs" />
-    <Compile Include="Brillo\General.cs" />
-    <Compile Include="Brillo\Location.cs" />
-    <Compile Include="Brillo\Logic\Document.cs" />
-    <Compile Include="Brillo\Logic\Stock.cs" />
-    <Compile Include="Brillo\Security.cs" />
-    <Compile Include="Brillo\Vat.cs" />
     <Compile Include="Class\EntityValidation.cs" />
     <Compile Include="Commercial\contact.cs" />
     <Compile Include="Commercial\contact_field_value.cs" />
@@ -554,12 +519,6 @@
     <Compile Include="Item\item_inventory.cs" />
     <Compile Include="Item\item_transfer.cs" />
     <Compile Include="Item\item_transfer_detail.cs" />
-    <Compile Include="Brillo\Weather.cs" />
-    <Compile Include="Brillo\WeatherSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>WeatherSettings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Commercial\payment.cs" />
     <Compile Include="Commercial\payment_detail.cs" />
     <Compile Include="Commercial\payment_schedual.cs" />
@@ -620,10 +579,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Brillo\WeatherSettings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>WeatherSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\accounting_account.datasource" />
@@ -783,10 +738,6 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Brillo\Promotion\PromotionProduct.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="DocumentViewr.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

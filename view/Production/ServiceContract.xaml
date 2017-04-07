@@ -3,9 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Cognitivo.Commercial"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:entity="clr-namespace:entity;assembly=entity"
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -70,7 +68,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-                                        Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>

@@ -10,18 +10,8 @@ using System.Windows.Data;
 
 namespace Cognitivo.Production
 {
-    public partial class ServiceContract : Page, INotifyPropertyChanged
+    public partial class ServiceContract : Page
     {
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisePropertyChanged(string prop)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        #endregion INotifyPropertyChanged
 
         private CollectionViewSource contactViewSource, production_service_accountViewSource;
         db db = new db();
@@ -62,7 +52,8 @@ namespace Cognitivo.Production
 
         private async void load_Schedual()
         {
-            production_service_accountViewSource = (CollectionViewSource)FindResource("production_service_accountViewSource");
+            production_service_accountViewSource = FindResource("production_service_accountViewSource") as CollectionViewSource;
+
             if (production_service_accountViewSource != null)
             {
                 contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
@@ -72,14 +63,14 @@ namespace Cognitivo.Production
                                     .Where(
                                         x => x.id_company == CurrentSession.Id_Company
                                         && x.id_purchase_order_detail != null
-                                        && x.credit > x.child.Where(z => z.id_purchase_invoice_detail == null).Sum(y => y.debit)
+                                        && x.credit != x.child.Where(z => z.id_purchase_invoice_detail == null).Sum(y => y.debit)
                                         )
                                         .Include(y => y.purchase_order_detail)
                                         .Include(z => z.contact)
                                         .OrderByDescending(x => x.trans_date)
                                     .ToListAsync();
 
-                foreach (production_service_account service_account in db.production_service_account.Local.OrderBy(x => x.contact.name).ToList())
+                foreach (production_service_account service_account in db.production_service_account.Local.ToList())
                 {
                     if (contactLIST.Contains(service_account.contact) == false)
                     {
@@ -89,7 +80,15 @@ namespace Cognitivo.Production
                     }
                 }
 
-                contactViewSource.Source = contactLIST;
+                if (contactLIST.Count() > 0)
+                {
+                    contactViewSource.Source = contactLIST.OrderBy(x => x.name);
+                }
+                else
+                {
+                    contactViewSource.Source = null;
+                }
+                
             }
         }
 
@@ -153,6 +152,7 @@ namespace Cognitivo.Production
                         detail.app_vat_group = purchase_order_detail.app_vat_group;
                         detail.batch_code = purchase_order_detail.batch_code;
                         detail.expire_date = purchase_order_detail.expire_date;
+                        detail.id_cost_center = purchase_order_detail.id_cost_center;
 
                         detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
                         detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
@@ -178,7 +178,7 @@ namespace Cognitivo.Production
                 }
             }
 
-            db.SaveChangesAsync();
+            toolbar.msgSaved(db.SaveChanges());
             load_Schedual();
         }
 

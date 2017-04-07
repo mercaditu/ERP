@@ -30,16 +30,16 @@
                     <rv:ReportViewer x:Name="reportViewer" />
                 </WindowsFormsHost>
             </TabItem>
-            <!--<TabItem Header="Data">
+            <TabItem Header="Data">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"
                                        SelectionMode="Multiple" Background="White"
                                        AllowGrouping="True" AllowFiltering="True"
                                        ShowGroupDropArea="True" />
-            </TabItem>-->
-            <!--<TabItem Header="Matrix">
+            </TabItem>
+            <TabItem Header="Matrix">
                 <syncfusion:PivotGridControl x:Name="sfPivotTable" VisualStyle="Metro" />
-            </TabItem>-->
+            </TabItem>
         </TabControl>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>

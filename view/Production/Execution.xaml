@@ -40,8 +40,7 @@
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
         <CollectionViewSource x:Key="production_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" />
         <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
-        <CollectionViewSource x:Key="item_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_dimension}, CreateList=True}" />
-        <CollectionViewSource x:Key="production_execution_detailViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detailViewSource}}" />
+         <CollectionViewSource x:Key="production_execution_detailViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detailViewSource}}" />
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}" />
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}" />
@@ -62,6 +61,8 @@
 			  Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged" />
         <Grid Name="crud_modal_cost" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
 			  Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5" />
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			  Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
         <ListBox x:Name="projectDataGrid"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -177,7 +178,7 @@
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False"
 									  ItemsSource="{Binding}"
-									  SelectionChanged="dgproduct_SelectionChanged">
+									>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
 														Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60" />
@@ -233,7 +234,7 @@
                                 <Button x:Name="btnInsert_Raw" Content="{lex:Loc Insert}" Click="btnInsert_Click" />
                             </StackPanel>
 
-                            <DataGrid Margin="4" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="dgRaw_SelectionChanged">
+                            <DataGrid Margin="4" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding}" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
@@ -333,7 +334,7 @@
                                     <Button x:Name="btnInsert_ServiceContract" Content="{lex:Loc Insert}" Click="btnInsert_Click" />
                                 </StackPanel>
                                 <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgServicecontract" AutoGenerateColumns="False" Height="256"
-										  ItemsSource="{Binding}" SelectionChanged="dgServicecontract_SelectionChanged">
+										  ItemsSource="{Binding}" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
 														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -427,7 +428,7 @@
                                 <TextBox  x:Name="txtAsset" Width="128" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" Margin="4" />
                                 <Button x:Name="btnInsert_FixedAsset" Content="{lex:Loc Insert}" VerticalAlignment="Center" Click="btnInsert_Click" />
                             </StackPanel>
-                            <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital"  AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="dgCapital_SelectionChanged">
+                            <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital"  AutoGenerateColumns="False" ItemsSource="{Binding}" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100" />
@@ -458,7 +459,7 @@
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4" x:Name="dgSupplier" AutoGenerateColumns="False"
 									  ItemsSource="{Binding}"
-									  SelectionChanged="dgSupplier_SelectionChanged">
+									>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
 														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

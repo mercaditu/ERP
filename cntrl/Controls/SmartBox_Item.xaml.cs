@@ -120,18 +120,26 @@ namespace cntrl.Controls
                 {
                     entity.BrilloQuery.Item Item = itemViewSource.View.CurrentItem as entity.BrilloQuery.Item;
 
+                   
                     if (Item != null)
                     {
                         ItemID = Item.ID;
                         QuantityInStock = Item.InStock;
                         ItemPopUp.IsOpen = false;
                         Text = Item.Name;
-                        Quantity = 1;
+                        if (Quantity<=1)
+                        {
+                            Quantity = 1;
+                        }
+                       
                     }
                     else
                     {
                         ItemID = 0;
-                        Quantity = 1;
+                        if (Quantity <= 1)
+                        {
+                            Quantity = 1;
+                        }
                         Text = tbxSearch.Text;
                     }
 

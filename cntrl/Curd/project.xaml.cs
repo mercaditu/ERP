@@ -122,24 +122,29 @@ namespace cntrl.Curd
             string[] tagsArray = tbxTag.Text.Split(',');
             foreach (string strTag in tagsArray)
             {
-                project_tag tag = db.project_tag.Where(x => x.name == strTag).FirstOrDefault();
-                if (tag == null)
+                if (strTag!="")
                 {
-                    tag = new project_tag();
-                    tag.name = strTag;
-                    db.project_tag.Add(tag);
-                    db.SaveChanges();
+                    project_tag tag = db.project_tag.Where(x => x.name == strTag).FirstOrDefault();
+                    if (tag == null)
+                    {
+                        tag = new project_tag();
+                        tag.name = strTag;
+                        db.project_tag.Add(tag);
+                        db.SaveChanges();
+                    }
+                    project_tag_detail tag_detail = db.project_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_project == _project.id_project).FirstOrDefault();
+                    if (tag_detail == null)
+                    {
+                        tag_detail = new project_tag_detail();
+                        tag_detail.id_project = _project.id_project;
+                        tag_detail.id_tag = tag.id_tag;
+                        db.project_tag_detail.Add(tag_detail);
+                        db.SaveChanges();
+                    }
                 }
+               
 
-                project_tag_detail tag_detail = db.project_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_project == _project.id_project).FirstOrDefault();
-                if (tag_detail == null)
-                {
-                    tag_detail = new project_tag_detail();
-                    tag_detail.id_project = _project.id_project;
-                    tag_detail.id_tag = tag.id_tag;
-                    db.project_tag_detail.Add(tag_detail);
-                    db.SaveChanges();
-                }
+              
             }
 
             btnCancel_Click(sender, e);

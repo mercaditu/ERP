@@ -24,9 +24,11 @@ namespace Cognitivo.Production
         //Production ORDER CollectionViewSource
         private CollectionViewSource
             production_orderViewSource,
-            production_order_detaillViewSource,
+            production_order_detaillViewSource;
 
-            item_dimensionViewSource;
+        private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
+
+        //item_dimensionViewSource;
 
         public Execution()
         {
@@ -35,8 +37,8 @@ namespace Cognitivo.Production
 
         private async void Page_Loaded(object sender, EventArgs e)
         {
-            item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
-            item_dimensionViewSource.Source = await ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
+            //item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
+            //item_dimensionViewSource.Source = await ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
 
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
@@ -264,126 +266,13 @@ namespace Cognitivo.Production
             }
         }
 
-        private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailViewSource != null)
-            {
-                if (production_execution_detailViewSource.View != null)
-                {
-                    production_execution_detail obj = production_execution_detailViewSource.View.CurrentItem as production_execution_detail;
+      
 
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-        }
+       
 
-        private void dgproduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailViewSource != null)
-            {
-                if (production_execution_detailViewSource.View != null)
-                {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailViewSource.View.CurrentItem;
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-        }
+    
 
-        private void dgRaw_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailViewSource != null)
-            {
-                if (production_execution_detailViewSource.View != null)
-                {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailViewSource.View.CurrentItem;
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-        }
-
-        private void dgCapital_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailViewSource != null)
-            {
-                if (production_execution_detailViewSource.View != null)
-                {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailViewSource.View.CurrentItem;
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-        }
+    
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -659,6 +548,18 @@ namespace Cognitivo.Production
             _production_execution_detail.unit_cost = production_order_detail.item.unit_cost != null ? (decimal)production_order_detail.item.unit_cost : 0;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
+            if (_production_execution_detail.item.id_item_type == item.item_type.Product || _production_execution_detail.item.id_item_type == item.item_type.RawMaterial)
+            {
+                if (_production_execution_detail.item.item_product.FirstOrDefault()!=null)
+                {
+                    if (_production_execution_detail.item.item_product.FirstOrDefault().can_expire)
+                    {
+                        crud_modalExpire.Visibility = Visibility.Visible;
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(production_order_detail.production_order.id_branch,null, _production_execution_detail.item.item_product.FirstOrDefault().id_item_product);
+                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                    }
+                }
+            }
 
             if (_production_execution_detail.item.id_item_type == item.item_type.ServiceContract)
             {
@@ -673,36 +574,7 @@ namespace Cognitivo.Production
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
 
-        private void dgServicecontract_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailViewSource != null)
-            {
-                if (production_execution_detailViewSource.View != null)
-                {
-                    production_execution_detail obj = production_execution_detailViewSource.View.CurrentItem as production_execution_detail;
-
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-        }
+    
 
         private void CmbServicecontract_Select(object sender, RoutedEventArgs e)
         {
@@ -771,6 +643,25 @@ namespace Cognitivo.Production
         {
             ViewAll = !ViewAll;
             RaisePropertyChanged("ViewAll");
+        }
+
+        private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
+            {
+                production_execution_detail production_execution_detail = (production_execution_detail)production_execution_detailViewSource.View.CurrentItem;
+
+                if (production_execution_detail != null)
+                {
+                    item_movement item_movement = ExecutionDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                    if (item_movement != null)
+                    {
+                        production_execution_detail.batch = item_movement.code;
+                        production_execution_detail.expiry_date = item_movement.expire_date;
+                        production_execution_detail.movement_id = (int)item_movement.id_movement;
+                    }
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

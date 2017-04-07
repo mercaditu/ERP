@@ -440,20 +440,6 @@ namespace Cognitivo.Production
             crud_modal.Visibility = Visibility.Collapsed;
         }
 
-        private void item_ProductDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
-        {
-            DataGrid DataGrid = (DataGrid)sender;
-            production_order_detail obj = (production_order_detail)DataGrid.SelectedItem;
-            if (obj != null)
-            {
-                if (obj.project_task != null)
-                {
-                    int _id_task = obj.project_task.id_project_task;
-                    project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
-                    project_task_dimensionViewSource.Source = OrderDB.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
-                }
-            }
-        }
 
         private void item_Select(object sender, EventArgs e)
         {
@@ -789,6 +775,22 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+
+       
+        private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            production_order_detail obj = (production_order_detail)itemDataGrid.SelectedItem;
+            if (obj != null)
+            {
+                if (obj.project_task != null)
+                {
+                    int _id_task = obj.project_task.id_project_task;
+                    project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
+                    project_task_dimensionViewSource.Source = OrderDB.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

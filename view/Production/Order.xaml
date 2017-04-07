@@ -361,9 +361,10 @@
 															 Icon="" Click="btnRequestResource_Click"
 															 VerticalAlignment="Top" HorizontalAlignment="Center" />
                             </StackPanel>
+                            <StackPanel>
                             <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,48,0,0"
 										  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Auto"
-										  LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+								SelectionChanged="itemDataGrid_SelectionChanged" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 																ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24"
@@ -374,30 +375,28 @@
 															ElementStyle="{StaticResource RightAlignStyle}"
 															Width="auto" IsReadOnly="True" />
                                 </DataGrid.Columns>
-                                <DataGrid.RowDetailsTemplate>
-                                    <DataTemplate>
-                                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False"
+                            
+                            </DataGrid>
+                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False"
 													  EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
 													  ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}"
 													  RowDetailsVisibilityMode="VisibleWhenSelected">
-                                            <DataGrid.Columns>
-                                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
 																			ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}"
 																			DisplayMemberPath="name" SelectedValuePath="id_dimension"
 																			SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"
+                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"
 																		Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto" />
-                                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"
+                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"
 																			DisplayMemberPath="name" SelectedValuePath="id_measurement"
 																			ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 																			SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 																			Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto" />
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </DataTemplate>
-                                </DataGrid.RowDetailsTemplate>
+                                </DataGrid.Columns>
                             </DataGrid>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                 </TabItem>

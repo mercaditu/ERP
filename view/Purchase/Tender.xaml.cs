@@ -307,7 +307,7 @@ namespace Cognitivo.Purchase
                                 else
                                 {
                                     purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
-                                    purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+                                    purchase_tender_detail.quantity += purchase_tender_item.quantity;
                                 }
                             }
                             else
@@ -327,7 +327,7 @@ namespace Cognitivo.Purchase
                                 else
                                 {
                                     purchase_tender_detail purchase_tender_detail = PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
-                                    purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+                                    purchase_tender_detail.quantity += purchase_tender_detail.quantity;
                                 }
                             }
                         }

@@ -28,19 +28,19 @@ contacts.code as ContactCode,
 contacts.gov_code as GovermentId,
 task.quantity_est as QuantityEst,
 
-(SELECT round(GROUP_CONCAT(value SEPARATOR ' x '),2)
- from project_task_dimension where id_project_task = task.id_project_task GROUP BY id_project_task) as Dimension,
+(SELECT GROUP_CONCAT(ROUND(value,2) SEPARATOR ' x ')
+ from project_task_dimension where id_project_task = task.id_project_task) as Dimension,
 
-ROUND(task.quantity_est,2) *ROUND(item_conversion_factor.value,2) * (select ROUND(EXP(SUM(LOG(`value`))),2) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
+ROUND(task.quantity_est,2) * item_conversion_factor.value * (select ROUND(EXP(SUM(LOG(`value`))),2) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
 round((select ROUND(EXP(SUM(LOG(`value`))),2 ) as value from project_task_dimension where id_project_task = task.id_project_task)  * ROUND(task.quantity_est,2),2) as Factor,
-exe.Quantity as QuantityReal,
+sum(exe.Quantity) as QuantityReal,
 	sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
 										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
                                         (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,
 (1-( (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/sum(time_to_sec(timediff(end_date,start_date)) / 3600))) * 100 as diffPer,
 (((sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient))/task.completed) as CompletedHours,
 task.unit_cost_est as CostEst,
-exe.unit_cost as CostReal,
+sum(exe.unit_cost) as CostReal,
 task.start_date_est as StartDate,
 task.end_date_est as EndDate,
 sum(sbd.quantity * sbd.unit_price) as TotalBudgeted,
@@ -49,7 +49,9 @@ sum(ps.debit) as TotalPaid,
 sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional,
 if(task.importance > 0, task.importance, null) as AveragePercentage,
-if(task.completed > 0, task.completed, null) as Percentage
+if(task.completed > 0, task.completed, null) as Percentage,
+(select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default) as Price
+
 from project_task as task
 
 inner join projects  as proj on proj.id_project = task.id_project

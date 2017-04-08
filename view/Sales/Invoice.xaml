@@ -681,7 +681,7 @@
 														Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100" />
                                     <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														Header="{lex:Loc Cognitivo:local:Items}"
-                                                        IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}"
+                                                        IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}}"
                                                         MinWidth="128" />
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 															ItemsSource="{Binding Source={x:Static entity:CurrentSession.VAT_Groups}}"

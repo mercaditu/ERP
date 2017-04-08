@@ -209,41 +209,38 @@ namespace entity
 
             CurrentSession.UserRole = Role;
 
-            string licensekey = "";
-            app_company app_company;
+            //string licensekey = "";
+            //app_company app_company;
 
-            using (db db = new db())
-            {
-                app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-                try
-                {
-                    if (app_company != null)
-                    {
-                        Licence.VerifyCompanyLicence(app_company.version);
-                        if (Licence.CompanyLicence.versions.Count() == 0)
-                        {
-                            licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
-                            app_company.version = licensekey;
-                            db.SaveChanges();
+            //using (db db = new db())
+            //{
+            //    app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
+            //    try
+            //    {
+            //        if (app_company != null)
+            //        {
+            //            Licence.VerifyCompanyLicence(app_company.version);
+            //            if (Licence.CompanyLicence.versions.Count() == 0)
+            //            {
+            //                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)Versions.Full);
+            //                app_company.version = licensekey;
+            //                db.SaveChanges();
 
-                            if (app_company.version != null || app_company.version == "")
-                            {
-                            }
-                            else
-                            {
-                                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)CurrentSession.Versions.Full);
-                                app_company.version = licensekey;
-                                db.SaveChanges();
-                            }
-                        }
+            //                if (app_company.version == null || app_company.version != "")
+            //                {
+            //                    licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)Versions.Full);
+            //                    app_company.version = licensekey;
+            //                    db.SaveChanges();
+            //                }
+            //            }
 
-                        Licence.VerifyCompanyLicence(licensekey);
-                    }
-                }
-                catch (Exception)
-                {
-                }
-            }
+            //            Licence.VerifyCompanyLicence(licensekey);
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
             //if (Licence.CompanyLicence == null && Licence.CompanyLicence.company_name == app_company.name && Licence.CompanyLicence.company_code == app_company.gov_code)
             //{
             //    Version = Versions.Lite;

@@ -140,9 +140,9 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    if (this.items != null)
+                    if (items != null)
                     {
-                        _quantity_est = Brillo.ConversionFactor.Factor_Quantity_Back(this.items, Quantity_Factored, GetDimensionValue());
+                        _quantity_est = ConversionFactor.Factor_Quantity_Back(this.items, Quantity_Factored, GetDimensionValue());
                         RaisePropertyChanged("value_counted");
                     }
                 }

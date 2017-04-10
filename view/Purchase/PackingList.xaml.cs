@@ -259,7 +259,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                         purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                         purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                        purchase_packing_detail.verified_by = CurrentSession.Id_User;
+                      //  purchase_packing_detail.verified_by = CurrentSession.Id_User;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                         purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();

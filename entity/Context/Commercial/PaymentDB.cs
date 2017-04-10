@@ -172,16 +172,16 @@ namespace entity
                         if (ChildBalance > 0)
                         {
                             payment_schedual child_schedual = new payment_schedual();
-                            if (Math.Round(ChildBalance, 2) >= Math.Round(parent.credit))
+                            if (Math.Round(ChildBalance, 2) >= Math.Round(parent.AccountPayableBalance))
                             {
-                                child_schedual.debit = parent.credit;
+                                child_schedual.debit = parent.AccountPayableBalance;
                                 if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
                                 {
                                     child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
                                     Parent_Schedual = child_schedual.parent;
                                 }
 
-                                ChildBalance -= parent.credit;
+                                ChildBalance -= parent.AccountPayableBalance;
                             }
                             else
                             {
@@ -230,12 +230,12 @@ namespace entity
                         {
                             payment_schedual child_schedual = new payment_schedual();
                             //Payment Detail is greater or equal to Schedual
-                            if (ChildBalance >= parent.debit)
+                            if (ChildBalance >= parent.AccountReceivableBalance)
                             {
-                                child_schedual.credit = parent.debit;
+                                child_schedual.credit = parent.AccountReceivableBalance;
                                 child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
                                 Parent_Schedual = child_schedual.parent;
-                                ChildBalance -= parent.debit;
+                                ChildBalance -= parent.AccountReceivableBalance;
                             }
                             else
                             { //Schedual is greater than Payment Detail.

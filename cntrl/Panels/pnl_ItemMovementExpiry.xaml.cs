@@ -71,7 +71,11 @@ namespace cntrl.Panels
         {
             ExpiryInStock ExpiryInStock = ExpiryInStockViewSource.View.CurrentItem as ExpiryInStock;
 
-            MovementID = ExpiryInStock.MovementID;
+            if (ExpiryInStock!=null)
+            {
+                MovementID = ExpiryInStock.MovementID;
+            }
+           
 
             Grid parentGrid = (Grid)Parent;
             parentGrid.Visibility = Visibility.Hidden;

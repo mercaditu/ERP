@@ -1061,6 +1061,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1217,7 +1218,6 @@ Fields!status.Value=6,"LimeGreen"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1475,7 +1475,7 @@ Fields!status.Value=6,"LimeGreen"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Fields!AveragePercentage.Value &gt; 0, Fields!AveragePercentage.Value, Nothing)</Value>
+                                  <Value>=Sum(Fields!AveragePercentage.Value)</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
                                     <FontSize>8pt</FontSize>

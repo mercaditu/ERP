@@ -35,7 +35,7 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -725,7 +725,9 @@
     <EmbeddedResource Include="Reports\Projects\ProjectHR.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectImportance.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectRawMaterial.rdlc" />
-    <EmbeddedResource Include="Reports\Projects\Project.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\Project.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Projects\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectFinance.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Technical.rdlc" />

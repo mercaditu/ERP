@@ -64,7 +64,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "PackingListSend", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.Packing", entity.App.Names.PackingList, "", entity.CurrentSession.Versions.Medium, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.SchedualViewer", entity.App.Names.SalesInvoice, "", entity.CurrentSession.Versions.Medium, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Form, "Commercial.SchedualViewer", entity.App.Names.SalesInvoice, "", entity.CurrentSession.Versions.Medium, "0");
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespaces.Form, "Commercial.Contact", entity.App.Names.Supplier, "Contact", entity.CurrentSession.Versions.Lite, "1");
@@ -144,7 +144,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Form, "Project.Development.ProjectType", entity.App.Names.Template, "ProjectCategory", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Form, "Project.Development.Project", entity.App.Names.Project, "Project", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", entity.CurrentSession.Versions.Full, "1");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.Development.ProjectGantt", entity.App.Names.ActivityPlan, "", entity.CurrentSession.Versions.Full, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.Development.ProjectGantt", entity.App.Names.ActivityPlan, "", entity.CurrentSession.Versions.Full, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", entity.CurrentSession.Versions.Full, "0");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespaces.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "Plan", entity.CurrentSession.Versions.Full, "1");
